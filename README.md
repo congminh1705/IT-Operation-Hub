@@ -63,7 +63,7 @@ Nghiệp vụ lõi có **33 use case**; phần AI bổ sung **8 use case riêng*
 
 ![IT Operations Hub — Use case theo vai trò](docs/xmind/previews/00-use-cases-overview.png)
 
-[Mở bộ use case XMind](docs/xmind/02-use-cases.xmind) · [Danh mục 33 use case và luồng chi tiết](docs/03-use-cases.md)
+[Mở bộ use case XMind](docs/xmind/02-use-cases.xmind) · [Danh mục 33 use case và luồng chi tiết](docs/03-use-cases.md) · [Xem sơ đồ UML dạng SVG](docs/diagrams/README.md)
 
 Các bản đồ actor–goal hỗ trợ đọc và thảo luận phạm vi. Điều kiện theo bản ghi và trạng thái vẫn phải đối chiếu ma trận quyền; một actor xuất hiện trên sơ đồ không có nghĩa được thao tác trên mọi ticket.
 

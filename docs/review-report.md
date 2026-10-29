@@ -7,12 +7,12 @@
 
 | Thành phần | Số lượng / nội dung |
 |---|---|
-| Markdown | 29 file, gồm phân tích, nghiệp vụ, IA, UI/UX, thiết kế AI, thị giác/motion và kế hoạch kiểm chứng |
+| Markdown | 30 file, gồm phân tích, nghiệp vụ, IA, UI/UX, thiết kế AI, thị giác/motion, hướng dẫn xem sơ đồ và kế hoạch kiểm chứng |
 | Use cases | 33 mục lõi giữ nguyên + 8 mục AI có namespace riêng; 3 nguồn PlantUML lõi phụ lục |
 | Backlog | 47 stories lõi + 8 stories AI; có INVEST và phụ thuộc, chưa ước lượng triển khai |
 | Nghiệm thu dự kiến | 47 AC lõi, 10 AC xuyên suốt, 12 ví dụ SLA; thêm 8 AC và 12 ca AI, tất cả chưa chạy |
 | Kiến trúc thông tin | 26 mẫu lõi giữ nguyên + 3 mẫu AI tùy chọn |
-| Thiết kế trực quan | 13 SVG UI (10 lõi + 3 AI), 2 board SVG, 44 icon SVG, 27 SVG/PNG sơ đồ, 1 SVG/PNG UML phụ lục và 1 PNG minh họa login; tổng 87 SVG/29 PNG. Đã bỏ 15 PNG xuất giao diện riêng; ảnh nhúng XMind được giữ |
+| Thiết kế trực quan | 13 SVG UI (10 lõi + 3 AI), 2 board SVG, 44 icon SVG, 27 SVG/PNG sơ đồ, 1 SVG/PNG UML tổng quan, 3 SVG UML xuất từ PlantUML và 1 PNG minh họa login; tổng 90 SVG/29 PNG. Đã bỏ 15 PNG xuất giao diện riêng; ảnh nhúng XMind được giữ |
 | XMind | 9 file: bộ tổng 27 sheet và 8 file chuyên đề; 15 ảnh UI/board trong bộ tổng và file UI/UX, 3 ảnh trong file AI |
 | Liên kết nghiệp vụ | 13 nhóm quy tắc lõi, ma trận quyền, 15 chỉ số giữ nguyên; 28 quyết định gồm phần AI và thị giác bổ sung |
 
@@ -21,7 +21,7 @@
 - Đối chiếu đủ US01–US47 với AC01–AC47 và 47 dòng truy vết; không thiếu ID trong dải.
 - Đối chiếu đủ UC01–UC33 giữa catalog, nguồn PlantUML và truy vết.
 - Kiểm tra tham chiếu screen trong truy vết nằm trong inventory; không coi dialog là route đã có.
-- Kiểm tra đường dẫn nội bộ, số cột các bảng Markdown, fence của code block, UTF-8 và cấu trúc XML của 87 SVG.
+- Kiểm tra đường dẫn nội bộ, số cột các bảng Markdown, fence của code block, UTF-8 và cấu trúc XML của 90 SVG.
 - Kiểm tra SVG không nhúng script, foreignObject hay tài nguyên ảnh từ mạng; có title/description.
 - Bộ tài liệu hiện có 29 PNG, gồm sơ đồ và minh họa login nguồn. Đợt v0.4 đã xuất và review 15 ảnh UI/board cùng bản đồ UI/UX; sau đó bỏ 15 PNG giao diện riêng theo yêu cầu, giữ SVG và ảnh nhúng trong XMind. Đo text theo Segoe UI không phát hiện tràn ra ngoài canvas; kiểm tra này không tự chứng minh không có mọi lỗi bố cục trong từng panel.
 - Sửa menu tài sản phục vụ xử lý của Technician, filter mobile và đường nối use case sau review.
@@ -52,7 +52,7 @@ Tính tỷ lệ tương phản từ mã màu sRGB cho các cặp token. Đây l�
 
 Chưa có frontend/backend/database/worker chạy thực, API contract triển khai, migration, seed hoặc kiểm thử tự động ứng dụng. Chưa có dữ liệu thật; các tên, thiết bị, ticket và số liệu trên bản vẽ đều hư cấu. Không nghiệm thu tính bền vững, phân quyền backend, SLA nền hay cấp phát đồng thời từ bản vẽ.
 
-Chưa phỏng vấn, tree test hoặc usability test; personas/journeys là giả thuyết. Chưa đánh giá bàn phím, screen reader, DOM, reflow hoặc hiệu năng ứng dụng. Các sơ đồ chính được chuyển sang XMind; đã rà archive, JSON, ID và tham chiếu quan hệ. Chưa mở trực tiếp bằng XMind Desktop hoặc render phụ lục bằng engine PlantUML. Ảnh xem nhanh được dựng từ cùng nội dung, không phải ảnh chụp ứng dụng XMind.
+Chưa phỏng vấn, tree test hoặc usability test; personas/journeys là giả thuyết. Chưa đánh giá bàn phím, screen reader, DOM, reflow hoặc hiệu năng ứng dụng. Các sơ đồ chính được chuyển sang XMind; đã rà archive, JSON, ID và tham chiếu quan hệ. Chưa mở trực tiếp bằng XMind Desktop. Ba phụ lục UML đã được render cục bộ bằng PlantUML 1.2026.9 thành SVG, đối chiếu đủ 33 UC; nguồn `.puml` được giữ nguyên. Ảnh xem nhanh XMind được dựng từ cùng nội dung, không phải ảnh chụp ứng dụng XMind.
 
 Chrome headless không xuất được ảnh trong môi trường phiên làm việc; PNG được xuất bằng System.Drawing từ các thành phần SVG. Có thể có khác biệt font/raster hóa giữa PNG và trình duyệt, nên SVG và đặc tả là nguồn chỉnh sửa. Không dùng PNG để chứng minh browser compatibility.
 
@@ -75,7 +75,9 @@ AI hỗ trợ đã được bổ sung vào thiết kế theo yêu cầu mới, d
 
 Trong đợt **v0.4**, so sánh lại xác nhận **9/9 tài liệu nghiệp vụ lõi không đổi** theo các hash bên dưới. Các mã UC/US/AC, máy trạng thái, chính sách SLA, quyền, công thức MET và mô hình tài sản lõi được giữ nguyên. AI dùng mã riêng và đặc tả bổ sung trong [ranh giới tích hợp](ai/integration-and-non-regression.md). Các thay đổi thị giác được mô tả tại [giao diện v0.4](design/visual-refresh.md).
 
-| Tài liệu lõi | SHA-256 trước = sau |
+Các hash dưới đây là kết quả lịch sử của đợt bảo toàn v0.4. Sau đó `03-use-cases.md` được bổ sung liên kết tới SVG và trang hướng dẫn xem sơ đồ; phần catalog và luồng nghiệp vụ không đổi.
+
+| Tài liệu lõi | SHA-256 trước = sau tại đợt v0.4 |
 |---|---|
 | [03-use-cases.md](03-use-cases.md) | `545c1cd221c7a4fc2e90b3111a80f6f4b82d3498fbe5bc2a8b94779e3b344b1b` |
 | [05-user-flows.md](05-user-flows.md) | `effec5a084554068b90dc94ed92a6da5688921e75108cc6f57d484aed5faeea2` |

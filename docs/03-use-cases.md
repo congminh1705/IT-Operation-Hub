@@ -14,10 +14,12 @@ Hệ thống là **IT Operations Hub cho một tổ chức**. Actor chính: Requ
 
 Bản đồ XMind tổ chức actor–goal để đọc và chỉnh sửa. Đây không phải cách thay thế ký pháp UML chính thức. Phụ lục UML vẫn được giữ để kiểm tra association và system boundary:
 
-- [Tài khoản và quản trị — PlantUML](diagrams/use-cases-access.puml): UC01–UC09.
-- [Ticket, SLA, thông báo — PlantUML](diagrams/use-cases-ticket.puml): UC10–UC26.
-- [Tài sản và quan sát — PlantUML](diagrams/use-cases-operations.puml): UC27–UC33.
+- [Tài khoản và quản trị — SVG](diagrams/use-cases-access.svg): UC01–UC09 · [Nguồn PlantUML](diagrams/use-cases-access.puml).
+- [Ticket, SLA, thông báo — SVG](diagrams/use-cases-ticket.svg): UC10–UC26 · [Nguồn PlantUML](diagrams/use-cases-ticket.puml).
+- [Tài sản và quan sát — SVG](diagrams/use-cases-operations.svg): UC27–UC33 · [Nguồn PlantUML](diagrams/use-cases-operations.puml).
 - [UML tổng quan dạng SVG](diagrams/use-cases-overview.svg).
+
+[Xem tất cả sơ đồ và hướng dẫn mở trong VS Code/GitHub](diagrams/README.md).
 
 ## Danh mục đầy đủ
 
