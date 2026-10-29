@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1122" viewBox="0 0 2200 1122" role="img" aria-labelledby="title desc"><title id="title">Chatbot AI tùy chọn</title><desc id="desc">Sơ đồ từ nội dung XMind. Phần AI tùy chọn ở mức thiết kế; giữ nguyên nghiệp vụ lõi.</desc><style>text{font-family:Segoe UI,Arial,sans-serif}</style>
+<rect x="0" y="0" width="2200" height="1122" rx="0" fill="#F8FAFC"/>
+<text x="48" y="57" font-size="15" font-weight="700" fill="#2563EB" text-anchor="start">IT OPERATIONS HUB</text>
+<text x="48" y="103" font-size="32" font-weight="700" fill="#0F172A" text-anchor="start">Chatbot AI tùy chọn</text>
+<text x="48" y="137" font-size="17" font-weight="400" fill="#475569" text-anchor="start">Nguồn XMind chỉnh sửa được · AI chỉ hỗ trợ đọc/nháp, không tự thay đổi nghiệp vụ</text>
+<path d="M 920 616.0 C 840.0 616.0 840.0 310.0 760 310.0" fill="none" stroke="#2563EB" stroke-width="3"/>
+<path d="M 470 310.0 C 440.0 310.0 440.0 234.0 410 234.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="202.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="240.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Hướng dẫn được duyệt có nguồn</text>
+<path d="M 470 310.0 C 440.0 310.0 440.0 310.0 410 310.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="278.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="316.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Tra cứu ticket/asset đúng quyền</text>
+<path d="M 470 310.0 C 440.0 310.0 440.0 386.0 410 386.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="354.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="392.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Báo cáo dùng MET hiện có</text>
+<rect x="470" y="264.0" width="290" height="92" rx="12" fill="#2563EB" stroke="#2563EB"/>
+<text x="615.0" y="316.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Hỏi và đọc</text>
+<path d="M 920 616.0 C 840.0 616.0 840.0 594.0 760 594.0" fill="none" stroke="#0891B2" stroke-width="3"/>
+<path d="M 470 594.0 C 440.0 594.0 440.0 518.0 410 518.0" fill="none" stroke="#0891B2" stroke-width="1.6"/>
+<rect x="40" y="486.0" width="370" height="64" rx="12" fill="white" stroke="#0891B2"/>
+<text x="225.0" y="524.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Tóm tắt ticket theo visibility</text>
+<path d="M 470 594.0 C 440.0 594.0 440.0 594.0 410 594.0" fill="none" stroke="#0891B2" stroke-width="1.6"/>
+<rect x="40" y="562.0" width="370" height="64" rx="12" fill="white" stroke="#0891B2"/>
+<text x="225.0" y="600.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Nháp yêu cầu → SCR21</text>
+<path d="M 470 594.0 C 440.0 594.0 440.0 670.0 410 670.0" fill="none" stroke="#0891B2" stroke-width="1.6"/>
+<rect x="40" y="638.0" width="370" height="64" rx="12" fill="white" stroke="#0891B2"/>
+<text x="225.0" y="676.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Nháp phản hồi → composer SCR22</text>
+<rect x="470" y="548.0" width="290" height="92" rx="12" fill="#0891B2" stroke="#0891B2"/>
+<text x="615.0" y="600.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Hiểu và soạn</text>
+<path d="M 920 616.0 C 840.0 616.0 840.0 878.0 760 878.0" fill="none" stroke="#7C3AED" stroke-width="3"/>
+<path d="M 470 878.0 C 440.0 878.0 440.0 802.0 410 802.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="770.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="808.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Xem và chỉnh nháp</text>
+<path d="M 470 878.0 C 440.0 878.0 440.0 878.0 410 878.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="846.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="884.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Bấm gửi tại form hiện có</text>
+<path d="M 470 878.0 C 440.0 878.0 440.0 954.0 410 954.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="922.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="960.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">AI không tự thực thi thay đổi</text>
+<rect x="470" y="832.0" width="290" height="92" rx="12" fill="#7C3AED" stroke="#7C3AED"/>
+<text x="615.0" y="884.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Người dùng quyết định</text>
+<path d="M 1280 616.0 C 1360.0 616.0 1360.0 310.0 1440 310.0" fill="none" stroke="#059669" stroke-width="3"/>
+<path d="M 1730 310.0 C 1760.0 310.0 1760.0 234.0 1790 234.0" fill="none" stroke="#059669" stroke-width="1.6"/>
+<rect x="1790" y="202.0" width="370" height="64" rx="12" fill="white" stroke="#059669"/>
+<text x="1975.0" y="240.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Không trạng thái hoặc role mới</text>
+<path d="M 1730 310.0 C 1760.0 310.0 1760.0 310.0 1790 310.0" fill="none" stroke="#059669" stroke-width="1.6"/>
+<rect x="1790" y="278.0" width="370" height="64" rx="12" fill="white" stroke="#059669"/>
+<text x="1975.0" y="316.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Không first response từ chat</text>
+<path d="M 1730 310.0 C 1760.0 310.0 1760.0 386.0 1790 386.0" fill="none" stroke="#059669" stroke-width="1.6"/>
+<rect x="1790" y="354.0" width="370" height="64" rx="12" fill="white" stroke="#059669"/>
+<text x="1975.0" y="392.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Không sửa ngân sách SLA hoặc assignment</text>
+<rect x="1440" y="264.0" width="290" height="92" rx="12" fill="#059669" stroke="#059669"/>
+<text x="1585.0" y="316.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Bảo toàn nghiệp vụ</text>
+<path d="M 1280 616.0 C 1360.0 616.0 1360.0 594.0 1440 594.0" fill="none" stroke="#D97706" stroke-width="3"/>
+<path d="M 1730 594.0 C 1760.0 594.0 1760.0 518.0 1790 518.0" fill="none" stroke="#D97706" stroke-width="1.6"/>
+<rect x="1790" y="486.0" width="370" height="64" rx="12" fill="white" stroke="#D97706"/>
+<text x="1975.0" y="524.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Bật/tắt độc lập</text>
+<path d="M 1730 594.0 C 1760.0 594.0 1760.0 594.0 1790 594.0" fill="none" stroke="#D97706" stroke-width="1.6"/>
+<rect x="1790" y="562.0" width="370" height="64" rx="12" fill="white" stroke="#D97706"/>
+<text x="1975.0" y="600.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">AI lỗi vẫn xử lý thủ công</text>
+<path d="M 1730 594.0 C 1760.0 594.0 1760.0 670.0 1790 670.0" fill="none" stroke="#D97706" stroke-width="1.6"/>
+<rect x="1790" y="638.0" width="370" height="64" rx="12" fill="white" stroke="#D97706"/>
+<text x="1975.0" y="676.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Chưa cấu hình không bật giả</text>
+<rect x="1440" y="548.0" width="290" height="92" rx="12" fill="#D97706" stroke="#D97706"/>
+<text x="1585.0" y="600.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Khả dụng</text>
+<path d="M 1280 616.0 C 1360.0 616.0 1360.0 878.0 1440 878.0" fill="none" stroke="#DB2777" stroke-width="3"/>
+<path d="M 1730 878.0 C 1760.0 878.0 1760.0 802.0 1790 802.0" fill="none" stroke="#DB2777" stroke-width="1.6"/>
+<rect x="1790" y="770.0" width="370" height="64" rx="12" fill="white" stroke="#DB2777"/>
+<text x="1975.0" y="808.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Lọc quyền trước khi gửi model</text>
+<path d="M 1730 878.0 C 1760.0 878.0 1760.0 878.0 1790 878.0" fill="none" stroke="#DB2777" stroke-width="1.6"/>
+<rect x="1790" y="846.0" width="370" height="64" rx="12" fill="white" stroke="#DB2777"/>
+<text x="1975.0" y="884.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Public và internal tách phiên</text>
+<path d="M 1730 878.0 C 1760.0 878.0 1760.0 954.0 1790 954.0" fill="none" stroke="#DB2777" stroke-width="1.6"/>
+<rect x="1790" y="922.0" width="370" height="64" rx="12" fill="white" stroke="#DB2777"/>
+<text x="1975.0" y="960.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Không nhận upload tệp vào chat</text>
+<rect x="1440" y="832.0" width="290" height="92" rx="12" fill="#DB2777" stroke="#DB2777"/>
+<text x="1585.0" y="884.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Dữ liệu và nguồn</text>
+<rect x="920" y="544.0" width="360" height="144" rx="12" fill="#0F2348" stroke="#0F2348"/>
+<text x="1100.0" y="622.0" font-size="29" font-weight="700" fill="white" text-anchor="middle">AI hỗ trợ vận hành</text>
+<line x1="48" y1="1060" x2="2152" y2="1060" stroke="#CBD5E1" stroke-width="2"/>
+<text x="48" y="1092" font-size="15" font-weight="400" fill="#475569" text-anchor="start">SƠ ĐỒ XEM NHANH · File .xmind có thể chỉnh sửa · Thiết kế v0.3</text>
+<text x="2152" y="1092" font-size="15" font-weight="400" fill="#475569" text-anchor="end">Lõi nghiệp vụ giữ nguyên</text>
+</svg>

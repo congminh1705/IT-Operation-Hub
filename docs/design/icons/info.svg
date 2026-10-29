@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="title desc"><title id="title">Icon info</title><desc id="desc">Thiết kế UI v0.4 của IT Operations Hub, dữ liệu minh họa hư cấu. Bản vẽ tĩnh, chưa có ứng dụng hoặc chatbot vận hành.</desc><style>text{font-family:Inter,Segoe UI,Arial,sans-serif}</style>
+<circle cx="12.0" cy="12.0" r="9.0" fill="none" stroke="#334155" stroke-width="1.85"/>
+<circle cx="12.0" cy="7.0" r="0.8" fill="#334155" stroke="#334155" stroke-width="1.85"/>
+<line x1="12.0" y1="11.0" x2="12.0" y2="17.0" stroke="#334155" stroke-width="1.85" stroke-linecap="round"/>
+</svg>

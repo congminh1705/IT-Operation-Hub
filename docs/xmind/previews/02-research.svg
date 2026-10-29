@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1274" viewBox="0 0 2200 1274" role="img" aria-labelledby="title desc"><title id="title">Phân tích top down</title><desc id="desc">Ảnh xem trước từ cùng cây chủ đề trong tài liệu XMind. Không phải ảnh chụp ứng dụng XMind.</desc><style>text{font-family:Segoe UI,Arial,sans-serif}</style>
+<rect x="0" y="0" width="2200" height="1274" rx="0" fill="#F8FAFC"/>
+<text x="48" y="57" font-size="15" font-weight="700" fill="#2563EB" text-anchor="start">IT OPERATIONS HUB</text>
+<text x="48" y="103" font-size="32" font-weight="700" fill="#0F172A" text-anchor="start">Phân tích top down</text>
+<text x="48" y="137" font-size="17" font-weight="400" fill="#475569" text-anchor="start">Nội dung và nhánh tương ứng với file XMind · Mở file gốc để sửa, thu gọn hoặc mở rộng chủ đề</text>
+<path d="M 920 692.0 C 840.0 692.0 840.0 310.0 760 310.0" fill="none" stroke="#2563EB" stroke-width="3"/>
+<path d="M 470 310.0 C 440.0 310.0 440.0 234.0 410 234.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="202.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="240.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Nhiều phòng ban và thiết bị</text>
+<path d="M 470 310.0 C 440.0 310.0 440.0 310.0 410 310.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="278.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="316.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Đội IT nội bộ, nhiều nhóm</text>
+<path d="M 470 310.0 C 440.0 310.0 440.0 386.0 410 386.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="354.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="392.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Một tổ chức trong MVP</text>
+<rect x="470" y="264.0" width="290" height="92" rx="12" fill="#2563EB" stroke="#2563EB"/>
+<text x="615.0" y="316.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Bối cảnh</text>
+<path d="M 920 692.0 C 840.0 692.0 840.0 594.0 760 594.0" fill="none" stroke="#0891B2" stroke-width="3"/>
+<path d="M 470 594.0 C 440.0 594.0 440.0 518.0 410 518.0" fill="none" stroke="#0891B2" stroke-width="1.6"/>
+<rect x="40" y="486.0" width="370" height="64" rx="12" fill="white" stroke="#0891B2"/>
+<text x="225.0" y="524.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Yêu cầu trao đổi phân tán</text>
+<path d="M 470 594.0 C 440.0 594.0 440.0 594.0 410 594.0" fill="none" stroke="#0891B2" stroke-width="1.6"/>
+<rect x="40" y="562.0" width="370" height="64" rx="12" fill="white" stroke="#0891B2"/>
+<text x="225.0" y="600.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Dễ bỏ sót, thiếu trách nhiệm rõ</text>
+<path d="M 470 594.0 C 440.0 594.0 440.0 670.0 410 670.0" fill="none" stroke="#0891B2" stroke-width="1.6"/>
+<rect x="40" y="638.0" width="370" height="64" rx="12" fill="white" stroke="#0891B2"/>
+<text x="225.0" y="676.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Khó thấy SLA và lịch sử tài sản</text>
+<rect x="470" y="548.0" width="290" height="92" rx="12" fill="#0891B2" stroke="#0891B2"/>
+<text x="615.0" y="600.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Vấn đề được đặc tả</text>
+<path d="M 920 692.0 C 840.0 692.0 840.0 878.0 760 878.0" fill="none" stroke="#7C3AED" stroke-width="3"/>
+<path d="M 470 878.0 C 440.0 878.0 440.0 802.0 410 802.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="770.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="808.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Theo dõi từ tạo đến xác nhận</text>
+<path d="M 470 878.0 C 440.0 878.0 440.0 878.0 410 878.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="846.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="884.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Điều phối theo nhóm và ưu tiên</text>
+<path d="M 470 878.0 C 440.0 878.0 440.0 954.0 410 954.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="922.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="960.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Dữ liệu đối chiếu được</text>
+<rect x="470" y="832.0" width="290" height="92" rx="12" fill="#7C3AED" stroke="#7C3AED"/>
+<text x="615.0" y="884.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Kết quả mong muốn</text>
+<path d="M 1280 692.0 C 1360.0 692.0 1360.0 310.0 1440 310.0" fill="none" stroke="#059669" stroke-width="3"/>
+<path d="M 1730 310.0 C 1760.0 310.0 1760.0 234.0 1790 234.0" fill="none" stroke="#059669" stroke-width="1.6"/>
+<rect x="1790" y="202.0" width="370" height="64" rx="12" fill="white" stroke="#059669"/>
+<text x="1975.0" y="240.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Năng lực → Use case</text>
+<path d="M 1730 310.0 C 1760.0 310.0 1760.0 310.0 1790 310.0" fill="none" stroke="#059669" stroke-width="1.6"/>
+<rect x="1790" y="278.0" width="370" height="64" rx="12" fill="white" stroke="#059669"/>
+<text x="1975.0" y="316.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Use case → Story và AC</text>
+<path d="M 1730 310.0 C 1760.0 310.0 1760.0 386.0 1790 386.0" fill="none" stroke="#059669" stroke-width="1.6"/>
+<rect x="1790" y="354.0" width="370" height="64" rx="12" fill="white" stroke="#059669"/>
+<text x="1975.0" y="392.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Story → Thông tin và màn hình</text>
+<rect x="1440" y="264.0" width="290" height="92" rx="12" fill="#059669" stroke="#059669"/>
+<text x="1585.0" y="316.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Phân rã giải pháp</text>
+<path d="M 1280 692.0 C 1360.0 692.0 1360.0 632.0 1440 632.0" fill="none" stroke="#D97706" stroke-width="3"/>
+<path d="M 1730 632.0 C 1760.0 632.0 1760.0 518.0 1790 518.0" fill="none" stroke="#D97706" stroke-width="1.6"/>
+<rect x="1790" y="486.0" width="370" height="64" rx="12" fill="white" stroke="#D97706"/>
+<text x="1975.0" y="524.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">H01: Hiểu ảnh hưởng và khẩn cấp</text>
+<path d="M 1730 632.0 C 1760.0 632.0 1760.0 594.0 1790 594.0" fill="none" stroke="#D97706" stroke-width="1.6"/>
+<rect x="1790" y="562.0" width="370" height="64" rx="12" fill="white" stroke="#D97706"/>
+<text x="1975.0" y="600.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">H02: Phân biệt giải quyết và đóng</text>
+<path d="M 1730 632.0 C 1760.0 632.0 1760.0 670.0 1790 670.0" fill="none" stroke="#D97706" stroke-width="1.6"/>
+<rect x="1790" y="638.0" width="370" height="64" rx="12" fill="white" stroke="#D97706"/>
+<text x="1975.0" y="676.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">H03: Tránh nhầm công khai/nội bộ</text>
+<path d="M 1730 632.0 C 1760.0 632.0 1760.0 746.0 1790 746.0" fill="none" stroke="#D97706" stroke-width="1.6"/>
+<rect x="1790" y="714.0" width="370" height="64" rx="12" fill="white" stroke="#D97706"/>
+<text x="1975.0" y="740.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">H04–06: Điều phối, asset, breach</text>
+<text x="1975.0" y="764.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">history</text>
+<rect x="1440" y="586.0" width="290" height="92" rx="12" fill="#D97706" stroke="#D97706"/>
+<text x="1585.0" y="638.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Giả thuyết nghiên cứu</text>
+<path d="M 1280 692.0 C 1360.0 692.0 1360.0 992.0 1440 992.0" fill="none" stroke="#DB2777" stroke-width="3"/>
+<path d="M 1730 992.0 C 1760.0 992.0 1760.0 878.0 1790 878.0" fill="none" stroke="#DB2777" stroke-width="1.6"/>
+<rect x="1790" y="846.0" width="370" height="64" rx="12" fill="white" stroke="#DB2777"/>
+<text x="1975.0" y="884.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Phỏng vấn bốn vai trò</text>
+<path d="M 1730 992.0 C 1760.0 992.0 1760.0 954.0 1790 954.0" fill="none" stroke="#DB2777" stroke-width="1.6"/>
+<rect x="1790" y="922.0" width="370" height="64" rx="12" fill="white" stroke="#DB2777"/>
+<text x="1975.0" y="960.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Tree test kiến trúc thông tin</text>
+<path d="M 1730 992.0 C 1760.0 992.0 1760.0 1030.0 1790 1030.0" fill="none" stroke="#DB2777" stroke-width="1.6"/>
+<rect x="1790" y="998.0" width="370" height="64" rx="12" fill="white" stroke="#DB2777"/>
+<text x="1975.0" y="1036.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Usability test luồng chính</text>
+<path d="M 1730 992.0 C 1760.0 992.0 1760.0 1106.0 1790 1106.0" fill="none" stroke="#DB2777" stroke-width="1.6"/>
+<rect x="1790" y="1074.0" width="370" height="64" rx="12" fill="white" stroke="#DB2777"/>
+<text x="1975.0" y="1112.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Chưa có kết quả nghiên cứu thực địa</text>
+<rect x="1440" y="946.0" width="290" height="92" rx="12" fill="#DB2777" stroke="#DB2777"/>
+<text x="1585.0" y="998.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Kiểm chứng tiếp theo</text>
+<rect x="920" y="620.0" width="360" height="144" rx="12" fill="#0F2348" stroke="#0F2348"/>
+<text x="1100.0" y="698.0" font-size="29" font-weight="700" fill="white" text-anchor="middle">Bài toán vận hành IT</text>
+<line x1="48" y1="1212" x2="2152" y2="1212" stroke="#CBD5E1" stroke-width="2"/>
+<text x="48" y="1244" font-size="15" font-weight="400" fill="#475569" text-anchor="start">SƠ ĐỒ XEM NHANH · File .xmind có thể chỉnh sửa · Thiết kế v0.2</text>
+<text x="2152" y="1244" font-size="15" font-weight="400" fill="#475569" text-anchor="end">Phạm vi: phân tích và thiết kế</text>
+</svg>

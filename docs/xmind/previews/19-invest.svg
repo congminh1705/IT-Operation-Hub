@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="3078" viewBox="0 0 2200 3078" role="img" aria-labelledby="title desc"><title id="title">User stories INVEST</title><desc id="desc">Ảnh xem trước từ cùng cây chủ đề trong tài liệu XMind. Không phải ảnh chụp ứng dụng XMind.</desc><style>text{font-family:Segoe UI,Arial,sans-serif}</style>
+<rect x="0" y="0" width="2200" height="3078" rx="0" fill="#F8FAFC"/>
+<text x="48" y="57" font-size="15" font-weight="700" fill="#2563EB" text-anchor="start">IT OPERATIONS HUB</text>
+<text x="48" y="103" font-size="32" font-weight="700" fill="#0F172A" text-anchor="start">User stories INVEST</text>
+<text x="48" y="137" font-size="17" font-weight="400" fill="#475569" text-anchor="start">Nội dung và nhánh tương ứng với file XMind · Mở file gốc để sửa, thu gọn hoặc mở rộng chủ đề</text>
+<path d="M 920 1594.0 C 840.0 1594.0 840.0 652.0 760 652.0" fill="none" stroke="#2563EB" stroke-width="3"/>
+<path d="M 470 652.0 C 440.0 652.0 440.0 234.0 410 234.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="202.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="240.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US01 · Đăng nhập</text>
+<path d="M 470 652.0 C 440.0 652.0 440.0 310.0 410 310.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="278.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="316.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US02 · Đăng xuất</text>
+<path d="M 470 652.0 C 440.0 652.0 440.0 386.0 410 386.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="354.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="392.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US03 · Hồ sơ cá nhân</text>
+<path d="M 470 652.0 C 440.0 652.0 440.0 462.0 410 462.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="430.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="468.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US04 · Đổi mật khẩu</text>
+<path d="M 470 652.0 C 440.0 652.0 440.0 538.0 410 538.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="506.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="544.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US05 · Tạo tài khoản</text>
+<path d="M 470 652.0 C 440.0 652.0 440.0 614.0 410 614.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="582.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="620.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US06 · Đổi vai trò và phòng ban</text>
+<path d="M 470 652.0 C 440.0 652.0 440.0 690.0 410 690.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="658.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="696.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US07 · Khóa hoặc mở khóa user</text>
+<path d="M 470 652.0 C 440.0 652.0 440.0 766.0 410 766.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="734.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="772.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US08 · Quản lý phòng ban</text>
+<path d="M 470 652.0 C 440.0 652.0 440.0 842.0 410 842.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="810.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="848.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US09 · Quản lý nhóm IT</text>
+<path d="M 470 652.0 C 440.0 652.0 440.0 918.0 410 918.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="886.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="924.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US10 · Thành viên nhóm</text>
+<path d="M 470 652.0 C 440.0 652.0 440.0 994.0 410 994.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="962.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="1000.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US11 · Danh mục ticket</text>
+<path d="M 470 652.0 C 440.0 652.0 440.0 1070.0 410 1070.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="1038.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="1076.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US12 · SLA mặc định</text>
+<rect x="470" y="606.0" width="290" height="92" rx="12" fill="#2563EB" stroke="#2563EB"/>
+<text x="615.0" y="658.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Danh tính và quản trị</text>
+<path d="M 920 1594.0 C 840.0 1594.0 840.0 1430.0 760 1430.0" fill="none" stroke="#0891B2" stroke-width="3"/>
+<path d="M 470 1430.0 C 440.0 1430.0 440.0 1202.0 410 1202.0" fill="none" stroke="#0891B2" stroke-width="1.6"/>
+<rect x="40" y="1170.0" width="370" height="64" rx="12" fill="white" stroke="#0891B2"/>
+<text x="225.0" y="1208.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US13 · Tạo ticket</text>
+<path d="M 470 1430.0 C 440.0 1430.0 440.0 1278.0 410 1278.0" fill="none" stroke="#0891B2" stroke-width="1.6"/>
+<rect x="40" y="1246.0" width="370" height="64" rx="12" fill="white" stroke="#0891B2"/>
+<text x="225.0" y="1284.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US14 · Tìm và lọc ticket</text>
+<path d="M 470 1430.0 C 440.0 1430.0 440.0 1354.0 410 1354.0" fill="none" stroke="#0891B2" stroke-width="1.6"/>
+<rect x="40" y="1322.0" width="370" height="64" rx="12" fill="white" stroke="#0891B2"/>
+<text x="225.0" y="1360.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US15 · Chi tiết ticket</text>
+<path d="M 470 1430.0 C 440.0 1430.0 440.0 1430.0 410 1430.0" fill="none" stroke="#0891B2" stroke-width="1.6"/>
+<rect x="40" y="1398.0" width="370" height="64" rx="12" fill="white" stroke="#0891B2"/>
+<text x="225.0" y="1436.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US16 · Phân công và chuyển nhóm</text>
+<path d="M 470 1430.0 C 440.0 1430.0 440.0 1506.0 410 1506.0" fill="none" stroke="#0891B2" stroke-width="1.6"/>
+<rect x="40" y="1474.0" width="370" height="64" rx="12" fill="white" stroke="#0891B2"/>
+<text x="225.0" y="1512.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US17 · Tự nhận ticket</text>
+<path d="M 470 1430.0 C 440.0 1430.0 440.0 1582.0 410 1582.0" fill="none" stroke="#0891B2" stroke-width="1.6"/>
+<rect x="40" y="1550.0" width="370" height="64" rx="12" fill="white" stroke="#0891B2"/>
+<text x="225.0" y="1588.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US18 · Tiếp nhận New</text>
+<path d="M 470 1430.0 C 440.0 1430.0 440.0 1658.0 410 1658.0" fill="none" stroke="#0891B2" stroke-width="1.6"/>
+<rect x="40" y="1626.0" width="370" height="64" rx="12" fill="white" stroke="#0891B2"/>
+<text x="225.0" y="1664.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US19 · Bắt đầu xử lý</text>
+<rect x="470" y="1384.0" width="290" height="92" rx="12" fill="#0891B2" stroke="#0891B2"/>
+<text x="615.0" y="1436.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Tiếp nhận và phân công</text>
+<path d="M 920 1594.0 C 840.0 1594.0 840.0 2208.0 760 2208.0" fill="none" stroke="#7C3AED" stroke-width="3"/>
+<path d="M 470 2208.0 C 440.0 2208.0 440.0 1790.0 410 1790.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="1758.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="1796.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US20 · Trao đổi công khai</text>
+<path d="M 470 2208.0 C 440.0 2208.0 440.0 1866.0 410 1866.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="1834.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="1872.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US21 · Ghi chú nội bộ</text>
+<path d="M 470 2208.0 C 440.0 2208.0 440.0 1942.0 410 1942.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="1910.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="1948.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US22 · Gửi ảnh hoặc PDF</text>
+<path d="M 470 2208.0 C 440.0 2208.0 440.0 2018.0 410 2018.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="1986.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="2024.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US23 · Tải tệp có quyền</text>
+<path d="M 470 2208.0 C 440.0 2208.0 440.0 2094.0 410 2094.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="2062.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="2100.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US24 · Chờ phản hồi / tiếp tục</text>
+<path d="M 470 2208.0 C 440.0 2208.0 440.0 2170.0 410 2170.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="2138.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="2176.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US25 · Đề xuất giải quyết</text>
+<path d="M 470 2208.0 C 440.0 2208.0 440.0 2246.0 410 2246.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="2214.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="2252.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US26 · Xác nhận đóng</text>
+<path d="M 470 2208.0 C 440.0 2208.0 440.0 2322.0 410 2322.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="2290.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="2328.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US27 · Mở lại Resolved</text>
+<path d="M 470 2208.0 C 440.0 2208.0 440.0 2398.0 410 2398.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="2366.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="2404.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US28 · Manager mở lại Closed</text>
+<path d="M 470 2208.0 C 440.0 2208.0 440.0 2474.0 410 2474.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="2442.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="2480.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US29 · Hủy theo quyền</text>
+<path d="M 470 2208.0 C 440.0 2208.0 440.0 2550.0 410 2550.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="2518.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="2556.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US30 · Điều chỉnh ưu tiên</text>
+<path d="M 470 2208.0 C 440.0 2208.0 440.0 2626.0 410 2626.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="2594.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="2632.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US31 · Timeline ticket</text>
+<rect x="470" y="2162.0" width="290" height="92" rx="12" fill="#7C3AED" stroke="#7C3AED"/>
+<text x="615.0" y="2214.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Hội thoại và vòng đời</text>
+<path d="M 920 1594.0 C 840.0 1594.0 840.0 2834.0 760 2834.0" fill="none" stroke="#059669" stroke-width="3"/>
+<path d="M 470 2834.0 C 440.0 2834.0 440.0 2758.0 410 2758.0" fill="none" stroke="#059669" stroke-width="1.6"/>
+<rect x="40" y="2726.0" width="370" height="64" rx="12" fill="white" stroke="#059669"/>
+<text x="225.0" y="2764.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US32 · Theo dõi hai SLA</text>
+<path d="M 470 2834.0 C 440.0 2834.0 440.0 2834.0 410 2834.0" fill="none" stroke="#059669" stroke-width="1.6"/>
+<rect x="40" y="2802.0" width="370" height="64" rx="12" fill="white" stroke="#059669"/>
+<text x="225.0" y="2840.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US33 · Cảnh báo SLA nền</text>
+<path d="M 470 2834.0 C 440.0 2834.0 440.0 2910.0 410 2910.0" fill="none" stroke="#059669" stroke-width="1.6"/>
+<rect x="40" y="2878.0" width="370" height="64" rx="12" fill="white" stroke="#059669"/>
+<text x="225.0" y="2916.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US34 · Thông báo của tôi</text>
+<rect x="470" y="2788.0" width="290" height="92" rx="12" fill="#059669" stroke="#059669"/>
+<text x="615.0" y="2840.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">SLA và thông báo</text>
+<path d="M 1280 1594.0 C 1360.0 1594.0 1360.0 424.0 1440 424.0" fill="none" stroke="#D97706" stroke-width="3"/>
+<path d="M 1730 424.0 C 1760.0 424.0 1760.0 234.0 1790 234.0" fill="none" stroke="#D97706" stroke-width="1.6"/>
+<rect x="1790" y="202.0" width="370" height="64" rx="12" fill="white" stroke="#D97706"/>
+<text x="1975.0" y="240.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US35 · Tạo và sửa tài sản</text>
+<path d="M 1730 424.0 C 1760.0 424.0 1760.0 310.0 1790 310.0" fill="none" stroke="#D97706" stroke-width="1.6"/>
+<rect x="1790" y="278.0" width="370" height="64" rx="12" fill="white" stroke="#D97706"/>
+<text x="1975.0" y="316.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US36 · Tra cứu tài sản</text>
+<path d="M 1730 424.0 C 1760.0 424.0 1760.0 386.0 1790 386.0" fill="none" stroke="#D97706" stroke-width="1.6"/>
+<rect x="1790" y="354.0" width="370" height="64" rx="12" fill="white" stroke="#D97706"/>
+<text x="1975.0" y="392.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US37 · Lịch sử tài sản</text>
+<path d="M 1730 424.0 C 1760.0 424.0 1760.0 462.0 1790 462.0" fill="none" stroke="#D97706" stroke-width="1.6"/>
+<rect x="1790" y="430.0" width="370" height="64" rx="12" fill="white" stroke="#D97706"/>
+<text x="1975.0" y="468.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US38 · Cấp phát tài sản</text>
+<path d="M 1730 424.0 C 1760.0 424.0 1760.0 538.0 1790 538.0" fill="none" stroke="#D97706" stroke-width="1.6"/>
+<rect x="1790" y="506.0" width="370" height="64" rx="12" fill="white" stroke="#D97706"/>
+<text x="1975.0" y="544.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US39 · Thu hồi tài sản</text>
+<path d="M 1730 424.0 C 1760.0 424.0 1760.0 614.0 1790 614.0" fill="none" stroke="#D97706" stroke-width="1.6"/>
+<rect x="1790" y="582.0" width="370" height="64" rx="12" fill="white" stroke="#D97706"/>
+<text x="1975.0" y="620.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US40 · Trạng thái tài sản</text>
+<rect x="1440" y="378.0" width="290" height="92" rx="12" fill="#D97706" stroke="#D97706"/>
+<text x="1585.0" y="430.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Tài sản</text>
+<path d="M 1280 1594.0 C 1360.0 1594.0 1360.0 936.0 1440 936.0" fill="none" stroke="#DB2777" stroke-width="3"/>
+<path d="M 1730 936.0 C 1760.0 936.0 1760.0 746.0 1790 746.0" fill="none" stroke="#DB2777" stroke-width="1.6"/>
+<rect x="1790" y="714.0" width="370" height="64" rx="12" fill="white" stroke="#DB2777"/>
+<text x="1975.0" y="752.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US41 · Dashboard cá nhân</text>
+<path d="M 1730 936.0 C 1760.0 936.0 1760.0 822.0 1790 822.0" fill="none" stroke="#DB2777" stroke-width="1.6"/>
+<rect x="1790" y="790.0" width="370" height="64" rx="12" fill="white" stroke="#DB2777"/>
+<text x="1975.0" y="828.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US42 · Dashboard Technician</text>
+<path d="M 1730 936.0 C 1760.0 936.0 1760.0 898.0 1790 898.0" fill="none" stroke="#DB2777" stroke-width="1.6"/>
+<rect x="1790" y="866.0" width="370" height="64" rx="12" fill="white" stroke="#DB2777"/>
+<text x="1975.0" y="904.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US43 · Tổng quan Manager</text>
+<path d="M 1730 936.0 C 1760.0 936.0 1760.0 974.0 1790 974.0" fill="none" stroke="#DB2777" stroke-width="1.6"/>
+<rect x="1790" y="942.0" width="370" height="64" rx="12" fill="white" stroke="#DB2777"/>
+<text x="1975.0" y="980.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US44 · Xu hướng và thời gian xử lý</text>
+<path d="M 1730 936.0 C 1760.0 936.0 1760.0 1050.0 1790 1050.0" fill="none" stroke="#DB2777" stroke-width="1.6"/>
+<rect x="1790" y="1018.0" width="370" height="64" rx="12" fill="white" stroke="#DB2777"/>
+<text x="1975.0" y="1056.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US45 · Tải công việc</text>
+<path d="M 1730 936.0 C 1760.0 936.0 1760.0 1126.0 1790 1126.0" fill="none" stroke="#DB2777" stroke-width="1.6"/>
+<rect x="1790" y="1094.0" width="370" height="64" rx="12" fill="white" stroke="#DB2777"/>
+<text x="1975.0" y="1132.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US46 · Bảo hành thiết bị</text>
+<rect x="1440" y="890.0" width="290" height="92" rx="12" fill="#DB2777" stroke="#DB2777"/>
+<text x="1585.0" y="942.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Dashboard và báo cáo</text>
+<path d="M 1280 1594.0 C 1360.0 1594.0 1360.0 1280.0 1440 1280.0" fill="none" stroke="#475569" stroke-width="3"/>
+<path d="M 1730 1280.0 C 1760.0 1280.0 1760.0 1280.0 1790 1280.0" fill="none" stroke="#475569" stroke-width="1.6"/>
+<rect x="1790" y="1248.0" width="370" height="64" rx="12" fill="white" stroke="#475569"/>
+<text x="1975.0" y="1286.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">US47 · Nhật ký kiểm tra</text>
+<rect x="1440" y="1234.0" width="290" height="92" rx="12" fill="#475569" stroke="#475569"/>
+<text x="1585.0" y="1286.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Kiểm tra và lịch sử</text>
+<rect x="920" y="1522.0" width="360" height="144" rx="12" fill="#0F2348" stroke="#0F2348"/>
+<text x="1100.0" y="1600.0" font-size="29" font-weight="700" fill="white" text-anchor="middle">47 user stories MVP</text>
+<line x1="48" y1="3016" x2="2152" y2="3016" stroke="#CBD5E1" stroke-width="2"/>
+<text x="48" y="3048" font-size="15" font-weight="400" fill="#475569" text-anchor="start">SƠ ĐỒ XEM NHANH · File .xmind có thể chỉnh sửa · Thiết kế v0.2</text>
+<text x="2152" y="3048" font-size="15" font-weight="400" fill="#475569" text-anchor="end">Phạm vi: phân tích và thiết kế</text>
+</svg>

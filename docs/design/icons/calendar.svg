@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="title desc"><title id="title">Icon calendar</title><desc id="desc">Thiết kế UI v0.4 của IT Operations Hub, dữ liệu minh họa hư cấu. Bản vẽ tĩnh, chưa có ứng dụng hoặc chatbot vận hành.</desc><style>text{font-family:Inter,Segoe UI,Arial,sans-serif}</style>
+<rect x="3.0" y="5.0" width="18.0" height="17.0" rx="2.0" fill="none" stroke="#334155" stroke-width="1.85"/>
+<line x1="7.0" y1="2.0" x2="7.0" y2="8.0" stroke="#334155" stroke-width="1.85" stroke-linecap="round"/>
+<line x1="17.0" y1="2.0" x2="17.0" y2="8.0" stroke="#334155" stroke-width="1.85" stroke-linecap="round"/>
+<line x1="3.0" y1="11.0" x2="21.0" y2="11.0" stroke="#334155" stroke-width="1.85" stroke-linecap="round"/>
+<line x1="7.0" y1="15.0" x2="10.0" y2="15.0" stroke="#334155" stroke-width="1.85" stroke-linecap="round"/>
+<line x1="14.0" y1="15.0" x2="17.0" y2="15.0" stroke="#334155" stroke-width="1.85" stroke-linecap="round"/>
+</svg>

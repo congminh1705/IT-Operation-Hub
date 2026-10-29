@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="930" viewBox="0 0 2200 930" role="img" aria-labelledby="title desc"><title id="title">Handoff AI về nghiệp vụ</title><desc id="desc">Sơ đồ từ nội dung XMind. Phần AI tùy chọn ở mức thiết kế; giữ nguyên nghiệp vụ lõi.</desc><style>text{font-family:Segoe UI,Arial,sans-serif}</style>
+<rect x="0" y="0" width="2200" height="930" rx="0" fill="#F8FAFC"/>
+<text x="48" y="57" font-size="15" font-weight="700" fill="#2563EB" text-anchor="start">IT OPERATIONS HUB</text>
+<text x="48" y="103" font-size="32" font-weight="700" fill="#0F172A" text-anchor="start">Handoff AI về nghiệp vụ</text>
+<text x="48" y="137" font-size="17" font-weight="400" fill="#475569" text-anchor="start">Nguồn XMind chỉnh sửa được · AI chỉ hỗ trợ đọc/nháp, không tự thay đổi nghiệp vụ</text>
+<path d="M 920 502.0 C 840.0 502.0 840.0 272.0 760 272.0" fill="none" stroke="#2563EB" stroke-width="3"/>
+<path d="M 470 272.0 C 440.0 272.0 440.0 234.0 410 234.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="202.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="240.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Xác thực phiên hiện có</text>
+<path d="M 470 272.0 C 440.0 272.0 440.0 310.0 410 310.0" fill="none" stroke="#2563EB" stroke-width="1.6"/>
+<rect x="40" y="278.0" width="370" height="64" rx="12" fill="white" stroke="#2563EB"/>
+<text x="225.0" y="316.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Xác định ngữ cảnh và nguồn</text>
+<rect x="470" y="226.0" width="290" height="92" rx="12" fill="#2563EB" stroke="#2563EB"/>
+<text x="615.0" y="278.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">1 · Hỏi trong scope</text>
+<path d="M 920 502.0 C 840.0 502.0 840.0 480.0 760 480.0" fill="none" stroke="#0891B2" stroke-width="3"/>
+<path d="M 470 480.0 C 440.0 480.0 440.0 442.0 410 442.0" fill="none" stroke="#0891B2" stroke-width="1.6"/>
+<rect x="40" y="410.0" width="370" height="64" rx="12" fill="white" stroke="#0891B2"/>
+<text x="225.0" y="448.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Dịch vụ đọc có quyền</text>
+<path d="M 470 480.0 C 440.0 480.0 440.0 518.0 410 518.0" fill="none" stroke="#0891B2" stroke-width="1.6"/>
+<rect x="40" y="486.0" width="370" height="64" rx="12" fill="white" stroke="#0891B2"/>
+<text x="225.0" y="524.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Nguồn + thời điểm dữ liệu</text>
+<rect x="470" y="434.0" width="290" height="92" rx="12" fill="#0891B2" stroke="#0891B2"/>
+<text x="615.0" y="486.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">2 · Đọc và trả lời</text>
+<path d="M 920 502.0 C 840.0 502.0 840.0 688.0 760 688.0" fill="none" stroke="#7C3AED" stroke-width="3"/>
+<path d="M 470 688.0 C 440.0 688.0 440.0 650.0 410 650.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="618.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="656.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Chưa có ticket hoặc comment</text>
+<path d="M 470 688.0 C 440.0 688.0 440.0 726.0 410 726.0" fill="none" stroke="#7C3AED" stroke-width="1.6"/>
+<rect x="40" y="694.0" width="370" height="64" rx="12" fill="white" stroke="#7C3AED"/>
+<text x="225.0" y="732.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Chưa đổi trạng thái/SLA</text>
+<rect x="470" y="642.0" width="290" height="92" rx="12" fill="#7C3AED" stroke="#7C3AED"/>
+<text x="615.0" y="694.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">3 · Chuẩn bị nháp</text>
+<path d="M 1280 502.0 C 1360.0 502.0 1360.0 272.0 1440 272.0" fill="none" stroke="#059669" stroke-width="3"/>
+<path d="M 1730 272.0 C 1760.0 272.0 1760.0 234.0 1790 234.0" fill="none" stroke="#059669" stroke-width="1.6"/>
+<rect x="1790" y="202.0" width="370" height="64" rx="12" fill="white" stroke="#059669"/>
+<text x="1975.0" y="240.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">SCR21 hoặc composer SCR22</text>
+<path d="M 1730 272.0 C 1760.0 272.0 1760.0 310.0 1790 310.0" fill="none" stroke="#059669" stroke-width="1.6"/>
+<rect x="1790" y="278.0" width="370" height="64" rx="12" fill="white" stroke="#059669"/>
+<text x="1975.0" y="316.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Không ghi đè bản đang nhập</text>
+<rect x="1440" y="226.0" width="290" height="92" rx="12" fill="#059669" stroke="#059669"/>
+<text x="1585.0" y="266.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">4 · Chuyển tới màn hình</text>
+<text x="1585.0" y="290.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">cũ</text>
+<path d="M 1280 502.0 C 1360.0 502.0 1360.0 480.0 1440 480.0" fill="none" stroke="#D97706" stroke-width="3"/>
+<path d="M 1730 480.0 C 1760.0 480.0 1760.0 442.0 1790 442.0" fill="none" stroke="#D97706" stroke-width="1.6"/>
+<rect x="1790" y="410.0" width="370" height="64" rx="12" fill="white" stroke="#D97706"/>
+<text x="1975.0" y="448.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Validate, quyền, version như cũ</text>
+<path d="M 1730 480.0 C 1760.0 480.0 1760.0 518.0 1790 518.0" fill="none" stroke="#D97706" stroke-width="1.6"/>
+<rect x="1790" y="486.0" width="370" height="64" rx="12" fill="white" stroke="#D97706"/>
+<text x="1975.0" y="524.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Không auto-submit hoặc retry ghi</text>
+<rect x="1440" y="434.0" width="290" height="92" rx="12" fill="#D97706" stroke="#D97706"/>
+<text x="1585.0" y="474.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">5 · Người dùng kiểm</text>
+<text x="1585.0" y="498.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">tra/gửi</text>
+<path d="M 1280 502.0 C 1360.0 502.0 1360.0 688.0 1440 688.0" fill="none" stroke="#DB2777" stroke-width="3"/>
+<path d="M 1730 688.0 C 1760.0 688.0 1760.0 650.0 1790 650.0" fill="none" stroke="#DB2777" stroke-width="1.6"/>
+<rect x="1790" y="618.0" width="370" height="64" rx="12" fill="white" stroke="#DB2777"/>
+<text x="1975.0" y="656.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Chỉ submit cuối tạo mutation</text>
+<path d="M 1730 688.0 C 1760.0 688.0 1760.0 726.0 1790 726.0" fill="none" stroke="#DB2777" stroke-width="1.6"/>
+<rect x="1790" y="694.0" width="370" height="64" rx="12" fill="white" stroke="#DB2777"/>
+<text x="1975.0" y="732.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">AI tắt vẫn dùng đầy đủ luồng cũ</text>
+<rect x="1440" y="642.0" width="290" height="92" rx="12" fill="#DB2777" stroke="#DB2777"/>
+<text x="1585.0" y="694.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">6 · Kết quả nghiệp vụ</text>
+<rect x="920" y="430.0" width="360" height="144" rx="12" fill="#0F2348" stroke="#0F2348"/>
+<text x="1100.0" y="496.0" font-size="29" font-weight="700" fill="white" text-anchor="middle">Hỏi → nháp → kiểm</text>
+<text x="1100.0" y="520.0" font-size="29" font-weight="700" fill="white" text-anchor="middle">tra → gửi</text>
+<line x1="48" y1="868" x2="2152" y2="868" stroke="#CBD5E1" stroke-width="2"/>
+<text x="48" y="900" font-size="15" font-weight="400" fill="#475569" text-anchor="start">SƠ ĐỒ XEM NHANH · File .xmind có thể chỉnh sửa · Thiết kế v0.3</text>
+<text x="2152" y="900" font-size="15" font-weight="400" fill="#475569" text-anchor="end">Lõi nghiệp vụ giữ nguyên</text>
+</svg>

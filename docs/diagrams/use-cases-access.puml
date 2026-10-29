@@ -1,0 +1,43 @@
+@startuml
+title IT Operations Hub — Tài khoản và quản trị (UC01–UC09)
+left to right direction
+skinparam backgroundColor #FFFFFF
+skinparam usecaseBackgroundColor #EFF6FF
+skinparam usecaseBorderColor #2563EB
+actor "Người dùng" as User
+actor "Requester" as R
+actor "Technician" as T
+actor "IT Manager" as M
+actor "Admin" as A
+R --|> User
+T --|> User
+M --|> User
+A --|> User
+rectangle "IT Operations Hub — một tổ chức" {
+  usecase "UC01 Đăng nhập" as U01
+  usecase "UC02 Đăng xuất" as U02
+  usecase "UC03 Hồ sơ cá nhân" as U03
+  usecase "UC04 Đổi mật khẩu" as U04
+  usecase "UC05 Quản lý tài khoản" as U05
+  usecase "UC06 Phòng ban" as U06
+  usecase "UC07 Nhóm và thành viên" as U07
+  usecase "UC08 Danh mục ticket" as U08
+  usecase "UC09 Chính sách SLA" as U09
+}
+User -- U01
+User -- U02
+User -- U03
+User -- U04
+A -- U05
+A -- U06
+A -- U07
+A -- U08
+A -- U09
+note bottom of U05
+  Chỉ Admin tạo user; không đăng ký công khai.
+  Khóa user thu hồi phiên, không xóa lịch sử.
+end note
+note bottom of U09
+  Mặc định mới không đổi snapshot ticket cũ.
+end note
+@enduml

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="title desc"><title id="title">Icon laptop</title><desc id="desc">Thiết kế UI v0.4 của IT Operations Hub, dữ liệu minh họa hư cấu. Bản vẽ tĩnh, chưa có ứng dụng hoặc chatbot vận hành.</desc><style>text{font-family:Inter,Segoe UI,Arial,sans-serif}</style>
+<rect x="4.0" y="3.0" width="16.0" height="13.0" rx="1.5" fill="none" stroke="#334155" stroke-width="1.85"/>
+<path d="M 2.0 19.0 L 22.0 19.0 L 20.0 21.0 L 4.0 21.0 Z" fill="none" stroke="#334155" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="10.0" y1="19.0" x2="14.0" y2="19.0" stroke="#334155" stroke-width="1.85" stroke-linecap="round"/>
+</svg>
