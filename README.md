@@ -12,7 +12,7 @@ MVP phục vụ **một tổ chức**, gồm bốn vai trò: **Requester, Techni
 
 Yêu cầu được phân tích từ mục tiêu sản phẩm xuống năng lực nghiệp vụ, vai trò, use case, user story và tiêu chí nghiệm thu. Mỗi story liên kết tới màn hình và quy tắc tương ứng để giữ nhất quán giữa nghiệp vụ và trải nghiệm.
 
-### 1.1 Phân tích bài toán từ trên xuống
+### 1.1 Phân tích bài toán (Top-down Research)
 
 | Cấp phân tích | Nội dung |
 |---|---|
