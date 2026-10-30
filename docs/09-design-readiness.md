@@ -12,7 +12,7 @@ Quy ước: `[x]` là **đã có tài liệu/bản vẽ trong lần bàn giao n�
 - [x] IA, inventory 26 mẫu màn hình/tương tác và navigation theo quyền.
 - [x] Journeys/task flows và quy tắc trạng thái, quyền, SLA, asset.
 - [x] Design system, nội dung, trạng thái, responsive và mục tiêu accessibility.
-- [x] Làm mới 13 bản UI v0.4 (10 lõi + 3 AI), 2 board bổ trợ và 44 icon SVG; danh mục phần chưa vẽ riêng.
+- [x] Bộ 16 bản UI v0.4 (13 lõi + 3 AI), gồm dashboard cá nhân/Admin và chi tiết D-29, 2 board bổ trợ và 44 icon SVG; danh mục phần chưa vẽ riêng.
 - [x] Đặc tả chuyển động, reduced motion, focus và bố cục desktop/tablet/mobile.
 - [ ] Prototype tương tác, animation thực thi và kiểm chứng responsive trên ứng dụng.
 - [x] File XMind tổng 27 sheet, 8 file chuyên đề và ảnh xem nhanh, gồm phần AI tùy chọn.
@@ -24,7 +24,8 @@ Quy ước: `[x]` là **đã có tài liệu/bản vẽ trong lần bàn giao n�
 ## M1 — Nền tảng
 
 - [x] Đặc tả đăng nhập/đăng xuất, scope, quản trị, layout, quyền và khóa phiên.
-- [ ] Refinement password policy, quy trình bàn giao/reset password không email; thư viện auth server session.
+- [x] Thống nhất D-29: trưởng phòng dùng Requester gửi ticket cấp tài khoản trong hệ thống; Admin xác minh và tạo user, bàn giao qua kênh doanh nghiệp; trưởng phòng xác nhận kết quả trên ticket.
+- [ ] Refinement password policy, hỗ trợ quên/reset password không email và bootstrap Admin đầu tiên; thư viện auth server session.
 - [ ] Kiểm tra tương thích stack và phiên bản tại lúc khởi tạo; khóa dependency.
 - [ ] Khởi tạo source, database/migration, `.env.example`, Docker Compose và README chạy sạch.
 - [ ] Seed hư cấu có cờ demo, chạy lại được:4 role/3 team/5 department/~20 user.

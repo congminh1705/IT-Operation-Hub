@@ -6,6 +6,8 @@ Sản phẩm tích hợp **trợ lý AI** để hỏi đáp hướng dẫn có d
 
 MVP phục vụ **một tổ chức**, gồm bốn vai trò: **Requester, Technician, IT Manager và Admin**. Luồng trọng tâm là **tạo yêu cầu → tiếp nhận → xử lý → giải quyết → xác nhận đóng hoặc mở lại**.
 
+**Trưởng phòng gửi ticket yêu cầu cấp tài khoản trong hệ thống** bằng vai trò Requester hiện có; Admin IT kiểm tra và cấp tại Quản trị → Người dùng. Mặc định cấp Requester; vai trò IT cần phê duyệt đúng thẩm quyền. Thông tin đăng nhập được bàn giao qua kênh doanh nghiệp; trưởng phòng theo dõi và xác nhận kết quả trên ticket. Xem [quy trình cấp tài khoản](docs/requirements/account-provisioning.md).
+
 **Giai đoạn hiện tại:** phân tích và thiết kế; chưa triển khai ứng dụng. Thiết kế đã bổ sung chatbot AI tùy chọn; chưa có chatbot hoặc provider đang vận hành. Sơ đồ có file XMind chỉnh sửa được. Các bản vẽ UI/UX dùng dữ liệu minh họa.
 
 ## 1. Requirements — INVEST, Use Cases và Acceptance Criteria
@@ -160,6 +162,14 @@ Các hình dưới đây là bản thiết kế UI/UX tĩnh. Số liệu trên d
 
 ![Tổng quan Manager — dữ liệu minh họa](docs/design/wireframes/02-dashboard-manager.svg)
 
+#### Dashboard Requester / trưởng phòng
+
+![Dashboard cá nhân — yêu cầu cần phản hồi và tài sản được cấp](docs/design/wireframes/16-dashboard-requester.svg)
+
+#### Dashboard Admin
+
+![Dashboard Admin — hàng đợi dịch vụ Tài khoản và thao tác quản trị](docs/design/wireframes/17-dashboard-admin.svg)
+
 #### Danh sách ticket
 
 ![Danh sách ticket — dữ liệu minh họa](docs/design/wireframes/03-tickets.svg)
@@ -167,6 +177,10 @@ Các hình dưới đây là bản thiết kế UI/UX tĩnh. Số liệu trên d
 #### Chi tiết và xử lý ticket
 
 ![Chi tiết Technician — dữ liệu minh họa](docs/design/wireframes/05-ticket-technician.svg)
+
+#### Xử lý yêu cầu cấp tài khoản — Admin
+
+![Ticket cấp tài khoản — trưởng phòng là requester, chỉ Admin mở form tạo user](docs/design/wireframes/18-ticket-account-provisioning.svg)
 
 #### Xác nhận kết quả của người yêu cầu
 
@@ -176,7 +190,7 @@ Các hình dưới đây là bản thiết kế UI/UX tĩnh. Số liệu trên d
 
 ![Mobile — danh sách và trả lời Pending](docs/design/wireframes/09-mobile.svg)
 
-Bộ thiết kế có **13 bản UI SVG** (10 bản lõi và 3 bản AI), **2 board bổ trợ** và **44 icon SVG riêng**, bao gồm đăng nhập, tạo ticket, tài sản, SLA và trạng thái lỗi. Xem [gallery UI/UX](docs/design/wireframes/README.md), [đặc tả màn hình](docs/07-uiux-specification.md) và [bản đồ UI/UX XMind](docs/xmind/07-uiux.xmind).
+Bộ thiết kế có **16 bản UI SVG** (13 bản lõi và 3 bản AI), **2 board bổ trợ** và **44 icon SVG riêng**, bao gồm đăng nhập, tạo ticket, tài sản, SLA và trạng thái lỗi. Xem [gallery UI/UX](docs/design/wireframes/README.md), [đặc tả màn hình](docs/07-uiux-specification.md) và [bản đồ UI/UX XMind](docs/xmind/07-uiux.xmind).
 
 [Xem board icon và component](docs/design/wireframes/14-icons-and-components.svg) · [Storyboard responsive/motion](docs/design/wireframes/15-responsive-motion.svg) · [Định hướng giao diện v0.4](docs/design/visual-refresh.md).
 
@@ -223,7 +237,7 @@ Sơ đồ được tổ chức theo chủ đề để dễ chỉnh sửa và rev
 | [04 — User flows](docs/xmind/04-user-flows.xmind) | Bảy luồng nghiệp vụ chính |
 | [05 — Business rules](docs/xmind/05-business-rules.xmind) | Trạng thái ticket/tài sản, SLA, ưu tiên và mô hình thông tin |
 | [06 — INVEST backlog](docs/xmind/06-invest-backlog.xmind) | 47 story lõi có nội dung và AC trong ghi chú |
-| [07 — UI/UX](docs/xmind/07-uiux.xmind) | Trải nghiệm, chất lượng giao diện và 15 ảnh đính kèm: 13 bản UI + 2 board |
+| [07 — UI/UX](docs/xmind/07-uiux.xmind) | Trải nghiệm, chất lượng giao diện và 18 ảnh đính kèm: 16 bản UI + 2 board |
 | [08 — Chatbot AI](docs/xmind/08-ai-assistant.xmind) | Phạm vi, 8 UC/stories, handoff và bất biến nghiệp vụ; 3 ảnh AI đính kèm |
 
 Xem [hướng dẫn mở và danh mục sơ đồ](docs/xmind/README.md). Wireframe màn hình là tài liệu riêng; chúng cũng được đính kèm dạng ảnh trong file UI/UX để thuận tiện review.
@@ -250,7 +264,7 @@ Xem [hướng dẫn mở và danh mục sơ đồ](docs/xmind/README.md). Wirefr
 - [x] 47 user stories cùng review INVEST, AC và truy vết.
 - [x] Information architecture, screen hierarchy và user flows.
 - [x] Bộ sơ đồ XMind có thể chỉnh sửa và ảnh xem nhanh.
-- [x] UI/UX v0.4: 13 bản UI, 2 board thiết kế, 44 icon SVG; đặc tả responsive và chuyển động.
+- [x] UI/UX v0.4: 16 bản UI, 2 board thiết kế, 44 icon SVG; đặc tả responsive và chuyển động.
 - [ ] Prototype tương tác và kiểm chứng animation, bàn phím, responsive trên UI thực thi.
 - [x] Thiết kế chatbot AI tùy chọn, 8 use case/stories, AC riêng và ranh giới tích hợp.
 - [ ] Triển khai/kết nối provider AI và chạy bộ kiểm chứng AI + regression lõi.

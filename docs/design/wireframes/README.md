@@ -1,6 +1,6 @@
 # Bộ bản vẽ UI/UX
 
-**13 bản UI tĩnh (10 bản lõi và 3 bản AI) và 2 board thiết kế, phiên bản v0.4**, dùng dữ liệu hư cấu có nhãn. SVG là tài liệu thiết kế có thể phóng to, không có tương tác, không gửi request và không chứng minh ứng dụng đã có dữ liệu bền vững. Các nút biểu diễn hành động sẽ cần triển khai trong MVP.
+**16 bản UI tĩnh (13 bản lõi và 3 bản AI) và 2 board thiết kế, phiên bản v0.4**, dùng dữ liệu hư cấu có nhãn. SVG là tài liệu thiết kế có thể phóng to, không có tương tác, không gửi request và không chứng minh ứng dụng đã có dữ liệu bền vững. Các nút biểu diễn hành động sẽ cần triển khai trong MVP.
 
 Mở trực tiếp SVG trong trình duyệt hoặc công cụ thiết kế để xem và chỉnh sửa. Các bản xuất PNG giao diện đã được bỏ; thư mục chỉ giữ SVG, tài liệu và [use-cases-overview.png](use-cases-overview.png) theo yêu cầu. Riêng login có [minh họa PNG nền trong suốt](../illustrations/login-it-support.png) nhúng trực tiếp trong SVG. Hiển thị font có thể khác nhẹ theo thiết bị.
 
@@ -21,8 +21,11 @@ Mở trực tiếp SVG trong trình duyệt hoặc công cụ thiết kế để
 | [13 — Trạng thái AI](13-ai-states.svg) | Mẫu bổ sung | Lỗi, thiếu nguồn, mất quyền và tách nội bộ/công khai |
 | [14 — Icon và component](14-icons-and-components.svg) | Board thiết kế | 44 icon, nhãn, focus, hover và loading |
 | [15 — Responsive và motion](15-responsive-motion.svg) | Storyboard tĩnh | Desktop/tablet/mobile và các khung mở panel; chưa chạy animation |
+| [16 — Dashboard Requester/trưởng phòng](16-dashboard-requester.svg) | Requester · SCR10 | Chỉ dữ liệu cá nhân; Pending/Resolved và yêu cầu nhân sự mới theo D-29 |
+| [17 — Dashboard Admin](17-dashboard-admin.svg) | Admin · biến thể SCR12 | Hàng đợi dịch vụ/Tài khoản; KPI tổ chức tách biệt; quản lý user chỉ Admin |
+| [18 — Ticket cấp tài khoản](18-ticket-account-provisioning.svg) | Admin · SCR22 → SCR60 | Xác minh đề nghị, mở form quản trị; không tự tạo user/giải quyết ticket |
 
-[Use case tổng quan — PNG](use-cases-overview.png) · [SVG nguồn](../../diagrams/use-cases-overview.svg). Đây là sơ đồ phụ lục, không tính vào 13 bản UI hoặc 2 board.
+[Use case tổng quan — PNG](use-cases-overview.png) · [SVG nguồn](../../diagrams/use-cases-overview.svg). Đây là sơ đồ phụ lục, không tính vào 16 bản UI hoặc 2 board.
 
 Các ảnh cũng được đính kèm trong [file UI/UX XMind](../../xmind/07-uiux.xmind); phần sơ đồ hành trình và cấu trúc dùng topic XMind chỉnh sửa được. Ảnh wireframe đính kèm không biến thành các control UI chỉnh sửa riêng trong XMind.
 
@@ -35,6 +38,12 @@ Xem [định hướng thị giác v0.4](../visual-refresh.md), [44 icon nguồn]
 ![Đăng nhập](01-login.svg)
 
 ![Dashboard Manager](02-dashboard-manager.svg)
+
+![Dashboard Requester/trưởng phòng](16-dashboard-requester.svg)
+
+![Dashboard Admin](17-dashboard-admin.svg)
+
+![Ticket cấp tài khoản — Admin](18-ticket-account-provisioning.svg)
 
 ![Tạo yêu cầu](04-create-ticket.svg)
 
@@ -60,8 +69,10 @@ Xem [định hướng thị giác v0.4](../visual-refresh.md), [44 icon nguồn]
 
 ## Ranh giới độ phủ bản vẽ
 
-Wireframe tập trung luồng ticket và các quyết định UX rủi ro. Dashboard cá nhân/Technician, báo cáo chi tiết, thông báo, hồ sơ, đổi password và các form quản trị khác **đã có đặc tả trong [UI/UX](../../07-uiux-specification.md), chưa có bản vẽ riêng**. Các dialog được mô tả theo trường, điều kiện và nội dung; chưa vẽ mọi biến thể. Đây là bộ thiết kế ban đầu, không gọi là đã hoàn thành hi-fi/prototype tương tác cho mọi screen.
+Wireframe tập trung luồng ticket và các quyết định UX rủi ro. Dashboard cá nhân/trưởng phòng và biến thể Admin đã có bản vẽ 16/17; bản 18 minh họa xử lý yêu cầu cấp tài khoản. Dashboard Technician, báo cáo chi tiết, thông báo, hồ sơ, đổi password và các form quản trị khác **đã có đặc tả trong [UI/UX](../../07-uiux-specification.md), chưa có bản vẽ riêng**. Form tạo người dùng SCR60 đã có đặc tả nhưng chưa có bản vẽ riêng. Các dialog chưa được vẽ ở mọi biến thể; đây chưa phải prototype tương tác cho mọi screen.
 
 Hai bản chi tiết ticket minh họa các thời điểm khác nhau của cùng ticket: Technician ở In Progress và Requester ở Resolved. Dữ liệu trong dashboard/bảng là bố cục minh họa, không phải một seed dataset đã kiểm chứng liên kết chéo.
 
-Ba bản AI là phần bổ sung tùy chọn. Cả 13 bản đã được làm mới về thị giác ở v0.4; quyền, trạng thái và quy tắc nghiệp vụ lõi giữ nguyên. Menu AI minh họa cấu hình đang bật; ẩn các điểm truy cập AI khi tắt tính năng. [Thiết kế chatbot](../../10-ai-assistant.md) mô tả ranh giới hành động và nguồn; chưa có chatbot thực thi.
+Ba bản AI là phần bổ sung tùy chọn. Bộ 13 bản ban đầu được làm mới ở v0.4; ba bản 16–18 bổ sung góc nhìn D-29 trên các screen hiện có. Không tạo role trưởng phòng hoặc trạng thái mới. Menu AI minh họa cấu hình đang bật; ẩn các điểm truy cập AI khi tắt tính năng. [Thiết kế chatbot](../../10-ai-assistant.md) mô tả ranh giới hành động và nguồn; chưa có chatbot thực thi.
+
+Các hình 16/17/18 thể hiện mốc thời gian khác nhau. Xem [dữ liệu và công thức đối chiếu](../../requirements/account-provisioning.md) trước khi so sánh trạng thái cùng ticket giữa các bản.

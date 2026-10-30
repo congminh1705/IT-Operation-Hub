@@ -57,9 +57,17 @@ Giữ vị trí bảng, nội dung đang nhập, bộ lọc và vị trí đọc
 
 ## Bộ bàn giao và ranh giới
 
-- 13 bản UI: 10 bản lõi và 3 bản AI, đều được làm mới về thị giác.
+### Bổ sung dashboard và xử lý cấp tài khoản — D-29
+
+[Dashboard cá nhân/trưởng phòng](wireframes/16-dashboard-requester.svg) dùng phạm vi Requester; [biến thể Admin](wireframes/17-dashboard-admin.svg) có hàng đợi dịch vụ/Tài khoản và lối quản trị; [ticket cấp tài khoản](wireframes/18-ticket-account-provisioning.svg) chỉ hiện thao tác tạo user cho Admin. Bộ phận/chức danh trưởng phòng không cấp thêm quyền dữ liệu. Các hình chỉ dùng SCR10, SCR12, SCR22 và liên kết SCR60 hiện có.
+
+Hàng đợi Tài khoản gồm cả yêu cầu cấp mới và hỗ trợ khác, không dùng số này làm KPI cấp tài khoản. Tạo user và giải quyết ticket là hai thao tác riêng; không có trạng thái “Chờ duyệt”. Các mốc 11:00/12:00 là hai thời điểm minh họa của cùng ví dụ TKT-000128. Xem [dữ liệu đối chiếu và hành vi](../requirements/account-provisioning.md).
+
+### Thành phần hiện tại
+
+- 16 bản UI: 13 bản lõi và 3 bản AI. Ba bản 16–18 bổ sung dashboard Requester/trưởng phòng, biến thể Admin và ticket cấp tài khoản trên các screen hiện có.
 - 2 board bổ trợ: icon/component và storyboard responsive/motion; không tính là 2 màn hình sản phẩm mới.
-- 44 icon SVG riêng; 15 ảnh UI/board được giữ bên trong bộ XMind tổng và UI/UX. Các bản PNG giao diện riêng đã được bỏ, tài liệu tham chiếu trực tiếp SVG.
+- 44 icon SVG riêng; 18 ảnh UI/board được giữ bên trong bộ XMind tổng và UI/UX. Các bản PNG giao diện riêng đã được bỏ, tài liệu tham chiếu trực tiếp SVG.
 - [Bản lưu v0.3](archive/ui-v0.3.zip) để đối chiếu với giao diện trước khi làm mới.
 
 Giữ nguyên 33 UC, 47 stories lõi, quyền, trạng thái, cách tính SLA, công thức chỉ số và lịch sử tài sản. Không tạo route, tính năng nghiệp vụ hay chỉ số mới. Menu AI trong bản vẽ minh họa cấu hình đang bật; khi AI bị tắt, ẩn mục AI và các điểm mở panel, các tác vụ thường vẫn dùng bình thường.

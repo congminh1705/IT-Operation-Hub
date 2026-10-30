@@ -24,15 +24,23 @@ Văn bản và biểu tượng cùng thể hiện trạng thái. Không đưa d�
 
 Mở đầu “Xin chào, [Tên]” và “Tạo yêu cầu”. Khối “Cần bạn phản hồi” lên trước gồm Pending và Resolved, nhãn CTA lần lượt “Trả lời”/“Kiểm tra kết quả”. Bên dưới là yêu cầu gần đây và tài sản đang được cấp. Ticket không cần hành động vẫn xem qua “Yêu cầu của tôi”. Không có tổng ticket công ty, tên nhân sự khác hoặc KPI SLA nhóm.
 
+[Bản vẽ Requester/trưởng phòng](design/wireframes/16-dashboard-requester.svg) minh họa D-29: chức danh trưởng phòng không mở rộng phạm vi dữ liệu. Khối hướng dẫn gửi yêu cầu cho nhân sự mới mở SCR21 hiện có; người dùng chọn Yêu cầu dịch vụ / Tài khoản. “Bổ sung thông tin” mở ticket Pending, “Kiểm tra kết quả” mở ticket Resolved; chỉ gửi phản hồi hoặc xác nhận trong chi tiết mới thực hiện nghiệp vụ. Danh sách luôn lọc theo requester đang đăng nhập, không theo toàn phòng ban.
+
 ### Technician
 
 Khối việc được giao, nhóm chưa phân công, sắp hạn và quá hạn. Chọn nhóm trong các membership hiện tại; “Tất cả nhóm của tôi” là hợp không trùng. Bảng “Ưu tiên xử lý” hiện mã/tiêu đề, status, priority, SLA cần chú ý và assignee. “Nhận xử lý” chỉ ticket chưa giao thuộc nhóm; không có dropdown giao cho đồng nghiệp. Có lối sang dashboard cá nhân.
+
+Ticket yêu cầu cấp tài khoản có thể nằm trong hàng đợi nhóm theo quyền, nhưng Technician không có lối tạo user hoặc truy cập SCR60. Việc cần Admin thực hiện được điều phối theo nhóm/người phụ trách và trao đổi hiện có; không dùng Pending chỉ để chờ Admin.
 
 ### Manager/Admin
 
 KPI hàng đợi hiện tại gồm chưa xong, chưa phân công, sắp vi phạm, đã vi phạm; ghi “Hiện tại · mọi ngày tạo”. Các KPI chồng lấn nên không cộng thành tổng. Khu vực phân tích riêng có filter kỳ, phân bố status/priority/team, trend tạo/resolve, thời gian hoạt động trung bình với n và tải kỹ thuật viên. Module bảo hành liên kết asset.
 
 Click KPI mở danh sách đúng tập; filter kỳ không âm thầm áp lên hàng đợi hiện tại. Không có tăng/giảm% giả, donut không rõ mẫu số, “AI insights” hoặc nút xuất chưa đặc tả. Load/error/empty cho từng panel, không chặn toàn bộ trang nếu một biểu đồ lỗi.
+
+[Biến thể Admin](design/wireframes/17-dashboard-admin.svg) giữ KPI toàn tổ chức và bổ sung hàng đợi “Yêu cầu về tài khoản”: loại Yêu cầu dịch vụ, danh mục Tài khoản, trạng thái thuộc New/Open/In Progress/Pending. Nút “Xem 6 ticket” trong hình minh họa mở SCR20 với đúng bộ lọc này; không lọc lại các KPI toàn tổ chức. Hàng đợi có cả cấp mới và hỗ trợ tài khoản khác, không suy luận loại cấp tài khoản từ tiêu đề.
+
+Chỉ Admin có lối quản lý người dùng/nhóm, sử dụng SCR60/SCR62 hiện có; Manager giữ dashboard điều phối và không có các thao tác quản trị này. Biến thể Admin liên kết sang tải công việc, báo cáo và nhật ký hiện có; biểu đồ/bộ lọc kỳ vẫn theo đặc tả Manager/Admin. Các chỉ số tương ứng dùng metrics catalog, không tạo KPI “Chờ duyệt” hoặc trạng thái mới.
 
 ## 4. Danh sách ticket — SCR20
 
@@ -61,6 +69,8 @@ Một page có form chính và panel “Điều gì xảy ra tiếp theo?”. Fo
 Primary “Gửi yêu cầu”, secondary “Hủy” quay danh sách; có xác nhận rời trang nếu form thay đổi. Panel side diễn giải New, phản hồi trong ứng dụng và xác nhận đóng; không hứa SLA trước khi có priority/snapshot chính xác. Validation client hỗ trợ, server là quyết định cuối. Trạng thái chưa rõ kết quả gửi do mạng không được mời bấm gửi nhiều lần không kiểm tra.
 
 ## 6. Chi tiết ticket — SCR22
+
+[Ticket cấp tài khoản — góc nhìn Admin](design/wireframes/18-ticket-account-provisioning.svg) minh họa trạng thái In Progress. Khối “Thao tác quản trị” chỉ dành cho Admin, mở form SCR60 để nhập và kiểm tra dữ liệu từ mô tả; không tạo user chỉ bằng mở form, không tự sao chép dữ liệu cá nhân qua URL và không tự giải quyết ticket. Giữ bản nhập khi chuyển màn hình theo quy tắc phục hồi. Requester/Technician/Manager không thấy khối này và vẫn bị backend từ chối thao tác tạo user. Người yêu cầu là trưởng phòng; nhân viên được đề nghị cấp chỉ là nội dung xử lý, không thay requester. Ví dụ này không yêu cầu liên kết dữ liệu Ticket–User mới hoặc cơ chế tự nhận diện tài khoản đã tạo.
 
 Hai cột desktop: nội dung khoảng2/3, ngữ cảnh1/3. Header mã/tiêu đề/status/priority; hành động bên phải tùy role/trạng thái. Công khai và nội bộ có vùng audience rõ ràng; nhãn nội bộ “Chỉ nhóm IT có quyền xem ticket” kèm biểu tượng khóa. Requester không có tab trống “nội bộ” hoặc badge số note.
 
@@ -114,6 +124,10 @@ Báo cáo có ba tab Ticket, SLA, Tải công việc. Filter kỳ có ngày bắ
 Thông báo có Tất cả/Chưa đọc, thời gian và loại; chọn mở kiểm tra lại quyền và đánh dấu readAt. Có “Đánh dấu tất cả đã đọc” trong phạm vi user hiện tại. Trống nói “Bạn chưa có thông báo”; lỗi không nói “Không có thông báo”. Badge không tiết lộ nội dung; nội bộ sau thu hồi quyền dùng thông điệp chung.
 
 ## 10. Quản trị — SCR60–65
+
+**Yêu cầu cấp tài khoản — dùng lại SCR21/SCR22:** trưởng phòng đăng nhập bằng Requester, chọn Yêu cầu dịch vụ / Tài khoản và mô tả nhân sự cần cấp. Trường hợp này dùng form và trạng thái ticket hiện có, không có form đăng ký hoặc vai trò trưởng phòng riêng. Admin xác minh đề nghị và ghi kết quả xử lý trên ticket; trưởng phòng theo dõi, bổ sung thông tin và xác nhận đóng. Nội dung không chứa mật khẩu.
+
+**Tạo người dùng — SCR60:** theo [quy trình cấp tài khoản D-29](requirements/account-provisioning.md), chỉ Admin truy cập form sau khi xác minh ticket đề nghị hoặc trong bước thiết lập có ủy quyền. Nhập họ tên, email công ty, phòng ban, vai trò và mật khẩu ban đầu; mặc định Requester. Khi chọn vai trò IT, nhắc xác nhận phê duyệt đúng thẩm quyền. Tạo thành công chỉ xác nhận kết quả và nhắc bàn giao qua kênh doanh nghiệp; không hiển thị lại password, đưa mật khẩu vào ticket hoặc báo đã gửi email. Tạo user không tự chuyển trạng thái ticket; vẫn cần thao tác xử lý/giải quyết theo luồng hiện có.
 
 | Màn hình | Thành phần và hành động | Phòng ngừa lỗi |
 |---|---|---|

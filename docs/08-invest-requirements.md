@@ -70,7 +70,7 @@ I và V đọc trực tiếp ở cột phụ thuộc và câu giá trị phía t
 | US02 | Vị trí nút và thông báo | Một phiên bị thu hồi, không là “logout mọi thiết bị” | R |
 | US03 | Trường liên hệ và cách chia form | Không đổi role/email qua hồ sơ cá nhân | R |
 | US04 | Gợi ý độ mạnh và nội dung xác nhận | Một lần đổi; password policy/thư viện được chọn ở M1 | R |
-| US05 | Bố cục form user | Một user, không import/bulk invite; cần chốt bàn giao password | R |
+| US05 | Bố cục form user | Một user, mặc định Requester; Admin xử lý đề nghị cấp qua ticket của trưởng phòng theo D-29; không import/bulk invite | R |
 | US06 | Dialog hay form riêng | Một user, kiểm tra membership/assignment bị ảnh hưởng | R |
 | US07 | Cách trình bày tác động khóa | Revocation + chuyển giao có thể lớn; chia “khóa”/“mở khóa” khi refinement | C |
 | US08 | Bảng hay form inline | Một phòng ban/lần; không xóa lịch sử | R |

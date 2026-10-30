@@ -6,6 +6,8 @@ Tài liệu này là nguồn thống nhất cho use case, AC, thông tin màn h�
 
 Một tổ chức, bốn vai trò. Admin tạo tài khoản; không đăng ký công khai. Email chuẩn hóa và duy nhất; tài khoản không xóa khi đã có lịch sử. Khóa tài khoản vô hiệu mọi phiên server; mở khóa không khôi phục phiên cũ. Đổi role/membership có hiệu lực ở request tiếp theo. Không lưu mật khẩu, token hoặc nội dung tệp trong audit. Quyền theo [ma trận](permissions-matrix.md).
 
+Theo D-29, trưởng phòng dùng vai trò Requester tạo ticket loại Yêu cầu dịch vụ, danh mục Tài khoản ngay trong hệ thống. Admin xác minh chức trách người đề nghị và nhu cầu cấp, sau đó tạo user tại Quản trị → Người dùng, mặc định Requester. Chức danh trưởng phòng không phải role mới hoặc IT Manager; gửi ticket không tự cấp user/quyền. Vai trò IT cần phê duyệt đúng thẩm quyền, membership nhóm quản lý riêng. Trưởng phòng là requester và xác nhận đóng sau khi IT giải quyết; mật khẩu bàn giao ngoài ticket qua kênh doanh nghiệp. Admin đầu tiên và tài khoản trưởng phòng ban đầu được thiết lập có ủy quyền. Xem [quy trình cấp tài khoản](account-provisioning.md).
+
 ## BR-02 — Định danh và dữ liệu ticket
 
 Mã ticket tự sinh duy nhất, dạng `TKT-000123`; khoảng trống dãy mã chấp nhận được, không tái sử dụng. Người tạo là người yêu cầu trong MVP; không gửi thay người khác. Loại: sự cố cá nhân, yêu cầu dịch vụ. Nhóm mặc định là nhóm tiếp nhận hoạt động do Admin chọn; không để việc định tuyến tự động chưa có thực gây mất ticket [D-02].

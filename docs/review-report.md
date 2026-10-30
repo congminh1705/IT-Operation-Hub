@@ -7,21 +7,21 @@
 
 | Thành phần | Số lượng / nội dung |
 |---|---|
-| Markdown | 30 file, gồm phân tích, nghiệp vụ, IA, UI/UX, thiết kế AI, thị giác/motion, hướng dẫn xem sơ đồ và kế hoạch kiểm chứng |
+| Markdown | 31 file, gồm phân tích, nghiệp vụ, IA, UI/UX, thiết kế AI, thị giác/motion, cấp tài khoản nội bộ, hướng dẫn xem sơ đồ và kế hoạch kiểm chứng |
 | Use cases | 33 mục lõi giữ nguyên + 8 mục AI có namespace riêng; 4 SVG theo vai trò, gồm tổng quan và 3 nhóm chi tiết |
 | Backlog | 47 stories lõi + 8 stories AI; có INVEST và phụ thuộc, chưa ước lượng triển khai |
 | Nghiệm thu dự kiến | 47 AC lõi, 10 AC xuyên suốt, 12 ví dụ SLA; thêm 8 AC và 12 ca AI, tất cả chưa chạy |
 | Kiến trúc thông tin | 26 mẫu lõi giữ nguyên + 3 mẫu AI tùy chọn |
-| Thiết kế trực quan | 13 SVG UI (10 lõi + 3 AI), 2 board SVG, 44 icon SVG, 27 SVG sơ đồ, 1 SVG/PNG use case tổng quan, 3 SVG use case chi tiết và 1 PNG minh họa login; tổng 90 SVG/2 PNG. Đã bỏ 15 PNG xuất giao diện riêng; ảnh nhúng XMind được giữ |
-| XMind | 9 file: bộ tổng 27 sheet và 8 file chuyên đề; 15 ảnh UI/board trong bộ tổng và file UI/UX, 3 ảnh trong file AI |
-| Liên kết nghiệp vụ | 13 nhóm quy tắc lõi, ma trận quyền, 15 chỉ số giữ nguyên; 28 quyết định gồm phần AI và thị giác bổ sung |
+| Thiết kế trực quan | 16 SVG UI (13 lõi + 3 AI), 2 board SVG, 44 icon SVG, 27 SVG sơ đồ, 1 SVG/PNG use case tổng quan, 3 SVG use case chi tiết và 1 PNG minh họa login; tổng 93 SVG/2 PNG. Đã bỏ 15 PNG xuất giao diện riêng; ảnh nhúng XMind được giữ |
+| XMind | 9 file: bộ tổng 27 sheet và 8 file chuyên đề; 18 ảnh UI/board trong bộ tổng và file UI/UX, 3 ảnh trong file AI |
+| Liên kết nghiệp vụ | 13 nhóm quy tắc lõi, ma trận quyền, 15 chỉ số giữ nguyên; 29 quyết định gồm phần AI, thị giác và cấp tài khoản nội bộ |
 
 ## Kiểm tra đã thực hiện trên tài liệu
 
 - Đối chiếu đủ US01–US47 với AC01–AC47 và 47 dòng truy vết; không thiếu ID trong dải.
 - Đối chiếu đủ UC01–UC33 giữa catalog, sơ đồ SVG và truy vết.
 - Kiểm tra tham chiếu screen trong truy vết nằm trong inventory; không coi dialog là route đã có.
-- Kiểm tra đường dẫn nội bộ, số cột các bảng Markdown, fence của code block, UTF-8 và cấu trúc XML của 90 SVG.
+- Kiểm tra đường dẫn nội bộ, số cột các bảng Markdown, fence của code block, UTF-8 và cấu trúc XML của 93 SVG.
 - Kiểm tra SVG không nhúng script, foreignObject hay tài nguyên ảnh từ mạng; có title/description.
 - Bộ tài liệu hiện có 2 PNG riêng: tổng quan use case trong wireframes và minh họa login nguồn. Đã bỏ 27 PNG trùng SVG trong thư mục xem nhanh XMind và 15 PNG giao diện riêng theo yêu cầu; giữ SVG và ảnh nhúng trong XMind. Đợt v0.4 đã xuất và review ảnh UI/board cùng bản đồ UI/UX trước khi bỏ các bản PNG riêng. Đo text theo Segoe UI không phát hiện tràn ra ngoài canvas; kiểm tra này không tự chứng minh không có mọi lỗi bố cục trong từng panel.
 - Sửa menu tài sản phục vụ xử lý của Technician, filter mobile và đường nối use case sau review.
@@ -35,6 +35,10 @@
 Các kiểm tra cấu trúc và ID được chạy bằng script tạm trong phiên làm việc; không thêm framework test hoặc mã ứng dụng vào repository.
 
 Đợt làm mới sơ đồ: vẽ lại cả 4 SVG theo góc nhìn vai trò, giữ 33 UC và toàn bộ 54 association actor–use case của ba sơ đồ chi tiết. Mã UC có thể lặp giữa các góc nhìn; sơ đồ không bổ sung nghiệp vụ. Kiểm tra dữ liệu quan hệ trước/sau, mã UC, nội dung và bố cục; cập nhật PNG tổng quan hiện có cho khớp SVG. Ba file nguồn cũ đã được bỏ theo yêu cầu, SVG là tài liệu chỉnh sửa trực tiếp.
+
+Quy trình D-29 được cập nhật theo chỉ dẫn mới: trưởng phòng gửi ticket Yêu cầu dịch vụ / Tài khoản ngay trong hệ thống bằng quyền Requester; Admin xác minh và tạo user mặc định Requester, có phê duyệt đúng thẩm quyền khi cấp vai trò IT. Trưởng phòng là requester và xác nhận kết quả trên ticket; mật khẩu bàn giao qua kênh doanh nghiệp. Đã làm rõ UC10/US13 và UC05/US05/AC05, form ticket/quản trị và checklist M1. Không thêm role HR hoặc trưởng phòng, không thêm trạng thái ticket hoặc module phê duyệt riêng; chưa triển khai chức năng thực tế. [Quy trình chi tiết](requirements/account-provisioning.md).
+
+Đã bổ sung 3 SVG UI D-29: dashboard Requester/trưởng phòng, biến thể dashboard Admin và chi tiết ticket cấp tài khoản. Giữ các ID SCR10/SCR12/SCR22, chỉ liên kết SCR60 hiện có; tổng 26 mẫu màn hình lõi và 3 mẫu AI không đổi. Đối chiếu phạm vi quyền, bộ lọc hàng đợi Tài khoản và mốc SLA minh họa; không thêm chỉ số cấp mới dựa trên tiêu đề. Ảnh PNG review được xuất vào thư mục tạm và nhúng trong XMind, không tạo lại folder preview PNG trong repo. Form tạo user và dashboard Technician vẫn chưa có bản vẽ riêng.
 
 ## Kiểm tra token tương phản
 
@@ -77,7 +81,7 @@ AI hỗ trợ đã được bổ sung vào thiết kế theo yêu cầu mới, d
 
 Trong đợt **v0.4**, so sánh lại xác nhận **9/9 tài liệu nghiệp vụ lõi không đổi** theo các hash bên dưới. Các mã UC/US/AC, máy trạng thái, chính sách SLA, quyền, công thức MET và mô hình tài sản lõi được giữ nguyên. AI dùng mã riêng và đặc tả bổ sung trong [ranh giới tích hợp](ai/integration-and-non-regression.md). Các thay đổi thị giác được mô tả tại [giao diện v0.4](design/visual-refresh.md).
 
-Các hash dưới đây là kết quả lịch sử của đợt bảo toàn v0.4, không đại diện cho hash hiện tại sau các lần cập nhật liên kết. Sau đó tài liệu được bổ sung đường dẫn sơ đồ và chuyển ảnh xem nhanh sang SVG; catalog, luồng và quy tắc nghiệp vụ không đổi.
+Các hash dưới đây là kết quả lịch sử của đợt bảo toàn v0.4, không đại diện cho hash hiện tại. Sau đó tài liệu được cập nhật liên kết SVG và làm rõ cấp tài khoản nội bộ theo D-29 đã được người dùng chấp thuận. Giữ nguyên số lượng/mã UC và US; trạng thái ticket, đồng hồ SLA và vòng đời tài sản không đổi.
 
 | Tài liệu lõi | SHA-256 trước = sau tại đợt v0.4 |
 |---|---|

@@ -2,6 +2,8 @@
 
 **Trạng thái chung: đề xuất để review, chưa phải quyết định kiến trúc triển khai.** Đặc tả gốc ưu tiên hơn tài liệu này. Các mục dưới đây làm rõ chỗ đề bài chưa chỉ định; không yêu cầu người dùng trả lời trước khi nhận bộ thiết kế.
 
+Riêng **D-29 — cấp tài khoản nội bộ** đã được người dùng chấp thuận về nghiệp vụ; chi tiết triển khai kỹ thuật vẫn thuộc bước M1.
+
 | ID | Quyết định đề xuất | Lý do, tác động và phương án cần xác nhận |
 |---|---|---|
 | D-01 | Một role/user; người có vai trò IT vẫn gửi được yêu cầu cá nhân, có hai scope “Của tôi”/“Công việc IT” | Không nhân bản tài khoản; scope riêng tránh vô tình mở nội bộ ticket cá nhân ngoài nhóm |
@@ -19,7 +21,7 @@
 | D-13 | KPI hàng đợi hiện tại không bị filter ngày che ticket cũ; chart/báo cáo theo kỳ được gắn nhãn riêng | Tránh giấu tồn đọng. Công thức giải quyết gần nhất được công bố trong metrics catalog |
 | D-14 | Requester được xem tài sản đang được cấp và ticket của mình liên quan; Technician xem tài sản phục vụ ticket nhóm | Hạn chế lộ hồ sơ thiết bị/nhân sự ngoài nhiệm vụ; Manager/Admin toàn bộ |
 | D-15 | Từ chối bản ghi ngoài scope giống không tìm thấy; 403 cho chức năng theo role | Tránh dò tồn tại bản ghi; thông điệp UX chung và đường về an toàn |
-| D-16 | Password ban đầu do Admin nhập, bàn giao ngoài hệ thống; không có email tự động/reset qua email | Thực hiện được luồng Admin tạo user mà không hứa nhà cung cấp gửi mail. Quy trình hỗ trợ quên mật khẩu cần refinement trước M1 |
+| D-16 | Password ban đầu do Admin nhập, bàn giao qua kênh nội bộ theo D-29; không có email tự động/reset qua email | Cách cấp và bàn giao tài khoản đã chốt về nghiệp vụ. Chính sách password và hỗ trợ quên mật khẩu vẫn cần refinement trước M1 |
 | D-17 | Khóa user, đổi role mất quyền IT hoặc bỏ membership cần xử lý assignment trên ticket đang mở; lịch sử giữ nguyên | Thu hồi quyền lập tức, không để ticket đang xử lý nằm ở assignee không còn quyền; không được khóa Admin hoạt động cuối cùng |
 | D-18 | Giao diện sáng, Inter/Segoe UI, xanh dương và nhận diện riêng | Nhận diện nhất quán, phù hợp công cụ vận hành IT |
 | D-19 | Không xuất báo cáo, đăng ký, nút quên mật khẩu gửi mail hoặc dark mode; AI theo phạm vi bổ sung D-22 | Không đưa hành động chưa có nghiệp vụ vào nghiệm thu; chatbot tùy chọn không tự thực thi thay đổi |
@@ -44,3 +46,9 @@ Các quy tắc nhỏ như độ dài trường, phân trang mặc định 20/t�
 | ID | Quyết định | Lý do và tác động |
 |---|---|---|
 | D-28 | Làm mới 13 bản UI, thêm 2 board, 44 icon vector riêng và đặc tả motion/responsive; lưu bản v0.3 | Theo yêu cầu giao diện đẹp, thân thiện và uyển chuyển hơn. Chỉ đổi cách trình bày, không thêm screen ID hoặc đổi nghiệp vụ. Chuyển động là đề xuất thiết kế, chưa có animation/prototype thực thi; xem [định hướng](../design/visual-refresh.md) |
+
+## Quyết định đã thống nhất về cấp tài khoản
+
+| ID | Quyết định | Trạng thái và phạm vi |
+|---|---|---|
+| D-29 | Trưởng phòng dùng quyền Requester tạo ticket Yêu cầu dịch vụ / Tài khoản ngay trong hệ thống. Admin xác minh người đề nghị, nhu cầu và phê duyệt vai trò IT rồi tạo user tại Quản trị → Người dùng, mặc định Requester. Bàn giao mật khẩu qua kênh doanh nghiệp; trưởng phòng theo dõi và xác nhận kết quả trên ticket | Cập nhật theo chỉ dẫn người dùng ngày 30/10/2026: người yêu cầu là trưởng phòng, yêu cầu nằm trong ứng dụng. Không thêm role HR/trưởng phòng, không tự cấp tài khoản từ ticket; dùng trạng thái và SLA hiện có. Admin đầu tiên và tài khoản trưởng phòng ban đầu thiết lập có ủy quyền; bootstrap kỹ thuật và password policy vẫn cần refinement M1. [Luồng chi tiết](../requirements/account-provisioning.md) |

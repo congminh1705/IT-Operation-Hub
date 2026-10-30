@@ -22,7 +22,7 @@ Các bản đồ actor–goal hỗ trợ review use case; ký pháp UML hình th
 | [04 — User flows](04-user-flows.xmind) | 7 | Nhân viên, Technician, Manager, tài sản, Admin, lỗi, thông báo |
 | [05 — Business rules](05-business-rules.xmind) | 5 | Trạng thái ticket, SLA, tài sản, ưu tiên và mô hình khái niệm |
 | [06 — INVEST backlog](06-invest-backlog.xmind) | 1 | 47 story, phụ thuộc và AC trong ghi chú |
-| [07 — UI/UX](07-uiux.xmind) | 2 | Trải nghiệm, chất lượng và 15 ảnh: 13 bản UI + 2 board thiết kế |
+| [07 — UI/UX](07-uiux.xmind) | 2 | Trải nghiệm, chất lượng và 18 ảnh: 16 bản UI + 2 board thiết kế |
 | [08 — Chatbot AI](08-ai-assistant.xmind) | 4 | Phạm vi AI, 8 UC/stories, handoff, bất biến và 3 ảnh AI đính kèm |
 
 ## Danh mục sheet và ảnh SVG xem nhanh
@@ -59,7 +59,7 @@ Các bản đồ actor–goal hỗ trợ review use case; ký pháp UML hình th
 
 ## Wireframe đính kèm
 
-Sheet UI/UX có 15 ảnh v0.4 (13 bản UI và 2 board thiết kế) nằm trong archive, không cần tải từ URL bên ngoài. Nhánh “Wireframe màn hình” được thu gọn ban đầu để tránh canvas quá dài; mở nhánh để xem ảnh.
+Sheet UI/UX có 18 ảnh v0.4 (16 bản UI và 2 board thiết kế) nằm trong archive, không cần tải từ URL bên ngoài. Nhánh “Wireframe màn hình” được thu gọn ban đầu để tránh canvas quá dài; mở nhánh để xem ảnh.
 
 Ảnh màn hình là tài liệu UI/UX tĩnh; XMind không chuyển chúng thành từng input, button hay bảng có thể sửa độc lập. Nguồn vector và đặc tả tương tác được giữ ở [wireframe gallery](../design/wireframes/README.md); có thêm [44 icon SVG](../design/icons/) và [quy định motion/responsive](../design/motion-and-responsive.md). Các sơ đồ phân tích, IA, backlog và luồng dùng topic/quan hệ XMind thực sự.
 

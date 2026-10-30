@@ -10,7 +10,7 @@
 | AC02 | Có phiên hợp lệ | Đăng xuất rồi dùng lại phiên đó | Phiên bị từ chối; dữ liệu riêng tư trên client được xóa; không chỉ chuyển trang |
 | AC03 | Đăng nhập | Sửa hồ sơ và thử truyền role/userId khác | Chỉ trường cá nhân được phép đổi; role/ID không được mass assign; lỗi giữ form |
 | AC04 | Mật khẩu hiện tại đúng | Đổi password hợp lệ | Đăng nhập lại bằng password mới; password cũ không dùng được, phiên khác thu hồi. Sai password hiện tại không đổi dữ liệu |
-| AC05 | Admin và phòng ban hoạt động | Tạo một user | Email duy nhất, role hợp lệ, password không trả lại/audit. R/T/M gọi trực tiếp bị từ chối |
+| AC05 | Admin và phòng ban hoạt động; ticket đề nghị cấp của trưởng phòng đã được xác minh theo D-29, hoặc bước thiết lập có ủy quyền | Tạo một user | Mặc định Requester; email duy nhất, role hợp lệ. Vai trò IT có phê duyệt đúng thẩm quyền. Password không trả lại/audit/ticket; không tự gửi email khi chưa cấu hình. R/T/M gọi API tạo user trực tiếp bị từ chối; gửi ticket không tự tạo user |
 | AC06 | User đã có lịch sử | Admin đổi role/phòng ban | Giữ lịch sử, quyền mới có hiệu lực, audit cũ/mới; xử lý assignment bị mất điều kiện IT. Không làm mất Admin hoạt động cuối cùng |
 | AC07 | User có nhiều phiên | Admin khóa rồi user gọi API bằng phiên cũ | Tất cả phiên bị từ chối; unlock không hồi sinh phiên; history không mất. Xử lý assignment mở trước khi hoàn tất khóa |
 | AC08 | Phòng ban được user tham chiếu | Admin ngừng sử dụng | Không xuất hiện cho lựa chọn mới, lịch sử vẫn đọc; không xóa bản ghi có tham chiếu |
@@ -18,7 +18,7 @@
 | AC10 | T là thành viên nhóm có ticket | Admin bỏ membership | Scope thu hồi ngay ở request sau; xử lý ticket đang giao; user còn trong nhóm khác chỉ giữ quyền nhóm đó |
 | AC11 | Category đang có ticket | Admin ngừng category | Ticket cũ giữ nhãn; form mới không chọn được; tên/mã không trùng theo quy định |
 | AC12 | Có ticket dùng snapshot cũ | Admin lưu bảng SLA mới | Version mới có audit; ticket cũ không đổi ngân sách; ticket mới lấy version mới; ngân sách≤0 bị từ chối |
-| AC13 | User có asset của mình và cấu hình đủ | Gửi ticket hợp lệ | New, mã duy nhất, requester từ phiên, priority từ ma trận, snapshot, event. Asset người khác/priority tùy ý bị từ chối |
+| AC13 | User có asset của mình và cấu hình đủ | Gửi ticket hợp lệ | New, mã duy nhất, requester từ phiên, priority từ ma trận, snapshot, event. Asset người khác/priority tùy ý bị từ chối. Đề nghị cấp tài khoản D-29 chỉ tạo ticket; chưa tạo user, requester vẫn là trưởng phòng gửi đề nghị |
 | AC14 | Có ticket nhiều scope | Search, kết hợp filter, sort và đổi trang | Chỉ trả tập được phép; count khớp; sort ổn định; đổi filter về trang1; back giữ query; không rò rỉ qua tổng số |
 | AC15 | Requester A và ticket của B có note | A đổi ID URL/API | Không đọc được ticket B. A đọc ticket mình không nhận note, tệp note hay metadata nội bộ |
 | AC16 | M/A mở dialog phân công | Đổi nhóm/người xử lý kèm lý do | Assignee thuộc nhóm mới, event cũ/mới, thông báo; SLA không reset; In Progress/Pending không được bỏ người phụ trách |

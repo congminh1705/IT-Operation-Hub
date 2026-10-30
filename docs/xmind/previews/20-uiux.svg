@@ -1,127 +1,138 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="2106" viewBox="0 0 2200 2106" role="img" aria-labelledby="title desc"><title id="title">UI/UX và wireframes v0.4</title><desc id="desc">13 bản UI, 2 board và 44 icon nguồn. Nội dung từ topic XMind; ảnh xem nhanh không phải bản xuất từ XMind Desktop.</desc><style>text{font-family:Segoe UI,Arial,sans-serif}</style>
-<rect x="0" y="0" width="2200" height="2106" rx="14" fill="#F4F7FC"/>
-<text x="48" y="57" font-size="15" font-weight="700" fill="#1D4ED8" text-anchor="start">IT OPERATIONS HUB · UI v0.4</text>
-<text x="48" y="103" font-size="32" font-weight="700" fill="#15263D" text-anchor="start">Trải nghiệm và hệ thống giao diện</text>
-<text x="48" y="140" font-size="17" font-weight="400" fill="#52637A" text-anchor="start">13 bản UI + 2 board thiết kế · 44 icon SVG · Giữ nguyên luồng nghiệp vụ</text>
-<path d="M 920 1118.0 C 840.0 1118.0 840.0 730.0 760 730.0" fill="none" stroke="#1D4ED8" stroke-width="3"/>
-<path d="M 470 730.0 C 440.0 730.0 440.0 616.0 410 616.0" fill="none" stroke="#1D4ED8" stroke-width="1.5"/>
-<rect x="40" y="584.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="225.0" y="622.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Dashboard cá nhân</text>
-<path d="M 470 730.0 C 440.0 730.0 440.0 692.0 410 692.0" fill="none" stroke="#1D4ED8" stroke-width="1.5"/>
-<rect x="40" y="660.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="225.0" y="698.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Gửi và theo dõi yêu cầu</text>
-<path d="M 470 730.0 C 440.0 730.0 440.0 768.0 410 768.0" fill="none" stroke="#1D4ED8" stroke-width="1.5"/>
-<rect x="40" y="736.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="225.0" y="774.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Trả lời Pending, xác nhận Resolved</text>
-<path d="M 470 730.0 C 440.0 730.0 440.0 844.0 410 844.0" fill="none" stroke="#1D4ED8" stroke-width="1.5"/>
-<rect x="40" y="812.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="225.0" y="850.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Tài sản đang được cấp</text>
-<rect x="470" y="684.0" width="290" height="92" rx="14" fill="#1D4ED8"/>
-<text x="615" y="736.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Nhân viên</text>
-<path d="M 920 1118.0 C 840.0 1118.0 840.0 1086.0 760 1086.0" fill="none" stroke="#0891B2" stroke-width="3"/>
-<path d="M 470 1086.0 C 440.0 1086.0 440.0 972.0 410 972.0" fill="none" stroke="#0891B2" stroke-width="1.5"/>
-<rect x="40" y="940.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="225.0" y="978.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Hàng đợi nhóm và tự nhận</text>
-<path d="M 470 1086.0 C 440.0 1086.0 440.0 1048.0 410 1048.0" fill="none" stroke="#0891B2" stroke-width="1.5"/>
-<rect x="40" y="1016.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="225.0" y="1054.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Chi tiết và SLA</text>
-<path d="M 470 1086.0 C 440.0 1086.0 440.0 1124.0 410 1124.0" fill="none" stroke="#0891B2" stroke-width="1.5"/>
-<rect x="40" y="1092.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="225.0" y="1130.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Công khai khác nội bộ</text>
-<path d="M 470 1086.0 C 440.0 1086.0 440.0 1200.0 410 1200.0" fill="none" stroke="#0891B2" stroke-width="1.5"/>
-<rect x="40" y="1168.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="225.0" y="1206.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Giải pháp trước khi Resolved</text>
-<rect x="470" y="1040.0" width="290" height="92" rx="14" fill="#0891B2"/>
-<text x="615" y="1092.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Kỹ thuật viên</text>
-<path d="M 920 1118.0 C 840.0 1118.0 840.0 1442.0 760 1442.0" fill="none" stroke="#15803D" stroke-width="3"/>
-<path d="M 470 1442.0 C 440.0 1442.0 440.0 1328.0 410 1328.0" fill="none" stroke="#15803D" stroke-width="1.5"/>
-<rect x="40" y="1296.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="225.0" y="1334.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Điều phối và đổi ưu tiên có lý do</text>
-<path d="M 470 1442.0 C 440.0 1442.0 440.0 1404.0 410 1404.0" fill="none" stroke="#15803D" stroke-width="1.5"/>
-<rect x="40" y="1372.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="225.0" y="1410.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Tài sản và lịch sử bàn giao</text>
-<path d="M 470 1442.0 C 440.0 1442.0 440.0 1480.0 410 1480.0" fill="none" stroke="#15803D" stroke-width="1.5"/>
-<rect x="40" y="1448.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="225.0" y="1486.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Dashboard và báo cáo có nguồn</text>
-<path d="M 470 1442.0 C 440.0 1442.0 440.0 1556.0 410 1556.0" fill="none" stroke="#15803D" stroke-width="1.5"/>
-<rect x="40" y="1524.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="225.0" y="1562.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Quản trị user/nhóm/SLA</text>
-<rect x="470" y="1396.0" width="290" height="92" rx="14" fill="#15803D"/>
-<text x="615" y="1448.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Manager / Admin</text>
-<path d="M 1280 1118.0 C 1360.0 1118.0 1360.0 376.0 1440 376.0" fill="none" stroke="#B45309" stroke-width="3"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="2334" viewBox="0 0 2200 2334" role="img" aria-labelledby="title desc"><title id="title">UI/UX và wireframes v0.4</title><desc id="desc">16 bản UI, 2 board và 44 icon nguồn; ba bản D-29 dùng các screen hiện có. Nội dung từ topic XMind, không phải ảnh xuất từ XMind Desktop.</desc><style>text{font-family:Segoe UI,Arial,sans-serif}</style>
+<rect x="0" y="0" width="2200" height="2334" rx="14" fill="#F4F7FC"/>
+<text x="48" y="57" font-size="15" fill="#1D4ED8" font-weight="700" text-anchor="start">IT OPERATIONS HUB · UI v0.4</text>
+<text x="48" y="103" font-size="32" fill="#15263D" font-weight="700" text-anchor="start">Trải nghiệm và hệ thống giao diện</text>
+<text x="48" y="140" font-size="17" fill="#52637A" font-weight="400" text-anchor="start">16 bản UI + 2 board thiết kế · 44 icon SVG · Bổ sung dashboard và ticket theo D-29</text>
+<path d="M 920 1232.0 C 840.0 1232.0 840.0 844.0 760 844.0" fill="none" stroke="#1D4ED8" stroke-width="3"/>
+<path d="M 470 844.0 C 440.0 844.0 440.0 730.0 410 730.0" fill="none" stroke="#1D4ED8" stroke-width="1.5"/>
+<rect x="40" y="698.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
+<text x="225" y="736.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Dashboard cá nhân</text>
+<path d="M 470 844.0 C 440.0 844.0 440.0 806.0 410 806.0" fill="none" stroke="#1D4ED8" stroke-width="1.5"/>
+<rect x="40" y="774.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
+<text x="225" y="812.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Gửi và theo dõi yêu cầu</text>
+<path d="M 470 844.0 C 440.0 844.0 440.0 882.0 410 882.0" fill="none" stroke="#1D4ED8" stroke-width="1.5"/>
+<rect x="40" y="850.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
+<text x="225" y="888.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Trả lời Pending, xác nhận Resolved</text>
+<path d="M 470 844.0 C 440.0 844.0 440.0 958.0 410 958.0" fill="none" stroke="#1D4ED8" stroke-width="1.5"/>
+<rect x="40" y="926.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
+<text x="225" y="964.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Tài sản đang được cấp</text>
+<rect x="470" y="798.0" width="290" height="92" rx="14" fill="#1D4ED8"/>
+<text x="615" y="850.0" font-size="20" fill="white" font-weight="600" text-anchor="middle">Nhân viên</text>
+<path d="M 920 1232.0 C 840.0 1232.0 840.0 1200.0 760 1200.0" fill="none" stroke="#0891B2" stroke-width="3"/>
+<path d="M 470 1200.0 C 440.0 1200.0 440.0 1086.0 410 1086.0" fill="none" stroke="#0891B2" stroke-width="1.5"/>
+<rect x="40" y="1054.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
+<text x="225" y="1092.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Hàng đợi nhóm và tự nhận</text>
+<path d="M 470 1200.0 C 440.0 1200.0 440.0 1162.0 410 1162.0" fill="none" stroke="#0891B2" stroke-width="1.5"/>
+<rect x="40" y="1130.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
+<text x="225" y="1168.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Chi tiết và SLA</text>
+<path d="M 470 1200.0 C 440.0 1200.0 440.0 1238.0 410 1238.0" fill="none" stroke="#0891B2" stroke-width="1.5"/>
+<rect x="40" y="1206.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
+<text x="225" y="1244.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Công khai khác nội bộ</text>
+<path d="M 470 1200.0 C 440.0 1200.0 440.0 1314.0 410 1314.0" fill="none" stroke="#0891B2" stroke-width="1.5"/>
+<rect x="40" y="1282.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
+<text x="225" y="1320.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Giải pháp trước khi Resolved</text>
+<rect x="470" y="1154.0" width="290" height="92" rx="14" fill="#0891B2"/>
+<text x="615" y="1206.0" font-size="20" fill="white" font-weight="600" text-anchor="middle">Kỹ thuật viên</text>
+<path d="M 920 1232.0 C 840.0 1232.0 840.0 1556.0 760 1556.0" fill="none" stroke="#15803D" stroke-width="3"/>
+<path d="M 470 1556.0 C 440.0 1556.0 440.0 1442.0 410 1442.0" fill="none" stroke="#15803D" stroke-width="1.5"/>
+<rect x="40" y="1410.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
+<text x="225" y="1448.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Điều phối và đổi ưu tiên có lý do</text>
+<path d="M 470 1556.0 C 440.0 1556.0 440.0 1518.0 410 1518.0" fill="none" stroke="#15803D" stroke-width="1.5"/>
+<rect x="40" y="1486.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
+<text x="225" y="1524.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Tài sản và lịch sử bàn giao</text>
+<path d="M 470 1556.0 C 440.0 1556.0 440.0 1594.0 410 1594.0" fill="none" stroke="#15803D" stroke-width="1.5"/>
+<rect x="40" y="1562.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
+<text x="225" y="1600.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Dashboard và báo cáo có nguồn</text>
+<path d="M 470 1556.0 C 440.0 1556.0 440.0 1670.0 410 1670.0" fill="none" stroke="#15803D" stroke-width="1.5"/>
+<rect x="40" y="1638.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
+<text x="225" y="1676.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Quản trị user/nhóm/SLA</text>
+<rect x="470" y="1510.0" width="290" height="92" rx="14" fill="#15803D"/>
+<text x="615" y="1562.0" font-size="20" fill="white" font-weight="600" text-anchor="middle">Manager / Admin</text>
+<path d="M 1280 1232.0 C 1360.0 1232.0 1360.0 376.0 1440 376.0" fill="none" stroke="#B45309" stroke-width="3"/>
 <path d="M 1730 376.0 C 1760.0 376.0 1760.0 262.0 1790 262.0" fill="none" stroke="#B45309" stroke-width="1.5"/>
 <rect x="1790" y="230.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="268.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Sidebar + topbar</text>
+<text x="1975" y="268.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Sidebar + topbar</text>
 <path d="M 1730 376.0 C 1760.0 376.0 1760.0 338.0 1790 338.0" fill="none" stroke="#B45309" stroke-width="1.5"/>
 <rect x="1790" y="306.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="344.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Bảng và bộ lọc rõ</text>
+<text x="1975" y="344.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Bảng và bộ lọc rõ</text>
 <path d="M 1730 376.0 C 1760.0 376.0 1760.0 414.0 1790 414.0" fill="none" stroke="#B45309" stroke-width="1.5"/>
 <rect x="1790" y="382.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="420.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Nền sáng, nhấn xanh dương</text>
+<text x="1975" y="420.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Nền sáng, nhấn xanh dương</text>
 <path d="M 1730 376.0 C 1760.0 376.0 1760.0 490.0 1790 490.0" fill="none" stroke="#B45309" stroke-width="1.5"/>
 <rect x="1790" y="458.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="496.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Tiếng Việt, desktop và mobile</text>
+<text x="1975" y="496.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Tiếng Việt, desktop và mobile</text>
 <rect x="1440" y="330.0" width="290" height="92" rx="14" fill="#B45309"/>
-<text x="1585" y="382.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Bố cục và hình thức</text>
-<path d="M 1280 1118.0 C 1360.0 1118.0 1360.0 1264.0 1440 1264.0" fill="none" stroke="#6D28D9" stroke-width="3"/>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 618.0 1790 618.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1585" y="382.0" font-size="20" fill="white" font-weight="600" text-anchor="middle">Bố cục và hình thức</text>
+<path d="M 1280 1232.0 C 1360.0 1232.0 1360.0 1378.0 1440 1378.0" fill="none" stroke="#6D28D9" stroke-width="3"/>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 618.0 1790 618.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="586.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="624.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">13 bản UI + 2 board thiết kế</text>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 694.0 1790 694.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1975" y="624.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">16 bản UI + 2 board thiết kế</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 694.0 1790 694.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="662.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="700.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Chi tiết trường và dialog trong đặc tả</text>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 770.0 1790 770.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1975" y="700.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Chi tiết trường và dialog trong đặc tả</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 770.0 1790 770.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="738.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="776.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">Bản vẽ tĩnh, dữ liệu hư cấu</text>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 846.0 1790 846.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1975" y="776.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Bản vẽ tĩnh, dữ liệu hư cấu</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 846.0 1790 846.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="814.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="852.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">01-login · Ảnh đính kèm</text>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 922.0 1790 922.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1975" y="852.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">01-login · Ảnh đính kèm</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 922.0 1790 922.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="890.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="928.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">02-dashboard-manager · Ảnh đính kèm</text>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 998.0 1790 998.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1975" y="928.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">02-dashboard-manager · Ảnh đính kèm</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 998.0 1790 998.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="966.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="1004.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">03-tickets · Ảnh đính kèm</text>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 1074.0 1790 1074.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1975" y="1004.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">03-tickets · Ảnh đính kèm</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 1074.0 1790 1074.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="1042.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="1080.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">04-create-ticket · Ảnh đính kèm</text>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 1150.0 1790 1150.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1975" y="1080.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">04-create-ticket · Ảnh đính kèm</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 1150.0 1790 1150.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="1118.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="1156.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">05-ticket-technician · Ảnh đính kèm</text>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 1226.0 1790 1226.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1975" y="1156.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">05-ticket-technician · Ảnh đính kèm</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 1226.0 1790 1226.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="1194.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="1232.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">06-ticket-requester · Ảnh đính kèm</text>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 1302.0 1790 1302.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1975" y="1232.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">06-ticket-requester · Ảnh đính kèm</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 1302.0 1790 1302.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="1270.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="1308.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">07-asset · Ảnh đính kèm</text>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 1378.0 1790 1378.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1975" y="1308.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">07-asset · Ảnh đính kèm</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 1378.0 1790 1378.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="1346.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="1384.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">08-admin-sla · Ảnh đính kèm</text>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 1454.0 1790 1454.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1975" y="1384.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">08-admin-sla · Ảnh đính kèm</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 1454.0 1790 1454.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="1422.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="1460.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">09-mobile · Ảnh đính kèm</text>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 1530.0 1790 1530.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1975" y="1460.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">09-mobile · Ảnh đính kèm</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 1530.0 1790 1530.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="1498.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="1536.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">10-ux-states · Ảnh đính kèm</text>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 1606.0 1790 1606.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1975" y="1536.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">10-ux-states · Ảnh đính kèm</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 1606.0 1790 1606.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="1574.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="1612.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">11-ai-assistant · Ảnh đính kèm</text>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 1682.0 1790 1682.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1975" y="1612.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">11-ai-assistant · Ảnh đính kèm</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 1682.0 1790 1682.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="1650.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="1688.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">12-ai-ticket-assistant · Ảnh đính kèm</text>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 1758.0 1790 1758.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1975" y="1688.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">12-ai-ticket-assistant · Ảnh đính kèm</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 1758.0 1790 1758.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="1726.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="1764.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">13-ai-states · Ảnh đính kèm</text>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 1834.0 1790 1834.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1975" y="1764.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">13-ai-states · Ảnh đính kèm</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 1834.0 1790 1834.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="1802.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="1840.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">14 · Icon và component · Ảnh đính kèm</text>
-<path d="M 1730 1264.0 C 1760.0 1264.0 1760.0 1910.0 1790 1910.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<text x="1975" y="1840.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">14 · Icon và component · Ảnh đính kèm</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 1910.0 1790 1910.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
 <rect x="1790" y="1878.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
-<text x="1975.0" y="1905.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">15 · Responsive và motion · Ảnh đính</text>
-<text x="1975.0" y="1927.0" font-size="16" font-weight="400" fill="#15263D" text-anchor="middle">kèm</text>
-<rect x="1440" y="1218.0" width="290" height="92" rx="14" fill="#6D28D9"/>
-<text x="1585" y="1270.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Wireframe màn hình</text>
-<rect x="920" y="1063.0" width="360" height="110" rx="14" fill="#15263D"/>
-<text x="1100" y="1114.0" font-size="24" font-weight="700" fill="white" text-anchor="middle">Trải nghiệm</text>
-<text x="1100" y="1148.0" font-size="24" font-weight="700" fill="white" text-anchor="middle">theo vai trò</text>
-<text x="48" y="2078" font-size="14" font-weight="400" fill="#52637A" text-anchor="start">Bản đồ nội dung thiết kế · Nguồn chỉnh sửa topic trong 07-uiux.xmind và bộ tổng</text></svg>
+<text x="1975" y="1905.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">15 · Responsive và motion · Ảnh đính</text>
+<text x="1975" y="1927.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">kèm</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 1986.0 1790 1986.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<rect x="1790" y="1954.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
+<text x="1975" y="1981.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">16 · Dashboard Requester / trưởng</text>
+<text x="1975" y="2003.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">phòng · Ảnh đính kèm</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 2062.0 1790 2062.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<rect x="1790" y="2030.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
+<text x="1975" y="2068.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">17 · Dashboard Admin · Ảnh đính kèm</text>
+<path d="M 1730 1378.0 C 1760.0 1378.0 1760.0 2138.0 1790 2138.0" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+<rect x="1790" y="2106.0" width="370" height="64" rx="14" fill="white" stroke="#DCE5F0"/>
+<text x="1975" y="2133.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">18 · Ticket cấp tài khoản / Admin ·</text>
+<text x="1975" y="2155.0" font-size="16" fill="#15263D" font-weight="400" text-anchor="middle">Ảnh đính kèm</text>
+<rect x="1440" y="1332.0" width="290" height="92" rx="14" fill="#6D28D9"/>
+<text x="1585" y="1384.0" font-size="20" fill="white" font-weight="600" text-anchor="middle">Wireframe màn hình</text>
+<rect x="920" y="1177.0" width="360" height="110" rx="14" fill="#15263D"/>
+<text x="1100" y="1228.0" font-size="24" fill="white" font-weight="700" text-anchor="middle">Trải nghiệm</text>
+<text x="1100" y="1262.0" font-size="24" fill="white" font-weight="700" text-anchor="middle">theo vai trò</text>
+<text x="48" y="2306" font-size="14" fill="#52637A" font-weight="400" text-anchor="start">Bản đồ nội dung thiết kế · Nguồn topic trong 07-uiux.xmind và bộ tổng</text></svg>

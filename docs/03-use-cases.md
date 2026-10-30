@@ -130,6 +130,7 @@ Các SVG được bố trí lại theo góc nhìn actor của cùng một hệ t
 
 ### UC05/UC07/UC09 — Quản trị an toàn
 
+- Theo [D-29 — cấp tài khoản nội bộ](requirements/account-provisioning.md), trưởng phòng dùng UC10 tạo ticket Yêu cầu dịch vụ / Tài khoản trong hệ thống bằng Requester. Admin xác minh đề nghị và dùng UC05 tạo user tại Quản trị → Người dùng, mặc định Requester; vai trò IT cần phê duyệt đúng thẩm quyền. Trưởng phòng theo dõi và xác nhận đóng ticket; không đổi requester sang nhân viên được cấp. Không thêm role trưởng phòng hoặc HR, không tự tạo user từ ticket.
 - Admin tạo user với role/phòng ban và password ban đầu, hoặc sửa role/khóa user có xác nhận. Mật khẩu không xuất hiện lại trong danh sách/audit.
 - Bỏ membership/khóa người đang xử lý cần xử lý các assignment mở; thu hồi quyền/phiên và giữ lịch sử. Không vô hiệu Admin cuối cùng.
 - Sửa SLA tạo phiên bản mặc định mới, hiển thị preview P1–P4 và phạm vi “Chỉ ticket tạo mới”; ticket cũ giữ snapshot. Các thay đổi quan trọng có audit.
