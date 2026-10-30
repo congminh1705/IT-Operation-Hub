@@ -1,5 +1,7 @@
 # Information architecture
 
+> **Phạm vi cập nhật 30/10/2026 — D-33:** Trợ lý AI thuộc phạm vi và nghiệm thu MVP theo xác nhận mới nhất của chủ dự án. Có thể bật/tắt khi vận hành, nhưng không được bỏ qua triển khai hoặc nghiệm thu AI. Giữ nguyên quyền và luồng nghiệp vụ lõi; hiện mới có thiết kế, chưa có provider hoặc chức năng hoạt động. [Tech stack và đối chiếu](technical/tech-stack.md).
+
 ## Mô hình tổ chức thông tin
 
 Đối tượng trung tâm là **ticket**; tài sản, người phụ trách, SLA và lịch sử cung cấp ngữ cảnh. Tách không gian yêu cầu cá nhân với công việc IT bằng scope và navigation, dùng chung chi tiết ticket có quyền. Không dựng bốn ứng dụng tách rời theo role.

@@ -7,7 +7,7 @@
 | NFR01 | Mọi đọc/ghi kiểm tra phiên, role và scope bản ghi; cả count, lookup, tệp và notification | Negative test đổi ID/role/team và đọc trực tiếp API |
 | NFR02 | Khóa tài khoản thu hồi mọi phiên; logout vô hiệu phiên hiện tại | Dùng cookie/phiên cũ gọi lại không được truy cập |
 | NFR03 | Mutation nhiều bản ghi nhất quán, có version; không lost update | Hai người đổi trạng thái/nhận ticket/cấp tài sản cùng lúc |
-| NFR04 | Dữ liệu tồn tại sau restart, có cơ chế backup được chọn khi triển khai | Restart ứng dụng/DB, đối chiếu ticket/comment/assignment |
+| NFR04 | Dữ liệu tồn tại sau restart; backup PostgreSQL và private files, có hướng dẫn restore | Restart ứng dụng/DB, đối chiếu ticket/comment/assignment; diễn tập phục hồi, chưa cam kết RPO/RTO |
 | NFR05 | SLA chuẩn UTC, 24/7, Pending/reopen/priority chính xác; worker idempotent | Bộ ví dụ thời gian cố định và chạy worker lại nhiều lần |
 | NFR06 | Tệp riêng tư, allowlist, ≤10 MB/tệp, ≤5/lần, quyền theo nội dung cha | Biên kích thước, giả MIME, note attachment và quyền sau chuyển nhóm |
 | NFR07 | Phản hồi lỗi thống nhất; giữ form, chỉ rõ trường, không lộ stack hoặc bí mật | Kiểm tra validation, hết phiên, không quyền, xung đột, lỗi mạng |
@@ -17,6 +17,9 @@
 | NFR11 | Mục tiêu đề xuất: p95 đọc danh sách≤2s, ghi≤3s trên tập20 user/60 ticket/30 asset trong môi trường được ghi nhận | Chưa là SLA hiệu năng production; đo và điều chỉnh sau |
 | NFR12 | Worker kiểm tra tối đa60s/lần; UI hiển thị mốc dữ liệu gần nhất | Worker chạy độc lập khi không ai mở dashboard; có theo dõi lỗi vận hành |
 | NFR13 | Audit đủ actor/thời gian/cũ/mới/lý do cho các thay đổi bắt buộc, không bí mật | Review event mẫu user role/SLA/ticket/asset |
-| NFR14 | UI không truy cập DB, business rules dùng chung API/worker; khóa dependency khi khởi tạo | Architecture review và kiểm tra repository lúc triển khai |
+| NFR14 | Next.js không đọc DB; FastAPI/worker dùng chung service và Session đồng bộ riêng; khóa pnpm/uv dependency | Architecture review, frozen install, clean build/test tại M1 |
+| NFR15 | Session PostgreSQL, token opaque HttpOnly/Secure/SameSite; Argon2id và CSRF cho mutation/login | Test expiry/revoke/rotate, cookie và Origin/CSRF; request sau thu hồi không đọc được dữ liệu |
+| NFR16 | Polling 30 giây chỉ tab hoạt động; cache phân biệt user/scope, xóa khi logout | Fake-clock/frontend test, đổi user/role và API negative test; worker không phụ thuộc polling |
+| NFR17 | API OpenAPI khớp TypeScript sinh tự động; UTC/Asia/Ho_Chi_Minh; backend phân trang/lọc | Contract CI, test timezone và filter/page; không dùng lọc client thay scope server |
 
 Tham chiếu accessibility: [WCAG 2.2](https://www.w3.org/TR/WCAG22/). Phạm vi hiện tại chưa cho phép đo các tiêu chí trên; không đánh dấu PASS dựa trên bản vẽ.

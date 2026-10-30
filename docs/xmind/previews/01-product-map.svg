@@ -120,7 +120,7 @@
 <text x="1975.0" y="1472.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Quản lý nhóm, phòng ban, SLA</text>
 <path d="M 1730 1428.0 C 1760.0 1428.0 1760.0 1542.0 1790 1542.0" fill="none" stroke="#4F46E5" stroke-width="1.6"/>
 <rect x="1790" y="1510.0" width="370" height="64" rx="12" fill="white" stroke="#4F46E5"/>
-<text x="1975.0" y="1548.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Trợ lý AI tùy chọn</text>
+<text x="1975.0" y="1548.0" font-size="17" font-weight="400" fill="#0F172A" text-anchor="middle">Trợ lý AI · MVP</text>
 <rect x="1440" y="1382.0" width="290" height="92" rx="12" fill="#4F46E5" stroke="#4F46E5"/>
 <text x="1585.0" y="1434.0" font-size="20" font-weight="600" fill="white" text-anchor="middle">Quản trị &amp; phạm vi</text>
 <rect x="920" y="838.0" width="360" height="144" rx="12" fill="#0F2348" stroke="#0F2348"/>

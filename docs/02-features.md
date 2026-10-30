@@ -1,5 +1,7 @@
 # Danh mục năng lực và ưu tiên
 
+> **Phạm vi cập nhật 30/10/2026 — D-33:** Trợ lý AI thuộc phạm vi và nghiệm thu MVP theo xác nhận mới nhất của chủ dự án. Có thể bật/tắt khi vận hành, nhưng không được bỏ qua triển khai hoặc nghiệm thu AI. Giữ nguyên quyền và luồng nghiệp vụ lõi; hiện mới có thiết kế, chưa có provider hoặc chức năng hoạt động. [Tech stack và đối chiếu](technical/tech-stack.md).
+
 Tất cả tính năng dưới đây ở trạng thái **đã đặc tả / chưa triển khai**. “Bắt buộc MVP” là độ ưu tiên phạm vi, không phải thứ tự đưa mọi thứ vào một sprint. `P1–P4` dành riêng cho độ ưu tiên ticket; backlog dùng Must/Should để tránh nhầm.
 
 | ID | Năng lực và giá trị | Mốc tương lai | Stories | Phạm vi |
@@ -34,9 +36,9 @@ Admin tạo tài khoản/nhóm → Requester tạo ticket → Manager giao Techn
 
 Tìm kiếm topbar là lối tắt tìm **ticket trong phạm vi quyền**, chưa phải bộ máy tìm kiếm toàn hệ thống. Trang “Tài sản của tôi” khác danh mục tài sản quản trị. “Nhật ký” khác timeline công khai của một ticket. Báo cáo không có nút xuất cho đến khi phạm vi đó được bổ sung chính thức.
 
-## Năng lực AI bổ sung, tùy chọn
+## Năng lực AI trong MVP, có thể bật/tắt khi vận hành
 
-F01–F19 và lát cắt nghiệp vụ đầu tiên giữ nguyên. AI không là điều kiện để hoàn thành các luồng lõi.
+F01–F19 và lát cắt nghiệp vụ đầu tiên giữ nguyên. Luồng lõi không phụ thuộc khả dụng AI; tuy nhiên AI là điều kiện nghiệm thu MVP mở rộng theo D-33.
 
 | ID | Năng lực | Stories | Trạng thái |
 |---|---|---|---|

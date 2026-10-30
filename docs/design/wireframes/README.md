@@ -1,6 +1,8 @@
 # Bộ bản vẽ UI/UX
 
-**16 bản UI tĩnh (13 bản lõi và 3 bản AI) và 2 board thiết kế, phiên bản v0.4**, dùng dữ liệu hư cấu có nhãn. SVG là tài liệu thiết kế có thể phóng to, không có tương tác, không gửi request và không chứng minh ứng dụng đã có dữ liệu bền vững. Các nút biểu diễn hành động sẽ cần triển khai trong MVP.
+> **Phạm vi cập nhật 30/10/2026 — D-33:** Trợ lý AI thuộc phạm vi và nghiệm thu MVP theo xác nhận mới nhất của chủ dự án. Có thể bật/tắt khi vận hành, nhưng không được bỏ qua triển khai hoặc nghiệm thu AI. Giữ nguyên quyền và luồng nghiệp vụ lõi; hiện mới có thiết kế, chưa có provider hoặc chức năng hoạt động. [Tech stack và đối chiếu](../../technical/tech-stack.md).
+
+**16 bản UI tĩnh (13 bản lõi và 3 bản AI) và 2 board thiết kế, phiên bản v0.4**, dùng dữ liệu hư cấu có nhãn. SVG là tài liệu thiết kế có thể phóng to, không có tương tác, không gửi request và không chứng minh ứng dụng đã có dữ liệu bền vững. Các thao tác lõi và AI đều thuộc phạm vi MVP; nghiệm thu yêu cầu chức năng thực tế thay cho tương tác hoặc phản hồi mẫu.
 
 Mở trực tiếp SVG trong trình duyệt hoặc công cụ thiết kế để xem và chỉnh sửa. Các bản xuất PNG giao diện đã được bỏ; thư mục chỉ giữ SVG, tài liệu và [use-cases-overview.png](use-cases-overview.png) theo yêu cầu. Riêng login có [minh họa PNG nền trong suốt](../illustrations/login-it-support.png) nhúng trực tiếp trong SVG. Hiển thị font có thể khác nhẹ theo thiết bị.
 

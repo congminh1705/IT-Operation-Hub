@@ -1,5 +1,7 @@
 # Tích hợp AI và bảo toàn nghiệp vụ lõi
 
+> **Phạm vi cập nhật 30/10/2026 — D-33:** Trợ lý AI thuộc phạm vi và nghiệm thu MVP theo xác nhận mới nhất của chủ dự án. Có thể bật/tắt khi vận hành, nhưng không được bỏ qua triển khai hoặc nghiệm thu AI. Giữ nguyên quyền và luồng nghiệp vụ lõi; hiện mới có thiết kế, chưa có provider hoặc chức năng hoạt động. [Tech stack và đối chiếu](../technical/tech-stack.md).
+
 Tài liệu đặc tả ranh giới để triển khai sau này. **Chưa có adapter AI, endpoint, model call hoặc regression test chạy thực.** Lớp AI chỉ đọc và tạo nháp; quyền và mutation vẫn thuộc ứng dụng nghiệp vụ.
 
 ## 1. Ranh giới dịch vụ
@@ -92,7 +94,7 @@ Chỉ nhận các trường nháp được cho phép như tiêu đề, mô tả,
 - Khi triển khai, bật nội bộ theo vai trò/tác vụ sau khi quyền API lõi và nguồn đã qua kiểm tra; public trước, nội bộ sau khi test visibility.
 - Tắt flag là rollback chức năng AI; form, ticket, SLA worker và tài sản không cần rollback dữ liệu vì AI không trực tiếp ghi chúng.
 
-M1–M6 vẫn là chuỗi nghiệm thu lõi. Nhánh AI triển khai khi API tương ứng sẵn sàng; không trì hoãn luồng thủ công để chờ kết quả AI. Không đánh dấu chatbot hoạt động chỉ vì có ô chat hoặc nội dung mẫu.
+M1–M6 vẫn là chuỗi triển khai MVP, gồm nghiệm thu lõi và AI. Nhánh AI triển khai trong MVP khi API tương ứng sẵn sàng; không trì hoãn luồng thủ công để chờ kết quả AI. Không đánh dấu chatbot hoạt động chỉ vì có ô chat hoặc nội dung mẫu.
 
 ## 8. Truy vết phần bổ sung
 
@@ -107,7 +109,7 @@ M1–M6 vẫn là chuỗi nghiệm thu lõi. Nhánh AI triển khai khi API tư�
 | F-AI07 | UC-AI07 / US-AI07 / AC-AI07 | SCR-AI01 | Phiên và danh tính hiện có | Đọc chat khác, xóa nhầm dữ liệu lõi |
 | F-AI08 | UC-AI08 / US-AI08 / AC-AI08 | SCR-AI03 | Quyền Admin; cấu hình riêng | Ảnh hưởng core khi AI tắt/lỗi |
 
-## 9. Gate nghiệm thu AI trong tương lai
+## 9. Gate nghiệm thu AI bắt buộc trong MVP
 
 Chạy TC-AI01–12 và bộ AC lõi hiện có với AI bật, tắt và provider lỗi. Đối chiếu DB trước/sau câu hỏi, tóm tắt và nháp: Ticket, TicketComment, TicketEvent, TicketSLA, AssetAssignment không đổi. Chỉ những thao tác cuối do user gửi ở form gốc mới được có mutation tương ứng. Kiểm tra no-leak cả payload tới model và UI, không chỉ kiểm tra câu trả lời.
 

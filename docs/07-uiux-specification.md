@@ -1,5 +1,7 @@
 # Đặc tả UI/UX theo màn hình
 
+> **Phạm vi cập nhật 30/10/2026 — D-33:** Trợ lý AI thuộc phạm vi và nghiệm thu MVP theo xác nhận mới nhất của chủ dự án. Có thể bật/tắt khi vận hành, nhưng không được bỏ qua triển khai hoặc nghiệm thu AI. Giữ nguyên quyền và luồng nghiệp vụ lõi; hiện mới có thiết kế, chưa có provider hoặc chức năng hoạt động. [Tech stack và đối chiếu](technical/tech-stack.md).
+
 Trạng thái: **thiết kế đích, chưa có UI thực thi**. Đọc cùng [IA](04-information-architecture.md), [ma trận quyền](requirements/permissions-matrix.md), [design system](design/design-system.md) và [content/state contract](design/content-and-states.md). ID screen dùng trong AC và bảng truy vết.
 
 Bản vẽ được làm mới thị giác ở **v0.4**: khoảng trắng thoáng hơn, card bo mềm, bộ icon24 px thống nhất và hành vi chuyển động có kiểm soát. Xem [định hướng giao diện](design/visual-refresh.md), [icon/component](design/wireframes/14-icons-and-components.svg) và [motion/responsive](design/motion-and-responsive.md). Không đổi screen ID hoặc logic nghiệp vụ.

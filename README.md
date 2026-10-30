@@ -2,13 +2,13 @@
 
 IT Operations Hub là nền tảng quản lý dịch vụ và vận hành IT nội bộ, tập trung yêu cầu hỗ trợ, công việc xử lý, tài sản và thông tin vận hành trong một không gian làm việc. Nhân viên theo dõi yêu cầu đến khi hoàn tất; đội IT quản lý trách nhiệm và thời hạn; trưởng nhóm có dữ liệu để phát hiện điểm nghẽn và điều phối.
 
-Sản phẩm tích hợp **trợ lý AI** để hỏi đáp hướng dẫn có dẫn nguồn, tra cứu thông tin theo quyền, tóm tắt ticket và soạn nháp yêu cầu hoặc phản hồi. AI hỗ trợ người dùng trong luồng làm việc hiện có; người dùng vẫn kiểm tra và xác nhận trước khi gửi. Tính năng AI có thể bật/tắt độc lập, không thay đổi quy tắc xử lý ticket, SLA, phân quyền hoặc quản lý tài sản.
+Phạm vi MVP của sản phẩm bao gồm **trợ lý AI tích hợp trong ứng dụng** để hỏi đáp hướng dẫn có dẫn nguồn, tra cứu thông tin theo quyền, tóm tắt ticket và soạn nháp yêu cầu hoặc phản hồi. AI hỗ trợ người dùng trong luồng làm việc hiện có; người dùng vẫn kiểm tra và xác nhận trước khi gửi. Tính năng AI có thể bật/tắt độc lập, không thay đổi quy tắc xử lý ticket, SLA, phân quyền hoặc quản lý tài sản.
 
 MVP phục vụ **một tổ chức**, gồm bốn vai trò: **Requester, Technician, IT Manager và Admin**. Luồng trọng tâm là **tạo yêu cầu → tiếp nhận → xử lý → giải quyết → xác nhận đóng hoặc mở lại**.
 
 **Trưởng phòng gửi ticket yêu cầu cấp tài khoản trong hệ thống** bằng vai trò Requester hiện có; Admin IT kiểm tra và cấp tại Quản trị → Người dùng. Mặc định cấp Requester; vai trò IT cần phê duyệt đúng thẩm quyền. Thông tin đăng nhập được bàn giao qua kênh doanh nghiệp; trưởng phòng theo dõi và xác nhận kết quả trên ticket. Xem [quy trình cấp tài khoản](docs/requirements/account-provisioning.md).
 
-**Giai đoạn hiện tại:** phân tích và thiết kế; chưa triển khai ứng dụng. Thiết kế đã bổ sung chatbot AI tùy chọn; chưa có chatbot hoặc provider đang vận hành. Sơ đồ có file XMind chỉnh sửa được. Các bản vẽ UI/UX dùng dữ liệu minh họa.
+**Giai đoạn hiện tại:** phân tích và thiết kế; chưa triển khai ứng dụng. Đã có thiết kế chatbot AI trong phạm vi MVP; chưa có chatbot hoặc provider đang vận hành. Tech stack mục tiêu đã chốt, chưa cài đặt hoặc chạy kiểm thử ứng dụng. Sơ đồ có file XMind chỉnh sửa được. Các bản vẽ UI/UX dùng dữ liệu minh họa.
 
 ## 1. Requirements — INVEST, Use Cases và Acceptance Criteria
 
@@ -22,7 +22,7 @@ Yêu cầu được phân tích từ mục tiêu sản phẩm xuống năng lự
 | Vấn đề | Yêu cầu phân tán, dễ bỏ sót, thiếu người chịu trách nhiệm và khó theo dõi thời hạn |
 | Mục tiêu | Tập trung yêu cầu, rõ trách nhiệm, kiểm soát SLA, liên kết tài sản và lịch sử |
 | Năng lực cốt lõi | Ticket, phân công, hội thoại, SLA, tài sản, dashboard và thông báo |
-| Phạm vi MVP | Một tổ chức, bốn vai trò, quản trị tài khoản nội bộ; bổ sung trợ lý AI tùy chọn, không thay đổi luồng lõi |
+| Phạm vi MVP | Một tổ chức, bốn vai trò, quản trị tài khoản nội bộ; trợ lý AI tích hợp thuộc phạm vi nghiệm thu MVP |
 | Cách kiểm chứng | AC nghiệp vụ, truy vết yêu cầu, phỏng vấn và usability test theo kế hoạch |
 
 Nghiên cứu hiện gồm phân tích đặc tả và desk research. Các proto-personas, journeys và giả thuyết chưa được xác nhận bằng nghiên cứu người dùng thực tế. Chi tiết trong [Research top down](docs/00-research.md) và [phạm vi sản phẩm](docs/01-scope.md).
@@ -113,7 +113,7 @@ Các AC xác định kết quả quan sát được, gồm luồng thành công,
 - SLA giữ tổng thời gian đã dùng qua chuyển nhóm, đổi ưu tiên và mở lại; worker không báo trùng.
 - Tệp, dữ liệu tài sản và dashboard đều tuân thủ phạm vi quyền.
 
-Lõi có **47 AC theo story**, **10 AC xuyên suốt** và **12 ví dụ SLA**. Phần AI có thêm **8 AC và 12 ca kiểm chứng**, được quản lý riêng. Đây là kịch bản nghiệm thu dự kiến, chưa phải kết quả chạy test. Độ phủ 12 tiêu chí nghiệm thu gốc được ghi trong [master traceability](docs/traceability/master-traceability.md).
+Lõi có **47 AC theo story**, **10 AC xuyên suốt** và **12 ví dụ SLA**. Phần AI có thêm **8 AC và 12 ca kiểm chứng**, được quản lý riêng và bắt buộc đạt khi nghiệm thu MVP. Đây là kịch bản nghiệm thu dự kiến, chưa phải kết quả chạy test. Độ phủ 12 tiêu chí nghiệm thu gốc được ghi trong [master traceability](docs/traceability/master-traceability.md).
 
 ## 2. Information Architecture, Screen Hierarchy và UI/UX
 
@@ -136,6 +136,7 @@ Workspace được tổ chức theo nhiệm vụ: tổng quan, yêu cầu/ticket
 | Ticket | Danh sách, tạo mới, chi tiết, hội thoại, nội bộ, SLA và timeline |
 | Xử lý ticket | Phân công, trạng thái, ưu tiên và các xác nhận |
 | Tài sản | Danh sách, hồ sơ, chi tiết, cấp phát, thu hồi và trạng thái |
+| Kỹ thuật mục tiêu | [Tech stack](docs/technical/tech-stack.md) · [Kiến trúc](docs/technical/architecture.md) · [Phiên bản](docs/technical/version-baseline.md) |
 | Theo dõi | Báo cáo, thông báo và nhật ký |
 | Quản trị | Người dùng, phòng ban, nhóm/thành viên, danh mục và SLA |
 | Truy cập/lỗi | Không có quyền và không tìm thấy bản ghi |
@@ -152,7 +153,7 @@ Bộ luồng còn gồm nhận/xử lý ticket, điều phối, cấp phát/thu 
 
 Giao diện dùng nền sáng, xanh dương dịu, card bo mềm và khoảng trắng thoáng để đọc bảng và xử lý công việc lâu dài. Bộ icon cùng hệ nét đi với nhãn rõ ràng; tiêu đề, bộ lọc và thao tác chính có cấp bậc dễ nhận biết. Thiết kế thân thiện bằng tiếng Việt, có bố cục desktop/tablet/mobile và quy định chuyển động ngắn, tôn trọng reduced motion. Trạng thái luôn có nhãn chữ.
 
-Các hình dưới đây là bản thiết kế UI/UX tĩnh. Số liệu trên dashboard và ticket là dữ liệu hư cấu để minh họa bố cục.
+Các hình dưới đây là bản thiết kế UI/UX tĩnh. Số liệu trên dashboard và ticket là dữ liệu hư cấu để minh họa bố cục. Các entry/nút AI thuộc thiết kế MVP; khi triển khai chỉ hiển thị thao tác sinh nội dung khi đã có cấu hình và chức năng thật, không dùng nút hoặc phản hồi giả để nghiệm thu.
 
 #### Đăng nhập
 
@@ -211,9 +212,9 @@ Các hình trên là thiết kế tĩnh, không phải ứng dụng đang hoạt
 
 Chi tiết trong [Design system](docs/design/design-system.md), [Content and states](docs/design/content-and-states.md) và [kế hoạch kiểm chứng thiết kế](docs/research/validation-plan.md).
 
-### 2.6 Chatbot AI hỗ trợ, không thay đổi nghiệp vụ
+### 2.6 Trợ lý AI tích hợp trong MVP
 
-Trợ lý AI được bổ sung như một lớp tùy chọn: hỏi đáp hướng dẫn có nguồn, tra cứu dữ liệu được phép, tóm tắt ticket và chuẩn bị nháp. Manager/Admin có thể hỏi báo cáo dựa trên các chỉ số hiện có. Phần bổ sung có **8 user stories**, dùng mã riêng, không thay 47 stories lõi.
+Trợ lý AI là hạng mục bắt buộc triển khai và nghiệm thu trong MVP, có thể bật/tắt khi vận hành: hỏi đáp hướng dẫn có nguồn, tra cứu dữ liệu được phép, tóm tắt ticket và chuẩn bị nháp. Manager/Admin có thể hỏi báo cáo dựa trên các chỉ số hiện có. Phần bổ sung có **8 user stories**, dùng mã riêng, không thay 47 stories lõi.
 
 ![Trợ lý AI — thiết kế tĩnh, dữ liệu minh họa](docs/design/wireframes/11-ai-assistant.svg)
 
@@ -242,6 +243,21 @@ Sơ đồ được tổ chức theo chủ đề để dễ chỉnh sửa và rev
 
 Xem [hướng dẫn mở và danh mục sơ đồ](docs/xmind/README.md). Wireframe màn hình là tài liệu riêng; chúng cũng được đính kèm dạng ảnh trong file UI/UX để thuận tiện review.
 
+## 4. Tech stack mục tiêu
+
+| Phần | Công nghệ đã chọn |
+|---|---|
+| Frontend | Next.js App Router, React, TypeScript strict; Tailwind CSS, shadcn/ui, Lucide React |
+| Form và dữ liệu | React Hook Form + Zod; TanStack Query/Table; Recharts; date-fns + @date-fns/tz |
+| Backend | Python, FastAPI, Pydantic; SQLAlchemy đồng bộ, Alembic, Psycopg 3, PostgreSQL |
+| Xác thực | Session phía server lưu PostgreSQL, cookie HttpOnly; Argon2id qua pwdlib, bảo vệ CSRF |
+| Tác vụ và tệp | Celery + một Beat + Redis; local private khi dev, S3 private qua boto3 khi production |
+| Kiểm thử/vận hành | pytest/HTTPX, Vitest/RTL, Playwright; uv/pnpm; Docker Compose, Nginx, Linux VPS, GitHub Actions |
+
+Next.js sở hữu giao diện; FastAPI sở hữu API `/api/v1`, phân quyền và nghiệp vụ. Hai phần giao tiếp qua OpenAPI; UI không đọc database. Đây là lựa chọn thiết kế, chưa có ứng dụng chạy hoặc lockfile. Bộ phiên bản ứng viên đã được rà metadata, có điều chỉnh TypeScript/OpenAPI generator và redis-py/Kombu; chưa chạy solver/build.
+
+Xem [đối chiếu và chốt stack](docs/technical/tech-stack.md), [kiến trúc](docs/technical/architecture.md), [baseline phiên bản và gate M1](docs/technical/version-baseline.md).
+
 ## Documentation
 
 | Nhóm | Tài liệu |
@@ -255,6 +271,7 @@ Xem [hướng dẫn mở và danh mục sơ đồ](docs/xmind/README.md). Wirefr
 | Thị giác và tương tác | [Giao diện v0.4](docs/design/visual-refresh.md) · [Motion và responsive](docs/design/motion-and-responsive.md) · [44 icon SVG](docs/design/icons/) |
 | Chatbot AI | [Thiết kế](docs/10-ai-assistant.md) · [Use cases/INVEST/AC](docs/ai/use-cases-stories-and-acceptance.md) · [Tích hợp và bảo toàn nghiệp vụ](docs/ai/integration-and-non-regression.md) |
 | Kiểm chứng | [Validation plan](docs/research/validation-plan.md) · [Quyết định](docs/decisions/design-decisions.md) · [Truy vết](docs/traceability/master-traceability.md) |
+| Kỹ thuật mục tiêu | [Tech stack](docs/technical/tech-stack.md) · [Kiến trúc](docs/technical/architecture.md) · [Phiên bản](docs/technical/version-baseline.md) |
 | Theo dõi | [Checklist M1–M6](docs/09-design-readiness.md) · [Kết quả rà soát](docs/review-report.md) |
 
 ## Project Progress
@@ -266,8 +283,9 @@ Xem [hướng dẫn mở và danh mục sơ đồ](docs/xmind/README.md). Wirefr
 - [x] Bộ sơ đồ XMind có thể chỉnh sửa và ảnh xem nhanh.
 - [x] UI/UX v0.4: 16 bản UI, 2 board thiết kế, 44 icon SVG; đặc tả responsive và chuyển động.
 - [ ] Prototype tương tác và kiểm chứng animation, bàn phím, responsive trên UI thực thi.
-- [x] Thiết kế chatbot AI tùy chọn, 8 use case/stories, AC riêng và ranh giới tích hợp.
-- [ ] Triển khai/kết nối provider AI và chạy bộ kiểm chứng AI + regression lõi.
+- [x] Chốt stack frontend/backend và kiến trúc mục tiêu; rà metadata, ghi rõ gate kiểm chứng M1.
+- [x] Thiết kế chatbot AI trong MVP, 8 use case/stories, AC riêng và ranh giới tích hợp.
+- [ ] Triển khai/kết nối provider AI và đạt 8 AC AI, 12 ca kiểm chứng AI cùng regression lõi trước nghiệm thu MVP.
 - [ ] Phỏng vấn, tree test và usability test với người dùng thực tế.
 - [ ] Hoàn thiện bản vẽ riêng cho các màn hình phụ trợ.
 - [ ] Triển khai M1–M6 và kiểm thử ứng dụng khi bắt đầu giai đoạn phát triển.

@@ -1,8 +1,10 @@
 # Chatbot AI hỗ trợ vận hành
 
+> **Phạm vi cập nhật 30/10/2026 — D-33:** Trợ lý AI thuộc phạm vi và nghiệm thu MVP theo xác nhận mới nhất của chủ dự án. Có thể bật/tắt khi vận hành, nhưng không được bỏ qua triển khai hoặc nghiệm thu AI. Giữ nguyên quyền và luồng nghiệp vụ lõi; hiện mới có thiết kế, chưa có provider hoặc chức năng hoạt động. [Tech stack và đối chiếu](technical/tech-stack.md).
+
 **Phiên bản:** 0.3 · **Trạng thái:** bổ sung thiết kế, chưa triển khai chatbot hoặc kết nối nhà cung cấp AI.
 
-Chatbot được bổ sung vào phạm vi sản phẩm theo yêu cầu mới như một năng lực **tùy chọn**. Phần ticket, SLA, tài sản, phân quyền và báo cáo tiếp tục vận hành bằng các quy tắc đã đặc tả. Không có bước bắt buộc phải qua AI.
+Chatbot được bổ sung vào phạm vi sản phẩm theo yêu cầu mới như một năng lực **thuộc MVP**, có thể bật/tắt khi vận hành. “Tùy chọn” chỉ nói về việc sử dụng và khả dụng, không cho phép bỏ qua triển khai/nghiệm thu AI. Phần ticket, SLA, tài sản, phân quyền và báo cáo tiếp tục vận hành bằng các quy tắc đã đặc tả. Không có bước bắt buộc phải qua AI.
 
 ## 1. Mục tiêu và nguyên tắc
 

@@ -11,6 +11,7 @@ Mô hình này phục vụ phân tích và IA, **không phải schema database, 
 | Đối tượng | Thông tin chính và cách sử dụng |
 |---|---|
 | User | Tên, email, vai trò, phòng ban, trạng thái hoạt động; danh tính assignee/requester, không hiển thị mật khẩu/hash/token |
+| Session | User, hash token opaque, thời điểm tạo/hết hạn/thu hồi; server quản lý, không hiển thị token; khóa user thu hồi mọi phiên |
 | Department | Tên, mã, trạng thái; user hiện tại và phòng ban snapshot của assignment là hai khái niệm khác nhau |
 | Team | Tên, mã, trạng thái, cờ nhóm tiếp nhận; danh sách thành viên hiện tại |
 | TeamMembership | User, nhóm, hiệu lực; bỏ thành viên không xóa lịch sử hành động trước đây |
@@ -30,4 +31,4 @@ Mô hình này phục vụ phân tích và IA, **không phải schema database, 
 
 ID nội bộ không thay thế mã hiển thị. Không dựa vào ID khó đoán để cấp quyền. SLA phải lưu đủ diễn biến để tính lại giờ hoạt động và giữ breach history; có thể cần thêm bản ghi interval/violation khi thiết kế vật lý, đây không phải thêm module sản phẩm.
 
-Session server và cơ chế phiên bản cần có trong mô hình triển khai dù chưa nằm ở danh sách entity nghiệp vụ gốc. Unique/index/foreign key/transaction sẽ được đặc tả lúc M1; bộ tài liệu này chưa chọn ORM, khóa hay cấu trúc bảng cụ thể.
+Đã chọn PostgreSQL/SQLAlchemy đồng bộ/Alembic, UUID nội bộ và version theo D-30–D-32; unique/index/foreign key/schema vật lý và migration sẽ được đặc tả ở M1. Có thể thêm bảng kỹ thuật SLAInterval/SLAViolation/OutboxEvent để lưu thời gian, chống trùng và phát lại công việc sau commit; không phải phân hệ sản phẩm mới. Xem [kiến trúc](../technical/architecture.md).

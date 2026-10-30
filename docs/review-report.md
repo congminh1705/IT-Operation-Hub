@@ -1,20 +1,34 @@
 # Biên bản rà soát hồ sơ thiết kế
 
-**Ngày:** 30/10/2026 · **Phiên bản:** 0.4  
+**Ngày:** 30/10/2026 · **Phiên bản hồ sơ:** 0.5 (UI giữ v0.4)
 **Phạm vi:** tài liệu phân tích và thiết kế. Không phải biên bản nghiệm thu phần mềm.
 
 ## Thành phần bàn giao
 
 | Thành phần | Số lượng / nội dung |
 |---|---|
-| Markdown | 31 file, gồm phân tích, nghiệp vụ, IA, UI/UX, thiết kế AI, thị giác/motion, cấp tài khoản nội bộ, hướng dẫn xem sơ đồ và kế hoạch kiểm chứng |
+| Markdown | 34 file, gồm phân tích, nghiệp vụ, IA, UI/UX, thiết kế AI, thị giác/motion, cấp tài khoản nội bộ, hướng dẫn xem sơ đồ, kế hoạch kiểm chứng và 3 tài liệu kỹ thuật mục tiêu; thêm 1 JSON snapshot metadata package |
 | Use cases | 33 mục lõi giữ nguyên + 8 mục AI có namespace riêng; 4 SVG theo vai trò, gồm tổng quan và 3 nhóm chi tiết |
 | Backlog | 47 stories lõi + 8 stories AI; có INVEST và phụ thuộc, chưa ước lượng triển khai |
 | Nghiệm thu dự kiến | 47 AC lõi, 10 AC xuyên suốt, 12 ví dụ SLA; thêm 8 AC và 12 ca AI, tất cả chưa chạy |
-| Kiến trúc thông tin | 26 mẫu lõi giữ nguyên + 3 mẫu AI tùy chọn |
+| Kiến trúc thông tin | 26 mẫu lõi giữ nguyên + 3 mẫu AI trong MVP |
 | Thiết kế trực quan | 16 SVG UI (13 lõi + 3 AI), 2 board SVG, 44 icon SVG, 27 SVG sơ đồ, 1 SVG/PNG use case tổng quan, 3 SVG use case chi tiết và 1 PNG minh họa login; tổng 93 SVG/2 PNG. Đã bỏ 15 PNG xuất giao diện riêng; ảnh nhúng XMind được giữ |
 | XMind | 9 file: bộ tổng 27 sheet và 8 file chuyên đề; 18 ảnh UI/board trong bộ tổng và file UI/UX, 3 ảnh trong file AI |
-| Liên kết nghiệp vụ | 13 nhóm quy tắc lõi, ma trận quyền, 15 chỉ số giữ nguyên; 29 quyết định gồm phần AI, thị giác và cấp tài khoản nội bộ |
+| Liên kết nghiệp vụ | 13 nhóm quy tắc lõi, ma trận quyền, 15 chỉ số giữ nguyên; 33 quyết định, gồm D-30–D-33 chốt stack/kiến trúc/AI trong MVP |
+
+## Đối chiếu và chốt kỹ thuật v0.5
+
+Đã đối chiếu bản chốt mới với scope, UI/UX, dữ liệu, quyền, SLA, metrics và checklist. Frontend TypeScript/Next.js/React và backend Python/FastAPI phù hợp thiết kế hiện tại. Repo chưa có framework/source, nên không có migration mã ứng dụng từ stack khác. Bổ sung [bảng đối chiếu](technical/tech-stack.md), [kiến trúc](technical/architecture.md), [baseline phiên bản](technical/version-baseline.md) và metadata registry làm bằng chứng khảo sát.
+
+Đã phát hiện hai xung đột khi ghép latest: TypeScript 7 với peer TypeScript 5 của openapi-typescript; redis-py 8 với range <6.5 của Kombu 5.6.2 Redis extra. Baseline giữ TypeScript 5.9.3 và để solver chọn redis-py trong range phù hợp. Metadata không thay dependency resolution/build/integration test; chưa cài bất cứ dependency ứng dụng nào.
+
+Theo xác nhận mới nhất của chủ dự án, D-33 được cập nhật: trợ lý AI thuộc phạm vi triển khai và nghiệm thu MVP. Giữ 8 UC/US, 8 AC, 12 ca kiểm chứng và bản vẽ AI trong MVP; đồng bộ README, scope, IA, UI/UX, checklist, kiến trúc và XMind. Có thể bật/tắt khi vận hành, nhưng không dùng trạng thái tắt hoặc hình tĩnh để thay nghiệm thu AI thật. Provider/model/SDK chưa chọn, là việc cần chốt trước tích hợp trong MVP. Không đổi máy trạng thái, công thức SLA/dashboard, quyền hoặc D-29. Mô hình khái niệm bổ sung Session và tham chiếu các bảng kỹ thuật có thể cần; chưa có schema vật lý.
+
+## Kiểm tra cấu trúc hồ sơ v0.5
+
+Đã chạy lại kiểm tra: 34 Markdown có liên kết nội bộ hợp lệ, bảng/fence hợp lệ và UTF-8; 93 SVG parse XML; 9 XMind có archive/JSON, liên kết quan hệ và ảnh hợp lệ, bộ tổng vẫn 27 sheet; snapshot JSON có 45 bản ghi metadata khảo sát. Không có lỗi trong các kiểm tra này. Đối chiếu với bản bàn giao trước xác nhận 9 tài liệu use case/story/AC/flows/quyền/nghiệp vụ/metrics/cấp tài khoản/truy vết và 18 SVG UI/board giữ nguyên; ảnh nhúng/manifest XMind không đổi. Các thay đổi XMind chỉ là nhãn/ghi chú phạm vi và stack.
+
+Đây là kiểm tra tài liệu. Chưa chạy dependency solver, frontend build, database migration, API/worker hoặc kiểm thử ứng dụng; chưa mở XMind Desktop.
 
 ## Kiểm tra đã thực hiện trên tài liệu
 

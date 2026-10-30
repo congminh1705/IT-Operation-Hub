@@ -1,5 +1,7 @@
 # Sơ đồ IT Operations Hub — XMind
 
+> **Phạm vi cập nhật 30/10/2026 — D-33:** Trợ lý AI thuộc phạm vi và nghiệm thu MVP theo xác nhận mới nhất của chủ dự án. Có thể bật/tắt khi vận hành, nhưng không được bỏ qua triển khai hoặc nghiệm thu AI. Giữ nguyên quyền và luồng nghiệp vụ lõi; hiện mới có thiết kế, chưa có provider hoặc chức năng hoạt động. [Tech stack và đối chiếu](../technical/tech-stack.md).
+
 File tổng [it-operations-hub.xmind](it-operations-hub.xmind) có **27 sheet**. Các topic, nhánh, ghi chú, quan hệ và màu được lưu trong file `.xmind` để chỉnh sửa; không chỉ là ảnh đặt trong một file có đuôi XMind.
 
 ## Mở và sử dụng

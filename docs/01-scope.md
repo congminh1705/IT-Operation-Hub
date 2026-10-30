@@ -12,7 +12,7 @@ MVP tương lai phải có backend và lưu trữ bền vững. Bộ tài liệu
 |---|---|
 | Research top down, rà soát repo và nguồn tham khảo | Khởi tạo framework, cài dependency, chạy server |
 | Actor, use case UML, 47 stories lõi + 8 stories AI và AC | Viết frontend/backend hoặc API thực thi |
-| Quyền trên bản ghi, trạng thái ticket, SLA, tài sản | Schema vật lý, SQL, Prisma, migration, seed |
+| Quyền trên bản ghi, trạng thái ticket, SLA, tài sản | Schema vật lý, SQL, Alembic migration, seed |
 | IA, navigation, screen inventory, user journeys/flows, thiết kế chatbot tùy chọn | Kết nối dịch vụ/email/chat hoặc provider AI thực thi |
 | Wireframe SVG, design tokens, tương tác, nội dung và accessibility | Prototype chạy bằng HTML/JS hoặc bản UI có chức năng |
 | Checklist M1–M6, kế hoạch kiểm chứng và truy vết | Tuyên bố đã pass unit/integration/E2E hoặc nghiệm thu MVP |
@@ -25,7 +25,7 @@ MVP tương lai phải có backend và lưu trữ bền vững. Bộ tài liệu
 4. Hai đồng hồ SLA 24/7; snapshot, tạm dừng, mở lại, đổi ưu tiên, cảnh báo nền không trùng.
 5. Tài sản, một cấp phát hiệu lực, thu hồi, trạng thái, ticket liên quan.
 6. Dashboard theo vai trò, báo cáo nguồn dữ liệu thật, thông báo trong ứng dụng và audit.
-7. Trợ lý AI tùy chọn: hỏi đáp có nguồn, đọc dữ liệu có quyền, tóm tắt và soạn nháp; chuyển về màn hình nghiệp vụ để user kiểm tra/gửi.
+7. Trợ lý AI tích hợp trong MVP: hỏi đáp có nguồn, tra cứu theo quyền, tóm tắt và soạn nháp; người dùng kiểm tra/gửi qua form hiện có. Có thể bật/tắt khi vận hành nhưng phải triển khai và đạt nghiệm thu AI; xem D-33.
 
 ## Không thuộc MVP
 
@@ -35,7 +35,7 @@ SaaS đa khách hàng; đăng ký công khai; tự đóng ticket; xóa ticket; A
 
 Thành công ở giai đoạn tài liệu: truy vết được mục tiêu → use case → story → AC → màn hình; không có mâu thuẫn quyền/trạng thái/SLA; bản vẽ thể hiện được luồng chính và trường hợp lỗi quan trọng. Chưa thay thế xác nhận nghiệp vụ và nghiên cứu người dùng.
 
-Thành công ở giai đoạn MVP: đối chiếu 12 yêu cầu nghiệm thu gốc trong [bảng truy vết](traceability/master-traceability.md), từ chối truy cập trái quyền cả qua API, lưu dữ liệu sau khởi động lại và chạy kiểm thử các luồng chính. Không dùng số liệu giả thay dữ liệu vận hành.
+Thành công ở giai đoạn MVP: đạt thêm 8 AC AI và 12 ca kiểm chứng AI cùng regression lõi; đối chiếu 12 yêu cầu nghiệm thu gốc trong [bảng truy vết](traceability/master-traceability.md), từ chối truy cập trái quyền cả qua API, lưu dữ liệu sau khởi động lại và chạy kiểm thử các luồng chính. Không dùng số liệu giả thay dữ liệu vận hành.
 
 ## Chiến lược giai đoạn
 
@@ -43,4 +43,8 @@ Thiết kế bao phủ toàn bộ MVP để tránh ngõ cụt. Khi được yêu
 
 ## Phần AI được bổ sung
 
-[Chatbot AI](10-ai-assistant.md) là lớp hỗ trợ tùy chọn trong phạm vi thiết kế mới. Giữ nguyên 33 use case, 47 stories và các quy tắc lõi; bổ sung namespace riêng gồm 8 use case/stories, 3 mẫu màn hình và bộ AC AI. Không thay thứ tự M1–M6 hoặc bắt người dùng đi qua AI. Chưa có chatbot/provider hoạt động vì dự án vẫn ở giai đoạn tài liệu.
+[Chatbot AI](10-ai-assistant.md) là hạng mục trong MVP theo xác nhận mới nhất của chủ dự án, có thể bật/tắt khi vận hành. Giữ nguyên 33 use case, 47 stories và các quy tắc lõi; bổ sung namespace riêng gồm 8 use case/stories, 3 mẫu màn hình và bộ AC AI. Không thay thứ tự M1–M6 hoặc bắt người dùng đi qua AI. Chưa có chatbot/provider hoạt động vì dự án vẫn ở giai đoạn tài liệu.
+
+## Công nghệ mục tiêu
+
+Chốt Next.js/React/TypeScript cho frontend và FastAPI/Python cho backend, PostgreSQL/SQLAlchemy/Alembic, Celery/Beat/Redis. Chi tiết đối chiếu, ranh giới và phiên bản trong [tech stack](technical/tech-stack.md). Đợt này chỉ cập nhật tài liệu, chưa khởi tạo ứng dụng.

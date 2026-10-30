@@ -1,5 +1,7 @@
 # Use cases, INVEST và nghiệm thu cho chatbot AI
 
+> **Phạm vi cập nhật 30/10/2026 — D-33:** Trợ lý AI thuộc phạm vi và nghiệm thu MVP theo xác nhận mới nhất của chủ dự án. Có thể bật/tắt khi vận hành, nhưng không được bỏ qua triển khai hoặc nghiệm thu AI. Giữ nguyên quyền và luồng nghiệp vụ lõi; hiện mới có thiết kế, chưa có provider hoặc chức năng hoạt động. [Tech stack và đối chiếu](../technical/tech-stack.md).
+
 **Phạm vi bổ sung:** 8 use case và 8 user stories. Toàn bộ mới ở mức thiết kế; không đổi mã hoặc nội dung 33 UC/47 US của nghiệp vụ lõi. `UC-AI`, `US-AI`, `AC-AI` và `SCR-AI` là các mã riêng.
 
 ## Danh mục use case

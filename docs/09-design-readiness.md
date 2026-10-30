@@ -25,8 +25,9 @@ Quy ước: `[x]` là **đã có tài liệu/bản vẽ trong lần bàn giao n�
 
 - [x] Đặc tả đăng nhập/đăng xuất, scope, quản trị, layout, quyền và khóa phiên.
 - [x] Thống nhất D-29: trưởng phòng dùng Requester gửi ticket cấp tài khoản trong hệ thống; Admin xác minh và tạo user, bàn giao qua kênh doanh nghiệp; trưởng phòng xác nhận kết quả trên ticket.
-- [ ] Refinement password policy, hỗ trợ quên/reset password không email và bootstrap Admin đầu tiên; thư viện auth server session.
-- [ ] Kiểm tra tương thích stack và phiên bản tại lúc khởi tạo; khóa dependency.
+- [x] Chốt stack/kiến trúc D-30–D-33, server session PostgreSQL + pwdlib/CSRF; rà metadata và các xung đột dependency.
+- [ ] Refinement password policy, hỗ trợ quên/reset password không email và bootstrap Admin đầu tiên; triển khai/review bảo mật session service.
+- [ ] Resolve/build/test bộ phiên bản ứng viên, review security và khóa pnpm-lock.yaml/uv.lock ở M1; xem [gate kỹ thuật](technical/version-baseline.md).
 - [ ] Khởi tạo source, database/migration, `.env.example`, Docker Compose và README chạy sạch.
 - [ ] Seed hư cấu có cờ demo, chạy lại được:4 role/3 team/5 department/~20 user.
 - [ ] Test đăng nhập bốn vai trò, negative authorization, thu hồi phiên.
@@ -46,7 +47,8 @@ Quy ước: `[x]` là **đã có tài liệu/bản vẽ trong lần bàn giao n�
 ## M3 — SLA và thông báo
 
 - [x] Hai đồng hồ, snapshot P1–P4, pause/reopen/priority,80%/100%, dedup và recipients.
-- [ ] Refine US32/33 thành lát cắt phù hợp; chọn scheduler và quan sát worker.
+- [x] Chọn Celery + một Beat + Redis, chu kỳ 60 giây, PG lưu dedup/violation; worker Linux.
+- [ ] Refine US32/33 thành lát cắt phù hợp; triển khai và quan sát worker.
 - [ ] Worker nền dùng chung quy tắc với API, lịch sử breach và notification thực.
 - [ ] Tự động hóa TC-SLA01–12, concurrency/dedup và không phụ thuộc dashboard.
 
@@ -78,13 +80,13 @@ Quy ước: `[x]` là **đã có tài liệu/bản vẽ trong lần bàn giao n�
 - [ ] Bàn giao source/migration/seed/env example/README/API thực thi, hướng dẫn worker và storage.
 - [ ] Ghi kết quả test thực tế; tách rõ dữ liệu demo và hạn chế còn lại.
 
-**Gate:** đủ12 tiêu chí nghiệm thu gốc; không dùng chatbot tùy chọn hoặc giai đoạn 2 để thay thế các điều kiện nghiệm thu lõi chưa đạt.
+**Gate:** đủ 12 tiêu chí nghiệm thu gốc và 8 AC AI/12 ca kiểm chứng AI; regression lõi đạt khi AI bật, tắt và lỗi. AI không thay thế điều kiện lõi chưa đạt; chưa nghiệm thu MVP nếu chỉ có giao diện chat hoặc phản hồi mẫu.
 
 ## Điều kiện đưa story vào triển khai
 
 Role/scope, đầu vào/đầu ra, lỗi, AC, quy tắc và màn hình đã rõ; các story rộng được chia; phụ thuộc có dữ liệu fixture; business owner xác nhận giả định ảnh hưởng vận hành. Không dùng “tài liệu đầy đủ” để bỏ qua refinement E/S với đội phát triển.
 
-## Nhánh AI tùy chọn
+## Trợ lý AI — bắt buộc trong MVP
 
 - [x] Đặc tả lớp AI đọc/soạn nháp, phạm vi quyền, nguồn và handoff về form.
 - [x] 8 use case, 8 user stories INVEST, AC riêng và 12 ca kiểm chứng AI.
@@ -94,4 +96,4 @@ Role/scope, đầu vào/đầu ra, lỗi, AC, quy tắc và màn hình đã rõ;
 - [ ] Xây/tích hợp chatbot; hiện chưa có model call hoặc backend.
 - [ ] Chạy AC-AI/TC-AI cùng bộ regression lõi với AI bật, tắt và lỗi.
 
-Nhánh này không đổi thứ tự M1–M6 hoặc gate nghiệm thu lõi. Xem [tích hợp và kiểm tra không thay đổi nghiệp vụ](ai/integration-and-non-regression.md).
+Theo D-33 cập nhật, triển khai nhánh này trong MVP sau khi API lõi tương ứng sẵn sàng: M1 chốt provider/model, dữ liệu và cấu hình; M2–M5 tích hợp theo năng lực; M6 bắt buộc đạt 8 AC AI, 12 ca kiểm chứng và regression lõi. Có thể bật/tắt khi vận hành nhưng không dùng trạng thái tắt để coi AI đã được nghiệm thu. Giữ thứ tự M1–M6 và mọi gate lõi. Xem [tích hợp và kiểm tra không thay đổi nghiệp vụ](ai/integration-and-non-regression.md).
