@@ -14,12 +14,14 @@ Hệ thống là **IT Operations Hub cho một tổ chức**. Actor chính: Requ
 
 Bản đồ XMind tổ chức actor–goal để đọc và chỉnh sửa. Đây không phải cách thay thế ký pháp UML chính thức. Phụ lục UML vẫn được giữ để kiểm tra association và system boundary:
 
-- [Tài khoản và quản trị — SVG](diagrams/use-cases-access.svg): UC01–UC09 · [Nguồn PlantUML](diagrams/use-cases-access.puml).
-- [Ticket, SLA, thông báo — SVG](diagrams/use-cases-ticket.svg): UC10–UC26 · [Nguồn PlantUML](diagrams/use-cases-ticket.puml).
-- [Tài sản và quan sát — SVG](diagrams/use-cases-operations.svg): UC27–UC33 · [Nguồn PlantUML](diagrams/use-cases-operations.puml).
+- [Tài khoản và quản trị — SVG](diagrams/use-cases-access.svg): UC01–UC09.
+- [Ticket, SLA, thông báo — SVG](diagrams/use-cases-ticket.svg): UC10–UC26.
+- [Tài sản và quan sát — SVG](diagrams/use-cases-operations.svg): UC27–UC33.
 - [UML tổng quan dạng SVG](diagrams/use-cases-overview.svg).
 
 [Xem tất cả sơ đồ và hướng dẫn mở trong VS Code/GitHub](diagrams/README.md).
+
+Các SVG được bố trí lại theo góc nhìn actor của cùng một hệ thống. Mã UC lặp ở nhiều góc nhìn vẫn biểu diễn cùng nghiệp vụ; Admin kế thừa IT Manager và mọi vai trò đều có các tác vụ dùng chung. Phạm vi đọc/ghi cụ thể theo ma trận quyền.
 
 ## Danh mục đầy đủ
 

@@ -8,18 +8,18 @@
 | Thành phần | Số lượng / nội dung |
 |---|---|
 | Markdown | 30 file, gồm phân tích, nghiệp vụ, IA, UI/UX, thiết kế AI, thị giác/motion, hướng dẫn xem sơ đồ và kế hoạch kiểm chứng |
-| Use cases | 33 mục lõi giữ nguyên + 8 mục AI có namespace riêng; 3 nguồn PlantUML lõi phụ lục |
+| Use cases | 33 mục lõi giữ nguyên + 8 mục AI có namespace riêng; 4 SVG theo vai trò, gồm tổng quan và 3 nhóm chi tiết |
 | Backlog | 47 stories lõi + 8 stories AI; có INVEST và phụ thuộc, chưa ước lượng triển khai |
 | Nghiệm thu dự kiến | 47 AC lõi, 10 AC xuyên suốt, 12 ví dụ SLA; thêm 8 AC và 12 ca AI, tất cả chưa chạy |
 | Kiến trúc thông tin | 26 mẫu lõi giữ nguyên + 3 mẫu AI tùy chọn |
-| Thiết kế trực quan | 13 SVG UI (10 lõi + 3 AI), 2 board SVG, 44 icon SVG, 27 SVG/PNG sơ đồ, 1 SVG/PNG UML tổng quan, 3 SVG UML xuất từ PlantUML và 1 PNG minh họa login; tổng 90 SVG/29 PNG. Đã bỏ 15 PNG xuất giao diện riêng; ảnh nhúng XMind được giữ |
+| Thiết kế trực quan | 13 SVG UI (10 lõi + 3 AI), 2 board SVG, 44 icon SVG, 27 SVG/PNG sơ đồ, 1 SVG/PNG use case tổng quan, 3 SVG use case chi tiết và 1 PNG minh họa login; tổng 90 SVG/29 PNG. Đã bỏ 15 PNG xuất giao diện riêng; ảnh nhúng XMind được giữ |
 | XMind | 9 file: bộ tổng 27 sheet và 8 file chuyên đề; 15 ảnh UI/board trong bộ tổng và file UI/UX, 3 ảnh trong file AI |
 | Liên kết nghiệp vụ | 13 nhóm quy tắc lõi, ma trận quyền, 15 chỉ số giữ nguyên; 28 quyết định gồm phần AI và thị giác bổ sung |
 
 ## Kiểm tra đã thực hiện trên tài liệu
 
 - Đối chiếu đủ US01–US47 với AC01–AC47 và 47 dòng truy vết; không thiếu ID trong dải.
-- Đối chiếu đủ UC01–UC33 giữa catalog, nguồn PlantUML và truy vết.
+- Đối chiếu đủ UC01–UC33 giữa catalog, sơ đồ SVG và truy vết.
 - Kiểm tra tham chiếu screen trong truy vết nằm trong inventory; không coi dialog là route đã có.
 - Kiểm tra đường dẫn nội bộ, số cột các bảng Markdown, fence của code block, UTF-8 và cấu trúc XML của 90 SVG.
 - Kiểm tra SVG không nhúng script, foreignObject hay tài nguyên ảnh từ mạng; có title/description.
@@ -33,6 +33,8 @@
 - Bổ sung 44 icon vector cùng hệ nét, board trạng thái component và storyboard motion/responsive; không coi storyboard tĩnh là animation chạy thật. Lưu bộ UI trước thay đổi trong [archive v0.3](design/archive/ui-v0.3.zip).
 
 Các kiểm tra cấu trúc và ID được chạy bằng script tạm trong phiên làm việc; không thêm framework test hoặc mã ứng dụng vào repository.
+
+Đợt làm mới sơ đồ: vẽ lại cả 4 SVG theo góc nhìn vai trò, giữ 33 UC và toàn bộ 54 association actor–use case của ba sơ đồ chi tiết. Mã UC có thể lặp giữa các góc nhìn; sơ đồ không bổ sung nghiệp vụ. Kiểm tra dữ liệu quan hệ trước/sau, mã UC, nội dung và bố cục; cập nhật PNG tổng quan hiện có cho khớp SVG. Ba file nguồn cũ đã được bỏ theo yêu cầu, SVG là tài liệu chỉnh sửa trực tiếp.
 
 ## Kiểm tra token tương phản
 
@@ -52,7 +54,7 @@ Tính tỷ lệ tương phản từ mã màu sRGB cho các cặp token. Đây l�
 
 Chưa có frontend/backend/database/worker chạy thực, API contract triển khai, migration, seed hoặc kiểm thử tự động ứng dụng. Chưa có dữ liệu thật; các tên, thiết bị, ticket và số liệu trên bản vẽ đều hư cấu. Không nghiệm thu tính bền vững, phân quyền backend, SLA nền hay cấp phát đồng thời từ bản vẽ.
 
-Chưa phỏng vấn, tree test hoặc usability test; personas/journeys là giả thuyết. Chưa đánh giá bàn phím, screen reader, DOM, reflow hoặc hiệu năng ứng dụng. Các sơ đồ chính được chuyển sang XMind; đã rà archive, JSON, ID và tham chiếu quan hệ. Chưa mở trực tiếp bằng XMind Desktop. Ba phụ lục UML đã được render cục bộ bằng PlantUML 1.2026.9 thành SVG, đối chiếu đủ 33 UC; nguồn `.puml` được giữ nguyên. Ảnh xem nhanh XMind được dựng từ cùng nội dung, không phải ảnh chụp ứng dụng XMind.
+Chưa phỏng vấn, tree test hoặc usability test; personas/journeys là giả thuyết. Chưa đánh giá bàn phím, screen reader, DOM, reflow hoặc hiệu năng ứng dụng. Các sơ đồ chính được chuyển sang XMind; đã rà archive, JSON, ID và tham chiếu quan hệ. Chưa mở trực tiếp bằng XMind Desktop. Bốn sơ đồ use case SVG được vẽ trực tiếp theo góc nhìn vai trò, đối chiếu đủ 33 UC trong ba sơ đồ chi tiết. Ảnh xem nhanh XMind được dựng từ cùng nội dung, không phải ảnh chụp ứng dụng XMind.
 
 Chrome headless không xuất được ảnh trong môi trường phiên làm việc; PNG được xuất bằng System.Drawing từ các thành phần SVG. Có thể có khác biệt font/raster hóa giữa PNG và trình duyệt, nên SVG và đặc tả là nguồn chỉnh sửa. Không dùng PNG để chứng minh browser compatibility.
 
