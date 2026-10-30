@@ -31,7 +31,7 @@ Các thông tin thực địa về doanh nghiệp, khối lượng ticket và th
 
 ## 3. Cây phân rã sản phẩm
 
-![Sơ đồ XMind — 01-product-map](xmind/previews/01-product-map.png)
+![Sơ đồ XMind — 01-product-map](xmind/previews/01-product-map.svg)
 
 [Mở file XMind](xmind/01-product-map.xmind)
 

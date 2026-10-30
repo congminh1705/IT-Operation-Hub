@@ -4,7 +4,7 @@
 
 Đối tượng trung tâm là **ticket**; tài sản, người phụ trách, SLA và lịch sử cung cấp ngữ cảnh. Tách không gian yêu cầu cá nhân với công việc IT bằng scope và navigation, dùng chung chi tiết ticket có quyền. Không dựng bốn ứng dụng tách rời theo role.
 
-![Sơ đồ XMind — 06-information-architecture](xmind/previews/06-information-architecture.png)
+![Sơ đồ XMind — 06-information-architecture](xmind/previews/06-information-architecture.svg)
 
 [Mở file XMind](xmind/03-information-architecture.xmind)
 

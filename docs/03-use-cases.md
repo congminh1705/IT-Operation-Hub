@@ -8,7 +8,7 @@ Hệ thống là **IT Operations Hub cho một tổ chức**. Actor chính: Requ
 
 ## Sơ đồ use case XMind
 
-![Use case theo vai trò](xmind/previews/00-use-cases-overview.png)
+![Use case theo vai trò](xmind/previews/00-use-cases-overview.svg)
 
 [Mở file XMind](xmind/02-use-cases.xmind). File gồm bốn sheet: tổng quan và ba nhóm tài khoản/quản trị, ticket/SLA, tài sản/quan sát. Các chủ đề ghi mã UC để đối chiếu catalog; ghi chú có actor, story và điều kiện phạm vi.
 

@@ -2,7 +2,7 @@
 
 Mô hình này phục vụ phân tích và IA, **không phải schema database, migration hoặc thiết kế API**. Tên trường là thuật ngữ thống nhất để mô tả hành vi.
 
-![Sơ đồ XMind — 18-conceptual-model](../xmind/previews/18-conceptual-model.png)
+![Sơ đồ XMind — 18-conceptual-model](../xmind/previews/18-conceptual-model.svg)
 
 [Mở file XMind](../xmind/05-business-rules.xmind)
 

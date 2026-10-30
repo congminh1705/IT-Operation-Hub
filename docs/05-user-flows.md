@@ -13,7 +13,7 @@ Các journey là **giả thuyết trải nghiệm**, chưa mô tả hành vi đ�
 | Kiểm tra | “Vấn đề đã ổn chưa?” | Banner Resolved, giải pháp | Hai lựa chọn đóng/mở lại có ngữ cảnh |
 | Hoàn tất | “Lần sau có xem lại được không?” | Closed, timeline | Chỉ đọc; cần tiếp tục sau đóng liên hệ M/A |
 
-![Sơ đồ XMind — 07-flow-requester](xmind/previews/07-flow-requester.png)
+![Sơ đồ XMind — 07-flow-requester](xmind/previews/07-flow-requester.svg)
 
 [Mở file XMind](xmind/04-user-flows.xmind)
 
@@ -28,7 +28,7 @@ Các journey là **giả thuyết trải nghiệm**, chưa mô tả hành vi đ�
 | Chờ | Cần người yêu cầu bổ sung thông tin nào? | Pending bắt buộc câu hỏi public |
 | Kết thúc phần IT | Requester kiểm tra lại bằng cách nào? | Giải pháp có kết quả/hướng kiểm tra, chuyển Resolved |
 
-![Sơ đồ XMind — 08-flow-technician](xmind/previews/08-flow-technician.png)
+![Sơ đồ XMind — 08-flow-technician](xmind/previews/08-flow-technician.svg)
 
 [Mở file XMind](xmind/04-user-flows.xmind)
 
@@ -36,13 +36,13 @@ Các journey là **giả thuyết trải nghiệm**, chưa mô tả hành vi đ�
 
 Từ KPI hiện tại → danh sách đúng tập → kiểm tra impact/urgency và nội dung → giao/chuyển nhóm → xem tải mới và lịch sử. Nếu cần đổi priority, dialog hiển thị ngân sách mới trên thời gian đã dùng và yêu cầu lý do; không hứa “gia hạn từ bây giờ”.
 
-![Sơ đồ XMind — 09-flow-manager](xmind/previews/09-flow-manager.png)
+![Sơ đồ XMind — 09-flow-manager](xmind/previews/09-flow-manager.svg)
 
 [Mở file XMind](xmind/04-user-flows.xmind)
 
 ## Flow 4 — Tài sản
 
-![Sơ đồ XMind — 10-flow-asset](xmind/previews/10-flow-asset.png)
+![Sơ đồ XMind — 10-flow-asset](xmind/previews/10-flow-asset.svg)
 
 [Mở file XMind](xmind/04-user-flows.xmind)
 
@@ -50,7 +50,7 @@ Không có nút cấp phát trên thiết bị Đang sửa chữa/Ngừng sử d
 
 ## Flow 5 — Admin khóa user hoặc đổi membership
 
-![Luồng quản trị XMind](xmind/previews/11-flow-admin.png)
+![Luồng quản trị XMind](xmind/previews/11-flow-admin.svg)
 
 [Mở file XMind](xmind/04-user-flows.xmind)
 
@@ -58,7 +58,7 @@ Mở user/thành viên → xem vai trò và ticket đang giao → chọn chuyể
 
 ## Flow 6 — Xung đột và phục hồi lỗi
 
-![Sơ đồ XMind — 12-flow-conflict](xmind/previews/12-flow-conflict.png)
+![Sơ đồ XMind — 12-flow-conflict](xmind/previews/12-flow-conflict.svg)
 
 [Mở file XMind](xmind/04-user-flows.xmind)
 
@@ -66,7 +66,7 @@ Tải bản mới không tự hợp nhất trạng thái, priority hoặc assign
 
 ## Flow 7 — Thông báo
 
-![Luồng thông báo XMind](xmind/previews/13-flow-notification.png)
+![Luồng thông báo XMind](xmind/previews/13-flow-notification.svg)
 
 [Mở file XMind](xmind/04-user-flows.xmind)
 

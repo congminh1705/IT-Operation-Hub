@@ -12,7 +12,7 @@
 | Backlog | 47 stories lõi + 8 stories AI; có INVEST và phụ thuộc, chưa ước lượng triển khai |
 | Nghiệm thu dự kiến | 47 AC lõi, 10 AC xuyên suốt, 12 ví dụ SLA; thêm 8 AC và 12 ca AI, tất cả chưa chạy |
 | Kiến trúc thông tin | 26 mẫu lõi giữ nguyên + 3 mẫu AI tùy chọn |
-| Thiết kế trực quan | 13 SVG UI (10 lõi + 3 AI), 2 board SVG, 44 icon SVG, 27 SVG/PNG sơ đồ, 1 SVG/PNG use case tổng quan, 3 SVG use case chi tiết và 1 PNG minh họa login; tổng 90 SVG/29 PNG. Đã bỏ 15 PNG xuất giao diện riêng; ảnh nhúng XMind được giữ |
+| Thiết kế trực quan | 13 SVG UI (10 lõi + 3 AI), 2 board SVG, 44 icon SVG, 27 SVG sơ đồ, 1 SVG/PNG use case tổng quan, 3 SVG use case chi tiết và 1 PNG minh họa login; tổng 90 SVG/2 PNG. Đã bỏ 15 PNG xuất giao diện riêng; ảnh nhúng XMind được giữ |
 | XMind | 9 file: bộ tổng 27 sheet và 8 file chuyên đề; 15 ảnh UI/board trong bộ tổng và file UI/UX, 3 ảnh trong file AI |
 | Liên kết nghiệp vụ | 13 nhóm quy tắc lõi, ma trận quyền, 15 chỉ số giữ nguyên; 28 quyết định gồm phần AI và thị giác bổ sung |
 
@@ -23,7 +23,7 @@
 - Kiểm tra tham chiếu screen trong truy vết nằm trong inventory; không coi dialog là route đã có.
 - Kiểm tra đường dẫn nội bộ, số cột các bảng Markdown, fence của code block, UTF-8 và cấu trúc XML của 90 SVG.
 - Kiểm tra SVG không nhúng script, foreignObject hay tài nguyên ảnh từ mạng; có title/description.
-- Bộ tài liệu hiện có 29 PNG, gồm sơ đồ và minh họa login nguồn. Đợt v0.4 đã xuất và review 15 ảnh UI/board cùng bản đồ UI/UX; sau đó bỏ 15 PNG giao diện riêng theo yêu cầu, giữ SVG và ảnh nhúng trong XMind. Đo text theo Segoe UI không phát hiện tràn ra ngoài canvas; kiểm tra này không tự chứng minh không có mọi lỗi bố cục trong từng panel.
+- Bộ tài liệu hiện có 2 PNG riêng: tổng quan use case trong wireframes và minh họa login nguồn. Đã bỏ 27 PNG trùng SVG trong thư mục xem nhanh XMind và 15 PNG giao diện riêng theo yêu cầu; giữ SVG và ảnh nhúng trong XMind. Đợt v0.4 đã xuất và review ảnh UI/board cùng bản đồ UI/UX trước khi bỏ các bản PNG riêng. Đo text theo Segoe UI không phát hiện tràn ra ngoài canvas; kiểm tra này không tự chứng minh không có mọi lỗi bố cục trong từng panel.
 - Sửa menu tài sản phục vụ xử lý của Technician, filter mobile và đường nối use case sau review.
 - Đối chiếu 12 tiêu chí nghiệm thu MVP gốc với stories/quy tắc/AC trong [truy vết](traceability/master-traceability.md).
 - Kiểm tra workspace không có file source ứng dụng, migration hoặc dependency được khởi tạo trong đợt này.
@@ -77,7 +77,7 @@ AI hỗ trợ đã được bổ sung vào thiết kế theo yêu cầu mới, d
 
 Trong đợt **v0.4**, so sánh lại xác nhận **9/9 tài liệu nghiệp vụ lõi không đổi** theo các hash bên dưới. Các mã UC/US/AC, máy trạng thái, chính sách SLA, quyền, công thức MET và mô hình tài sản lõi được giữ nguyên. AI dùng mã riêng và đặc tả bổ sung trong [ranh giới tích hợp](ai/integration-and-non-regression.md). Các thay đổi thị giác được mô tả tại [giao diện v0.4](design/visual-refresh.md).
 
-Các hash dưới đây là kết quả lịch sử của đợt bảo toàn v0.4. Sau đó `03-use-cases.md` được bổ sung liên kết tới SVG và trang hướng dẫn xem sơ đồ; phần catalog và luồng nghiệp vụ không đổi.
+Các hash dưới đây là kết quả lịch sử của đợt bảo toàn v0.4, không đại diện cho hash hiện tại sau các lần cập nhật liên kết. Sau đó tài liệu được bổ sung đường dẫn sơ đồ và chuyển ảnh xem nhanh sang SVG; catalog, luồng và quy tắc nghiệp vụ không đổi.
 
 | Tài liệu lõi | SHA-256 trước = sau tại đợt v0.4 |
 |---|---|

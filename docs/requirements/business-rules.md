@@ -42,7 +42,7 @@ Hệ thống tính ưu tiên từ hai đầu vào, không cho Requester truyền
 
 Không có đường chuyển khác. Phân công, bình luận, đính kèm và đổi ưu tiên không tự đổi trạng thái, trừ phản hồi của người yêu cầu lúc Pending. Không bắt đầu từ New đi thẳng In Progress. MVP không tự đóng và không xóa ticket. Requester hủy New có xác nhận; lý do hủy tự nguyện; M/A hủy luôn bắt buộc lý do.
 
-![Sơ đồ XMind — 14-ticket-states](../xmind/previews/14-ticket-states.png)
+![Sơ đồ XMind — 14-ticket-states](../xmind/previews/14-ticket-states.svg)
 
 [Mở file XMind](../xmind/05-business-rules.xmind)
 

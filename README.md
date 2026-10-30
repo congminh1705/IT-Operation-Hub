@@ -27,9 +27,9 @@ Nghiên cứu hiện gồm phân tích đặc tả và desk research. Các proto
 
 ### 1.2 Product mind map
 
-![IT Operations Hub — Product mind map](docs/xmind/previews/01-product-map.png)
+![IT Operations Hub — Product mind map](docs/xmind/previews/01-product-map.svg)
 
-[Mở file XMind: tổng quan và research](docs/xmind/01-product-map.xmind) · [Xem sơ đồ nghiên cứu](docs/xmind/previews/02-research.png)
+[Mở file XMind: tổng quan và research](docs/xmind/01-product-map.xmind) · [Xem sơ đồ nghiên cứu](docs/xmind/previews/02-research.svg)
 
 ### 1.3 INVEST requirements
 
@@ -59,9 +59,23 @@ Các story rộng vẫn cần đội triển khai đánh giá và chia nhỏ; ch
 
 ### 1.4 Use cases
 
-Nghiệp vụ lõi có **33 use case**; phần AI bổ sung **8 use case riêng**. Sơ đồ dưới đây tóm lược các mục tiêu tiêu biểu theo vai trò; bộ XMind chi tiết chia thành tài khoản/quản trị, ticket/SLA và tài sản/quan sát.
+Nghiệp vụ lõi có **33 use case**; phần AI bổ sung **8 use case riêng**. Bốn sơ đồ SVG dưới đây gồm tổng quan theo vai trò và ba nhóm nghiệp vụ chi tiết. Một mã UC có thể xuất hiện ở nhiều góc nhìn nhưng vẫn là cùng một use case.
 
-![IT Operations Hub — Use case theo vai trò](docs/xmind/previews/00-use-cases-overview.png)
+#### Tổng quan theo vai trò
+
+![IT Operations Hub — Use case tổng quan theo vai trò](docs/xmind/previews/00-use-cases-overview.svg)
+
+#### Tài khoản và quản trị — UC01–UC09
+
+![Use case tài khoản và quản trị](docs/diagrams/use-cases-access.svg)
+
+#### Ticket, SLA và thông báo — UC10–UC26
+
+![Use case ticket, SLA và thông báo](docs/diagrams/use-cases-ticket.svg)
+
+#### Tài sản, dashboard và nhật ký — UC27–UC33
+
+![Use case tài sản, dashboard và nhật ký](docs/diagrams/use-cases-operations.svg)
 
 [Mở bộ use case XMind](docs/xmind/02-use-cases.xmind) · [Danh mục 33 use case và luồng chi tiết](docs/03-use-cases.md) · [Xem sơ đồ UML dạng SVG](docs/diagrams/README.md)
 
@@ -105,7 +119,7 @@ Workspace được tổ chức theo nhiệm vụ: tổng quan, yêu cầu/ticket
 
 ### 2.1 Information architecture
 
-![IT Operations Hub — Kiến trúc thông tin](docs/xmind/previews/06-information-architecture.png)
+![IT Operations Hub — Kiến trúc thông tin](docs/xmind/previews/06-information-architecture.svg)
 
 [Mở kiến trúc thông tin XMind](docs/xmind/03-information-architecture.xmind) · [Sitemap, navigation, routes và screen inventory](docs/04-information-architecture.md)
 
@@ -128,7 +142,7 @@ Inventory lõi có **26 mẫu màn hình/tương tác**, bao gồm dialog và tr
 
 ### 2.3 Primary user flows
 
-![IT Operations Hub — Luồng gửi và xác nhận yêu cầu](docs/xmind/previews/07-flow-requester.png)
+![IT Operations Hub — Luồng gửi và xác nhận yêu cầu](docs/xmind/previews/07-flow-requester.svg)
 
 Bộ luồng còn gồm nhận/xử lý ticket, điều phối, cấp phát/thu hồi, quản trị quyền, phục hồi lỗi và thông báo. Xem [user journeys và task flows](docs/05-user-flows.md) hoặc [bộ luồng XMind](docs/xmind/04-user-flows.xmind).
 
