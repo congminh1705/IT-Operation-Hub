@@ -1,113 +1,109 @@
-# Biên bản rà soát hồ sơ thiết kế
+---
+id: itoh-docs-review-report
+title: "Rà soát hồ sơ và bố cục sơ đồ"
+type: report
+domain: quality
+module: documentation
+tags: [quality, documentation, report]
+priority: 2
+status: self-reviewed
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: derived
+purpose: "Ghi phạm vi tự rà soát, thiếu sót đã chỉnh và giới hạn bằng chứng tài liệu."
+---
 
-**Ngày:** 30/10/2026 · **Phiên bản hồ sơ:** 0.5 (UI giữ v0.4)
-**Phạm vi:** tài liệu phân tích và thiết kế. Không phải biên bản nghiệm thu phần mềm.
+# Rà soát hồ sơ và bố cục sơ đồ
 
-## Thành phần bàn giao
+## 1. Phạm vi và trạng thái
 
-| Thành phần | Số lượng / nội dung |
+Đợt hiện tại chỉnh tài liệu/sơ đồ để tăng mức cụ thể, rõ trách nhiệm/guard/ngoại lệ và cải thiện bố cục. Agent tự rà soát; chủ đề tài phê duyệt nội dung. Đây không là review độc lập, XMind Desktop, triển khai hoặc kiểm thử ứng dụng.
+
+[Quy ước](documentation-standard.md) phân biệt nguồn và biểu diễn dẫn xuất. README giữ format hiện có và nguyên thứ tự đầu mục; metadata tham chiếu tại [mục lục hồ sơ](README.md). Không cài dependency dự án, sửa source/migration/cấu hình vận hành hoặc gọi AI API.
+
+## 2. Điểm đã rà và chỉnh
+
+| ID | Vấn đề | Thay đổi hiện hành | Nguồn |
+|---|---|---|---|
+| VIS01 | Use-case lặp nhiều, đường chéo/điều kiện chung chung | Vẽ lại 6 hình; ellipse có ID/mục tiêu/guard, association vuông góc theo scope/actor; không actor AI thứ năm | diagrams/use-cases-*.svg, UC catalog, permissions |
+| VIS02 | Automation thiếu bước/trách nhiệm | Yêu cầu → nguồn/candidates → model → revalidate → commit; thiếu dữ liệu và ngoại lệ có nhánh; lỗi model không partial effect | diagrams/automation-flow.svg, Flow 8 |
+| VIS03 | Onboarding trừu tượng | DAG 6 task DEMO, effort/dependency/người thực hiện; nhánh Admin cấp user song song khi đủ dữ liệu; nghiệm thu ticket riêng | diagrams/onboarding-task-dag.svg, Flow 8 |
+| VIS04 | Giao lại chưa có ví dụ khả thi | Absence DEMO 10–14h; remaining 180 phút; B rảnh 180 phút được xét, C chỉ 120 phút bị loại; khóa/đang làm/vượt scope chuyển ngoại lệ | diagrams/replanning-flow.svg, Flow 9 |
+| VIS05 | State/approval khó đọc | Ticket 12 cạnh, Task 10 cạnh, Asset 8 cạnh có guard; decision khác execution; tách vùng nhánh hủy | diagrams/*-states.svg, BR-04/11/15/18 |
+| VIS06 | Kiến trúc/sequence chưa render, ít chi tiết | Context/container/deployment và 2 sequence: TX1/TX2, budget reservation, claim/dedup, model ngoài transaction, stale/revoke sau duyệt | diagrams/architecture.md |
+| VIS07 | ERD lớn, thiếu trường | 11 góc nhìn có PK/FK/trường chọn lọc, giữ cardinality và nguồn tổng; chỉnh tuyến User → WorkCalendar để không xuyên Task | requirements/conceptual-data-model.md, diagrams/erd-*.svg |
+| VIS08 | Mind map chữ nhỏ/khoảng cách chưa đều | 18 mind map giữ bố cục hai phía; riêng Product/IA chỉ tăng độ đậm khung và viền sáng, giữ format ban đầu. 7 flow chuyển sang graph hành động/điều kiện có hướng; 2 state graph giữ nguyên | xmind/previews/, xmind/*.xmind |
+| VIS09 | Nguồn/ảnh dẫn xuất chưa đồng bộ | Cập nhật FIG registry, Flow 8/9, BR-11, traceability, hướng dẫn xem và PNG tổng quan | diagrams/README.md, 05-user-flows.md, business-rules.md |
+
+Giữ 51 UC (33 lõi, 8 AI, 10 OPS), 67 stories (47 lõi, 8 AI, 12 OPS), 36 mẫu screen. Số người/phút minh họa đều DEMO, không là dữ liệu vận hành hoặc policy được duyệt. Field/type/index/nullable/lock vật lý cần refinement D-40.
+
+## 3. Kiểm chứng tài liệu và hình
+
+| Phép kiểm | Kết quả / phạm vi |
 |---|---|
-| Markdown | 34 file, gồm phân tích, nghiệp vụ, IA, UI/UX, thiết kế AI, thị giác/motion, cấp tài khoản nội bộ, hướng dẫn xem sơ đồ, kế hoạch kiểm chứng và 3 tài liệu kỹ thuật mục tiêu; thêm 1 JSON snapshot metadata package |
-| Use cases | 33 mục lõi giữ nguyên + 8 mục AI có namespace riêng; 4 SVG theo vai trò, gồm tổng quan và 3 nhóm chi tiết |
-| Backlog | 47 stories lõi + 8 stories AI; có INVEST và phụ thuộc, chưa ước lượng triển khai |
-| Nghiệm thu dự kiến | 47 AC lõi, 10 AC xuyên suốt, 12 ví dụ SLA; thêm 8 AC và 12 ca AI, tất cả chưa chạy |
-| Kiến trúc thông tin | 26 mẫu lõi giữ nguyên + 3 mẫu AI trong MVP |
-| Thiết kế trực quan | 16 SVG UI (13 lõi + 3 AI), 2 board SVG, 44 icon SVG, 27 SVG sơ đồ, 1 SVG/PNG use case tổng quan, 3 SVG use case chi tiết và 1 PNG minh họa login; tổng 93 SVG/2 PNG. Đã bỏ 15 PNG xuất giao diện riêng; ảnh nhúng XMind được giữ |
-| XMind | 9 file: bộ tổng 27 sheet và 8 file chuyên đề; 18 ảnh UI/board trong bộ tổng và file UI/UX, 3 ảnh trong file AI |
-| Liên kết nghiệp vụ | 13 nhóm quy tắc lõi, ma trận quyền, 15 chỉ số giữ nguyên; 33 quyết định, gồm D-30–D-33 chốt stack/kiến trúc/AI trong MVP |
+| Markdown | Metadata cho 46 tài liệu docs/; README là ngoại lệ format có chủ đích. Kiểm links/file/anchor, H1/heading, bảng/fence và ID trên 47 Markdown |
+| README | Giữ thứ tự H2/H3 cũ; thêm mục 5 C4, 6 Database/OpenAPI, 7 Folder structures trước Documentation theo cách trình bày repo mẫu |
+| Mermaid | 20 block đã render thực: 19 SVG theo miền/kiến trúc/C4/sequence và một nguồn ERD tổng; dùng thư viện có sẵn, không cài dependency repo |
+| SVG | 121 SVG parse XML; 77 hình không phải icon render/đo bằng Chrome; không phát hiện chữ tràn canvas/node/width hoặc relationship ERD xuyên entity khác sau chỉnh |
+| Visual review | Đợt sơ đồ trước xem 56 hình qua contact sheet; đợt hợp đồng render lại 3 ER views và thêm 3 C4 SVG, xem C3/L4 để kiểm mũi tên/đệm/nhãn |
+| XMind | 9 ZIP/JSON; master 27 sheet và subset cùng nội dung; topic IDs/endpoints/resource refs hợp lệ; graph ticket/asset có 12/8 relationships |
+| PNG | Tái xuất tổng quan từ use-cases-overview.svg; UI vẫn là minh họa thiết kế |
 
-## Đối chiếu và chốt kỹ thuật v0.5
+Đây không là validator đầy đủ của framework đã cài, test ứng dụng, kiểm định UML/C4 hoặc chứng nhận accessibility. Đo hình học trên Chrome/font có sẵn không bảo đảm mọi renderer; contact sheet là rà tổng thể, không phải đọc mọi glyph ở mọi mức zoom. Chưa mở bằng XMind Desktop.
 
-Đã đối chiếu bản chốt mới với scope, UI/UX, dữ liệu, quyền, SLA, metrics và checklist. Frontend TypeScript/Next.js/React và backend Python/FastAPI phù hợp thiết kế hiện tại. Repo chưa có framework/source, nên không có migration mã ứng dụng từ stack khác. Bổ sung [bảng đối chiếu](technical/tech-stack.md), [kiến trúc](technical/architecture.md), [baseline phiên bản](technical/version-baseline.md) và metadata registry làm bằng chứng khảo sát.
+## 4. Nhóm file chịu ảnh hưởng
 
-Đã phát hiện hai xung đột khi ghép latest: TypeScript 7 với peer TypeScript 5 của openapi-typescript; redis-py 8 với range <6.5 của Kombu 5.6.2 Redis extra. Baseline giữ TypeScript 5.9.3 và để solver chọn redis-py trong range phù hợp. Metadata không thay dependency resolution/build/integration test; chưa cài bất cứ dependency ứng dụng nào.
-
-Theo xác nhận mới nhất của chủ dự án, D-33 được cập nhật: trợ lý AI thuộc phạm vi triển khai và nghiệm thu MVP. Giữ 8 UC/US, 8 AC, 12 ca kiểm chứng và bản vẽ AI trong MVP; đồng bộ README, scope, IA, UI/UX, checklist, kiến trúc và XMind. Có thể bật/tắt khi vận hành, nhưng không dùng trạng thái tắt hoặc hình tĩnh để thay nghiệm thu AI thật. Provider/model/SDK chưa chọn, là việc cần chốt trước tích hợp trong MVP. Không đổi máy trạng thái, công thức SLA/dashboard, quyền hoặc D-29. Mô hình khái niệm bổ sung Session và tham chiếu các bảng kỹ thuật có thể cần; chưa có schema vật lý.
-
-## Kiểm tra cấu trúc hồ sơ v0.5
-
-Đã chạy lại kiểm tra: 34 Markdown có liên kết nội bộ hợp lệ, bảng/fence hợp lệ và UTF-8; 93 SVG parse XML; 9 XMind có archive/JSON, liên kết quan hệ và ảnh hợp lệ, bộ tổng vẫn 27 sheet; snapshot JSON có 45 bản ghi metadata khảo sát. Không có lỗi trong các kiểm tra này. Đối chiếu với bản bàn giao trước xác nhận 9 tài liệu use case/story/AC/flows/quyền/nghiệp vụ/metrics/cấp tài khoản/truy vết và 18 SVG UI/board giữ nguyên; ảnh nhúng/manifest XMind không đổi. Các thay đổi XMind chỉ là nhãn/ghi chú phạm vi và stack.
-
-Đây là kiểm tra tài liệu. Chưa chạy dependency solver, frontend build, database migration, API/worker hoặc kiểm thử ứng dụng; chưa mở XMind Desktop.
-
-## Kiểm tra đã thực hiện trên tài liệu
-
-- Đối chiếu đủ US01–US47 với AC01–AC47 và 47 dòng truy vết; không thiếu ID trong dải.
-- Đối chiếu đủ UC01–UC33 giữa catalog, sơ đồ SVG và truy vết.
-- Kiểm tra tham chiếu screen trong truy vết nằm trong inventory; không coi dialog là route đã có.
-- Kiểm tra đường dẫn nội bộ, số cột các bảng Markdown, fence của code block, UTF-8 và cấu trúc XML của 93 SVG.
-- Kiểm tra SVG không nhúng script, foreignObject hay tài nguyên ảnh từ mạng; có title/description.
-- Bộ tài liệu hiện có 2 PNG riêng: tổng quan use case trong wireframes và minh họa login nguồn. Đã bỏ 27 PNG trùng SVG trong thư mục xem nhanh XMind và 15 PNG giao diện riêng theo yêu cầu; giữ SVG và ảnh nhúng trong XMind. Đợt v0.4 đã xuất và review ảnh UI/board cùng bản đồ UI/UX trước khi bỏ các bản PNG riêng. Đo text theo Segoe UI không phát hiện tràn ra ngoài canvas; kiểm tra này không tự chứng minh không có mọi lỗi bố cục trong từng panel.
-- Sửa menu tài sản phục vụ xử lý của Technician, filter mobile và đường nối use case sau review.
-- Đối chiếu 12 tiêu chí nghiệm thu MVP gốc với stories/quy tắc/AC trong [truy vết](traceability/master-traceability.md).
-- Kiểm tra workspace không có file source ứng dụng, migration hoặc dependency được khởi tạo trong đợt này.
-- Kiểm tra README trình bày trực tiếp sản phẩm và tài liệu không có thông tin nhận diện dự án khác.
-- Kiểm tra XMind chứa đủ 33 UC/47 US/26 screen lõi và 8 UC-AI/US-AI/AC-AI cùng 3 SCR-AI; quan hệ trỏ tới topic hợp lệ, ảnh nhúng trong archive.
-- Trong đợt bổ sung AI v0.3, 9 tài liệu lõi và 10 SVG lõi giữ nguyên hoàn toàn. Đợt làm mới thị giác v0.4 chủ động thay 13 bản UI theo yêu cầu mới; 9 tài liệu nghiệp vụ lõi tiếp tục khớp SHA-256. Không đồng nhất các kiểm tra tài liệu với regression test ứng dụng.
-- Bổ sung 44 icon vector cùng hệ nét, board trạng thái component và storyboard motion/responsive; không coi storyboard tĩnh là animation chạy thật. Lưu bộ UI trước thay đổi trong [archive v0.3](design/archive/ui-v0.3.zip).
-
-Các kiểm tra cấu trúc và ID được chạy bằng script tạm trong phiên làm việc; không thêm framework test hoặc mã ứng dụng vào repository.
-
-Đợt làm mới sơ đồ: vẽ lại cả 4 SVG theo góc nhìn vai trò, giữ 33 UC và toàn bộ 54 association actor–use case của ba sơ đồ chi tiết. Mã UC có thể lặp giữa các góc nhìn; sơ đồ không bổ sung nghiệp vụ. Kiểm tra dữ liệu quan hệ trước/sau, mã UC, nội dung và bố cục; cập nhật PNG tổng quan hiện có cho khớp SVG. Ba file nguồn cũ đã được bỏ theo yêu cầu, SVG là tài liệu chỉnh sửa trực tiếp.
-
-Quy trình D-29 được cập nhật theo chỉ dẫn mới: trưởng phòng gửi ticket Yêu cầu dịch vụ / Tài khoản ngay trong hệ thống bằng quyền Requester; Admin xác minh và tạo user mặc định Requester, có phê duyệt đúng thẩm quyền khi cấp vai trò IT. Trưởng phòng là requester và xác nhận kết quả trên ticket; mật khẩu bàn giao qua kênh doanh nghiệp. Đã làm rõ UC10/US13 và UC05/US05/AC05, form ticket/quản trị và checklist M1. Không thêm role HR hoặc trưởng phòng, không thêm trạng thái ticket hoặc module phê duyệt riêng; chưa triển khai chức năng thực tế. [Quy trình chi tiết](requirements/account-provisioning.md).
-
-Đã bổ sung 3 SVG UI D-29: dashboard Requester/trưởng phòng, biến thể dashboard Admin và chi tiết ticket cấp tài khoản. Giữ các ID SCR10/SCR12/SCR22, chỉ liên kết SCR60 hiện có; tổng 26 mẫu màn hình lõi và 3 mẫu AI không đổi. Đối chiếu phạm vi quyền, bộ lọc hàng đợi Tài khoản và mốc SLA minh họa; không thêm chỉ số cấp mới dựa trên tiêu đề. Ảnh PNG review được xuất vào thư mục tạm và nhúng trong XMind, không tạo lại folder preview PNG trong repo. Form tạo user và dashboard Technician vẫn chưa có bản vẽ riêng.
-
-## Kiểm tra token tương phản
-
-Tính tỷ lệ tương phản từ mã màu sRGB cho các cặp token. Đây là phép tính token, không phải chứng nhận accessibility cho UI chưa tồn tại.
-
-| Cặp màu | Tỷ lệ |
+| Nhóm | File / thay đổi |
 |---|---|
-| Trắng / primary `#1D4ED8` | 6,70:1 |
-| Text `#15263D` / trắng | 15,26:1 |
-| Secondary `#52637A` / trắng | 6,13:1 |
-| Success `#166534` / `#ECFDF3` | 6,76:1 |
-| Warning `#92400E` / `#FFF6DF` | 6,58:1 |
-| Danger `#B91C1C` / `#FFF0F0` | 5,85:1 |
-| Control boundary `#64748B` / trắng | 4,76:1 |
+| Use-case/vòng đời | 6 use-case SVG, automation/task/approval; thêm ticket/asset SVG; state previews dùng cùng graph |
+| Automation cụ thể | [Task DAG](diagrams/onboarding-task-dag.svg), [giao lại](diagrams/replanning-flow.svg), [Flow 8/9](05-user-flows.md) |
+| Kiến trúc | [Nguồn/ảnh](diagrams/architecture.md), 5 SVG context/container/sequence/deployment; technical/architecture.md |
+| Dữ liệu | [ERD nguồn](requirements/conceptual-data-model.md), 11 SVG theo miền; giữ nguồn quan hệ tổng |
+| XMind | 18 mind-map previews, 7 activity-flow previews, 2 state previews; 9 archive đồng bộ. Product/IA giữ format ban đầu với khung đậm và sáng hơn |
+| Đồng bộ hồ sơ | README, docs/README.md, documentation-standard.md, diagrams/README.md, BR-11, traceability, xmind/README.md và báo cáo này |
+| Dẫn xuất | docs/design/wireframes/use-cases-overview.png tái xuất; không sửa code dự án |
 
-## Giới hạn và phần chưa kiểm chứng
+## 5. Đối chiếu nội dung Product, IA và primary flows
 
-Chưa có frontend/backend/database/worker chạy thực, API contract triển khai, migration, seed hoặc kiểm thử tự động ứng dụng. Chưa có dữ liệu thật; các tên, thiết bị, ticket và số liệu trên bản vẽ đều hư cấu. Không nghiệm thu tính bền vững, phân quyền backend, SLA nền hay cấp phát đồng thời từ bản vẽ.
+| Hạng mục | Thiết kế thể hiện | Kết luận / hành động | Nguồn |
+|---|---|---|---|
+| Phạm vi và vai trò | Bốn vai trò R/T/M/A; không Trưởng nhóm IT; AI là dịch vụ nội bộ | Khớp định hướng đã chốt; làm rõ policy nghiệp vụ khác quản trị user/role | Scope, permissions, D-41 |
+| AI trong MVP | Trợ lý theo yêu cầu và điều phối có policy/grant; nhân sự IT làm chuyên môn | Khớp; luồng Trưởng phòng tập trung thiết lập/giám sát/can thiệp/duyệt, không bắt buộc giao từng việc | BR-14–20, UC-OPS |
+| Ticket và task | Ticket tiếp nhận/SLA/nghiệm thu; task có dependency và trạng thái riêng | Khớp; task Done không tự Resolved/Closed | BR-04/15, Flow 1/2 |
+| SLA | Phản hồi đầu từ public IT comment; Pending chỉ pause resolution; không reset khi mở lại/đổi người | Làm rõ nhãn Product để tránh hiểu chat AI là phản hồi đầu | BR-08/09 |
+| IA và phân quyền | Đủ 36 mẫu; dialog/error khác trang điều hướng; quyền theo bản ghi | Khớp catalog; giữ ID/route trong mind map, quyền/loại chi tiết ở notes/catalog | IA, permissions |
+| Tài sản, lỗi và thông báo | Một assignment hiệu lực; không ghi đè version; retry chống trùng; recheck visibility | Khớp quy tắc thiết kế; các nhánh có trách nhiệm/điều kiện rõ hơn | BR-06/10–12, NFR, Flow 4/6/7 |
+| Thiếu người, khóa/vượt quyền | Không ép giao hoặc coi duyệt là thành công | Có nhánh ngoại lệ; capacity/policy/khóa khẩn khi thiếu người bàn giao vẫn Cần quyết định | BR-16–19, D-40, Flow 3/5 |
+| Yêu cầu doanh nghiệp thực tế | Chưa phỏng vấn/đo vận hành hay phê duyệt quy trình nội bộ | Chỉ xác nhận khớp yêu cầu dự án đã chốt; chưa kết luận phù hợp mọi quy trình doanh nghiệp | Research, validation-plan, D-40 |
 
-Chưa phỏng vấn, tree test hoặc usability test; personas/journeys là giả thuyết. Chưa đánh giá bàn phím, screen reader, DOM, reflow hoặc hiệu năng ứng dụng. Các sơ đồ chính được chuyển sang XMind; đã rà archive, JSON, ID và tham chiếu quan hệ. Chưa mở trực tiếp bằng XMind Desktop. Bốn sơ đồ use case SVG được vẽ trực tiếp theo góc nhìn vai trò, đối chiếu đủ 33 UC trong ba sơ đồ chi tiết. Ảnh xem nhanh XMind được dựng từ cùng nội dung, không phải ảnh chụp ứng dụng XMind.
+Product/IA giữ bố cục mind map ban đầu theo yêu cầu: trung tâm và các nhóm/nhánh hai phía, palette và đường cong; chỉ tăng nét khung và lớp viền sáng. Không chuyển sang bảng thẻ/khung lồng. Bản SVG mới đã render và xem lại; 9 hình Product/IA/flow được đo không có lỗi tràn canvas/độ rộng chữ/node trong phạm vi phép đo. Bảy flow có topic và cạnh tương ứng trong XMind; mã UC/US/SCR giữ nguyên, topic nội bộ flow được tái tạo. Chưa mở XMind Desktop.
 
-Chrome headless không xuất được ảnh trong môi trường phiên làm việc; PNG được xuất bằng System.Drawing từ các thành phần SVG. Có thể có khác biệt font/raster hóa giữa PNG và trình duyệt, nên SVG và đặc tả là nguồn chỉnh sửa. Không dùng PNG để chứng minh browser compatibility.
+Các ý ở rìa Product/IA hiện có khung kín riêng: rộng 480 px, chữ 22 px thay cho 20 px, khoảng đệm và khoảng cách dọc tăng; đường cong vẫn giữ cấu trúc mind map. Native XMind đồng bộ viền/kiểu khung/cỡ chữ của các ý này trong master và hai file chuyên đề. Đã rà 44 ý Product và đủ 36 ID màn hình IA với phạm vi MVP, BR và ma trận quyền; hình là tổng quan, không thay danh mục yêu cầu hay hợp đồng phân quyền chi tiết. Nhãn SVG bỏ dấu code/escape Markdown để dễ đọc, không đổi route thiết kế. Nội dung phù hợp yêu cầu dự án đã chốt; không coi đó là bằng chứng đã khảo sát hoặc phê duyệt quy trình vận hành doanh nghiệp.
 
-Các màn hình phụ trợ chưa có bản vẽ riêng được liệt kê trong [wireframe index](design/wireframes/README.md); đã có đặc tả hành vi nhưng chưa phải bộ hi-fi đầy đủ hoặc prototype tương tác.
+Phân cấp hiển thị tiếp tục được làm rõ: trung tâm rộng 480 px/cao tối thiểu 230 px/chữ 34 px trên nền navy; nhóm bậc hai rộng 360 px/cao tối thiểu 132 px/chữ 26 px trên nền đa màu theo palette từng nhánh. Ý ngoài cùng giữ nền sáng/chữ 22 px. Giữ cấu trúc, nhãn và ID; chỉ thay kích thước, nền và kiểu chữ. Native XMind đồng bộ hai cấp trung tâm/nhóm. Kiểm tra render không phát hiện tràn chữ trong phạm vi đo.
 
-## Các điểm cần xác nhận ở vòng nghiệp vụ tiếp theo
+Đường nối SVG Product/IA từ trung tâm tới nhóm dùng các điểm gắn riêng theo thứ tự trên–dưới. Dây từ từng nhóm tới các ô con chụm tại giữa cạnh ngoài của ô nhóm rồi tỏa cong theo ảnh mẫu được chọn. Hành lang giữa các cấp và chiều rộng preview 2800 px giữ các tuyến rõ; đường cong không quay ngược. Giữ nguyên kích thước ô/chữ, màu, nội dung và quan hệ nguồn–đích. Bố cục đường SVG là bản xem riêng; XMind Desktop có cơ chế tự dàn trang và chưa được mở kiểm tra trong đợt này.
 
-1. D-09: snapshot cả bảng SLA và cách đổi priority áp ngân sách mới trên thời gian đã dùng.
-2. D-12/D-17: mở lại khi assignee không còn hợp lệ; xử lý ticket khi khóa user/đổi role/bỏ membership.
-3. D-13: tách KPI hiện tại khỏi báo cáo kỳ; công thức lần giải quyết gần nhất có thể làm số liệu kỳ cũ thay đổi.
-4. D-08/D-21: IT tự tạo/tự xử lý không được giả phản hồi đầu tiên từ IT khác.
-5. D-16: bàn giao password ban đầu và quy trình hỗ trợ quên mật khẩu khi không có email provider.
+## 6. Phần còn mở và giới hạn
 
-AI hỗ trợ đã được bổ sung vào thiết kế theo yêu cầu mới, dùng phạm vi đọc/nháp và handoff về form cũ; chưa tích hợp provider hoặc có chatbot chạy thật. Các điểm cần kiểm chứng thêm là nguồn được duyệt, chính sách dữ liệu và chất lượng retrieval. Không thêm giai đoạn 2 hoặc AI tự thực thi thay đổi nghiệp vụ. Công việc hiện tại vẫn là tài liệu và UI/UX, chưa viết code ứng dụng.
+D-40 giữ các quyết định production, dữ liệu/ngân sách/retention, lịch/capacity/taxonomy, policy scope, KB publisher, reservation, bootstrap/password/reset, schema/lock/idempotency/retry, hosting/HA và backup/RPO/RTO/owner. Field trong ERD là đề xuất logic chọn lọc, chưa là hợp đồng schema vật lý.
 
+Chưa có ứng dụng/OpenAPI runtime, migration, hi-fi riêng cho mọi screen OPS, usability/accessibility thực tế, model call hoặc restore. D-39 chỉ cho cấu hình DEMO/test giới hạn khi được yêu cầu triển khai riêng. M1–M5 vẫn là kế hoạch, chưa kích hoạt lập trình.
 
-## Bảo toàn tài liệu lõi qua các phiên bản
+## 7. DBML, OpenAPI, C4 và code structure
 
-Ở đợt bổ sung AI **v0.3**, so sánh SHA-256 ghi nhận **19/19 file không đổi**, gồm 9 tài liệu dưới đây và 10 SVG lõi tại thời điểm đó. Đây là kết quả lịch sử, không áp dụng cho hình v0.4 đã được làm mới theo yêu cầu giao diện.
+Yêu cầu hiện tại bổ sung bốn nhóm tài liệu; tham khảo cách README trình bày của finance-manager và metadata/phân miền/traceability của Agentic SDLC Kit. Không sao chép stack, JWT, trạng thái hoàn thành hoặc governance runtime của dự án khác.
 
-Trong đợt **v0.4**, so sánh lại xác nhận **9/9 tài liệu nghiệp vụ lõi không đổi** theo các hash bên dưới. Các mã UC/US/AC, máy trạng thái, chính sách SLA, quyền, công thức MET và mô hình tài sản lõi được giữ nguyên. AI dùng mã riêng và đặc tả bổ sung trong [ranh giới tích hợp](ai/integration-and-non-regression.md). Các thay đổi thị giác được mô tả tại [giao diện v0.4](design/visual-refresh.md).
+| Hạng mục | Trước | Artifact hiện tại / thay đổi | Trạng thái |
+|---|---|---|---|
+| DBML/ER Mermaid | ER Mermaid theo miền, chưa DBML | database/schema.dbml + README; 52 entity/59 reference chọn lọc; source JSON snapshot sửa ở model và 3 ER SVG | Design draft; chưa schema vật lý đầy đủ/DDL/migration |
+| OpenAPI | Catalog HTTP/API01–19, chưa contract máy đọc | api/openapi.json, README.md, operations.md; 74 paths/96 operations/95 schemas; JSON/multipart, security/role/scope/UC/BR/error/version/idempotency | Static design, không runtime export/client đã sinh |
+| C4 | Context/container/deployment/sequence | architecture/c4/README.md, 01-context.md, 02-containers.md, 03-components.md, 04-code.md; C1/C2 tái dùng; 3 C3/L4 SVG mới | Component/code design, chưa package/container thực thi |
+| Code structure | Hai thư mục src chỉ .gitkeep | technical/code-structure.md; current/target trees, App Router/screens, module files, ownership/dependency/UoW | Chỉ cây planned trong Markdown, không tạo code |
+| README | Mục 1–4 theo format hiện có | Thêm mục 5/6/7 có hình/bảng/cây thư mục và link chi tiết; cập nhật Documentation/Progress | Giữ thứ tự đầu mục cũ |
+| Đồng bộ nguồn | Một số mô tả chưa có OpenAPI, kiểu snapshot int, hồ sơ UI diễn đạt mơ hồ | API rationale, docs index, architecture, model/ER, diagram registry, traceability, UI profile/US03, readiness, D-40, documentation-standard và báo cáo này | Không thay đổi phạm vi MVP/stack/vai trò |
 
-Các hash dưới đây là kết quả lịch sử của đợt bảo toàn v0.4, không đại diện cho hash hiện tại. Sau đó tài liệu được cập nhật liên kết SVG và làm rõ cấp tài khoản nội bộ theo D-29 đã được người dùng chấp thuận. Giữ nguyên số lượng/mã UC và US; trạng thái ticket, đồng hồ SLA và vòng đời tài sản không đổi.
+Kiểm đã chạy: cấu trúc JSON và 999 local refs, operationId duy nhất, path parameters, required properties, CSRF ở mutation, public/security boundaries, đủ API01–19, enum task theo BR-15; DBML entity/reference endpoints khớp Mermaid; 47 Markdown/46 metadata docs và links/heading/table/fence; 20 Mermaid block có render evidence; 121 SVG parse, 77 non-icon SVG đo hình học không lỗi trong phạm vi phép đo. L4 reroute một dependency tránh xuyên CandidateEvaluator; source/target không đổi. src vẫn chỉ frontend/.gitkeep và backend/.gitkeep.
 
-| Tài liệu lõi | SHA-256 trước = sau tại đợt v0.4 |
-|---|---|
-| [03-use-cases.md](03-use-cases.md) | `545c1cd221c7a4fc2e90b3111a80f6f4b82d3498fbe5bc2a8b94779e3b344b1b` |
-| [05-user-flows.md](05-user-flows.md) | `effec5a084554068b90dc94ed92a6da5688921e75108cc6f57d484aed5faeea2` |
-| [06-acceptance-criteria.md](06-acceptance-criteria.md) | `6e7ae63f55833295af2d262a5f3f587103c43c3df4897a998489a7690f863fb5` |
-| [08-invest-requirements.md](08-invest-requirements.md) | `10b4468729abfb96b22c88665a0a65d50e924ed5fe3c893aed7c8a8aa50a28aa` |
-| [business-rules.md](requirements/business-rules.md) | `c0c37d0ae93c794e6c7001a1f7e8396e1342f8593a8d613d3d4f762a155b6b42` |
-| [permissions-matrix.md](requirements/permissions-matrix.md) | `58fb8100e6aacf7c05af04deb02464c6d6cf45cb1562653ee40846630f5a33b6` |
-| [metrics-catalog.md](requirements/metrics-catalog.md) | `6d6d74083db74ad60c9c15457ecc013e75467383d59e2ce5136c0979daefea89` |
-| [conceptual-data-model.md](requirements/conceptual-data-model.md) | `d295b959151eba5500cc6ef3f64e86fa9e3b546f0b1b4dc19c7c1afc3eaa51d9` |
-| [master-traceability.md](traceability/master-traceability.md) | `2a19fcb12333ad10f1b69eff218a0b888f7999cd06937ba492c10ab19eed04ab` |
-
-Kết quả này xác nhận không sửa nội dung đặc tả lõi. Chưa chứng minh hành vi phần mềm không hồi quy vì hiện chưa có ứng dụng; khi triển khai phải chạy lại bộ kiểm thử lõi với AI bật, tắt và lỗi theo kế hoạch TC-AI.
-
+Chưa chạy official OpenAPI validator/DBML CLI, HTTP request, Pydantic runtime export, TypeScript client generation, Alembic/DB hoặc test ứng dụng. Schema/DTO/naming/projection và các trường chưa có trong view chọn lọc cần review D-40; invariant BR không được coi là đã được DBML tự thực thi. Không gọi AI provider hoặc cài dependency; M1–M5 chưa bắt đầu.
