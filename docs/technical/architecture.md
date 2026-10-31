@@ -1,74 +1,169 @@
-# Kiến trúc mục tiêu và ranh giới triển khai
+---
+id: itoh-docs-technical-architecture
+title: "Kiến trúc mục tiêu và vận hành dự kiến"
+type: reference
+domain: architecture
+module: system
+tags: [architecture, system, reference]
+priority: 1
+status: design-draft
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: primary
+purpose: "Định nghĩa component/service boundary, giao dịch, bảo mật và vận hành mục tiêu."
+---
 
-Trạng thái: quyết định thiết kế, chưa có source ứng dụng. Công nghệ trong [tech stack](tech-stack.md); nghiệp vụ, quyền và chỉ số trong các catalog hiện hành vẫn là chuẩn.
+# Kiến trúc mục tiêu và vận hành dự kiến
 
-## 1. Cấu trúc và trách nhiệm
+**Thiết kế mục tiêu · Chỉ thiết kế; chưa có ứng dụng hoạt động.** Không tạo/sửa code, migration hoặc cấu hình trong đợt này. [Stack](tech-stack.md) giữ Next.js/React/TypeScript và FastAPI/SQLAlchemy/Alembic/PostgreSQL; Celery/Redis. Các tên bảng/tool/route là thiết kế.
 
-Một repository, một backend modular monolith. Giữ `src/frontend/` và `src/backend/` hiện có; `deployment/` là thư mục dự kiến ở M1, `docs/` chứa tài liệu. Chưa tạo skeleton hoặc file cấu hình triển khai.
+## 1. Modular monolith và trách nhiệm
 
-| Lớp / tiến trình | Trách nhiệm | Ranh giới |
+Một repo, frontend/backend riêng ở các thư mục hiện có. Next.js chỉ giao diện, FastAPI sở hữu REST `/api/v1` và nghiệp vụ; API và worker dùng chung service/Session đồng bộ riêng theo request/task. Không chuyển Django ORM hoặc đưa domain vào Next.js.
+
+| Thành phần | Trách nhiệm |
+|---|---|
+| Frontend | Form, bảng, trạng thái, URL filters, polling mặc định 30 giây khi tab hoạt động; không nguồn quyền/DB |
+| Nginx | Cùng domain: /api/ → FastAPI, phần còn lại → frontend; TLS, hạn mức body |
+| API/router/schema | HTTP, xác thực, input/output schema, lỗi; không gom toàn bộ domain vào router |
+| Service/repository/model | Quyền, state machine, transaction/version/capacity, truy vấn scoped; repository không tự commit tách |
+| Celery worker / một Beat | Outbox, AI, đánh giá lại, SLA mỗi 60 giây, notification, indexing; tách queue AI khỏi SLA |
+| PostgreSQL + pgvector | Domain, session, outbox/dedup, audit, run/action/approval, KB/version/ACL/chunks/vector |
+| Redis | Broker, không nguồn dữ liệu chuẩn hoặc nơi duy nhất giữ event/session |
+| Provider adapter | Sinh plan/ranking/output schema, embedding; không quyền ghi database |
+| Local private / S3 private | Tệp ngoài public; API kiểm tra quyền cha mỗi lần tải |
+
+Giữ auth/users/teams/tickets/sla/assets/notifications/reports/audit; bổ sung work_management, workforce, automation, ai_assistant, knowledge. Không tách thành microservice.
+
+[C4 Documentation C1–C4](../architecture/c4/README.md), [code structure](code-structure.md), [OpenAPI](../api/README.md) và [DBML/ER](../database/README.md) làm rõ artifacts thiết kế; không tạo runtime/module thật.
+
+### Các góc nhìn và ranh giới module
+
+[FIG-CTX01, FIG-CNT01, FIG-SEQ01/02 và FIG-DEP01](../diagrams/architecture.md) lần lượt mô tả context, container, sequence transaction/model/phê duyệt và triển khai dự kiến. Đây là các mức nhìn khác nhau của cùng kiến trúc, không dùng mind map làm sơ đồ deployment hoặc ERD làm sơ đồ component.
+
+| Module sở hữu dữ liệu | Hợp đồng và trách nhiệm | Phụ thuộc được phép |
 |---|---|---|
-| Browser / Next.js | Layout, form, bảng, chart, URL filters và trạng thái UX | Chỉ gọi REST; không đọc DB, không quyết định quyền hoặc SLA |
-| Nginx | TLS, reverse proxy cùng domain | `/api/` → FastAPI giữ nguyên prefix; đường còn lại → Next.js. API dùng `/api/v1`; không route nhầm thành trang Next |
-| FastAPI router/schema | Session dependency, parse/validate, HTTP errors, response schema | Không chứa toàn bộ quy tắc xử lý ticket trong route |
-| Service | Permission theo hành động/bản ghi, state machine, SLA, audit, transaction | API và worker dùng chung; worker có actor hệ thống rõ, không giả user Admin |
-| Repository/model | Query có scope, lưu trữ, khóa và ràng buộc | Không tự commit tách khỏi transaction nghiệp vụ |
-| Celery worker | Chạy tác vụ qua service với Session riêng | Không lấy frontend/dashboard làm bộ kích hoạt SLA |
-| Celery Beat | Phát lịch quét SLA mỗi 60 giây | Một instance cho một lịch |
-| PostgreSQL | Dữ liệu nghiệp vụ, session, SLA, violation, notification, audit | Nguồn dữ liệu chuẩn; Redis hỏng không làm mất lịch sử SLA |
-| Redis | Broker Celery | Không public Internet; không dùng làm dữ liệu chuẩn |
-| Storage adapter | Ghi/đọc/xóa tệp private bằng local hoặc S3 | Không có static upload route công khai |
+| auth / users / teams | Phiên, người dùng, tổ chức, membership và cấp/thu hồi quyền | Cung cấp principal/scope; phát sự kiện thay đổi quyền |
+| tickets / sla | Ticket, hội thoại, tệp cha, snapshot/clock/violation | Auth; service tệp riêng tư; không giao quyền ghi trực tiếp cho model |
+| work_management | Plan/version, Task/DAG, transition và assignment | Workforce/capacity, policy, ticket reference; không tự đóng ticket |
+| workforce | Kỹ năng xác nhận, lịch/absence, capacity và allocation | Users/teams; transaction phối hợp assignment theo thứ tự khóa thống nhất |
+| automation | Policy/grant, run/action, approval, outbox delivery và dedup | Domain services; chỉ thực thi intent đã kiểm quyền/versions |
+| ai_assistant / knowledge | Hội thoại/nháp/xác nhận, KB version/ACL/chunk và adapter | Scoped read services; mutation qua domain service; không SQL/shell từ model |
+| assets / notifications / reports / audit | Tài sản, người nhận, chỉ số và dấu vết | Truy vấn đúng scope; effect phát từ domain transaction, không dựng số liệu từ output model |
 
-Backend chia module `auth`, `users` (gồm phòng ban), `teams`, `tickets` (gồm danh mục), `sla`, `assets`, `notifications`, `reports`, `audit`; mỗi module giữ router/schema/service/repository/model phù hợp. Không tạo service mạng độc lập cho mỗi module.
+Router không truy cập repository của module khác để bỏ qua domain service. API và worker cùng dùng hợp đồng service, không gọi qua HTTP nội bộ để giả một phiên Admin. Ranh giới này là thiết kế, chưa phải cấu trúc package đã có.
 
-## 2. Xác thực và quyền
+## 2. Xác thực và phạm vi
 
-FastAPI sở hữu email/password và vòng đời phiên. Dùng pwdlib[argon2] để hash Argon2id, cùng thư viện chuẩn/maintained dependency cho random/crypto/cookie. PostgreSQL lưu Session gồm user, hash của opaque token ngẫu nhiên, created/expires/revoked và thông tin quản lý phiên cần thiết. Cookie chứa token thô, không chứa role hoặc dữ liệu user làm nguồn quyền; không lưu token trong localStorage.
+Session opaque server-side lưu hash trong PG, cookie HttpOnly/host-only/Path=/, SameSite=Lax và Secure production; không token localStorage. Argon2id qua pwdlib. CSRF cho mutation/login, kiểm tra Origin/Referer allowlist; SameSite không thay CSRF. Thu hồi mọi phiên khi khóa user, xoay phiên khi đăng nhập/thay đổi bảo mật; role/membership/active kiểm tra theo request. Bootstrap/password/reset không email cần quyết định chi tiết D-40.
 
-Cookie HttpOnly, Secure ở production, SameSite=Lax, host-only, Path=/; cân nhắc tên `__Host-` cho HTTPS. Token được xoay khi đăng nhập và thay đổi bảo mật cần thiết. Logout thu hồi phiên hiện tại; khóa user thu hồi tất cả phiên trong cùng transaction; mỗi request kiểm tra user hoạt động và quyền/membership hiện tại. Không cache quyền lâu tới mức tiếp tục truy cập sau thu hồi.
+R/T/M/A theo [ma trận quyền](../requirements/permissions-matrix.md). Trợ lý dùng actor user; nền dùng AI_COORDINATOR gắn grantor/policy/scope. Không giả Admin/Manager. Requester không nhận nội bộ/nhân lực/plan/audit AI. Scope áp dụng trước list/count/lookup/report, download và history/cache; ngoài scope trả 404 chung, cấm chức năng trả 403.
 
-CSRF synchronizer token gắn với phiên, gửi qua header ở mutation; có bảo vệ login CSRF và kiểm tra Origin/Referer theo allowlist. SameSite không thay thế CSRF. Cùng domain qua Nginx để tránh CORS phức tạp; nếu dev khác origin phải allowlist rõ và dùng credentials, không wildcard.
+### Trust boundary và tình huống đe dọa
 
-Đây là **dịch vụ session ứng dụng ghép từ thành phần được duy trì**, chưa phải tích hợp một thư viện auth end-to-end. Không dùng JWT tutorial như thiết kế phiên, không dùng Starlette signed-cookie session làm thay thế PostgreSQL session. Gate M1 bắt buộc test rotate/expiry/revoke/CSRF/login abuse và review bảo mật. Password policy, reset không email và bootstrap Admin vẫn cần refinement; không thêm public signup hoặc email provider giả. [FastAPI password hashing](https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/), [OWASP sessions](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html), [OWASP CSRF](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html).
+| Boundary / rủi ro | Kiểm soát thiết kế | Bằng chứng cần có khi triển khai |
+|---|---|---|
+| Browser → API: giả role, IDOR, CSRF | Principal từ phiên; role/scope server; CSRF/Origin; field projection trước response | Negative API test với ID người khác, count/lookup/download và phiên cũ |
+| Nội dung ticket/KB → model: prompt injection | Nguồn là dữ liệu chưa tin cậy; tool allowlist/schema; không secret/shell/SQL; quyền không do prompt quyết định | Bộ injection và tool args giả quyền; không có domain effect trái phép |
+| Model/worker → domain: TOCTOU, trùng effect | Revalidate grant/policy/ACL/version/capacity trong transaction; unique business keys | Đổi policy/lịch/quyền trong lúc model chờ; hai worker và crash trước ack |
+| Public ↔ internal: lộ hội thoại/tệp/citation | Phiên AI tách visibility; scoped source trước provider và kiểm lại trước hiển thị | Thu hồi quyền khi stream/index pending; kiểm history/cache và link nguồn |
+| Tệp → storage/browser: giả MIME, public access | Allowlist/signature/size; private object; download kiểm quyền cha, attachment/nosniff | MIME giả, boundary size/count, quyền tệp note và object không qua API |
+| Secrets/log/provider: rò dữ liệu và chi phí | Secrets ngoài repo/log; redaction; egress data policy; ledger reservation và bounded retry | Quét response/log; concurrent budget/timeout unknown; không tự tăng model/budget |
+| Backup/restore: replay và lộ bản sao | Quyền/mã hóa; restore cách ly, dừng outbound/worker; đối chiếu ledger/dedup | Diễn tập không gọi provider hoặc tạo assignment/notification cũ lần hai |
 
-Scope áp dụng trước khi trả danh sách, count, lookup, comment, attachment, notification và report. Requester không nhận internal fields từ API. Technician không tăng quyền bằng ID; ngoài scope trả 404 theo D-15, chức năng không được role cho phép trả 403. Thay role/team phải áp dụng trên request kế tiếp; client ẩn menu chỉ phục vụ UX.
+Rate limit cụ thể, session TTL, retention, scanner tệp bổ sung nếu áp dụng, incident owner và SLO production cần quyết định trước vận hành tại D-40; không tự tuyên bố tuân thủ tiêu chuẩn bảo mật hoặc kết quả pentest.
 
-## 3. Transaction, version và API
+## 3. Transaction và đồng thời
 
-Service mở transaction bao trùm thay đổi ticket/SLA/event/notification/audit liên quan. Khi lỗi thì rollback; không commit từng repository. Session đồng bộ riêng mỗi request/task, đóng/rollback đúng vòng đời; worker không dùng chung connection/session được thừa kế từ process khác.
+Mỗi mutation ghi domain + audit + outbox nguyên tử, rollback toàn bộ nếu lỗi. UUID nội bộ/mã hiển thị unique theo cơ chế an toàn; không MAX+1. Expected version cập nhật có điều kiện, conflict 409, không ghi đè âm thầm. Dùng SQLAlchemy version/khóa phù hợp, không coi ORM version tự bảo vệ bulk update.
 
-UUID là khóa nội bộ, ticket code/asset code có unique riêng; dùng sequence/cơ chế sinh mã an toàn, không `MAX + 1`. Mutation nhận expected version; cập nhật có điều kiện version và tăng version nguyên tử. Conflict trả 409, UI giữ bản nhập và yêu cầu đối chiếu. `version_id_col` hỗ trợ flush ORM nhưng bulk update cần điều kiện version tường minh. [SQLAlchemy version counter](https://docs.sqlalchemy.org/en/21/orm/versioning.html).
+Plan nhiều phiên bản/ticket, unique có điều kiện bảo đảm chỉ một phiên bản effective. Dependency cùng plan, DAG, không tự bắt đầu khi predecessor chưa Done. AssetAssignment chỉ một lượt chưa thu hồi/asset bằng partial unique + transaction. Mọi kiểm tra và giữ chỗ nguồn lực phải atomic, không chỉ kiểm tra UI.
 
-Asset assignment dùng transaction, khóa asset khi kiểm tra trạng thái và ràng buộc unique theo asset với điều kiện chưa thu hồi. Hai yêu cầu cấp đồng thời chỉ một thành công; trạng thái sửa chữa/ngừng sử dụng bị chặn. Không dựa vào nút disabled để bảo đảm tính duy nhất. [PostgreSQL partial indexes](https://www.postgresql.org/docs/current/indexes-partial.html).
+Assignment khóa các hàng nhân lực/allocation liên quan theo thứ tự xác định, re-read load/calendar/skills rồi ghi; thay lịch/kỹ năng/assignment cũng tuân thủ thứ tự khóa đó. Chỉ khóa nguồn lực cần thiết, không mặc định khóa toàn bộ user. Lock granularity, isolation và thứ tự khóa vật lý phải được review ở refinement trước M1/M2; chưa có DDL/migration.
 
-REST JSON `/api/v1`, multipart cho tệp. Pagination mặc định 20, tối đa 100, sort allowlist và tie-breaker ID; các filter chuẩn hóa vào URL. Error envelope dự kiến gồm `code`, `message`, `field_errors`, `request_id`; chuẩn hóa cả lỗi validation mặc định 422. Status 401 hết phiên, 403 role, 404 ngoài scope/không tồn tại, 409 conflict, 422 đầu vào sai. OpenAPI thực tế sẽ chốt path/schema tại M1–M2; tài liệu này chưa tuyên bố có endpoint đang chạy.
+## 4. Tách model call khỏi giao dịch
 
-Pydantic là hợp đồng server; CI xuất OpenAPI và sinh TypeScript bằng openapi-typescript, phát hiện type drift. Zod kiểm tra input UX, không thay validation server. Không chuyển Pydantic validator thành quy tắc quyền ở frontend.
+Domain transaction → OutboxEvent → worker claim/lease + Run → snapshot nguồn/candidates/versions → kết thúc transaction đọc → adapter model → schema/semantic validation → transaction mới khóa/re-read → policy/grantor/ACL/version/capacity/feasibility → service tool → domain + Action + audit + notification + outbox → commit → ack.
 
-## 4. SLA, idempotency và hàng đợi
+Không giữ connection transaction hoặc DB lock qua thời gian chờ model. Proposal lỗi/refusal/timeout không ghi task/assignment nửa vời. Snapshot cũ phải đánh giá lại. Model ranking chỉ trong candidates backend đã lọc, mỗi tool vẫn recheck; không dùng đề xuất model làm quyền.
 
-Beat phát lệnh quét mỗi 60 giây; worker lấy ticket cần theo dõi từ PostgreSQL theo batch/index. DB lưu snapshot P1–P4, thời gian đã dùng, running interval và breach history. Pending chỉ dừng resolution; public IT comment có nội dung mới tính first response; Resolved/Closed không tiêu thụ resolution; reopen tiếp tục ngân sách, chuyển nhóm không reset. Không đổi công thức nghiệp vụ hiện hành.
+## 5. Event, outbox, retry và chống trùng
 
-Worker và API khóa/check lại bản ghi trước khi ghi kết quả; tránh hai lượt quét hoặc mutation chạy chồng. Violation/delivery có unique key thể hiện ticket, loại đồng hồ, ngưỡng và kỳ theo dõi đã được định nghĩa; ưu tiên đổi hoặc reopen không tự xóa breach trước. Thiết kế key vật lý phải được kiểm thử theo từng kịch bản, không chỉ dùng task ID hoặc Redis lock.
+| Sự kiện dự kiến | Nguồn transaction | Tác vụ tiếp theo |
+|---|---|---|
+| ticket.created / information.updated | Ticket/confirmed command | Kiểm tra đầu vào, lập plan hoặc hỏi thiếu |
+| plan.activated / task.assigned | Work service | Notification và quan sát; allocation/audit đã commit cùng assignment |
+| task.progressed / blocked / completed | Người cập nhật qua service | Unlock dependency, rà nguy cơ, báo cáo; không tự đóng ticket |
+| availability.changed / skills.changed / membership.changed | Workforce/quản trị | Xác định task ảnh hưởng, replan trong policy hoặc approval |
+| sla.risk / deadline.risk / load.changed | SLA/work service | Nhắc/ngoại lệ đúng scope |
+| policy.changed / approval.decided | Manager service | Chặn/revalidate pending action; thực thi quyết định hợp lệ |
+| knowledge.published / access.revoked | Knowledge service | Index/reindex; ACL truy vấn hiệu lực ngay |
 
-Ghi breach và Notification trong một transaction, unique theo event/recipient. Worker retry, Redis redelivery hoặc nhiều worker không tạo thêm cùng cảnh báo. Các mutation cũng kiểm tra SLA để không bỏ qua vi phạm xảy ra trước thời điểm resolve trong lúc worker gián đoạn. UI polling 30 giây chỉ cập nhật hiển thị, không thay worker.
+Event lưu ID, loại, aggregate/version, actor/correlation, payload tối thiểu, createdAt. Outbox lưu trạng thái, attempt, lease/token, nextAttemptAt, deliveredAt/error; bảng vật lý có thể tách event và delivery. Publisher quét pending/lease hết hạn rồi gửi broker; có thể gửi lặp. Consumer claim theo event + handler/purpose và dedup action nghiệp vụ trong DB. Kết quả commit được đọc lại khi retry sau ack lỗi.
 
-Với công việc cần phát từ transaction sang broker, dùng OutboxEvent trong PostgreSQL và lượt phát lại sau commit; task xử lý idempotent. SLA periodic scan luôn có khả năng phục hồi từ DB dù mất message. Không giữ toàn bộ bộ đếm hoặc một task ETA dài cho mỗi ticket trong Redis; không coi broker bảo đảm exactly-once. [Celery periodic tasks](https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html).
+Khóa idempotency đề xuất: confirmed-ticket = actor + key + content digest; run = event + purpose; action = run + intent + target + version; allocation = task + plan revision; notification = business event + recipient + type; SLA giữ BR-10. Cùng key khác nội dung trả conflict. Khóa business key cụ thể phải chốt theo schema, không chỉ dùng Celery task ID hoặc Redis lock.
 
-## 5. Tệp và dữ liệu thời gian
+Lỗi tạm thời backoff có jitter, số lần/timeout cấu hình hữu hạn; lỗi quyền/schema/stale/không khả thi không retry mù mà đánh giá lại hoặc chuyển quản lý. Hết retry vào failed/dead-letter có lý do, người có quyền retry bằng thao tác audit; không tạo action mới nếu intent đã thành công. Queue outage phục hồi từ PG, không mất event. Outbox không bảo đảm exactly-once delivery; cần hiệu ứng nghiệp vụ chống trùng.
 
-Local dev lưu ngoài public/static với key ngẫu nhiên. Production S3 private qua boto3; API xác thực/quyền nội dung cha tại mỗi lần download rồi stream nội dung. Không phát URL public hoặc URL ký sống lâu khiến quyền cũ tồn tại sau chuyển nhóm/khóa user.
+[EVT01–EVT17 và event envelope](api-design.md#hợp-đồng-sự-kiện-nội-bộ) là catalog tên/producer/consumer; bảng trên là tóm tắt kiến trúc. Allocation và audit của assignment phải được ghi ngay trong transaction thực hiện assignment; consumer sau commit chỉ gửi thông báo/đánh giá tiếp, không bổ sung allocation bắt buộc một cách không nguyên tử.
 
-Allowlist PNG/JPEG/WebP/PDF, tối đa 10.000.000 byte/tệp và 5 tệp/lần. Kiểm tra số byte thật, extension, media type và chữ ký/khả năng parse nội dung; không tin filename/MIME client. M1–M2 chốt thư viện kiểm tra nội dung an toàn, có thể dùng libmagic qua python-magic trong Linux container; nó không thay toàn bộ validation. Sanitize tên tải về, Content-Disposition attachment/nosniff; không dùng tên người dùng làm đường dẫn. Proxy body limit dự kiến 64 MiB để chứa 5 tệp và multipart overhead; API vẫn áp hạn mức từng tệp.
+## 6. Workforce và lập kế hoạch
 
-PG và object storage không có transaction chung: stage private file, chỉ hiển thị metadata đã finalize trong nghiệp vụ thành công; cleanup/reconciliation cho object mồ côi và retry có idempotency key. Không khẳng định transaction DB có thể rollback tệp S3. Upload chưa hoàn tất không tạo comment/first response giả.
+Nguồn và công thức ở BR-16; dùng phút, lịch và khoảng cụ thể. Allocation nhiều kỳ được tách theo giao của kỳ/lịch; tổng công sức phân bổ bằng remaining, không đếm lại toàn bộ effort cho từng kỳ. Absence chồng nhau trừ theo hợp khoảng; dữ liệu thiếu không coi là rảnh. Task chưa phân bổ là rủi ro hiển thị, không bị bỏ khỏi báo cáo.
 
-Timestamp lưu UTC, timezone-aware, API ISO 8601; ngày mua/bảo hành thuần ngày không ép thành timestamp. Frontend format Asia/Ho_Chi_Minh bằng date-fns/tz. SLA dùng clock server và ngân sách 24/7; không làm tròn theo giờ hiển thị.
+Kiểm tra cả tải, lịch kỹ năng/nhóm, predecessor, deadline và cam kết/SLA; capacity tổng đủ không tự chứng minh lịch khả thi. Độ dài kỳ, daily budget, timezone lịch và mức độ chi tiết slot là Cần quyết định D-40; thiết kế không tự coi ví dụ demo là policy doanh nghiệp.
 
-## 6. Vận hành và khả năng mở rộng
+## 7. Approval và can thiệp
 
-Nginx, Next.js, API, worker, một Beat, PostgreSQL và Redis là các tiến trình/container trong cùng hệ thống; S3 là dịch vụ lưu trữ production. Worker Linux cho cả dev Windows. API/worker/Beat dùng cùng version image/backend và Alembic migration; chạy migration một lần có kiểm soát trước chuyển traffic, không để mọi replica cùng migrate.
+Proposal có before/after, lý do/tác động, record/policy/workforce/plan versions và nguồn. Pending → Approved/Rejected/Expired/Superseded; execution tách Pending/Running/Succeeded/Failed/Conflict. Duyệt là quyết định, không tự đồng nghĩa thay đổi thành công. Approval + execution đều kiểm tra quyền/policy hiệu lực/capacity/version; stale tạo Conflict hoặc proposal mới, không tự áp dụng.
 
-Healthcheck, persistent volumes, giới hạn pool kết nối theo tổng API/worker, retry/backoff và log request/task ID cần được cấu hình và kiểm chứng. PG/Redis không mở cổng production ra Internet. Backup PostgreSQL kèm private files và diễn tập restore; RPO/RTO chưa được cam kết. Một VPS là baseline triển khai, không phải cam kết high availability.
+Manager tắt policy hoặc khóa assignment phải có hiệu lực trước action ghi. Tôn trọng quyết định thủ công; mọi override lưu actor/lý do. Hoàn tác dùng compensating action hợp lệ, không xóa history hoặc lùi task Done.
 
-Trợ lý AI trong MVP gọi API/service nghiệp vụ với scope người dùng, không trực tiếp DB và không tự cấp quyền. Backend có module/adapter AI tách khỏi service lõi; dùng Celery hiện có cho tác vụ AI dài nếu cần, không chặn worker SLA (tách queue và giới hạn tài nguyên). Chưa chọn provider/model/SDK hoặc có quyết định dùng vector DB; phải chốt giải pháp và kiểm chứng nguồn/quyền trước triển khai tích hợp. Không dùng chatbot placeholder để nghiệm thu. Các hạn chế đọc/soạn nháp và xác nhận hiện tại được giữ trong [thiết kế AI](../10-ai-assistant.md).
+## 8. SLA, tài sản, KB và tệp
+
+SLA ticket giữ 24/7, snapshot P1–P4, pause resolution khi Pending, resume phần còn lại, không reset do chuyển nhóm/đổi người. First response là public IT comment hợp lệ; chat/automation reminder không tính. Worker/API dùng chung service, breach/dedup DB, quét mỗi 60 giây. Task calendar không thay SLA.
+
+Inventory/assignment là nguồn thực; thiếu thiết bị mở ngoại lệ. Reservation nếu áp dụng phải có vòng đời riêng khỏi cấp phát, TTL/thu hồi/audit và chống hai plan giữ cùng tài sản; chi tiết reservation Cần quyết định trước schema, không mặc định AI tự cấp phát.
+
+KB Article → immutable Version → Chunk/Embedding và ACL. Published/quyền/version lọc tại SQL trước retrieval, recheck trước provider/render. Worker index/reindex chỉ cập nhật vector, không nguồn quyết định ACL. pgvector là stack mục tiêu; embedding provider/dimension/chunking/reranking và SLA index cần chốt, không gọi keyword lookup là RAG hoàn chỉnh.
+
+Tệp PNG/JPEG/WebP/PDF, ≤10.000.000 byte/tệp, ≤5/lần; kiểm nội dung/signature, không tin MIME/filename. Private local dev/S3 production, download qua auth/scope, attachment/nosniff; không public URL. Stage/finalize/reconcile object mồ côi; PG không rollback S3. Timestamp UTC aware; ngày thuần date không ép timestamp; hiển thị Asia/Ho_Chi_Minh.
+
+## 9. Vận hành và khôi phục — kế hoạch
+
+Production mục tiêu: Nginx, frontend, API, Celery worker, một Beat, PG và Redis trên Linux; S3 private. Worker Linux kể cả dev Windows. Health/liveness tách readiness DB/broker/provider; provider lỗi không làm core mất khả dụng. JSON log/request ID/event/run/action correlation; không password/session/key/prompt nhạy cảm. Giám sát outbox lag, failed runs, approval tồn, queue depth, SLA scan delay và usage.
+
+Migration một lần mỗi release trước traffic, backup trước thay đổi; review forward/backward compatibility, không để replica tự migrate. CI tương lai: frozen lock, lint/typecheck, test, migration DB sạch/nâng cấp, OpenAPI/type drift, build/E2E; không có pipeline/config thực thi ở đợt này.
+
+Backup PG hằng ngày cùng private files/object versions, kiểm quyền/mã hóa/retention theo D-40; giữ KB/history/event/audit/usage. Restore vào môi trường cách ly, chặn outbound model/email và pause worker trước phục hồi; restore DB + files, kiểm migration/references/count/SLA/outbox, xác minh action cũ không replay, rồi cho worker tiếp tục có kiểm soát. Chỉ đổi traffic sau kiểm tra; diễn tập định kỳ. RPO/RTO, retention, owner lịch diễn tập: Cần quyết định, chưa cam kết.
+
+Dữ liệu/tài khoản demo và database test tách production. Cấu hình kiểm thử AI giới hạn demo/5 USD ở D-39 không cấp quyền gửi dữ liệu thật. Chưa có triển khai, backup hoặc restore đã chạy.
+
+### Trình tự phát hành và khôi phục dự kiến
+
+| Bước | Điều kiện / hành động dự kiến | Điểm kiểm soát |
+|---|---|---|
+| Trước phát hành | Xác nhận được phép triển khai, cấu hình/secret đúng môi trường, kiểm tương thích và backup đọc được | Chưa thực hiện; không dùng hồ sơ thiết kế thay phê duyệt chạy production |
+| Migration | Một tiến trình nâng cấp schema; kiểm trước/sau và tương thích API/worker | Nếu lỗi, dừng mở traffic; rollback/forward-fix phải dựa phương án migration đã review |
+| Mở ứng dụng | Kiểm DB/storage/session, khởi động API/frontend rồi worker và một Beat | Readiness lõi khác tình trạng broker/provider; feature flag AI không chặn core |
+| Theo dõi | Request errors/latency; queue depth, outbox lag, lease hết hạn, scan delay, failed actions, approval age, usage/reserved cost | Ngưỡng cảnh báo và người trực chưa chốt; không mặc định mọi event xử lý trong 60 giây |
+| Tạm ngưng automation | Disable policy/feature flag, chặn effect mới tại service; giữ run/error/audit | Không xóa pending event hoặc ghi giả thành công; lịch sử không bị mất |
+| Phục hồi | Chọn backup, cách ly môi trường, pause worker và outbound, restore DB/tệp nhất quán | Kiểm reference/count/checksum khi có, clock/snapshot/usage/dedup; không replay action đã thành công |
+| Cho chạy lại | Kiểm quyền/policy hiện hành, lease và pending backlog; mở worker có kiểm soát rồi traffic | Ghi evidence, người quyết định và giới hạn RPO/RTO thực đo; chưa có kết quả diễn tập |
+
+### Tradeoff và điều kiện còn mở
+
+Modular monolith giảm số ranh giới triển khai nhưng đòi hỏi giữ kỷ luật service và transaction. Session PG và outbox đặt tính bền vững tại một nơi nhưng làm DB thành phụ thuộc lõi. Celery/Redis chấp nhận redelivery nên cần idempotency ở DB. Model ngoài transaction tránh giữ lock dài nhưng bắt buộc kiểm lại snapshot; dùng model không thay thuật toán kiểm khả thi. pgvector gom quyền và nguồn vào PG nhưng embedding/index freshness vẫn cần quyết định riêng.
+
+Các hệ quả này truy về D-30–38 và NFR14–25; topology HA, isolation/lock vật lý, retention/SLO và provider production còn ở D-40. Không đổi stack để lấp chi tiết chưa chốt.
+
+## 10. Thiết kế giới hạn chi phí kiểm thử AI — chưa chạy
+
+Trước request có phí phải xác minh quyền model/billing/quota/giá, nội dung demo-only và DB test. D-39 cho trần tổng 5 USD cả generation/embedding/retry; không tự đổi model đắt hơn. Cấu hình max calls/input/output/retries/concurrency và phần dự phòng phải được xác định trước chạy, không lấy provider timeout làm lý do chạy tiếp không giới hạn.
+
+Ledger giữ actualSpent + reservedInFlight + unknownCost theo transaction/lock ngân sách. Reserve upper bound bảo thủ từ giới hạn token/giá hiện hành trước gửi, kể cả reasoning/cached/embedding theo cách provider tính. Chỉ phát request nếu tổng cộng reservation mới còn dưới trần sau trừ safety margin; retry là request mới phải reserve riêng. Khi timeout không có usage xác định thì giữ khoản bảo thủ, không tự giải phóng như 0 USD. Usage có nguồn mới settle và đối chiếu billing; báo riêng phí đo được/ước lượng/unknown. Chưa có lượt gọi, ledger hoặc billing evidence thực tế.
+
+## Tài liệu liên quan
+
+[SQLAlchemy versioning](https://docs.sqlalchemy.org/en/21/orm/versioning.html), [Celery tasks](https://docs.celeryq.dev/en/stable/userguide/tasks.html) là tài liệu kỹ thuật tham khảo; không thay bằng chứng kiểm thử sau triển khai. [API thiết kế](api-design.md) · [ERD](../requirements/conceptual-data-model.md) · [quyền](../requirements/permissions-matrix.md).

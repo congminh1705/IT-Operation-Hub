@@ -1,12 +1,28 @@
-# Baseline phiên bản và mức kiểm chứng
+---
+id: itoh-docs-technical-version-baseline
+title: "Danh mục phiên bản và mức kiểm chứng"
+type: reference
+domain: architecture
+module: dependencies
+tags: [architecture, dependencies, reference]
+priority: 1
+status: design-draft
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: primary
+purpose: "Liệt kê phiên bản ứng viên và điều kiện xác minh tương thích trước triển khai."
+---
 
-**Ngày tra cứu: 30/10/2026.** Chốt stack không đồng nghĩa bộ package đã cài hoặc đã chạy cùng nhau. Repo chỉ có tài liệu và SVG/XMind; không có package.json, pyproject.toml hoặc lockfile ứng dụng. Bảng dưới là **baseline ứng viên cho M1**, không phải kết quả dependency resolution/build/test.
+# Danh mục phiên bản và mức kiểm chứng
+
+**Ngày tra cứu: 30/10/2026.** Chốt stack không đồng nghĩa bộ package đã cài hoặc đã chạy cùng nhau. Hiện repo chỉ giữ tài liệu và SVG/XMind; không có manifest hoặc lockfile ứng dụng được chấp nhận. Bảng dưới là **các phiên bản ứng viên cho M1**, không phải kết quả dependency resolution/build/test.
 
 ## 1. Runtime và hạ tầng
 
 | Thành phần | Nhánh chọn | Căn cứ và điều kiện |
 |---|---|---|
-| Node.js | 24 LTS | Baseline ổn định; đáp ứng engine của Next 16, ESLint 10 và Vitest 5 đã tra. Chưa cần chuyển Node 26 LTS mới ra; không chọn Node 20 chỉ vì đạt minimum Next |
+| Node.js | 24 LTS | Phiên bản runtime mục tiêu; đáp ứng engine của Next 16, ESLint 10 và Vitest 5 đã tra. Chưa cần chuyển Node 26 LTS mới ra; không chọn Node 20 chỉ vì đạt minimum Next |
 | Python | 3.13 | Dùng thống nhất API/worker/CI, chọn patch được hỗ trợ khi khởi tạo; kiểm tra wheel Psycopg/Argon2 và test container |
 | PostgreSQL | 18 stable | Psycopg 3 có hỗ trợ; không dùng PostgreSQL 19 RC cho MVP; chốt patch/image digest tại M1 |
 | Redis server | 7.x | Broker với chính sách triển khai/giấy phép được review tại M1; không nhầm số version server với package Python redis-py |
@@ -30,7 +46,7 @@ Nguồn: [Node release status](https://nodejs.org/en/about/previous-releases), [
 | recharts | 3.10.1 | Peer React/DOM/React-is có nhánh 19 |
 | date-fns / @date-fns/tz | 4.4.0 / 1.5.0 | Kiểm tra format/parse UTC và Asia/Ho_Chi_Minh bằng test |
 | pnpm | 12.16.1 | Ghi packageManager khi M1; tạo lockfile thật |
-| openapi-typescript | 7.13.0 | Dev tool sinh type; là lý do giữ TypeScript 5 ở baseline |
+| openapi-typescript | 7.13.0 | Dev tool sinh type; là lý do giữ TypeScript 5 trong danh mục này |
 | vitest / @testing-library/react | 5.0.5 / 16.3.3 | Vitest engine chấp nhận Node 24; bổ sung Vite/DOM environment và @testing-library/dom theo peer khi resolve |
 | @playwright/test | 1.64.1 | Browser binary/container phải khớp package |
 | eslint / prettier | 10.13.0 / 3.9.10 | Node 24 đáp ứng engine; kiểm tra plugin/config thực trước khóa |
@@ -71,4 +87,8 @@ Chưa thực hiện các gate trên trong đợt tài liệu này. Chưa tạo `
 
 ## 5. Dependency AI trong MVP
 
-Theo D-33 cập nhật, trợ lý AI thuộc MVP. Chưa chọn provider/model/SDK; đây là hạng mục cần chốt ở M1 trước tích hợp, không phải lý do chuyển AI sang giai đoạn sau. Sau khi chọn, bổ sung phiên bản SDK và dependency cần thiết vào uv.lock/pnpm-lock.yaml, kiểm tra tương thích, retry/timeout, phạm vi dữ liệu và 8 AC AI/12 ca kiểm chứng cùng regression lõi trước nghiệm thu M6. Không thêm framework AI/vector DB khi chưa có căn cứ kỹ thuật.
+AI trợ lý và điều phối thuộc MVP theo D-35; PostgreSQL + pgvector là stack RAG mục tiêu theo D-37. D-39 chỉ xác nhận OpenAI API/gpt-5-mini và trần 5 USD/dữ liệu demo cho thử nghiệm M3 sau này; text-embedding-3-small còn là đề xuất phải xác minh. Provider/model/embedding/SDK và ngân sách/data policy production Cần quyết định D-40. Khi được yêu cầu code riêng, resolver bổ sung package/lock phù hợp, kiểm timeout/retry/tool/schema/quota và mọi AC/A1–A13 trước gate M5. Không cài dependency hoặc gọi provider trong đợt tài liệu.
+
+## Trạng thái kiểm chứng
+
+Các version/metadata phía trên là snapshot khảo sát ngày 30/10/2026, chưa phải bộ dependency/runtime được nghiệm thu. Khi bắt đầu phát triển, cần kiểm lại release/security, resolve và khóa phiên bản, clean install/build/test theo các điều kiện trên. Hiện chưa có manifest/lock/env ứng dụng được chấp nhận; M1–M5 chỉ là kế hoạch.
