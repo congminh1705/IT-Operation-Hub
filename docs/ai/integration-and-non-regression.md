@@ -1,120 +1,82 @@
-# Tích hợp AI và bảo toàn nghiệp vụ lõi
+---
+id: itoh-docs-ai-integration-and-non-regression
+title: "Tích hợp AI và bảo toàn nghiệp vụ"
+type: reference
+domain: ai
+module: integration
+tags: [ai, integration, reference]
+priority: 1
+status: design-draft
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: primary
+purpose: "Định nghĩa tool boundary, giao dịch, retry và bảo toàn bất biến khi tích hợp AI."
+---
 
-> **Phạm vi cập nhật 30/10/2026 — D-33:** Trợ lý AI thuộc phạm vi và nghiệm thu MVP theo xác nhận mới nhất của chủ dự án. Có thể bật/tắt khi vận hành, nhưng không được bỏ qua triển khai hoặc nghiệm thu AI. Giữ nguyên quyền và luồng nghiệp vụ lõi; hiện mới có thiết kế, chưa có provider hoặc chức năng hoạt động. [Tech stack và đối chiếu](../technical/tech-stack.md).
+# Tích hợp AI và bảo toàn nghiệp vụ
 
-Tài liệu đặc tả ranh giới để triển khai sau này. **Chưa có adapter AI, endpoint, model call hoặc regression test chạy thực.** Lớp AI chỉ đọc và tạo nháp; quyền và mutation vẫn thuộc ứng dụng nghiệp vụ.
+**Thiết kế mục tiêu 31/10/2026; chưa có adapter, endpoint hoặc test thực thi.** D-35 thay cấm mutation tuyệt đối của D-23; Q&A/summary/nháp phản hồi vẫn chỉ đọc/nháp. Đợt này chỉ sửa tài liệu.
 
-## 1. Ranh giới dịch vụ
+## Tool và danh tính
 
-Luồng đọc: UI trợ lý → xác thực hiện có → kiểm tra scope → dịch vụ đọc ticket/asset/report/tài liệu → chọn payload tối thiểu → adapter AI → kiểm tra nguồn/quyền đầu ra → UI.
-
-Luồng ghi: UI trợ lý tạo nháp → người dùng chọn chuyển nháp → **form/composer hiện có** → người dùng kiểm tra và gửi → validation/quyền/version/transaction **như hiện tại**. AI không được nối với endpoint mutation bằng credential riêng.
-
-Provider không nhận database credential, session cookie hoặc khóa gọi API nghiệp vụ. Không cấp role “AI Admin”. Dữ liệu nguồn, kể cả tài liệu đã duyệt, là dữ liệu không đáng tin về mặt chỉ dẫn; không thể thay quyền, gọi thêm công cụ hoặc thay đổi danh sách thao tác được phép.
-
-Đầu ra chỉ được hiển thị dưới dạng nội dung đã escape/sanitize và các source card do ứng dụng dựng. Không thực thi HTML/JavaScript hoặc tự tải ảnh/URL do model đưa ra; link nguồn phải thuộc tập tham chiếu server đã xác thực. Không để một câu trả lời đọc dữ liệu gây request bên ngoài ngoài ý muốn.
-
-## 2. Allowlist thao tác đọc
-
-Tên dưới đây là hợp đồng khái niệm, chưa phải API đã triển khai.
-
-| Thao tác | Phạm vi / nguồn quyết định |
-|---|---|
-| `searchApprovedGuides` / `readGuide` | Tài liệu được chọn, phiên bản và ACL của người dùng |
-| `listPermittedTickets` / `readTicketPublic` | Cùng scope, pagination và field policy như danh sách/chi tiết ticket |
-| `readTicketInternal` | Chỉ một ticket được chọn, user còn quyền IT, chế độ INTERNAL đã mở rõ |
-| `listPermittedAssets` / `readAsset` | Cùng scope bản rút gọn/phục vụ xử lý/quản lý như lõi |
-| `readReportFacts` | M/A, metric/filter allowlist từ MET01–15; trả facts và thời điểm |
-| `prepareTicketDraft` / `prepareReplyDraft` | Chỉ cấu trúc nháp trong lớp AI; không gọi mutation nghiệp vụ |
-
-Không có tool tạo comment, đổi trạng thái, phân công, chuyển nhóm, override priority, cấp/thu hồi asset, đổi user/role hoặc sửa SLA. Không shell, SQL, HTTP tùy ý, crawler hoặc truy xuất toàn database qua ngôn ngữ tự nhiên.
-
-## 3. Scope và ranh giới công khai/nội bộ
-
-| Ngữ cảnh | Nguồn được dùng | Handoff |
+| Tool khái niệm | Actor/scope | Điều kiện |
 |---|---|---|
-| Chat chung | Tài liệu có quyền, trường public của các đối tượng được phép | Nháp yêu cầu hoặc link nguồn |
-| Ticket PUBLIC | Public fields/comment/tệp metadata được phép; không đọc nội bộ | Nháp public vào composer công khai |
-| Ticket INTERNAL | Public và internal của **một ticket**, chỉ IT có scope | Nháp nội bộ vào composer note; không chuyển thành public |
-| Báo cáo | Facts đã lọc của M/A | Link tới SCR40 với filter tương ứng, không tạo báo cáo/metric mới |
+| Search/read KB, ticket, asset, report | User hoặc service identity đúng policy | Chỉ đọc; lọc trước retrieval/provider/trả kết quả và đọc lại |
+| Prepare ticket/reply draft | Chủ phiên, audience rõ | Không ticket/comment/SLA/event nghiệp vụ |
+| Confirm/create ticket | User xác nhận preview cụ thể | Validation lõi, digest/version/idempotency; không chọn requester/role/priority override tùy ý |
+| Propose/validate plan, eligible candidates | AI_COORDINATOR gắn run/event/policy/grantor | DAG/estimate/deadline/inventory; proposal chưa có hiệu lực |
+| Activate plan/create/assign/reassign tasks | AI_COORDINATOR trong allowlist | Policy/grantor hiện tại, scope/version/capacity/transaction; ngoài quyền trình duyệt |
+| Approval/reminder/report | Cùng actor và visibility | Dedup/tần suất; approval chưa là execution |
+| Hoàn thành task, giải quyết/đóng ticket | Người có quyền | State machine; model không tự xác nhận |
+| User/role/SLA/asset mutation | Người có quyền, service chuyên trách | AI không tự cấp user/role/tài sản; sửa SLA/cam kết cần đúng quyền và duyệt |
 
-Phiên PUBLIC và INTERNAL tách ngữ cảnh, không mang lịch sử nội bộ sang phiên public. Nếu user muốn soạn public sau khi đọc nội bộ, mở một phiên PUBLIC mới chỉ dùng dữ liệu public; không nhờ mô hình “tự bỏ thông tin nhạy cảm” từ lịch sử trộn.
+Provider không nhận DB credential/session/credential nghiệp vụ hoặc quyền Admin. Dữ liệu KB/ticket không cấp quyền. Không shell, SQL hoặc HTTP tùy ý.
 
-Quyền được kiểm tra trước retrieval, trước gửi tới provider và trước render/đọc lại lịch sử. Nếu nguồn mất quyền trong lúc sinh câu trả lời, bỏ kết quả phụ thuộc nguồn đó, không lộ một phần. Cache không dùng chung giữa user hoặc visibility; mọi hit vẫn kiểm tra quyền hiện tại. Turn cũ chứa dữ liệu nguồn không còn quyền phải bị che toàn bộ khi cần, không chỉ bỏ link dẫn nguồn.
+## Giao dịch, sự kiện và retry
 
-AI không truy cập mặc định nội dung binary của tệp. Link attachment tiếp tục tải qua kiểm tra quyền hiện có; không đổi thành URL public để provider đọc. Lịch sử chat không là đường vòng giữ bản sao dữ liệu đã bị thu hồi quyền.
+1. Transaction nghiệp vụ lưu thay đổi + OutboxEvent.
+2. Worker claim event bằng DB/lease, tạo hoặc tiếp tục run theo event ID, commit.
+3. Snapshot nguồn/candidates đúng quyền; đóng transaction trước gọi model.
+4. Schema/refusal/timeout lỗi → run failure có thể xử lý lại, không task nửa vời.
+5. Transaction mới re-read, khóa nguồn lực theo thứ tự, kiểm tra version/policy/grantor/ACL/capacity; ghi domain/action/audit/notification/outbox nguyên tử.
+6. Ack sau commit; redelivery dùng khóa nghiệp vụ và kết quả đã lưu.
 
-## 4. Bất biến đối chiếu với lõi
+PostgreSQL là nguồn khôi phục khi broker lỗi; Redis lock/Celery task ID không thay dedup domain. Xem [kiến trúc](../technical/architecture.md) về key, backoff và dead-letter.
 
-| Bất biến | Hành vi AI được phép | Hành vi bị chặn / kiểm tra |
+## Public/internal và dữ liệu
+
+PUBLIC không nhận internal fields; INTERNAL gắn ticket và quyền IT hiện tại. Không handoff nội bộ ra public. Cache/history/nguồn kiểm tra lại ACL; mất quyền thì che cả nội dung phụ thuộc nguồn, không chỉ bỏ citation. KB phải Published/version hợp lệ; thu hồi hiệu lực ngay tại truy vấn.
+
+Chỉ render text escape và source cards server xác nhận, không thực thi HTML/JS/tải URL model. Tệp private vẫn qua quyền cha, không đưa binary/URL public cho provider mặc định. Không hứa nhận diện hoàn hảo bí mật do user tự dán.
+
+## Bất biến và mutation hợp lệ
+
+| Nghiệp vụ | Bảo toàn | Thay đổi được phép |
 |---|---|---|
-| Trạng thái BR-04 | Đọc/giải thích trạng thái hiện tại | Không thêm trạng thái hoặc chuyển cạnh qua chat |
-| Tạo ticket BR-02 | Chuẩn bị các trường cho form | Không tạo mã/event/SLA từ nháp; submit cuối vẫn SCR21 |
-| Priority BR-03 | Hiển thị đề xuất từ ma trận | Không nhận P1/assignee tùy ý từ output AI; form tính lại |
-| First response BR-08 | Soạn nháp cho người IT | AI message không là TicketComment; không ghi firstResponseAt |
-| Pending BR-04/09 | Tóm tắt câu hỏi và đề xuất nội dung | Không resume khi chat; chỉ comment requester gửi thật/IT tiếp tục theo quyền |
-| SLA BR-09/10 | Đọc ngân sách/đã dùng từ service | Không reset/pause/resume hoặc sửa breach history/worker dedup |
-| Phân công BR-05 | Đọc người/nhóm đang phụ trách | Không tự nhận, giao người hoặc chuyển nhóm |
-| Tài sản BR-11 | Đọc hồ sơ đúng scope | Không sửa assignment hoặc trạng thái; một assignment hiệu lực giữ nguyên |
-| MET01–15 | Đọc facts từ báo cáo | Không đếm chat/nháp thành ticket; không tự tính lại công thức |
-| Version và transaction | Handoff kèm ngữ cảnh cần revalidate | Không bỏ qua conflict vì câu trả lời được sinh từ version cũ |
-| Hoạt động khi AI lỗi | Timeout/circuit breaker ở lớp AI | Không giữ khóa DB, chặn submit form hoặc dừng worker SLA |
-| Lịch sử | Chat lưu riêng, audit AI metadata tối thiểu | Không trộn chat vào timeline công khai; xóa chat không xóa lịch sử nghiệp vụ |
+| Ticket BR-02–06 | Requester, ma trận priority, state/quyền/version | Tạo sau xác nhận; không tự giải quyết/đóng |
+| Plan/task BR-14–15 | Tách ticket, DAG, một plan version hiệu lực | Tạo/giao/giao lại theo policy; Done do người thực hiện |
+| Phân bổ BR-16 | Thành viên/kỹ năng/lịch/tải thật | Recheck/giữ chỗ atomic; không ép vượt tải |
+| SLA BR-08–10 | 24/7, snapshot, pause/reopen, dedup/history | Lịch nhân lực không đổi SLA; thay SLA/cam kết phải duyệt |
+| First response | Chỉ public IT comment hợp lệ | Nháp do IT gửi thật mới xét; AI message/nhắc không tính |
+| Assets BR-11 | Một cấp phát hiệu lực | Task tham chiếu/kiểm kê; không tự cấp phát hoặc mua |
+| MET01–22 | Facts theo scope/kỳ/timestamp | Đếm thực thể/action đã commit; không đếm nháp |
+| Manual/approval | Không ghi đè lock/đang làm, chặn stale | Approved vẫn recheck policy/quyền/capacity |
 
-Các bản đặc tả lõi được giữ nguyên nội dung. [Biên bản rà soát](../review-report.md) ghi phép so sánh checksum trước/sau trên tài liệu lõi và wireframe hiện có. Điều này chứng minh sự giữ nguyên tài liệu, không thay thế regression test của phần mềm sau khi triển khai.
+## Dữ liệu AI
 
-## 5. Dữ liệu riêng của lớp AI
+Conversation/Message/SourceReference/Draft tách domain; xóa chat không xóa ticket/task/audit. ConfirmedCommand lưu owner/digest nội dung/version/TTL/idempotency. Run/Action/Approval/Outbox/Usage lưu provenance và trạng thái/result/error. Không log prompt/body/secrets mặc định; retention/redaction/quyền review trace: Cần quyết định D-40.
 
-| Khái niệm bổ sung | Dữ liệu cần có / ranh giới |
-|---|---|
-| AIConversation | Chủ phiên, visibility, ticket context tùy chọn, thời điểm và trạng thái; không là ticket |
-| AIMessage | Vai trò user/assistant, nội dung chat và trạng thái hoàn thành/lỗi; không là comment |
-| AISourceReference | Nguồn, version, visibility và ACL reference; dùng để revalidate khi đọc lại |
-| AIDraft | Chủ nháp, target form/audience, dữ liệu cấu trúc, thời hạn; không có trạng thái nghiệp vụ |
-| AIUsageEvent | Metadata request, loại tác vụ, lỗi/usage nếu có; không log prompt/body/secrets mặc định |
-| ApprovedAISource | Nguồn đã duyệt, phiên bản, phạm vi đọc và trạng thái; chưa mở phân hệ KB đầy đủ |
+## Tắt automation và hoàn tác
 
-Không thêm trường bắt buộc vào Ticket, TicketSLA hoặc Asset để bật chatbot. Xóa/vô hiệu dữ liệu AI không kéo theo xóa hồ sơ lõi. Thời hạn lưu/xóa chat, nhà cung cấp và chính sách truyền dữ liệu phải được doanh nghiệp chốt trước vận hành; chưa tuyên bố không lưu dữ liệu hoặc không dùng để huấn luyện khi chưa có căn cứ.
+Tắt trợ lý dừng sinh nội dung; tắt automation chặn lệnh nền mới. Task chờ provider recheck trước ghi. Không xóa task đã tạo khi tắt AI; hoàn tác bằng hành động bù còn hợp lệ, có quyền/version/audit, không lùi âm thầm việc đã bắt đầu/hoàn thành. Luồng thủ công và SLA tiếp tục hoạt động.
 
-Việc tắt trợ lý không làm user mất quyền lõi. Đọc hoặc xóa lịch sử cá nhân có thể còn được cung cấp khi cờ AI tắt để người dùng quản lý dữ liệu đã tạo; trạng thái này không gọi provider.
+Retry hữu hạn/backoff; lỗi nghiệp vụ không khả thi chuyển ngoại lệ. Timeout kết quả phí không rõ phải giữ reservation chi phí bảo thủ; không retry vô hạn. Mất broker khôi phục từ event DB.
 
-## 6. Handoff và concurrency
+## Kế hoạch kiểm tra không hồi quy
 
-Nháp chuyển trong bộ nhớ phiên hoặc token tham chiếu riêng tư có owner/TTL; không nhét mô tả/note vào URL. SCR21/SCR22 coi đó là input chưa tin cậy, kiểm tra lại enum, độ dài, scope asset và trạng thái. Không auto-submit sau đăng nhập lại, refresh, retry hoặc mở lại panel.
+PLANNED/NOT RUN: giữ 47 AC lõi, 10 AC-X, 12 TC-SLA và 8 AC-AI/12 TC-AI. Q&A/summary/nháp chưa xác nhận không đổi domain. Xác nhận ticket chỉ tạo một ticket/SLA/event. Automation được cấp phải đổi task/assignment/action/notification đúng phạm vi và đủ trace; không áp điều kiện database luôn bất biến cho mọi lệnh AI.
 
-Chỉ nhận các trường nháp được cho phép như tiêu đề, mô tả, loại, danh mục, impact/urgency và asset được phép. Bỏ/từ chối userId, role, trạng thái, priority override, nhóm hoặc assignee do model tự đề xuất trong payload. Đích handoff chỉ là form/composer được ứng dụng định sẵn, không phải URL hoặc tên thao tác do model tự tạo.
+Bổ sung AC-OPS01–12/A1–A13: lọc cứng candidates, cycle, nghỉ phép, task lock/đang làm, approval stale, 2 workers/replay/retry, policy/KB revoked, injection/provider/broker lỗi, report source và restore. Kiểm tra payload gửi model và API, không chỉ đáp án. Không chạy test trong đợt tài liệu.
 
-Đang có nội dung trong form/composer thì hỏi thay thế hay giữ; mặc định giữ. Handoff bị chặn khi thiếu quyền hoặc không đúng audience. Khi version ticket đổi, bản nháp vẫn có thể đọc như nội dung do user chuẩn bị nhưng không có quyền ghi cho đến khi dịch vụ nghiệp vụ chấp nhận version/ngữ cảnh hiện tại.
-
-## 7. Khả dụng, rollout và rollback
-
-- Flag AI độc lập, mặc định tắt nếu thiếu provider, nguồn hoặc data policy. Không cần model client để chạy luồng nghiệp vụ thường.
-- Provider adapter độc lập khỏi domain; timeout/hủy/giới hạn concurrency chỉ ảnh hưởng AI. Không mở transaction nghiệp vụ trong lúc chờ model.
-- Chưa chọn vendor/model hoặc phiên bản dependency trong giai đoạn tài liệu. Không có secret/API key trong source, chat, ảnh hoặc log.
-- Khi triển khai, bật nội bộ theo vai trò/tác vụ sau khi quyền API lõi và nguồn đã qua kiểm tra; public trước, nội bộ sau khi test visibility.
-- Tắt flag là rollback chức năng AI; form, ticket, SLA worker và tài sản không cần rollback dữ liệu vì AI không trực tiếp ghi chúng.
-
-M1–M6 vẫn là chuỗi triển khai MVP, gồm nghiệm thu lõi và AI. Nhánh AI triển khai trong MVP khi API tương ứng sẵn sàng; không trì hoãn luồng thủ công để chờ kết quả AI. Không đánh dấu chatbot hoạt động chỉ vì có ô chat hoặc nội dung mẫu.
-
-## 8. Truy vết phần bổ sung
-
-| Năng lực | UC / US / AC | Màn hình | Nghiệp vụ tái dùng | Rủi ro kiểm chứng |
-|---|---|---|---|---|
-| F-AI01 | UC-AI01 / US-AI01 / AC-AI01 | SCR-AI01 | Nguồn hướng dẫn được duyệt | Link bịa, thiếu nguồn, prompt injection |
-| F-AI02 | UC-AI02 / US-AI02 / AC-AI02 | SCR-AI01 | UC11/12/27/28, quyền hiện có | IDOR, scope thay đổi, cache/history |
-| F-AI03 | UC-AI03 / US-AI03 / AC-AI03 | SCR-AI02→SCR21 | UC10 / BR-02/03 | Tạo ngầm, sai priority, trùng submit |
-| F-AI04 | UC-AI04 / US-AI04 / AC-AI04 | SCR-AI01 trên SCR22 | UC12/24, visibility | Lộ nội bộ, ghi first response giả |
-| F-AI05 | UC-AI05 / US-AI05 / AC-AI05 | SCR-AI02→SCR22 | UC15/16, BR-04/06/08 | Gửi nhầm audience, auto-resume |
-| F-AI06 | UC-AI06 / US-AI06 / AC-AI06 | SCR-AI01→SCR40 | UC32 / MET01–15 | Đổi công thức, đọc báo cáo cấm |
-| F-AI07 | UC-AI07 / US-AI07 / AC-AI07 | SCR-AI01 | Phiên và danh tính hiện có | Đọc chat khác, xóa nhầm dữ liệu lõi |
-| F-AI08 | UC-AI08 / US-AI08 / AC-AI08 | SCR-AI03 | Quyền Admin; cấu hình riêng | Ảnh hưởng core khi AI tắt/lỗi |
-
-## 9. Gate nghiệm thu AI bắt buộc trong MVP
-
-Chạy TC-AI01–12 và bộ AC lõi hiện có với AI bật, tắt và provider lỗi. Đối chiếu DB trước/sau câu hỏi, tóm tắt và nháp: Ticket, TicketComment, TicketEvent, TicketSLA, AssetAssignment không đổi. Chỉ những thao tác cuối do user gửi ở form gốc mới được có mutation tương ứng. Kiểm tra no-leak cả payload tới model và UI, không chỉ kiểm tra câu trả lời.
-
-Chạy cùng TC-SLA01–12, test hai assignee nhận ticket và cấp phát đồng thời như kế hoạch lõi; không được miễn các test đó vì thêm AI. Kết quả hiện tại: **chưa chạy — chưa có ứng dụng để kiểm thử**.
-
-## Giới hạn nhận diện nội dung do người dùng tự nhập
-
-Visibility được thực thi chắc chắn với các nguồn hệ thống đã gắn quyền và nhãn. Không tuyên bố có thể nhận diện hoàn hảo mọi bí mật hoặc ghi chú nội bộ mà người dùng tự gõ/dán vào chat. UI phải nêu audience, nhắc không gửi bí mật và yêu cầu người dùng kiểm tra trước khi gửi qua composer hiện có; đây không phải lý do nới quyền retrieval hoặc bỏ kiểm tra ở backend.
+[Catalog AI](use-cases-stories-and-acceptance.md) · [AC tổng](../06-acceptance-criteria.md) · [Truy vết](../traceability/master-traceability.md) · [Lộ trình](../09-design-readiness.md).

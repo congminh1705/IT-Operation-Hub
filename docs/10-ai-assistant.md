@@ -1,118 +1,81 @@
-# Chatbot AI hỗ trợ vận hành
+---
+id: itoh-docs-10-ai-assistant
+title: "Thiết kế AI trợ lý và điều phối tự động"
+type: reference
+domain: ai
+module: orchestration
+tags: [ai, orchestration, reference]
+priority: 1
+status: design-draft
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: primary
+purpose: "Định nghĩa trợ lý và điều phối AI, nguồn, policy và ranh giới hành động."
+---
 
-> **Phạm vi cập nhật 30/10/2026 — D-33:** Trợ lý AI thuộc phạm vi và nghiệm thu MVP theo xác nhận mới nhất của chủ dự án. Có thể bật/tắt khi vận hành, nhưng không được bỏ qua triển khai hoặc nghiệm thu AI. Giữ nguyên quyền và luồng nghiệp vụ lõi; hiện mới có thiết kế, chưa có provider hoặc chức năng hoạt động. [Tech stack và đối chiếu](technical/tech-stack.md).
+# Thiết kế AI trợ lý và điều phối tự động
 
-**Phiên bản:** 0.3 · **Trạng thái:** bổ sung thiết kế, chưa triển khai chatbot hoặc kết nối nhà cung cấp AI.
+**Thiết kế mục tiêu · Chưa triển khai/kiểm thử.** D-35 thay giới hạn toàn cục “AI chỉ đọc/soạn nháp” của D-23 cũ. Hiện chỉ cập nhật tài liệu.
 
-Chatbot được bổ sung vào phạm vi sản phẩm theo yêu cầu mới như một năng lực **thuộc MVP**, có thể bật/tắt khi vận hành. “Tùy chọn” chỉ nói về việc sử dụng và khả dụng, không cho phép bỏ qua triển khai/nghiệm thu AI. Phần ticket, SLA, tài sản, phân quyền và báo cáo tiếp tục vận hành bằng các quy tắc đã đặc tả. Không có bước bắt buộc phải qua AI.
+## Hai chế độ và danh tính
 
-## 1. Mục tiêu và nguyên tắc
-
-Giúp người dùng tìm hướng dẫn, hiểu tiến độ và chuẩn bị nội dung hỗ trợ nhanh hơn. AI đọc thông tin qua cùng lớp nghiệp vụ và quyền của người đang đăng nhập; kết quả có nguồn và thời điểm dữ liệu. Khi thiếu nguồn, không có quyền hoặc dịch vụ lỗi, người dùng tiếp tục bằng các màn hình thông thường.
-
-AI không là một vai trò mới, không thay nhân sự IT và không quyết định trạng thái nghiệp vụ. Phạm vi đầu tiên là **đọc → giải thích → soạn nháp → chuyển tới giao diện hiện có**. Chatbot không có công cụ ghi trực tiếp vào ticket, bình luận, tài sản, quyền user hoặc SLA.
-
-## 2. Năng lực bổ sung
-
-| ID | Năng lực | Giá trị và giới hạn |
+| Chế độ | Danh tính/quyền | Hành động |
 |---|---|---|
-| F-AI01 | Hỏi đáp hướng dẫn có nguồn | Chỉ tài liệu nội bộ đã được duyệt và phù hợp quyền; không tìm trên web tự do |
-| F-AI02 | Tra cứu ticket/tài sản | Lấy dữ liệu mới qua dịch vụ đọc hiện có; không mở rộng phạm vi vì người dùng biết ID |
-| F-AI03 | Soạn nháp yêu cầu | Thu thập các trường của SCR21; mở form để người dùng kiểm tra và bấm gửi |
-| F-AI04 | Tóm tắt ticket | Tóm tắt theo visibility; bản công khai không nhận ghi chú hoặc tệp nội bộ |
-| F-AI05 | Soạn nháp phản hồi | Đưa nội dung đã kiểm tra vào composer đúng audience; chưa tạo comment |
-| F-AI06 | Hỏi báo cáo bằng ngôn ngữ tự nhiên | Chỉ M/A; ánh xạ truy vấn được phép và MET01–MET15, không tự viết SQL hoặc tự tính số liệu |
-| F-AI07 | Phiên chat cá nhân | Chỉ chủ phiên truy cập; đọc lịch sử vẫn kiểm tra quyền với nguồn đang còn hiệu lực |
-| F-AI08 | Bật/tắt trợ lý | Chỉ Admin; bật khi nhà cung cấp, nguồn và chính sách dữ liệu đã cấu hình hợp lệ |
+| Trợ lý theo yêu cầu | Người dùng hiện tại; role/scope/visibility trước mỗi tool và trước trả kết quả | Hỏi đáp KB đã xuất bản, tra cứu/tóm tắt; tạo ticket sau xác nhận; nháp phản hồi cho IT duyệt |
+| Điều phối nền | AI_COORDINATOR, gắn event/run/policy version/người cấp quyền | Sinh plan/task, phân công/giao lại, nhắc/báo cáo trong policy; ngoại lệ chuyển quản lý |
 
-Tài liệu hướng dẫn đầu tiên là tập nguồn được chỉ định cho trợ lý, có phiên bản và quyền đọc. Việc này không mở thêm toàn bộ phân hệ kho kiến thức, editor, phê duyệt bài hoặc crawler. Chưa nhận upload tệp vào chat, chưa OCR ảnh/PDF và chưa nhúng toàn bộ tệp ticket vào mô hình.
+Provider sinh output theo schema và đề xuất tool; backend quyết định quyền, hợp lệ và transaction. Model không có credential database/session. Requester không đọc nhân lực, kế hoạch nội bộ, trace hoặc approval.
 
-## 3. Trải nghiệm theo vai trò
+## Trợ lý giữ trong MVP
 
-| Vai trò | Có thể nhờ AI | Điều kiện |
-|---|---|---|
-| Requester | Hướng dẫn, ticket của mình, tài sản được cấp, tóm tắt công khai, nháp yêu cầu | Không thấy ticket người khác hoặc nội bộ; không suy ra tồn tại bản ghi từ lỗi |
-| Technician | Như góc nhìn cá nhân; thêm ticket/tài sản trong phạm vi xử lý, tóm tắt và nháp phản hồi | Scope nhóm được kiểm tra lại; nội bộ chỉ trong phiên gắn một ticket và được chọn rõ |
-| IT Manager | Thông tin được phép toàn tổ chức, tóm tắt, nháp, báo cáo nghiệp vụ | Không có công cụ AI đổi priority/assignee/status; vẫn dùng dialog hiện có |
-| Admin | Các thao tác đọc theo quyền và cấu hình trợ lý | Không dùng chat làm đường tắt đổi user/role/SLA hoặc xem chat cá nhân của người khác |
+- Hỏi đáp dùng KB Published và còn quyền, có tên/version/link mở được; thiếu căn cứ phải nói rõ. Thu hồi quyền áp dụng tại retrieval, không đợi embedding.
+- Tra cứu/tóm tắt ticket/tài sản theo scope API; báo cáo lấy facts theo metric allowlist. Không SQL tự sinh.
+- Tạo ticket: thu thập trường → xem trước → user xác nhận chính nội dung/phiên bản đó → service tạo bằng quyền user và idempotency key → trả mã/kết quả đã lưu. Không xác nhận hoặc nội dung đổi thì không ghi. Có lựa chọn sửa tại SCR21; không bắt buộc rời hội thoại.
+- Nháp phản hồi: tách PUBLIC/INTERNAL, không chuyển nội bộ ra public; IT kiểm tra/chỉnh rồi gửi composer. Chat/nháp không là public comment, first response hoặc hoàn thành kỹ thuật.
+- Phiên cá nhân và lịch sử kiểm tra lại quyền nguồn; Admin không tự được đọc chat người khác. Retention: Cần quyết định D-40.
 
-“Chat cá nhân” không có màn hình Admin xem mọi nội dung chat trong phạm vi này. Nhật ký vận hành AI chỉ lưu metadata tối thiểu; quy trình xử lý sự cố/retention cần được chốt trước vận hành.
+## Điều phối theo sự kiện và chính sách
 
-## 4. Các luồng chính
+Hiểu mục tiêu/deadline/thông tin thiếu → lấy workflow/template/nguồn được phép → sinh task, kỹ năng/công sức/phụ thuộc → backend validate schema/DAG/feasibility → lọc ứng viên nhóm/kỹ năng/lịch/tải → AI xếp hạng trong tập hợp lệ, giải thích bằng dữ liệu vận hành → service tạo/giao task → notification/audit/outbox → sự kiện tiến độ/lịch/tải/blocked/deadline → đánh giá lại → giao lại trong quyền hoặc trình quản lý.
 
-### Hỏi đáp và tra cứu
+Thiếu dữ liệu thì hỏi có cấu trúc, chống lặp; không coi mọi người đều rảnh. Ước lượng model chưa được xác thực phải dùng template đã duyệt hoặc hỏi trước tự giao. Luồng template xác định M2 không thay bằng chứng model thật M3/A11.
 
-Mở trợ lý → nhập câu hỏi → xác định loại thông tin → xác thực phiên và quyền → lấy nguồn hợp lệ → trả lời có nguồn → mở màn hình nguồn nếu cần. Đọc nguồn trước khi đưa vào mô hình; không lấy mọi dữ liệu rồi nhờ mô hình tự lọc.
+## Policy và phê duyệt
 
-Mỗi câu trả lời về quy định cần tài liệu và phiên bản. Câu trả lời về ticket/asset cần link đối tượng được phép cùng thời điểm đọc. Báo cáo cần khoảng thời gian, scope, công thức và số liệu từ lớp báo cáo. Không có nguồn đủ tin cậy → nói rõ chưa có căn cứ và cung cấp lối vào chức năng phù hợp.
-
-### Soạn yêu cầu qua hội thoại
-
-AI hỏi bổ sung tiêu đề, mô tả, loại, danh mục, ảnh hưởng và khẩn cấp → tạo **bản nháp** → người dùng chọn “Kiểm tra yêu cầu” → mở SCR21 với dữ liệu nhập sẵn → kiểm tra và chỉnh → người dùng bấm **Gửi yêu cầu** như luồng hiện tại.
-
-Trước lần gửi cuối: chưa có mã ticket, chưa New, chưa SLA và chưa thông báo phân công. Form tính lại priority bằng ma trận; requester không được AI gán P1 hoặc assignee tùy ý. Asset phải vẫn được cấp cho người dùng khi submit. Không đặt mô tả hoặc dữ liệu nhạy cảm vào query URL khi chuyển nháp.
-
-### Tóm tắt và soạn phản hồi
-
-Trong SCR22, chọn “Nhờ AI hỗ trợ” → mở panel theo ngữ cảnh → chọn tóm tắt hoặc soạn nháp. Tóm tắt công khai và nháp công khai chỉ dùng nguồn public đã lọc. Phiên nội bộ được đánh nhãn rõ và không có thao tác đưa nội dung sang công khai.
-
-Chọn “Đưa vào khung soạn” chỉ điền bản nháp sau khi người dùng chủ động chọn; không ghi đè nội dung đang soạn nếu chưa xác nhận thay thế. Người IT đọc/chỉnh và bấm **Gửi công khai** hoặc **Lưu ghi chú nội bộ** ở composer hiện có. Backend kiểm tra lại quyền, trạng thái và version tại lần gửi đó.
-
-## 5. Những bất biến phải giữ
-
-- Giữ nguyên New/Open/In Progress/Pending/Resolved/Closed/Cancelled và các cạnh chuyển tiếp.
-- AI trả lời hoặc tóm tắt không tạo `TicketComment`, không tiếp nhận, không resume Pending và không làm ticket Resolved.
-- AI không ghi `firstResponseAt`. Chỉ public comment do IT chủ động gửi qua nghiệp vụ hiện có mới xét phản hồi đầu tiên.
-- Không sửa snapshot, ngân sách hoặc thời gian SLA; worker cảnh báo và khóa chống trùng giữ nguyên.
-- Không cấp phát/thu hồi, đổi trạng thái tài sản, role, nhóm hoặc chính sách SLA qua chatbot.
-- Chat và nháp chưa gửi không vào số liệu dashboard hoặc timeline ticket.
-- Khi AI tắt hoặc lỗi, các luồng thủ công và tác vụ nền tiếp tục sử dụng được.
-
-Điều kiện kiểm tra chi tiết nằm trong [tích hợp và bảo toàn nghiệp vụ](ai/integration-and-non-regression.md).
-
-## 6. Information architecture và UI/UX
-
-| Screen bổ sung | Vị trí và nội dung | Điều hướng về luồng hiện có |
-|---|---|---|
-| SCR-AI01 | `/assistant` hoặc panel ngữ cảnh; chat, nguồn, scope và trạng thái dịch vụ | Link ticket/asset/report đã kiểm tra quyền; mobile mở trang riêng |
-| SCR-AI02 | Thẻ xem trước nháp trong chat/panel | Chuyển nháp đến SCR21 hoặc composer SCR22, không commit dữ liệu |
-| SCR-AI03 | `/admin/assistant`; trạng thái bật/tắt, nguồn, chính sách dữ liệu, kết nối đã cấu hình | Chỉ Admin; không hiển thị hoặc nhập khóa bí mật vào chat |
-
-Khi tính năng khả dụng, sidebar có “Trợ lý AI”; SCR22 có action phụ “Nhờ AI hỗ trợ”. Không tự mở chat, không che CTA xử lý, không di chuyển nút đang có. Panel là vùng tùy chọn, giữ form/filter đang thao tác; mobile có nút quay lại ngữ cảnh trước. Việc chọn role hay scope của trợ lý không cấp thêm quyền.
-
-### Màn hình tham khảo
-
-![Trợ lý AI và bản nháp yêu cầu](design/wireframes/11-ai-assistant.svg)
-
-![Hỗ trợ theo ngữ cảnh ticket](design/wireframes/12-ai-ticket-assistant.svg)
-
-![Trạng thái nguồn, lỗi và khả dụng](design/wireframes/13-ai-states.svg)
-
-Nhãn luôn có “Trợ lý AI”; không trình bày như một kỹ thuật viên đã tiếp nhận việc. Câu nhắc ngắn: “AI hỗ trợ tham khảo. Kiểm tra nội dung trước khi gửi.” Từng nguồn mở được, không bịa link. Nội dung đang sinh chưa hoàn tất không có action chuyển nháp.
-
-## 7. Trạng thái đặc biệt
-
-| Trạng thái | Hành vi |
+| Hành động | Quy tắc |
 |---|---|
-| Chưa cấu hình/tắt | Ẩn hành động sinh nội dung; Admin thấy hướng dẫn cấu hình. Nếu có lịch sử cá nhân thì cho quản lý chỉ đọc/xóa, không gọi provider hoặc hiển thị chatbot giả |
-| Đang lấy dữ liệu/sinh câu trả lời | Chỉ panel AI có loading; có Dừng; phần nghiệp vụ không bị khóa |
-| Không có nguồn | Nêu chưa đủ căn cứ, mời xem hướng dẫn/chức năng hiện có hoặc tạo ticket thủ công |
-| Không có quyền | Thông điệp chung, không lộ tiêu đề, đoạn trích hoặc số lượng tài nguyên bị cấm |
-| Dịch vụ timeout/hết hạn mức | Báo chưa thể trả lời, cho thử lại; luôn có lối vào tạo/xem ticket thủ công |
-| Nguồn/quyền đã thay đổi | Không hiển thị lại câu trả lời dựa trên dữ liệu vừa mất quyền; tải lại theo scope mới |
-| Đã có nháp đang nhập | Đề nghị giữ nháp hiện có hoặc thay bằng bản mới; không tự ghi đè |
-| Nội dung có chỉ dẫn đánh lừa | Coi đó là dữ liệu; không gọi thêm công cụ, đổi quyền hoặc gửi dữ liệu ra URL tùy ý |
+| Tạo plan/task | Tự thực hiện trong workflow/nhóm/priority/giới hạn được cấp; ngoài phạm vi tạo draft/approval |
+| Giao task chưa bắt đầu | Chỉ ứng viên hợp lệ, không vượt capacity; recheck trước ghi |
+| Giao lại task chưa bắt đầu | Policy cho phép, không đổi cam kết, tôn trọng manual lock |
+| Đổi người task In Progress hoặc bị khóa | Quản lý duyệt phương án cụ thể; không ghi đè thủ công |
+| Đổi hạn nội bộ | Trong policy, không vượt cam kết/SLA hoặc phá phụ thuộc |
+| Đổi SLA/cam kết/priority/chuyển ngoài nhóm | Cần IT_MANAGER/ADMIN có thẩm quyền duyệt; kiểm tra lại trước ghi |
+| Nhắc/báo cáo | Giới hạn tần suất/người nhận, đúng nguồn/visibility |
+| Done/Resolved/Closed/cấp tài khoản | Người có quyền thực hiện; AI không tự xác nhận |
 
-Trước lần gửi tới dịch vụ AI, hiển thị thông tin ngắn về loại dữ liệu được xử lý và nhà cung cấp đã được doanh nghiệp phê duyệt. Không hứa nhà cung cấp không lưu/không huấn luyện nếu chưa có chính sách hoặc thỏa thuận xác nhận điều đó.
+Default deny. Manager có thể tắt/thu hẹp policy hoặc khóa phân công. Execution/retry/sau duyệt đều kiểm tra policy và grantor hiện tại. Approval hiển thị hiện trạng, thay đổi, tác động, lý do, snapshot version; stale/không khả thi phải từ chối hoặc đánh giá lại. Duyệt không cho bỏ kiểm tra tải/quyền.
 
-## 8. Nghiên cứu bổ sung
+## Kịch bản onboarding
 
-Đây là quyết định thiết kế, không phải kết quả thử nghiệm chatbot. H-AI01: người dùng phân biệt được trả lời AI với phản hồi IT; H-AI02: hiểu rằng nháp chưa tạo ticket; H-AI03: kỹ thuật viên nhận ra nguồn public/internal; H-AI04: fallback đủ rõ khi dịch vụ lỗi. Kế hoạch test và AC được ghi ở [backlog AI](ai/use-cases-stories-and-acceptance.md).
+10 nhân viên, danh sách/cấu hình/hạn đầy đủ, quy trình Published và policy bật: kiểm kê → chuẩn bị máy → cài đặt → kiểm tra → bàn giao; nhánh đề nghị cấp tài khoản song song khi đủ đầu vào và hoàn thành trước kiểm tra. AI không tự mua máy/tạo tài khoản.
 
-Tham khảo: [OWASP Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) về chỉ dẫn có thể nằm trong dữ liệu được đọc; [OWASP Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) về giới hạn công cụ/quyền/tự chủ. Vì vậy thiết kế dùng allowlist chỉ đọc và giữ quyền quyết định nghiệp vụ ở giao diện hiện có. [NN/g về hallucinations](https://www.nngroup.com/articles/ai-hallucinations/) hỗ trợ việc làm rõ nguồn và giới hạn câu trả lời; các nguyên tắc này chưa chứng minh hệ thống đã an toàn hoặc chính xác.
+Nghỉ phép tạo sự kiện: xác định task ảnh hưởng, giao lại việc chưa bắt đầu nếu đủ điều kiện; task đang làm/khóa hoặc không có nghiệm thì mở ngoại lệ. Kỹ thuật viên ghi hoàn thành, ticket vẫn qua giải quyết/nghiệm thu; AI tổng hợp kết quả đã lưu.
 
-## 9. Điều kiện triển khai sau thiết kế
+## Tích hợp và bảo mật
 
-Lõi nghiệp vụ và quyền phải có API thực trước khi bật các tác vụ đọc dữ liệu thật. Chọn nhà cung cấp/mô hình, ngân sách, chính sách dữ liệu và tập tài liệu được duyệt tại bước kỹ thuật; chưa thêm dependency hoặc secret vào dự án hiện tại. AI có flag bật/tắt riêng và không là điều kiện khởi động hay nghiệm thu luồng lõi M1–M6.
+Adapter provider/model/embedding tách domain, schema output, allowlist tool, timeout và giới hạn lượt/token/retry. Snapshot → đóng transaction đọc → gọi model → transaction mới re-read/version/policy/ACL/capacity → ghi nguyên tử domain/action/audit/outbox. Không giữ lock lúc chờ model; không áp dụng plan lỗi một phần.
 
-Xem [8 use case, 8 stories và AC](ai/use-cases-stories-and-acceptance.md), [ma trận tích hợp/truy vết](ai/integration-and-non-regression.md) và [file XMind AI](xmind/08-ai-assistant.xmind).
+Run/action truy về event/policy/grantor/actor, nguồn/version, model/prompt version, args đã lọc bí mật, kết quả/lỗi/usage nếu có. KB/ticket là dữ liệu không đáng tin về chỉ dẫn; không shell/HTTP/SQL tùy ý. Render escape, link trong tập được server xác nhận. Provider lỗi không chặn core hoặc worker SLA. Xem [ranh giới tích hợp](ai/integration-and-non-regression.md).
+
+## Cấu hình AI và quyết định
+
+Xác nhận riêng trước đó chỉ dành cho **kiểm thử M3 ban đầu**: OpenAI API, `gpt-5-mini`, tổng tối đa 5 USD gồm retry/embedding, dữ liệu DEMO và database kiểm thử. `text-embedding-3-small` là đề xuất nếu thử RAG, cần xác minh trước dùng. Không tự đổi model đắt hơn/tăng trần. Chỉ dẫn hiện tại chỉ tài liệu, chưa được chạy API.
+
+Quyền model tài khoản, billing/quota, giá tại ngày chạy, khả năng tool/schema và chất lượng chưa được kiểm chứng. Provider/model/embedding, ngân sách và chính sách dữ liệu **production: Cần quyết định**, theo D-39/40. Không đưa key vào chat/log/repo hoặc dùng phạm vi demo để gửi dữ liệu thật.
+
+## Màn hình và nghiệm thu
+
+Giữ SCR-AI01–03; bổ sung SCR-OPS01–07 ở [IA](04-information-architecture.md): task board, plan, nhân lực, điều phối, approval, policy/template, KB. Draft/proposal tách kết quả thực thi.
+
+8 UC/US/AC trợ lý ở [catalog AI](ai/use-cases-stories-and-acceptance.md); 10 UC-OPS, 12 US/AC-OPS và A1–A13 ở catalog gốc. Tất cả PLANNED/NOT RUN. Cần cả đường automation thành công và ngoại lệ với model thật/dữ liệu lưu thật trong môi trường được phép; UI/chat tĩnh không đủ.
