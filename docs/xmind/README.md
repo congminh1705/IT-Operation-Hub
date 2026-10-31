@@ -1,72 +1,72 @@
+---
+id: itoh-docs-xmind-readme
+title: "Sơ đồ IT Operations Hub — XMind"
+type: reference
+domain: design
+module: mindmaps
+tags: [design, mindmaps, reference]
+priority: 2
+status: design-draft
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: derived
+purpose: "Định nghĩa cách xem, nguồn, độ phủ và quan hệ master/subset của XMind."
+---
+
 # Sơ đồ IT Operations Hub — XMind
 
-> **Phạm vi cập nhật 30/10/2026 — D-33:** Trợ lý AI thuộc phạm vi và nghiệm thu MVP theo xác nhận mới nhất của chủ dự án. Có thể bật/tắt khi vận hành, nhưng không được bỏ qua triển khai hoặc nghiệm thu AI. Giữ nguyên quyền và luồng nghiệp vụ lõi; hiện mới có thiết kế, chưa có provider hoặc chức năng hoạt động. [Tech stack và đối chiếu](../technical/tech-stack.md).
+**Thiết kế mục tiêu · Chỉ tài liệu thiết kế, chưa triển khai/kiểm thử.** File tổng [it-operations-hub.xmind](it-operations-hub.xmind) giữ 27 sheet; 8 file chuyên đề, tổng 9 archive. Topic/notes đã đối chiếu từng mã và định nghĩa với trợ lý + automation, KB/ACL, task/policy/approval và lộ trình M0–M5.
 
-File tổng [it-operations-hub.xmind](it-operations-hub.xmind) có **27 sheet**. Các topic, nhánh, ghi chú, quan hệ và màu được lưu trong file `.xmind` để chỉnh sửa; không chỉ là ảnh đặt trong một file có đuôi XMind.
+## Cách đọc
 
-## Mở và sử dụng
+Mở .xmind bằng XMind, chọn sheet, mở nhánh và notes. Topic/quan hệ là dữ liệu chỉnh sửa được. Bộ 27 preview gồm **18 mind map (gồm Product và IA), 7 luồng hoạt động có hướng và 2 state graph**. Product và IA giữ bố cục trung tâm, nhóm và nhánh hai phía như trước, chỉ tăng nét khung và thêm viền sáng; IA đủ 36 mẫu với ID/route, loại/scope chi tiết trong notes/catalog; bảy flow có hành động, bên chịu trách nhiệm và nhánh điều kiện. Các preview này dùng viền xanh đậm với lớp xanh sáng bên ngoài. Native XMind dùng chữ lớn, khung viền xanh và relationships có hướng; hai state graph ticket/asset giữ 12/8 cạnh.
 
-1. Mở file tổng bằng XMind, hoặc chọn file chuyên đề bên dưới.
-2. Chọn sheet theo chủ đề; mở/thu nhánh để điều chỉnh mức chi tiết.
-3. Đọc ghi chú của topic để xem actor, điều kiện phạm vi hoặc đầy đủ câu user story và AC.
-4. Chỉnh màu, bố cục và topic trong XMind; khi xuất ảnh mới, cập nhật ảnh xem nhanh tương ứng trong tài liệu.
+Giữ mã nghiệp vụ UC/US/SCR. Bảy sheet flow chuyển từ cây chủ đề sang các topic hoạt động và quan hệ có hướng, nên ID topic nội bộ được tái tạo; chi tiết tham chiếu giữ trong notes theo guard/quyền hiện hành. Product/IA giữ ID topic hiện có, Product thêm hai ý kiểm soát. Master/subset đồng bộ cùng nội dung. Điều kiện dài/AC, route và nguồn nằm trong notes/catalog Markdown. Preview SVG được bố cục riêng, không phải ảnh chụp/export XMind Desktop; chưa mở bằng XMind Desktop trong đợt này.
 
-Các bản đồ actor–goal hỗ trợ review use case; ký pháp UML hình thức được giữ ở phụ lục trong [use case catalog](../03-use-cases.md). Bản đồ mô hình thông tin mô tả đối tượng ở mức khái niệm, không phải ERD vật lý hoặc schema database.
+Các ý ngoài cùng của Product/IA có khung kín, viền đậm kèm viền sáng, ô và chữ lớn hơn; giữ bố cục trung tâm/nhánh hai phía. Nội dung gồm 44 ý Product và 36 mẫu màn hình IA. Product là tổng quan năng lực, IA là nhóm thông tin/route thiết kế; phạm vi ghi/đọc và điều kiện nghiệp vụ vẫn theo catalog/BR/ma trận quyền, không suy quyền từ một nhánh cùng nhóm.
 
-## Các file chuyên đề
+Ô trung tâm được tăng kích thước và cỡ chữ; nhóm bậc hai cũng lớn hơn, dùng chữ sáng trên nền đậm theo màu riêng từng nhánh. Native master và hai file Product/IA đồng bộ màu nền/cỡ chữ của hai cấp này; các ý ngoài cùng tiếp tục dùng nền sáng. Nội dung, topic ID và thứ tự nhóm giữ nguyên khi chỉnh phân cấp hiển thị.
 
-| File | Sheet | Nội dung |
+Các sơ đồ/core use cases cũ giữ mã; thêm nhánh công việc và điều phối và liên hệ nguồn. Bốn sheet AI được sửa nội dung thành trợ lý/điều phối/tool scope; sheet lộ trình đổi M0–M5. Quan hệ của các sheet tái cấu trúc dùng cây topic mới, không để edge trỏ topic đã bỏ.
+
+## File chuyên đề
+
+| File | Sheet | Nội dung hiện hành |
 |---|---|---|
-| [Toàn bộ dự án](it-operations-hub.xmind) | 27 | Tất cả sơ đồ, backlog, UI/UX và lộ trình |
-| [01 — Product map](01-product-map.xmind) | 2 | Sản phẩm và research top down |
-| [02 — Use cases](02-use-cases.xmind) | 4 | Tổng quan vai trò; tài khoản; ticket/SLA; tài sản/báo cáo |
-| [03 — Information architecture](03-information-architecture.xmind) | 1 | Phân cấp workspace, navigation và màn hình |
-| [04 — User flows](04-user-flows.xmind) | 7 | Nhân viên, Technician, Manager, tài sản, Admin, lỗi, thông báo |
-| [05 — Business rules](05-business-rules.xmind) | 5 | Trạng thái ticket, SLA, tài sản, ưu tiên và mô hình khái niệm |
-| [06 — INVEST backlog](06-invest-backlog.xmind) | 1 | 47 story, phụ thuộc và AC trong ghi chú |
-| [07 — UI/UX](07-uiux.xmind) | 2 | Trải nghiệm, chất lượng và 18 ảnh: 16 bản UI + 2 board thiết kế |
-| [08 — Chatbot AI](08-ai-assistant.xmind) | 4 | Phạm vi AI, 8 UC/stories, handoff, bất biến và 3 ảnh AI đính kèm |
+| [Tổng](it-operations-hub.xmind) | 27 | Core, AI, OPS, UI và roadmap |
+| [01 Product](01-product-map.xmind) | 2 | Product/research và mục tiêu điều phối |
+| [02 Use cases](02-use-cases.xmind) | 4 | Tổng quan đủ 51 UC riêng (33 core + 8 AI + 10 OPS); ba sheet core giữ actor/scope |
+| [03 IA](03-information-architecture.xmind) | 1 | Đủ 36 node screen riêng (26 core + 3 AI + 7 OPS), route/quyền/UC trong notes |
+| [04 Flows](04-user-flows.xmind) | 7 | Bảy góc nhìn lõi, bổ sung xác nhận/replan/approval |
+| [05 Business rules](05-business-rules.xmind) | 5 | State/SLA/assets/priority/model, liên hệ BR-14–22 |
+| [06 Backlog](06-invest-backlog.xmind) | 1 | Đủ 67 story riêng: 47 core + 8 AI + 12 OPS, notes nối AC/phụ thuộc từ nguồn hiện hành |
+| [07 UI/UX](07-uiux.xmind) | 2 | UI/quality và độ phủ OPS, 18 ảnh minh họa giữ trong archive |
+| [08 AI](08-ai-assistant.xmind) | 4 | Trợ lý/điều phối, đủ 8 UC-AI + 10 UC-OPS và liên hệ story/AC; ảnh trợ lý 11 cập nhật, 12/13 không đổi |
 
-## Danh mục sheet và ảnh SVG xem nhanh
+## Preview SVG cùng cây chủ đề
 
-| # | Nội dung | Xem ảnh |
-|---|---|---|
-| 1 | Tổng quan sản phẩm | [Product map](previews/01-product-map.svg) |
-| 2 | Phân tích top down | [Research](previews/02-research.svg) |
-| 3 | Use case tổng quan theo vai trò | [Actor–goal overview](previews/00-use-cases-overview.svg) |
-| 4 | Use case tài khoản và quản trị | [Access](previews/03-use-cases-access.svg) |
-| 5 | Use case ticket, SLA, thông báo | [Ticket](previews/04-use-cases-ticket.svg) |
-| 6 | Use case tài sản và quan sát | [Operations](previews/05-use-cases-operations.svg) |
-| 7 | Kiến trúc thông tin | [IA](previews/06-information-architecture.svg) |
-| 8 | Luồng nhân viên | [Requester flow](previews/07-flow-requester.svg) |
-| 9 | Luồng kỹ thuật viên | [Technician flow](previews/08-flow-technician.svg) |
-| 10 | Luồng điều phối | [Manager flow](previews/09-flow-manager.svg) |
-| 11 | Luồng tài sản | [Asset flow](previews/10-flow-asset.svg) |
-| 12 | Luồng quản trị quyền | [Admin flow](previews/11-flow-admin.svg) |
-| 13 | Luồng phục hồi lỗi | [Conflict/error flow](previews/12-flow-conflict.svg) |
-| 14 | Luồng thông báo | [Notification flow](previews/13-flow-notification.svg) |
-| 15 | Trạng thái và chuyển tiếp ticket | [State graph](previews/14-ticket-states.svg) |
-| 16 | Hai đồng hồ SLA | [SLA](previews/15-sla.svg) |
-| 17 | Trạng thái tài sản | [Asset states](previews/16-asset-states.svg) |
-| 18 | Ma trận ưu tiên | [Priority](previews/17-priority.svg) |
-| 19 | Mô hình thông tin khái niệm | [Conceptual model](previews/18-conceptual-model.svg) |
-| 20 | User stories INVEST | [Backlog](previews/19-invest.svg) |
-| 21 | Trải nghiệm và wireframes | [UI/UX](previews/20-uiux.svg) |
-| 22 | Trạng thái và accessibility | [UX quality](previews/21-ux-quality.svg) |
-| 23 | Lộ trình M1–M6 | [Roadmap](previews/22-roadmap.svg) |
-| 24 | AI hỗ trợ tùy chọn | [AI overview](previews/23-ai-overview.svg) |
-| 25 | 8 use case/stories AI | [AI catalog](previews/24-ai-use-cases.svg) |
-| 26 | Handoff về form/composer hiện có | [AI flow](previews/25-ai-handoff.svg) |
-| 27 | Bất biến ticket/SLA/tài sản/quyền | [AI boundaries](previews/26-ai-boundaries.svg) |
+| Nhóm | Xem sơ đồ nút/nhánh |
+|---|---|
+| Product/research | [01](previews/01-product-map.svg), [02](previews/02-research.svg) |
+| Use cases | [Tổng quan](previews/00-use-cases-overview.svg), [Access](previews/03-use-cases-access.svg), [Ticket](previews/04-use-cases-ticket.svg), [Operations](previews/05-use-cases-operations.svg) |
+| IA | [Screens](previews/06-information-architecture.svg) |
+| Flows | [Requester](previews/07-flow-requester.svg), [Technician](previews/08-flow-technician.svg), [Manager](previews/09-flow-manager.svg), [Asset](previews/10-flow-asset.svg), [Admin](previews/11-flow-admin.svg), [Conflict](previews/12-flow-conflict.svg), [Notification](previews/13-flow-notification.svg) |
+| Rules/model | [Ticket state](previews/14-ticket-states.svg), [SLA](previews/15-sla.svg), [Asset state](previews/16-asset-states.svg), [Priority](previews/17-priority.svg), [Model](previews/18-conceptual-model.svg) |
+| Backlog/UI | [INVEST](previews/19-invest.svg), [UI/UX](previews/20-uiux.svg), [Quality](previews/21-ux-quality.svg) |
+| Roadmap | [M0–M5](previews/22-roadmap.svg) |
+| AI | [Tổng quan](previews/23-ai-overview.svg), [Catalog](previews/24-ai-use-cases.svg), [Flows](previews/25-ai-handoff.svg), [Policy/boundaries](previews/26-ai-boundaries.svg) |
 
-## Wireframe đính kèm
+## Độ phủ và ảnh nhúng
 
-Sheet UI/UX có 18 ảnh v0.4 (16 bản UI và 2 board thiết kế) nằm trong archive, không cần tải từ URL bên ngoài. Nhánh “Wireframe màn hình” được thu gọn ban đầu để tránh canvas quá dài; mở nhánh để xem ảnh.
+16 UI SVG + 2 board hiện có là mẫu thị giác; SCR-OPS01–07 có đặc tả trong [UI/UX](../07-uiux-specification.md), chưa hi-fi riêng toàn bộ. Ảnh trợ lý 11 trong ba archive liên quan đã tái xuất từ SVG hiện hành; các ảnh UI khác giữ nội dung minh họa không đổi, có note phạm vi. Không dùng ảnh tĩnh làm nguồn quyết định nghiệp vụ mới. Nguồn hiện hành là Markdown/topic/SVG. Archive UI v0.3 là lịch sử, không đặc tả cạnh tranh.
 
-Ảnh màn hình là tài liệu UI/UX tĩnh; XMind không chuyển chúng thành từng input, button hay bảng có thể sửa độc lập. Nguồn vector và đặc tả tương tác được giữ ở [wireframe gallery](../design/wireframes/README.md); có thêm [44 icon SVG](../design/icons/) và [quy định motion/responsive](../design/motion-and-responsive.md). Các sơ đồ phân tích, IA, backlog và luồng dùng topic/quan hệ XMind thực sự.
+ERD logic nằm trong [mô hình dữ liệu](../requirements/conceptual-data-model.md), flow automation trong [flows](../05-user-flows.md). Tree XMind không thay ERD/schema hoặc [ma trận quyền](../requirements/permissions-matrix.md).
 
-## Giới hạn kiểm tra
+Đã kiểm cấu trúc và nội dung đối chiếu: 51 UC/67 story/36 screen ở các sheet tương ứng, story/AC notes khớp định nghĩa nguồn; kiểm ZIP/JSON/topic/relations/resources và XML/link. Đã xuất/review một số diagram bằng Chrome, chưa mở bằng XMind Desktop và chưa kiểm toàn bộ hình ở mọi kích thước. [Review](../review-report.md) ghi kết quả thực tế.
 
-Đã kiểm tra archive, JSON, ID topic/quan hệ, ảnh đính kèm và độ phủ UC/US/SCR. Chưa mở trực tiếp bằng ứng dụng XMind Desktop trong môi trường này. Ảnh SVG xem nhanh được dựng từ cùng dữ liệu sơ đồ, không được mô tả là ảnh xuất từ ứng dụng XMind; bố cục tự động trong XMind có thể khác.
+## Nguồn chuẩn và loại sơ đồ
 
-Cấu trúc archive/topic/style/image được đối chiếu với [mô hình chính thức của XMind SDK](https://github.com/xmindltd/xmind-sdk-js/blob/master/src/common/model.ts) và [cách đóng gói của SDK](https://github.com/xmindltd/xmind-sdk-js/blob/master/src/utils/zipper.ts). Không cài dependency vào dự án hoặc thêm mã ứng dụng để tạo bộ tài liệu.
+Root notes của từng sheet chỉ rõ nguồn Markdown theo chủ đề, ma trận quyền và quy ước hồ sơ. XMind là cây phân rã/tổng hợp dẫn xuất; các nhánh không định nghĩa sequence, foreign key hoặc quyền. Dùng [ERD logic](../requirements/conceptual-data-model.md) cho cardinality, [các góc nhìn kiến trúc](../diagrams/architecture.md) cho component/transaction/deployment và [danh mục FIG](../diagrams/README.md) cho loại/nguồn/giới hạn của mỗi sơ đồ.
+
+Actor người dùng là R/T/M/A; bộ lập lịch và AI_COORDINATOR là thành phần nội bộ. Trưởng phòng IT là IT Manager; Team không tạo thêm cấp trưởng nhóm. Các sheet master/subset giữ cùng ID và nội dung nguồn. Archive UI cũ là lịch sử, không dùng để quyết định hành vi hiện hành.
