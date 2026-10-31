@@ -1,0 +1,517 @@
+// Design-draft; selected logical fields, not complete physical schema or DDL.
+// Source: requirements/conceptual-data-model.md and BR-01..22.
+// Nullable/index/FK proposals require D-40 review; omitted fields are not optional business rules.
+Project it_operations_hub {
+  database_type: 'PostgreSQL'
+  Note: 'Documentation only. No database, migration or approved physical schema.'
+}
+
+Table Department {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  name text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  active boolean [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table Session {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  user_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  token_hash text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  expires_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  revoked_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table Team {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  name text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  active boolean [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table TeamMembership {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  team_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  user_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  active boolean [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table Ticket {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  requester_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  team_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  status varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  priority varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  version integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  asset_id uuid [null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table User {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  department_id uuid [null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  role varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  active boolean [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  version integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table Attachment {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  ticket_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  private_object_key text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  parent_visibility varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  size_bytes integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table TicketComment {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  ticket_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  visibility varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  content text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  created_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table TicketEvent {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  ticket_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  event_type text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  visibility varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  occurred_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table Asset {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  code text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  serial text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  status varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  version integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table AssetAssignment {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  asset_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  user_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  assigned_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  returned_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table PlanVersion {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  work_plan_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  template_version_id uuid [null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  revision integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  state varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  sources jsonb [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table Skill {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  name text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  active boolean [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table Task {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  plan_version_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  status varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  estimated_minutes integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  remaining_minutes integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  version integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table TaskDependency {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  task_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  predecessor_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table TaskSkillRequirement {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  task_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  skill_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  required_level text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table TemplateVersion {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  template_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  revision integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  state varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  steps_dag jsonb [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table WorkPlan {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  ticket_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  goal text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table WorkflowTemplate {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  workflow_type text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  active boolean [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table AvailabilityException {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  calendar_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  starts_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  ends_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  version integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table CapacityPeriod {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  calendar_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  starts_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  ends_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  budget_minutes integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table UserSkill {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  user_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  skill_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  verified_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  version integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table WorkAllocation {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  task_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  user_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  period_allocations jsonb [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  reserved_minutes integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table WorkCalendar {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  user_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  timezone text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  work_intervals jsonb [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  version integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table AutomationPolicy {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  enabled boolean [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  workflow_scope text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table AutomationRun {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  event_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  policy_version_id uuid [null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  status varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  source_versions jsonb [null, note: 'Map of aggregate IDs and versions, not one integer.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table PolicyGrant {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  policy_version_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  grantor_user_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  service_identity_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  scope jsonb [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table PolicyVersion {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  policy_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  revision integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  actions_limits jsonb [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  expires_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table ServiceIdentity {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  name text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  active boolean [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table ApprovalDecision {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  approval_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  decider_user_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  decision varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  reason text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table ApprovalRequest {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  action_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  before_after jsonb [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  snapshot_versions jsonb [null, note: 'Map of aggregate IDs and versions, not one integer.']
+  decision_status text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table AuditLog {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  actor_type varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  actor_reference text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  action_id uuid [null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  before_after_redacted jsonb [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table AutomationAction {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  run_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  target_id uuid [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  intent_key text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  result varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table DomainEvent {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  event_type text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  aggregate_id uuid [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  aggregate_version integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  correlation_id uuid [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table Notification {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  event_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  recipient_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  read_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table OutboxDelivery {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  event_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  handler_purpose text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  attempt integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  lease_until timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table KnowledgeACL {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  article_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  audience jsonb [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  version integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table KnowledgeArticle {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  title text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  state varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  owner_reference text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table KnowledgeChunk {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  source_version_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  sequence_no integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  text text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table KnowledgeEmbedding {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  chunk_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  model text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  dimension integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  embedding_vector vector [null, note: 'pgvector dimension/model/index remains D-40.']
+  index_state varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table KnowledgeVersion {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  article_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  revision integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  state varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  content text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table AIConversation {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  owner_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  visibility varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  created_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table AIDraft {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  conversation_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  preview_digest text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  version integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  expires_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table AIMessage {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  conversation_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  role varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  content_redacted text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table AISourceReference {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  message_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  source_reference text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  source_version integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table AIBudgetLedger {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  hard_cap numeric(18,8) [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  actual_spent numeric(18,8) [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  reserved_in_flight numeric(18,8) [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  unknown_cost numeric(18,8) [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table AIUsage {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  budget_ledger_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  run_id uuid [null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  message_id uuid [null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  cost_state varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  actual_cost numeric(18,8) [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  reserved_cost numeric(18,8) [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table ConfirmedCommand {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  actor_user_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  preview_digest text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  idempotency_key text [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  result_ticket_id uuid [null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table SLAInterval {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  ticket_sla_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  clock_type varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  starts_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  ends_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table SLAPolicy {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  policy_version integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  priority_budgets jsonb [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  active boolean [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table SLAViolation {
+  id uuid [pk, not null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  ticket_sla_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  clock_type varchar(40) [null, note: 'Values follow BR/glossary; varchar placeholder, not a PostgreSQL enum decision.']
+  threshold integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  breached_at timestamptz [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Table TicketSLA {
+  ticket_id uuid [pk, not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  budget_snapshot jsonb [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  response_used integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  resolution_used integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  adjustment_revision integer [null, note: 'Selected field; scalar nullability requires refinement D-40.']
+  policy_id uuid [not null, note: 'Logical reference; mandatory/optional proposal, review before Alembic.']
+  Note: 'Logical selected-field view. Read invariants and history rules in BR/model.'
+}
+
+Ref: Department.id < User.department_id
+Ref: User.id < Session.user_id
+Ref: Team.id < TeamMembership.team_id
+Ref: User.id < TeamMembership.user_id
+Ref: User.id < Ticket.requester_id
+Ref: Team.id < Ticket.team_id
+Ref: Ticket.id < TicketComment.ticket_id
+Ref: Ticket.id < TicketEvent.ticket_id
+Ref: Ticket.id < Attachment.ticket_id
+Ref: Asset.id < AssetAssignment.asset_id
+Ref: User.id < AssetAssignment.user_id
+Ref: Ticket.id - TicketSLA.ticket_id
+Ref: TicketSLA.ticket_id < SLAInterval.ticket_sla_id
+Ref: TicketSLA.ticket_id < SLAViolation.ticket_sla_id
+Ref: Ticket.id < WorkPlan.ticket_id
+Ref: WorkPlan.id < PlanVersion.work_plan_id
+Ref: TemplateVersion.id < PlanVersion.template_version_id
+Ref: PlanVersion.id < Task.plan_version_id
+Ref: Task.id < TaskDependency.task_id
+Ref: Task.id < TaskDependency.predecessor_id
+Ref: Task.id < TaskSkillRequirement.task_id
+Ref: Skill.id < TaskSkillRequirement.skill_id
+Ref: WorkflowTemplate.id < TemplateVersion.template_id
+Ref: WorkCalendar.id < AvailabilityException.calendar_id
+Ref: WorkCalendar.id < CapacityPeriod.calendar_id
+Ref: User.id < UserSkill.user_id
+Ref: Skill.id < UserSkill.skill_id
+Ref: Task.id < WorkAllocation.task_id
+Ref: User.id < WorkAllocation.user_id
+Ref: User.id < WorkCalendar.user_id
+Ref: DomainEvent.id < AutomationRun.event_id
+Ref: PolicyVersion.id < AutomationRun.policy_version_id
+Ref: PolicyVersion.id < PolicyGrant.policy_version_id
+Ref: User.id < PolicyGrant.grantor_user_id
+Ref: ServiceIdentity.id < PolicyGrant.service_identity_id
+Ref: AutomationPolicy.id < PolicyVersion.policy_id
+Ref: ApprovalRequest.id < ApprovalDecision.approval_id
+Ref: User.id < ApprovalDecision.decider_user_id
+Ref: AutomationAction.id < ApprovalRequest.action_id
+Ref: AutomationAction.id < AuditLog.action_id
+Ref: AutomationRun.id < AutomationAction.run_id
+Ref: DomainEvent.id < Notification.event_id
+Ref: User.id < Notification.recipient_id
+Ref: DomainEvent.id < OutboxDelivery.event_id
+Ref: KnowledgeArticle.id < KnowledgeACL.article_id
+Ref: KnowledgeVersion.id < KnowledgeChunk.source_version_id
+Ref: KnowledgeChunk.id < KnowledgeEmbedding.chunk_id
+Ref: KnowledgeArticle.id < KnowledgeVersion.article_id
+Ref: User.id < AIConversation.owner_id
+Ref: AIConversation.id < AIDraft.conversation_id
+Ref: AIConversation.id < AIMessage.conversation_id
+Ref: AIMessage.id < AISourceReference.message_id
+Ref: AIBudgetLedger.id < AIUsage.budget_ledger_id
+Ref: AutomationRun.id < AIUsage.run_id
+Ref: AIMessage.id < AIUsage.message_id
+Ref: User.id < ConfirmedCommand.actor_user_id
+Ref: Ticket.id < ConfirmedCommand.result_ticket_id
+Ref: Asset.id < Ticket.asset_id
+Ref: SLAPolicy.id < TicketSLA.policy_id
