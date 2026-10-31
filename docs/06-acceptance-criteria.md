@@ -1,3 +1,19 @@
+---
+id: itoh-docs-06-acceptance-criteria
+title: "Tiêu chí nghiệm thu thiết kế và kịch bản nghiệp vụ"
+type: reference
+domain: quality
+module: acceptance
+tags: [quality, acceptance, reference]
+priority: 1
+status: design-draft
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: primary
+purpose: "Định nghĩa AC và tình huống dự kiến cho nghiệp vụ lõi và điều phối."
+---
+
 # Tiêu chí nghiệm thu thiết kế và kịch bản nghiệp vụ
 
 **Tất cả AC/TC ở trạng thái PLANNED, chưa chạy trên ứng dụng.** Mỗi AC cùng số với story tương ứng. Các mệnh đề Given–When–Then định nghĩa kết quả quan sát được; chúng chưa phải test code. Một story chỉ được nghiệm thu sau khi thỏa AC riêng và AC xuyên suốt có liên quan.
@@ -52,7 +68,7 @@
 | AC44 | Ticket nhiều lần resolve/reopen, có Pending | Xem trend/average theo kỳ | MET06–08, mỗi ticket tại resolve gần nhất, dùng active duration; n=0 hiển thị“—”; số có thể đối chiếu nguồn |
 | AC45 | Ticket In Progress/Pending/chưa giao | Xem tải hiện tại | MET09 theo assignee; chưa giao riêng; không coi số ticket là điểm hiệu suất; tổng khớp nguồn |
 | AC46 | Asset có ngày bảo hành trong/ngoài30 ngày, trống | Mở module bảo hành | MET10 đúng biên ngày địa phương; trống không tính như sắp hết; asset ngừng sử dụng bị loại |
-| AC47 | Audit user/SLA/ticket/asset | M hoặc A đọc nhật ký | M chỉ ticket/asset; A toàn bộ; đủ actor/thời điểm/cũ/mới; không password/token/file content |
+| AC47 | Audit user/SLA/ticket/asset | M hoặc A đọc nhật ký | M đọc nghiệp vụ ticket/asset/workforce/automation đúng scope; A thêm quản trị user/SLA theo quyền; đủ actor/thời điểm/cũ/mới; không password/token/file content |
 
 ## Tiêu chí xuyên suốt
 
@@ -89,3 +105,59 @@ Tất cả mốc sau là UTC, thời lượng tính liên tục; TC chỉ là k�
 | TC-SLA12 | Đã phản hồi sau 20 phút ở P2; đổi P1 | So sánh 20/15 phút, giữ firstResponseAt; vi phạm mới do điều chỉnh ghi tại lúc đổi ưu tiên, không sửa lịch sử ngân sách trước đó |
 
 Kiểm thử kỹ thuật và accessibility thực tế chỉ bắt đầu khi có ứng dụng. Kế hoạch đánh giá thiết kế với người dùng ở [validation plan](research/validation-plan.md).
+
+## AC quản lý công việc/automation — PLANNED / NOT RUN
+
+| ID | Given / When | Then — kết quả cần kiểm chứng sau triển khai |
+|---|---|---|
+| AC-OPS01 | Có nhân lực/skills/lịch; M cập nhật hoặc T tự xác nhận | Chỉ người có quyền xác nhận, version/audit/event; lịch thiếu không coi rảnh, absence chồng trừ một lần |
+| AC-OPS02 | Template/policy Draft/Published; M cấp/tắt | Default deny, workflow/team/priority/actions/limits/grantor/version hợp lệ; đổi policy hiệu lực trước tool ghi |
+| AC-OPS03 | Request thiếu danh sách/cấu hình/hạn | Hỏi có cấu trúc chống lặp; không bịa nhân sự/thiết bị hoặc tự thực thi plan thiếu dữ liệu |
+| AC-OPS04 | Proposal schema/DAG, cycle hoặc plan version cũ | Chỉ DAG hợp lệ có source/estimate xác thực; một effective version; cycle/stale không ghi task nửa vời |
+| AC-OPS05 | Candidates sai nhóm/skill/lịch/tải và hai workers cùng giao | Chỉ candidate hợp lệ, allocation atomic từng kỳ/slot, không vượt capacity; không nghiệm mở ngoại lệ |
+| AC-OPS06 | Task chưa đủ predecessor hoặc đang In Progress | API chặn start sớm/sai cạnh; Done do người có quyền, result/remaining=0; không tự đóng ticket |
+| AC-OPS07 | Nghỉ phép, đổi tải hoặc blocked/risk | Event xác định task ảnh hưởng; reassign chưa bắt đầu trong policy, còn lại exception, không tự đổi SLA |
+| AC-OPS08 | Approval Pending, dữ liệu/policy/capacity thay đổi | Duyệt đúng quyền/version; stale/revoked/infeasible bị chặn hoặc re-evaluate; decision tách execution result |
+| AC-OPS09 | Manual lock/đang làm hoặc manager tắt policy khi model đang sinh | Không tự ghi đè hoặc ghi sau revoke; compensating action chỉ khi hợp lệ/audit, không xóa history |
+| AC-OPS10 | Duplicate event, retry sau commit, broker/provider lỗi | Không trùng task/allocation/action/notification; outbox phục hồi, retry hữu hạn/failed state, provenance đầy đủ |
+| AC-OPS11 | KB Draft/Published/internal, ACL bị thu hồi trong lúc index/model | Chỉ nguồn còn quyền vào retrieval/provider/citation; loại nguồn thu hồi tức thì, không đợi embedding; injection không cấp tool |
+| AC-OPS12 | Dashboard/run/report và usage thiếu hoặc có | Facts MET/source/kỳ/scope khớp; draft không tính execution; latency/token/cost có nguồn hoặc ghi chưa xác định, không bịa hiệu quả |
+
+## Tiêu chí nghiệm thu MVP A1–A13
+
+| ID | Điều kiện mục tiêu | Truy vết chính |
+|---|---|---|
+| A1 | Ticket hợp lệ kích hoạt AI plan/task và tự giao theo policy bật, có kết quả lưu | AC-OPS03–05 |
+| A2 | Schema/DAG hợp lệ, dependency chặn start sớm | AC-OPS04/06 |
+| A3 | Nhóm/skills/lịch/capacity đúng, không nghiệm mở ngoại lệ | AC-OPS01/05 |
+| A4 | Đổi lịch kích hoạt đánh giá, tự reassign trong quyền và trình ngoài quyền | AC-OPS07/08 |
+| A5 | Hai worker/replay/retry không trùng hoặc vượt tải | AC-OPS05/10 |
+| A6 | Approval stale chặn; manual decision được tôn trọng | AC-OPS08/09 |
+| A7 | Action truy về event/policy/source/grantor/result | AC-OPS10/12, AC47 |
+| A8 | Ticket/SLA/scope/note/asset đúng cả API trực tiếp | AC13–40, AC-X01/09, TC-SLA01–12 |
+| A9 | KB có nguồn đúng quyền, không lộ qua chat/run/retrieval | AC-AI01/02/04/07, AC-OPS11 |
+| A10 | Timeout/output lỗi/injection/broker outage không vượt quyền, thủ công vẫn dùng | AC-AI08, AC-OPS09–11 |
+| A11 | Bộ tình huống cố định chạy model thật trước nghiệm thu; mock không thay gate | TC-OPS01–12, D-39/40 |
+| A12 | Dashboard/report đối chiếu source; latency/usage/cost ghi khi provider cung cấp | AC41–46, AC-OPS12, MET16–22 |
+| A13 | README clean setup, migration kiểm soát, restart persistence và backup/restore | AC-X08/09, kiến trúc §Vận hành |
+
+Tất cả chưa chạy. “Có schema/API thiết kế” chưa đáp ứng A1/A11/A13.
+
+## Bộ tình huống automation/AI cố định — dự kiến
+
+| ID | Tình huống | Kỳ vọng / phân loại lỗi cần phân biệt |
+|---|---|---|
+| TC-OPS01 | Onboarding 10 người đầy đủ, policy bật | Model plan/rank, service tạo/giao task/notification thật; phân biệt lỗi plan và execute |
+| TC-OPS02 | Thiếu danh sách/cấu hình/deadline | Hỏi bổ sung chống lặp, không fabricated input |
+| TC-OPS03 | Không đủ máy hoặc nhân lực/skill/capacity | Không ép giao, exception có evidence |
+| TC-OPS04 | Dependency cycle/unknown hoặc start sớm | Schema/domain từ chối, không partial plan |
+| TC-OPS05 | Nghỉ đột xuất, task chưa bắt đầu và có người thay | Event → re-evaluate → assignment mới trong policy |
+| TC-OPS06 | Task đang làm/lock hoặc vượt scope/cam kết | Approval cụ thể, không overwrite hoặc tự nới SLA |
+| TC-OPS07 | Event lặp/retry/hai workers tranh capacity | Một effect/intent, allocation không vượt; unique/lock PG thật |
+| TC-OPS08 | Dữ liệu/policy thay sau proposal/duyệt | Stale/revoked chặn trước ghi, proposal mới nếu cần |
+| TC-OPS09 | Provider timeout/refusal/output sai/không có usage | Run lỗi retry được trong giới hạn; không task nửa vời, unknown cost bảo thủ |
+| TC-OPS10 | KB chứa prompt injection/ACL revoked khi đang sinh | Không nâng tool/quyền/rò nguồn/history; loại output mất quyền |
+| TC-OPS11 | Broker ngắt và worker chết sau commit trước ack | Core API còn dùng khi DB sẵn sàng; outbox/dedup không mất effect; giám sát SLA scan delay, phục hồi quét bù từ PG không reset clock |
+| TC-OPS12 | Người thực hiện Done, requester nghiệm thu; restart/restore/report | Không auto-close; facts/persistence/usage truy vết; restore không replay sai |
+
+Khi được triển khai riêng, dùng fixture tổng hợp có nhãn DEMO và DB test tách production. Báo cáo model/provider/version, input/source/expected outcome, tool/result, lỗi model so với lỗi domain, token/latency/cost và unknown. Không đưa tỷ lệ cải thiện chưa đo thành kết quả.

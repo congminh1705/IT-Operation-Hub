@@ -1,10 +1,26 @@
+---
+id: itoh-docs-research-validation-plan
+title: "Kế hoạch kiểm chứng nghiên cứu và thiết kế"
+type: planning
+domain: quality
+module: discovery
+tags: [quality, discovery, planning]
+priority: 1
+status: planned
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: primary
+purpose: "Lập kế hoạch nghiên cứu, usability và ghi bằng chứng; chưa có kết quả thực địa."
+---
+
 # Kế hoạch kiểm chứng nghiên cứu và thiết kế
 
 **Chưa thực hiện.** Không có số người đã tham gia, tỷ lệ thành công thực tế hay lời trích dẫn phỏng vấn. Kế hoạch dưới đây chuẩn bị để kiểm chứng các giả thuyết H01–H06 sau khi review tài liệu.
 
 ## Câu hỏi và người tham gia đề xuất
 
-Vòng discovery:2–3Requester ở các phòng ban khác nhau,2Technician thuộc nhóm khác nhau,1–2Manager và1Admin. Đây là mẫu định tính có chủ đích, không đại diện thống kê. Xin đồng ý trước ghi âm; dùng tình huống hư cấu, không yêu cầu gửi mật khẩu hoặc ticket có dữ liệu nhạy cảm.
+Vòng discovery dự kiến: 2–3 Requester ở các phòng ban khác nhau, 2 Technician thuộc các nhóm chuyên môn, 1 Trưởng phòng IT và 1 Admin. Đây là mẫu định tính có chủ đích, không đại diện thống kê. Xin đồng ý trước ghi âm; dùng tình huống hư cấu, không yêu cầu gửi mật khẩu hoặc ticket có dữ liệu nhạy cảm.
 
 | Vai trò | Câu hỏi mở, không dẫn dắt | Bằng chứng cần tìm |
 |---|---|---|
@@ -47,3 +63,18 @@ Mức độ lỗi: **nghiêm trọng** = rò rỉ quyền, mất dữ liệu, g�
 ## Mẫu ghi kết quả
 
 Mỗi finding có ID, ngày, task/role, dữ kiện quan sát, tác động, mức độ, screen/story liên quan, thay đổi đề xuất và kết quả test lại. Không điền kết quả giả. Cập nhật sổ quyết định và truy vết sau khi một giả định được xác nhận hoặc bác bỏ.
+
+## Kiểm chứng task và AI điều phối
+
+| Task | Vai trò và đề bài | Quan sát / evidence cần có |
+|---|---|---|
+| UT-OPS01 | M: xác nhận skills/lịch và cấp policy onboarding | Hiểu default deny, phạm vi workflow/nhóm/priority/actions và tắt automation |
+| UT-OPS02 | R: tạo ticket bằng hội thoại, sửa preview rồi xác nhận | Phân biệt draft/xác nhận/result; không tưởng đã có ticket trước xác nhận |
+| UT-OPS03 | T: đọc plan, thử bắt đầu task có dependency, cập nhật remaining/kết quả | Hiểu lý do chặn, ticket khác task, Done không đóng ticket |
+| UT-OPS04 | M: ghi nghỉ phép, đọc reassign và exception | Nhận biết task nào tự giao lại, task đang làm/lock nào cần quyết định |
+| UT-OPS05 | M: duyệt phương án rồi dữ liệu/policy thay | Hiểu stale/conflict/đánh giá lại và Approved khác execution succeeded |
+| UT-OPS06 | M: đọc run/report/cost và can thiệp thủ công | Truy nguồn/event/policy/actor/result, nhận biết unknown cost và manual lock |
+| UT-OPS07 | Reader/publisher: xuất bản KB, thu hồi ACL, đọc lại nguồn | Hiểu Draft/Published/version/audience, không đọc nội dung thu hồi |
+| UT-OPS08 | Bàn phím/mobile/reduced motion | Board có table, DAG có list, diff đọc được, focus/error giữ bản nhập |
+
+Nghiệm thu kỹ thuật theo TC-OPS01–12 và A1–A13 tách khỏi usability. Chưa chạy nghiên cứu, benchmark/model eval hoặc test ứng dụng; chỉ được cập nhật kế hoạch ở đợt này.

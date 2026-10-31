@@ -1,8 +1,24 @@
+---
+id: itoh-docs-03-use-cases
+title: "Actors và use cases"
+type: reference
+domain: business
+module: requirements
+tags: [business, requirements, reference]
+priority: 1
+status: design-draft
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: primary
+purpose: "Đặc tả actor, mục tiêu, luồng và điều kiện use case lõi/OPS."
+---
+
 # Actors và use cases
 
 ## Ranh giới hệ thống
 
-Hệ thống là **IT Operations Hub cho một tổ chức**. Actor chính: Requester, Technician, IT Manager và Admin. “Người yêu cầu của ticket” là quan hệ với bản ghi, có thể là user thuộc bất kỳ role nào. Tác nhân phụ **Bộ lập lịch** kích hoạt kiểm tra SLA; worker thuộc hệ thống, không có quyền tương tác như người dùng. Database và file storage là chi tiết nội bộ, không phải actor nghiệp vụ.
+Hệ thống là **IT Operations Hub cho một tổ chức**. Actor chính: Requester, Technician, IT Manager và Admin. “Người yêu cầu của ticket” là quan hệ với bản ghi, có thể là user thuộc bất kỳ role nào. Danh tính dịch vụ **AI_COORDINATOR** thực hiện điều phối trong policy; thành phần nội bộ **Bộ lập lịch** kích hoạt SLA/đánh giá nguy cơ; worker thuộc hệ thống, không có quyền tương tác như người dùng. Database và file storage là chi tiết nội bộ, không phải actor nghiệp vụ.
 
 Đăng nhập là use case riêng và là tiền điều kiện cho tác vụ cần bảo vệ; không vẽ mọi use case `include` đăng nhập. Association actor–use case thể hiện tham gia, không tự xác lập quyền trên mọi bản ghi; đọc cùng [ma trận quyền](requirements/permissions-matrix.md).
 
@@ -10,7 +26,7 @@ Hệ thống là **IT Operations Hub cho một tổ chức**. Actor chính: Requ
 
 ![Use case theo vai trò](xmind/previews/00-use-cases-overview.svg)
 
-[Mở file XMind](xmind/02-use-cases.xmind). File gồm bốn sheet: tổng quan và ba nhóm tài khoản/quản trị, ticket/SLA, tài sản/quan sát. Các chủ đề ghi mã UC để đối chiếu catalog; ghi chú có actor, story và điều kiện phạm vi.
+[Mở file XMind](xmind/02-use-cases.xmind). Bốn sheet gồm tổng quan 51 UC và ba góc nhìn lõi tài khoản/quản trị, ticket/SLA, tài sản/quan sát. Các chủ đề ghi mã UC để đối chiếu catalog; ghi chú có actor, story và điều kiện phạm vi.
 
 Bản đồ XMind tổ chức actor–goal để đọc và chỉnh sửa. Đây không phải cách thay thế ký pháp UML chính thức. Phụ lục UML vẫn được giữ để kiểm tra association và system boundary:
 
@@ -18,12 +34,14 @@ Bản đồ XMind tổ chức actor–goal để đọc và chỉnh sửa. Đây
 - [Ticket, SLA, thông báo — SVG](diagrams/use-cases-ticket.svg): UC10–UC26.
 - [Tài sản và quan sát — SVG](diagrams/use-cases-operations.svg): UC27–UC33.
 - [UML tổng quan dạng SVG](diagrams/use-cases-overview.svg).
+- [Trợ lý AI — UC-AI01–08](diagrams/use-cases-ai.svg).
+- [Công việc/điều phối/KB — UC-OPS01–10](diagrams/use-cases-work-management.svg).
 
 [Xem tất cả sơ đồ và hướng dẫn mở trong VS Code/GitHub](diagrams/README.md).
 
 Các SVG được bố trí lại theo góc nhìn actor của cùng một hệ thống. Mã UC lặp ở nhiều góc nhìn vẫn biểu diễn cùng nghiệp vụ; Admin kế thừa IT Manager và mọi vai trò đều có các tác vụ dùng chung. Phạm vi đọc/ghi cụ thể theo ma trận quyền.
 
-## Danh mục đầy đủ
+## Danh mục nghiệp vụ lõi — UC01–UC33
 
 | ID | Mục tiêu | Actor chính | Stories | Kết quả |
 |---|---|---|---|---|
@@ -51,7 +69,7 @@ Các SVG được bố trí lại theo góc nhìn actor của cùng một hệ t
 | UC22 | Hủy | Requester khi New; M/A trước Resolved | US29 | Cancelled, giữ lịch sử |
 | UC23 | Điều chỉnh ưu tiên | M, A | US30 | Lý do, ngân sách mới theo snapshot |
 | UC24 | Theo dõi hai đồng hồ SLA | Tất cả theo scope | US32 | Nhãn, thời gian và lịch sử nhất quán |
-| UC25 | Phát hiện và cảnh báo SLA | Bộ lập lịch; M/assignee nhận kết quả | US33 | Cảnh báo nền không trùng |
+| UC25 | Phát hiện và cảnh báo SLA | M/assignee nhận kết quả; scheduler kích hoạt nội bộ | US33 | Cảnh báo nền không trùng |
 | UC26 | Xem/đọc thông báo | Tất cả | US34 | Chỉ thông báo của mình, readAt |
 | UC27 | Tra cứu/quản lý hồ sơ tài sản | R/T đọc có scope, M/A quản lý | US35–US36 | Danh mục đúng quyền, thông tin hợp lệ |
 | UC28 | Xem lịch sử tài sản/ticket | Tất cả theo scope | US37 | Lịch sử và ticket không vượt quyền |
@@ -63,13 +81,32 @@ Các SVG được bố trí lại theo góc nhìn actor của cùng một hệ t
 
 ## Hợp đồng dùng chung
 
-**Tiền điều kiện:** phiên server hợp lệ, tài khoản hoạt động, role và quan hệ bản ghi thỏa ma trận. **Bảo đảm tối thiểu:** từ chối không thay đổi dữ liệu; không lộ nội dung ngoài quyền; dữ liệu nhập giữ khi lỗi có thể sửa. **Mutation:** kiểm tra version, lưu thay đổi và lịch sử nhất quán; thông báo tham chiếu một sự kiện để chống trùng. **Ngoại lệ chung:** validation, hết phiên, mất quyền, xung đột, lỗi lưu/tệp. Không retry âm thầm thao tác ghi.
+### Cấu trúc đặc tả và phân loại tác nhân
+
+Mỗi UC được đọc từ dòng catalog (ID/mục tiêu/actor/story/điều kiện) cùng hợp đồng chung dưới đây, AC của story liên quan và luồng chi tiết nếu có. Bảng OPS ghi riêng tiền điều kiện, luồng, hậu điều kiện và ngoại lệ. Catalog trợ lý AI là nguồn duy nhất cho UC-AI01–08, không sao chép thành UC lõi mới.
+
+| Thành phần đặc tả | Nguồn và quy ước |
+|---|---|
+| ID / mục tiêu / phạm vi | Dòng catalog; một mã giữ nguyên qua nhiều góc nhìn actor |
+| Actor khởi tạo / giám sát | R/T/M/A là actor bên ngoài; IT Manager là Trưởng phòng IT, không có trưởng nhóm riêng |
+| Trigger | Tác vụ người dùng tại screen tương ứng; automation có thêm trigger event ở EVT01–17 |
+| Tiền điều kiện | Hợp đồng chung + điều kiện riêng trong catalog/luồng; không đồng nhất dữ liệu demo với cấu hình production |
+| Luồng chính / biến thể | Luồng trọng yếu, AC tương ứng và flows; các bước UI không tự mở rộng quyền |
+| Hậu điều kiện thành công | Kết quả trong AC, persisted domain + audit/outbox nếu mutation; tác vụ nền trả run reference chưa phải effect thành công |
+| Bảo đảm khi thất bại | Không effect trái phép/partial, không rò dữ liệu; validation/401/403/404/409 và provider lỗi theo API/BR |
+| Truy vết | US/AC/SCR/BR/API/EVT tại ma trận truy vết; mọi AC vẫn NOT RUN |
+
+AI_COORDINATOR và worker là thành phần thực hiện **nội bộ**, không là actor người dùng hoặc cấp quản lý. Khi catalog OPS ghi service AI, đó là executor của mục tiêu vận hành dưới sự giám sát M/A; không tạo actor thứ năm trên use-case view. Bộ lập lịch là trigger kỹ thuật nội bộ, khác người nhận cảnh báo. Xem [sequence](diagrams/architecture.md) cho thứ tự gọi và transaction thay vì suy thứ tự từ association use case.
+
+### Tiền điều kiện và bảo đảm chung
+
+**Tiền điều kiện:** phiên server hợp lệ, tài khoản hoạt động, role và quan hệ bản ghi thỏa ma trận. **Bảo đảm tối thiểu:** từ chối không thay đổi dữ liệu; không lộ nội dung ngoài quyền; dữ liệu nhập giữ khi lỗi có thể sửa. **Mutation:** kiểm tra version, lưu thay đổi và lịch sử nhất quán; thông báo tham chiếu một sự kiện để chống trùng. **Ngoại lệ chung:** validation, hết phiên, mất quyền, xung đột, lỗi lưu/tệp. Không retry âm thầm mutation người dùng; worker retry có idempotency và audit theo BR-19.
 
 ## Các use case trọng yếu
 
 ### UC10 — Tạo ticket
 
-- **Kích hoạt:** người dùng chọn “Tạo yêu cầu”. Tiền điều kiện bổ sung: có nhóm tiếp nhận, danh mục và SLA mặc định hoạt động.
+- **Kích hoạt:** người dùng chọn “Tạo yêu cầu”. Tiền điều kiện bổ sung: có nhóm tiếp nhận, danh mục và SLA mặc định hoạt động. UC-AI03 có thể kích hoạt cùng service sau user xác nhận preview; không tự tạo trước xác nhận.
 - **Luồng chính:** nhập tiêu đề/mô tả/loại/danh mục → chọn ảnh hưởng/khẩn cấp → thấy ưu tiên đề xuất → chọn tài sản của mình và tệp nếu có → gửi → hệ thống xác thực lại quyền và dữ liệu → tạo mã, New, nhóm tiếp nhận, snapshot SLA và event → mở chi tiết, thông báo thành công.
 - **Nhánh:** asset không còn được cấp hoặc tệp sai → giữ form, chỉ lỗi tại trường; cấu hình tiếp nhận thiếu → báo không thể gửi, giữ form, hướng dẫn liên hệ Admin; gửi lại do mạng → không nhân đôi ticket.
 - **Hậu điều kiện:** requester là actor; không nhận priority/assignee tùy ý từ client.
@@ -141,3 +178,26 @@ Các SVG được bố trí lại theo góc nhìn actor của cùng một hệ t
 - Drill-down giữ đúng công thức và tập nguồn; không có dữ liệu hiển thị trạng thái rỗng, không thay bằng demo. Khi tải lỗi không hiển thị0 thay cho “không tải được”.
 
 Các UC còn lại dùng hợp đồng chung và AC tương ứng; chi tiết trường/interaction nằm trong [đặc tả UI/UX](07-uiux-specification.md).
+
+## Use case quản lý công việc và điều phối — UC-OPS01–10
+
+Giữ UC01–UC33 lõi và UC-AI01–08 trợ lý; thêm UC-OPS01–10. Tất cả chỉ được đặc tả, chưa thực thi.
+
+| ID | Mục tiêu / actor | Tiền điều kiện → luồng → hậu điều kiện | Ngoại lệ |
+|---|---|---|---|
+| UC-OPS01 | Quản lý năng lực/lịch — M/A | Nhóm/nhân sự hợp lệ → xác nhận kỹ năng, lịch/ngân sách/absence → audit/version + sự kiện task ảnh hưởng | Sai quyền/lịch thiếu/overlap phải xử lý; không tự coi rảnh |
+| UC-OPS02 | Policy và quy trình mẫu — M/A | Template/schema/DAG/effort/source đã review → publish/version → cấp scope/actions/limits/grantor → bật/tắt/lock | Default deny; không tự dùng demo policy cho vận hành |
+| UC-OPS03 | Hiểu yêu cầu và hỏi bổ sung — user/service AI | Ticket/context đúng quyền → trích mục tiêu/hạn/fields → câu hỏi có cấu trúc chống lặp → chờ bổ sung | Thiếu nguồn/không hợp lệ không tự lập kế hoạch hiệu lực |
+| UC-OPS04 | Lập/kích hoạt plan — AI_COORDINATOR hoặc M/A | Template/KB Published, đầu vào đầy đủ → model schema/DAG/estimate/feasibility → effective version + tasks qua service | Không policy: Draft/approval; cycle/stale/thiếu inventory/nhân lực: không thực thi |
+| UC-OPS05 | Chọn và giao task — AI_COORDINATOR trong policy; M/A thủ công | Backend lọc candidates → AI rank có lý do → recheck/version/atomic allocation → assignment/notification/action | Candidate hết capacity hoặc mất quyền: re-evaluate/exception, không ép giao |
+| UC-OPS06 | Thực hiện task — assignee/M/A | Scope/dependency/assignment hợp lệ → Ready/In Progress/Blocked/progress/Done với kết quả → event/unlock successors | API chuyển sớm/sai cạnh/Done thiếu kết quả bị chặn; không tự đóng ticket |
+| UC-OPS07 | Theo dõi và điều phối lại — service AI/M/A | Event lịch/tải/blocked/risk → tìm task ảnh hưởng → giữ manual lock/đang làm → giao lại trong policy hoặc trình duyệt | Không nghiệm/vượt scope/cam kết: approval, không tự đổi SLA |
+| UC-OPS08 | Quyết định ngoại lệ — M/A | Proposal before/after/impact/reason/snapshot → approve/reject → execution recheck → kết quả riêng | Stale/policy revoked/capacity đổi: conflict hoặc proposal mới, không áp snapshot cũ |
+| UC-OPS09 | Theo dõi run/audit và báo cáo — M/A | Scope hợp lệ → event/policy/grantor/source/action/result/usage → đọc facts và retry có kiểm soát | Không expose nội bộ cho R; không trùng effect/giả cost hoặc kết quả |
+| UC-OPS10 | Quản lý/truy xuất KB — reader theo ACL; publisher được cấp | Draft/version → publish → index nền → retrieval Published/ACL/version → nguồn mở được | Thu hồi ACL hiệu lực ngay; thiếu nguồn nói rõ; quyền publisher cụ thể Cần quyết định |
+
+### Kịch bản chính liên use case
+
+UC10 hoặc UC-AI03 đã xác nhận → UC-OPS03 → UC-OPS04/05 → UC-OPS06 → lịch nghỉ UC-OPS01 → UC-OPS07 → UC-OPS08 nếu cần → người IT UC19, requester UC20 → UC-OPS09. UC-OPS02/10 cung cấp policy/template/tri thức được duyệt. Bước cấp tài khoản là task người có quyền theo D-29, không cho model thực hiện UC05.
+
+Khi từ chối/timeout, giữ dữ liệu đã commit và proposal/error truy vết; không giả thành công hoặc kế hoạch một phần. Chi tiết quyền/state trong BR-14–22 và API thiết kế.

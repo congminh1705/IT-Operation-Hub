@@ -1,3 +1,19 @@
+---
+id: itoh-docs-requirements-metrics-catalog
+title: "Danh mục chỉ số và quy ước đối chiếu"
+type: reference
+domain: domain
+module: reporting
+tags: [domain, reporting, reference]
+priority: 1
+status: design-draft
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: primary
+purpose: "Định nghĩa công thức chỉ số, tập dữ liệu, thời gian và scope drill-down."
+---
+
 # Danh mục chỉ số và quy ước đối chiếu
 
 Mục tiêu là các màn hình dùng chung công thức, không tự diễn giải lại. Tất cả áp dụng [phạm vi quyền](permissions-matrix.md) **trước khi đếm**. Số liệu trong SVG không phải kết quả chạy các công thức này.
@@ -42,3 +58,23 @@ Ticket D hoạt động 2 giờ, Pending 3 giờ, hoạt động 1 giờ rồi R
 ## Hành vi filter và drill-down
 
 KPI mang filter suy ra của chính nó khi mở danh sách; URL giữ scope, trạng thái, nhóm, assignee, loại SLA. Với chỉ số theo cohort, truyền cùng khoảng ngày tạo. Với MET07/08, danh sách drill-down phải lọc theo thời điểm giải quyết gần nhất, không đổi thành ngày tạo. Count trong link, bảng và báo cáo phải khớp tại cùng thời điểm tham chiếu; sau mutation có thể đổi và phải tải lại.
+
+## Chỉ số task, capacity và automation
+
+Giữ MET01–15 cho ticket/assets; MET09 đếm ticket không thay phép tính capacity task theo phút. Các tập dưới đây chỉ dữ liệu đúng quyền IT; Requester không nhận tải/nhân lực/approval. Cùng filter/kỳ/timestamp và drill-down phải dùng cùng tập nguồn.
+
+| ID | Chỉ số / định nghĩa | Nguồn và giới hạn |
+|---|---|---|
+| MET16 | Task chưa xong = count task thuộc effective plan version với status To Do/Ready/In Progress/Blocked; breakdown theo trạng thái | Task/PlanVersion hiện tại; không đếm Draft hoặc version Superseded, không suy từ số ticket |
+| MET17 | Phút tải/capacity/free theo nhân sự/kỳ = allocated remaining / capacity sau trừ absence / hiệu số | WorkAllocation + calendar/capacity/absence theo BR-16; không cộng task chưa phân bổ vào zero, hiển thị số task/phút chưa phân bổ riêng |
+| MET18 | Task rủi ro = tập phân biệt đang Blocked hoặc dueAt < t chưa Done/Cancelled hoặc predecessor khiến lịch không khả thi | Task/dependency/schedule; risk loại nào phải có lý do/timestamp, không cộng trùng các nhóm |
+| MET19 | Phê duyệt chờ = count ApprovalRequest Pending còn hiệu lực; execution failure/conflict là tập riêng | ApprovalRequest/Decision/Action; Approved chưa phải succeeded, expired/superseded không trong queue pending |
+| MET20 | Hành động automation theo outcome = count distinct committed action intent theo executedAt trong kỳ; succeeded/failed/conflict tách | Action/result; proposed/draft/request model không tính là nghiệp vụ đã thực thi; retry cùng intent không nhân đôi |
+| MET21 | Thời gian tiếp nhận→giao plan = firstSuccessfulAssignmentAt − confirmedTicketCreatedAt cho plan đủ task được giao; kèm n và median/p95 khi đủ mẫu | Ticket/event/action timestamps; chưa giao là pending/censored, không giả 0; không có mẫu hiển thị “—” |
+| MET22 | Usage/chi phí/latency theo run và tổng kỳ = provider usage/actual cost có giá/version nguồn, reserved/unknown riêng; thời gian wall-clock run riêng model latency | AIUsage/BudgetLedger/Run; không usage thì “Chưa xác định”, không giả 0 USD; cached/reasoning token chỉ tách khi provider trả |
+
+### Điều kiện đo và đối chiếu sau triển khai
+
+So sánh cùng bộ tình huống/quy trình thủ công và automation: số thao tác điều phối thủ công, tỷ lệ phương án giữ nguyên (plan áp dụng không bị sửa / plan đã áp dụng trong cohort), tỷ lệ cần can thiệp (run cần quyết định/sửa / run điều phối trong cohort), thời gian tiếp nhận→giao và chi phí/run. Cohort, thời gian quan sát và cách nhận diện thao tác thủ công phải ghi trong báo cáo đo; hiện chưa chốt ngưỡng và chưa có kết quả, không tuyên bố phần trăm cải thiện.
+
+Task Done không làm MET01 ticket giảm nếu chưa qua Resolved/Closed/Cancelled. Nhắc việc/AI chat không first response. Dữ liệu demo tách khỏi báo cáo vận hành.

@@ -1,3 +1,19 @@
+---
+id: itoh-docs-00-research
+title: "Research top down"
+type: reference
+domain: business
+module: discovery
+tags: [business, discovery, reference]
+priority: 1
+status: hypothesis
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: primary
+purpose: "Phân biệt giả thuyết bài toán, proto-persona và dữ kiện cần nghiên cứu."
+---
+
 # Research top down
 
 Ngày nghiên cứu: **30/10/2026**. Phương pháp đã thực hiện: phân tích đặc tả, đánh giá hiện trạng dự án, desk research nguồn sơ cấp và tổng hợp giả thuyết thiết kế. **Chưa phỏng vấn, khảo sát nhân viên, đo hệ thống hiện tại hoặc chạy usability test.**
@@ -8,7 +24,7 @@ Ngày nghiên cứu: **30/10/2026**. Phương pháp đã thực hiện: phân t�
 |---|---|
 | Bối cảnh tổ chức | Một doanh nghiệp, nhiều phòng ban, nhiều thiết bị, đội IT nội bộ gồm nhiều nhóm |
 | Vấn đề được đặc tả | Yêu cầu phân tán; dễ bỏ sót; thiếu người chịu trách nhiệm; khó thấy thời hạn và lịch sử thiết bị |
-| Hệ quả cần kiểm chứng | Người dùng hỏi lại tiến độ; kỹ thuật viên đổi ngữ cảnh; trưởng nhóm phát hiện tồn đọng muộn |
+| Hệ quả cần kiểm chứng | Người dùng hỏi lại tiến độ; kỹ thuật viên đổi ngữ cảnh; trưởng phòng IT phát hiện tồn đọng muộn |
 | Năng lực sản phẩm | Một nơi tiếp nhận, điều phối, trao đổi, xử lý, xác nhận; liên kết tài sản và kiểm soát SLA |
 | Giá trị cho nhân viên | Biết yêu cầu đã được ghi nhận, ai xử lý, đang chờ gì và cách xác nhận kết quả |
 | Giá trị cho IT | Hàng đợi rõ phạm vi; giao việc có lịch sử; phân biệt trao đổi công khai với nội bộ |
@@ -20,7 +36,7 @@ Chuỗi lập luận: **tập trung yêu cầu → nhìn rõ trách nhiệm → 
 
 | Cơ sở | Kết luận cho thiết kế |
 |---|---|
-| Đặc tả sản phẩm | Một tổ chức, bốn vai trò, ưu tiên luồng ticket xuyên suốt |
+| Đặc tả sản phẩm | Một tổ chức, bốn vai trò, ưu tiên luồng yêu cầu → plan/task → giao việc → theo dõi/điều phối lại → nghiệm thu |
 | Hiện trạng workspace | Giai đoạn phân tích và thiết kế; chưa có ứng dụng, database hoặc worker |
 | Yêu cầu giao diện | Tiếng Việt, desktop trước, nền sáng, màu nhấn xanh dương, bảng dữ liệu rõ |
 | Ràng buộc nghiệp vụ | Quyền theo từng bản ghi; trạng thái có điều kiện; hai đồng hồ SLA; lịch sử không xóa |
@@ -30,6 +46,8 @@ Chuỗi lập luận: **tập trung yêu cầu → nhìn rõ trách nhiệm → 
 Các thông tin thực địa về doanh nghiệp, khối lượng ticket và thói quen người dùng vẫn cần kiểm chứng. Không suy diễn tài liệu thiết kế thành bằng chứng tính năng đã hoạt động.
 
 ## 3. Cây phân rã sản phẩm
+
+Hình phân rã năng lực theo phạm vi đã chốt, giữ bố cục mind map trung tâm và các nhánh hai phía; khung nhóm được tăng độ đậm và thêm viền sáng. Đường nối là quan hệ phân rã, không phải trình tự xử lý. AI trợ lý/điều phối và KB/RAG thuộc MVP; ticket tiếp nhận khác task thực thi. Bốn vai trò không có cấp Trưởng nhóm IT; Trưởng phòng thiết lập chính sách, giám sát và duyệt ngoại lệ. Chi tiết vận hành D-40 chưa được xác nhận bằng khảo sát doanh nghiệp.
 
 ![Sơ đồ XMind — 01-product-map](xmind/previews/01-product-map.svg)
 
@@ -58,7 +76,7 @@ Các nguồn dưới đây hỗ trợ phương pháp hoặc nguyên tắc thiế
 |---|---|---|---|
 | Nhân viên | Khi công việc bị gián đoạn, tôi muốn gửi mô tả và theo dõi để biết cách tiếp tục làm việc | Tạo yêu cầu, trạng thái, câu hỏi IT đang chờ, kết quả cần xác nhận | Không hiểu thuật ngữ SLA/P1; nhầm “đã giải quyết” với “đã đóng” |
 | Kỹ thuật viên | Khi bắt đầu ca làm, tôi muốn biết việc của mình và việc nhóm chưa ai nhận để ưu tiên xử lý | Việc được giao, nhóm, tuổi ticket, hai thời hạn SLA | Gửi nhầm ghi chú nội bộ ra công khai; vô tình nhận trùng |
-| Trưởng nhóm | Khi hàng đợi tăng, tôi muốn thấy điểm nghẽn để phân công và chuyển nhóm có căn cứ | Chưa phân công, sắp hạn/quá hạn, tải theo người | KPI tổng che khuất ticket cũ; đếm SLA đang hoạt động lẫn lịch sử vi phạm |
+| Trưởng phòng IT | Khi AI điều phối công việc, tôi muốn thiết lập chính sách và thấy điểm nghẽn để giám sát, can thiệp hoặc duyệt ngoại lệ có căn cứ | Policy/grant, runs/actions, ngoại lệ, sắp hạn/quá hạn, tải theo người | Nhầm đã duyệt với đã thực thi; KPI tổng che khuất ticket cũ hoặc lịch sử vi phạm |
 | Admin | Khi nhân sự hoặc chính sách thay đổi, tôi muốn cập nhật quyền và cấu hình để vận hành an toàn | Tài khoản hoạt động, nhóm, chính sách hiện hành, lịch sử thay đổi | Khóa user nhưng phiên còn hiệu lực; đổi SLA làm ticket cũ đổi theo |
 
 ## 6. Giả thuyết ưu tiên kiểm chứng
@@ -70,14 +88,22 @@ Các nguồn dưới đây hỗ trợ phương pháp hoặc nguyên tắc thiế
 | H03 | Tách tab công khai/nội bộ giảm gửi nhầm | Cho technician soạn hai loại nội dung liên tiếp | Chỉnh composer và bước xác nhận phạm vi |
 | H04 | Hàng đợi chưa phân công và SLA hữu ích hơn dashboard nhiều biểu đồ | Test điều phối với manager | Đổi thứ tự nội dung, không đổi công thức |
 | H05 | Thông tin cấp phát và ticket trước đây đủ hỗ trợ xử lý thiết bị | Phỏng vấn kỹ thuật viên/tài sản | Bổ sung trường mô tả trong MVP nếu thực sự cần; không tự thêm CMDB |
-| H06 | Trưởng nhóm cần nhìn vi phạm đã từng xảy ra dù ticket hiện còn ngân sách | Test đổi ưu tiên và mở lại | Điều chỉnh cách diễn đạt lịch sử, không xóa vi phạm |
+| H06 | Trưởng phòng IT cần nhìn vi phạm đã từng xảy ra dù ticket hiện còn ngân sách | Test đổi ưu tiên và mở lại | Điều chỉnh cách diễn đạt lịch sử, không xóa vi phạm |
 
 ## 7. Rủi ro và câu hỏi nghiên cứu
 
 Ưu tiên cao: độ hiểu của các trạng thái; quyền sau chuyển nhóm; nhầm nội bộ/công khai; tài khoản bị khóa còn ticket; định nghĩa chỉ số theo kỳ. Ưu tiên vừa: bảng trên điện thoại, mật độ bộ lọc, tra cứu tài sản. Các quyết định tạm thời có trong [sổ quyết định](decisions/design-decisions.md); kế hoạch phỏng vấn và thử nghiệm nằm ở [validation plan](research/validation-plan.md).
 
-Không đặt mục tiêu giảm thời gian xử lý theo phần trăm khi chưa có baseline. Sau triển khai có thể đo tỷ lệ ticket có người phụ trách, thời gian phản hồi đầu tiên, thời gian giải quyết hoạt động, số lần mở lại và task success của các luồng chính.
+Không đặt mục tiêu giảm thời gian xử lý theo phần trăm khi chưa có mốc đo ban đầu. Sau triển khai có thể đo tỷ lệ ticket có người phụ trách, thời gian phản hồi đầu tiên, thời gian giải quyết hoạt động, số lần mở lại và task success của các luồng chính.
 
 ## 8. Nghiên cứu bổ sung cho trợ lý AI
 
-Phạm vi được mở thêm lớp hỗ trợ tùy chọn: hỏi đáp có nguồn, tra cứu theo quyền, tóm tắt và nháp chuyển về form cũ. Không dùng AI thay máy trạng thái, first response, clock SLA hoặc quyết định cấp phát. Các giả thuyết H-AI01–04 và nguồn desk research được ghi trong [thiết kế chatbot](10-ai-assistant.md); chưa có kết quả người dùng hoặc benchmark chất lượng AI.
+Phạm vi MVP gồm trợ lý theo yêu cầu và điều phối tự động: hỏi đáp có nguồn, tra cứu/tóm tắt, tạo ticket sau xác nhận và plan/giao/theo dõi/replan qua policy. Không dùng AI bỏ qua máy trạng thái/first response/SLA hoặc tự cấp phát. Service automation được ghi nghiệp vụ trong policy theo D-35. Các giả thuyết H-AI01–04 và nguồn desk research được ghi trong [thiết kế chatbot](10-ai-assistant.md); chưa có kết quả người dùng hoặc benchmark chất lượng AI.
+
+## 9. Giả thuyết nghiên cứu về điều phối
+
+Pain points mục tiêu: trưởng phòng phải chia/giao từng việc; chọn người thiếu dữ liệu kỹ năng/lịch/tải; phát hiện dependency/blocked muộn; nghỉ phép khiến phân công cũ không còn phù hợp; tổng hợp thủ công và khó giải thích hành động AI. Đây là các giả thuyết bài toán, chưa phải kết quả khảo sát thực địa.
+
+H-OPS01: manager hiểu và kiểm soát policy/default deny; H-OPS02: kỹ thuật viên hiểu ticket khác task và dependency; H-OPS03: giải thích candidate dựa kỹ năng/lịch/tải đủ hỗ trợ quyết định; H-OPS04: approval diff và execution status tránh nhầm duyệt với đã giao; H-OPS05: manual lock/tắt automation tạo khả năng can thiệp rõ ràng.
+
+Kiểm chứng bằng tình huống onboarding/absence/exception, đối chiếu hành động/dữ liệu nguồn và quan sát người dùng ở giai đoạn sau. Không tuyên bố thay manager hoặc tăng hiệu suất theo phần trăm khi chưa đo. D-39 chỉ xác nhận cấu hình thử demo; hiệu quả model và provider production chưa được xác nhận.

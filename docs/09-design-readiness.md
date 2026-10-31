@@ -1,99 +1,96 @@
-# Checklist thiết kế và lộ trình M1–M6
+---
+id: itoh-docs-09-design-readiness
+title: "Trạng thái thiết kế và lộ trình M0–M5"
+type: planning
+domain: project
+module: delivery
+tags: [project, delivery, planning]
+priority: 1
+status: planned
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: primary
+purpose: "Mô tả lộ trình, epic/phụ thuộc và kế hoạch kiểm chứng; không cấp lệnh code."
+---
 
-Quy ước: `[x]` là **đã có tài liệu/bản vẽ trong lần bàn giao này**, `[ ]` là **chưa triển khai hoặc chưa kiểm chứng**. Không chuyển nghĩa `[x]` thành tính năng đã hoạt động.
+# Trạng thái thiết kế và lộ trình M0–M5
 
-## Hoàn thành phạm vi tài liệu hiện tại
+**Đợt hiện tại CHỈ tài liệu.** M1–M5 là kế hoạch, không lệnh khởi tạo code, dependency, migration, test hoặc cấu hình vận hành. Thứ tự này thay lịch M1–M6 cũ để đưa AI automation vào M3. Đã đặc tả không đồng nghĩa đã đạt gate phần mềm.
 
-- [x] Đánh giá hiện trạng dự án, phạm vi và cơ sở thiết kế.
-- [x] Research top down, problem framing, proto-personas, JTBD và giả thuyết.
-- [x] Phạm vi MVP, phần sau MVP, danh mục năng lực và quyết định đề xuất.
-- [x] 33 use case, sơ đồ XMind theo actor và phụ lục UML.
-- [x] 47 user stories, AC tương ứng và review INVEST chỉ rõ story cần refinement.
-- [x] IA, inventory 26 mẫu màn hình/tương tác và navigation theo quyền.
-- [x] Journeys/task flows và quy tắc trạng thái, quyền, SLA, asset.
-- [x] Design system, nội dung, trạng thái, responsive và mục tiêu accessibility.
-- [x] Bộ 16 bản UI v0.4 (13 lõi + 3 AI), gồm dashboard cá nhân/Admin và chi tiết D-29, 2 board bổ trợ và 44 icon SVG; danh mục phần chưa vẽ riêng.
-- [x] Đặc tả chuyển động, reduced motion, focus và bố cục desktop/tablet/mobile.
-- [ ] Prototype tương tác, animation thực thi và kiểm chứng responsive trên ứng dụng.
-- [x] File XMind tổng 27 sheet, 8 file chuyên đề và ảnh xem nhanh, gồm phần AI tùy chọn.
-- [x] Công thức chỉ số, mô hình thông tin khái niệm và ma trận truy vết.
-- [x] Kế hoạch kiểm chứng người dùng và checklist nghiệm thu tương lai.
-- [ ] Chủ nghiệp vụ xác nhận các giả định, nhất là D-09/D-12/D-13.
-- [ ] Phỏng vấn, tree test, usability test và kiểm tra accessibility trên UI thực thi.
+## M0 — Hoàn thiện thiết kế
 
-## M1 — Nền tảng
+Hoàn thiện scope/features/roles, UC/US/AC, state/quyền, kiến trúc/ERD/API, AI/policy/approval, worker/events/retry/security/audit, UI, kế hoạch kiểm thử/vận hành và sơ đồ. Nội dung được quản lý trực tiếp trong tài liệu nguồn theo từng chủ đề.
 
-- [x] Đặc tả đăng nhập/đăng xuất, scope, quản trị, layout, quyền và khóa phiên.
-- [x] Thống nhất D-29: trưởng phòng dùng Requester gửi ticket cấp tài khoản trong hệ thống; Admin xác minh và tạo user, bàn giao qua kênh doanh nghiệp; trưởng phòng xác nhận kết quả trên ticket.
-- [x] Chốt stack/kiến trúc D-30–D-33, server session PostgreSQL + pwdlib/CSRF; rà metadata và các xung đột dependency.
-- [ ] Refinement password policy, hỗ trợ quên/reset password không email và bootstrap Admin đầu tiên; triển khai/review bảo mật session service.
-- [ ] Resolve/build/test bộ phiên bản ứng viên, review security và khóa pnpm-lock.yaml/uv.lock ở M1; xem [gate kỹ thuật](technical/version-baseline.md).
-- [ ] Khởi tạo source, database/migration, `.env.example`, Docker Compose và README chạy sạch.
-- [ ] Seed hư cấu có cờ demo, chạy lại được:4 role/3 team/5 department/~20 user.
-- [ ] Test đăng nhập bốn vai trò, negative authorization, thu hồi phiên.
+Artifacts M0 hiện có: [DBML/ER Mermaid](database/README.md), [OpenAPI document](api/README.md), [C4 C1–C4](architecture/c4/README.md) và [cấu trúc folder/file mục tiêu](technical/code-structure.md). Đây là design draft; contract/schema vật lý phải review theo D-40, chưa tạo code/migration/manifest/test thực thi.
 
-**Gate triển khai:** đăng nhập thực, backend từ chối sai quyền/ID; dữ liệu tồn tại sau restart. Chưa đạt gate vì chưa có code.
+Kiểm tra cấu trúc tài liệu, liên kết và tính nhất quán giữa mã yêu cầu/sơ đồ; không chạy test ứng dụng hoặc gọi model. Các điểm chưa chốt nằm trong D-40. [Trạng thái hồ sơ](review-report.md) tổng hợp độ phủ và giới hạn kiểm chứng.
 
-## M2 — Ticket xuyên suốt
+## Lộ trình triển khai tương lai
 
-- [x] Tạo/list/detail, phân công, hội thoại, nội bộ, tệp, trạng thái, lịch sử, version conflict và wireframes.
-- [ ] Refine/tách US14,US16,US22 trước sprint; chốt cách lưu tệp nhất quán với dữ liệu.
-- [ ] Xây luồng New→Open→In Progress→Resolved→Closed và các nhánh Pending/reopen/cancel.
-- [ ] Tệp thực và kiểm tra quyền tải, validation, pagination và lỗi thống nhất.
-- [ ] Unit/integration cho trạng thái/quyền; E2E luồng requester–manager–technician.
+| Mốc | Kết quả mục tiêu | Gate nghiệm thu tương lai |
+|---|---|---|
+| M1 — Nền tảng | DB/auth/CSRF/scope; users/teams/skills/calendar; ticket/task thủ công; audit | Session revoke/scope/state/estimate chuẩn, migration và persistence được kiểm chứng |
+| M2 — Quy trình xác định | Plan version/DAG, template Published, policy/default deny, candidate/capacity, outbox/worker, approval/idempotency | Input cấu trúc chạy xuyên suốt; 2 workers/retry không trùng/vượt tải, stale/manual lock đúng |
+| M3 — AI automation | Adapter schema, hiểu yêu cầu, lập plan/rank/tool actions, theo dõi/replan, onboarding và ngoại lệ | Model thật + action/dữ liệu lưu thật trong DB test, đủ success/exception paths; bounded cost, injection/provider lỗi an toàn |
+| M4 — Vận hành đầy đủ | SLA/notification, assets/files, KB/RAG và trợ lý, dashboard/report | 47 AC lõi/8 AC-AI và MET source/scope/KB permissions được chứng minh; không UI giả |
+| M5 — Nghiệm thu | Quyền/concurrency/model, E2E/responsive/accessibility, backup/restore, CI/deploy/runbook/demo | A1–A13 + toàn bộ AC liên quan; README clean setup/upgrade/recovery và kết quả thực tế |
 
-**Gate:** hoàn thành một ticket từ gửi tới xác nhận hoặc mở lại, gồm trường hợp API cố ý sai quyền. Không dùng mock để nghiệm thu.
+M1 có thể chuẩn bị snapshot SLA/inventory/KB tối thiểu để M3 đủ dữ liệu; M4 hoàn thiện các nghiệp vụ này. Không dồn toàn bộ AI cuối dự án; không bỏ core scope để đạt riêng demo.
 
-## M3 — SLA và thông báo
+## Kế hoạch kiểm chứng — chưa chạy
 
-- [x] Hai đồng hồ, snapshot P1–P4, pause/reopen/priority,80%/100%, dedup và recipients.
-- [x] Chọn Celery + một Beat + Redis, chu kỳ 60 giây, PG lưu dedup/violation; worker Linux.
-- [ ] Refine US32/33 thành lát cắt phù hợp; triển khai và quan sát worker.
-- [ ] Worker nền dùng chung quy tắc với API, lịch sử breach và notification thực.
-- [ ] Tự động hóa TC-SLA01–12, concurrency/dedup và không phụ thuộc dashboard.
+### Entry, môi trường và bằng chứng
 
-**Gate:** đối chiếu mốc thời gian và chạy lại worker không trùng; chính sách mặc định mới không sửa ticket cũ.
+Entry của giai đoạn kiểm thử ứng dụng: có yêu cầu triển khai riêng, slice/code và môi trường test đã sẵn sàng; quyết định ảnh hưởng slice được chốt; dữ liệu tổng hợp có nhãn DEMO, không credential hoặc dữ liệu thật. PostgreSQL thật kiểm chứng các bảo đảm PostgreSQL; fake clock dùng cho SLA. Provider mock kiểm nhánh tự động nhưng không thay kiểm chứng model thật tại A11.
 
-## M4 — Tài sản
+Mỗi kết quả sau này cần commit/build/môi trường, fixture, bước chạy, expected/actual, log đã redaction, test report và lỗi còn mở. Hiện tất cả nhóm dưới đây là **PLANNED / NOT RUN**; không có số liệu pass rate, chi phí hoặc benchmark thực tế.
 
-- [x] Hồ sơ, scope đọc, assignment, thu hồi, state matrix và liên kết ticket.
-- [ ] Xây transaction và ràng buộc một assignment hiệu lực; seed~30 asset.
-- [ ] Hoàn thiện asset picker thật trong ticket và test IDOR qua liên kết tài sản.
-- [ ] Test cấp đồng thời, thu hồi, sửa chữa, ngừng sử dụng và bảo toàn lịch sử.
+| Nhóm kiểm chứng | Điều kiện và expected result | Nguồn / evidence tương lai |
+|---|---|---|
+| Quyền/session/CSRF | Đổi user/team/quyền, dùng phiên cũ và gọi API trực tiếp: từ chối đúng scope, không leak count/tệp/chat | NFR01/02/15/22, ma trận quyền; API negative report |
+| State và SLA | Các cạnh hợp lệ/sai, Pending/reopen/priority, clock cố định: không reset thời gian/vi phạm | BR-04/08–10/15, TC-SLA01–12; state/clock report |
+| Transaction/concurrency | Hai worker phân cùng task/nguồn lực, hai người cấp asset: chỉ effect hợp lệ, không vượt capacity | NFR03/19, AC-OPS04–07, BR-11/14/16; PostgreSQL integration report |
+| Outbox/retry | Crash sau commit trước ack, event lặp/lệch thứ tự, broker down: không mất event hoặc nhân effect, scan bù | NFR21, TC-OPS, BR-19; DB facts + worker trace |
+| Model và tool | Thiếu dữ liệu/nhân lực, schema lỗi/cycle/injection/provider timeout: không bịa nguồn hoặc ghi trái quyền | TC-AI01–12, TC-OPS01–12, A1–A11; model/output/action traces |
+| Approval/manual control | Duyệt stale, revoke policy khi model chờ, task đang làm/khóa: chặn hoặc lập đề nghị mới | BR-17/18, NFR18/25; trước/sau và decision/execution riêng |
+| KB/RAG | ACL đổi khi index/model pending, citation phiên bản cũ: không provider/render nguồn mất quyền | BR-21, NFR22, AC-OPS11; retrieval/ACL evidence |
+| Usage/budget | Concurrent request/retry/timeout unknown: reserve bảo thủ và dừng trước trần | NFR23, D-39; ledger và usage/billing có nguồn, không ước lượng thành actual |
+| UI/UX/a11y | 320/390/768/1440, bàn phím/zoom/reflow/reduced motion, form lỗi và cache đổi user | NFR07–09/16/26; Playwright và review thủ công, kế hoạch UX riêng |
+| Persistence/restore | Restart, restore cách ly DB/tệp, chặn outbound và replay cũ: dữ liệu nhất quán, không effect ngoài ý muốn | NFR04/21/24; recovery evidence và RPO/RTO thực đo |
 
-**Gate:** không cấp hai người đồng thời; R/T không đi vòng từ asset để đọc ticket ngoài quyền.
+### Phương pháp theo lớp
 
-## M5 — Dashboard và báo cáo
+- Backend: pytest/HTTPX; PostgreSQL thật cho transaction/locks/partial unique/concurrency, không dùng SQLite chứng minh bảo đảm PG.
+- Frontend: Vitest/RTL cho giữ form, field errors, polling/cache/user switch; Playwright cho requester → IT/task → nghiệm thu và nghỉ phép/approval.
+- AI: bộ cố định gồm rõ ràng/thiếu dữ liệu/thiếu người/cycle/nghỉ đột xuất/vượt quyền/lặp/stale/provider lỗi/prompt injection. Tách lỗi model và domain execution; mock chỉ cho test tự động phù hợp, không thay A11.
+- Core: giữ 47 AC, 10 AC-X, 12 TC-SLA; hỗ trợ 8 AC-AI/12 TC-AI; điều phối AC-OPS01–12 và A1–A13.
+- Ops: clean setup, migration một lần/release, persistence restart, outbox replay, restore cách ly và đối chiếu dữ liệu; không cam kết RPO/RTO khi chưa chốt/đo.
+- UX/research: phỏng vấn/tree test/usability/keyboard/responsive chưa thực hiện. 16 UI SVG + 2 board hiện có chưa phủ mọi SCR-OPS bằng hi-fi riêng.
 
-- [x] Metrics catalog, scope/kỳ hiện tại, drill-down và wireframe Manager.
-- [ ] Refine US43/44; xây dashboard từng role và báo cáo từ dữ liệu nguồn.
-- [ ] Seed~60 ticket đủ trạng thái/SLA, đánh dấu demo; không trộn vào vận hành thật.
-- [ ] Đối chiếu từng MET với query nguồn, gồm sample0và ticket reopen nhiều lần.
+## Điều kiện bước sang lập trình
 
-**Gate:** số card/biểu đồ/drill-down khớp cùng thời điểm và cùng phạm vi.
+### Cấu trúc kế hoạch và phụ thuộc
 
-## M6 — Hoàn thiện và bàn giao triển khai
+Kế hoạch ở trạng thái **ROADMAP_DRAFT / chưa kích hoạt triển khai**. Các mục tiêu M1–M5 đã được mô tả nhưng chưa phải lệnh thực thi. Mỗi epic dưới đây là **EPIC_PROPOSED**; chưa có task triển khai được sinh hoặc bắt đầu. Owner sản phẩm là chủ đề tài; người phụ trách thực hiện/kiểm chứng cần được phân khi có yêu cầu triển khai riêng.
 
-- [x] AC, negative scenarios, trạng thái UX và kế hoạch test.
-- [ ] Test responsive/keyboard/screen reader/contrast trên ứng dụng.
-- [ ] Sửa lỗi nghiệp vụ nghiêm trọng, test luồng chính và khởi động sạch.
-- [ ] Bàn giao source/migration/seed/env example/README/API thực thi, hướng dẫn worker và storage.
-- [ ] Ghi kết quả test thực tế; tách rõ dữ liệu demo và hạn chế còn lại.
+| Epic | Mốc | Phạm vi / kết quả nghiệm thu | Phụ thuộc |
+|---|---|---|---|
+| E01 | M1 | Identity/session/CSRF/quyền/quản trị và thu hồi phiên đúng NFR01/02/15 | M0 và quyết định auth ảnh hưởng slice |
+| E02 | M1 | Workforce/kỹ năng/lịch/absence và dữ liệu demo có provenance | E01, quyết định capacity/skill D-40 |
+| E03 | M1 | Ticket/task thủ công, state, persistence và audit | E01; E02 cho assignment có capacity |
+| E04 | M2 | Plan version/DAG, Published templates, policy/default deny | E02/E03 |
+| E05 | M2 | Outbox/idempotency/approval/concurrency, manual lock và recovery | E04; BR-18/19 được refinement |
+| E06 | M3 | Provider adapter, plan/rank/tool/replan với model thật trong giới hạn D-39 | E05; model/billing/quota/pricing được xác minh khi được phép chạy |
+| E07 | M3–M4 | Nguồn KB tối thiểu cho E06; đầy đủ trợ lý/KB/RAG/ACL/citation ở M4 | E01/E04; schema/ACL nguồn tối thiểu không chờ toàn bộ M4 |
+| E08 | M4 | SLA worker, notifications, files và assets đầy đủ | E03/E05; dữ liệu tối thiểu đã có cho E06 |
+| E09 | M4 | Dashboard/report/usage từ dữ liệu thật đúng MET/quyền | E06/E07/E08 |
+| E10 | M5 | Hồi quy/E2E/security/UX/restore và bộ bằng chứng A1–A13 | E01–E09; không thay toàn bộ AC bằng demo thành công |
 
-**Gate:** đủ 12 tiêu chí nghiệm thu gốc và 8 AC AI/12 ca kiểm chứng AI; regression lõi đạt khi AI bật, tắt và lỗi. AI không thay thế điều kiện lõi chưa đạt; chưa nghiệm thu MVP nếu chỉ có giao diện chat hoặc phản hồi mẫu.
+M3 phụ thuộc **phần nguồn tối thiểu** của E07, không phụ thuộc E07 hoàn tất toàn bộ; đây là phụ thuộc sản phẩm theo phần bàn giao, tránh vòng M3 chờ M4. Không tạo Task của hệ thống IT từ các epic của kế hoạch phát triển: hai khái niệm khác nhau.
 
-## Điều kiện đưa story vào triển khai
+### Exit và điều kiện chuyển giai đoạn
 
-Role/scope, đầu vào/đầu ra, lỗi, AC, quy tắc và màn hình đã rõ; các story rộng được chia; phụ thuộc có dữ liệu fixture; business owner xác nhận giả định ảnh hưởng vận hành. Không dùng “tài liệu đầy đủ” để bỏ qua refinement E/S với đội phát triển.
+Người dùng phải yêu cầu triển khai riêng. Sau đó refinement những chi tiết Cần quyết định ảnh hưởng lát cắt, resolve/pin dependency và tạo lock thật, review security và schema/API. Không coi metadata package hoặc tài liệu hiện tại là dependency/runtime đã kiểm chứng.
 
-## Trợ lý AI — bắt buộc trong MVP
-
-- [x] Đặc tả lớp AI đọc/soạn nháp, phạm vi quyền, nguồn và handoff về form.
-- [x] 8 use case, 8 user stories INVEST, AC riêng và 12 ca kiểm chứng AI.
-- [x] 3 mẫu màn hình, 3 wireframe AI và 4 sheet XMind AI.
-- [x] Xác định bất biến ticket/SLA/asset/report, không tool ghi và không first response từ chat.
-- [ ] Có API lõi thực, provider được duyệt, nguồn hợp lệ và chính sách dữ liệu đã chốt.
-- [ ] Xây/tích hợp chatbot; hiện chưa có model call hoặc backend.
-- [ ] Chạy AC-AI/TC-AI cùng bộ regression lõi với AI bật, tắt và lỗi.
-
-Theo D-33 cập nhật, triển khai nhánh này trong MVP sau khi API lõi tương ứng sẵn sàng: M1 chốt provider/model, dữ liệu và cấu hình; M2–M5 tích hợp theo năng lực; M6 bắt buộc đạt 8 AC AI, 12 ca kiểm chứng và regression lõi. Có thể bật/tắt khi vận hành nhưng không dùng trạng thái tắt để coi AI đã được nghiệm thu. Giữ thứ tự M1–M6 và mọi gate lõi. Xem [tích hợp và kiểm tra không thay đổi nghiệp vụ](ai/integration-and-non-regression.md).
+D-39 ghi cấu hình demo M3 đã được xác nhận riêng; chỉ gọi khi được chuyển sang triển khai, có key cấu hình an toàn và kiểm billing/quota/model/pricing. Chưa có kết quả model hoặc chi phí API thực tế.

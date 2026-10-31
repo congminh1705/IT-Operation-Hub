@@ -1,6 +1,22 @@
+---
+id: itoh-docs-08-invest-requirements
+title: "User stories và đánh giá INVEST"
+type: reference
+domain: business
+module: requirements
+tags: [business, requirements, reference]
+priority: 1
+status: design-draft
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: primary
+purpose: "Định nghĩa story lõi/OPS, phụ thuộc, AC và đánh giá INVEST để refinement."
+---
+
 # User stories và đánh giá INVEST
 
-**47 stories đề xuất cho MVP. Chưa triển khai, chưa ước lượng bởi đội phát triển.** Mã US là cố định để truy vết; thứ tự US không phải cam kết thứ tự sprint.
+**47 stories lõi giữ mã; bổ sung 8 stories trợ lý và 12 stories quản lý công việc/điều phối cho MVP mục tiêu. Chưa triển khai, chưa ước lượng bởi đội phát triển.** Mã US là cố định để truy vết; thứ tự US không phải cam kết thứ tự sprint.
 
 ## Cách đọc INVEST
 
@@ -106,7 +122,7 @@ I và V đọc trực tiếp ở cột phụ thuộc và câu giá trị phía t
 | US38 | Nội dung biên bản ngắn | Một asset/user, constraint đồng thời; không ký điện tử | R |
 | US39 | Bố cục thu hồi | Kết thúc một assignment và chọn trạng thái | R |
 | US40 | Cách cảnh báo trạng thái | Một thay đổi trạng thái, không thêm bảo trì tự động | R |
-| US41 | Thứ tự khối ưu tiên | Ba khối cá nhân, có thể chia ticket/asset theo M2/M4 | R |
+| US41 | Thứ tự khối ưu tiên | Ba khối cá nhân, có thể chia ticket/asset theo lộ trình M0–M5 | R |
 | US42 | Preset hàng đợi | Một dashboard theo nhóm, chung công thức SLA | R |
 | US43 | Loại biểu đồ | KPI và ba phân bố khá rộng; chia KPI hàng đợi/phân bố khi ước lượng | C |
 | US44 | Biểu đồ line/bar | Trend và average có cùng tập nguồn; chia hai story khi vượt iteration | C |
@@ -115,3 +131,38 @@ I và V đọc trực tiếp ở cột phụ thuộc và câu giá trị phía t
 | US47 | Bố cục filter nhật ký | Một tập audit theo role, không công cụ SIEM | R |
 
 Stories `C` chưa được tuyên bố “INVEST đạt hoàn toàn”; có kế hoạch chia và cần đội triển khai đánh giá. Không tách story thành “viết database”, “viết API” và “làm UI” rồi coi đó là giá trị độc lập. Quy tắc bảo mật, concurrency và accessibility đi cùng từng lát cắt.
+
+## Stories quản lý công việc và điều phối — US-OPS01–12
+
+Các story sau chỉ ở mức thiết kế, chưa triển khai, chưa ước lượng. Mã lõi US01–47 và trợ lý US-AI01–08 giữ nguyên. Chỉ số và quyền ở catalog gốc, không sao chép công thức vào frontend.
+
+| ID / năng lực | User story và giá trị | Phụ thuộc / UC | AC / screen / mốc dự kiến |
+|---|---|---|---|
+| US-OPS01 / F-OPS01 | Là quản lý IT, tôi muốn xác nhận kỹ năng/lịch/ngân sách để việc giao dựa dữ liệu vận hành | Nhóm/user, UC-OPS01 | AC-OPS01 / SCR-OPS03 / M1 |
+| US-OPS02 / F-OPS02 | Là quản lý, tôi muốn publish workflow và cấp/tắt policy để giới hạn hành động AI | Source/schema/permissions, UC-OPS02 | AC-OPS02 / SCR-OPS06 / M2 |
+| US-OPS03 / F-OPS03 | Là requester, tôi muốn biết thông tin còn thiếu để IT có thể lập kế hoạch đúng | Ticket/context, UC-OPS03 | AC-OPS03 / SCR21/22/AI01 / M3 |
+| US-OPS04 / F-OPS04 | Là quản lý, tôi muốn plan/task/DAG có nguồn và phiên bản để giám sát việc thực hiện | Template/KB, UC-OPS04 | AC-OPS04 / SCR-OPS02 / M2–M3 |
+| US-OPS05 / F-OPS05 | Là quản lý, tôi muốn AI giao task cho người hợp lệ và có khả năng nhận để giảm chia việc thủ công | Capacity/policy/candidates, UC-OPS05 | AC-OPS05 / SCR-OPS01/04 / M2–M3 |
+| US-OPS06 / F-OPS06 | Là kỹ thuật viên, tôi muốn cập nhật tiến độ/remaining/kết quả theo dependency để nhóm theo dõi chính xác | Task/assignment, UC-OPS06 | AC-OPS06 / SCR-OPS01/02 / M1–M2 |
+| US-OPS07 / F-OPS07 | Là quản lý, tôi muốn thay lịch/tải kích hoạt re-evaluation để xử lý task ảnh hưởng kịp thời | Outbox/policy, UC-OPS07 | AC-OPS07 / SCR-OPS03/04 / M2–M3 |
+| US-OPS08 / F-OPS08 | Là quản lý, tôi muốn duyệt/từ chối phương án có tác động rõ để quyết định ngoại lệ | Snapshot/policy, UC-OPS08 | AC-OPS08 / SCR-OPS05 / M2–M3 |
+| US-OPS09 / F-OPS09 | Là quản lý, tôi muốn khóa phân công hoặc dừng automation để AI tôn trọng quyết định thủ công | Policy/task version, UC-OPS02/07 | AC-OPS09 / SCR-OPS02/06 / M2 |
+| US-OPS10 / F-OPS10 | Là quản lý, tôi muốn truy vết run/action và xử lý retry để không thất lạc hoặc lặp hành động | Event/run/audit, UC-OPS09 | AC-OPS10 / SCR-OPS04 / M2–M3 |
+| US-OPS11 / F-OPS11 | Là người có quyền, tôi muốn đọc nguồn Published có version/ACL; publisher muốn quản lý KB để trả lời và lập plan có căn cứ | KB/index/ACL, UC-OPS10 | AC-OPS11 / SCR-OPS07/AI01 / M4, nguồn tối thiểu M3 |
+| US-OPS12 / F-OPS12 | Là quản lý, tôi muốn báo cáo tiến độ/tải/rủi ro và hành động từ dữ liệu nguồn để giám sát | MET16–22, UC-OPS09 | AC-OPS12 / SCR12/40/OPS04 / M4 |
+
+### Đánh giá INVEST cho US-OPS01–12
+
+I: mỗi story có kết quả nghiệp vụ riêng và phụ thuộc trên bảng, không tách story thành “DB/API/UI”. V: giá trị ở câu story. T: AC-OPS tương ứng và A1–A13. Không gắn trạng thái PASS khi chỉ đặc tả.
+
+| Stories | N — có thể thương lượng | E/S — cần refinement |
+|---|---|---|
+| OPS01/02 | Cách nhập lịch/skill, bố cục scope/publish | Chia skills/calendar và workflow/policy nếu lớn; capacity kỳ/slot/threshold cần quyết định |
+| OPS03/04 | Câu hỏi bổ sung, cách xem DAG | Chia intake/plan validation; template estimate phải được quản lý xác nhận |
+| OPS05/06 | Cách giải thích candidates, board/table | Assignment atomic và progress/dependency là lát cắt riêng; không trì hoãn quyền/concurrency |
+| OPS07/08/09 | Bố cục impact/diff/lock | Tách nghỉ phép→reassign khỏi approval stale/manual override nếu cần; giữ policy recheck |
+| OPS10 | Timeline/filter run | Tách retry và observability; xác định exact business dedup keys |
+| OPS11 | Editor/source card | Có thể chia publish/ACL/index/RAG; chưa chọn embedding production |
+| OPS12 | Biểu đồ/bảng | Chốt query và mẫu số, không cam kết hiệu quả khi chưa đo |
+
+Tổng backlog mục tiêu: 47 lõi + 8 trợ lý + 12 OPS = 67 stories. M1–M5 chỉ là lộ trình tài liệu, chưa lệnh coding.

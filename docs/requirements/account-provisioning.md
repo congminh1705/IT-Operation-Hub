@@ -1,3 +1,19 @@
+---
+id: itoh-docs-requirements-account-provisioning
+title: "Cấp tài khoản nội bộ"
+type: reference
+domain: domain
+module: identity
+tags: [domain, identity, reference]
+priority: 1
+status: design-draft
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: primary
+purpose: "Đặc tả trưởng phòng ban gửi ticket và Admin xác minh/cấp tài khoản."
+---
+
 # Cấp tài khoản nội bộ
 
 **Đã thống nhất về nghiệp vụ ngày 30/10/2026 — D-29.** Đây là đặc tả cho bước triển khai sau này; hiện chưa có hệ thống tạo tài khoản chạy thật.
@@ -28,7 +44,7 @@ Không giới hạn toàn bộ danh mục Tài khoản chỉ cho trưởng phòn
 6. Admin bàn giao địa chỉ ứng dụng, email đăng nhập và mật khẩu ban đầu cho người nhận qua kênh doanh nghiệp. Không đưa mật khẩu vào ticket, ghi chú nội bộ, giải pháp hoặc thông báo; không tự gửi email khi chưa cấu hình nhà cung cấp.
 7. Nhân sự IT ghi giải pháp và chuyển Resolved theo luồng hợp lệ; trưởng phòng là requester nên xác nhận đóng hoặc yêu cầu xử lý lại. Người được cấp tài khoản đăng nhập và có thể đổi mật khẩu qua chức năng hiện có.
 
-Tái sử dụng form ticket và trường mô tả hiện có, không thêm entity yêu cầu cấp tài khoản hoặc trạng thái phê duyệt mới. Ngày bắt đầu làm việc chỉ là thông tin xử lý trong mô tả, không tự bổ sung trường bắt buộc hoặc lịch kích hoạt vào User. SLA bắt đầu khi tạo ticket và tuân thủ quy tắc hiện có; tạo user không tự chuyển trạng thái hoặc đóng ticket.
+Tái sử dụng form ticket và trường mô tả hiện có, không thêm entity yêu cầu cấp tài khoản hoặc trạng thái ticket phê duyệt mới. Approval automation là đối tượng riêng, không thay quyền Admin/phê duyệt role IT D-29. Ngày bắt đầu làm việc chỉ là thông tin xử lý trong mô tả, không tự bổ sung trường bắt buộc hoặc lịch kích hoạt vào User. SLA bắt đầu khi tạo ticket và tuân thủ quy tắc hiện có; tạo user không tự chuyển trạng thái hoặc đóng ticket.
 
 ## Mật khẩu và Admin đầu tiên
 
@@ -58,7 +74,7 @@ Dashboard Admin dùng KPI minh họa MET01–04 là 42/12/8/6, tách khỏi 6 ti
 
 ## Đối chiếu nghiệm thu dự kiến
 
-Các điều kiện này làm rõ **UC10/US13/AC13** cho bước trưởng phòng gửi yêu cầu và **UC05/US05/AC05** cho bước Admin tạo user; dùng lại UC04, UC07, UC15 và các bước giải quyết/đóng hiện có. Không tạo thêm mã use case, story hoặc trạng thái ticket.
+Các điều kiện này làm rõ **UC10/US13/AC13** cho bước trưởng phòng gửi yêu cầu và **UC05/US05/AC05** cho bước Admin tạo user; dùng lại UC04, UC07, UC15 và các bước giải quyết/đóng hiện có. D-29 vẫn dùng các mã lõi hiện có; UC/US-OPS bổ sung cho điều phối không tự cho phép cấp tài khoản hoặc thêm trạng thái ticket.
 
 - Chỉ Admin tạo tài khoản; Requester, Technician và IT Manager gọi API trực tiếp bị từ chối.
 - Form tạo user mặc định Requester; email phải duy nhất, role hợp lệ và phòng ban hoạt động.
@@ -69,3 +85,9 @@ Các điều kiện này làm rõ **UC10/US13/AC13** cho bước trưởng phòn
 - Khóa tài khoản thu hồi phiên và giữ lịch sử; không khóa Admin cuối cùng.
 
 Chưa chạy các điều kiện này trên ứng dụng. Đọc cùng [ma trận quyền](permissions-matrix.md), [quy tắc nghiệp vụ](business-rules.md), [UC05](../03-use-cases.md) và [quyết định thiết kế](../decisions/design-decisions.md).
+
+## Quan hệ với onboarding và AI điều phối — thiết kế hiện hành
+
+AI có thể chia/giao/theo dõi task “Xác minh và cấp tài khoản” cho người có quyền trong workflow đã duyệt, nhắc tiến độ và trình ngoại lệ; **không gọi tool tạo user/đổi role hoặc bàn giao mật khẩu**. Backend vẫn kiểm quyền Admin tại lần tạo tài khoản; một kỹ thuật viên được giao task không nhờ đó có thêm quyền quản trị. Nếu chỉ Admin mới đủ quyền thực hiện thì candidate phải thỏa cả quyền hành động lẫn skills/team/lịch/capacity.
+
+Trưởng phòng IT (IT_MANAGER) cấu hình policy/duyệt ngoại lệ vận hành khác trưởng phòng ban gửi đề nghị bằng Requester. Approval automation không thay chứng cứ phê duyệt cấp vai trò IT và không tự đóng ticket. Kết quả cấp tài khoản được người thực hiện ghi; requester vẫn nghiệm thu theo BR-04. Chi tiết task/plan ở BR-14–18; không tạo code/API thực thi trong đợt tài liệu.
