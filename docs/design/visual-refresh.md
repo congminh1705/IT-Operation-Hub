@@ -1,10 +1,26 @@
+---
+id: itoh-docs-design-visual-refresh
+title: "Định hướng giao diện v0.4"
+type: reference
+domain: design
+module: visual
+tags: [design, visual, reference]
+priority: 1
+status: design-draft
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: primary
+purpose: "Giải thích định hướng thị giác, bộ bàn giao và giới hạn độ phủ."
+---
+
 # Định hướng giao diện v0.4
 
 Thiết kế được làm mới theo yêu cầu giao diện đẹp, thân thiện, uyển chuyển và icon rõ ràng. Phạm vi là bản vẽ và đặc tả; chưa có frontend, animation chạy thật hoặc chatbot đang hoạt động.
 
 ## Ngôn ngữ thị giác
 
-Không gian làm việc dùng nền xanh xám rất nhạt, bề mặt trắng, màu xanh dương cho hành động chính. Card bo mềm và bóng nhẹ giúp phân vùng; bảng vẫn ưu tiên việc đọc nhiều dòng. Màu tím chỉ nhận diện trợ lý AI tùy chọn. Giữ chữ tiếng Việt, lời dẫn ngắn và tên hành động cụ thể.
+Không gian làm việc dùng nền xanh xám rất nhạt, bề mặt trắng, màu xanh dương cho hành động chính. Card bo mềm và bóng nhẹ giúp phân vùng; bảng vẫn ưu tiên việc đọc nhiều dòng. Màu tím chỉ nhận diện trợ lý AI có thể bật/tắt khi vận hành. Giữ chữ tiếng Việt, lời dẫn ngắn và tên hành động cụ thể.
 
 | Thành phần | Thiết kế mới | Mục đích |
 |---|---|---|
@@ -57,11 +73,11 @@ Giữ vị trí bảng, nội dung đang nhập, bộ lọc và vị trí đọc
 
 ## Bộ bàn giao và ranh giới
 
-### Bổ sung dashboard và xử lý cấp tài khoản — D-29
+### Dashboard và xử lý cấp tài khoản — D-29
 
 [Dashboard cá nhân/trưởng phòng](wireframes/16-dashboard-requester.svg) dùng phạm vi Requester; [biến thể Admin](wireframes/17-dashboard-admin.svg) có hàng đợi dịch vụ/Tài khoản và lối quản trị; [ticket cấp tài khoản](wireframes/18-ticket-account-provisioning.svg) chỉ hiện thao tác tạo user cho Admin. Bộ phận/chức danh trưởng phòng không cấp thêm quyền dữ liệu. Các hình chỉ dùng SCR10, SCR12, SCR22 và liên kết SCR60 hiện có.
 
-Hàng đợi Tài khoản gồm cả yêu cầu cấp mới và hỗ trợ khác, không dùng số này làm KPI cấp tài khoản. Tạo user và giải quyết ticket là hai thao tác riêng; không có trạng thái “Chờ duyệt”. Các mốc 11:00/12:00 là hai thời điểm minh họa của cùng ví dụ TKT-000128. Xem [dữ liệu đối chiếu và hành vi](../requirements/account-provisioning.md).
+Hàng đợi Tài khoản gồm cả yêu cầu cấp mới và hỗ trợ khác, không dùng số này làm KPI cấp tài khoản. Tạo user và giải quyết ticket là hai thao tác riêng; không có trạng thái ticket “Chờ duyệt”; approval automation có vòng đời riêng. Các mốc 11:00/12:00 là hai thời điểm minh họa của cùng ví dụ TKT-000128. Xem [dữ liệu đối chiếu và hành vi](../requirements/account-provisioning.md).
 
 ### Thành phần hiện tại
 
@@ -70,6 +86,12 @@ Hàng đợi Tài khoản gồm cả yêu cầu cấp mới và hỗ trợ khác
 - 44 icon SVG riêng; 18 ảnh UI/board được giữ bên trong bộ XMind tổng và UI/UX. Các bản PNG giao diện riêng đã được bỏ, tài liệu tham chiếu trực tiếp SVG.
 - [Bản lưu v0.3](archive/ui-v0.3.zip) để đối chiếu với giao diện trước khi làm mới.
 
-Giữ nguyên 33 UC, 47 stories lõi, quyền, trạng thái, cách tính SLA, công thức chỉ số và lịch sử tài sản. Không tạo route, tính năng nghiệp vụ hay chỉ số mới. Menu AI trong bản vẽ minh họa cấu hình đang bật; khi AI bị tắt, ẩn mục AI và các điểm mở panel, các tác vụ thường vẫn dùng bình thường.
+Giữ mã 33 UC/47 stories lõi, trạng thái ticket, SLA và lịch sử tài sản; thiết kế hiện hành thêm UC/US/AC-OPS, quyền theo policy và MET16–22. Đợt thị giác v0.4 trước đây không tạo nghiệp vụ mới; thiết kế hiện hành hiện bổ sung OPS theo tài liệu gốc. Menu AI trong bản vẽ minh họa cấu hình đang bật; khi AI bị tắt, ẩn mục AI và các điểm mở panel, các tác vụ thường vẫn dùng bình thường.
 
 Hình có dữ liệu hư cấu và trạng thái minh họa. Chưa xác nhận usability với người dùng thực, chưa chứng minh khả năng truy cập hoặc responsive bằng một ứng dụng chạy thật. Xem [biên bản rà soát](../review-report.md) và [gallery](wireframes/README.md) để biết độ phủ.
+
+## Giao diện công việc, điều phối và kiến thức
+
+Bổ sung task/plan/workforce/coordination/approval/policy/KB theo SCR-OPS01–07, giữ nền sáng/xanh và hệ nét hiện có. Hình trợ lý 11–13 chỉ minh họa luồng trợ lý, không đại diện toàn bộ AI MVP. Nội dung xác nhận ticket/ranking/action/approval bám [UI/UX gốc](../07-uiux-specification.md); chưa có hi-fi riêng cho mọi màn OPS.
+
+Ảnh trợ lý 11 nhúng XMind và PNG use-case tổng quan đã được tái xuất từ SVG hiện hành; các ảnh UI không đổi và archive v0.3 giữ phạm vi minh họa/lịch sử. Text specification/SVG quyết định nghiệp vụ, không dùng hình tĩnh làm nghiệm thu tính năng.

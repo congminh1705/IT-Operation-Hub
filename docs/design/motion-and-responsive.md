@@ -1,3 +1,19 @@
+---
+id: itoh-docs-design-motion-and-responsive
+title: "Chuyển động và responsive v0.4"
+type: reference
+domain: design
+module: responsive
+tags: [design, responsive, reference]
+priority: 1
+status: design-draft
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: primary
+purpose: "Định nghĩa responsive, motion, focus và phương án thay thế dễ tiếp cận."
+---
+
 # Chuyển động và responsive v0.4
 
 Đặc tả này hướng dẫn bước triển khai UI sau này. [Storyboard](wireframes/15-responsive-motion.svg) và [SVG nguồn](wireframes/15-responsive-motion.svg) là các khung hình tĩnh, chưa phải prototype tương tác hoặc animation thực thi. Các mốc thời gian dưới đây là lựa chọn thiết kế, không phải yêu cầu thời lượng của WCAG.
@@ -52,3 +68,9 @@ Các bước review chưa thực hiện trên UI chạy thật:
 - Đối chiếu label, thông báo cho screen reader, tương phản và kích thước vùng bấm.
 
 Các bước này kiểm chứng trải nghiệm; không thay thế test phân quyền backend, máy trạng thái hoặc SLA.
+
+## Task board, DAG và phê duyệt
+
+Board phải có list/table và action bàn phím thay kéo thả; không animate chuyển task trước server xác nhận trạng thái. DAG có dependency list, không yêu cầu pan/zoom bằng chuột để đọc nội dung thiết yếu. Mobile hiển thị task/card và approval diff tuần tự “Hiện tại → Dự kiến → Tác động”.
+
+Polling 30 giây chỉ tab hoạt động giữ vị trí/focus/form; run/action mới có thông báo ngắn, không tự nhảy tới cuối timeline. Không animation “AI đã giao” hoặc thanh tiến độ phần trăm khi chưa có dữ liệu thực. Reduced motion áp cho cả OPS; keyboard/focus/reading order vẫn phải kiểm khi có UI.

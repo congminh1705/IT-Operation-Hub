@@ -1,10 +1,26 @@
+---
+id: itoh-docs-07-uiux-specification
+title: "Đặc tả UI/UX theo màn hình"
+type: reference
+domain: design
+module: screens
+tags: [design, screens, reference]
+priority: 1
+status: design-draft
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: primary
+purpose: "Đặc tả trường, thao tác, trạng thái và phản hồi theo từng screen."
+---
+
 # Đặc tả UI/UX theo màn hình
 
-> **Phạm vi cập nhật 30/10/2026 — D-33:** Trợ lý AI thuộc phạm vi và nghiệm thu MVP theo xác nhận mới nhất của chủ dự án. Có thể bật/tắt khi vận hành, nhưng không được bỏ qua triển khai hoặc nghiệm thu AI. Giữ nguyên quyền và luồng nghiệp vụ lõi; hiện mới có thiết kế, chưa có provider hoặc chức năng hoạt động. [Tech stack và đối chiếu](technical/tech-stack.md).
+> **Thiết kế mục tiêu:** Chỉ tài liệu thiết kế; chưa triển khai/kiểm thử. AI trong MVP gồm trợ lý và điều phối theo policy; Ticket khác Task; KB/RAG trong phạm vi. Xem quyết định D-34–40 và tài liệu nguồn theo chủ đề.
 
 Trạng thái: **thiết kế đích, chưa có UI thực thi**. Đọc cùng [IA](04-information-architecture.md), [ma trận quyền](requirements/permissions-matrix.md), [design system](design/design-system.md) và [content/state contract](design/content-and-states.md). ID screen dùng trong AC và bảng truy vết.
 
-Bản vẽ được làm mới thị giác ở **v0.4**: khoảng trắng thoáng hơn, card bo mềm, bộ icon24 px thống nhất và hành vi chuyển động có kiểm soát. Xem [định hướng giao diện](design/visual-refresh.md), [icon/component](design/wireframes/14-icons-and-components.svg) và [motion/responsive](design/motion-and-responsive.md). Không đổi screen ID hoặc logic nghiệp vụ.
+Bản vẽ được làm mới thị giác ở **v0.4**: khoảng trắng thoáng hơn, card bo mềm, bộ icon24 px thống nhất và hành vi chuyển động có kiểm soát. Xem [định hướng giao diện](design/visual-refresh.md), [icon/component](design/wireframes/14-icons-and-components.svg) và [motion/responsive](design/motion-and-responsive.md). Giữ screen ID lõi; thiết kế hiện hành bổ sung SCR-OPS và hành vi automation ở phần cuối.
 
 ## 1. App shell và nguyên tắc tương tác
 
@@ -18,7 +34,7 @@ Văn bản và biểu tượng cùng thể hiện trạng thái. Không đưa d�
 
 **Đăng nhập:** một vùng giới thiệu ngắn bên trái, form bên phải; mobile chỉ giữ tiêu đề và form. Trường email, password có nhãn và nút hiện/ẩn có tên truy cập. Primary “Đăng nhập”; Enter gửi form; submit đang chạy có trạng thái “Đang đăng nhập…”. Không có đăng ký, role picker, email reset hoặc CTA giả. Hướng dẫn tĩnh “Tài khoản do quản trị viên cấp. Cần hỗ trợ? Liên hệ IT nội bộ.” Không hiển thị password demo hay tài khoản mặc định trong giao diện vận hành.
 
-**Hồ sơ:** tên, email chỉ đọc, vai trò/phòng ban chỉ đọc, thông tin liên hệ được phép sửa. “Lưu thay đổi” chỉ có khi có thay đổi. Không trộn quyền tự đổi role vào form. **Đổi mật khẩu:** mật khẩu hiện tại, mới và xác nhận, hướng dẫn policy trước nhập; giữ giá trị không nhạy cảm khi lỗi, không đưa password vào log. Password fields không được giữ sau thành công/rời phiên; nút hiện/ẩn từng trường độc lập.
+**Hồ sơ:** tên và thông tin liên hệ được phép sửa; email, vai trò/phòng ban chỉ đọc. “Lưu thay đổi” chỉ có khi có thay đổi. Không trộn quyền tự đổi role vào form. **Đổi mật khẩu:** mật khẩu hiện tại, mới và xác nhận, hướng dẫn policy trước nhập; giữ giá trị không nhạy cảm khi lỗi, không đưa password vào log. Password fields không được giữ sau thành công/rời phiên; nút hiện/ẩn từng trường độc lập.
 
 ## 3. Dashboard theo vai trò — SCR10/11/12
 
@@ -38,11 +54,11 @@ Ticket yêu cầu cấp tài khoản có thể nằm trong hàng đợi nhóm th
 
 KPI hàng đợi hiện tại gồm chưa xong, chưa phân công, sắp vi phạm, đã vi phạm; ghi “Hiện tại · mọi ngày tạo”. Các KPI chồng lấn nên không cộng thành tổng. Khu vực phân tích riêng có filter kỳ, phân bố status/priority/team, trend tạo/resolve, thời gian hoạt động trung bình với n và tải kỹ thuật viên. Module bảo hành liên kết asset.
 
-Click KPI mở danh sách đúng tập; filter kỳ không âm thầm áp lên hàng đợi hiện tại. Không có tăng/giảm% giả, donut không rõ mẫu số, “AI insights” hoặc nút xuất chưa đặc tả. Load/error/empty cho từng panel, không chặn toàn bộ trang nếu một biểu đồ lỗi.
+Click KPI mở danh sách đúng tập; filter kỳ không âm thầm áp lên hàng đợi hiện tại. Không có tăng/giảm% giả, donut không rõ mẫu số, “AI insights” không có nguồn hoặc nút xuất chưa đặc tả. Load/error/empty cho từng panel, không chặn toàn bộ trang nếu một biểu đồ lỗi.
 
 [Biến thể Admin](design/wireframes/17-dashboard-admin.svg) giữ KPI toàn tổ chức và bổ sung hàng đợi “Yêu cầu về tài khoản”: loại Yêu cầu dịch vụ, danh mục Tài khoản, trạng thái thuộc New/Open/In Progress/Pending. Nút “Xem 6 ticket” trong hình minh họa mở SCR20 với đúng bộ lọc này; không lọc lại các KPI toàn tổ chức. Hàng đợi có cả cấp mới và hỗ trợ tài khoản khác, không suy luận loại cấp tài khoản từ tiêu đề.
 
-Chỉ Admin có lối quản lý người dùng/nhóm, sử dụng SCR60/SCR62 hiện có; Manager giữ dashboard điều phối và không có các thao tác quản trị này. Biến thể Admin liên kết sang tải công việc, báo cáo và nhật ký hiện có; biểu đồ/bộ lọc kỳ vẫn theo đặc tả Manager/Admin. Các chỉ số tương ứng dùng metrics catalog, không tạo KPI “Chờ duyệt” hoặc trạng thái mới.
+Chỉ Admin có lối quản lý người dùng/nhóm, sử dụng SCR60/SCR62 hiện có; Manager giữ dashboard điều phối và không có các thao tác quản trị này. Biến thể Admin liên kết sang tải công việc, báo cáo và nhật ký hiện có; biểu đồ/bộ lọc kỳ vẫn theo đặc tả Manager/Admin. Các chỉ số tương ứng dùng metrics catalog, không tạo trạng thái ticket “Chờ duyệt”. Approval automation là đối tượng riêng tại SCR-OPS05, không dùng hàng đợi Tài khoản làm queue approval.
 
 ## 4. Danh sách ticket — SCR20
 
@@ -65,8 +81,10 @@ Một page có form chính và panel “Điều gì xảy ra tiếp theo?”. Fo
 | Ảnh hưởng* | Radio/select | Một người / Một nhóm/phòng ban / Toàn tổ chức; chưa chọn sẵn |
 | Khẩn cấp* | Radio/select | Thấp / Trung bình / Cao; ví dụ theo khả năng tiếp tục làm việc |
 | Ưu tiên đề xuất | Read-only summary | Tính ngay khi đủ2 trường; giải thích IT sẽ xác minh |
-| Tài sản | Searchable select | Tùy chọn, chỉ asset của mình; “Không liên quan thiết bị” |
+| Tài sản | Searchable select | Tùy chọn theo quyền; R/T tạo cá nhân chỉ asset đang được cấp, M/A theo ma trận; “Không liên quan thiết bị” |
 | Đính kèm | File picker có nút | PNG/JPEG/WebP/PDF, ≤10MB/tệp, ≤5; list tên/kích thước/xóa trước gửi |
+
+Với workflow onboarding, bổ sung nhóm thông tin danh sách nhân viên mới, cấu hình/model/số lượng máy và hạn bàn giao có múi giờ; có thể thu thập qua hội thoại rồi xác nhận preview. Đây là đầu vào yêu cầu do requester cung cấp, không mở lookup mọi nhân viên hoặc tích hợp HR. Thiếu dữ liệu thì hỏi bổ sung; không biến các trường này thành bắt buộc cho mọi ticket.
 
 Primary “Gửi yêu cầu”, secondary “Hủy” quay danh sách; có xác nhận rời trang nếu form thay đổi. Panel side diễn giải New, phản hồi trong ứng dụng và xác nhận đóng; không hứa SLA trước khi có priority/snapshot chính xác. Validation client hỗ trợ, server là quyết định cuối. Trạng thái chưa rõ kết quả gửi do mạng không được mời bấm gửi nhiều lần không kiểm tra.
 
@@ -138,7 +156,7 @@ Thông báo có Tất cả/Chưa đọc, thời gian và loại; chọn mở ki�
 | Nhóm IT | Danh sách, form nhóm, cờ tiếp nhận; panel thành viên | Không bỏ người mà bỏ quên ticket đang xử lý; membership đổi quyền ngay |
 | Danh mục | Tạo/sửa/ngừng sử dụng | Danh mục cũ vẫn đọc trên ticket |
 | SLA | Bảng P1–P4, input thời lượng + đơn vị, version, người sửa, lịch sử | Banner “Chỉ áp dụng ticket tạo mới”; preview trước lưu; giá trị dương |
-| Nhật ký | Filter actor/action/entity/date; detail cũ/mới có lọc | M chỉ ticket/asset; A thêm user/SLA; không trưng password/token |
+| Nhật ký | Filter actor/action/entity/date; detail cũ/mới có lọc | M đọc nghiệp vụ ticket/asset/workforce/automation đúng scope; A thêm quản trị user/SLA; không trưng password/token |
 
 ## 11. Responsive và kiểm chứng
 
@@ -146,12 +164,42 @@ Desktop ưu tiên bảng. Tablet sidebar thu gọn có nhãn khi mở, panel chi
 
 Các tiêu chí bàn phím, tương phản, trạng thái, lỗi và thông báo nằm ở design system/content contract; các test cần chạy với người thật nằm ở [validation plan](research/validation-plan.md).
 
-## 12. Trợ lý AI tùy chọn — SCR-AI01/02/03
+## 12. Trợ lý AI trong MVP — SCR-AI01/02/03
 
 Trợ lý là page hoặc panel do người dùng chủ động mở. Giữ nguyên CTA xử lý, form, filter và composer hiện có. Khi AI lỗi, loading/lỗi chỉ nằm trong vùng AI; người dùng vẫn dùng các hành động nghiệp vụ theo quyền. Đóng panel trả focus về trigger; mobile có nút quay về ngữ cảnh trước.
 
-Chat có nhãn AI, scope hiện tại, nguồn, thời điểm dữ liệu và đường dẫn nguồn đã kiểm tra. Nháp có dòng “Chưa tạo yêu cầu” hoặc “Chưa gửi bình luận”. Action chuyển nháp chỉ mở/điền form; người dùng đọc và gửi tại màn hình cũ. Không tự ghi đè nội dung đang soạn.
+Chat có nhãn AI, scope hiện tại, nguồn, thời điểm dữ liệu và đường dẫn nguồn đã kiểm tra. Nháp có dòng “Chưa tạo yêu cầu” hoặc “Chưa gửi bình luận”. Ticket preview có “Xác nhận tạo yêu cầu” gọi service sau xác nhận nội dung/version, hoặc “Chỉnh trong form”; reply draft chỉ chuyển composer để IT kiểm tra/gửi. Không tự ghi đè nội dung đang soạn.
 
 Public và internal là hai ngữ cảnh riêng. Nháp nội bộ không có nút đưa sang composer công khai. Không trình bày câu trả lời AI như phản hồi của kỹ thuật viên hoặc sự kiện SLA. SCR-AI03 chỉ hiện trạng thái cấu hình và bật/tắt với Admin; không đưa khóa provider vào ô chat.
 
-Chi tiết, trạng thái lỗi, nguồn và dữ liệu: [Chatbot AI](10-ai-assistant.md). Bản vẽ: [chat](design/wireframes/11-ai-assistant.svg), [panel ticket](design/wireframes/12-ai-ticket-assistant.svg), [trạng thái](design/wireframes/13-ai-states.svg). Đây là phần bổ sung; 10 wireframe lõi giữ nguyên.
+Chi tiết, trạng thái lỗi, nguồn và dữ liệu: [Chatbot AI](10-ai-assistant.md). Bản vẽ: [chat](design/wireframes/11-ai-assistant.svg), [panel ticket](design/wireframes/12-ai-ticket-assistant.svg), [trạng thái](design/wireframes/13-ai-states.svg). Các hình là mẫu trợ lý; đặc tả OPS dưới đây bổ sung phạm vi automation, chưa có UI thực thi.
+
+## 13. Công việc và kế hoạch — SCR-OPS01/02
+
+Board có To Do/Ready/In Progress/Blocked/Done/Cancelled, cùng chế độ bảng bàn phím đầy đủ. Không dùng kéo thả làm cách duy nhất chuyển trạng thái hoặc bỏ qua dependency/service validation. Task card hiển thị người phụ trách, remaining/estimate, deadline, dependency blocked, manual lock và ticket link đúng scope.
+
+Chi tiết plan có mục tiêu, version hiệu lực/history, sources, DAG và list tương đương; lịch/tải/candidate explanation chỉ IT có quyền. Chuyển version/assignment/lock có diff/lý do và kiểm conflict; không hiển thị JSON kỹ thuật trong luồng thao tác thường. CTA “Bắt đầu”, “Báo bị chặn”, “Cập nhật còn lại”, “Ghi nhận hoàn thành” theo trạng thái; Done cần kết quả và remaining=0. Không nút “AI hoàn thành”.
+
+Requester chỉ thấy tiến độ công khai đã lọc trong ticket, không plan nhân lực hoặc lý do nội bộ. Hoàn thành task không tự đổi banner ticket thành Closed.
+
+## 14. Nhân lực — SCR-OPS03
+
+M/A xem kỹ năng/người xác nhận, lịch/absence theo khoảng, ngân sách/capacity/load/free và task chưa phân bổ. T chỉ bản thân/lookup tối thiểu theo quyền, không bảng xếp hạng năng suất. Đơn vị phút/giờ và kỳ/timezone ghi rõ; missing data khác “rảnh”. Lưu absence hiển thị task ảnh hưởng, không báo đã điều phối lại trước khi worker commit.
+
+## 15. Trung tâm điều phối và phê duyệt — SCR-OPS04/05
+
+Run timeline: event → dữ liệu/nguồn → phương án → tool action → kết quả/lỗi; tách “Đã đề xuất”, “Chờ duyệt”, “Đã thực thi”, “Thực thi thất bại”. Có nguồn, thời điểm, actor/policy và mã tra cứu phù hợp; không show secrets/raw prompt mặc định. Retry chỉ cho trạng thái/intent cho phép.
+
+Approval detail hiển thị hiện tại/dự kiến, lý do, tác động người nhận/tải/deadline/SLA, phạm vi policy, tuổi snapshot và action cần duyệt. Hai nút “Duyệt phương án”/“Từ chối” cùng ô lý do; chỉ người có quyền. Conflict giữ nội dung quyết định, yêu cầu đánh giá lại; Approved không được hiển thị như execution succeeded khi chưa có kết quả. Không có phương án khả thi thì “Cần điều chỉnh nguồn lực/kế hoạch”, không nút ép giao.
+
+## 16. Policy/template và KB — SCR-OPS06/07
+
+Manager cấu hình workflow/nhóm/priority/actions/limits/grantor, xem phạm vi và tác động trước bật/tắt; default chưa cấp. Template có Draft/Published/version, bước/skills/estimate/dependency/source và review feasibility. Lock assignment/manual decision có nhãn/lý do, không tự bỏ lock trong polling.
+
+KB có search, Published/version/audience/citation; tác giả/publisher theo quyền được cấp, màn Draft/edit/publish/access/history tách reader view. ACL thay đổi phản ánh ngay; “Đang cập nhật chỉ mục” không cho phép lộ nội dung mất quyền. Vai trò biên soạn cụ thể và hành vi editor chi tiết Cần quyết định D-40.
+
+## 17. Trạng thái, polling và độ phủ thiết kế
+
+Loading/empty/filter-empty/error/forbidden/conflict áp từng panel. Không dùng số demo để điền chỗ trống; pending/approved không giả là thành công. Polling mặc định 30 giây khi tab hoạt động, cache theo user/scope, xóa dữ liệu khi mất quyền/logout; không lấy polling làm bộ kích hoạt workflow.
+
+Keyboard/focus/reduced motion và mobile một cột theo design system. DAG luôn có danh sách thay thế; approval diff trên mobile xếp “Hiện tại” rồi “Dự kiến”, không bắt cuộn ngang. Chưa có prototype, kiểm accessibility hoặc hi-fi riêng toàn bộ SCR-OPS; xem [gallery](design/wireframes/README.md) về độ phủ.

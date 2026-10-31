@@ -1,150 +1,150 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1280" viewBox="0 0 1440 1280" role="img" aria-labelledby="title desc"><title id="title">SCR12 — Dashboard Admin · Hàng đợi yêu cầu tài khoản</title><desc id="desc">Thiết kế UI v0.4 của IT Operations Hub, dữ liệu minh họa hư cấu. Bản vẽ tĩnh, chưa có ứng dụng hoặc chatbot vận hành.</desc><style>text{font-family:Inter,Segoe UI,Arial,sans-serif}</style>
-<rect x="0" y="0" width="1440" height="1280" rx="0" fill="#F4F7FC"/>
-<rect x="0" y="0" width="244" height="1280" rx="0" fill="white"/>
-<line x1="244" y1="0" x2="244" y2="1280" stroke="#E5ECF5" stroke-width="1" stroke-linecap="round"/>
-<rect x="24" y="27" width="40" height="40" rx="12" fill="#1D4ED8"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1280" viewBox="0 0 1440 1280" role="img" aria-labelledby="title desc" data-figure-id="FIG-UI17" data-design-status="design-draft"><title id="title">SCR12 — Dashboard Admin · Hàng đợi yêu cầu tài khoản</title><desc id="desc">Thiết kế UI v0.4 của IT Operations Hub, dữ liệu minh họa hư cấu. Bản vẽ tĩnh, chưa có ứng dụng hoặc chatbot vận hành.</desc><metadata id="documentation-contract">{"figure_id": "FIG-UI17", "notation": "wireframe", "status": "design-draft", "authority": "derived", "sources": ["docs/04-information-architecture.md", "docs/07-uiux-specification.md", "docs/design/design-system.md"], "documentation_standard": "docs/documentation-standard.md", "implementation": "not-started"}</metadata><style>text{font-family:Inter,Segoe UI,Arial,sans-serif}</style>
+<rect x="0" y="0" width="1440" height="1280" rx="0" fill="#F4F7FC" />
+<rect x="0" y="0" width="244" height="1280" rx="0" fill="white" />
+<line x1="244" y1="0" x2="244" y2="1280" stroke="#E5ECF5" stroke-width="1" stroke-linecap="round" />
+<rect x="24" y="27" width="40" height="40" rx="12" fill="#1D4ED8" />
 <text x="44" y="54" font-size="18" fill="white" font-weight="700" text-anchor="middle">IT</text>
 <text x="78" y="43" font-size="17" fill="#15263D" font-weight="700" text-anchor="start">Operations Hub</text>
 <text x="78" y="65" font-size="11" fill="#52637A" font-weight="400" text-anchor="start">Nền tảng IT nội bộ</text>
 <text x="24" y="118" font-size="10" fill="#60728A" font-weight="600" text-anchor="start">KHÔNG GIAN LÀM VIỆC</text>
-<rect x="12" y="137" width="220" height="42" rx="11" fill="#1D4ED8"/>
-<rect x="29.75" y="149.75" width="6.416666666666666" height="6.416666666666666" rx="1.375" fill="none" stroke="white" stroke-width="1.6958333333333333"/>
-<rect x="39.83333333333333" y="149.75" width="6.416666666666666" height="4.583333333333333" rx="1.375" fill="none" stroke="white" stroke-width="1.6958333333333333"/>
-<rect x="29.75" y="159.83333333333334" width="6.416666666666666" height="6.416666666666666" rx="1.375" fill="none" stroke="white" stroke-width="1.6958333333333333"/>
-<rect x="39.83333333333333" y="158.0" width="6.416666666666666" height="8.25" rx="1.375" fill="none" stroke="white" stroke-width="1.6958333333333333"/>
+<rect x="12" y="137" width="220" height="42" rx="11" fill="#1D4ED8" />
+<rect x="29.75" y="149.75" width="6.416666666666666" height="6.416666666666666" rx="1.375" fill="none" stroke="white" stroke-width="1.6958333333333333" />
+<rect x="39.83333333333333" y="149.75" width="6.416666666666666" height="4.583333333333333" rx="1.375" fill="none" stroke="white" stroke-width="1.6958333333333333" />
+<rect x="29.75" y="159.83333333333334" width="6.416666666666666" height="6.416666666666666" rx="1.375" fill="none" stroke="white" stroke-width="1.6958333333333333" />
+<rect x="39.83333333333333" y="158.0" width="6.416666666666666" height="8.25" rx="1.375" fill="none" stroke="white" stroke-width="1.6958333333333333" />
 <text x="63" y="164" font-size="13" fill="white" font-weight="600" text-anchor="start">Tổng quan</text>
-<path d="M 29.75 198.583 L 46.25 198.583 L 46.25 202.25 C 42.583 202.25 42.583 207.75 46.25 207.75 L 46.25 211.417 L 29.75 211.417 L 29.75 207.75 C 33.417 207.75 33.417 202.25 29.75 202.25 Z" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<line x1="39.83333333333333" y1="201.33333333333334" x2="39.83333333333333" y2="203.16666666666666" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round"/>
-<line x1="39.83333333333333" y1="205.91666666666666" x2="39.83333333333333" y2="208.66666666666666" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round"/>
+<path d="M 29.75 198.583 L 46.25 198.583 L 46.25 202.25 C 42.583 202.25 42.583 207.75 46.25 207.75 L 46.25 211.417 L 29.75 211.417 L 29.75 207.75 C 33.417 207.75 33.417 202.25 29.75 202.25 Z" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="39.83333333333333" y1="201.33333333333334" x2="39.83333333333333" y2="203.16666666666666" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" />
+<line x1="39.83333333333333" y1="205.91666666666666" x2="39.83333333333333" y2="208.66666666666666" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" />
 <text x="63" y="211" font-size="13" fill="#52637A" font-weight="400" text-anchor="start">Yêu cầu của tôi</text>
-<path d="M 30.667 244.667 L 45.333 244.667 L 47.167 253.833 L 47.167 259.333 L 28.833 259.333 L 28.833 253.833 Z" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 28.833 253.833 L 34.333 253.833 L 36.167 256.583 L 39.833 256.583 L 41.667 253.833 L 47.167 253.833" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 30.667 244.667 L 45.333 244.667 L 47.167 253.833 L 47.167 259.333 L 28.833 259.333 L 28.833 253.833 Z" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M 28.833 253.833 L 34.333 253.833 L 36.167 256.583 L 39.833 256.583 L 41.667 253.833 L 47.167 253.833" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round" />
 <text x="63" y="258" font-size="13" fill="#52637A" font-weight="400" text-anchor="start">Ticket</text>
-<path d="M 38.0 289.833 L 40.75 296.25 L 47.167 299.0 L 40.75 301.75 L 38.0 308.167 L 35.25 301.75 L 28.833 299.0 L 35.25 296.25 Z" fill="none" stroke="#6D28D9" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<line x1="45.33333333333333" y1="289.8333333333333" x2="45.33333333333333" y2="293.5" stroke="#6D28D9" stroke-width="1.6958333333333333" stroke-linecap="round"/>
-<line x1="43.5" y1="291.6666666666667" x2="47.166666666666664" y2="291.6666666666667" stroke="#6D28D9" stroke-width="1.6958333333333333" stroke-linecap="round"/>
+<path d="M 38.0 289.833 L 40.75 296.25 L 47.167 299.0 L 40.75 301.75 L 38.0 308.167 L 35.25 301.75 L 28.833 299.0 L 35.25 296.25 Z" fill="none" stroke="#6D28D9" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="45.33333333333333" y1="289.8333333333333" x2="45.33333333333333" y2="293.5" stroke="#6D28D9" stroke-width="1.6958333333333333" stroke-linecap="round" />
+<line x1="43.5" y1="291.6666666666667" x2="47.166666666666664" y2="291.6666666666667" stroke="#6D28D9" stroke-width="1.6958333333333333" stroke-linecap="round" />
 <text x="63" y="305" font-size="13" fill="#52637A" font-weight="400" text-anchor="start">Trợ lý AI</text>
-<rect x="192" y="286" width="30" height="28" rx="14" fill="#F3EDFF"/>
+<rect x="192" y="286" width="30" height="28" rx="14" fill="#F3EDFF" />
 <text x="204" y="305" font-size="12" fill="#6D28D9" font-weight="600" text-anchor="start">AI</text>
-<rect x="30.666666666666668" y="337.75" width="14.666666666666666" height="11.916666666666666" rx="1.375" fill="none" stroke="#52637A" stroke-width="1.6958333333333333"/>
-<path d="M 28.833 352.417 L 47.167 352.417 L 45.333 354.25 L 30.667 354.25 Z" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<line x1="36.166666666666664" y1="352.4166666666667" x2="39.83333333333333" y2="352.4166666666667" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round"/>
+<rect x="30.666666666666668" y="337.75" width="14.666666666666666" height="11.916666666666666" rx="1.375" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" />
+<path d="M 28.833 352.417 L 47.167 352.417 L 45.333 354.25 L 30.667 354.25 Z" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="36.166666666666664" y1="352.4166666666667" x2="39.83333333333333" y2="352.4166666666667" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" />
 <text x="63" y="352" font-size="13" fill="#52637A" font-weight="400" text-anchor="start">Tài sản</text>
-<path d="M 31.583 397.583 L 44.417 397.583 L 42.583 394.833 L 42.583 390.25 C 42.583 383.833 33.417 383.833 33.417 390.25 L 33.417 394.833 Z" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 36.167 401.25 C 37.083 402.167 38.917 402.167 39.833 401.25" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<line x1="38.0" y1="383.8333333333333" x2="38.0" y2="385.6666666666667" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round"/>
+<path d="M 31.583 397.583 L 44.417 397.583 L 42.583 394.833 L 42.583 390.25 C 42.583 383.833 33.417 383.833 33.417 390.25 L 33.417 394.833 Z" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M 36.167 401.25 C 37.083 402.167 38.917 402.167 39.833 401.25" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="38.0" y1="383.8333333333333" x2="38.0" y2="385.6666666666667" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" />
 <text x="63" y="399" font-size="13" fill="#52637A" font-weight="400" text-anchor="start">Thông báo</text>
-<line x1="29.75" y1="431.75" x2="29.75" y2="448.25" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round"/>
-<line x1="29.75" y1="448.25" x2="47.166666666666664" y2="448.25" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round"/>
-<rect x="33.416666666666664" y="440.0" width="2.75" height="5.5" rx="0.9166666666666666" fill="none" stroke="#52637A" stroke-width="1.6958333333333333"/>
-<rect x="38.916666666666664" y="436.3333333333333" width="2.75" height="9.166666666666666" rx="0.9166666666666666" fill="none" stroke="#52637A" stroke-width="1.6958333333333333"/>
-<rect x="44.416666666666664" y="432.6666666666667" width="2.75" height="12.833333333333332" rx="0.9166666666666666" fill="none" stroke="#52637A" stroke-width="1.6958333333333333"/>
+<line x1="29.75" y1="431.75" x2="29.75" y2="448.25" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" />
+<line x1="29.75" y1="448.25" x2="47.166666666666664" y2="448.25" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" />
+<rect x="33.416666666666664" y="440.0" width="2.75" height="5.5" rx="0.9166666666666666" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" />
+<rect x="38.916666666666664" y="436.3333333333333" width="2.75" height="9.166666666666666" rx="0.9166666666666666" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" />
+<rect x="44.416666666666664" y="432.6666666666667" width="2.75" height="12.833333333333332" rx="0.9166666666666666" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" />
 <text x="63" y="446" font-size="13" fill="#52637A" font-weight="400" text-anchor="start">Báo cáo</text>
-<path d="M 29.75 482.417 C 31.583 477.833 38.0 476.0 43.5 480.583 C 49.0 485.167 46.25 494.333 39.833 496.167 C 34.333 498.0 28.833 493.417 28.833 488.833" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 29.75 477.833 L 29.75 482.417 L 34.333 482.417" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<line x1="38.0" y1="482.4166666666667" x2="38.0" y2="487.0" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round"/>
-<line x1="38.0" y1="487.0" x2="41.666666666666664" y2="488.8333333333333" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round"/>
+<path d="M 29.75 482.417 C 31.583 477.833 38.0 476.0 43.5 480.583 C 49.0 485.167 46.25 494.333 39.833 496.167 C 34.333 498.0 28.833 493.417 28.833 488.833" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M 29.75 477.833 L 29.75 482.417 L 34.333 482.417" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="38.0" y1="482.4166666666667" x2="38.0" y2="487.0" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" />
+<line x1="38.0" y1="487.0" x2="41.666666666666664" y2="488.8333333333333" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" />
 <text x="63" y="493" font-size="13" fill="#52637A" font-weight="400" text-anchor="start">Nhật ký</text>
-<path d="M 47.167 534.0 L 45.086 535.898 L 45.938 538.583 L 44.481 540.481 L 41.667 540.352 L 40.374 542.855 L 38.0 543.167 L 36.102 541.086 L 33.417 541.938 L 31.519 540.481 L 31.648 537.667 L 29.145 536.374 L 28.833 534.0 L 30.914 532.102 L 30.062 529.417 L 31.519 527.519 L 34.333 527.648 L 35.626 525.145 L 38.0 524.833 L 39.898 526.914 L 42.583 526.062 L 44.481 527.519 L 44.352 530.333 L 46.855 531.626 Z" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="38.0" cy="534.0" r="3.208333333333333" fill="none" stroke="#52637A" stroke-width="1.6958333333333333"/>
+<path d="M 47.167 534.0 L 45.086 535.898 L 45.938 538.583 L 44.481 540.481 L 41.667 540.352 L 40.374 542.855 L 38.0 543.167 L 36.102 541.086 L 33.417 541.938 L 31.519 540.481 L 31.648 537.667 L 29.145 536.374 L 28.833 534.0 L 30.914 532.102 L 30.062 529.417 L 31.519 527.519 L 34.333 527.648 L 35.626 525.145 L 38.0 524.833 L 39.898 526.914 L 42.583 526.062 L 44.481 527.519 L 44.352 530.333 L 46.855 531.626 Z" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round" />
+<circle cx="38.0" cy="534.0" r="3.208333333333333" fill="none" stroke="#52637A" stroke-width="1.6958333333333333" />
 <text x="63" y="540" font-size="13" fill="#52637A" font-weight="400" text-anchor="start">Quản trị</text>
-<rect x="18" y="1022" width="208" height="117" rx="14" fill="#F2F6FF"/>
-<rect x="32" y="1036" width="34" height="34" rx="10" fill="white"/>
-<circle cx="49.0" cy="1053.0" r="7.5" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667"/>
-<path d="M 46.5 1049.667 C 46.5 1046.333 52.333 1046.333 52.333 1049.667 C 52.333 1052.167 49.0 1051.333 49.0 1054.667" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="49.0" cy="1058.0" r="0.5833333333333334" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="1.5416666666666667"/>
+<rect x="18" y="1022" width="208" height="117" rx="14" fill="#F2F6FF" />
+<rect x="32" y="1036" width="34" height="34" rx="10" fill="white" />
+<circle cx="49.0" cy="1053.0" r="7.5" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" />
+<path d="M 46.5 1049.667 C 46.5 1046.333 52.333 1046.333 52.333 1049.667 C 52.333 1052.167 49.0 1051.333 49.0 1054.667" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" stroke-linejoin="round" />
+<circle cx="49.0" cy="1058.0" r="0.5833333333333334" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="1.5416666666666667" />
 <text x="77" y="1050" font-size="13" fill="#15263D" font-weight="600" text-anchor="start">Cần IT hỗ trợ?</text>
 <text x="32" y="1087" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Theo dõi yêu cầu tại một nơi.</text>
 <text x="32" y="1112" font-size="12" fill="#1D4ED8" font-weight="600" text-anchor="start">Gửi yêu cầu</text>
-<path d="M 126.917 1102.542 L 131.875 1107.5 L 126.917 1112.458" fill="none" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-<line x1="119.125" y1="1107.5" x2="131.875" y2="1107.5" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round"/>
-<line x1="20" y1="1161" x2="224" y2="1161" stroke="#E4EBF4" stroke-width="1" stroke-linecap="round"/>
-<circle cx="40.0" cy="1200.0" r="18.0" fill="#E8F0FF"/>
+<path d="M 126.917 1102.542 L 131.875 1107.5 L 126.917 1112.458" fill="none" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="119.125" y1="1107.5" x2="131.875" y2="1107.5" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round" />
+<line x1="20" y1="1161" x2="224" y2="1161" stroke="#E4EBF4" stroke-width="1" stroke-linecap="round" />
+<circle cx="40.0" cy="1200.0" r="18.0" fill="#E8F0FF" />
 <text x="40.0" y="1204.0" font-size="12" fill="#1D4ED8" font-weight="600" text-anchor="middle">HN</text>
 <text x="69" y="1198" font-size="12" fill="#15263D" font-weight="600" text-anchor="start">Phạm Hải Nam</text>
 <text x="69" y="1218" font-size="11" fill="#52637A" font-weight="400" text-anchor="start">Quản trị viên</text>
-<path d="M 215.333 1196.0 L 220.0 1200.667 L 224.667 1196.0" fill="none" stroke="#60728A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-<rect x="245" y="0" width="1195" height="76" rx="0" fill="white"/>
-<line x1="244" y1="76" x2="1440" y2="76" stroke="#E4EBF4" stroke-width="1" stroke-linecap="round"/>
-<rect x="278.375" y="30.375" width="5.541666666666666" height="5.541666666666666" rx="1.1875" fill="none" stroke="#60728A" stroke-width="1.4645833333333333"/>
-<rect x="287.0833333333333" y="30.375" width="5.541666666666666" height="3.958333333333333" rx="1.1875" fill="none" stroke="#60728A" stroke-width="1.4645833333333333"/>
-<rect x="278.375" y="39.08333333333333" width="5.541666666666666" height="5.541666666666666" rx="1.1875" fill="none" stroke="#60728A" stroke-width="1.4645833333333333"/>
-<rect x="287.0833333333333" y="37.5" width="5.541666666666666" height="7.125" rx="1.1875" fill="none" stroke="#60728A" stroke-width="1.4645833333333333"/>
+<path d="M 215.333 1196.0 L 220.0 1200.667 L 224.667 1196.0" fill="none" stroke="#60728A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+<rect x="245" y="0" width="1195" height="76" rx="0" fill="white" />
+<line x1="244" y1="76" x2="1440" y2="76" stroke="#E4EBF4" stroke-width="1" stroke-linecap="round" />
+<rect x="278.375" y="30.375" width="5.541666666666666" height="5.541666666666666" rx="1.1875" fill="none" stroke="#60728A" stroke-width="1.4645833333333333" />
+<rect x="287.0833333333333" y="30.375" width="5.541666666666666" height="3.958333333333333" rx="1.1875" fill="none" stroke="#60728A" stroke-width="1.4645833333333333" />
+<rect x="278.375" y="39.08333333333333" width="5.541666666666666" height="5.541666666666666" rx="1.1875" fill="none" stroke="#60728A" stroke-width="1.4645833333333333" />
+<rect x="287.0833333333333" y="37.5" width="5.541666666666666" height="7.125" rx="1.1875" fill="none" stroke="#60728A" stroke-width="1.4645833333333333" />
 <text x="306" y="43" font-size="13" fill="#52637A" font-weight="400" text-anchor="start">Tổng quan</text>
-<rect x="857" y="17" width="350" height="42" rx="11" fill="#F7F9FD" stroke="#E4EBF4" stroke-width="1"/>
-<circle cx="879.75" cy="36.75" r="5.416666666666667" fill="none" stroke="#60728A" stroke-width="1.5416666666666667"/>
-<line x1="883.9166666666666" y1="40.91666666666667" x2="888.5" y2="45.5" stroke="#60728A" stroke-width="1.5416666666666667" stroke-linecap="round"/>
+<rect x="857" y="17" width="350" height="42" rx="11" fill="#F7F9FD" stroke="#E4EBF4" stroke-width="1" />
+<circle cx="879.75" cy="36.75" r="5.416666666666667" fill="none" stroke="#60728A" stroke-width="1.5416666666666667" />
+<line x1="883.9166666666666" y1="40.91666666666667" x2="888.5" y2="45.5" stroke="#60728A" stroke-width="1.5416666666666667" stroke-linecap="round" />
 <text x="904" y="43" font-size="13" fill="#60728A" font-weight="400" text-anchor="start">Tìm mã hoặc tiêu đề ticket…</text>
-<rect x="1223" y="17" width="42" height="42" rx="11" fill="white" stroke="#DCE5F0" stroke-width="1"/>
-<path d="M 1237.875 42.375 L 1250.125 42.375 L 1248.375 39.75 L 1248.375 35.375 C 1248.375 29.25 1239.625 29.25 1239.625 35.375 L 1239.625 39.75 Z" fill="none" stroke="#52637A" stroke-width="1.6187500000000001" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 1242.25 45.875 C 1243.125 46.75 1244.875 46.75 1245.75 45.875" fill="none" stroke="#52637A" stroke-width="1.6187500000000001" stroke-linecap="round" stroke-linejoin="round"/>
-<line x1="1244.0" y1="29.25" x2="1244.0" y2="31.0" stroke="#52637A" stroke-width="1.6187500000000001" stroke-linecap="round"/>
-<circle cx="1258" cy="21" r="9" fill="#1D4ED8"/>
+<rect x="1223" y="17" width="42" height="42" rx="11" fill="white" stroke="#DCE5F0" stroke-width="1" />
+<path d="M 1237.875 42.375 L 1250.125 42.375 L 1248.375 39.75 L 1248.375 35.375 C 1248.375 29.25 1239.625 29.25 1239.625 35.375 L 1239.625 39.75 Z" fill="none" stroke="#52637A" stroke-width="1.6187500000000001" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M 1242.25 45.875 C 1243.125 46.75 1244.875 46.75 1245.75 45.875" fill="none" stroke="#52637A" stroke-width="1.6187500000000001" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="1244.0" y1="29.25" x2="1244.0" y2="31.0" stroke="#52637A" stroke-width="1.6187500000000001" stroke-linecap="round" />
+<circle cx="1258" cy="21" r="9" fill="#1D4ED8" />
 <text x="1258" y="25" font-size="10" fill="white" font-weight="600" text-anchor="middle">3</text>
-<line x1="1283" y1="22" x2="1283" y2="54" stroke="#E4EBF4" stroke-width="1" stroke-linecap="round"/>
-<circle cx="1320.0" cy="38.0" r="18.0" fill="#E8F0FF"/>
+<line x1="1283" y1="22" x2="1283" y2="54" stroke="#E4EBF4" stroke-width="1" stroke-linecap="round" />
+<circle cx="1320.0" cy="38.0" r="18.0" fill="#E8F0FF" />
 <text x="1320.0" y="42.0" font-size="12" fill="#1D4ED8" font-weight="600" text-anchor="middle">HN</text>
 <text x="1352" y="43" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Tài khoản</text>
-<path d="M 1402.917 35.25 L 1407.0 39.333 L 1411.083 35.25" fill="none" stroke="#60728A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 1402.917 35.25 L 1407.0 39.333 L 1411.083 35.25" fill="none" stroke="#60728A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
 <text x="276" y="130" font-size="28" fill="#15263D" font-weight="700" text-anchor="start">Tổng quan quản trị</text>
 <text x="276" y="161" font-size="14" fill="#52637A" font-weight="400" text-anchor="start">Ưu tiên hàng đợi cần xử lý và truy cập đúng thao tác quản trị.</text>
-<rect x="1150" y="108" width="262" height="44" rx="10" fill="white" stroke="#CAD5E4" stroke-width="1"/>
-<circle cx="1212.525" cy="126.04166666666667" r="2.6916666666666664" fill="none" stroke="#15263D" stroke-width="1.4645833333333333"/>
-<path d="M 1206.983 137.125 C 1206.983 130.0 1218.067 130.0 1218.067 137.125" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 1218.858 123.667 C 1223.608 123.667 1223.608 129.208 1219.65 129.208" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 1220.442 132.375 C 1222.817 133.167 1223.608 134.75 1223.608 137.125" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1150" y="108" width="262" height="44" rx="10" fill="white" stroke="#CAD5E4" stroke-width="1" />
+<circle cx="1212.525" cy="126.04166666666667" r="2.6916666666666664" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" />
+<path d="M 1206.983 137.125 C 1206.983 130.0 1218.067 130.0 1218.067 137.125" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M 1218.858 123.667 C 1223.608 123.667 1223.608 129.208 1219.65 129.208" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M 1220.442 132.375 C 1222.817 133.167 1223.608 134.75 1223.608 137.125" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" stroke-linejoin="round" />
 <text x="1232.4" y="135.0" font-size="14" fill="#15263D" font-weight="600" text-anchor="start">Quản lý người dùng</text>
 <text x="276" y="187" font-size="11" fill="#52637A" font-weight="600" text-anchor="start">HÀNG ĐỢI HIỆN TẠI · MỌI NGÀY TẠO · MINH HỌA LÚC 11:00 NGÀY 30/10/2026</text>
-<rect x="276" y="207" width="269" height="132" rx="17" fill="#EAF0F8" opacity="0.65"/>
-<rect x="276" y="204" width="269" height="132" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1"/>
-<rect x="483" y="222" width="42" height="42" rx="13" fill="#EEF4FF"/>
-<path d="M 496.667 235.667 L 511.333 235.667 L 513.167 244.833 L 513.167 250.333 L 494.833 250.333 L 494.833 244.833 Z" fill="none" stroke="#1D4ED8" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 494.833 244.833 L 500.333 244.833 L 502.167 247.583 L 505.833 247.583 L 507.667 244.833 L 513.167 244.833" fill="none" stroke="#1D4ED8" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="276" y="207" width="269" height="132" rx="17" fill="#EAF0F8" opacity="0.65" />
+<rect x="276" y="204" width="269" height="132" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
+<rect x="483" y="222" width="42" height="42" rx="13" fill="#EEF4FF" />
+<path d="M 496.667 235.667 L 511.333 235.667 L 513.167 244.833 L 513.167 250.333 L 494.833 250.333 L 494.833 244.833 Z" fill="none" stroke="#1D4ED8" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M 494.833 244.833 L 500.333 244.833 L 502.167 247.583 L 505.833 247.583 L 507.667 244.833 L 513.167 244.833" fill="none" stroke="#1D4ED8" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round" />
 <text x="296" y="234" font-size="14" fill="#52637A" font-weight="400" text-anchor="start">Chưa xử lý xong</text>
 <text x="296" y="284" font-size="34" fill="#15263D" font-weight="700" text-anchor="start">42</text>
 <text x="296" y="314" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Toàn tổ chức</text>
-<rect x="565" y="207" width="269" height="132" rx="17" fill="#EAF0F8" opacity="0.65"/>
-<rect x="565" y="204" width="269" height="132" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1"/>
-<rect x="772" y="222" width="42" height="42" rx="13" fill="#EEF4FF"/>
-<circle cx="790.25" cy="238.41666666666666" r="3.1166666666666663" fill="none" stroke="#1D4ED8" stroke-width="1.6958333333333333"/>
-<path d="M 783.833 251.25 C 783.833 243.0 796.667 243.0 796.667 251.25" fill="none" stroke="#1D4ED8" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 797.583 235.667 C 803.083 235.667 803.083 242.083 798.5 242.083" fill="none" stroke="#1D4ED8" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 799.417 245.75 C 802.167 246.667 803.083 248.5 803.083 251.25" fill="none" stroke="#1D4ED8" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="565" y="207" width="269" height="132" rx="17" fill="#EAF0F8" opacity="0.65" />
+<rect x="565" y="204" width="269" height="132" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
+<rect x="772" y="222" width="42" height="42" rx="13" fill="#EEF4FF" />
+<circle cx="790.25" cy="238.41666666666666" r="3.1166666666666663" fill="none" stroke="#1D4ED8" stroke-width="1.6958333333333333" />
+<path d="M 783.833 251.25 C 783.833 243.0 796.667 243.0 796.667 251.25" fill="none" stroke="#1D4ED8" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M 797.583 235.667 C 803.083 235.667 803.083 242.083 798.5 242.083" fill="none" stroke="#1D4ED8" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M 799.417 245.75 C 802.167 246.667 803.083 248.5 803.083 251.25" fill="none" stroke="#1D4ED8" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round" />
 <text x="585" y="234" font-size="14" fill="#52637A" font-weight="400" text-anchor="start">Chưa phân công</text>
 <text x="585" y="284" font-size="34" fill="#15263D" font-weight="700" text-anchor="start">12</text>
 <text x="585" y="314" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Cần điều phối người phụ trách</text>
-<rect x="854" y="207" width="269" height="132" rx="17" fill="#EAF0F8" opacity="0.65"/>
-<rect x="854" y="204" width="269" height="132" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1"/>
-<rect x="1061" y="222" width="42" height="42" rx="13" fill="#FFF6DF"/>
-<circle cx="1082.0" cy="243.0" r="8.25" fill="none" stroke="#92400E" stroke-width="1.6958333333333333"/>
-<line x1="1082.0" y1="237.5" x2="1082.0" y2="243.0" stroke="#92400E" stroke-width="1.6958333333333333" stroke-linecap="round"/>
-<line x1="1082.0" y1="243.0" x2="1085.6666666666667" y2="245.75" stroke="#92400E" stroke-width="1.6958333333333333" stroke-linecap="round"/>
+<rect x="854" y="207" width="269" height="132" rx="17" fill="#EAF0F8" opacity="0.65" />
+<rect x="854" y="204" width="269" height="132" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
+<rect x="1061" y="222" width="42" height="42" rx="13" fill="#FFF6DF" />
+<circle cx="1082.0" cy="243.0" r="8.25" fill="none" stroke="#92400E" stroke-width="1.6958333333333333" />
+<line x1="1082.0" y1="237.5" x2="1082.0" y2="243.0" stroke="#92400E" stroke-width="1.6958333333333333" stroke-linecap="round" />
+<line x1="1082.0" y1="243.0" x2="1085.6666666666667" y2="245.75" stroke="#92400E" stroke-width="1.6958333333333333" stroke-linecap="round" />
 <text x="874" y="234" font-size="14" fill="#52637A" font-weight="400" text-anchor="start">Sắp vi phạm SLA</text>
 <text x="874" y="284" font-size="34" fill="#15263D" font-weight="700" text-anchor="start">8</text>
 <text x="874" y="314" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Có đồng hồ sử dụng từ 80%</text>
-<rect x="1143" y="207" width="269" height="132" rx="17" fill="#EAF0F8" opacity="0.65"/>
-<rect x="1143" y="204" width="269" height="132" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1"/>
-<rect x="1350" y="222" width="42" height="42" rx="13" fill="#FFF0F0"/>
-<path d="M 1371.0 233.833 L 1381.083 251.25 L 1360.917 251.25 Z" fill="none" stroke="#B91C1C" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<line x1="1371.0" y1="239.33333333333334" x2="1371.0" y2="243.91666666666666" stroke="#B91C1C" stroke-width="1.6958333333333333" stroke-linecap="round"/>
-<circle cx="1371.0" cy="247.58333333333334" r="0.6416666666666666" fill="#B91C1C" stroke="#B91C1C" stroke-width="1.6958333333333333"/>
+<rect x="1143" y="207" width="269" height="132" rx="17" fill="#EAF0F8" opacity="0.65" />
+<rect x="1143" y="204" width="269" height="132" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
+<rect x="1350" y="222" width="42" height="42" rx="13" fill="#FFF0F0" />
+<path d="M 1371.0 233.833 L 1381.083 251.25 L 1360.917 251.25 Z" fill="none" stroke="#B91C1C" stroke-width="1.6958333333333333" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="1371.0" y1="239.33333333333334" x2="1371.0" y2="243.91666666666666" stroke="#B91C1C" stroke-width="1.6958333333333333" stroke-linecap="round" />
+<circle cx="1371.0" cy="247.58333333333334" r="0.6416666666666666" fill="#B91C1C" stroke="#B91C1C" stroke-width="1.6958333333333333" />
 <text x="1163" y="234" font-size="14" fill="#52637A" font-weight="400" text-anchor="start">Đã vi phạm SLA</text>
 <text x="1163" y="284" font-size="34" fill="#15263D" font-weight="700" text-anchor="start">6</text>
 <text x="1163" y="314" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Có đồng hồ đang quá hạn</text>
-<rect x="276" y="361" width="1136" height="434" rx="17" fill="#EAF0F8" opacity="0.65"/>
-<rect x="276" y="358" width="1136" height="434" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1"/>
-<rect x="296" y="377" width="36" height="36" rx="10" fill="#EEF4FF"/>
-<path d="M 306.5 389.167 L 321.5 389.167 L 321.5 392.5 C 318.167 392.5 318.167 397.5 321.5 397.5 L 321.5 400.833 L 306.5 400.833 L 306.5 397.5 C 309.833 397.5 309.833 392.5 306.5 392.5 Z" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" stroke-linejoin="round"/>
-<line x1="315.6666666666667" y1="391.6666666666667" x2="315.6666666666667" y2="393.3333333333333" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round"/>
-<line x1="315.6666666666667" y1="395.8333333333333" x2="315.6666666666667" y2="398.3333333333333" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round"/>
+<rect x="276" y="361" width="1136" height="434" rx="17" fill="#EAF0F8" opacity="0.65" />
+<rect x="276" y="358" width="1136" height="434" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
+<rect x="296" y="377" width="36" height="36" rx="10" fill="#EEF4FF" />
+<path d="M 306.5 389.167 L 321.5 389.167 L 321.5 392.5 C 318.167 392.5 318.167 397.5 321.5 397.5 L 321.5 400.833 L 306.5 400.833 L 306.5 397.5 C 309.833 397.5 309.833 392.5 306.5 392.5 Z" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="315.6666666666667" y1="391.6666666666667" x2="315.6666666666667" y2="393.3333333333333" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" />
+<line x1="315.6666666666667" y1="395.8333333333333" x2="315.6666666666667" y2="398.3333333333333" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" />
 <text x="345" y="393" font-size="17" fill="#15263D" font-weight="600" text-anchor="start">Yêu cầu về tài khoản</text>
 <text x="345" y="417" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Yêu cầu dịch vụ · Danh mục Tài khoản · Chưa xử lý xong</text>
-<rect x="1210" y="376" width="180" height="44" rx="10" fill="white" stroke="#CAD5E4" stroke-width="1"/>
-<path d="M 1256.183 392.458 L 1261.725 398.0 L 1256.183 403.542" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<line x1="1247.475" y1="398.0" x2="1261.725" y2="398.0" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round"/>
+<rect x="1210" y="376" width="180" height="44" rx="10" fill="white" stroke="#CAD5E4" stroke-width="1" />
+<path d="M 1256.183 392.458 L 1261.725 398.0 L 1256.183 403.542" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="1247.475" y1="398.0" x2="1261.725" y2="398.0" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" />
 <text x="1272.1" y="403.0" font-size="14" fill="#15263D" font-weight="600" text-anchor="start">Xem 6 ticket</text>
 <text x="298" y="448" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Gồm cấp mới và các hỗ trợ tài khoản khác; không phải tổng yêu cầu cấp tài khoản.</text>
-<line x1="298" y1="468" x2="1390" y2="468" stroke="#E4EBF4" stroke-width="1" stroke-linecap="round"/>
+<line x1="298" y1="468" x2="1390" y2="468" stroke="#E4EBF4" stroke-width="1" stroke-linecap="round" />
 <text x="298" y="493" font-size="11" fill="#52637A" font-weight="600" text-anchor="start">YÊU CẦU / NGƯỜI GỬI</text>
 <text x="800" y="493" font-size="11" fill="#52637A" font-weight="600" text-anchor="start">TRẠNG THÁI</text>
 <text x="982" y="493" font-size="11" fill="#52637A" font-weight="600" text-anchor="start">PHỤ TRÁCH</text>
@@ -152,109 +152,109 @@
 <text x="298" y="520" font-size="12" fill="#1D4ED8" font-weight="600" text-anchor="start">TKT-000128</text>
 <text x="418" y="520" font-size="14" fill="#15263D" font-weight="600" text-anchor="start">Cấp tài khoản cho Võ Minh Khang</text>
 <text x="418" y="544" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Nguyễn Thu Hà · Kế toán</text>
-<rect x="800" y="513" width="158" height="28" rx="14" fill="#EEF4FF"/>
+<rect x="800" y="513" width="158" height="28" rx="14" fill="#EEF4FF" />
 <text x="812" y="532" font-size="12" fill="#1D4ED8" font-weight="600" text-anchor="start">Đang xử lý</text>
 <text x="982" y="530" font-size="13" fill="#15263D" font-weight="400" text-anchor="start">Phạm Hải Nam</text>
-<rect x="1192" y="513" width="174" height="28" rx="14" fill="#EEF4FF"/>
-<circle cx="1210.0" cy="527.0" r="6.0" fill="none" stroke="#1D4ED8" stroke-width="1.4"/>
-<line x1="1210.0" y1="523.0" x2="1210.0" y2="527.0" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round"/>
-<line x1="1210.0" y1="527.0" x2="1212.6666666666667" y2="529.0" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round"/>
+<rect x="1192" y="513" width="174" height="28" rx="14" fill="#EEF4FF" />
+<circle cx="1210.0" cy="527.0" r="6.0" fill="none" stroke="#1D4ED8" stroke-width="1.4" />
+<line x1="1210.0" y1="523.0" x2="1210.0" y2="527.0" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round" />
+<line x1="1210.0" y1="527.0" x2="1212.6666666666667" y2="529.0" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round" />
 <text x="1224" y="532" font-size="12" fill="#1D4ED8" font-weight="600" text-anchor="start">Còn 22 giờ</text>
-<line x1="298" y1="561" x2="1390" y2="561" stroke="#E4EBF4" stroke-width="1" stroke-linecap="round"/>
+<line x1="298" y1="561" x2="1390" y2="561" stroke="#E4EBF4" stroke-width="1" stroke-linecap="round" />
 <text x="298" y="580" font-size="12" fill="#1D4ED8" font-weight="600" text-anchor="start">TKT-000127</text>
 <text x="418" y="580" font-size="14" fill="#15263D" font-weight="600" text-anchor="start">Cấp tài khoản cho Lê Ngọc Anh</text>
 <text x="418" y="604" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Nguyễn Thu Hà · Kế toán</text>
-<rect x="800" y="573" width="158" height="28" rx="14" fill="#FFF6DF"/>
+<rect x="800" y="573" width="158" height="28" rx="14" fill="#FFF6DF" />
 <text x="812" y="592" font-size="12" fill="#92400E" font-weight="600" text-anchor="start">Chờ phản hồi</text>
 <text x="982" y="590" font-size="13" fill="#15263D" font-weight="400" text-anchor="start">Lê Minh An</text>
-<rect x="1192" y="573" width="174" height="28" rx="14" fill="#FFF6DF"/>
-<rect x="1206.0" y="581.6666666666666" width="2.6666666666666665" height="10.666666666666666" rx="0.6666666666666666" fill="none" stroke="#92400E" stroke-width="1.4"/>
-<rect x="1211.3333333333333" y="581.6666666666666" width="2.6666666666666665" height="10.666666666666666" rx="0.6666666666666666" fill="none" stroke="#92400E" stroke-width="1.4"/>
+<rect x="1192" y="573" width="174" height="28" rx="14" fill="#FFF6DF" />
+<rect x="1206.0" y="581.6666666666666" width="2.6666666666666665" height="10.666666666666666" rx="0.6666666666666666" fill="none" stroke="#92400E" stroke-width="1.4" />
+<rect x="1211.3333333333333" y="581.6666666666666" width="2.6666666666666665" height="10.666666666666666" rx="0.6666666666666666" fill="none" stroke="#92400E" stroke-width="1.4" />
 <text x="1224" y="592" font-size="12" fill="#92400E" font-weight="600" text-anchor="start">Tạm dừng</text>
-<line x1="298" y1="621" x2="1390" y2="621" stroke="#E4EBF4" stroke-width="1" stroke-linecap="round"/>
+<line x1="298" y1="621" x2="1390" y2="621" stroke="#E4EBF4" stroke-width="1" stroke-linecap="round" />
 <text x="298" y="640" font-size="12" fill="#1D4ED8" font-weight="600" text-anchor="start">TKT-000126</text>
 <text x="418" y="640" font-size="14" fill="#15263D" font-weight="600" text-anchor="start">Mở khóa tài khoản nhân viên</text>
 <text x="418" y="664" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Đặng Hoài Nam · Kinh doanh</text>
-<rect x="800" y="633" width="158" height="28" rx="14" fill="#EEF4FF"/>
+<rect x="800" y="633" width="158" height="28" rx="14" fill="#EEF4FF" />
 <text x="812" y="652" font-size="12" fill="#1D4ED8" font-weight="600" text-anchor="start">Mới</text>
 <text x="982" y="650" font-size="13" fill="#15263D" font-weight="400" text-anchor="start">Chưa phân công</text>
-<rect x="1192" y="633" width="174" height="28" rx="14" fill="#EEF4FF"/>
-<circle cx="1210.0" cy="647.0" r="6.0" fill="none" stroke="#1D4ED8" stroke-width="1.4"/>
-<line x1="1210.0" y1="643.0" x2="1210.0" y2="647.0" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round"/>
-<line x1="1210.0" y1="647.0" x2="1212.6666666666667" y2="649.0" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round"/>
+<rect x="1192" y="633" width="174" height="28" rx="14" fill="#EEF4FF" />
+<circle cx="1210.0" cy="647.0" r="6.0" fill="none" stroke="#1D4ED8" stroke-width="1.4" />
+<line x1="1210.0" y1="643.0" x2="1210.0" y2="647.0" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round" />
+<line x1="1210.0" y1="647.0" x2="1212.6666666666667" y2="649.0" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round" />
 <text x="1224" y="652" font-size="12" fill="#1D4ED8" font-weight="600" text-anchor="start">Còn 23 giờ</text>
-<line x1="298" y1="681" x2="1390" y2="681" stroke="#E4EBF4" stroke-width="1" stroke-linecap="round"/>
+<line x1="298" y1="681" x2="1390" y2="681" stroke="#E4EBF4" stroke-width="1" stroke-linecap="round" />
 <text x="298" y="700" font-size="12" fill="#1D4ED8" font-weight="600" text-anchor="start">TKT-000125</text>
 <text x="418" y="700" font-size="14" fill="#15263D" font-weight="600" text-anchor="start">Cấp quyền truy cập ứng dụng nội bộ</text>
 <text x="418" y="724" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Bùi Khánh Linh · Vận hành</text>
-<rect x="800" y="693" width="158" height="28" rx="14" fill="#EEF4FF"/>
+<rect x="800" y="693" width="158" height="28" rx="14" fill="#EEF4FF" />
 <text x="812" y="712" font-size="12" fill="#1D4ED8" font-weight="600" text-anchor="start">Đã tiếp nhận</text>
 <text x="982" y="710" font-size="13" fill="#15263D" font-weight="400" text-anchor="start">Lê Minh An</text>
-<rect x="1192" y="693" width="174" height="28" rx="14" fill="#EEF4FF"/>
-<circle cx="1210.0" cy="707.0" r="6.0" fill="none" stroke="#1D4ED8" stroke-width="1.4"/>
-<line x1="1210.0" y1="703.0" x2="1210.0" y2="707.0" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round"/>
-<line x1="1210.0" y1="707.0" x2="1212.6666666666667" y2="709.0" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round"/>
+<rect x="1192" y="693" width="174" height="28" rx="14" fill="#EEF4FF" />
+<circle cx="1210.0" cy="707.0" r="6.0" fill="none" stroke="#1D4ED8" stroke-width="1.4" />
+<line x1="1210.0" y1="703.0" x2="1210.0" y2="707.0" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round" />
+<line x1="1210.0" y1="707.0" x2="1212.6666666666667" y2="709.0" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round" />
 <text x="1224" y="712" font-size="12" fill="#1D4ED8" font-weight="600" text-anchor="start">Còn 18 giờ</text>
 <text x="298" y="774" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Hiển thị 4 / 6 ticket trong hàng đợi lọc · Các số KPI phía trên vẫn là toàn tổ chức.</text>
-<rect x="276" y="817" width="550" height="338" rx="17" fill="#EAF0F8" opacity="0.65"/>
-<rect x="276" y="814" width="550" height="338" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1"/>
-<rect x="296" y="833" width="36" height="36" rx="10" fill="#EEF4FF"/>
-<rect x="308.1666666666667" y="849.3333333333334" width="11.666666666666668" height="10.0" rx="1.6666666666666667" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667"/>
-<path d="M 310.667 849.333 L 310.667 846.0 C 310.667 841.0 317.333 841.0 317.333 846.0 L 317.333 849.333" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" stroke-linejoin="round"/>
-<line x1="314.0" y1="853.5" x2="314.0" y2="856.0" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round"/>
+<rect x="276" y="817" width="550" height="338" rx="17" fill="#EAF0F8" opacity="0.65" />
+<rect x="276" y="814" width="550" height="338" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
+<rect x="296" y="833" width="36" height="36" rx="10" fill="#EEF4FF" />
+<rect x="308.1666666666667" y="849.3333333333334" width="11.666666666666668" height="10.0" rx="1.6666666666666667" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" />
+<path d="M 310.667 849.333 L 310.667 846.0 C 310.667 841.0 317.333 841.0 317.333 846.0 L 317.333 849.333" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="314.0" y1="853.5" x2="314.0" y2="856.0" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" />
 <text x="345" y="849" font-size="17" fill="#15263D" font-weight="600" text-anchor="start">Thao tác dành cho Admin</text>
 <text x="345" y="873" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Kiểm tra ticket và thẩm quyền trước khi cấp</text>
-<rect x="298" y="896" width="506" height="44" rx="10" fill="white" stroke="#CAD5E4" stroke-width="1"/>
-<circle cx="482.525" cy="914.0416666666666" r="2.6916666666666664" fill="none" stroke="#15263D" stroke-width="1.4645833333333333"/>
-<path d="M 476.983 925.125 C 476.983 918.0 488.067 918.0 488.067 925.125" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 488.858 911.667 C 493.608 911.667 493.608 917.208 489.65 917.208" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 490.442 920.375 C 492.817 921.167 493.608 922.75 493.608 925.125" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="298" y="896" width="506" height="44" rx="10" fill="white" stroke="#CAD5E4" stroke-width="1" />
+<circle cx="482.525" cy="914.0416666666666" r="2.6916666666666664" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" />
+<path d="M 476.983 925.125 C 476.983 918.0 488.067 918.0 488.067 925.125" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M 488.858 911.667 C 493.608 911.667 493.608 917.208 489.65 917.208" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M 490.442 920.375 C 492.817 921.167 493.608 922.75 493.608 925.125" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" stroke-linejoin="round" />
 <text x="502.4" y="923.0" font-size="14" fill="#15263D" font-weight="600" text-anchor="start">Quản lý người dùng</text>
-<rect x="298" y="956" width="506" height="44" rx="10" fill="white" stroke="#CAD5E4" stroke-width="1"/>
-<rect x="478.56666666666666" y="970.0833333333334" width="12.666666666666666" height="15.833333333333332" rx="0.7916666666666666" fill="none" stroke="#15263D" stroke-width="1.4645833333333333"/>
-<line x1="476.9833333333333" y1="985.9166666666666" x2="492.81666666666666" y2="985.9166666666666" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round"/>
-<rect x="483.31666666666666" y="981.9583333333334" width="3.1666666666666665" height="3.958333333333333" rx="0.0" fill="none" stroke="#15263D" stroke-width="1.4645833333333333"/>
-<line x1="481.7333333333333" y1="973.25" x2="481.7333333333333" y2="974.8333333333334" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round"/>
-<line x1="488.06666666666666" y1="973.25" x2="488.06666666666666" y2="974.8333333333334" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round"/>
-<line x1="481.7333333333333" y1="977.2083333333334" x2="481.7333333333333" y2="978.7916666666666" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round"/>
-<line x1="488.06666666666666" y1="977.2083333333334" x2="488.06666666666666" y2="978.7916666666666" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round"/>
+<rect x="298" y="956" width="506" height="44" rx="10" fill="white" stroke="#CAD5E4" stroke-width="1" />
+<rect x="478.56666666666666" y="970.0833333333334" width="12.666666666666666" height="15.833333333333332" rx="0.7916666666666666" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" />
+<line x1="476.9833333333333" y1="985.9166666666666" x2="492.81666666666666" y2="985.9166666666666" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" />
+<rect x="483.31666666666666" y="981.9583333333334" width="3.1666666666666665" height="3.958333333333333" rx="0.0" fill="none" stroke="#15263D" stroke-width="1.4645833333333333" />
+<line x1="481.7333333333333" y1="973.25" x2="481.7333333333333" y2="974.8333333333334" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" />
+<line x1="488.06666666666666" y1="973.25" x2="488.06666666666666" y2="974.8333333333334" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" />
+<line x1="481.7333333333333" y1="977.2083333333334" x2="481.7333333333333" y2="978.7916666666666" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" />
+<line x1="488.06666666666666" y1="977.2083333333334" x2="488.06666666666666" y2="978.7916666666666" stroke="#15263D" stroke-width="1.4645833333333333" stroke-linecap="round" />
 <text x="502.4" y="983.0" font-size="14" fill="#15263D" font-weight="600" text-anchor="start">Nhóm và thành viên</text>
 <text x="298" y="1047" font-size="14" fill="#15263D" font-weight="600" text-anchor="start">Người dùng mới mặc định Requester.</text>
 <text x="298" y="1077" font-size="13" fill="#52637A" font-weight="400" text-anchor="start">Tạo tài khoản không tự giải quyết ticket.</text>
 <text x="298" y="1102" font-size="13" fill="#52637A" font-weight="400" text-anchor="start">Bàn giao mật khẩu qua kênh doanh nghiệp.</text>
-<rect x="846" y="817" width="566" height="338" rx="17" fill="#EAF0F8" opacity="0.65"/>
-<rect x="846" y="814" width="566" height="338" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1"/>
-<rect x="866" y="833" width="36" height="36" rx="10" fill="#EEF4FF"/>
-<line x1="876.5" y1="843.5" x2="876.5" y2="858.5" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round"/>
-<line x1="876.5" y1="858.5" x2="892.3333333333334" y2="858.5" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round"/>
-<rect x="879.8333333333334" y="851.0" width="2.5" height="5.0" rx="0.8333333333333334" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667"/>
-<rect x="884.8333333333334" y="847.6666666666666" width="2.5" height="8.333333333333334" rx="0.8333333333333334" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667"/>
-<rect x="889.8333333333334" y="844.3333333333334" width="2.5" height="11.666666666666668" rx="0.8333333333333334" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667"/>
+<rect x="846" y="817" width="566" height="338" rx="17" fill="#EAF0F8" opacity="0.65" />
+<rect x="846" y="814" width="566" height="338" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
+<rect x="866" y="833" width="36" height="36" rx="10" fill="#EEF4FF" />
+<line x1="876.5" y1="843.5" x2="876.5" y2="858.5" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" />
+<line x1="876.5" y1="858.5" x2="892.3333333333334" y2="858.5" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" />
+<rect x="879.8333333333334" y="851.0" width="2.5" height="5.0" rx="0.8333333333333334" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" />
+<rect x="884.8333333333334" y="847.6666666666666" width="2.5" height="8.333333333333334" rx="0.8333333333333334" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" />
+<rect x="889.8333333333334" y="844.3333333333334" width="2.5" height="11.666666666666668" rx="0.8333333333333334" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" />
 <text x="915" y="849" font-size="17" fill="#15263D" font-weight="600" text-anchor="start">Điều phối và theo dõi</text>
 <text x="915" y="873" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Theo dõi khối lượng và thời hạn xử lý</text>
-<rect x="868" y="898" width="38" height="38" rx="11" fill="#EEF4FF"/>
-<circle cx="884.5" cy="912.8333333333334" r="2.8333333333333335" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667"/>
-<path d="M 878.667 924.5 C 878.667 917.0 890.333 917.0 890.333 924.5" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 891.167 910.333 C 896.167 910.333 896.167 916.167 892.0 916.167" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 892.833 919.5 C 895.333 920.333 896.167 922.0 896.167 924.5" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="868" y="898" width="38" height="38" rx="11" fill="#EEF4FF" />
+<circle cx="884.5" cy="912.8333333333334" r="2.8333333333333335" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" />
+<path d="M 878.667 924.5 C 878.667 917.0 890.333 917.0 890.333 924.5" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M 891.167 910.333 C 896.167 910.333 896.167 916.167 892.0 916.167" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M 892.833 919.5 C 895.333 920.333 896.167 922.0 896.167 924.5" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" stroke-linejoin="round" />
 <text x="920" y="913" font-size="15" fill="#15263D" font-weight="600" text-anchor="start">Tải công việc</text>
 <text x="920" y="940" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Xem ticket đang mở theo kỹ thuật viên.</text>
-<rect x="868" y="974" width="38" height="38" rx="11" fill="#EEF4FF"/>
-<line x1="879.5" y1="985.5" x2="879.5" y2="1000.5" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round"/>
-<line x1="879.5" y1="1000.5" x2="895.3333333333334" y2="1000.5" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round"/>
-<rect x="882.8333333333334" y="993.0" width="2.5" height="5.0" rx="0.8333333333333334" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667"/>
-<rect x="887.8333333333334" y="989.6666666666666" width="2.5" height="8.333333333333334" rx="0.8333333333333334" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667"/>
-<rect x="892.8333333333334" y="986.3333333333334" width="2.5" height="11.666666666666668" rx="0.8333333333333334" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667"/>
+<rect x="868" y="974" width="38" height="38" rx="11" fill="#EEF4FF" />
+<line x1="879.5" y1="985.5" x2="879.5" y2="1000.5" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" />
+<line x1="879.5" y1="1000.5" x2="895.3333333333334" y2="1000.5" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" />
+<rect x="882.8333333333334" y="993.0" width="2.5" height="5.0" rx="0.8333333333333334" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" />
+<rect x="887.8333333333334" y="989.6666666666666" width="2.5" height="8.333333333333334" rx="0.8333333333333334" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" />
+<rect x="892.8333333333334" y="986.3333333333334" width="2.5" height="11.666666666666668" rx="0.8333333333333334" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" />
 <text x="920" y="989" font-size="15" fill="#15263D" font-weight="600" text-anchor="start">Báo cáo vận hành</text>
 <text x="920" y="1016" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Phân tích theo kỳ và công thức chỉ số thống nhất.</text>
-<rect x="868" y="1050" width="38" height="38" rx="11" fill="#EEF4FF"/>
-<path d="M 879.5 1064.833 C 881.167 1060.667 887.0 1059.0 892.0 1063.167 C 897.0 1067.333 894.5 1075.667 888.667 1077.333 C 883.667 1079.0 878.667 1074.833 878.667 1070.667" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 879.5 1060.667 L 879.5 1064.833 L 883.667 1064.833" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" stroke-linejoin="round"/>
-<line x1="887.0" y1="1064.8333333333333" x2="887.0" y2="1069.0" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round"/>
-<line x1="887.0" y1="1069.0" x2="890.3333333333334" y2="1070.6666666666667" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round"/>
+<rect x="868" y="1050" width="38" height="38" rx="11" fill="#EEF4FF" />
+<path d="M 879.5 1064.833 C 881.167 1060.667 887.0 1059.0 892.0 1063.167 C 897.0 1067.333 894.5 1075.667 888.667 1077.333 C 883.667 1079.0 878.667 1074.833 878.667 1070.667" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M 879.5 1060.667 L 879.5 1064.833 L 883.667 1064.833" fill="none" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="887.0" y1="1064.8333333333333" x2="887.0" y2="1069.0" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" />
+<line x1="887.0" y1="1069.0" x2="890.3333333333334" y2="1070.6666666666667" stroke="#1D4ED8" stroke-width="1.5416666666666667" stroke-linecap="round" />
 <text x="920" y="1065" font-size="15" fill="#15263D" font-weight="600" text-anchor="start">Nhật ký kiểm tra</text>
 <text x="920" y="1092" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">User, role, SLA và lịch sử nghiệp vụ theo quyền.</text>
 <text x="276" y="1195" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Chọn một ticket để kiểm tra thông tin trước khi cấp tài khoản.</text>
-<rect x="244" y="1246" width="1196" height="34" rx="0" fill="#EBF0F8"/>
+<rect x="244" y="1246" width="1196" height="34" rx="0" fill="#EBF0F8" />
 <text x="276" y="1268" font-size="11" fill="#52637A" font-weight="400" text-anchor="start">THIẾT KẾ UI v0.4 · DỮ LIỆU MINH HỌA · SCR12 · Admin · D-29 · Hàng đợi Tài khoản khác với riêng yêu cầu cấp mới</text>
 </svg>

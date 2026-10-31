@@ -1,6 +1,22 @@
+---
+id: itoh-docs-design-wireframes-readme
+title: "Bộ bản vẽ UI/UX"
+type: reference
+domain: design
+module: wireframes
+tags: [design, wireframes, reference]
+priority: 2
+status: design-draft
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: derived
+purpose: "Điều hướng bản vẽ tới screen nguồn và nêu rõ dữ liệu minh họa/độ phủ."
+---
+
 # Bộ bản vẽ UI/UX
 
-> **Phạm vi cập nhật 30/10/2026 — D-33:** Trợ lý AI thuộc phạm vi và nghiệm thu MVP theo xác nhận mới nhất của chủ dự án. Có thể bật/tắt khi vận hành, nhưng không được bỏ qua triển khai hoặc nghiệm thu AI. Giữ nguyên quyền và luồng nghiệp vụ lõi; hiện mới có thiết kế, chưa có provider hoặc chức năng hoạt động. [Tech stack và đối chiếu](../../technical/tech-stack.md).
+> **Thiết kế mục tiêu:** Chỉ tài liệu thiết kế; chưa triển khai/kiểm thử. AI trong MVP gồm trợ lý và điều phối theo policy; Ticket khác Task; KB/RAG trong phạm vi. Xem quyết định D-34–40 và tài liệu nguồn theo chủ đề.
 
 **16 bản UI tĩnh (13 bản lõi và 3 bản AI) và 2 board thiết kế, phiên bản v0.4**, dùng dữ liệu hư cấu có nhãn. SVG là tài liệu thiết kế có thể phóng to, không có tương tác, không gửi request và không chứng minh ứng dụng đã có dữ liệu bền vững. Các thao tác lõi và AI đều thuộc phạm vi MVP; nghiệm thu yêu cầu chức năng thực tế thay cho tương tác hoặc phản hồi mẫu.
 
@@ -18,7 +34,7 @@ Mở trực tiếp SVG trong trình duyệt hoặc công cụ thiết kế để
 | [08 — Cấu hình SLA](08-admin-sla.svg) | Admin · SCR64 | P1–P4, đơn vị thời lượng, phiên bản, tác động ticket mới |
 | [09 — Mobile](09-mobile.svg) | Requester · SCR20/22 | Hai view390 px, trả lời Pending và thao tác chính |
 | [10 — Trạng thái UX](10-ux-states.svg) | Các vai trò · mẫu dùng chung | Validation, conflict, filter rỗng và tải lỗi |
-| [11 — Trợ lý AI](11-ai-assistant.svg) | Requester · SCR-AI01/02 | Nguồn, bản nháp và chuyển về form, chưa tạo ticket |
+| [11 — Trợ lý AI](11-ai-assistant.svg) | Requester · SCR-AI01/02 | Nguồn, preview rồi xác nhận tạo hoặc chỉnh form; chưa xác nhận chưa tạo |
 | [12 — AI trong ticket](12-ai-ticket-assistant.svg) | Technician · SCR-AI01/02 | Tóm tắt public và nháp phản hồi, chưa gửi bình luận |
 | [13 — Trạng thái AI](13-ai-states.svg) | Mẫu bổ sung | Lỗi, thiếu nguồn, mất quyền và tách nội bộ/công khai |
 | [14 — Icon và component](14-icons-and-components.svg) | Board thiết kế | 44 icon, nhãn, focus, hover và loading |
@@ -27,7 +43,7 @@ Mở trực tiếp SVG trong trình duyệt hoặc công cụ thiết kế để
 | [17 — Dashboard Admin](17-dashboard-admin.svg) | Admin · biến thể SCR12 | Hàng đợi dịch vụ/Tài khoản; KPI tổ chức tách biệt; quản lý user chỉ Admin |
 | [18 — Ticket cấp tài khoản](18-ticket-account-provisioning.svg) | Admin · SCR22 → SCR60 | Xác minh đề nghị, mở form quản trị; không tự tạo user/giải quyết ticket |
 
-[Use case tổng quan — PNG](use-cases-overview.png) · [SVG nguồn](../../diagrams/use-cases-overview.svg). Đây là sơ đồ phụ lục, không tính vào 16 bản UI hoặc 2 board.
+[Use case tổng quan hiện hành — PNG](use-cases-overview.png) · [SVG nguồn](../../diagrams/use-cases-overview.svg). Đây là sơ đồ phụ lục, không tính vào 16 bản UI hoặc 2 board.
 
 Các ảnh cũng được đính kèm trong [file UI/UX XMind](../../xmind/07-uiux.xmind); phần sơ đồ hành trình và cấu trúc dùng topic XMind chỉnh sửa được. Ảnh wireframe đính kèm không biến thành các control UI chỉnh sửa riêng trong XMind.
 
@@ -75,6 +91,12 @@ Wireframe tập trung luồng ticket và các quyết định UX rủi ro. Dashb
 
 Hai bản chi tiết ticket minh họa các thời điểm khác nhau của cùng ticket: Technician ở In Progress và Requester ở Resolved. Dữ liệu trong dashboard/bảng là bố cục minh họa, không phải một seed dataset đã kiểm chứng liên kết chéo.
 
-Ba bản AI là phần bổ sung tùy chọn. Bộ 13 bản ban đầu được làm mới ở v0.4; ba bản 16–18 bổ sung góc nhìn D-29 trên các screen hiện có. Không tạo role trưởng phòng hoặc trạng thái mới. Menu AI minh họa cấu hình đang bật; ẩn các điểm truy cập AI khi tắt tính năng. [Thiết kế chatbot](../../10-ai-assistant.md) mô tả ranh giới hành động và nguồn; chưa có chatbot thực thi.
+Ba bản AI là mẫu trợ lý trong MVP, có thể bật/tắt khi vận hành; không phủ hết automation. Bộ 13 bản ban đầu được làm mới ở v0.4; ba bản 16–18 bổ sung góc nhìn D-29 trên các screen hiện có. Không tạo role trưởng phòng hoặc trạng thái ticket mới. Task/approval có trạng thái riêng theo thiết kế hiện hành. Menu AI minh họa cấu hình đang bật; ẩn các điểm truy cập AI khi tắt tính năng. [Thiết kế chatbot](../../10-ai-assistant.md) mô tả ranh giới hành động và nguồn; chưa có chatbot thực thi.
 
 Các hình 16/17/18 thể hiện mốc thời gian khác nhau. Xem [dữ liệu và công thức đối chiếu](../../requirements/account-provisioning.md) trước khi so sánh trạng thái cùng ticket giữa các bản.
+
+## Nguồn và trạng thái thiết kế
+
+36 mẫu screen/interaction mục tiêu gồm 26 lõi, 3 AI, 7 OPS. 16 UI SVG + 2 board hiện có chưa phải hi-fi cho mọi mẫu. Đặc tả task board/plan/nhân lực/điều phối/phê duyệt/policy/KB nằm trực tiếp trong [UI/UX](../../07-uiux-specification.md) và [IA](../../04-information-architecture.md); các panel/empty/error/forbidden/conflict đã được mô tả.
+
+SVG trợ lý 11 được sửa nội dung xác nhận ticket và tái xuất vào ba bản ảnh nhúng XMind tương ứng. PNG use-case tổng quan được cập nhật từ SVG hiện hành. Các ảnh UI không đổi giữ phạm vi minh họa; đặc tả Markdown quản lý nghiệp vụ mới. Không dùng ảnh tĩnh hoặc nút minh họa làm bằng chứng automation đã chạy.

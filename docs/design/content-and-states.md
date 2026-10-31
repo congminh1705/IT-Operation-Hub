@@ -1,3 +1,19 @@
+---
+id: itoh-docs-design-content-and-states
+title: "Nội dung giao diện, lỗi và trạng thái"
+type: reference
+domain: design
+module: content
+tags: [design, content, reference]
+priority: 1
+status: design-draft
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: primary
+purpose: "Chuẩn hóa thuật ngữ, thông báo, lỗi và nội dung trạng thái giao diện."
+---
+
 # Nội dung giao diện, lỗi và trạng thái
 
 ## Nguyên tắc lời văn
@@ -11,7 +27,7 @@ Viết ngắn, nói rõ việc đã xảy ra và bước tiếp theo. Dùng đ�
 | Gửi thành công | “Đã tạo yêu cầu TKT-000123. Bạn có thể theo dõi trao đổi tại đây.” |
 | Pending | “IT đang cần bạn bổ sung thông tin. Trả lời câu hỏi bên dưới để tiếp tục xử lý.” |
 | Resolved | “IT đã đề xuất giải pháp. Hãy kiểm tra kết quả rồi xác nhận đóng hoặc yêu cầu xử lý lại.” |
-| Closed | “Yêu cầu đã được bạn xác nhận hoàn tất. Nếu cần mở lại, liên hệ trưởng nhóm IT.” |
+| Closed | “Yêu cầu đã được bạn xác nhận hoàn tất. Nếu cần mở lại, liên hệ trưởng phòng IT.” |
 | Internal composer | “Ghi chú nội bộ · Chỉ nhóm IT có quyền xem ticket.” |
 | Public composer | “Trao đổi công khai · Người yêu cầu và IT có quyền sẽ xem được.” |
 | Priority đề xuất | “Ưu tiên đề xuất: P3 — Trung bình. IT sẽ xác minh mức ảnh hưởng và khẩn cấp.” |
@@ -48,7 +64,7 @@ Viết ngắn, nói rõ việc đã xảy ra và bước tiếp theo. Dùng đ�
 - Tệp: “Tệp này vượt10MB. Chọn tệp nhỏ hơn hoặc bỏ khỏi lần gửi.” / “Chỉ nhận PNG, JPEG, WebP và PDF.”
 - Assignee: “Chọn người hoạt động thuộc nhóm phụ trách.”
 - Cấp phát: “Tài sản đã được cấp hoặc vừa thay đổi. Tải lại để kiểm tra.”
-- Mở lại: “Người phụ trách trước đây không còn đủ điều kiện. Trưởng nhóm IT cần phân công lại trước khi mở lại.”
+- Mở lại: “Người phụ trách trước đây không còn đủ điều kiện. Trưởng phòng IT cần phân công lại trước khi mở lại.”
 
 Độ dài trường là đề xuất cần test; không dùng lỗi đếm ký tự làm thay thế cho yêu cầu nội dung có nghĩa. Lỗi backend được ánh xạ sang các thông điệp này, không đưa message kỹ thuật trực tiếp ra giao diện.
 
@@ -67,3 +83,26 @@ Viết ngắn, nói rõ việc đã xảy ra và bước tiếp theo. Dùng đ�
 | SLA giải quyết | Tổng thời gian hoạt động; không tính Pending/Resolved/Closed |
 | Snapshot | Chính sách được ghi nhận cho ticket; UI thường gọi “Chính sách trên yêu cầu” |
 | Assignment / Lượt cấp phát | Một lần giao tài sản có đầu/cuối, lịch sử không bị xóa |
+
+## Nội dung điều phối, phê duyệt và KB
+
+| Tình huống | Nội dung đề xuất / yêu cầu |
+|---|---|
+| Ticket preview | “Chưa tạo yêu cầu. Kiểm tra nội dung rồi xác nhận.” CTA “Xác nhận tạo yêu cầu” hoặc “Chỉnh trong form” |
+| Policy chưa cấp | “Quy trình chưa được cấp quyền tự động. Kế hoạch đang ở bản nháp.” |
+| Thiếu dữ liệu | “Cần bổ sung danh sách nhân viên, cấu hình máy hoặc hạn bàn giao trước khi lập kế hoạch.” Chỉ hỏi field thực sự thiếu |
+| Không nghiệm | “Chưa có người đủ điều kiện nhận việc trong khoảng này. Cần quản lý điều chỉnh nguồn lực hoặc kế hoạch.” |
+| Dependency | “Chưa thể bắt đầu: công việc phụ thuộc chưa hoàn thành.” |
+| Đã đề xuất | “Phương án đã được tạo, chưa áp dụng thay đổi.” |
+| Giao việc thành công | “Đã giao công việc cho [người có quyền hiển thị].” Chỉ sau service xác nhận commit |
+| Đang chờ duyệt | “Cần quản lý quyết định phương án này.” Không nói đã giao |
+| Approval stale | “Dữ liệu đã thay đổi từ lúc đề xuất. Đánh giá lại trước khi duyệt.” Giữ lý do đang nhập |
+| Approved, chờ execution | “Đã duyệt phương án. Đang kiểm tra điều kiện thực thi.” |
+| Manual lock | “Phân công đã được quản lý khóa. AI sẽ không tự thay đổi.” |
+| Provider/broker lỗi | “Chưa hoàn tất điều phối. Các thao tác thủ công vẫn dùng được.” Nêu trạng thái retry/failed thực tế |
+| Budget/usage | “Đã dừng trước giới hạn kiểm thử.” / “Chi phí chưa xác định” nếu không có usage, không ghi 0 USD |
+| KB bị thu hồi | “Nguồn không còn khả dụng trong phạm vi của bạn.” Không lộ title/snippet cấm |
+
+Glossary: Ticket = yêu cầu/SLA; Task = công việc thực thi; Plan = tập task/phụ thuộc có phiên bản; Allocation = phân bổ công sức theo kỳ; AssetAssignment = lượt cấp phát tài sản (khác task assignment); Approval = quyết định phương án, không phải execution; AI_COORDINATOR = danh tính dịch vụ giới hạn theo policy.
+
+Error/empty/loading/forbidden/conflict của OPS dùng hợp đồng chung. Source/record ID kỹ thuật chỉ có ở vùng tra cứu cần thiết, không trộn vào form nghiệp vụ thường.

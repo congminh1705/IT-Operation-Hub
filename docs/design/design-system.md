@@ -1,3 +1,19 @@
+---
+id: itoh-docs-design-design-system
+title: "Design system đề xuất — v0.4"
+type: reference
+domain: design
+module: components
+tags: [design, components, reference]
+priority: 1
+status: design-draft
+owner: "Chủ đề tài"
+approval: needs-review
+updated: 2026-10-31
+authority: primary
+purpose: "Quy định nền tảng thị giác, component và mục tiêu accessibility."
+---
+
 # Design system đề xuất — v0.4
 
 Đây là specification, chưa phải thư viện component hay Tailwind/shadcn đã cài đặt. Nhận diện riêng cho công cụ doanh nghiệp, dùng nền sáng và xanh dương theo đề bài.
@@ -71,8 +87,22 @@ Theo [SC 2.5.8](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.
 
 Không ngăn paste vào password. Không dựa riêng tooltip hover cho điều kiện nghiệp vụ. Tôn trọng reduced motion. Không tuyên bố SVG wireframe đã chứng minh screen reader, semantic HTML hoặc conformance của ứng dụng.
 
-## Component bổ sung cho trợ lý AI
+## Component trợ lý AI
 
-Tái dùng token hiện có. Thêm message bubble có nhãn “Trợ lý AI”, source card với tên/version/time, badge phạm vi Công khai/Nội bộ, draft card có CTA chuyển về form, loading có Dừng và error panel có lối dùng chức năng thường. Không dùng badge “đã xử lý” cho một câu trả lời AI; không hiển thị phần trăm độ tin cậy nếu chưa có cơ sở đo.
+Tái dùng token hiện có. Thêm message bubble có nhãn “Trợ lý AI”, source card với tên/version/time, badge phạm vi Công khai/Nội bộ, draft card có CTA xác nhận tạo ticket hoặc chỉnh trong form; reply draft chỉ chuyển composer, loading có Dừng và error panel có lối dùng chức năng thường. Không dùng badge “đã xử lý” cho một câu trả lời AI; không hiển thị phần trăm độ tin cậy nếu chưa có cơ sở đo.
 
-Panel AI không tự mở hoặc che thao tác chính. Mở/đóng giữ focus và dữ liệu form; stream chỉ thông báo thay đổi có kiểm soát, không đọc lại toàn bộ từng token cho screen reader. Nháp chỉ được chuyển sau khi sinh xong và nguồn/quyền đã kiểm tra; khi lỗi hoặc dữ liệu stale thì không có CTA gửi ngầm.
+Panel AI không tự mở hoặc che thao tác chính. Mở/đóng giữ focus và dữ liệu form; stream chỉ thông báo thay đổi có kiểm soát, không đọc lại toàn bộ từng token cho screen reader. Nháp chỉ được xác nhận/chuyển sau khi sinh xong và nguồn/quyền đã kiểm tra; khi lỗi hoặc dữ liệu stale thì không có CTA gửi ngầm.
+
+## Component công việc và điều phối
+
+| Component | Trạng thái và quy tắc |
+|---|---|
+| Task card/board/table | To Do/Ready/In Progress/Blocked/Done/Cancelled có nhãn chữ; assignee/remaining/deadline/dependency/lock; bàn phím thao tác thay kéo thả |
+| DAG/list dependency | Cùng dữ liệu, list thay thế; predecessor chưa Done có lý do blocked; không dựa vào màu/đường nối duy nhất |
+| Capacity/calendar | Capacity/load/free và kỳ/đơn vị/timezone; missing/unallocated khác zero; không xếp hạng hiệu suất |
+| Policy/grant card | Chưa cấp/Bật/Tắt/Hết hiệu lực; workflow/nhóm/actions/giới hạn/người cấp; không dùng badge Bật khi thiếu cấu hình |
+| Approval diff | Hiện tại/Dự kiến/Tác động/Lý do; Pending/Approved/Rejected/Expired/Superseded tách execution pending/succeeded/failed/conflict |
+| Run/action timeline | Đã đề xuất/Chờ duyệt/Đã thực thi/Thất bại; source/time, error/retry quyền; không hiển thị secret/raw prompt |
+| KB/citation | Draft/Published/Retired/version/audience, nguồn mở được; stale/revoked không render nội dung mất quyền |
+
+Tái dùng token/spacing/focus hiện có. Approval modal theo quy tắc dialog; chi tiết dài dùng page. Không thêm hiệu ứng giả tiến độ hoặc phần trăm confidence không đo. Đây chưa phải component library/UI chạy.
