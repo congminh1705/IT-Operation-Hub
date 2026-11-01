@@ -1,169 +1,175 @@
 ---
 id: itoh-docs-technical-api-design
-title: "Thiết kế API mục tiêu"
+title: "Target API design"
 type: reference
 domain: api
 module: contracts
 tags: [api, contracts, reference]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Định nghĩa hợp đồng HTTP/schema/event và truy vết, với OpenAPI tĩnh, chưa có API thực thi."
+purpose: "Define HTTP/schema/event contracts and traceability using static OpenAPI, without executable APIs."
 ---
 
-# Thiết kế API mục tiêu
+# Target API design
 
-**Tài liệu thiết kế 31/10/2026; đã có [OpenAPI tĩnh](../api/openapi.json), chưa có endpoint runtime.** REST JSON dưới /api/v1; [hướng dẫn](../api/README.md) và [operation catalog](../api/operations.md) đặc tả DTO/HTTP design draft. FastAPI/Pydantic tương lai phải export/diff với hợp đồng đã review. Không tạo router/schema code/config ở đợt này.
+**Design dated 31 October 2026; [static OpenAPI](../api/openapi.json) exists, runtime endpoints do not.** REST JSON under /api/v1; [guide](../api/README.md)/[operations](../api/operations.md) define draft DTO/HTTP contracts. Future FastAPI/Pydantic exports must be compared with reviewed contracts. No router/schema code/config is created now.
 
-## Hợp đồng chung
+## Shared contract
 
-Human request dùng server session cookie/CSRF; role/scope từ backend, không từ userId/role client. Worker dùng service identity gắn run/event/policy/grantor, không có public endpoint cho phép giả AI_COORDINATOR. GET không đổi nghiệp vụ. List/filter/sort/paging áp scope trước count; mặc định 20, tối đa 100, tie-breaker ID; query allowlist.
+Human requests use server-session cookies/CSRF; backend supplies role/scope, not client userId/role. Workers use service identity tied to run/event/policy/grantor; no public AI_COORDINATOR impersonation endpoint. GET does not mutate business data. Scope precedes list/count/lookup/report; default 20/maximum 100, ID tie-breaker, allowlisted queries/sorts.
 
-Mutation nhận expectedVersion và idempotency key khi có thể retry (header dự kiến Idempotency-Key); digest gắn actor/action/target/payload. Cùng key/nội dung trả cùng result, khác nội dung trả 409. Không auto retry stale mutation. Error envelope: code/message/field_errors/request_id; 401/403/404 scoped/409 conflict/422 validation/429 limit/503 unavailable. Datetime ISO8601 UTC aware; không đưa secret vào URL/body audit.
+Retryable mutations use expectedVersion/idempotency (proposed Idempotency-Key header), with actor/action/target/payload digest. Same key/content returns same result; different content 409. No automatic stale-mutation retry. Error code/message/field_errors/request_id; 401/403/scoped 404/409/422/429/503. ISO8601 aware UTC; no secrets in URLs/audit bodies.
 
-## Nhóm endpoint dự kiến
+## Proposed endpoint groups
 
-Method/path dưới đây là hợp đồng review, không lệnh thực thi.
+Methods/paths are review contracts, not execution commands.
 
-| Nhóm | Method/path tương đối | Quyền và nội dung |
-|---|---|---|
-| Auth | GET /auth/csrf; POST /auth/login, /auth/logout; GET /auth/me; POST /auth/password | Origin/pre-session CSRF cho login; session/CSRF và revoke/rotate |
-| Quản trị | /users, /departments, /teams, /teams/{id}/members, /categories | GET lookup tối thiểu đúng scope; POST/PATCH Admin, version/audit, xử lý assignment ảnh hưởng |
-| Ticket | GET/POST /tickets; GET /tickets/{id}; POST /tickets/{id}/transitions, /assignment, /priority | Quyền lõi, không DELETE; priority từ ma trận/override có lý do; snapshot SLA |
-| Nội dung | GET/POST /tickets/{id}/comments; POST /tickets/{id}/attachments; GET /attachments/{id}/download | Visibility/tệp/quyền cha; note không first response; public requester reply resume Pending |
-| Kế hoạch | GET /tickets/{id}/plans; GET /plans/{id}/versions; POST /tickets/{id}/plan-proposals; POST /plans/{id}/activate | T trong scope đọc, M/A sửa/activate; service identity chỉ trong policy; Draft không effective |
-| Task | GET /tasks; GET /tasks/{id}; POST /tasks/{id}/transitions, /progress, /assignment | T nhóm đọc, assignee tiến độ/kết quả; M/A điều phối; expectedVersion, dependency/capacity/lock |
-| Nhân lực | GET /workforce; GET/PATCH /workforce/{id}; POST /workforce/{id}/absences | M/A cấu hình/xác nhận; T chỉ dữ liệu bản thân và lookup tối thiểu; sự kiện thay đổi lịch |
-| Workflow | GET /workflows; POST /workflows; POST /workflows/{id}/versions, /publish | M/A, schema steps/DAG/effort/source; version Published không sửa tại chỗ |
-| Policy | GET/POST /automation/policies; PATCH /automation/policies/{id}; POST /automation/policies/{id}/disable | M/A có thẩm quyền; default deny, grantor/scope/limits/version |
-| Runs/actions | GET /automation/runs; GET /automation/runs/{id}; POST /automation/runs/{id}/retry | M/A scoped/redacted; retry intent đã thành công không ghi trùng; thất bại nghiệp vụ cần re-evaluate |
-| Phê duyệt | GET /approvals; GET /approvals/{id}; POST /approvals/{id}/decisions | M/A, before/after/impact/snapshot; quyết định tách executionStatus; stale 409 |
-| Trợ lý | POST /assistant/conversations; GET/DELETE /assistant/conversations/{id}; POST /assistant/conversations/{id}/messages | Chỉ owner, nguồn/visibility hiện tại; DELETE chỉ dữ liệu chat theo retention |
-| Xác nhận ticket | POST /assistant/ticket-drafts; POST /assistant/ticket-drafts/{id}/confirm | User xác nhận preview digest/version/TTL, idempotency; gọi cùng Ticket service |
-| KB | GET /knowledge, /knowledge/{id}/versions/{version}; POST /knowledge, /knowledge/{id}/versions; POST /knowledge/{id}/publish, /access | Chỉ Published còn quyền để đọc; M/A biên soạn/xuất bản/ACL theo policy, audit; quyền sửa KB cụ thể D-40 |
-| Tài sản | GET/POST /assets; GET/PATCH /assets/{id}; POST /assets/{id}/assignments, /returns, /transitions | R/T scoped read; M/A write, atomic one assignment; AI không tự cấp phát |
-| Vận hành | GET /notifications; POST /notifications/{id}/read; GET /reports, /audit | Recipient hoặc M/A theo metric/audit scope; không expose payload nội bộ cho R |
-| Cấu hình AI | GET/PATCH /admin/assistant | Admin cấu hình khả dụng, không trả secret hoặc đọc chat mọi người; Manager policy là nhóm khác |
-| Health | GET /health/live; GET /health/ready | Chỉ trạng thái tối thiểu; không secret/hostname nội bộ; provider lỗi không chặn core |
+| Group | Relative method/path | Permissions/content |
+| --- | --- | --- |
+| Auth | GET /auth/csrf; POST /auth/login, /auth/logout; GET /auth/me; POST /auth/password | Login Origin/pre-session CSRF; session/CSRF/revoke/rotate |
+| Administration | /users, /departments, /teams, /teams/{id}/members, /categories | Scoped minimal lookup; Admin POST/PATCH/version/audit/assignment impacts |
+| Tickets | GET/POST /tickets; GET /tickets/{id}; POST /tickets/{id}/transitions, /assignment, /priority | Core rights, no DELETE; matrix priority/reasoned override; SLA snapshot |
+| Content | GET/POST /tickets/{id}/comments; POST /tickets/{id}/attachments; GET /attachments/{id}/download | Parent visibility/files/authorization; notes not first response; requester public reply resumes Pending |
+| Plans | GET /tickets/{id}/plans; GET /plans/{id}/versions; POST /tickets/{id}/plan-proposals; POST /plans/{id}/activate | Scoped T reads, M/A edit/activate, policy service identity; Draft not effective |
+| Tasks | GET /tasks; GET /tasks/{id}; POST /tasks/{id}/transitions, /progress, /assignment | Team T reads/assignee results; M/A coordinate; version/dependency/capacity/lock |
+| Workforce | GET /workforce; GET/PATCH /workforce/{id}; POST /workforce/{id}/absences | M/A configure/verify; T self/minimal lookup; schedule events |
+| Workflows | GET/POST /workflows; POST /workflows/{id}/versions, /publish | M/A, steps/DAG/effort/sources; immutable Published |
+| Policies | GET/POST /automation/policies; PATCH /automation/policies/{id}; POST /automation/policies/{id}/disable | Authorized M/A, default deny/grantor/scope/limits/version |
+| Runs/actions | GET /automation/runs; GET /automation/runs/{id}; POST /automation/runs/{id}/retry | Scoped/redacted M/A; no repeat successful intents; business failures need re-evaluation |
+| Approvals | GET /approvals; GET /approvals/{id}; POST /approvals/{id}/decisions | M/A, before/after/impact/snapshot, separate executionStatus, stale 409 |
+| Assistant | POST /assistant/conversations; GET/DELETE /assistant/conversations/{id}; POST /assistant/conversations/{id}/messages | Owner/current visibility/sources only; DELETE chat under retention |
+| Ticket confirmation | POST /assistant/ticket-drafts; POST /assistant/ticket-drafts/{id}/confirm | Exact user-confirmed digest/version/TTL/idempotency, same Ticket service |
+| KB | GET /knowledge, /knowledge/{id}/versions/{version}; POST /knowledge, /knowledge/{id}/versions; POST /knowledge/{id}/publish, /access | Read accessible Published only; author/publish/ACL under separate policy/audit, D-40 |
+| Assets | GET/POST /assets; GET/PATCH /assets/{id}; POST /assets/{id}/assignments, /returns, /transitions | R/T scoped reads, M/A writes, atomic single assignment; no autonomous AI issue |
+| Operations | GET /notifications; POST /notifications/{id}/read; GET /reports, /audit | Recipient/M/A metric/audit scope, no internal R payloads |
+| AI settings | GET/PATCH /admin/assistant | Admin availability, no secrets/others' chats; Manager policies separate |
+| Health | GET /health/live; GET /health/ready | Minimal status, no secrets/internal hosts; provider failure does not block core |
 
-### Định danh và cách đọc hợp đồng
+### Identification and interpretation
 
-Các dòng trên là nhóm route; những path sau dấu phẩy dùng cùng prefix tài nguyên, không phải endpoint ở root. Không suy ra CRUD hoặc DELETE khi chưa được nêu. Các nhóm hợp đồng có ID ổn định dưới đây để truy vết; path/schema chi tiết nằm trong OpenAPI tĩnh và cần review trước triển khai.
+Comma-separated suffixes share their resource prefix, not root routes. Do not infer unspecified CRUD/DELETE. Stable group IDs support traceability; detailed paths/schemas are in static OpenAPI and need review.
 
-| ID | Nhóm hợp đồng | UC nguồn | BR / điều kiện chính |
-|---|---|---|---|
+| ID | Contract group | Source UC | BR / main conditions |
+| --- | --- | --- | --- |
 | API01 | Auth | UC01–04 | BR-01, NFR02/15 |
-| API02 | User/department/team/category | UC05–08 | BR-01/02/05; chỉ Admin mutation |
-| API03 | Ticket và transitions/assignment/priority | UC10–14, UC18–23 | BR-02–05/08/09 |
-| API04 | Comments và attachments | UC15–17 | BR-06–08; scope nội dung cha |
-| API05 | Plans/proposals/activate | UC-OPS04 | BR-14/15/17; một effective version |
-| API06 | Tasks/progress/assignment/lock | UC-OPS05–07 | BR-15–18; manual lock/version/capacity |
-| API07 | Workforce/absence | UC-OPS01 | BR-16; không nguồn rảnh mặc định |
-| API08 | Workflow versions/publish | UC-OPS02 | BR-14/17/21; published immutable |
-| API09 | Automation policies/grants | UC-OPS02/07 | BR-17/18; grantor và default deny |
-| API10 | Runs/actions/retry | UC-OPS09 | BR-19/22; quyền retry không bỏ dedup |
-| API11 | Approval/decision | UC-OPS08 | BR-18; decision khác execution |
-| API12 | Assistant conversations/messages | UC-AI01/02/04–07 | BR-20/21; owner và public/internal |
-| API13 | Ticket draft/confirm | UC-AI03, UC-OPS03 | BR-02/20; preview digest/TTL/idempotency |
-| API14 | Knowledge/version/publish/access | UC-OPS10, UC-AI01 | BR-21; quyền biên soạn còn D-40 |
+| API02 | Users/departments/teams/categories | UC05–08 | BR-01/02/05; Admin mutations |
+| API03 | Tickets/transitions/assignments/priority | UC10–14, UC18–23 | BR-02–05/08/09 |
+| API04 | Comments/attachments | UC15–17 | BR-06–08; parent scope |
+| API05 | Plans/proposals/activate | UC-OPS04 | BR-14/15/17; one effective version |
+| API06 | Tasks/progress/assignments/locks | UC-OPS05–07 | BR-15–18; manual lock/version/capacity |
+| API07 | Workforce/absence | UC-OPS01 | BR-16; no default availability |
+| API08 | Workflow versions/publish | UC-OPS02 | BR-14/17/21; immutable Published |
+| API09 | Automation policies/grants | UC-OPS02/07 | BR-17/18; grantor/default deny |
+| API10 | Runs/actions/retry | UC-OPS09 | BR-19/22; retries retain dedup |
+| API11 | Approval/decision | UC-OPS08 | BR-18; decision ≠ execution |
+| API12 | Assistant conversations/messages | UC-AI01/02/04–07 | BR-20/21; owner/public/internal |
+| API13 | Ticket draft/confirm | UC-AI03, UC-OPS03 | BR-02/20; digest/TTL/idempotency |
+| API14 | Knowledge/version/publish/access | UC-OPS10, UC-AI01 | BR-21; author rights D-40 |
 | API15 | Assets/assignments/returns/transitions | UC27–31 | BR-11; atomic assignment |
-| API16 | Notifications/reports/audit | UC26/32/33, UC-OPS09 | BR-12/22; recipient và MET scope |
-| API17 | Assistant admin settings | UC-AI08 | D-24/33; không trả secret hoặc chat của người khác |
-| API18 | Health | NFR04/21 | Tín hiệu tối thiểu, không dữ liệu hạ tầng nhạy cảm |
-| API19 | SLA configuration / clocks | UC09/24/25 | BR-08–10; GET/PATCH /sla/policy (Admin), clock qua ticket projection; quét SLA là worker nội bộ |
+| API16 | Notifications/reports/audit | UC26/32/33, UC-OPS09 | BR-12/22; recipient/MET scope |
+| API17 | Assistant admin settings | UC-AI08 | D-24/33; no secrets/others' chats |
+| API18 | Health | NFR04/21 | Minimal signal, no sensitive infrastructure data |
+| API19 | SLA settings/clocks | UC09/24/25 | BR-08–10; Admin GET/PATCH /sla/policy; ticket clock projection; internal scans |
 
-API06 có `POST /tasks/{id}/assignment-lock` để đặt/bỏ khóa có lý do bởi M/A, không dùng thao tác assignment ngầm bỏ khóa. API09 chỉ cấp grant trong thẩm quyền hiện tại của người cấp; không có public route giả service identity. API19 bổ sung route cấu hình SLA vốn thuộc UC09; thay đổi chỉ áp ticket mới, không sửa snapshot cũ.
+API06 includes M/A reasoned `POST /tasks/{id}/assignment-lock`; assignments never silently unlock. API09 grants cannot exceed grantor authority; no public service impersonation. API19 implements existing UC09; new defaults affect future tickets only.
 
-### HTTP, đồng thời và kết quả bất đồng bộ
+### HTTP, concurrency, asynchronous outcomes
 
-| Trường hợp | Kết quả dự kiến |
-|---|---|
-| Đọc danh sách/chi tiết | 200; collection gồm items, page, page_size, total sau scope; các query/sort được allowlist |
-| Tạo tài nguyên đã commit | 201; ID/version và tham chiếu tài nguyên; ví dụ ticket đã lưu không đồng nghĩa task đã giao |
-| Chấp nhận yêu cầu xử lý nền | 202; run/proposal reference để polling; không trả success cho domain effect chưa thực hiện |
-| Mutation đồng bộ | 200 với version hiện tại; logout/đổi password/xóa chat dùng 204 trong OpenAPI draft |
-| Xung đột | 409; stale version/approval, duplicate key với digest khác, capacity/assignment conflict; không retry mù |
-| Lỗi khác | 401 session, 403 chức năng, 404 scope/không tồn tại, 422 input, 429 hạn mức, 503 phụ thuộc không sẵn sàng; không stack trace |
+| Case | Expected result |
+| --- | --- |
+| Lists/details | 200, scoped items/page/page_size/total, allowlisted queries/sorts |
+| Committed resource | 201, ID/version/reference; saved ticket does not imply task assignment |
+| Background acceptance | 202, run/proposal reference for polling, not unexecuted-effect success |
+| Synchronous mutation | 200/current version; logout/password/chat deletion 204 in draft |
+| Conflict | 409 stale version/approval, same key/different digest, capacity/assignment conflict; no blind retry |
+| Other errors | 401 session, 403 function, 404 scope/missing, 422 input, 429 limits, 503 dependency; no stack |
 
-`expectedVersion` thuộc aggregate bị sửa; approval còn mang snapshot versions của plan/task/workforce/policy. Update điều kiện thất bại không ghi domain effect. Idempotency record và effect phải có tính nguyên tử; request cùng key đang chạy phải trả trạng thái rõ và không gọi provider lần nữa tùy tiện. TTL của command/key và thời gian chờ cần refinement D-40.
+`expectedVersion` belongs to the edited aggregate. Approval also carries plan/task/workforce/policy snapshots. Failed conditional updates write no effects. Idempotency/effects are atomic; same in-flight key returns clear status, not arbitrary repeated provider calls. Command/key TTL/wait durations remain D-40.
 
-## Schema khái niệm cần review
+## Conceptual schemas for review
 
-| Tên | Trường chính / validation |
-|---|---|
-| TicketCreate / ConfirmedTicket | title/description/type/category/impact/urgency/asset; workflow goal/deadline/onboarding data nếu áp dụng; requester từ phiên |
-| PlanProposal | outcome plan/needs_information/exception, source ID/version, tasks với stable key/title/skills/estimate/deadline/dependencies, lý do; không cycle/unknown reference |
-| CandidateSet / AssignmentCommand | server-generated eligible IDs, skills/calendar/capacity evidence/time/versions; target/version/policy/run/idempotency; không nhận candidate cấm do model tự thêm |
-| ApprovalView / Decision | before/after/impact/reason/snapshot, expectedVersion/approve-or-reject/reason; execution result riêng |
-| ProgressUpdate | task/version, state/remaining/result; Done cần kết quả và remaining=0, predecessor hợp lệ |
-| RunView | event/policy/grantor/actor/sources/versions, actions/results/errors, latency/usage/cost nếu có; redaction theo quyền |
-| KnowledgeView | article/version/state/ACL/citation; Published/ACL check ngay tại đọc, không cache vượt quyền |
+| Name | Main fields / validation |
+| --- | --- |
+| TicketCreate / ConfirmedTicket | title/description/type/category/impact/urgency/asset; applicable workflow goal/deadline/onboarding; session requester |
+| PlanProposal | plan/needs_information/exception, source IDs/versions, stable task keys/titles/skills/estimates/deadlines/dependencies/reasons; no cycles/unknown refs |
+| CandidateSet / AssignmentCommand | Server eligible IDs/skills/calendar/capacity evidence/time/versions; target/version/policy/run/idempotency; model cannot add prohibited candidates |
+| ApprovalView / Decision | before/after/impact/reason/snapshot; expectedVersion/approve-or-reject/reason; separate execution |
+| ProgressUpdate | task/version/state/remaining/result; Done requires result/remaining 0/valid predecessors |
+| RunView | event/policy/grantor/actor/sources/versions/actions/results/errors; sourced latency/usage/cost; permission redaction |
+| KnowledgeView | article/version/state/ACL/citation; immediate read checks, no overprivileged caches |
 
-Không trả một response chứa nội bộ rồi yêu cầu frontend ẩn field. Requester ticket response không có plan nhân sự/action/approval/skills/load. Structured tool args là input chưa tin cậy, luôn validate tại service.
+Never return internal data for frontend hiding. Requester projections exclude workforce plans/actions/approvals/skills/load. Structured tool arguments remain untrusted service inputs.
 
-## Ví dụ phản hồi khái niệm
+## Conceptual response examples
 
-Tạo ticket thành công trả id/code/status=New/version cùng request_id. Nếu request bị gửi lại với cùng key thì cùng id, không thêm SLA/event. Duyệt một đề nghị có taskVersion cũ trả code STALE_APPROVAL/status 409, giữ proposal để đối chiếu; không thực thi phương án cũ.
+Ticket creation returns id/code/status=New/version/request_id. Same-key replay returns same id without another SLA/event. Stale taskVersion approval returns STALE_APPROVAL/409, retains proposal for comparison, applies no old plan.
 
-## Hợp đồng sự kiện nội bộ
+## Internal event contract
 
-Sự kiện là thông tin domain đã commit, không phải HTTP request hoặc quyền thực thi. Catalog sau định nghĩa tên logic dùng cho thiết kế; wire schema/version và business key vật lý cần review trước code. Consumer chỉ nhận ID/payload tối thiểu, đọc lại dữ liệu và quyền hiện hành trước effect.
+Events describe committed domain facts, not HTTP requests/permissions. Logical names below need wire-version/schema/physical-key review before code. Consumers receive minimal IDs/payloads and re-read current data/rights.
 
-| ID | Event type | Producer sở hữu transaction | Consumer / xử lý dự kiến | Nguồn |
-|---|---|---|---|---|
-| EVT01 | ticket.created | Ticket service | Automation kiểm đầu vào; notification theo scope | UC10, UC-AI03, BR-02/19 |
-| EVT02 | information.updated | Ticket/context service | Đánh giá lại phần thông tin còn thiếu; không lặp câu hỏi cũ | UC-OPS03, BR-20 |
-| EVT03 | plan.activated | Work management | Theo dõi kế hoạch và notification; không tạo lại cùng task | UC-OPS04, BR-14 |
-| EVT04 | task.assigned | Assignment service | Notification và load/risk evaluation; allocation đã nằm trong transaction producer | UC-OPS05, BR-16/19 |
-| EVT05 | task.progressed | Task service | Cập nhật quan sát/risk từ nguồn, không ghi đè kết quả người thực hiện | UC-OPS06, BR-15 |
-| EVT06 | task.blocked | Task service | Rà dependency, nguyên nhân và ngoại lệ theo policy | UC-OPS06/07, BR-15/18 |
-| EVT07 | task.completed | Task service | Kiểm successor đủ Ready; báo cáo; không tự Resolved/Closed ticket | UC-OPS06, BR-15 |
-| EVT08 | availability.changed | Workforce service | Tìm task chịu ảnh hưởng, replan/giao lại hoặc approval | UC-OPS01/07, BR-16 |
-| EVT09 | skills.changed | Workforce service | Kiểm lại eligibility; không mặc định kỹ năng chưa xác nhận | UC-OPS01/07, BR-16 |
-| EVT10 | membership.changed | Team service | Thu hồi scope ngay; xử lý assignment và re-evaluate | UC07, UC-OPS07, BR-01/05 |
-| EVT11 | sla.risk | SLA service | Cảnh báo theo BR-10, dedup ngưỡng/người nhận | UC25, BR-10 |
-| EVT12 | deadline.risk | Work/risk service | Nhắc hoặc trình ngoại lệ; không tự nới hạn/SLA | UC-OPS07, BR-17 |
-| EVT13 | load.changed | Allocation service | Tính lại feasibility của công việc ảnh hưởng | UC-OPS05/07, BR-16 |
-| EVT14 | policy.changed | Policy service | Revalidate/chặn intent chưa ghi; disable có hiệu lực ở service ngay khi commit | UC-OPS02/07, BR-17 |
-| EVT15 | approval.decided | Approval service | Execution kiểm lại quyền/grant/snapshot/capacity | UC-OPS08, BR-18 |
-| EVT16 | knowledge.published | Knowledge service | Index version đã publish; index không là quyền đọc | UC-OPS10, BR-21 |
-| EVT17 | access.revoked | Knowledge ACL service | Vô hiệu cache/retrieval; ACL DB đã có hiệu lực không chờ consumer | UC-OPS10, BR-21 |
+| ID | Event type | Transaction-owning producer | Expected consumer handling | Source |
+| --- | --- | --- | --- | --- |
+| EVT01 | ticket.created | Ticket service | Input evaluation; scoped notifications | UC10, UC-AI03, BR-02/19 |
+| EVT02 | information.updated | Ticket/context service | Re-evaluate missing fields, no repeated questions | UC-OPS03, BR-20 |
+| EVT03 | plan.activated | Work management | Monitor/notify; no task recreation | UC-OPS04, BR-14 |
+| EVT04 | task.assigned | Assignment service | Notify/load-risk evaluation; producer already allocated atomically | UC-OPS05, BR-16/19 |
+| EVT05 | task.progressed | Task service | Source-based monitoring/risk, no performer-result overwrite | UC-OPS06, BR-15 |
+| EVT06 | task.blocked | Task service | Dependencies/reason/policy exceptions | UC-OPS06/07, BR-15/18 |
+| EVT07 | task.completed | Task service | Eligible successor Ready; report; no ticket auto-close | UC-OPS06, BR-15 |
+| EVT08 | availability.changed | Workforce service | Affected-task replanning/reassignment/approval | UC-OPS01/07, BR-16 |
+| EVT09 | skills.changed | Workforce service | Recheck eligibility; unverified ≠ qualified | UC-OPS01/07, BR-16 |
+| EVT10 | membership.changed | Team service | Immediate scope revocation, assignment/re-evaluation | UC07, UC-OPS07, BR-01/05 |
+| EVT11 | sla.risk | SLA service | BR-10 recipient/threshold-dedup alerts | UC25, BR-10 |
+| EVT12 | deadline.risk | Work/risk service | Remind/escalate, no deadline/SLA extension | UC-OPS07, BR-17 |
+| EVT13 | load.changed | Allocation service | Recalculate affected-work feasibility | UC-OPS05/07, BR-16 |
+| EVT14 | policy.changed | Policy service | Block/revalidate uncommitted intents; disable effective at service commit | UC-OPS02/07, BR-17 |
+| EVT15 | approval.decided | Approval service | Execution rechecks rights/grants/snapshots/capacity | UC-OPS08, BR-18 |
+| EVT16 | knowledge.published | Knowledge service | Index published version, not read authorization | UC-OPS10, BR-21 |
+| EVT17 | access.revoked | Knowledge ACL service | Invalidate cache/retrieval; DB ACL effective without consumer delay | UC-OPS10, BR-21 |
 
-Envelope logic gồm `event_id`, `event_type`, `schema_version`, `aggregate_type/id/version`, `occurred_at` UTC, `actor_type/id`, `correlation_id`, `causation_id` nếu có, và `payload` tối thiểu. Không chứa credential, session token, toàn bộ prompt hay nội dung tệp. Consumer không lấy actor trong payload làm bằng chứng authority; service kiểm principal/grant hiện tại. Schema version không tương thích phải được ghi lỗi/quarantine, không tự bỏ qua rồi ack thành công.
+Envelope: `event_id`, `event_type`, `schema_version`, `aggregate_type/id/version`, UTC `occurred_at`, `actor_type/id`, `correlation_id`, optional `causation_id`, minimal `payload`. No credentials/session tokens/full prompts/files. Payload actor is not authority evidence; services verify current principals/grants. Incompatible versions produce error/quarantine, not ignored successful ack.
 
-Delivery là at-least-once. Claim/lease, retry/nextAttempt và dead-letter thuộc OutboxDelivery, không sửa sự kiện domain đã xảy ra. Cặp event + handler/purpose chống trùng run; business intent + target/version chống trùng effect. Event đến chậm/lệch thứ tự phải re-read aggregate/version, bỏ qua intent không còn áp dụng với lý do audit hoặc lập đánh giá mới; không đảo ngược snapshot cũ. Lỗi transient có retry hữu hạn; lỗi schema/quyền/business conflict không retry mù. Số lần và backoff cụ thể còn D-40.
+At-least-once delivery. OutboxDelivery owns claims/leases/nextAttempt/retry/dead-letter, never rewriting occurred facts. Event+handler/purpose dedups runs; intent+target/version dedups effects. Late/out-of-order events re-read aggregates/versions and audit skipped obsolete intents or re-evaluate, never reverse old snapshots. Bounded transient retries; no blind schema/access/conflict retries. Counts/backoff D-40.
 
-## Ví dụ hợp đồng — dữ liệu tổng hợp
+## Contract examples — synthetic data
 
-Ví dụ biểu diễn input/output dự kiến, không phải response thu từ ứng dụng. Các ID có nhãn demo; tên field cuối cùng cần thống nhất trong OpenAPI.
+Expected inputs/outputs, not captured app responses. DEMO IDs; final field naming must match OpenAPI.
 
 ```json
 {
   "expectedVersion": 3,
   "decision": "approve",
-  "reason": "DEMO: cho phép phương án thay người trong phạm vi được duyệt",
+  "reason": "DEMO: authorize the replacement within the approved scope",
   "snapshot": {"taskVersion": 7, "policyVersion": 2, "workforceVersion": 9}
 }
 ```
 
-Command ở API11 chỉ ghi quyết định sau kiểm tra quyền/version. Ví dụ phần response nghiệp vụ: `decisionStatus: Approved`, `executionStatus: Pending`, `approvalId: demo-approval-01`, `version: 4`. Chỉ sau transaction execution thành công mới là Succeeded; không trả assignment thành công ngay trong phản hồi quyết định nếu mới đưa vào queue.
+API11 records the decision after rights/version checks. Conceptual response: `decisionStatus: Approved`, `executionStatus: Pending`, `approvalId: demo-approval-01`, `version: 4`. Only a successful execution transaction means Succeeded; enqueuing is not assignment success.
 
 ```json
 {
   "code": "STALE_APPROVAL",
-  "message": "Phương án đã thay đổi. Hãy xem lại đề nghị mới nhất.",
+  "message": "The proposal has changed. Review the latest proposal.",
   "field_errors": {},
   "request_id": "demo-request-01"
 }
 ```
 
-Response lỗi ví dụ dùng HTTP 409, không tiết lộ snapshot workforce cho người ngoài scope. Cấu trúc field_errors, error codes và phân biệt 200/201/202/204 phải được review đồng nhất với OpenAPI tĩnh trước code; chưa có client hoặc API hoạt động.
+HTTP409; no workforce snapshots outside scope. Review field_errors/codes/200/201/202/204 consistently with static OpenAPI before code; no running client/API.
 
-## Điều kiện hoàn thiện hợp đồng
+## Contract completion conditions
 
-Đã có OpenAPI JSON design draft bao phủ API01–19, gồm timeline/lịch sử cấp phát/lịch sử message và lookup tối thiểu. Review DTO/naming/vocabulary/projection → khi được yêu cầu code, triển khai Pydantic/FastAPI và diff runtime export → sinh TypeScript → kiểm contract/negative scope/concurrency trong CI. Chưa có runtime hoặc client đã sinh. PATCH /auth/profile và GET /lookups làm rõ UC03/form lookup, không thêm quyền quản trị.
+Static design-draft OpenAPI covers API01–19 including timelines/asset histories/messages/minimal lookups. Review DTOs/names/enums/projections → separately authorized Pydantic/FastAPI implementation/runtime export comparison → TypeScript generation → contract/negative-scope/concurrency CI. No runtime/generated client. PATCH /auth/profile and GET /lookups clarify UC03/forms without admin permissions.
 
-[Quyền](../requirements/permissions-matrix.md) · [Mô hình/ERD](../requirements/conceptual-data-model.md) · [Kiến trúc](architecture.md) · [Nghiệp vụ](../requirements/business-rules.md).
+[Permissions](../requirements/permissions-matrix.md) · [Data/ERD](../requirements/conceptual-data-model.md) · [Architecture](architecture.md) · [Business rules](../requirements/business-rules.md).
+
+## D-42 — Action cards in shared workspace
+
+API12 adds AssistantResult.action_cards: allowlisted form_key/prefill declarations, no endpoints/methods/actors/secrets/executable code. Trusted frontend registry, not dynamic HTML. Confirmed forms call existing core APIs with original session/CSRF/role/scope/version/idempotency/validation. API13 draft/confirm stays ticket-specific; result_ticket_id is not generalized.
+
+No generic command executor/new routes for UI unification. API12 prepares, not executes. Result cards read domain responses/current records; running/timeouts follow original APIs. Authorized automation APIs supply runs/activity; R reads public ticket projections rather than client-filtered run payloads. New OpenAPI card schema is not an operating endpoint.

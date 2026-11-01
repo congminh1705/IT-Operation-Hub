@@ -7,44 +7,44 @@ module: contracts
 tags: [api, contracts, design]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Định nghĩa hợp đồng OpenAPI, bảo mật, ví dụ DEMO và điều kiện kiểm chứng."
+purpose: "Define the OpenAPI contract, security, DEMO examples, and verification conditions."
 ---
 
 # OpenAPI Document
 
-**Hợp đồng thiết kế tĩnh; chưa có API server, client đã sinh hoặc kết quả API test.** Dùng [OpenAPI 3.1.1 JSON](openapi.json), cùng ý định contract-first của repo mẫu, giữ stack FastAPI/Pydantic và schema JSON hiện có. Đây không phải OpenAPI export từ runtime.
+**Static design contract; no API server, generated client, or API test results exist.** The [OpenAPI 3.1.1 JSON](openapi.json) follows the reference repository's contract-first approach while retaining FastAPI/Pydantic and existing JSON schemas. It is not a runtime export.
 
-## Phạm vi và trạng thái
+## Scope and status
 
-| Nội dung | Artifact / kết quả |
-|---|---|
-| Hợp đồng máy đọc | [openapi.json](openapi.json): 74 paths, 96 operations, 95 schemas |
-| Truy vết | [Operation catalog](operations.md): API01–19 → operationId/method/path/role/scope; UC/BR tại catalog nguồn |
-| Quy tắc, TX và event | [API design](../technical/api-design.md): EVT01–17 nội bộ, không biến thành HTTP routes |
-| Nghiệp vụ/quyền | [BR](../requirements/business-rules.md), [permissions](../requirements/permissions-matrix.md) |
-| Thẩm quyền | Chủ đề tài review; detailed contract design-draft, không tự ghi được phê duyệt |
+| Topic | Artifact / outcome |
+| --- | --- |
+| Machine-readable contract | [openapi.json](openapi.json): 74 paths, 96 operations, 96 schemas |
+| Traceability | [Operation catalog](operations.md): API01–19 → operationId/method/path/role/scope; UC/BR in the source catalog |
+| Rules, TX, events | [API design](../technical/api-design.md): internal EVT01–17 are not HTTP routes |
+| Business rules/permissions | [BR](../requirements/business-rules.md), [permissions](../requirements/permissions-matrix.md) |
+| Authority | Project-owner review; detailed contract remains design-draft, not self-approved |
 
-## Authentication, concurrency và lỗi
+## Authentication, concurrency, and errors
 
-Session PostgreSQL, cookie HttpOnly; tên dự kiến itoh_session cần review, không JWT/localStorage. Login lấy pre-session CSRF rồi gửi X-CSRF-Token; mutation có CSRF/Origin và idempotency, GET không đổi domain. Principal/role/grantor từ backend; public API không nhận requester giả hoặc service identity. DTO chặn field không được khai báo.
+PostgreSQL sessions with HttpOnly cookies; proposed cookie name itoh_session requires review, not JWT/localStorage. Login obtains pre-session CSRF and sends X-CSRF-Token. Mutations use CSRF/Origin and idempotency; GET does not change domain state. Backend supplies principal/role/grantor; public APIs accept neither forged requesters nor service identities. DTOs reject undeclared fields.
 
-Mutation versioned dùng expectedVersion; cùng idempotency key/digest trả lại kết quả trước, khác digest 409. Request đang chạy không gọi provider/ghi effect lần hai; thời hạn key/retry D-40. 201 nghĩa tài nguyên đã commit; 202 chỉ tiếp nhận xử lý nền; 200 kết quả đồng bộ; 204 logout/đổi password/xóa chat. Decision approval có execution_status riêng. Asset/Task allocation vẫn kiểm atomic ở domain service.
+Versioned mutations use expectedVersion. The same idempotency key/digest returns the prior result; a different digest returns 409. In-flight requests do not call providers or apply effects twice; key lifetimes/retries remain D-40.201 means committed resource, 202 background acceptance only, 200 synchronous results, 204 logout/password change/chat deletion. Approval decisions have separate execution_status. Asset/task allocation remains atomic in domain services.
 
-Error envelope code/message/field_errors/request_id; 401/403/404 scoped/409/422/429/503. Không tồn tại và ngoài quyền cùng thông điệp 404. File quá lớn 413. List items/page/page_size/total sau scope; page default1, page_size20, tối đa100. UTC có offset, không secret trong URL/log/error.
+Error envelope: code/message/field_errors/request_id; 401/403/scoped 404/409/422/429/503. Missing/out-of-scope records share the same 404 message. Oversized files return 413. Lists use items/page/page_size/total after scope; page default 1, page_size 20, maximum 100. Timestamps are UTC with offsets; no secrets in URLs/logs/errors.
 
-## Projection và điểm cần refinement
+## Projections and refinement needs
 
-TicketPublic không chứa plan nhân sự/approval/note. TicketInternal chỉ scoped IT; hai response schema tách biệt, không tải dữ liệu riêng tư rồi ẩn client. Workforce T chỉ bản thân/lookup tối thiểu; Admin không mặc định đọc mọi chat. Trợ lý own conversation, KB Published và ACL hiện hành; retention/xóa chat không xóa nghiệp vụ/audit/idempotency. MA chỉ author/publisher KB khi có quyền riêng được chốt; trước đó default deny.
+TicketPublic excludes workforce plans/approvals/notes. TicketInternal is scoped to IT; separate response schemas avoid loading private data then hiding it client-side. Technician workforce access is self/minimal lookup; Admin has no blanket chat access. Assistant conversations belong to their owners; KB uses Published/current ACL. Retention/chat deletion does not delete business/audit/idempotency records. M/A require separately granted KB author/publisher rights; default deny until D-40 is resolved.
 
-Hai route làm rõ UC hiện có: PATCH /auth/profile (UC03, tự sửa tên hiển thị/thông tin liên hệ), GET /lookups (dữ liệu tối thiểu cho form, không user directory). Trường profile/lookup naming, vocabulary enum DTO, cookie name, limits, publisher policy, handover khẩn và grant ngoại lệ vẫn là đề xuất cần review D-40, không quyết định vận hành mới. Upload một file/operation, tối đa5 file trong một thao tác UI, mỗi file ≤10MB, không thay giới hạn nghiệp vụ. Đã có GET timeline ticket, lịch sử cấp phát, ticket liên quan asset và lịch sử messages; mỗi danh sách kiểm scope trước count. Không suy CRUD/DELETE từ các nhóm.
+Two routes clarify existing UCs: PATCH /auth/profile (UC03, own display/contact details) and GET /lookups (minimum form data, not an employee directory). Profile/lookup naming, DTO enums, cookie names, limits, publisher policy, emergency handover, and exception grants remain D-40 proposals, not new operational decisions. Upload accepts one file per operation, up to 5 per UI action, each ≤10 MB, preserving business limits. Ticket timelines, asset assignment history, related tickets, and message history have GET routes; scope precedes every count. Group labels do not imply generic CRUD/DELETE.
 
-## Ví dụ luồng DEMO để review contract
+## DEMO flows for contract review
 
-Dùng UUID giả đã được tạo trong môi trường test khi triển khai. Không đưa cookie/API key/password thật vào ví dụ hoặc repository. Header token bên dưới chỉ là placeholder.
+Use fake UUIDs created in the test environment during implementation. Never put actual cookies/API keys/passwords in examples/repository. Tokens below are placeholders.
 
 ```http
 POST /api/v1/tickets
@@ -52,10 +52,10 @@ Content-Type: application/json
 X-CSRF-Token: DEMO-CSRF-PLACEHOLDER
 Idempotency-Key: DEMO-ticket-001
 
-{"title":"DEMO — chuẩn bị máy cho nhân viên giả","description":"DEMO — cần xác nhận cấu hình và thời hạn bàn giao.","type":"SERVICE_REQUEST","category_id":"00000000-0000-4000-8000-000000000001","impact":"LOW","urgency":"LOW"}
+{"title":"DEMO — prepare devices for fictitious employees","description":"DEMO — confirm configuration and handover deadline.","type":"SERVICE_REQUEST","category_id":"00000000-0000-4000-8000-000000000001","impact":"LOW","urgency":"LOW"}
 ```
 
-Expected: 201/New/version; requester từ phiên, SLA snapshot; replay cùng key không tạo ticket/event lần hai. Không có grant thì automation không tự giao.
+Expected: 201/New/version; requester from session; SLA snapshot; same-key replay creates no duplicate ticket/event. Automation does not assign without a grant.
 
 ```http
 POST /api/v1/approvals/00000000-0000-4000-8000-000000000002/decisions
@@ -63,13 +63,17 @@ Content-Type: application/json
 X-CSRF-Token: DEMO-CSRF-PLACEHOLDER
 Idempotency-Key: DEMO-approval-001
 
-{"expectedVersion":2,"decision":"APPROVE","reason":"DEMO — đã kiểm tra nguồn lực","snapshot_versions":{"00000000-0000-4000-8000-000000000003":4}}
+{"expectedVersion":2,"decision":"APPROVE","reason":"DEMO — resources checked","snapshot_versions":{"00000000-0000-4000-8000-000000000003":4}}
 ```
 
-Expected: quyết định được lưu khác execution; nếu version/policy/skills/capacity đổi thì 409 hoặc execution Conflict sau revalidate, không giao theo snapshot cũ.
+Expected: saved decision is distinct from execution. Changed versions/policy/skills/capacity cause 409 or execution Conflict after revalidation, not assignment from an old snapshot.
 
-## Kiểm chứng và bàn giao tương lai
+## Verification and future handover
 
-Kiểm JSON, local refs, operationId/path params, schema/required, scope metadata và coverage API01–19. Chưa chạy official OpenAPI validator/client generator hoặc test HTTP thật. Trước code phải review DTO enum/naming, hoàn thiện projection/historical resource shape và vận hành D-40; sau đó FastAPI export cần semantic diff với contract đã duyệt, sinh TypeScript và chạy negative scope/version/concurrency/CSRF tests. Không có lệnh bắt đầu M1–M5 trong tài liệu này.
+Check JSON, local refs, operationId/path parameters, schema/required fields, scope metadata, API01–19 coverage. Official OpenAPI validation/client generation and live HTTP tests have not run. Before implementation, review DTO enums/naming, complete projections/historical resource shapes, and D-40 operations. Then semantically compare FastAPI exports with the approved contract, generate TypeScript, and run negative scope/version/concurrency/CSRF tests. This document does not activate M1–M5.
 
 [OpenAPI 3.1.1](https://spec.openapis.org/oas/v3.1.1.html) · [C4](../architecture/c4/README.md) · [DBML/ER](../database/README.md).
+
+## Action cards and shared AI screen — D-42
+
+AssistantResult includes action_cards (declarations, not effects). A trusted registry maps form_key to existing forms/APIs. Prefill contains no permissions/secrets/endpoints and only form-allowed fields. User confirmation sends the domain request with the operation's CSRF/version/idempotency controls. Tickets retain API13 draft/confirm; other forms use core APIs, not a generic proxy. Workspace unification does not change routes/operation counts; the new schema remains design-draft. Requesters see public ticket progress, not automation traces; forms/status remain available when the assistant is unavailable.

@@ -7,36 +7,36 @@ module: c4
 tags: [architecture, c4, design]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: derived
-purpose: "Liên kết C1–C4, trách nhiệm, ranh giới và bằng chứng thiết kế."
+purpose: "Link C1–C4 responsibilities, boundaries, and design evidence."
 ---
 
 # C4 Documentation
 
-**Target architecture / design-draft.** Chưa có code hoặc deployment; C4 L4 là thiết kế code dự kiến, không reverse engineering. Chủ đề tài review; không tự phê duyệt thiết kế chi tiết.
+**Target architecture / design-draft.** No application code or deployment exists. C4 Level 4 is a proposed code design, not reverse engineering. The project owner reviews it; detailed designs are not self-approved.
 
-## Các mức và nguồn chuẩn
+## Levels and authoritative sources
 
-| Mức | Câu hỏi | Tài liệu |
-|---|---|---|
-| C1 Context | Ai dùng Hub; hệ thống ngoài nào? | [01-context](01-context.md) |
-| C2 Container | Các đơn vị chạy/lưu trữ giao tiếp thế nào? | [02-containers](02-containers.md) |
-| C3 Components | Trách nhiệm bên trong API/worker? | [03-components](03-components.md) |
-| C4 Code | Một command phối hợp policy/service/repository thế nào? | [04-code](04-code.md) |
-| Dynamic | Snapshot/model/approval/transaction/retry? | [Sequences nguồn](../../diagrams/architecture.md) |
-| Deployment | Một origin, queues, storage và phục hồi? | [Topology](../../diagrams/deployment-topology.svg), [kiến trúc](../../technical/architecture.md) |
+| Level | Question | Document |
+| --- | --- | --- |
+| C1 Context | Who uses the Hub, and which external systems interact with it? | [01-context](01-context.md) |
+| C2 Container | How do running and storage units communicate? | [02-containers](02-containers.md) |
+| C3 Components | What are the responsibilities inside the API/worker? | [03-components](03-components.md) |
+| C4 Code | How does a command coordinate policy/service/repository? | [04-code](04-code.md) |
+| Dynamic | How do snapshot/model/approval/transaction/retry interact? | [Sequence sources](../../diagrams/architecture.md) |
+| Deployment | How are one origin, queues, storage, and recovery arranged? | [Topology](../../diagrams/deployment-topology.svg), [architecture](../../technical/architecture.md) |
 
-Context/container/deployment hiện có được tái sử dụng, không tạo một hệ thống song song. Mermaid dùng ký pháp flowchart/class để thể hiện mức C4, không tuyên bố Structurizr DSL hoặc UML được chứng nhận. Nguồn kiến trúc chuẩn: technical/architecture.md; các view C4 diễn giải cùng ranh giới.
+Existing context/container/deployment views are reused, rather than defining a parallel system. Mermaid flowchart/class notation represents C4 levels; this is not a claim of Structurizr DSL or certified UML. The authoritative architecture source is technical/architecture.md; C4 views explain the same boundaries.
 
-## Ràng buộc và quyết định
+## Constraints and decisions
 
-Một tổ chức, R/T/M/A; không Trưởng nhóm IT. AI_COORDINATOR nội bộ, không human actor thứ năm. Next.js UI không chứa domain/DB; FastAPI sở hữu API, SQLAlchemy sync/Alembic/PostgreSQL; worker dùng chung domain service, không HTTP giả Admin. Redis broker không nguồn dữ liệu chuẩn; một Beat; queue SLA tách model. KB pgvector có ACL hiện hành. Không giữ transaction qua model call.
+One organization, R/T/M/A, no IT Team Lead. AI_COORDINATOR is internal, not a fifth human actor. Next.js UI contains no domain/DB logic; FastAPI owns APIs with synchronous SQLAlchemy/Alembic/PostgreSQL. Workers share domain services rather than impersonating Admin over HTTP. Redis is a broker, not the system of record. One Beat; SLA queues are separate from model queues. KB pgvector uses current ACLs. No transaction spans a model call.
 
-## Kiểm chứng và giới hạn
+## Verification and limits
 
-Source Mermaid và SVG được kiểm render/refs. Module ownership, trust boundary, transaction và failure flows đối chiếu BR/NFR/API. Chưa có runtime, test ứng dụng, independent review hoặc chứng nhận C4. Cookie/DTO physical details, calendar/capacity, production provider/retention/budget và RPO/RTO/hosting theo D-40.
+Mermaid sources and SVGs are checked for rendering/references. Module ownership, trust boundaries, transactions, and failure paths are compared with BR/NFR/API. No runtime, application tests, independent review, or C4 certification exists. Physical cookie/DTO details, calendar/capacity, production provider/retention/budget, and RPO/RTO/hosting remain under D-40.
 
-[C4 model diagrams](https://c4model.com/diagrams) · [Stack](../../technical/tech-stack.md) · [Cấu trúc code dự kiến](../../technical/code-structure.md).
+[C4 model diagrams](https://c4model.com/diagrams) · [Stack](../../technical/tech-stack.md) · [Proposed code structure](../../technical/code-structure.md).

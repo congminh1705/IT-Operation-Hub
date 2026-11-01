@@ -1,29 +1,29 @@
 ---
 id: itoh-c4-code
-title: "C4 — Code collaboration dự kiến"
+title: "C4 — Proposed code collaboration"
 type: reference
 domain: architecture
 module: c4
 tags: [architecture, c4, design]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Đặc tả phối hợp lớp/hàm cho assignment mà không tạo source code."
+purpose: "Specify class/function collaboration for assignment without creating application source."
 ---
 
-# C4 — Code collaboration dự kiến
+# C4 — Proposed code collaboration
 
-**Design only.** Tên lớp/hàm và file dưới đây là đề xuất tổ chức, chưa tồn tại trong src/. Không suy từ class diagram rằng code đã triển khai.
+**Design only.** Class/function names and files below are proposed structures and do not exist in src/. The class diagram is not evidence of implemented code.
 
 ## FIG-CODE01 — Assignment command
 
 ![Code collaboration](../../diagrams/c4-code-assignment.svg)
 
 <details>
-<summary>Nguồn Mermaid</summary>
+<summary>Mermaid source</summary>
 
 ```mermaid
 classDiagram
@@ -75,28 +75,28 @@ classDiagram
 
 </details>
 
-## Hợp đồng lớp và trình tự xử lý
+## Class contracts and processing order
 
-| Thành phần dự kiến | File trong backend/app | Hợp đồng |
-|---|---|---|
-| TaskRouter | modules/work_management/router.py | DTO/HTTP mapping, principal từ dependency; không commit |
-| TaskApplicationService | modules/work_management/service.py | Sở hữu use case và transaction; idempotency, quyền/version/eligibility |
-| AssignmentPolicy | modules/work_management/policy.py | Human M/A hoặc service grant; manual lock/đang làm phải qua phê duyệt đúng scope |
-| CandidateEvaluator | modules/workforce/service.py | Skills đã xác nhận, lịch/absence, remaining/capacity; không bịa rảnh |
-| UnitOfWork | infrastructure/database/unit_of_work.py | Một SQLAlchemy Session/transaction; rollback toàn bộ |
-| Repositories | modules/work_management/repository.py, modules/workforce/repository.py | Scoped read/conditional version update/lock; không tự commit |
-| AuditOutboxWriter | infrastructure/events/writer.py | Audit/redacted event cùng transaction effect |
-| AutomationExecutor | modules/automation/executor.py | Snapshot → adapter ngoài TX → validate → command domain với grant hiện hành |
-| ProviderAdapter | infrastructure/ai/provider.py | Output schema/usage, không SQL/quyền domain |
+| Proposed component | File under backend/app | Contract |
+| --- | --- | --- |
+| TaskRouter | modules/work_management/router.py | DTO/HTTP mapping, dependency-provided principal; no commit |
+| TaskApplicationService | modules/work_management/service.py | Owns use case/transaction; idempotency, permissions/version/eligibility |
+| AssignmentPolicy | modules/work_management/policy.py | Human M/A or service grant; manual locks/in-progress work require correctly scoped approval |
+| CandidateEvaluator | modules/workforce/service.py | Verified skills, schedule/absence, remaining effort/capacity; no invented availability |
+| UnitOfWork | infrastructure/database/unit_of_work.py | One SQLAlchemy Session/transaction; full rollback |
+| Repositories | modules/work_management/repository.py, modules/workforce/repository.py | Scoped reads/conditional version updates/locks; no independent commit |
+| AuditOutboxWriter | infrastructure/events/writer.py | Audit/redacted events in the same transaction as the effect |
+| AutomationExecutor | modules/automation/executor.py | Snapshot → adapter outside TX → validation → domain command using current grant |
+| ProviderAdapter | infrastructure/ai/provider.py | Output schema/usage; no SQL/domain permissions |
 
-Human assignment: parse DTO → principal/scope → claim key → UoW khóa resource theo thứ tự → recheck version/skills/calendar/load/policy → ghi assignment/allocation/action/audit/outbox → commit → response. Conflict rollback, không ghi thành công giả. Automation proposal thêm model call ngoài TX trước bước recheck; approved exception vẫn kiểm lại.
+Human assignment: parse DTO → principal/scope → claim key → UoW locks resources in a consistent order → recheck version/skills/calendar/load/policy → write assignment/allocation/action/audit/outbox → commit → respond. Conflicts roll back without false success. Automation adds a model call outside TX before revalidation; approved exceptions still recheck.
 
-## Failure, trách nhiệm và kiểm chứng
+## Failures, responsibilities, and verification
 
-Cùng intent đã thành công trả kết quả cũ, không reserve lần hai. Snapshot/grant/policy cũ trả conflict/re-evaluate; task đang làm/lock không tự ghi đè. Provider timeout giữ unknown cost theo ledger và retry hữu hạn, không tự đổi model/ngân sách. Không gọi provider trong transaction.
+A previously successful intent returns its stored result without reserving capacity again. Stale snapshots/grants/policies cause conflict/re-evaluation; in-progress/locked tasks are not silently overwritten. Provider timeouts retain unknown costs in the ledger and use bounded retries; no autonomous model/budget switch. Never call providers inside a transaction.
 
-Expected application tests sau này: hai assignment cạnh tranh không vượt tải; mutate calendar/policy giữa snapshot/effect; crash sau commit trước ack; same/different digest retry; revoked actor; manual lock; stale approval. Hiện chỉ kiểm tài liệu/diagram, không viết hoặc chạy các test này.
+Future application tests: concurrent assignments do not overbook; calendar/policy changes between snapshot/effect; crash after commit before ack; same/different digest retries; revoked actor; manual lock; stale approval. Current work only checks documents/diagrams and does not write or run these application tests.
 
-## Liên quan
+## Related documents
 
 [Sequences](../../diagrams/architecture.md) · [Code structure](../../technical/code-structure.md) · [BR-15–19](../../requirements/business-rules.md) · [D-40](../../decisions/design-decisions.md).

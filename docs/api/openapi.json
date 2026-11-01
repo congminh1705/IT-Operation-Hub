@@ -98,7 +98,7 @@
     "/auth/csrf": {
       "get": {
         "operationId": "getCsrf",
-        "summary": "Lấy CSRF token",
+        "summary": "Get CSRF token",
         "tags": [
           "Authentication"
         ],
@@ -176,7 +176,7 @@
     "/auth/login": {
       "post": {
         "operationId": "login",
-        "summary": "Đăng nhập",
+        "summary": "Log in",
         "tags": [
           "Authentication"
         ],
@@ -271,7 +271,7 @@
     "/auth/logout": {
       "post": {
         "operationId": "logout",
-        "summary": "Thu hồi phiên hiện tại",
+        "summary": "Revoke current session",
         "tags": [
           "Authentication"
         ],
@@ -377,7 +377,7 @@
     "/auth/me": {
       "get": {
         "operationId": "getCurrentUser",
-        "summary": "Đọc tài khoản hiện tại",
+        "summary": "Read current account",
         "tags": [
           "Authentication"
         ],
@@ -486,7 +486,7 @@
     "/auth/profile": {
       "patch": {
         "operationId": "updateOwnProfile",
-        "summary": "Cập nhật hồ sơ cá nhân",
+        "summary": "Update own profile",
         "tags": [
           "Authentication"
         ],
@@ -612,7 +612,7 @@
     "/auth/password": {
       "post": {
         "operationId": "changeOwnPassword",
-        "summary": "Đổi mật khẩu",
+        "summary": "Change password",
         "tags": [
           "Authentication"
         ],
@@ -731,7 +731,7 @@
     "/users": {
       "get": {
         "operationId": "listUsers",
-        "summary": "Danh sách User",
+        "summary": "List user",
         "tags": [
           "Administration"
         ],
@@ -838,11 +838,11 @@
         "x-data-scope": "Admin management list; no public employee directory.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "post": {
         "operationId": "createUser",
-        "summary": "Tạo User",
+        "summary": "Create user",
         "tags": [
           "Administration"
         ],
@@ -959,13 +959,13 @@
           }
         },
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
     "/users/{id}": {
       "get": {
         "operationId": "getUser",
-        "summary": "Đọc User",
+        "summary": "Read user",
         "tags": [
           "Administration"
         ],
@@ -1075,11 +1075,11 @@
         "x-data-scope": "Admin management record.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "patch": {
         "operationId": "updateUser",
-        "summary": "Cập nhật User",
+        "summary": "Update user",
         "tags": [
           "Administration"
         ],
@@ -1205,13 +1205,13 @@
           }
         },
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
     "/departments": {
       "get": {
         "operationId": "listDepartments",
-        "summary": "Danh sách Department",
+        "summary": "List department",
         "tags": [
           "Administration"
         ],
@@ -1318,11 +1318,11 @@
         "x-data-scope": "Admin management list; no public employee directory.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "post": {
         "operationId": "createDepartment",
-        "summary": "Tạo Department",
+        "summary": "Create department",
         "tags": [
           "Administration"
         ],
@@ -1439,13 +1439,13 @@
           }
         },
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
     "/departments/{id}": {
       "get": {
         "operationId": "getDepartment",
-        "summary": "Đọc Department",
+        "summary": "Read department",
         "tags": [
           "Administration"
         ],
@@ -1555,11 +1555,11 @@
         "x-data-scope": "Admin management record.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "patch": {
         "operationId": "updateDepartment",
-        "summary": "Cập nhật Department",
+        "summary": "Update department",
         "tags": [
           "Administration"
         ],
@@ -1685,13 +1685,13 @@
           }
         },
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
     "/teams": {
       "get": {
         "operationId": "listTeams",
-        "summary": "Danh sách Team",
+        "summary": "List team",
         "tags": [
           "Administration"
         ],
@@ -1798,11 +1798,11 @@
         "x-data-scope": "Admin management list; no public employee directory.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "post": {
         "operationId": "createTeam",
-        "summary": "Tạo Team",
+        "summary": "Create team",
         "tags": [
           "Administration"
         ],
@@ -1919,13 +1919,13 @@
           }
         },
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
     "/teams/{id}": {
       "get": {
         "operationId": "getTeam",
-        "summary": "Đọc Team",
+        "summary": "Read team",
         "tags": [
           "Administration"
         ],
@@ -2035,11 +2035,11 @@
         "x-data-scope": "Admin management record.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "patch": {
         "operationId": "updateTeam",
-        "summary": "Cập nhật Team",
+        "summary": "Update team",
         "tags": [
           "Administration"
         ],
@@ -2165,13 +2165,13 @@
           }
         },
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
     "/categories": {
       "get": {
         "operationId": "listCategorys",
-        "summary": "Danh sách Category",
+        "summary": "List category",
         "tags": [
           "Administration"
         ],
@@ -2278,11 +2278,11 @@
         "x-data-scope": "Admin management list; no public employee directory.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "post": {
         "operationId": "createCategory",
-        "summary": "Tạo Category",
+        "summary": "Create category",
         "tags": [
           "Administration"
         ],
@@ -2399,13 +2399,13 @@
           }
         },
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
     "/categories/{id}": {
       "get": {
         "operationId": "getCategory",
-        "summary": "Đọc Category",
+        "summary": "Read category",
         "tags": [
           "Administration"
         ],
@@ -2515,11 +2515,11 @@
         "x-data-scope": "Admin management record.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "patch": {
         "operationId": "updateCategory",
-        "summary": "Cập nhật Category",
+        "summary": "Update category",
         "tags": [
           "Administration"
         ],
@@ -2645,13 +2645,13 @@
           }
         },
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
     "/teams/{id}/members": {
       "get": {
         "operationId": "listTeamMembers",
-        "summary": "Đọc thành viên",
+        "summary": "Read members",
         "tags": [
           "Administration"
         ],
@@ -2767,11 +2767,11 @@
         "x-data-scope": "Admin management view; member lookup is a separate minimal projection.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "post": {
         "operationId": "setTeamMembership",
-        "summary": "Cập nhật thành viên",
+        "summary": "Update membership",
         "tags": [
           "Administration"
         ],
@@ -2897,13 +2897,13 @@
           }
         },
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
     "/lookups": {
       "get": {
         "operationId": "listAllowedLookups",
-        "summary": "Tra cứu tham chiếu tối thiểu",
+        "summary": "Get minimal authorized lookups",
         "tags": [
           "Administration"
         ],
@@ -3026,13 +3026,13 @@
         "x-data-scope": "Only permitted categories, intake teams and own department reference. No employee enumeration; allowlisted kind required.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC05–08",
-        "x-business-rules": "BR-01/02/05; chỉ Admin mutation"
+        "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
     "/tickets": {
       "get": {
         "operationId": "listTickets",
-        "summary": "Danh sách ticket",
+        "summary": "List tickets",
         "tags": [
           "Tickets"
         ],
@@ -3174,7 +3174,7 @@
       },
       "post": {
         "operationId": "createTicket",
-        "summary": "Tạo ticket",
+        "summary": "Create ticket",
         "tags": [
           "Tickets"
         ],
@@ -3300,7 +3300,7 @@
     "/tickets/{id}": {
       "get": {
         "operationId": "getTicket",
-        "summary": "Chi tiết ticket",
+        "summary": "Ticket details",
         "tags": [
           "Tickets"
         ],
@@ -3821,7 +3821,7 @@
     "/tickets/{id}/comments": {
       "get": {
         "operationId": "listTicketComments",
-        "summary": "Đọc hội thoại",
+        "summary": "Read conversation",
         "tags": [
           "Ticket content"
         ],
@@ -3940,11 +3940,11 @@
         "x-data-scope": "Parent ticket scope and audience; internal note never requester.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC15–17",
-        "x-business-rules": "BR-06–08; scope nội dung cha"
+        "x-business-rules": "BR-06–08; parent-content scope"
       },
       "post": {
         "operationId": "createTicketComment",
-        "summary": "Gửi bình luận",
+        "summary": "Post comment",
         "tags": [
           "Ticket content"
         ],
@@ -4073,13 +4073,13 @@
           }
         },
         "x-source-use-cases": "UC15–17",
-        "x-business-rules": "BR-06–08; scope nội dung cha"
+        "x-business-rules": "BR-06–08; parent-content scope"
       }
     },
     "/tickets/{id}/attachments": {
       "post": {
         "operationId": "uploadTicketAttachment",
-        "summary": "Gửi tệp riêng tư",
+        "summary": "Upload private file",
         "tags": [
           "Ticket content"
         ],
@@ -4211,13 +4211,13 @@
           }
         },
         "x-source-use-cases": "UC15–17",
-        "x-business-rules": "BR-06–08; scope nội dung cha"
+        "x-business-rules": "BR-06–08; parent-content scope"
       }
     },
     "/attachments/{id}/download": {
       "get": {
         "operationId": "downloadAttachment",
-        "summary": "Tải tệp",
+        "summary": "Download file",
         "tags": [
           "Ticket content"
         ],
@@ -4347,13 +4347,13 @@
         "x-data-scope": "Current parent content scope, no public object URL; safe Content-Disposition, nosniff.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC15–17",
-        "x-business-rules": "BR-06–08; scope nội dung cha"
+        "x-business-rules": "BR-06–08; parent-content scope"
       }
     },
     "/tickets/{id}/plans": {
       "get": {
         "operationId": "listTicketPlans",
-        "summary": "Đọc kế hoạch",
+        "summary": "Read plan",
         "tags": [
           "Plans"
         ],
@@ -4471,13 +4471,13 @@
         "x-data-scope": "T current ticket team; M/A scope; requester excluded.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC-OPS04",
-        "x-business-rules": "BR-14/15/17; một effective version"
+        "x-business-rules": "BR-14/15/17; one effective version"
       }
     },
     "/plans/{id}/versions": {
       "get": {
         "operationId": "listPlanVersions",
-        "summary": "Đọc phiên bản kế hoạch",
+        "summary": "Read plan versions",
         "tags": [
           "Plans"
         ],
@@ -4595,13 +4595,13 @@
         "x-data-scope": "Same scoped IT plan permission.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC-OPS04",
-        "x-business-rules": "BR-14/15/17; một effective version"
+        "x-business-rules": "BR-14/15/17; one effective version"
       }
     },
     "/tickets/{id}/plan-proposals": {
       "post": {
         "operationId": "proposePlan",
-        "summary": "Đề nghị lập kế hoạch",
+        "summary": "Request plan proposal",
         "tags": [
           "Plans"
         ],
@@ -4728,13 +4728,13 @@
           }
         },
         "x-source-use-cases": "UC-OPS04",
-        "x-business-rules": "BR-14/15/17; một effective version"
+        "x-business-rules": "BR-14/15/17; one effective version"
       }
     },
     "/plans/{id}/activate": {
       "post": {
         "operationId": "activatePlan",
-        "summary": "Kích hoạt kế hoạch",
+        "summary": "Activate plan",
         "tags": [
           "Plans"
         ],
@@ -4861,13 +4861,13 @@
           }
         },
         "x-source-use-cases": "UC-OPS04",
-        "x-business-rules": "BR-14/15/17; một effective version"
+        "x-business-rules": "BR-14/15/17; one effective version"
       }
     },
     "/tasks": {
       "get": {
         "operationId": "listTasks",
-        "summary": "Danh sách task",
+        "summary": "List tasks",
         "tags": [
           "Tasks"
         ],
@@ -5009,7 +5009,7 @@
     "/tasks/{id}": {
       "get": {
         "operationId": "getTask",
-        "summary": "Chi tiết task",
+        "summary": "Task details",
         "tags": [
           "Tasks"
         ],
@@ -5661,7 +5661,7 @@
     "/workforce": {
       "get": {
         "operationId": "listWorkforce",
-        "summary": "Tra cứu nhân lực",
+        "summary": "Search workforce",
         "tags": [
           "Workforce"
         ],
@@ -5770,13 +5770,13 @@
         "x-data-scope": "T self/minimal task lookup; M/A managed IT scope; no global private calendar for T.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC-OPS01",
-        "x-business-rules": "BR-16; không nguồn rảnh mặc định"
+        "x-business-rules": "BR-16; no assumed availability"
       }
     },
     "/workforce/{id}": {
       "get": {
         "operationId": "getWorkforce",
-        "summary": "Chi tiết nhân lực",
+        "summary": "Workforce details",
         "tags": [
           "Workforce"
         ],
@@ -5888,11 +5888,11 @@
         "x-data-scope": "T self/minimal scoped projection; M/A managed scope.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC-OPS01",
-        "x-business-rules": "BR-16; không nguồn rảnh mặc định"
+        "x-business-rules": "BR-16; no assumed availability"
       },
       "patch": {
         "operationId": "updateWorkforce",
-        "summary": "Xác nhận kỹ năng/lịch",
+        "summary": "Verify skills/schedule",
         "tags": [
           "Workforce"
         ],
@@ -6019,13 +6019,13 @@
           }
         },
         "x-source-use-cases": "UC-OPS01",
-        "x-business-rules": "BR-16; không nguồn rảnh mặc định"
+        "x-business-rules": "BR-16; no assumed availability"
       }
     },
     "/workforce/{id}/absences": {
       "post": {
         "operationId": "recordAbsence",
-        "summary": "Ghi vắng mặt",
+        "summary": "Record absence",
         "tags": [
           "Workforce"
         ],
@@ -6152,13 +6152,13 @@
           }
         },
         "x-source-use-cases": "UC-OPS01",
-        "x-business-rules": "BR-16; không nguồn rảnh mặc định"
+        "x-business-rules": "BR-16; no assumed availability"
       }
     },
     "/workflows": {
       "get": {
         "operationId": "listWorkflows",
-        "summary": "Đọc workflow",
+        "summary": "Read workflows",
         "tags": [
           "Workflows"
         ],
@@ -6271,7 +6271,7 @@
       },
       "post": {
         "operationId": "createWorkflow",
-        "summary": "Tạo workflow",
+        "summary": "Create workflow",
         "tags": [
           "Workflows"
         ],
@@ -6395,7 +6395,7 @@
     "/workflows/{id}/versions": {
       "post": {
         "operationId": "createWorkflowVersion",
-        "summary": "Tạo bản workflow",
+        "summary": "Create workflow version",
         "tags": [
           "Workflows"
         ],
@@ -6528,7 +6528,7 @@
     "/workflows/{id}/publish": {
       "post": {
         "operationId": "publishWorkflow",
-        "summary": "Xuất bản workflow",
+        "summary": "Publish workflow",
         "tags": [
           "Workflows"
         ],
@@ -6661,7 +6661,7 @@
     "/automation/policies": {
       "get": {
         "operationId": "listPolicies",
-        "summary": "Đọc policy",
+        "summary": "Read policy",
         "tags": [
           "Automation policies"
         ],
@@ -6769,11 +6769,11 @@
         "x-data-scope": "Current management scope.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC-OPS02/07",
-        "x-business-rules": "BR-17/18; grantor và default deny"
+        "x-business-rules": "BR-17/18; grantor and default deny"
       },
       "post": {
         "operationId": "createPolicy",
-        "summary": "Cấp policy",
+        "summary": "Grant policy",
         "tags": [
           "Automation policies"
         ],
@@ -6891,13 +6891,13 @@
           }
         },
         "x-source-use-cases": "UC-OPS02/07",
-        "x-business-rules": "BR-17/18; grantor và default deny"
+        "x-business-rules": "BR-17/18; grantor and default deny"
       }
     },
     "/automation/policies/{id}": {
       "patch": {
         "operationId": "updatePolicy",
-        "summary": "Sửa policy/version",
+        "summary": "Update policy/version",
         "tags": [
           "Automation policies"
         ],
@@ -7024,13 +7024,13 @@
           }
         },
         "x-source-use-cases": "UC-OPS02/07",
-        "x-business-rules": "BR-17/18; grantor và default deny"
+        "x-business-rules": "BR-17/18; grantor and default deny"
       }
     },
     "/automation/policies/{id}/disable": {
       "post": {
         "operationId": "disablePolicy",
-        "summary": "Tắt policy",
+        "summary": "Disable policy",
         "tags": [
           "Automation policies"
         ],
@@ -7157,13 +7157,13 @@
           }
         },
         "x-source-use-cases": "UC-OPS02/07",
-        "x-business-rules": "BR-17/18; grantor và default deny"
+        "x-business-rules": "BR-17/18; grantor and default deny"
       }
     },
     "/automation/runs": {
       "get": {
         "operationId": "listRuns",
-        "summary": "Đọc runs",
+        "summary": "Read runs",
         "tags": [
           "Runs"
         ],
@@ -7271,13 +7271,13 @@
         "x-data-scope": "Scoped/redacted, never arbitrary prompts, secrets or other users chats.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC-OPS09",
-        "x-business-rules": "BR-19/22; quyền retry không bỏ dedup"
+        "x-business-rules": "BR-19/22; retry permission does not bypass deduplication"
       }
     },
     "/automation/runs/{id}": {
       "get": {
         "operationId": "getRun",
-        "summary": "Chi tiết run",
+        "summary": "Run details",
         "tags": [
           "Runs"
         ],
@@ -7388,13 +7388,13 @@
         "x-data-scope": "Scoped/redacted events/actions/errors/usage.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC-OPS09",
-        "x-business-rules": "BR-19/22; quyền retry không bỏ dedup"
+        "x-business-rules": "BR-19/22; retry permission does not bypass deduplication"
       }
     },
     "/automation/runs/{id}/retry": {
       "post": {
         "operationId": "retryRun",
-        "summary": "Đánh giá/chạy lại hữu hạn",
+        "summary": "Re-evaluate or retry within limits",
         "tags": [
           "Runs"
         ],
@@ -7521,13 +7521,13 @@
           }
         },
         "x-source-use-cases": "UC-OPS09",
-        "x-business-rules": "BR-19/22; quyền retry không bỏ dedup"
+        "x-business-rules": "BR-19/22; retry permission does not bypass deduplication"
       }
     },
     "/approvals": {
       "get": {
         "operationId": "listApprovals",
-        "summary": "Đọc ngoại lệ",
+        "summary": "Read exception",
         "tags": [
           "Approvals"
         ],
@@ -7635,13 +7635,13 @@
         "x-data-scope": "Only currently authorized approver.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC-OPS08",
-        "x-business-rules": "BR-18; decision khác execution"
+        "x-business-rules": "BR-18; decision differs from execution"
       }
     },
     "/approvals/{id}": {
       "get": {
         "operationId": "getApproval",
-        "summary": "Chi tiết ngoại lệ",
+        "summary": "Exception details",
         "tags": [
           "Approvals"
         ],
@@ -7752,13 +7752,13 @@
         "x-data-scope": "Before/after/current snapshot scope; no requester.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC-OPS08",
-        "x-business-rules": "BR-18; decision khác execution"
+        "x-business-rules": "BR-18; decision differs from execution"
       }
     },
     "/approvals/{id}/decisions": {
       "post": {
         "operationId": "decideApproval",
-        "summary": "Duyệt/từ chối",
+        "summary": "Approve or reject",
         "tags": [
           "Approvals"
         ],
@@ -7885,13 +7885,13 @@
           }
         },
         "x-source-use-cases": "UC-OPS08",
-        "x-business-rules": "BR-18; decision khác execution"
+        "x-business-rules": "BR-18; decision differs from execution"
       }
     },
     "/assistant/conversations": {
       "post": {
         "operationId": "createConversation",
-        "summary": "Tạo hội thoại",
+        "summary": "Create conversation",
         "tags": [
           "Assistant"
         ],
@@ -8011,13 +8011,13 @@
           }
         },
         "x-source-use-cases": "UC-AI01/02/04–07",
-        "x-business-rules": "BR-20/21; owner và public/internal"
+        "x-business-rules": "BR-20/21; owner and public/internal"
       }
     },
     "/assistant/conversations/{id}": {
       "get": {
         "operationId": "getConversation",
-        "summary": "Đọc hội thoại",
+        "summary": "Read conversation",
         "tags": [
           "Assistant"
         ],
@@ -8130,11 +8130,11 @@
         "x-data-scope": "Owner only; current source visibility rechecked, revoked content redacted.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC-AI01/02/04–07",
-        "x-business-rules": "BR-20/21; owner và public/internal"
+        "x-business-rules": "BR-20/21; owner and public/internal"
       },
       "delete": {
         "operationId": "deleteConversation",
-        "summary": "Xóa hội thoại",
+        "summary": "Delete conversation",
         "tags": [
           "Assistant"
         ],
@@ -8249,13 +8249,13 @@
         "x-data-scope": "Owner only; retention/tombstone D-40; never delete Ticket/Task/audit/idempotency evidence.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC-AI01/02/04–07",
-        "x-business-rules": "BR-20/21; owner và public/internal"
+        "x-business-rules": "BR-20/21; owner and public/internal"
       }
     },
     "/assistant/conversations/{id}/messages": {
       "post": {
         "operationId": "sendAssistantMessage",
-        "summary": "Hỏi trợ lý",
+        "summary": "Ask assistant",
         "tags": [
           "Assistant"
         ],
@@ -8384,7 +8384,7 @@
           }
         },
         "x-source-use-cases": "UC-AI01/02/04–07",
-        "x-business-rules": "BR-20/21; owner và public/internal"
+        "x-business-rules": "BR-20/21; owner and public/internal"
       },
       "get": {
         "operationId": "listConversationMessages",
@@ -8507,13 +8507,13 @@
         "x-data-scope": "Owner only; source ACL/current visibility redacted again when reading history. No other users chats.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC-AI01/02/04–07",
-        "x-business-rules": "BR-20/21; owner và public/internal"
+        "x-business-rules": "BR-20/21; owner and public/internal"
       }
     },
     "/assistant/ticket-drafts": {
       "post": {
         "operationId": "createTicketDraft",
-        "summary": "Tạo nháp ticket",
+        "summary": "Create ticket draft",
         "tags": [
           "Ticket confirmation"
         ],
@@ -8639,7 +8639,7 @@
     "/assistant/ticket-drafts/{id}/confirm": {
       "post": {
         "operationId": "confirmTicketDraft",
-        "summary": "Xác nhận tạo ticket",
+        "summary": "Confirm ticket creation",
         "tags": [
           "Ticket confirmation"
         ],
@@ -8774,7 +8774,7 @@
     "/knowledge": {
       "get": {
         "operationId": "searchKnowledge",
-        "summary": "Tìm kho kiến thức",
+        "summary": "Search knowledge",
         "tags": [
           "Knowledge"
         ],
@@ -8884,11 +8884,11 @@
         "x-data-scope": "Published and current ACL for reader; no source means no invented citation.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC-OPS10, UC-AI01",
-        "x-business-rules": "BR-21; quyền biên soạn còn D-40"
+        "x-business-rules": "BR-21; author rights remain D-40"
       },
       "post": {
         "operationId": "createKnowledgeArticle",
-        "summary": "Tạo bài nháp",
+        "summary": "Create draft article",
         "tags": [
           "Knowledge"
         ],
@@ -9006,13 +9006,13 @@
           }
         },
         "x-source-use-cases": "UC-OPS10, UC-AI01",
-        "x-business-rules": "BR-21; quyền biên soạn còn D-40"
+        "x-business-rules": "BR-21; author rights remain D-40"
       }
     },
     "/knowledge/{id}/versions/{version}": {
       "get": {
         "operationId": "getKnowledgeVersion",
-        "summary": "Đọc nguồn/version",
+        "summary": "Read source/version",
         "tags": [
           "Knowledge"
         ],
@@ -9134,13 +9134,13 @@
         "x-data-scope": "Published version AND current article ACL; old citation does not retain revoked access.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC-OPS10, UC-AI01",
-        "x-business-rules": "BR-21; quyền biên soạn còn D-40"
+        "x-business-rules": "BR-21; author rights remain D-40"
       }
     },
     "/knowledge/{id}/versions": {
       "post": {
         "operationId": "createKnowledgeVersion",
-        "summary": "Tạo version KB",
+        "summary": "Create knowledge version",
         "tags": [
           "Knowledge"
         ],
@@ -9267,7 +9267,7 @@
           }
         },
         "x-source-use-cases": "UC-OPS10, UC-AI01",
-        "x-business-rules": "BR-21; quyền biên soạn còn D-40"
+        "x-business-rules": "BR-21; author rights remain D-40"
       }
     },
     "/knowledge/{id}/publish": {
@@ -9400,7 +9400,7 @@
           }
         },
         "x-source-use-cases": "UC-OPS10, UC-AI01",
-        "x-business-rules": "BR-21; quyền biên soạn còn D-40"
+        "x-business-rules": "BR-21; author rights remain D-40"
       }
     },
     "/knowledge/{id}/access": {
@@ -9533,13 +9533,13 @@
           }
         },
         "x-source-use-cases": "UC-OPS10, UC-AI01",
-        "x-business-rules": "BR-21; quyền biên soạn còn D-40"
+        "x-business-rules": "BR-21; author rights remain D-40"
       }
     },
     "/assets": {
       "get": {
         "operationId": "listAssets",
-        "summary": "Đọc tài sản",
+        "summary": "Read assets",
         "tags": [
           "Assets"
         ],
@@ -9665,7 +9665,7 @@
       },
       "post": {
         "operationId": "createAsset",
-        "summary": "Tạo tài sản",
+        "summary": "Create asset",
         "tags": [
           "Assets"
         ],
@@ -9789,7 +9789,7 @@
     "/assets/{id}": {
       "get": {
         "operationId": "getAsset",
-        "summary": "Hồ sơ tài sản",
+        "summary": "Asset record",
         "tags": [
           "Assets"
         ],
@@ -9906,7 +9906,7 @@
       },
       "patch": {
         "operationId": "updateAsset",
-        "summary": "Sửa hồ sơ tài sản",
+        "summary": "Update asset record",
         "tags": [
           "Assets"
         ],
@@ -10039,7 +10039,7 @@
     "/assets/{id}/assignments": {
       "post": {
         "operationId": "assignAsset",
-        "summary": "Tài sản assignments",
+        "summary": "Issue asset",
         "tags": [
           "Assets"
         ],
@@ -10295,7 +10295,7 @@
     "/assets/{id}/returns": {
       "post": {
         "operationId": "returnAsset",
-        "summary": "Tài sản returns",
+        "summary": "Return asset",
         "tags": [
           "Assets"
         ],
@@ -10428,7 +10428,7 @@
     "/assets/{id}/transitions": {
       "post": {
         "operationId": "transitionAsset",
-        "summary": "Tài sản transitions",
+        "summary": "Transition asset",
         "tags": [
           "Assets"
         ],
@@ -10561,7 +10561,7 @@
     "/notifications": {
       "get": {
         "operationId": "listNotifications",
-        "summary": "Đọc thông báo",
+        "summary": "Read notifications",
         "tags": [
           "Operations"
         ],
@@ -10671,13 +10671,13 @@
         "x-data-scope": "Current recipient only; safe/redacted content if underlying scope revoked.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC26/32/33, UC-OPS09",
-        "x-business-rules": "BR-12/22; recipient và MET scope"
+        "x-business-rules": "BR-12/22; recipient and MET scope"
       }
     },
     "/notifications/{id}/read": {
       "post": {
         "operationId": "readNotification",
-        "summary": "Đánh dấu đã đọc",
+        "summary": "Mark notification read",
         "tags": [
           "Operations"
         ],
@@ -10796,13 +10796,13 @@
         "x-data-scope": "Own recipient only; does not mutate ticket.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC26/32/33, UC-OPS09",
-        "x-business-rules": "BR-12/22; recipient và MET scope"
+        "x-business-rules": "BR-12/22; recipient and MET scope"
       }
     },
     "/reports": {
       "get": {
         "operationId": "getReports",
-        "summary": "Đọc chỉ số",
+        "summary": "Read metrics",
         "tags": [
           "Operations"
         ],
@@ -10919,13 +10919,13 @@
         "x-data-scope": "MET allowlist, authorized aggregate scope; facts from DB, not model estimates.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC26/32/33, UC-OPS09",
-        "x-business-rules": "BR-12/22; recipient và MET scope"
+        "x-business-rules": "BR-12/22; recipient and MET scope"
       }
     },
     "/audit": {
       "get": {
         "operationId": "listAudit",
-        "summary": "Đọc audit",
+        "summary": "Read audit",
         "tags": [
           "Operations"
         ],
@@ -11033,13 +11033,13 @@
         "x-data-scope": "M business scope; A additional user/role/SLA administration; neither arbitrary chat/raw secrets.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC26/32/33, UC-OPS09",
-        "x-business-rules": "BR-12/22; recipient và MET scope"
+        "x-business-rules": "BR-12/22; recipient and MET scope"
       }
     },
     "/admin/assistant": {
       "get": {
         "operationId": "getAssistantSettings",
-        "summary": "Đọc cấu hình khả dụng",
+        "summary": "Read availability settings",
         "tags": [
           "Assistant administration"
         ],
@@ -11139,11 +11139,11 @@
         "x-data-scope": "Safe status only; no credential read endpoint.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC-AI08",
-        "x-business-rules": "D-24/33; không trả secret hoặc chat của người khác"
+        "x-business-rules": "D-24/33; no secrets or others’ chats"
       },
       "patch": {
         "operationId": "updateAssistantSettings",
-        "summary": "Bật/tắt trợ lý",
+        "summary": "Enable or disable assistant",
         "tags": [
           "Assistant administration"
         ],
@@ -11260,7 +11260,7 @@
           }
         },
         "x-source-use-cases": "UC-AI08",
-        "x-business-rules": "D-24/33; không trả secret hoặc chat của người khác"
+        "x-business-rules": "D-24/33; no secrets or others’ chats"
       }
     },
     "/health/live": {
@@ -11330,7 +11330,7 @@
         "x-data-scope": "Minimal status only, no DB/provider hostname/credentials. Ready depends core DB, not provider availability.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "NFR04/21",
-        "x-business-rules": "Tín hiệu tối thiểu, không dữ liệu hạ tầng nhạy cảm"
+        "x-business-rules": "Minimal status, no sensitive infrastructure data"
       }
     },
     "/health/ready": {
@@ -11400,13 +11400,13 @@
         "x-data-scope": "Minimal status only, no DB/provider hostname/credentials. Ready depends core DB, not provider availability.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "NFR04/21",
-        "x-business-rules": "Tín hiệu tối thiểu, không dữ liệu hạ tầng nhạy cảm"
+        "x-business-rules": "Minimal status, no sensitive infrastructure data"
       }
     },
     "/sla/policy": {
       "get": {
         "operationId": "getSLAPolicy",
-        "summary": "Đọc SLA mặc định",
+        "summary": "Read default SLA",
         "tags": [
           "SLA"
         ],
@@ -11506,11 +11506,11 @@
         "x-data-scope": "Admin configuration; others see own ticket SLA projection.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC09/24/25",
-        "x-business-rules": "BR-08–10; GET/PATCH /sla/policy (Admin), clock qua ticket projection; quét SLA là worker nội bộ"
+        "x-business-rules": "BR-08–10; Admin GET/PATCH /sla/policy, ticket clock projection; internal SLA worker"
       },
       "patch": {
         "operationId": "updateSLAPolicy",
-        "summary": "Sửa SLA mặc định",
+        "summary": "Update default SLA",
         "tags": [
           "SLA"
         ],
@@ -11627,7 +11627,7 @@
           }
         },
         "x-source-use-cases": "UC09/24/25",
-        "x-business-rules": "BR-08–10; GET/PATCH /sla/policy (Admin), clock qua ticket projection; quét SLA là worker nội bộ"
+        "x-business-rules": "BR-08–10; Admin GET/PATCH /sla/policy, ticket clock projection; internal SLA worker"
       }
     },
     "/tickets/{id}/events": {
@@ -11752,7 +11752,7 @@
         "x-data-scope": "Public timeline for requester; internal events only scoped IT. Filter before pagination/count.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC15–17",
-        "x-business-rules": "BR-06–08; scope nội dung cha"
+        "x-business-rules": "BR-06–08; parent-content scope"
       }
     },
     "/assets/{id}/tickets": {
@@ -13824,6 +13824,14 @@
               "DRAFT",
               "REFUSED"
             ]
+          },
+          "action_cards": {
+            "type": "array",
+            "maxItems": 6,
+            "items": {
+              "$ref": "#/components/schemas/AssistantActionCard"
+            },
+            "description": "Optional prepared forms/handoffs. Existing chat messages may omit it. Native domain responses drive result cards; model output is not proof of execution."
           }
         },
         "required": [
@@ -14345,7 +14353,8 @@
             "minimum": 1
           },
           "enabled": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Interactive generation availability only. D-42 workspace/status/native forms remain accessible by role; business automation is controlled independently through effective policies. This is not a flag to stop SLA or all workers."
           },
           "provider_configured": {
             "type": "boolean"
@@ -14366,7 +14375,8 @@
             "minimum": 1
           },
           "enabled": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Interactive generation availability only. D-42 workspace/status/native forms remain accessible by role; business automation is controlled independently through effective policies. This is not a flag to stop SLA or all workers."
           },
           "reason": {
             "type": "string",
@@ -15138,6 +15148,137 @@
           "page_size",
           "total"
         ]
+      },
+      "AssistantActionCard": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "card_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "form_key": {
+            "type": "string",
+            "enum": [
+              "ticket.create",
+              "ticket.reply",
+              "ticket.transition",
+              "ticket.assign",
+              "task.progress",
+              "task.transition",
+              "workforce.absence",
+              "approval.decide",
+              "policy.edit",
+              "asset.edit",
+              "asset.assignment",
+              "admin.secure_form",
+              "knowledge.secure_form"
+            ]
+          },
+          "display_title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "render_mode": {
+            "type": "string",
+            "enum": [
+              "INLINE_FORM",
+              "SECURE_HANDOFF"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "PREPARED",
+              "NEEDS_INFORMATION",
+              "HANDOFF"
+            ]
+          },
+          "resource_type": {
+            "type": "string",
+            "enum": [
+              "ticket",
+              "task",
+              "asset",
+              "approval",
+              "policy",
+              "user",
+              "knowledge"
+            ]
+          },
+          "resource_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "confirmation_required": {
+            "type": "boolean",
+            "const": true
+          },
+          "prefill": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "title": {
+                "type": "string",
+                "maxLength": 10000
+              },
+              "description": {
+                "type": "string",
+                "maxLength": 10000
+              },
+              "content": {
+                "type": "string",
+                "maxLength": 10000
+              },
+              "reason": {
+                "type": "string",
+                "maxLength": 10000
+              },
+              "progress_note": {
+                "type": "string",
+                "maxLength": 10000
+              },
+              "result": {
+                "type": "string",
+                "maxLength": 10000
+              },
+              "audience": {
+                "type": "string",
+                "enum": [
+                  "PUBLIC",
+                  "INTERNAL"
+                ]
+              },
+              "remaining_minutes": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "starts_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "ends_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "description": "Optional safe suggestions only. Native form registry accepts only fields applicable to this form_key; no secret, role/actor override, endpoint or executable code. Required fields, target scope and version are validated by the corresponding existing domain operation after user confirmation."
+          }
+        },
+        "required": [
+          "card_id",
+          "form_key",
+          "display_title",
+          "render_mode",
+          "state",
+          "confirmation_required"
+        ],
+        "description": "D-42 design declaration, never execution success. Server-owned allowlist prepares a trusted native form. Explicit user submission dispatches the existing domain API with session/CSRF/state/version/idempotency. ticket.create retains its draft/confirm API. Security forms do not send secrets through assistant content, prefill, model or history. Unknown or unsupported form_key is rejected; same workspace does not grant extra permissions."
       }
     }
   },

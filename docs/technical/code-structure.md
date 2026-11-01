@@ -1,49 +1,49 @@
 ---
 id: itoh-code-structure
-title: "Code structure — folders và files dự kiến"
+title: "Code structure — proposed folders and files"
 type: reference
 domain: development
 module: structure
 tags: [development, structure, design]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Phân biệt cây repo hiện có với cấu trúc Next.js/FastAPI mục tiêu và ownership."
+purpose: "Distinguish the current repository from target Next.js/FastAPI structure and ownership."
 ---
 
-# Code structure — folders và files dự kiến
+# Code structure — proposed folders and files
 
-**Chỉ tài liệu thiết kế.** Không tạo package, router, model, migration, dependency, test hoặc cấu hình vận hành. Cây dưới đây có chú thích planned; không mô tả source code đang có.
+**Design documentation only.** No packages/routers/models/migrations/dependencies/tests/operational configuration created. Trees are marked planned, not existing source.
 
-## 1. Hiện trạng repo
+## 1. Current repository
 
 ```text
 IT-Operation-Hub/
 ├── README.md
 ├── docs/
-│   ├── requirements/              # BR, quyền, mô hình/ER Mermaid hiện có
-│   ├── api/                       # OpenAPI JSON, operation catalog, hướng dẫn
-│   ├── database/                  # DBML và ánh xạ ER
+│   ├── requirements/              # Existing BR, permissions, data/ER Mermaid
+│   ├── api/                       # OpenAPI JSON, operation catalog, guide
+│   ├── database/                  # DBML and ER mappings
 │   ├── architecture/c4/           # C1–C4 design documentation
 │   ├── technical/                 # Architecture, stack, API rationale, code structure
-│   ├── diagrams/                  # SVG và nguồn diagram trong Markdown
-│   ├── design/                    # UI/UX và wireframe tĩnh
+│   ├── diagrams/                  # SVG and diagram sources in Markdown
+│   ├── design/                    # Static UI/UX and wireframes
 │   └── xmind/                     # Native XMind + SVG preview
 └── src/
-    ├── frontend/.gitkeep           # Chưa có ứng dụng Next.js
-    └── backend/.gitkeep            # Chưa có ứng dụng FastAPI
+    ├── frontend/.gitkeep           # No Next.js application
+    └── backend/.gitkeep            # No FastAPI application
 ```
 
-Chỉ docs/ và hai .gitkeep đã tồn tại trong src/. Không coi cây rút gọn là danh sách đầy đủ file tài liệu.
+Only documentation and two `src/` `.gitkeep` files currently exist. This abbreviated tree is not a complete document inventory.
 
-## 2. Frontend Next.js mục tiêu — PLANNED
+## 2. Target Next.js frontend — PLANNED
 
 ```text
 src/frontend/
-├── package.json                         # PLANNED, không cài dependency ở đợt tài liệu
+├── package.json                         # PLANNED, no dependency installation in documentation phase
 ├── next.config.ts                       # PLANNED
 ├── tsconfig.json                        # PLANNED
 ├── src/
@@ -52,7 +52,7 @@ src/frontend/
 │   │   ├── providers.tsx                 # QueryClient, UI state
 │   │   ├── login/page.tsx
 │   │   ├── (workspace)/
-│   │   │   ├── layout.tsx                # Shell/menu từ quyền server
+│   │   │   ├── layout.tsx                # Shell/menu from server permissions
 │   │   │   ├── dashboard/page.tsx
 │   │   │   ├── profile/page.tsx
 │   │   │   ├── profile/security/page.tsx
@@ -105,33 +105,33 @@ src/frontend/
 │   │   └── feedback/                    # Loading/error/permission states
 │   └── lib/
 │       ├── api/
-│       │   ├── generated/schema.d.ts     # PLANNED từ OpenAPI, không tự sửa
+│       │   ├── generated/schema.d.ts     # PLANNED from OpenAPI, do not edit manually
 │       │   ├── client.ts                # Cookie/CSRF/idempotency/error mapping
-│       │   └── query-keys.ts             # Partition theo user/scope/resource
+│       │   └── query-keys.ts             # Partition by user/scope/resource
 │       ├── auth/session.ts
 │       ├── dates.ts
 │       └── validation.ts
 ├── public/
-└── tests/                               # PLANNED, không tạo test thực thi
+└── tests/                               # PLANNED, no executable application tests created
     ├── components/
     └── e2e/
 ```
 
-Mỗi feature có `components/`, `api.ts`, `queries.ts`, `schemas.ts` và `types.ts` khi cần; không tạo một cây chứa mọi tên file giống nhau khi chưa có use case. Ví dụ tickets/components/ticket-form.tsx + ticket-conversation.tsx; automation/components/approval-diff.tsx; work-management/components/task-board.tsx.
+Features may contain `components/`, `api.ts`, `queries.ts`, `schemas.ts`, `types.ts` as needed; do not create identical empty scaffolds without use cases. Examples: tickets/components/ticket-form.tsx and ticket-conversation.tsx; automation/components/approval-diff.tsx; work-management/components/task-board.tsx.
 
-`app/` chỉ route/layout/composition; `(workspace)` là route group không xuất hiện trong URL. SCR23/24/25/33 là dialog của ticket/asset, không tạo page giả. Mobile và desktop dùng cùng quyền/backend; không thêm trang đăng ký/reset email hoặc Trưởng nhóm IT. Không coi file 403/404 là mục menu.
+`app/` contains routes/layout/composition; `(workspace)` is a route group absent from URLs. SCR23/24/25/33 are ticket/asset dialogs, not artificial pages. Mobile/desktop share backend permissions. No signup/email-reset/IT Team Lead pages. 403/404 files are not menu items.
 
-Không sao chép domain/policy sang Next.js route handler để tạo backend thứ hai. API client dùng same-origin cookie; server rendering nếu gọi API phải chuyển tiếp phiên theo request hợp lệ và không cache dữ liệu riêng tư xuyên user. Query cache invalidated/partition khi logout/chuyển scope; mutation thành công mới refresh dữ liệu nguồn.
+Do not duplicate domain/policies in Next.js handlers as a second backend. API uses same-origin cookies; SSR forwards valid request sessions without cross-user private caching. Partition/invalidate queries on logout/scope changes; refresh source data only after successful mutations.
 
-## 3. Backend FastAPI mục tiêu — PLANNED
+## 3. Target FastAPI backend — PLANNED
 
 ```text
 src/backend/
-├── pyproject.toml                         # PLANNED, uv.lock chỉ tạo lúc triển khai
-├── alembic.ini                            # PLANNED, chưa tạo cấu hình
+├── pyproject.toml                         # PLANNED, uv.lock only during implementation
+├── alembic.ini                            # PLANNED, no configuration created
 ├── migrations/
 │   ├── env.py                             # PLANNED
-│   └── versions/                          # PLANNED, hiện không có migration
+│   └── versions/                          # PLANNED, no existing migration
 ├── app/
 │   ├── main.py                            # FastAPI composition root
 │   ├── api/
@@ -139,7 +139,7 @@ src/backend/
 │   │   ├── dependencies.py                # Principal, session, CSRF/UoW
 │   │   └── errors.py                      # Error envelope
 │   ├── core/
-│   │   ├── settings.py                    # Config/secrets injection, không secret literals
+│   │   ├── settings.py                    # Config/secrets injection, no secret literals
 │   │   ├── security.py                    # Session hashing/Argon2id/CSRF primitives
 │   │   ├── principals.py                  # Human vs service-grant context
 │   │   └── clock.py                       # UTC clock abstraction
@@ -197,33 +197,33 @@ src/backend/
 │       ├── sla_jobs.py
 │       ├── notification_jobs.py
 │       └── knowledge_jobs.py
-└── tests/                                 # PLANNED, không tạo trong đợt tài liệu
+└── tests/                                 # PLANNED, not created during documentation phase
     ├── unit/
     ├── integration/
     └── contract/
 ```
 
-Auth/users/teams/sla/assets/... có thể dùng mẫu router/schemas/service/policy/models/repository khi có trách nhiệm tương ứng; không ép mọi module có file rỗng. Department/category quản trị nằm users/teams/tickets theo ownership, không thêm service triển khai độc lập.
+Auth/users/teams/sla/assets/etc. may follow router/schemas/service/policy/models/repository where responsibilities justify them; no mandatory empty files. Department/category administration belongs to users/teams/tickets by ownership, not standalone deployed services.
 
-## 4. Dependency và transaction rules
+## 4. Dependency and transaction rules
 
-| Tầng | Gọi được | Không được |
-|---|---|---|
-| Frontend route/feature | API client + generated DTO | DB/SQLAlchemy hoặc tự cấp role |
-| Router/schema | Auth dependency, application service | Tự commit, query repository module khác |
-| Application service | Domain policy, own repo, public service hợp đồng khác, UoW | Tin model/client role, giữ TX qua model |
-| Domain policy | Value objects/current evidence | HTTP/provider/storage side effects |
-| Repository | SQLAlchemy Session được truyền | Tự tạo commit/Session tách để lách invariant |
-| Worker job | Claim/dedup + shared service + service principal | HTTP giả phiên Admin; ORM write bỏ qua policy |
-| Provider/storage adapter | External protocol/I/O | Tự cấp quyền; domain effect ngoài command |
-| Audit/outbox | Writer trong UoW | Audit secret hoặc publish trước commit |
+| Layer | May call | Must not |
+| --- | --- | --- |
+| Frontend route/feature | API client/generated DTOs | DB/SQLAlchemy/self-granted roles |
+| Router/schema | Auth dependency/application service | Commit/access another module's repository |
+| Application service | Domain policies/own repository/public cross-module contracts/UoW | Trust client/model roles or hold TX through model |
+| Domain policy | Value objects/current evidence | HTTP/provider/storage effects |
+| Repository | Injected SQLAlchemy Session | Separate commits/Sessions bypassing invariants |
+| Worker | Claim/dedup/shared service/service principal | Admin HTTP impersonation/policy-bypassing ORM writes |
+| Provider/storage adapter | External protocol/I/O | Grant rights or domain effects outside commands |
+| Audit/outbox | Writer inside UoW | Log secrets/publish before commit |
 
-Không dùng async SQLAlchemy Session với ORM đồng bộ. FastAPI sync route/service và Celery sync worker dùng Session riêng; không share Session giữa request/thread/job. Lock order vật lý/capacity grain vẫn D-40.
+No async SQLAlchemy Session with synchronous ORM. Sync FastAPI routes/services/Celery workers get separate Sessions, never shared across requests/threads/jobs. Physical lock order/capacity granularity remain D-40.
 
-## 5. Module → contract → dữ liệu → view
+## 5. Module → contract → data → view
 
-| Module | API group | Entity chính | C4 |
-|---|---|---|---|
+| Module | API group | Main entities | C4 |
+| --- | --- | --- | --- |
 | auth/users/teams | API01/02 | User/Session/Department/Team/Membership | IAM/API |
 | tickets/sla | API03/04/19 | Ticket/Comment/Event/Attachment/TicketSLA | Ticket/API + periodic worker |
 | work_management/workforce | API05/06/07 | WorkPlan/PlanVersion/Task/skills/calendar/allocation | Work/API + executor |
@@ -232,12 +232,16 @@ Không dùng async SQLAlchemy Session với ORM đồng bộ. FastAPI sync route
 | assets | API15 | Asset/AssetAssignment | Assets/API |
 | notifications/reports/audit | API16 | Recipient/facts/AuditLog | Query/API + worker |
 
-Full route/operation mapping tại [operation catalog](../api/operations.md); entity có thể lặp trong view nhưng chỉ có một owner. D-40 về KB author/publisher không được suy từ thư mục module.
+Full routes/operations: [catalog](../api/operations.md). Entities may appear across views but have one owner. Folder names do not decide D-40 KB author/publisher rights.
 
-## 6. Kế hoạch triển khai và kiểm chứng sau này
+## 6. Future implementation and validation
 
-Chỉ khi có yêu cầu lập trình riêng: khởi tạo manifest/lock → API export/DTO review → modules lõi/session/CSRF → Alembic/schema refinement → domain state/concurrency → worker/SLA → automation/KB/provider theo mốc đã chốt. Cây thư mục không tự bắt đầu M1–M5. CI contract/client generation, import boundary, unit/integration/e2e, restore và security tests hiện PLANNED/NOT RUN.
+Only after a separate coding request: initialize manifests/locks → API export/DTO review → core/session/CSRF modules → Alembic/schema refinement → states/concurrency → workers/SLA → milestone automation/KB/providers. Directory trees do not activate M1–M5. Contract/client-generation CI, import-boundary, unit/integration/E2 E/restore/security tests are PLANNED/NOT RUN.
 
-Repo có chưa: docs và .gitkeep. Repo chưa có: package manifests/lock, source modules, migrations, worker/config, generated clients hoặc tests. Tài liệu này không tạo các file planned.
+Existing: documentation/.gitkeep. Absent: manifests/locks/modules/migrations/workers/config/generated clients/tests. This document creates none of the planned files.
 
 [C4 L4](../architecture/c4/04-code.md) · [Architecture](architecture.md) · [API](../api/README.md) · [Database](../database/README.md) · [D-40](../decisions/design-decisions.md).
+
+## D-42 — Shared AI screen organization
+
+Planned ai-workspace composition hosts conversation, trusted action-form renderer, scoped activity/details. Reuse domain forms/services/API clients; backend automation does not join the chat-component lifecycle. Design responsibilities only, no code folders/files. Validate form_key registry data instead of rendering model code.

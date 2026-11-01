@@ -1,29 +1,29 @@
 ---
 id: itoh-c4-components
-title: "C3 — Components của API và worker"
+title: "C3 — API and worker components"
 type: reference
 domain: architecture
 module: c4
 tags: [architecture, c4, design]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Phân chia trách nhiệm bên trong API và worker, với failure và transaction boundary."
+purpose: "Assign responsibilities inside the API and worker, including failure and transaction boundaries."
 ---
 
-# C3 — Components của API và worker
+# C3 — API and worker components
 
-**Thiết kế mục tiêu.** Đây là các component trong modular monolith; không tách thành microservice. API và worker nạp chung các package domain nhưng có entrypoint, Session và principal khác nhau.
+**Target design.** These components belong to a modular monolith, not separate microservices. API and worker load shared domain packages but use different entrypoints, Sessions, and principals.
 
 ## C3 API — FIG-CMP01
 
 ![API components](../../diagrams/c4-components-api.svg)
 
 <details>
-<summary>Nguồn Mermaid</summary>
+<summary>Mermaid source</summary>
 
 ```mermaid
 flowchart TB
@@ -67,7 +67,7 @@ flowchart TB
 ![Worker components](../../diagrams/c4-components-worker.svg)
 
 <details>
-<summary>Nguồn Mermaid</summary>
+<summary>Mermaid source</summary>
 
 ```mermaid
 flowchart TB
@@ -105,21 +105,21 @@ flowchart TB
 
 </details>
 
-## Ownership và phụ thuộc
+## Ownership and dependencies
 
-| Component | Sở hữu | Không được làm |
-|---|---|---|
-| HTTP/IAM | DTO/error mapping; session/CSRF/current scope | Tin role/requester/grantor do client truyền |
-| Tickets/SLA/assets | State, public/internal, snapshot/clock, asset assignment | Task Done tự đóng ticket; model tự cấp tài sản |
-| Work/workforce | Plan/DAG/task/skills/lịch/capacity/allocation | Dùng estimate/lịch chưa xác nhận để tự giao |
-| Automation controls | Workflow/policy/grant/run/action/approval | Coi Approved là Succeeded hoặc bỏ revalidation |
-| Assistant/knowledge | Owner chat/draft/confirm, Published/version/ACL | SQL/shell từ model; cache vượt quyền |
-| UoW/repository | Một Session/transaction cho domain + audit + outbox | Repository tự commit tách hoặc giữ lock qua model |
-| Adapter | Provider protocol/schema/result/usage | Quyền domain, tự tăng model/budget |
-| SLA/notification/index | Tính từ dữ liệu nguồn, dedup, ACL | Chờ model để chạy clock; notification tự cấp quyền |
+| Component | Owns | Must not do |
+| --- | --- | --- |
+| HTTP/IAM | DTO/error mapping; session/CSRF/current scope | Trust client-supplied role/requester/grantor |
+| Tickets/SLA/assets | State, public/internal visibility, snapshots/clocks, asset assignments | Close tickets automatically when tasks are Done; let models allocate assets |
+| Work/workforce | Plans/DAG/tasks/skills/schedules/capacity/allocation | Auto-assign using unverified estimates/schedules |
+| Automation controls | Workflows/policies/grants/runs/actions/approvals | Treat Approved as Succeeded or skip revalidation |
+| Assistant/knowledge | Chat ownership/drafts/confirmation, Published/version/ACL | Execute model SQL/shell; serve caches beyond current permissions |
+| UoW/repository | One Session/transaction for domain + audit + outbox | Commit separately in repositories or hold locks through model calls |
+| Adapter | Provider protocol/schema/results/usage | Own domain permissions or increase model cost/budget autonomously |
+| SLA/notification/index | Source-based calculations, deduplication, ACL | Wait for a model to advance clocks; grant access through notifications |
 
-Service call cross-module qua public application contract; router không truy cập repo module khác. Worker re-read policy/ACL/candidate/locks/capacity trong execution transaction; stale/refusal/schema/provider lỗi không partial effect. Reservation actual/unknown/in-flight được ledger hóa.
+Cross-module service calls use public application contracts; routers do not access another module's repository. Workers re-read policies/ACL/candidates/locks/capacity inside the execution transaction. Stale data, refusal, schema errors, or provider failures have no partial effect. Reservations for actual/unknown/in-flight costs are recorded in the ledger.
 
-## Truy vết và kiểm chứng
+## Traceability and verification
 
-API01–19 → module tại [code structure](../../technical/code-structure.md); command HTTP tại [OpenAPI](../../api/openapi.json); EVT01–17 tại [catalog nguồn](../../technical/api-design.md). Kiểm render/metadata/relationship; chưa benchmark, test application hoặc verify runtime dependency graph. Grant ngoại lệ, key TTL/lease/retry và lịch/capacity còn D-40.
+API01–19 map to modules in [code structure](../../technical/code-structure.md); HTTP commands are in [OpenAPI](../../api/openapi.json); EVT01–17 are in the [source catalog](../../technical/api-design.md). Rendering/metadata/relationships are checked; no benchmarks, application tests, or runtime dependency-graph verification have run. Exception grants, key TTL/leases/retry, and calendar/capacity details remain under D-40.

@@ -1,94 +1,94 @@
 ---
 id: itoh-docs-technical-version-baseline
-title: "Danh mục phiên bản và mức kiểm chứng"
+title: "Candidate versions and verification status"
 type: reference
 domain: architecture
 module: dependencies
 tags: [architecture, dependencies, reference]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Liệt kê phiên bản ứng viên và điều kiện xác minh tương thích trước triển khai."
+purpose: "List candidate versions and compatibility checks required before implementation."
 ---
 
-# Danh mục phiên bản và mức kiểm chứng
+# Candidate versions and verification status
 
-**Ngày tra cứu: 30/10/2026.** Chốt stack không đồng nghĩa bộ package đã cài hoặc đã chạy cùng nhau. Hiện repo chỉ giữ tài liệu và SVG/XMind; không có manifest hoặc lockfile ứng dụng được chấp nhận. Bảng dưới là **các phiên bản ứng viên cho M1**, không phải kết quả dependency resolution/build/test.
+**Research snapshot:30 October 2026.** An agreed stack is not an installed/tested package set. Repository content is documentation/SVG/XMind, without accepted application manifests/lockfiles. Versions below are **M1 candidates**, not dependency-resolution/build/test results.
 
-## 1. Runtime và hạ tầng
+## 1. Runtimes and infrastructure
 
-| Thành phần | Nhánh chọn | Căn cứ và điều kiện |
-|---|---|---|
-| Node.js | 24 LTS | Phiên bản runtime mục tiêu; đáp ứng engine của Next 16, ESLint 10 và Vitest 5 đã tra. Chưa cần chuyển Node 26 LTS mới ra; không chọn Node 20 chỉ vì đạt minimum Next |
-| Python | 3.13 | Dùng thống nhất API/worker/CI, chọn patch được hỗ trợ khi khởi tạo; kiểm tra wheel Psycopg/Argon2 và test container |
-| PostgreSQL | 18 stable | Psycopg 3 có hỗ trợ; không dùng PostgreSQL 19 RC cho MVP; chốt patch/image digest tại M1 |
-| Redis server | 7.x | Broker với chính sách triển khai/giấy phép được review tại M1; không nhầm số version server với package Python redis-py |
-| Nginx/Linux/Docker | Bản stable còn hỗ trợ tại M1 | Chọn image patch/digest cụ thể lúc khởi tạo; chưa khẳng định tương thích từ tên image `latest` |
+| Component | Selected branch | Basis and conditions |
+| --- | --- | --- |
+| Node.js | 24 LTS | Target satisfies researched Next 16/ESLint10/Vitest 5 engines. No need to switch to newly released Node 26 LTS; do not select Node 20 merely for Next minimum |
+| Python | 3.13 | Consistent API/worker/CI; supported patch at setup; verify Psycopg/Argon 2 wheels/containers |
+| PostgreSQL | 18 stable | Psycopg 3 support; no PostgreSQL19 RC for MVP; pin patch/image digest at M1 |
+| Redis server | 7.x | Review deployment/license at M1; server versions differ from Python redis-py |
+| Nginx/Linux/Docker | Supported stable at M1 | Select patches/digests at setup; latest image names prove no compatibility |
 
-Nguồn: [Node release status](https://nodejs.org/en/about/previous-releases), [Python versions](https://devguide.python.org/versions/), [PostgreSQL support](https://www.postgresql.org/support/versioning/), [Psycopg installation](https://www.psycopg.org/psycopg3/docs/basic/install.html). Các patch phải được kiểm tra lại lúc triển khai, không tự nâng major trong CI.
+Sources: [Node releases](https://nodejs.org/en/about/previous-releases), [Python versions](https://devguide.python.org/versions/), [PostgreSQL support](https://www.postgresql.org/support/versioning/), [Psycopg installation](https://www.psycopg.org/psycopg3/docs/basic/install.html). Recheck patches during implementation; no automatic major CI upgrades.
 
-## 2. Frontend: ứng viên trực tiếp
+## 2. Frontend direct candidates
 
-| Package | Phiên bản ứng viên | Kiểm tra/ghi chú |
-|---|---|---|
-| next / eslint-config-next | 16.4.3 / 16.4.3 | Cùng phiên bản; Next peer React 19, Node ≥20.9; config ESLint khai báo ESLint ≥9 |
-| react / react-dom / react-is | 19.3.1 / 19.3.1 / cùng nhánh React 19 | React DOM peer khớp React; Recharts yêu cầu react-is, cần resolve chính xác cùng bộ |
-| typescript | **5.9.3** | Không dùng latest 7.0.2: openapi-typescript 7.13.0 đang peer `^5.x`; đây là xung đột thật ở metadata |
-| tailwindcss | 4.3.3 | shadcn hỗ trợ Tailwind 4/React 19; kiểm tra plugin PostCSS tương ứng |
-| shadcn CLI | 4.23.0 | Tool tạo mã component, không coi là runtime dependency thay mọi primitive |
-| lucide-react | 1.64.0 | Peer React gồm 19 |
-| react-hook-form / @hookform/resolvers / zod | 7.91.0 / 6.0.2 / 4.6.7 | Resolver peer RHF ≥7.55 và Zod 4 phù hợp |
-| @tanstack/react-query | 5.105.0 | Peer React 18/19; cấu hình polling và cache rõ |
-| @tanstack/react-table | 9.3.1 | Peer React ≥18, Node ≥20; **dùng tài liệu v9**, không sao chép API v8 vào triển khai v9 |
-| recharts | 3.10.1 | Peer React/DOM/React-is có nhánh 19 |
-| date-fns / @date-fns/tz | 4.4.0 / 1.5.0 | Kiểm tra format/parse UTC và Asia/Ho_Chi_Minh bằng test |
-| pnpm | 12.16.1 | Ghi packageManager khi M1; tạo lockfile thật |
-| openapi-typescript | 7.13.0 | Dev tool sinh type; là lý do giữ TypeScript 5 trong danh mục này |
-| vitest / @testing-library/react | 5.0.5 / 16.3.3 | Vitest engine chấp nhận Node 24; bổ sung Vite/DOM environment và @testing-library/dom theo peer khi resolve |
-| @playwright/test | 1.64.1 | Browser binary/container phải khớp package |
-| eslint / prettier | 10.13.0 / 3.9.10 | Node 24 đáp ứng engine; kiểm tra plugin/config thực trước khóa |
+| Package | Candidate version | Check / note |
+| --- | --- | --- |
+| next / eslint-config-next | 16.4.3 / 16.4.3 | Matching versions; React 19 peer, Node≥20.9; ESLint config≥9 |
+| react / react-dom / react-is | 19.3.1 / 19.3.1 / matching React 19 branch | React DOM peer matches; Recharts needs react-is; resolve exact compatible set |
+| typescript | **5.9.3** | Not latest 7.0.2: openapi-typescript 7.13.0 peer `^5.x` is a metadata conflict |
+| tailwindcss | 4.3.3 | shadcn supports Tailwind 4/React 19; verify PostCSS plugin |
+| shadcn CLI | 4.23.0 | Component code generator, not a runtime replacement for all primitives |
+| lucide-react | 1.64.0 | React 19 included in peers |
+| react-hook-form / @hookform/resolvers / zod | 7.91.0 / 6.0.2 / 4.6.7 | Resolver RHF≥7.55/Zod 4 peers match |
+| @tanstack/react-query | 5.105.0 | React 18/19 peer; explicit polling/cache configuration |
+| @tanstack/react-table | 9.3.1 | React≥18/Node≥20; **use v9 documentation**, not copied v8 APIs |
+| recharts | 3.10.1 | React/DOM/React-is peers include 19 |
+| date-fns / @date-fns/tz | 4.4.0 / 1.5.0 | Test UTC/Asia/Ho_Chi_Minh formatting/parsing |
+| pnpm | 12.16.1 | Record packageManager/create actual lock at M1 |
+| openapi-typescript | 7.13.0 | Type-generation dev tool; reason for TypeScript5 here |
+| vitest / @testing-library/react | 5.0.5 / 16.3.3 | Node 24 engine; resolve Vite/DOM environment/@testing-library/dom peers |
+| @playwright/test | 1.64.1 | Match browser binaries/container to package |
+| eslint / prettier | 10.13.0 / 3.9.10 | Node 24 engines; verify actual config/plugins before lock |
 
-Metadata package lấy từ npm registry chính thức theo `/package/latest` và endpoint version cụ thể. **Peer range thỏa không chứng minh API, plugin hoặc build đã tương thích.** Các package bổ trợ như @types/react, @types/react-dom, @types/node, PostCSS plugin, shadcn primitives và môi trường DOM test sẽ do bộ khởi tạo/solver xác định, không được ngầm coi đã khóa.
+Metadata came from official npm registry latest/version endpoints. **Satisfying peer ranges does not prove API/plugin/build compatibility.** Supporting @types/react/react-dom/node, PostCSS, shadcn primitives, DOM test packages remain setup/solver choices, not implicitly locked.
 
-Nguồn kiểm tra trực tiếp: [Next 16.4.3 metadata](https://registry.npmjs.org/next/16.4.3), [TypeScript 5.9.3 metadata](https://registry.npmjs.org/typescript/5.9.3), [OpenAPI TypeScript metadata](https://registry.npmjs.org/openapi-typescript/7.13.0), [resolver metadata](https://registry.npmjs.org/@hookform/resolvers/6.0.2), [TanStack Table metadata](https://registry.npmjs.org/@tanstack/react-table/9.3.1), [Recharts metadata](https://registry.npmjs.org/recharts/3.10.1), [Vitest metadata](https://registry.npmjs.org/vitest/5.0.5), [shadcn compatibility](https://ui.shadcn.com/docs/tailwind-v4). Bản tra metadata đầy đủ được ghi tại [snapshot](package-metadata.json); các giá trị latest trong đó là bằng chứng khảo sát, không phải mọi giá trị được chọn.
+Direct sources: [Next 16.4.3](https://registry.npmjs.org/next/16.4.3), [TypeScript5.9.3](https://registry.npmjs.org/typescript/5.9.3), [OpenAPI TypeScript](https://registry.npmjs.org/openapi-typescript/7.13.0), [resolvers](https://registry.npmjs.org/@hookform/resolvers/6.0.2), [TanStack Table](https://registry.npmjs.org/@tanstack/react-table/9.3.1), [Recharts](https://registry.npmjs.org/recharts/3.10.1), [Vitest](https://registry.npmjs.org/vitest/5.0.5), [shadcn compatibility](https://ui.shadcn.com/docs/tailwind-v4). The [metadata snapshot](package-metadata.json) records surveyed latest values, not all selected values.
 
-## 3. Backend: ứng viên trực tiếp
+## 3. Backend direct candidates
 
-| Package | Phiên bản/nhánh ứng viên | Kiểm tra/ghi chú |
-|---|---|---|
-| fastapi | 0.162.0 | Yêu cầu Python ≥3.10/Pydantic ≥2.9; dùng package nền, không thêm mọi optional extra |
-| pydantic / pydantic-settings | 2.14.2 / 2.16.2 | Runtime Python 3.13 đáp ứng metadata; thêm email extra nếu dùng EmailStr |
-| SQLAlchemy / alembic | 2.1.6 / 1.20.1 | Dùng tài liệu 2.1, synchronous Session; không thêm mypy plugin legacy nếu typed model chuẩn đủ |
-| psycopg[binary] | 3.3.6 | Psycopg 3, không phải psycopg2 hoặc tên package psycopg3 |
-| uvicorn / uv | 0.54.0 / 0.13.6 | Chốt extras phù hợp môi trường và lock solver |
-| celery[redis] | 5.6.3 | Celery yêu cầu Kombu ≥5.6; worker Linux |
-| Kombu / redis-py | 5.6.2 / **≥4.5.2,<6.5, loại 4.5.5 và 5.0.2** | Kombu 5.6.2 Redis extra khai báo range này. **Không pin redis-py latest 8.1.0** cùng bộ này; để uv resolve patch trong range rồi test broker |
-| boto3 | 1.43.122 | Đồng bộ qua adapter; không gọi blocking S3 trên event loop |
-| pwdlib[argon2] / argon2-cffi | 0.3.1 / 25.1.0 | Chỉ hash/verify; dịch vụ phiên và CSRF còn phải xây/test |
-| python-multipart / email-validator | 0.0.32 / 2.3.0 | Package upload/email validation cần thiết |
-| pytest / httpx | 9.2.0 / 0.28.1 | Integration với FastAPI/Starlette trong môi trường thực còn phải chạy |
-| ruff / mypy | 0.17.3 / 2.4.1 | Lint/typecheck riêng, không chứng minh đúng runtime |
+| Package | Candidate version/branch | Check / note |
+| --- | --- | --- |
+| fastapi | 0.162.0 | Python≥3.10/Pydantic≥2.9; base package, not every optional extra |
+| pydantic / pydantic-settings | 2.14.2 / 2.16.2 | Python 3.13 satisfies metadata; email extra for EmailStr if used |
+| SQLAlchemy / alembic | 2.1.6 / 1.20.1 | 2.1 docs/synchronous Session; no legacy mypy plugin if standard typed models suffice |
+| psycopg [binary] | 3.3.6 | Psycopg 3, not psycopg 2 or package named psycopg 3 |
+| uvicorn / uv | 0.54.0 / 0.13.6 | Environment-appropriate extras/solver lock |
+| celery [redis] | 5.6.3 | Requires Kombu≥5.6; Linux workers |
+| Kombu / redis-py | 5.6.2 / **≥4.5.2, <6.5, excluding 4.5.5 and 5.0.2** | Kombu 5.6.2 Redis extra range. **Do not pin redis-py latest 8.1.0** in this set; uv resolves a patch within range, then test broker |
+| boto 3 | 1.43.122 | Sync adapter; no blocking S3 on event loop |
+| pwdlib [argon 2] / argon 2-cffi | 0.3.1 / 25.1.0 | Hash/verify only; sessions/CSRF still need implementation/tests |
+| python-multipart / email-validator | 0.0.32 / 2.3.0 | Upload/email validation packages |
+| pytest / httpx | 9.2.0 / 0.28.1 | Real FastAPI/Starlette integration still untested |
+| ruff / mypy | 0.17.3 / 2.4.1 | Lint/types do not prove runtime correctness |
 
-Nguồn: [FastAPI metadata](https://pypi.org/pypi/fastapi/0.162.0/json), [SQLAlchemy metadata](https://pypi.org/pypi/SQLAlchemy/2.1.6/json), [Celery metadata](https://pypi.org/pypi/celery/5.6.3/json), [Kombu Redis extra](https://pypi.org/pypi/kombu/5.6.2/json), [Psycopg](https://www.psycopg.org/psycopg3/docs/basic/install.html). Đây là hai xung đột đã phát hiện khi ghép latest: **TypeScript/OpenAPI generator** và **redis-py/Kombu**; không dùng `--force` hoặc bỏ peer checks để che lỗi.
+Sources: [FastAPI](https://pypi.org/pypi/fastapi/0.162.0/json), [SQLAlchemy](https://pypi.org/pypi/SQLAlchemy/2.1.6/json), [Celery](https://pypi.org/pypi/celery/5.6.3/json), [Kombu Redis extra](https://pypi.org/pypi/kombu/5.6.2/json), [Psycopg](https://www.psycopg.org/psycopg3/docs/basic/install.html). Historical latest-combination conflicts found: **TypeScript/OpenAPI generator**, **redis-py/Kombu**. Do not hide them with --force or disabled peer checks.
 
-## 4. Gate M1 trước khi gọi bộ phiên bản là đã kiểm chứng
+## 4. M1 gates before claiming validated versions
 
-1. Kiểm tra release/security advisory và giấy phép lại ở ngày khởi tạo; cập nhật patch trong nhánh được chấp thuận. Nâng major phải ghi ADR và kiểm tra migration API.
-2. Khởi tạo Node 24/Python 3.13 cùng môi trường Linux production; resolve dependency/transitive/optional extras thật, không dùng latest vô điều kiện.
-3. Tạo pnpm-lock.yaml/uv.lock; cài lại từ môi trường sạch bằng frozen lock, pin runtime/container digest và lưu phiên bản công cụ.
-4. Chạy Next build, TS strict, ESLint/Prettier; sinh OpenAPI types; smoke form/table/chart/date và test API error mapping.
-5. Chạy Alembic trên PostgreSQL sạch; session/CSRF/revoke, version conflict, asset double allocation; test upload/permission. Chạy Celery + Redis thật, Beat một instance, retry/dedup và phục hồi sau gián đoạn.
-6. Chạy Playwright cho bốn vai trò; ghi rõ phiên bản đã thử, lệnh, kết quả và phần chưa đạt. Xác nhận trình duyệt doanh nghiệp đáp ứng Tailwind 4; không dùng SVG tĩnh làm bằng chứng browser support.
+1. Recheck releases/security advisories/licenses on setup date; supported patches within approved branches. Major upgrades need ADR/API migration review.
+2. Use Node 24/Python 3.13 and production-like Linux; resolve actual transitive/optional dependencies, not unconditional latest.
+3. Create pnpm-lock.yaml/uv.lock; clean frozen reinstall; pin runtime/container digests and tool versions.
+4. Run Next build, strict TS, ESLint/Prettier; generate OpenAPI types; smoke forms/tables/charts/dates/API errors.
+5. Alembic on clean PostgreSQL; session/CSRF/revoke/version/asset concurrency/upload/access tests. Real Celery/Redis/one Beat, retry/dedup/outage recovery.
+6. Four-role Playwright; record versions/commands/results/failures. Confirm enterprise browsers support Tailwind 4; static SVGs do not prove browser support.
 
-Chưa thực hiện các gate trên trong đợt tài liệu này. Chưa tạo `.env.example`, Compose, migration, seed hoặc pipeline giả chỉ để đánh dấu hoàn thành.
+None performed during this documentation phase. No placeholder .env.example/Compose/migrations/seeds/pipelines merely to claim completion.
 
-## 5. Dependency AI trong MVP
+## 5. MVP AI dependencies
 
-AI trợ lý và điều phối thuộc MVP theo D-35; PostgreSQL + pgvector là stack RAG mục tiêu theo D-37. D-39 chỉ xác nhận OpenAI API/gpt-5-mini và trần 5 USD/dữ liệu demo cho thử nghiệm M3 sau này; text-embedding-3-small còn là đề xuất phải xác minh. Provider/model/embedding/SDK và ngân sách/data policy production Cần quyết định D-40. Khi được yêu cầu code riêng, resolver bổ sung package/lock phù hợp, kiểm timeout/retry/tool/schema/quota và mọi AC/A1–A13 trước gate M5. Không cài dependency hoặc gọi provider trong đợt tài liệu.
+Assistant/coordination are MVP under D-35; PostgreSQL/pgvector RAG under D-37. D-39 confirms OpenAI API/gpt-5-mini/USD5/DEMO only for future M3; text-embedding-3-small remains proposed/verification-required. Production provider/model/embedding/SDK/budget/data policy D-40. After a separate coding request, resolve/lock packages and validate timeouts/retries/tools/schemas/quotas/all AC/A1–A13 before M5. No dependency installs/provider calls now.
 
-## Trạng thái kiểm chứng
+## Verification status
 
-Các version/metadata phía trên là snapshot khảo sát ngày 30/10/2026, chưa phải bộ dependency/runtime được nghiệm thu. Khi bắt đầu phát triển, cần kiểm lại release/security, resolve và khóa phiên bản, clean install/build/test theo các điều kiện trên. Hiện chưa có manifest/lock/env ứng dụng được chấp nhận; M1–M5 chỉ là kế hoạch.
+Versions/metadata above are a historical 30 October 2026 snapshot, not accepted dependency/runtime results. At development start, recheck releases/security, resolve/lock, clean install/build/test. No accepted manifests/locks/environment; M1–M5 remain plans.

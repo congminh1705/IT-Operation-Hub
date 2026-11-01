@@ -1,169 +1,175 @@
 ---
 id: itoh-docs-technical-architecture
-title: "Kiến trúc mục tiêu và vận hành dự kiến"
+title: "Target architecture and planned operations"
 type: reference
 domain: architecture
 module: system
 tags: [architecture, system, reference]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Định nghĩa component/service boundary, giao dịch, bảo mật và vận hành mục tiêu."
+purpose: "Define component/service boundaries, transactions, security, and target operations."
 ---
 
-# Kiến trúc mục tiêu và vận hành dự kiến
+# Target architecture and planned operations
 
-**Thiết kế mục tiêu · Chỉ thiết kế; chưa có ứng dụng hoạt động.** Không tạo/sửa code, migration hoặc cấu hình trong đợt này. [Stack](tech-stack.md) giữ Next.js/React/TypeScript và FastAPI/SQLAlchemy/Alembic/PostgreSQL; Celery/Redis. Các tên bảng/tool/route là thiết kế.
+**Target design · Design only; no running application.** No application code, migrations, or operational configuration is created/modified. [Stack](tech-stack.md): Next.js/React/TypeScript, FastAPI/SQLAlchemy/Alembic/PostgreSQL, Celery/Redis. Table/tool/route names are designs.
 
-## 1. Modular monolith và trách nhiệm
+## 1. Modular monolith and responsibilities
 
-Một repo, frontend/backend riêng ở các thư mục hiện có. Next.js chỉ giao diện, FastAPI sở hữu REST `/api/v1` và nghiệp vụ; API và worker dùng chung service/Session đồng bộ riêng theo request/task. Không chuyển Django ORM hoặc đưa domain vào Next.js.
+One repository with existing frontend/backend directories. Next.js owns UI; FastAPI owns REST `/api/v1`/business logic. API/workers share services with separate synchronous Sessions per request/job. No Django ORM or Next.js domain logic.
 
-| Thành phần | Trách nhiệm |
-|---|---|
-| Frontend | Form, bảng, trạng thái, URL filters, polling mặc định 30 giây khi tab hoạt động; không nguồn quyền/DB |
-| Nginx | Cùng domain: /api/ → FastAPI, phần còn lại → frontend; TLS, hạn mức body |
-| API/router/schema | HTTP, xác thực, input/output schema, lỗi; không gom toàn bộ domain vào router |
-| Service/repository/model | Quyền, state machine, transaction/version/capacity, truy vấn scoped; repository không tự commit tách |
-| Celery worker / một Beat | Outbox, AI, đánh giá lại, SLA mỗi 60 giây, notification, indexing; tách queue AI khỏi SLA |
-| PostgreSQL + pgvector | Domain, session, outbox/dedup, audit, run/action/approval, KB/version/ACL/chunks/vector |
-| Redis | Broker, không nguồn dữ liệu chuẩn hoặc nơi duy nhất giữ event/session |
-| Provider adapter | Sinh plan/ranking/output schema, embedding; không quyền ghi database |
-| Local private / S3 private | Tệp ngoài public; API kiểm tra quyền cha mỗi lần tải |
+| Component | Responsibility |
+| --- | --- |
+| Frontend | Forms/tables/states/URL filters; default 30 s active-tab polling; not authorization/DB |
+| Nginx | Same domain: /api/→FastAPI, rest→frontend; TLS/body limits |
+| API/router/schema | HTTP/auth/input-output/errors, not all domain logic in routers |
+| Service/repository/model | Authorization/states/transactions/versions/capacity/scoped queries; repositories do not independently commit |
+| Celery worker / one Beat | Outbox/AI/re-evaluation/60 s SLA/notifications/indexing; AI queues separate from SLA |
+| PostgreSQL + pgvector | Domain/sessions/outbox/dedup/audit/runs/actions/approvals/KB/versions/ACL/chunks/vectors |
+| Redis | Broker, not system of record or sole event/session store |
+| Provider adapter | Plans/ranking/schema output/embeddings, no DB write rights |
+| Private local / private S3 | Nonpublic files; API checks parent rights on every download |
 
-Giữ auth/users/teams/tickets/sla/assets/notifications/reports/audit; bổ sung work_management, workforce, automation, ai_assistant, knowledge. Không tách thành microservice.
+Retain auth/users/teams/tickets/sla/assets/notifications/reports/audit; add work_management/workforce/automation/ai_assistant/knowledge. No microservice split.
 
-[C4 Documentation C1–C4](../architecture/c4/README.md), [code structure](code-structure.md), [OpenAPI](../api/README.md) và [DBML/ER](../database/README.md) làm rõ artifacts thiết kế; không tạo runtime/module thật.
+[C4 C1–C4](../architecture/c4/README.md), [code structure](code-structure.md), [OpenAPI](../api/README.md), [DBML/ER](../database/README.md) describe design artifacts, not runtime modules.
 
-### Các góc nhìn và ranh giới module
+### Views and module boundaries
 
-[FIG-CTX01, FIG-CNT01, FIG-SEQ01/02 và FIG-DEP01](../diagrams/architecture.md) lần lượt mô tả context, container, sequence transaction/model/phê duyệt và triển khai dự kiến. Đây là các mức nhìn khác nhau của cùng kiến trúc, không dùng mind map làm sơ đồ deployment hoặc ERD làm sơ đồ component.
+[FIG-CTX01, FIG-CNT01, FIG-SEQ01/02, FIG-DEP01](../diagrams/architecture.md) show context, containers, transaction/model/approval sequences, proposed deployment. Different views of one architecture; mind maps are not deployment diagrams and ERDs are not components.
 
-| Module sở hữu dữ liệu | Hợp đồng và trách nhiệm | Phụ thuộc được phép |
-|---|---|---|
-| auth / users / teams | Phiên, người dùng, tổ chức, membership và cấp/thu hồi quyền | Cung cấp principal/scope; phát sự kiện thay đổi quyền |
-| tickets / sla | Ticket, hội thoại, tệp cha, snapshot/clock/violation | Auth; service tệp riêng tư; không giao quyền ghi trực tiếp cho model |
-| work_management | Plan/version, Task/DAG, transition và assignment | Workforce/capacity, policy, ticket reference; không tự đóng ticket |
-| workforce | Kỹ năng xác nhận, lịch/absence, capacity và allocation | Users/teams; transaction phối hợp assignment theo thứ tự khóa thống nhất |
-| automation | Policy/grant, run/action, approval, outbox delivery và dedup | Domain services; chỉ thực thi intent đã kiểm quyền/versions |
-| ai_assistant / knowledge | Hội thoại/nháp/xác nhận, KB version/ACL/chunk và adapter | Scoped read services; mutation qua domain service; không SQL/shell từ model |
-| assets / notifications / reports / audit | Tài sản, người nhận, chỉ số và dấu vết | Truy vấn đúng scope; effect phát từ domain transaction, không dựng số liệu từ output model |
+| Data-owning module | Contracts/responsibility | Allowed dependencies |
+| --- | --- | --- |
+| auth/users/teams | Sessions/users/organization/membership/access grants/revocation | Supply principal/scope, emit access events |
+| tickets/sla | Tickets/conversations/parent files/snapshots/clocks/breaches | Auth/private-file services; no direct model write rights |
+| work_management | Plans/versions/tasks/DAG/transitions/assignments | Workforce/capacity/policy/ticket references; no ticket auto-close |
+| workforce | Verified skills/schedules/absence/capacity/allocation | Users/teams; consistent lock ordering with assignments |
+| automation | Policies/grants/runs/actions/approvals/outbox delivery/dedup | Domain services; authorized/version-checked intents only |
+| ai_assistant/knowledge | Chats/drafts/confirmation/KB versions/ACL/chunks/adapters | Scoped reads; writes through domain services; no model SQL/shell |
+| assets/notifications/reports/audit | Assets/recipients/metrics/traces | Scoped queries; transaction-derived effects, not model-generated statistics |
 
-Router không truy cập repository của module khác để bỏ qua domain service. API và worker cùng dùng hợp đồng service, không gọi qua HTTP nội bộ để giả một phiên Admin. Ranh giới này là thiết kế, chưa phải cấu trúc package đã có.
+Routers cannot bypass services through other modules' repositories. API/workers use shared service contracts, not internal HTTP Admin impersonation. These boundaries are planned packages.
 
-## 2. Xác thực và phạm vi
+## 2. Authentication and scope
 
-Session opaque server-side lưu hash trong PG, cookie HttpOnly/host-only/Path=/, SameSite=Lax và Secure production; không token localStorage. Argon2id qua pwdlib. CSRF cho mutation/login, kiểm tra Origin/Referer allowlist; SameSite không thay CSRF. Thu hồi mọi phiên khi khóa user, xoay phiên khi đăng nhập/thay đổi bảo mật; role/membership/active kiểm tra theo request. Bootstrap/password/reset không email cần quyết định chi tiết D-40.
+Opaque server-side sessions hashed in PostgreSQL; HttpOnly/host-only/Path=/, SameSite=Lax, production Secure cookies. No localStorage tokens. Argon2id via pwdlib. Mutation/login CSRF with Origin/Referer allowlist; SameSite is insufficient alone. Lock revokes all sessions; login/security changes rotate. Check role/membership/active per request. Bootstrap/password/non-email-reset details remain D-40.
 
-R/T/M/A theo [ma trận quyền](../requirements/permissions-matrix.md). Trợ lý dùng actor user; nền dùng AI_COORDINATOR gắn grantor/policy/scope. Không giả Admin/Manager. Requester không nhận nội bộ/nhân lực/plan/audit AI. Scope áp dụng trước list/count/lookup/report, download và history/cache; ngoài scope trả 404 chung, cấm chức năng trả 403.
+R/T/M/A follow [permissions](../requirements/permissions-matrix.md). Assistant uses user actor; background AI_COORDINATOR binds grantor/policy/scope, never impersonated Admin/Manager. Requester receives no internal/workforce/plan/AI-audit data. Scope before list/count/lookup/report/download/history/cache; generic 404 for records, 403 for prohibited features.
 
-### Trust boundary và tình huống đe dọa
+### Trust boundaries and threats
 
-| Boundary / rủi ro | Kiểm soát thiết kế | Bằng chứng cần có khi triển khai |
-|---|---|---|
-| Browser → API: giả role, IDOR, CSRF | Principal từ phiên; role/scope server; CSRF/Origin; field projection trước response | Negative API test với ID người khác, count/lookup/download và phiên cũ |
-| Nội dung ticket/KB → model: prompt injection | Nguồn là dữ liệu chưa tin cậy; tool allowlist/schema; không secret/shell/SQL; quyền không do prompt quyết định | Bộ injection và tool args giả quyền; không có domain effect trái phép |
-| Model/worker → domain: TOCTOU, trùng effect | Revalidate grant/policy/ACL/version/capacity trong transaction; unique business keys | Đổi policy/lịch/quyền trong lúc model chờ; hai worker và crash trước ack |
-| Public ↔ internal: lộ hội thoại/tệp/citation | Phiên AI tách visibility; scoped source trước provider và kiểm lại trước hiển thị | Thu hồi quyền khi stream/index pending; kiểm history/cache và link nguồn |
-| Tệp → storage/browser: giả MIME, public access | Allowlist/signature/size; private object; download kiểm quyền cha, attachment/nosniff | MIME giả, boundary size/count, quyền tệp note và object không qua API |
-| Secrets/log/provider: rò dữ liệu và chi phí | Secrets ngoài repo/log; redaction; egress data policy; ledger reservation và bounded retry | Quét response/log; concurrent budget/timeout unknown; không tự tăng model/budget |
-| Backup/restore: replay và lộ bản sao | Quyền/mã hóa; restore cách ly, dừng outbound/worker; đối chiếu ledger/dedup | Diễn tập không gọi provider hoặc tạo assignment/notification cũ lần hai |
+| Boundary / threat | Design controls | Future evidence |
+| --- | --- | --- |
+| Browser→API: forged role/IDOR/CSRF | Session principal/server scope/CSRF/Origin/response projection | Other-user IDs/count/lookups/download/old-session negative tests |
+| Ticket/KB→model: injection | Untrusted source data, tool allowlist/schema, no secrets/shell/SQL; prompts grant nothing | Injection/forged-tool-argument cases, no unauthorized effects |
+| Model/worker→domain: TOCTOU/duplicates | Transactional grant/policy/ACL/version/capacity revalidation, unique business keys | Change schedule/policy/access while model waits, two workers/crash pre-ack |
+| Public↔internal: chats/files/citations | Visibility-separated AI sessions/scoped sources before provider and display | Revocation during stream/index; history/cache/source-link tests |
+| Files→storage/browser: MIME spoof/public access | Allowlist/signature/size/private objects/parent download authorization/attachment/nosniff | Spoof/size/count/note-access/direct-object tests |
+| Secrets/log/provider: leaks/costs | Secrets outside repo/logs, redaction, egress policy, ledger reservations/bounded retries | Response/log scan, concurrent budgets/unknown timeouts; no autonomous upgrades |
+| Backup/restore: replay/copied-data leaks | Access/encryption/isolated restore/outbound-worker pause/ledger-dedup checks | No provider calls or repeated old assignments/notifications |
 
-Rate limit cụ thể, session TTL, retention, scanner tệp bổ sung nếu áp dụng, incident owner và SLO production cần quyết định trước vận hành tại D-40; không tự tuyên bố tuân thủ tiêu chuẩn bảo mật hoặc kết quả pentest.
+Rate limits/session TTL/retention/optional scanners/incident owner/production SLO require D-40 decisions. No security-certification/pentest-result claims.
 
-## 3. Transaction và đồng thời
+## 3. Transactions and concurrency
 
-Mỗi mutation ghi domain + audit + outbox nguyên tử, rollback toàn bộ nếu lỗi. UUID nội bộ/mã hiển thị unique theo cơ chế an toàn; không MAX+1. Expected version cập nhật có điều kiện, conflict 409, không ghi đè âm thầm. Dùng SQLAlchemy version/khóa phù hợp, không coi ORM version tự bảo vệ bulk update.
+Mutations atomically commit domain + audit + outbox, fully rolling back failures. Safe unique UUID/internal/display code generation, not MAX+1. Conditional expected-version updates return 409 without silent overwrite. Appropriate SQLAlchemy versioning/locks; ORM versions do not inherently protect bulk updates.
 
-Plan nhiều phiên bản/ticket, unique có điều kiện bảo đảm chỉ một phiên bản effective. Dependency cùng plan, DAG, không tự bắt đầu khi predecessor chưa Done. AssetAssignment chỉ một lượt chưa thu hồi/asset bằng partial unique + transaction. Mọi kiểm tra và giữ chỗ nguồn lực phải atomic, không chỉ kiểm tra UI.
+Multiple plan versions per ticket with partial uniqueness for one Effective. Same-plan DAG dependencies; no starts before predecessors Done. One unreturned AssetAssignment per asset via partial unique+transaction. Resource checks/reservations are atomic, not UI-only.
 
-Assignment khóa các hàng nhân lực/allocation liên quan theo thứ tự xác định, re-read load/calendar/skills rồi ghi; thay lịch/kỹ năng/assignment cũng tuân thủ thứ tự khóa đó. Chỉ khóa nguồn lực cần thiết, không mặc định khóa toàn bộ user. Lock granularity, isolation và thứ tự khóa vật lý phải được review ở refinement trước M1/M2; chưa có DDL/migration.
+Assignments lock relevant workforce/allocation rows in fixed order, re-read load/calendar/skills, then write. Schedule/skill/assignment edits follow the same order. Lock only needed resources, not all users. Physical granularity/isolation/order require pre-M1/M2 refinement; no DDL/migrations yet.
 
-## 4. Tách model call khỏi giao dịch
+## 4. Model calls outside transactions
 
-Domain transaction → OutboxEvent → worker claim/lease + Run → snapshot nguồn/candidates/versions → kết thúc transaction đọc → adapter model → schema/semantic validation → transaction mới khóa/re-read → policy/grantor/ACL/version/capacity/feasibility → service tool → domain + Action + audit + notification + outbox → commit → ack.
+Domain transaction → OutboxEvent → worker claim/lease + Run → scoped sources/candidates/versions → close read transaction → model adapter → schema/semantic validation → new transaction locks/re-reads → policy/grantor/ACL/version/capacity/feasibility → service tool → domain + Action + audit + notification + outbox → commit → ack.
 
-Không giữ connection transaction hoặc DB lock qua thời gian chờ model. Proposal lỗi/refusal/timeout không ghi task/assignment nửa vời. Snapshot cũ phải đánh giá lại. Model ranking chỉ trong candidates backend đã lọc, mỗi tool vẫn recheck; không dùng đề xuất model làm quyền.
+No open DB transaction/lock during model wait. Invalid/refused/timed-out proposals create no partial tasks/assignments. Stale snapshots require evaluation. Ranking stays within backend-filtered candidates; every tool rechecks, and model proposals are not grants.
 
-## 5. Event, outbox, retry và chống trùng
+## 5. Events, outbox, retries, deduplication
 
-| Sự kiện dự kiến | Nguồn transaction | Tác vụ tiếp theo |
-|---|---|---|
-| ticket.created / information.updated | Ticket/confirmed command | Kiểm tra đầu vào, lập plan hoặc hỏi thiếu |
-| plan.activated / task.assigned | Work service | Notification và quan sát; allocation/audit đã commit cùng assignment |
-| task.progressed / blocked / completed | Người cập nhật qua service | Unlock dependency, rà nguy cơ, báo cáo; không tự đóng ticket |
-| availability.changed / skills.changed / membership.changed | Workforce/quản trị | Xác định task ảnh hưởng, replan trong policy hoặc approval |
-| sla.risk / deadline.risk / load.changed | SLA/work service | Nhắc/ngoại lệ đúng scope |
-| policy.changed / approval.decided | Manager service | Chặn/revalidate pending action; thực thi quyết định hợp lệ |
-| knowledge.published / access.revoked | Knowledge service | Index/reindex; ACL truy vấn hiệu lực ngay |
+| Proposed event | Source transaction | Follow-up |
+| --- | --- | --- |
+| ticket.created / information.updated | Ticket/confirmed command | Validate inputs, plan or clarify |
+| plan.activated / task.assigned | Work service | Notify/observe; allocation/audit already committed with assignment |
+| task.progressed / blocked / completed | Human service update | Unlock dependencies, assess risk, report; no ticket auto-close |
+| availability.changed / skills.changed / membership.changed | Workforce/admin | Affected-task policy replanning/approval |
+| sla.risk / deadline.risk / load.changed | SLA/work service | Scoped reminders/exceptions |
+| policy.changed / approval.decided | Manager service | Block/revalidate pending actions; execute valid decisions |
+| knowledge.published / access.revoked | Knowledge service | Index/reindex; query ACL effective immediately |
 
-Event lưu ID, loại, aggregate/version, actor/correlation, payload tối thiểu, createdAt. Outbox lưu trạng thái, attempt, lease/token, nextAttemptAt, deliveredAt/error; bảng vật lý có thể tách event và delivery. Publisher quét pending/lease hết hạn rồi gửi broker; có thể gửi lặp. Consumer claim theo event + handler/purpose và dedup action nghiệp vụ trong DB. Kết quả commit được đọc lại khi retry sau ack lỗi.
+Events store ID/type/aggregate/version/actor/correlation/minimal payload/createdAt. Outbox stores status/attempt/lease-token/nextAttemptAt/deliveredAt/error; physical event/delivery tables may separate. Publisher scans pending/expired leases and may redeliver. Consumer claims event+handler/purpose and DB-deduplicates business effects. Postcommit ack failures return stored outcomes on retry.
 
-Khóa idempotency đề xuất: confirmed-ticket = actor + key + content digest; run = event + purpose; action = run + intent + target + version; allocation = task + plan revision; notification = business event + recipient + type; SLA giữ BR-10. Cùng key khác nội dung trả conflict. Khóa business key cụ thể phải chốt theo schema, không chỉ dùng Celery task ID hoặc Redis lock.
+Proposed keys: confirmed-ticket=actor+key+digest; run=event+purpose; action=run+intent+target+version; allocation=task+plan revision; notification=business event+recipient+type; SLA follows BR-10. Same key/different content conflicts. Final schema keys need review, not Celery IDs/Redis locks alone.
 
-Lỗi tạm thời backoff có jitter, số lần/timeout cấu hình hữu hạn; lỗi quyền/schema/stale/không khả thi không retry mù mà đánh giá lại hoặc chuyển quản lý. Hết retry vào failed/dead-letter có lý do, người có quyền retry bằng thao tác audit; không tạo action mới nếu intent đã thành công. Queue outage phục hồi từ PG, không mất event. Outbox không bảo đảm exactly-once delivery; cần hiệu ứng nghiệp vụ chống trùng.
+Transient failures use bounded timeouts/retries/jittered backoff. Authorization/schema/stale/infeasibility do not blindly retry; re-evaluate/escalate. Exhaustion persists failed/dead-letter reasons; authorized retries audited, never repeat successful intents. PostgreSQL recovers queue outages. Outbox is not exactly-once delivery; business effects need deduplication.
 
-[EVT01–EVT17 và event envelope](api-design.md#hợp-đồng-sự-kiện-nội-bộ) là catalog tên/producer/consumer; bảng trên là tóm tắt kiến trúc. Allocation và audit của assignment phải được ghi ngay trong transaction thực hiện assignment; consumer sau commit chỉ gửi thông báo/đánh giá tiếp, không bổ sung allocation bắt buộc một cách không nguyên tử.
+[EVT01–17/event envelope](api-design.md) is the authoritative producer/consumer catalog; above is architectural summary. Assignment allocation/audit is atomic in its transaction; postcommit consumers only notify/evaluate, not add required allocations later.
 
-## 6. Workforce và lập kế hoạch
+## 6. Workforce and planning
 
-Nguồn và công thức ở BR-16; dùng phút, lịch và khoảng cụ thể. Allocation nhiều kỳ được tách theo giao của kỳ/lịch; tổng công sức phân bổ bằng remaining, không đếm lại toàn bộ effort cho từng kỳ. Absence chồng nhau trừ theo hợp khoảng; dữ liệu thiếu không coi là rảnh. Task chưa phân bổ là rủi ro hiển thị, không bị bỏ khỏi báo cáo.
+BR-16 defines minute-based formulas/concrete windows. Multi-period allocations follow schedule/period intersections and total remaining effort, not full effort repeated per period. Absence overlaps use interval union; missing data is not availability. Unallocated work is visible risk, not omitted reporting.
 
-Kiểm tra cả tải, lịch kỹ năng/nhóm, predecessor, deadline và cam kết/SLA; capacity tổng đủ không tự chứng minh lịch khả thi. Độ dài kỳ, daily budget, timezone lịch và mức độ chi tiết slot là Cần quyết định D-40; thiết kế không tự coi ví dụ demo là policy doanh nghiệp.
+Check load, skills/team schedules, predecessors, deadlines, commitments/SLA. Aggregate capacity does not prove schedulability. Period length/daily budget/calendar timezone/slot granularity remain D-40; DEMO schedules are not enterprise policy.
 
-## 7. Approval và can thiệp
+## 7. Approval and intervention
 
-Proposal có before/after, lý do/tác động, record/policy/workforce/plan versions và nguồn. Pending → Approved/Rejected/Expired/Superseded; execution tách Pending/Running/Succeeded/Failed/Conflict. Duyệt là quyết định, không tự đồng nghĩa thay đổi thành công. Approval + execution đều kiểm tra quyền/policy hiệu lực/capacity/version; stale tạo Conflict hoặc proposal mới, không tự áp dụng.
+Proposal: before/after/reason/impact/record-policy-workforce-plan versions/sources. Decision Pending→Approved/Rejected/Expired/Superseded; execution separately Pending/Running/Succeeded/Failed/Conflict. Approval is a decision, not effect success. Both decision/execution recheck rights/effective policies/capacity/versions. Stale→Conflict/new proposal, never automatic stale application.
 
-Manager tắt policy hoặc khóa assignment phải có hiệu lực trước action ghi. Tôn trọng quyết định thủ công; mọi override lưu actor/lý do. Hoàn tác dùng compensating action hợp lệ, không xóa history hoặc lùi task Done.
+Policy disable/assignment locks take effect before writes. Respect/audit manual overrides. Undo uses valid compensating actions, not history deletion or Done regression.
 
-## 8. SLA, tài sản, KB và tệp
+## 8. SLA, assets, KB, files
 
-SLA ticket giữ 24/7, snapshot P1–P4, pause resolution khi Pending, resume phần còn lại, không reset do chuyển nhóm/đổi người. First response là public IT comment hợp lệ; chat/automation reminder không tính. Worker/API dùng chung service, breach/dedup DB, quét mỗi 60 giây. Task calendar không thay SLA.
+Ticket SLA retains 24/7/P1–P4 snapshots/Pending resolution pause/remaining-budget resume; team/assignee changes never reset. First response requires eligible public IT comment, not chat/reminder. Worker/API share services/DB breaches/dedup; 60 s scans. Task calendars do not redefine SLA.
 
-Inventory/assignment là nguồn thực; thiếu thiết bị mở ngoại lệ. Reservation nếu áp dụng phải có vòng đời riêng khỏi cấp phát, TTL/thu hồi/audit và chống hai plan giữ cùng tài sản; chi tiết reservation Cần quyết định trước schema, không mặc định AI tự cấp phát.
+Real inventory/assignments are authoritative; shortages become exceptions. Reservations, if adopted, need separate lifecycle/TTL/release/audit and cross-plan uniqueness. Details require decisions before schema, not autonomous AI issue.
 
-KB Article → immutable Version → Chunk/Embedding và ACL. Published/quyền/version lọc tại SQL trước retrieval, recheck trước provider/render. Worker index/reindex chỉ cập nhật vector, không nguồn quyết định ACL. pgvector là stack mục tiêu; embedding provider/dimension/chunking/reranking và SLA index cần chốt, không gọi keyword lookup là RAG hoàn chỉnh.
+KB Article→immutable Version→Chunk/Embedding+ACL. SQL filters Published/current access/version before retrieval, rechecks before provider/render. Index workers update vectors, never decide ACL. pgvector is target stack; embedding/dimensions/chunking/reranking/index SLA undecided. Keyword lookup is not full RAG.
 
-Tệp PNG/JPEG/WebP/PDF, ≤10.000.000 byte/tệp, ≤5/lần; kiểm nội dung/signature, không tin MIME/filename. Private local dev/S3 production, download qua auth/scope, attachment/nosniff; không public URL. Stage/finalize/reconcile object mồ côi; PG không rollback S3. Timestamp UTC aware; ngày thuần date không ép timestamp; hiển thị Asia/Ho_Chi_Minh.
+Allow PNG/JPEG/WebP/PDF, ≤10, 000, 000 bytes/file, ≤5/action; validate signatures, not MIME/name alone. Private local dev/S3 production; authorized attachment/nosniff downloads, no public URLs. Stage/finalize/reconcile orphan objects; PostgreSQL cannot roll back S3. Aware UTC timestamps; pure dates stay dates; Asia/Ho_Chi_Minh display.
 
-## 9. Vận hành và khôi phục — kế hoạch
+## 9. Planned operations and recovery
 
-Production mục tiêu: Nginx, frontend, API, Celery worker, một Beat, PG và Redis trên Linux; S3 private. Worker Linux kể cả dev Windows. Health/liveness tách readiness DB/broker/provider; provider lỗi không làm core mất khả dụng. JSON log/request ID/event/run/action correlation; không password/session/key/prompt nhạy cảm. Giám sát outbox lag, failed runs, approval tồn, queue depth, SLA scan delay và usage.
+Production target: Linux Nginx/frontend/API/Celery/one Beat/PostgreSQL/Redis, private S3. Linux workers even on Windows dev. Separate liveness/readiness and DB/broker/provider health; provider failure does not invalidate core health. JSON request/event/run/action correlations without passwords/sessions/keys/sensitive prompts. Monitor outbox lag/failed runs/approval backlog/queue depth/SLA scan delay/usage.
 
-Migration một lần mỗi release trước traffic, backup trước thay đổi; review forward/backward compatibility, không để replica tự migrate. CI tương lai: frozen lock, lint/typecheck, test, migration DB sạch/nâng cấp, OpenAPI/type drift, build/E2E; không có pipeline/config thực thi ở đợt này.
+One migration process per release before traffic, backup first, forward/backward compatibility review; replicas never auto-migrate. Future CI: frozen installs, lint/types/tests, clean/upgrade migrations, OpenAPI/type drift, build/E2 E. No executable pipeline/config created now.
 
-Backup PG hằng ngày cùng private files/object versions, kiểm quyền/mã hóa/retention theo D-40; giữ KB/history/event/audit/usage. Restore vào môi trường cách ly, chặn outbound model/email và pause worker trước phục hồi; restore DB + files, kiểm migration/references/count/SLA/outbox, xác minh action cũ không replay, rồi cho worker tiếp tục có kiểm soát. Chỉ đổi traffic sau kiểm tra; diễn tập định kỳ. RPO/RTO, retention, owner lịch diễn tập: Cần quyết định, chưa cam kết.
+Daily PostgreSQL/private-file/object-version backups with D-40 access/encryption/retention, including KB/history/events/audit/usage. Restore isolated with model/email egress blocked and workers paused. Restore DB/files, verify migrations/references/counts/SLA/outbox and no successful-action replay, then resume workers under control. Switch traffic after checks, rehearse regularly. RPO/RTO/retention/rehearsal owner remain undecided/unpromised.
 
-Dữ liệu/tài khoản demo và database test tách production. Cấu hình kiểm thử AI giới hạn demo/5 USD ở D-39 không cấp quyền gửi dữ liệu thật. Chưa có triển khai, backup hoặc restore đã chạy.
+DEMO accounts/data/test DB separate from production. D-39 DEMO/USD5 permission grants no real-data access. No deployment/backup/restore has run.
 
-### Trình tự phát hành và khôi phục dự kiến
+### Proposed release and recovery order
 
-| Bước | Điều kiện / hành động dự kiến | Điểm kiểm soát |
-|---|---|---|
-| Trước phát hành | Xác nhận được phép triển khai, cấu hình/secret đúng môi trường, kiểm tương thích và backup đọc được | Chưa thực hiện; không dùng hồ sơ thiết kế thay phê duyệt chạy production |
-| Migration | Một tiến trình nâng cấp schema; kiểm trước/sau và tương thích API/worker | Nếu lỗi, dừng mở traffic; rollback/forward-fix phải dựa phương án migration đã review |
-| Mở ứng dụng | Kiểm DB/storage/session, khởi động API/frontend rồi worker và một Beat | Readiness lõi khác tình trạng broker/provider; feature flag AI không chặn core |
-| Theo dõi | Request errors/latency; queue depth, outbox lag, lease hết hạn, scan delay, failed actions, approval age, usage/reserved cost | Ngưỡng cảnh báo và người trực chưa chốt; không mặc định mọi event xử lý trong 60 giây |
-| Tạm ngưng automation | Disable policy/feature flag, chặn effect mới tại service; giữ run/error/audit | Không xóa pending event hoặc ghi giả thành công; lịch sử không bị mất |
-| Phục hồi | Chọn backup, cách ly môi trường, pause worker và outbound, restore DB/tệp nhất quán | Kiểm reference/count/checksum khi có, clock/snapshot/usage/dedup; không replay action đã thành công |
-| Cho chạy lại | Kiểm quyền/policy hiện hành, lease và pending backlog; mở worker có kiểm soát rồi traffic | Ghi evidence, người quyết định và giới hạn RPO/RTO thực đo; chưa có kết quả diễn tập |
+| Step | Planned condition/action | Control |
+| --- | --- | --- |
+| Prerelease | Authorization, environment-correct settings/secrets, compatibility/readable backup | Not performed; design is not production execution approval |
+| Migration | One upgrader, before/after/API-worker compatibility checks | Failure blocks traffic; rollback/forward-fix follows reviewed migration plan |
+| Start | DB/storage/session checks, API/frontend then workers/one Beat | Core readiness differs from broker/provider health; AI flag does not block core |
+| Monitor | Errors/latency/queue/outbox/expired leases/scan delay/failed actions/approval age/usage/reserved cost | Alert thresholds/on-call owner undecided; not all events complete within 60 s |
+| Pause automation | Disable policy/flag, service blocks new effects, retain runs/errors/audit | No deleted pending events/false success/lost history |
+| Recover | Select backup, isolate, pause workers/egress, consistently restore DB/files | References/counts/checksums when available; clocks/snapshots/usage/dedup, no successful-action replay |
+| Resume | Current rights/policies/leases/backlog, controlled workers then traffic | Record evidence/decision-maker/measured RPO/RTO; no rehearsal result yet |
 
-### Tradeoff và điều kiện còn mở
+### Tradeoffs and open decisions
 
-Modular monolith giảm số ranh giới triển khai nhưng đòi hỏi giữ kỷ luật service và transaction. Session PG và outbox đặt tính bền vững tại một nơi nhưng làm DB thành phụ thuộc lõi. Celery/Redis chấp nhận redelivery nên cần idempotency ở DB. Model ngoài transaction tránh giữ lock dài nhưng bắt buộc kiểm lại snapshot; dùng model không thay thuật toán kiểm khả thi. pgvector gom quyền và nguồn vào PG nhưng embedding/index freshness vẫn cần quyết định riêng.
+Modular monolith reduces deployment boundaries but needs disciplined services/transactions. PostgreSQL sessions/outbox centralize durability while making DB a core dependency. Celery/Redis redelivery needs DB idempotency. Models outside transactions avoid long locks but require snapshot revalidation; models do not replace feasibility checks. pgvector co-locates sources/access in PostgreSQL, while embedding/freshness decisions remain separate.
 
-Các hệ quả này truy về D-30–38 và NFR14–25; topology HA, isolation/lock vật lý, retention/SLO và provider production còn ở D-40. Không đổi stack để lấp chi tiết chưa chốt.
+Trace to D-30–38/NFR14–25. HA/isolation/physical locks/retention/SLO/production providers remain D-40. Do not change the stack to fill open details.
 
-## 10. Thiết kế giới hạn chi phí kiểm thử AI — chưa chạy
+## 10. AI test cost controls — not run
 
-Trước request có phí phải xác minh quyền model/billing/quota/giá, nội dung demo-only và DB test. D-39 cho trần tổng 5 USD cả generation/embedding/retry; không tự đổi model đắt hơn. Cấu hình max calls/input/output/retries/concurrency và phần dự phòng phải được xác định trước chạy, không lấy provider timeout làm lý do chạy tiếp không giới hạn.
+Before paid requests verify model access/billing/quota/prices, DEMO-only payloads/test DB. D-39 caps total generation/embedding/retries at USD5, no more expensive fallback. Set max calls/input/output/retries/concurrency/safety margin before execution; timeouts do not justify unlimited continuation.
 
-Ledger giữ actualSpent + reservedInFlight + unknownCost theo transaction/lock ngân sách. Reserve upper bound bảo thủ từ giới hạn token/giá hiện hành trước gửi, kể cả reasoning/cached/embedding theo cách provider tính. Chỉ phát request nếu tổng cộng reservation mới còn dưới trần sau trừ safety margin; retry là request mới phải reserve riêng. Khi timeout không có usage xác định thì giữ khoản bảo thủ, không tự giải phóng như 0 USD. Usage có nguồn mới settle và đối chiếu billing; báo riêng phí đo được/ước lượng/unknown. Chưa có lượt gọi, ledger hoặc billing evidence thực tế.
+Ledger transaction/locks track actualSpent + reservedInFlight + unknownCost. Reserve conservative upper bounds from token limits/current prices, including provider-billed reasoning/cached/embedding usage. Send only when existing totals+new reservation remain below cap less safety margin. Every retry reserves separately. Timeout without known usage retains a conservative amount, never releases it as USD0. Settle only from sourced usage/reconcile billing; distinguish measured/estimated/unknown charges. No actual calls/ledger/billing evidence.
 
-## Tài liệu liên quan
+## Related documents
 
-[SQLAlchemy versioning](https://docs.sqlalchemy.org/en/21/orm/versioning.html), [Celery tasks](https://docs.celeryq.dev/en/stable/userguide/tasks.html) là tài liệu kỹ thuật tham khảo; không thay bằng chứng kiểm thử sau triển khai. [API thiết kế](api-design.md) · [ERD](../requirements/conceptual-data-model.md) · [quyền](../requirements/permissions-matrix.md).
+[SQLAlchemy versioning](https://docs.sqlalchemy.org/en/21/orm/versioning.html), [Celery tasks](https://docs.celeryq.dev/en/stable/userguide/tasks.html) are technical references, not application test evidence. [API design](api-design.md) · [ERD](../requirements/conceptual-data-model.md) · [Permissions](../requirements/permissions-matrix.md).
+
+## AI Workspace and action channel — D-42
+
+Frontend `/assistant` hosts conversations/native action cards/scoped activity. Assistant and automation retain separate actors/contexts/queues/tool grants; UI never merges identities/authority. Shared model/adapter uses one reserved global budget plus sublimits, not an increased D-39 cap.
+
+Server registry prepares cards; trusted frontend forms call original domain APIs after user confirmation. No general-purpose proxy or model-selected endpoints/SQL/JS. Tickets retain draft/confirm; other mutations retain domain validation/concurrency/idempotency/audit/outbox. Chat history/event feeds have distinct ACLs. Shared UI does not change C4 backend/modules/workers or make workers depend on browsers when assistants/providers are disabled.

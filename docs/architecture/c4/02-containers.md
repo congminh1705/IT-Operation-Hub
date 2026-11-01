@@ -7,40 +7,44 @@ module: c4
 tags: [architecture, c4, design]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: derived
-purpose: "Định nghĩa đơn vị chạy, giao thức và nguồn dữ liệu chuẩn."
+purpose: "Define runtime units, protocols, and systems of record."
 ---
 
 # C2 — Container
 
-**Target containers; chưa deploy.** Dùng lại FIG-CNT01 trong [nguồn Mermaid](../../diagrams/architecture.md).
+**Target containers; not deployed.** Reuses FIG-CNT01 in the [Mermaid source](../../diagrams/architecture.md).
 
 ![C2 — Containers](../../diagrams/system-containers.svg)
 
 ## Container catalog
 
-| Container | Công nghệ / trách nhiệm | Giao thức / dữ liệu |
-|---|---|---|
-| Web UI | Next.js/React/TypeScript, navigation/forms/query | HTTPS cùng origin tới /api/v1; không DB |
+| Container | Technology / responsibility | Protocol / data |
+| --- | --- | --- |
+| Web UI | Next.js/React/TypeScript, navigation/forms/queries | Same-origin HTTPS to /api/v1; no DB access |
 | API | FastAPI/Pydantic, auth/scope/domain HTTP | JSON/multipart; session cookie + CSRF |
-| Worker | Celery, shared domain services, Session riêng/job | Redis deliver/ack, PostgreSQL transaction, provider HTTPS |
-| Scheduler | Một Celery Beat | Phát job định kỳ, không tự đổi trạng thái nghiệp vụ |
-| Broker | Redis | At-least-once; không sole durable event/session store |
-| Database | PostgreSQL/pgvector, domain/session/outbox/audit/KB/usage | SQLAlchemy đồng bộ qua Psycopg; ACL vẫn ở domain |
-| Private file store | Local dev / S3 private production dự kiến | API kiểm quyền cha; DB/object storage có reconcile |
-| Reverse proxy | Nginx/TLS, một origin | /api → API; phần còn lại → Next.js |
+| Worker | Celery, shared domain services, separate Session per job | Redis delivery/ack, PostgreSQL transaction, provider HTTPS |
+| Scheduler | One Celery Beat | Enqueues periodic jobs; does not change business state itself |
+| Broker | Redis | At-least-once delivery; not the sole durable event/session store |
+| Database | PostgreSQL/pgvector, domain/session/outbox/audit/KB/usage | Synchronous SQLAlchemy via Psycopg; ACL remains in the domain |
+| Private file store | Local development / proposed private S3 in production | API checks parent-record access; DB/object-store reconciliation |
+| Reverse proxy | Nginx/TLS, one origin | /api → API; other paths → Next.js |
 
-Provider là external software system. ProviderAdapter là component trong backend/worker, không một microservice/container độc lập. Module trong monolith không tự thành container.
+The provider is an external software system. ProviderAdapter is a backend/worker component, not an independent microservice/container. Monolith modules are not automatically containers.
 
-## Reliability và deployment
+## Reliability and deployment
 
-Outbox/event persisted trước publish; worker claim/dedup/re-read trước effect và ack sau commit. Model call ngoài DB transaction. Queue SLA/notification/indexing tách AI để provider chậm không chặn clock. Một Beat không đồng nghĩa một worker. Database down → readiness không sẵn sàng; provider down → degrade AI, core vẫn dùng được nếu các phụ thuộc core còn tốt.
+Persist the outbox/event before publishing; workers claim/deduplicate/re-read before effects and acknowledge after commit. Model calls run outside database transactions. Separate SLA/notification/indexing queues from AI so slow providers do not block clocks. One Beat does not mean one worker. Database failure makes readiness fail; provider failure degrades AI while core features remain usable if core dependencies are healthy.
 
-[Deployment topology](../../diagrams/deployment-topology.svg) mô tả layout logic; VPS/HA/capacity/RPO/RTO/owner vẫn D-40. Không hard-code địa chỉ production.
+[Deployment topology](../../diagrams/deployment-topology.svg) describes the logical layout. VPS/HA/capacity/RPO/RTO/ownership remain D-40 decisions. Do not hard-code production addresses.
 
-## Liên quan
+## Related documents
 
 [Architecture](../../technical/architecture.md) · [API](../../api/README.md) · [C3](03-components.md).
+
+## D-42 — One frontend workspace
+
+Chat/action forms and activity share the Web UI screen. FastAPI retains assistant preparation and domain APIs; Celery runs event/policy automation independently of browser/chat lifetimes. Model/adapters may be shared, with separate contexts, actors, tool grants, and limits. A unified UI does not create a new container. See [flows and permissions](../../10-ai-assistant.md).

@@ -1,59 +1,59 @@
 ---
 id: itoh-docs-technical-tech-stack
-title: "Stack mục tiêu — IT Operations Hub"
+title: "Target stack — IT Operations Hub"
 type: reference
 domain: architecture
 module: technology
 tags: [architecture, technology, reference]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Ghi stack đã thống nhất và trách nhiệm từng nhóm công nghệ."
+purpose: "Record the agreed stack and each technology group’s responsibility."
 ---
 
-# Stack mục tiêu — IT Operations Hub
+# Target stack — IT Operations Hub
 
-**Thiết kế mục tiêu · Chỉ thiết kế.** Stack đã thống nhất; chưa có ứng dụng hoặc bộ dependency/runtime được nghiệm thu. Đợt này không cài dependency/sửa cấu hình/code.
+**Target design · Design only.** The stack is agreed, but no application or dependency/runtime set has passed acceptance. This phase installs no dependencies and changes no operational configuration or application code.
 
-## Công nghệ giữ nguyên
+## Retained technologies
 
-| Thành phần | Lựa chọn và trách nhiệm |
-|---|---|
-| Frontend | Next.js App Router/React/TypeScript strict, chỉ UI/REST; Tailwind CSS, shadcn/ui, Lucide React |
-| Forms | React Hook Form/Zod/resolvers; UX validation không thay backend |
-| Server state/table | TanStack Query/Table; query/paging/sort phía server, cache user/scope; polling 30 giây tab hoạt động |
-| Chart/time | Recharts, date-fns và timezone; UTC storage/ISO API, Asia/Ho_Chi_Minh display |
+| Component | Choice and responsibility |
+| --- | --- |
+| Frontend | Next.js App Router/React/TypeScript strict, UI/REST only; Tailwind CSS, shadcn/ui, Lucide React |
+| Forms | React Hook Form/Zod/resolvers; UX validation does not replace backend validation |
+| Server state/tables | TanStack Query/Table; server queries/paging/sorting, user/scope-partitioned cache; active-tab polling every 30 seconds |
+| Charts/time | Recharts, date-fns and timezones; UTC storage/ISO API, Asia/Ho_Chi_Minh display |
 | Backend | Python/FastAPI/Pydantic/pydantic-settings; modular monolith |
-| Database/ORM | PostgreSQL/SQLAlchemy Session đồng bộ/Alembic/Psycopg 3; không Django ORM |
-| Auth | PG server session, opaque cookie HttpOnly/Secure production/SameSite, Argon2id qua pwdlib và CSRF/login Origin |
-| Worker | Celery + Redis + một Beat; worker Linux kể cả Windows dev; tách queue AI/SLA/index |
-| AI | Provider/model/embedding adapter, structured output/tool allowlist; service backend giữ quyền ghi |
-| KB/RAG | PostgreSQL + pgvector; version/ACL/Published, chunk/embedding/indexing nền Celery; quyền runtime không phụ thuộc index |
-| Storage | Private local dev/S3 production qua boto3; API download kiểm scope cha |
-| Dependency | uv/pnpm, lock thật khi bắt đầu giai đoạn lập trình |
-| Quality/test | Ruff/mypy/ESLint/Prettier; pytest/HTTPX, Vitest/RTL, Playwright theo kế hoạch |
-| Deploy/ops | Docker Compose/Nginx/Uvicorn/Linux VPS/HTTPS, JSON logs/request ID, health/backup/restore, GitHub Actions nếu repo GitHub |
+| Database/ORM | PostgreSQL/synchronous SQLAlchemy Session/Alembic/Psycopg 3; no Django ORM |
+| Auth | PostgreSQL server sessions, opaque HttpOnly/Secure-in-production/SameSite cookies, Argon2id via pwdlib, CSRF/login Origin |
+| Workers | Celery + Redis + one Beat; Linux workers including Windows development; separate AI/SLA/index queues |
+| AI | Provider/model/embedding adapters, structured output/tool allowlist; backend services own write authorization |
+| KB/RAG | PostgreSQL + pgvector; version/ACL/Published, background Celery chunk/embedding/indexing; runtime authorization is independent of the index |
+| Storage | Private local development/private production S3 via boto 3; downloads check parent-record scope |
+| Dependencies | uv/pnpm; real lockfiles when implementation begins |
+| Quality/testing | Ruff/mypy/ESLint/Prettier; planned pytest/HTTPX, Vitest/RTL, Playwright |
+| Deployment/operations | Docker Compose/Nginx/Uvicorn/Linux VPS/HTTPS, JSON logs/request IDs, health/backup/restore, GitHub Actions if hosted on GitHub |
 
-Không Next.js business API/Prisma/Better Auth/BullMQ hoặc microservice mới. Route/dependency có query đồng bộ dùng cách phù hợp FastAPI để không blocking async event loop; Session riêng request/task, không global shared session.
+No Next.js business API/Prisma/Better Auth/BullMQ or new microservices. Routes/dependencies using synchronous queries must use suitable FastAPI execution so they do not block the async event loop. Each request/task has its own Session; no globally shared Session.
 
-## Phân hệ và trách nhiệm
+## Modules and responsibilities
 
-| Nhóm module | Trách nhiệm thiết kế |
-|---|---|
-| auth/users/teams | Danh tính, session/CSRF, role, phòng ban, nhóm và membership |
-| tickets/sla/assets | Yêu cầu/SLA 24/7, hội thoại/tệp và vòng đời tài sản |
-| work_management/workforce | Plan/version/DAG, task, kỹ năng/lịch/capacity/allocation |
-| automation | Policy/grant, outbox/events, run/action, approval và retry/idempotency |
-| ai_assistant/knowledge | Hội thoại/xác nhận/nguồn, adapter model/embedding, KB/version/ACL/RAG |
-| notifications/reports/audit | Thông báo, facts theo phạm vi và lịch sử hành động |
+| Module group | Design responsibility |
+| --- | --- |
+| auth/users/teams | Identity, sessions/CSRF, roles, departments, teams/membership |
+| tickets/sla/assets | Requests/24/7 SLA, conversations/files, asset lifecycle |
+| work_management/workforce | Plans/versions/DAG, tasks, skills/schedules/capacity/allocation |
+| automation | Policies/grants, outbox/events, runs/actions, approvals, retry/idempotency |
+| ai_assistant/knowledge | Conversations/confirmation/sources, model/embedding adapters, KB/version/ACL/RAG |
+| notifications/reports/audit | Notifications, scoped facts, action history |
 
-D-30–32 giữ stack; D-34 giới hạn tài liệu; D-35–38 mở rộng mục tiêu AI/KB; D-39 chỉ cấu hình kiểm thử demo; production Cần quyết định D-40. Nhánh Node/Python/PG cụ thể và mọi patch trong [danh mục phiên bản](version-baseline.md) là ứng viên lịch sử cần kiểm chứng lại, không tự nâng major.
+D-30–32 retain the stack; D-34 limits work to documentation; D-35–38 extend AI/KB targets; D-39 concerns DEMO testing only; production requires decisions under D-40. Specific Node/Python/PG branches and patches in the [version catalog](version-baseline.md) are historical candidates requiring revalidation, not authorization to upgrade majors.
 
-## Chưa triển khai
+## Not implemented
 
-Không có API/worker/AI/RAG/auth/DB/migration đang chạy hoặc test ứng dụng đã pass. Tài liệu API không phải OpenAPI được sinh, ERD không phải schema đã migrate. Không publish site hoặc đổi hosting để thay stack đã chốt.
+No running API/worker/AI/RAG/auth/DB/migration or passing application tests exist. API documentation is not generated OpenAPI from a running server; ERDs are not a migrated schema. Do not publish a site or change hosting to replace the agreed stack.
 
-[Architecture/ops](architecture.md) · [API thiết kế](api-design.md) · [ERD](../requirements/conceptual-data-model.md) · [Lộ trình M0–M5](../09-design-readiness.md).
+[Architecture/operations](architecture.md) · [API design](api-design.md) · [ERD](../requirements/conceptual-data-model.md) · [M0–M5 roadmap](../09-design-readiness.md).
