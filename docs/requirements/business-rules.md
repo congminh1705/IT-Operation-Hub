@@ -1,222 +1,222 @@
 ---
 id: itoh-docs-requirements-business-rules
-title: "Quy tắc nghiệp vụ chuẩn"
+title: "Business rules"
 type: reference
 domain: domain
 module: rules
 tags: [domain, rules, reference]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Là nguồn chuẩn cho bất biến, trạng thái, SLA, policy, approval và KB."
+purpose: "Provide authoritative invariants, states, SLA, policies, approvals, and KB rules."
 ---
 
-# Quy tắc nghiệp vụ chuẩn
+# Business rules
 
-Tài liệu này là nguồn thống nhất cho use case, AC, thông tin màn hình và công thức chỉ số. Các chi tiết bổ sung so với đề bài có tham chiếu [quyết định đề xuất](../decisions/design-decisions.md).
+This is the shared source for use cases, AC, screen information, and metric formulas. Details extending the brief reference [proposed decisions](../decisions/design-decisions.md).
 
-## BR-01 — Danh tính và lịch sử
+## BR-01 — Identity and history
 
-Một tổ chức, bốn vai trò người dùng; AI_COORDINATOR là danh tính dịch vụ nền theo D-35/D-38. Admin tạo tài khoản; không đăng ký công khai. Email chuẩn hóa và duy nhất; tài khoản không xóa khi đã có lịch sử. Khóa tài khoản vô hiệu mọi phiên server; mở khóa không khôi phục phiên cũ. Đổi role/membership có hiệu lực ở request tiếp theo. Không lưu mật khẩu, token hoặc nội dung tệp trong audit. Quyền theo [ma trận](permissions-matrix.md).
+One organization, four user roles; AI_COORDINATOR is a background service identity under D-35/D-38. Admin creates accounts; no public signup. Normalize emails and enforce uniqueness. Do not delete historical accounts. Lock revokes all server sessions; unlock never restores them. Role/membership changes apply on the next request. No passwords/tokens/file bodies in audit. See [permissions](permissions-matrix.md).
 
-Theo D-29, trưởng phòng dùng vai trò Requester tạo ticket loại Yêu cầu dịch vụ, danh mục Tài khoản ngay trong hệ thống. Admin xác minh chức trách người đề nghị và nhu cầu cấp, sau đó tạo user tại Quản trị → Người dùng, mặc định Requester. Chức danh trưởng phòng không phải role mới hoặc IT Manager; gửi ticket không tự cấp user/quyền. Vai trò IT cần phê duyệt đúng thẩm quyền, membership nhóm quản lý riêng. Trưởng phòng là requester và xác nhận đóng sau khi IT giải quyết; mật khẩu bàn giao ngoài ticket qua kênh doanh nghiệp. Admin đầu tiên và tài khoản trưởng phòng ban đầu được thiết lập có ủy quyền. Xem [quy trình cấp tài khoản](account-provisioning.md).
+Under D-29, department heads submit Service Request / Account tickets as Requester. Admin verifies authority/need and creates under Administration → Users, default Requester. Department head is not a new role or necessarily IT Manager; ticket submission does not grant accounts/rights. IT roles need authorized approval; membership is separate. Head remains requester and accepts closure. Passwords use enterprise handover outside tickets. First Admin/initial department-head accounts use authorized setup. See [provisioning](account-provisioning.md).
 
-## BR-02 — Định danh và dữ liệu ticket
+## BR-02 — Ticket identity and data
 
-Mã ticket tự sinh duy nhất, dạng `TKT-000123`; khoảng trống dãy mã chấp nhận được, không tái sử dụng. Người tạo là người yêu cầu trong MVP; không gửi thay người khác. Loại: sự cố cá nhân, yêu cầu dịch vụ. Nhóm mặc định là nhóm tiếp nhận hoạt động do Admin chọn; không để việc định tuyến tự động chưa có thực gây mất ticket [D-02].
+Generate unique codes such as `TKT-000123`; gaps are acceptable and codes are never reused. Creator is requester in MVP; no on-behalf submission. Types: personal incident, service request. Default team is Admin-selected active intake; nonexistent automatic routing must not lose requests [D-02].
 
-Tiêu đề, mô tả, loại, danh mục, ảnh hưởng và khẩn cấp bắt buộc. Tài sản và tệp không bắt buộc. Với workflow onboarding, cần xác minh danh sách nhân viên mới/cấu hình máy/số lượng/hạn bàn giao trước khi tự lập và giao kế hoạch; các trường cấu trúc này không bắt buộc cho mọi loại ticket, không phải quyền tra cứu danh sách nhân sự toàn tổ chức. Giới hạn đề xuất: tiêu đề 5–180 ký tự, mô tả 10–10.000, bình luận/giải pháp/lý do tối đa 10.000; lý do cần ít nhất 10 ký tự có nghĩa sau trim. Chuỗi toàn khoảng trắng không hợp lệ. Form giữ nguyên dữ liệu khi lỗi.
+Title/description/type/category/impact/urgency required; asset/files optional. Onboarding requires verified employee list/device configuration/quantity/handover deadline before automatic planning/assignment. These are not mandatory for every ticket or employee-directory rights. Proposed limits: title 5–180 characters, description 10–10, 000, comments/solutions/reasons maximum 10, 000; required reasons at least 10 meaningful trimmed characters. Whitespace-only invalid; preserve erroneous forms.
 
-## BR-03 — Ưu tiên
+## BR-03 — Priority
 
-| Ảnh hưởng \ Khẩn cấp | Cao | Trung bình | Thấp |
-|---|---|---|---|
-| Cao — toàn tổ chức | P1 | P2 | P3 |
-| Trung bình — nhóm/phòng ban | P2 | P3 | P3 |
-| Thấp — một người | P3 | P3 | P4 |
+| Impact / Urgency | High | Medium | Low |
+| --- | --- | --- | --- |
+| High — organization | P1 | P2 | P3 |
+| Medium — team/department | P2 | P3 | P3 |
+| Low — individual | P3 | P3 | P4 |
 
-Hệ thống tính ưu tiên từ hai đầu vào, không cho Requester truyền trực tiếp P1. IT xác minh; M/A điều chỉnh với lý do, lưu giá trị cũ/mới và đồng hồ đã dùng. Technician đề nghị điều chỉnh qua ghi chú nội bộ, không có quyền override. Không tự thay đổi ảnh hưởng/khẩn cấp ban đầu khi override ưu tiên.
+Server computes priority; Requester cannot supply P1 directly. IT verifies; M/A overrides with reason, old/new values, elapsed clocks. T suggests through internal notes, no override. Override does not silently edit original impact/urgency.
 
-## BR-04 — Máy trạng thái
+## BR-04 — State machine
 
-| Từ | Đến | Ai và điều kiện bổ sung |
-|---|---|---|
-| New | Open | T trong nhóm hoặc M/A; tiếp nhận không tính phản hồi đầu |
-| New | Cancelled | Người yêu cầu tự hủy; hoặc M/A có lý do |
-| Open | In Progress | Assignee hợp lệ trong nhóm; T phải là assignee, M/A được thực hiện |
-| Open | Cancelled | M/A có lý do |
-| In Progress | Pending | Assignee hoặc M/A, bắt buộc câu hỏi/lý do công khai |
-| In Progress | Resolved | Assignee hoặc M/A, bắt buộc giải pháp công khai |
-| In Progress | Cancelled | M/A có lý do |
-| Pending | In Progress | Người yêu cầu bình luận công khai có nội dung; hoặc assignee/M/A chủ động tiếp tục có lý do |
-| Pending | Cancelled | M/A có lý do |
-| Resolved | Closed | Chính người yêu cầu xác nhận |
-| Resolved | In Progress | Người yêu cầu hoặc M/A, lý do mở lại, assignee hợp lệ |
-| Closed | In Progress | Chỉ M/A, lý do mở lại, assignee hợp lệ |
-| Cancelled | — | Kết thúc, không mở lại |
+| From | To | Actor and extra guards |
+| --- | --- | --- |
+| New | Open | Team T or M/A; acceptance is not first response |
+| New | Cancelled | Requester cancels, or M/A with reason |
+| Open | In Progress | Valid team assignee; T must be assignee, M/A may act |
+| Open | Cancelled | M/A with reason |
+| In Progress | Pending | Assignee/M/A; required public question/reason |
+| In Progress | Resolved | Assignee/M/A; required public solution |
+| In Progress | Cancelled | M/A with reason |
+| Pending | In Progress | Substantive public requester reply, or assignee/M/A resumes with reason |
+| Pending | Cancelled | M/A with reason |
+| Resolved | Closed | Original requester confirms |
+| Resolved | In Progress | Requester/M/A, reopen reason, valid assignee |
+| Closed | In Progress | M/A only, reason, valid assignee |
+| Cancelled | — | Terminal, no reopen |
 
-Không có đường chuyển khác. Phân công, bình luận, đính kèm và đổi ưu tiên không tự đổi trạng thái, trừ phản hồi của người yêu cầu lúc Pending. Không bắt đầu từ New đi thẳng In Progress. MVP không tự đóng và không xóa ticket. Requester hủy New có xác nhận; lý do hủy tự nguyện; M/A hủy luôn bắt buộc lý do.
+No other transitions. Assignment/comments/files/priority do not change state, except requester replies while Pending. No New→In Progress shortcut. No auto-close/ticket deletion. Requester cancellation of New requires confirmation, optional reason; M/A cancellation always requires a reason.
 
-![Sơ đồ XMind — 14-ticket-states](../xmind/previews/14-ticket-states.svg)
+![XMind diagram — 14-ticket-states](../xmind/previews/14-ticket-states.svg)
 
-[Mở file XMind](../xmind/05-business-rules.xmind)
+[Open XMind](../xmind/05-business-rules.xmind)
 
-## BR-05 — Phân công và đồng thời
+## BR-05 — Assignment and concurrency
 
-Assignee là user hoạt động có vai trò T/M/A và thành viên nhóm phụ trách. M/A được chuyển nhóm, phải ghi lý do khi chuyển; chọn assignee hợp lệ trong nhóm mới hoặc bỏ assignee. Nếu ticket In Progress/Pending thì phải chọn người thay hợp lệ, không được để trạng thái đang xử lý mà không có người chịu trách nhiệm. Chuyển nhóm không reset SLA.
+Assignee must be active T/M/A and a current responsible-team member. M/A may transfer teams with a reason, selecting an eligible new-team assignee or clearing it. In Progress/Pending requires a valid replacement, never ownerless active work. Transfers never reset SLA.
 
-T chỉ tự nhận ticket **chưa có assignee**, thuộc nhóm mình. Mọi mutation có kiểm tra phiên bản; hai người nhận cùng lúc chỉ một người thành công. Người còn lại thấy tên người đã nhận sau khi kiểm tra lại quyền và giữ nội dung đang nhập. Không ghi đè âm thầm; không tự retry thao tác thay đổi trạng thái.
+T only self-claims **unassigned** own-team tickets. Every mutation checks versions; concurrent claims allow one success. Others see the new assignee after authorization recheck and keep input. No silent overwrite/automatic state-mutation retry.
 
-## BR-06 — Hội thoại và visibility
+## BR-06 — Conversations and visibility
 
-Public comment cần nội dung sau trim, có thể kèm tệp. Ghi chú nội bộ là nội dung khác visibility; không đổi một note đã gửi thành public. Composer trở về public khi mở ticket; chuyển qua lại giữ hai bản nháp riêng trong bộ nhớ, không mang nội dung nội bộ sang public [D-05]. Không lưu nội dung nhạy cảm vào localStorage.
+Public comments need trimmed content and may include files. Internal notes have separate visibility; sent notes cannot become public. Opening tickets defaults composer to public; switching retains separate in-memory drafts without internal-to-public copying [D-05]. No sensitive localStorage.
 
-Câu hỏi lúc Pending và giải pháp lúc Resolved được ghi thành **public TicketComment thực sự** cùng giao dịch đổi trạng thái. Người dùng thấy trước nội dung sẽ gửi. Vì vậy chúng có thể là phản hồi đầu nếu thỏa BR-08; sự kiện đổi trạng thái đứng một mình không được tính. Resolved cho phép bình luận nhưng cần thao tác mở lại có lý do; Closed/Cancelled chỉ đọc.
+Pending questions/Resolved solutions are **real public TicketComments** committed atomically with state. Preview the outgoing content. They may satisfy BR-08; standalone state events do not. Resolved permits discussion but needs reasoned reopening; Closed/Cancelled read-only.
 
-## BR-07 — Tệp
+## BR-07 — Files
 
-MVP chấp nhận PNG, JPEG, WebP và PDF [D-06]; mỗi tệp ≤ **10.000.000 byte**, mỗi lần gửi ≤5 tệp. Giới hạn này áp dụng cả gửi ticket mới và bình luận/ghi chú. Không nhận SVG, GIF, tài liệu Office hoặc tệp thực thi. Kiểm tra extension, MIME và nội dung ở server; client chỉ hướng dẫn sớm.
+Allow PNG/JPEG/WebP/PDF [D-06], each ≤**10, 000, 000 bytes**, at most 5/submission for tickets/comments/notes. No SVG/GIF/Office/executables. Server validates extension/MIME/content; client provides early guidance.
 
-Tệp kế thừa visibility từ ticket/public comment/internal note, không có lựa chọn quyền độc lập. Requester không nhận metadata hoặc tải được tệp note. Tải qua quyền hiện tại, không đường upload public. Chọn sai một tệp làm cả lần gửi chưa được commit; giữ văn bản và tệp hợp lệ để người dùng sửa. Khi ticket đã tạo mà upload bị gián đoạn, hệ thống tương lai phải tránh nhân đôi ticket; UX báo rõ ticket có được tạo hay chưa [D-07]. Không cam kết quét antivirus đã có.
+Files inherit parent ticket/public-comment/internal-note visibility, no separate ACL choice. Requester gets no note-file metadata/download. Downloads check current access; no public upload path. One invalid file prevents the submission commit, preserving text/valid files for correction. Interrupted post-ticket uploads must not duplicate tickets; future UX explicitly states whether creation occurred [D-07]. No claim of existing antivirus scanning.
 
-## BR-08 — Phản hồi đầu tiên
+## BR-08 — First response
 
-Bắt đầu từ `createdAt`. Kết thúc khi nhân sự IT có quyền trên ticket gửi public comment có nội dung. Không tính phân công, New→Open, nội bộ, tệp không có nội dung hay bình luận của người yêu cầu. Nếu người yêu cầu cũng là IT, họ không được tự tạo phản hồi đầu cho chính ticket của mình [D-08]. Pending không tạm dừng đồng hồ này.
+Starts at `createdAt`; ends on a substantive public comment from authorized IT. Assignment, New→Open, notes, content-free attachments, requester comments do not count. IT requesters cannot self-satisfy first response [D-08]. Pending does not pause it.
 
-`firstResponseElapsed = firstResponseAt - createdAt`; khi chưa phản hồi dùng `now - createdAt`. Cancelled chấm dứt theo dõi đang chạy nhưng không tạo phản hồi giả; lịch sử vi phạm đã có được giữ lại. Giải pháp công khai là một comment nên có thể ghi phản hồi đầu trong cùng giao dịch giải quyết.
+`firstResponseElapsed = firstResponseAt - createdAt`; absent response uses `now - createdAt`. Cancelled stops live monitoring without fabricated responses; preserve breaches. A public solution may set first response in the same resolution transaction.
 
-Trường hợp IT tự xử lý ticket mình tạo và chưa có phản hồi hợp lệ từ IT khác: tại Resolved/Closed/Cancelled, dừng **giám sát cảnh báo đang hoạt động**, hiển thị “Chưa có phản hồi IT hợp lệ”, không ghi timestamp giả hoặc kết quả “đúng hạn”. Nếu mở lại mà vẫn chưa phản hồi hợp lệ, thời gian phản hồi vẫn tính từ lúc tạo, không trừ khoảng đã kết thúc. Đây là quy ước đề xuất [D-21], cần kiểm chứng với chủ nghiệp vụ.
+For IT self-handled tickets lacking another IT person's valid response, Resolved/Closed/Cancelled stops **active alert monitoring** and shows no valid IT response, never fake timestamps/on-time results. If reopened without response, count from creation including terminated intervals. Proposed convention [D-21] needs business validation.
 
-## BR-09 — Giải quyết và snapshot
+## BR-09 — Resolution and snapshots
 
-Đếm tổng thời gian trong **New, Open, In Progress**. Pending, Resolved, Closed không tiêu thụ. Cancelled chấm dứt theo dõi. Mở lại tiếp tục phần ngân sách còn lại, không đặt về 0; ticket đã hết ngân sách vẫn quá hạn ngay khi mở lại. Phải lưu các khoảng chạy/dừng hoặc thông tin tương đương để đối chiếu, không tính đơn giản `resolvedAt-createdAt`.
+Sum time in **New, Open, In Progress**. Pending/Resolved/Closed do not consume it; Cancelled ends monitoring. Reopening resumes remaining budget, not zero; exhausted tickets reopen overdue. Persist run/pause intervals or equivalent, not simply `resolvedAt-createdAt`.
 
-| Ưu tiên | Phản hồi | Giải quyết |
-|---|---|---|
-| P1 | 15 phút | 4 giờ |
-| P2 | 1 giờ | 8 giờ |
-| P3 | 4 giờ | 24 giờ |
-| P4 | 8 giờ | 72 giờ |
+| Priority | Response | Resolution |
+| --- | --- | --- |
+| P1 | 15 minutes | 4 hours |
+| P2 | 1 hour | 8 hours |
+| P3 | 4 hours | 24 hours |
+| P4 | 8 hours | 72 hours |
 
-Snapshot trên ticket bao gồm bảng ngân sách P1–P4 và phiên bản chính sách tại lúc tạo. Đổi ưu tiên lấy ngân sách của mức mới **từ snapshot của ticket**, áp dụng trên thời gian đã dùng; lưu một lần điều chỉnh snapshot đang áp dụng [D-09]. Sửa chính sách mặc định chỉ tác động ticket tạo sau đó. Không xóa vi phạm cũ khi tăng ngân sách hoặc đổi mặc định.
+Ticket snapshot stores the full P1–P4 table/policy version at creation. Priority changes use the new level **from that ticket's snapshot** against elapsed usage; record the applied adjustment [D-09]. Default edits affect later tickets only. Increased budgets/default edits never delete breaches.
 
-Điều chỉnh cũng so sánh thời gian phản hồi đã tiêu thụ với ngân sách phản hồi mới; không sửa `firstResponseAt`. Nếu việc đổi ưu tiên khiến lần đầu vượt ngân sách, ghi nhận vi phạm do điều chỉnh tại thời điểm đổi, không giả rằng cam kết mới đã tồn tại trong quá khứ. Lịch sử ngân sách/kết quả trước điều chỉnh phải còn để giải thích số liệu.
+Compare response elapsed with new response budget too, without changing `firstResponseAt`. A newly breached priority budget is recorded at adjustment time, not backdated as an old commitment. Preserve prior budgets/outcomes for reporting.
 
-## BR-10 — Nhãn SLA và cảnh báo
+## BR-10 — SLA labels and alerts
 
-Hai chỉ số có nhãn riêng. Khi đang theo dõi: sử dụng <80% = Còn hạn; từ 80% đến dưới 100% = Sắp quá hạn; từ 100% = Đã quá hạn. Nếu đã dừng: ghi Đã phản hồi/Đã giải quyết và kết quả đúng hạn hoặc vi phạm, không tiếp tục countdown. Pending hiển thị Tạm dừng cho giải quyết kèm thời gian đã dùng; cảnh báo lịch sử vẫn nhìn thấy.
+Separate clocks. During monitoring: <80% Within target; 80%–<100% At risk; ≥100% Breached. Stopped clocks show Responded/Resolved and on-time/breach result, not a continuing countdown. Pending resolution shows Paused plus elapsed usage; historical alerts remain visible.
 
-Worker tương lai kiểm tra nền định kỳ đề xuất ≤60 giây, không phụ thuộc mở trang. Cảnh báo tới assignee hiện tại và các IT Manager hoạt động; chưa có assignee thì gửi Manager; không có Manager hoạt động thì Admin [D-10]. Các sự kiện nghiệp vụ tạo/cập nhật và worker phải dùng cùng quy tắc.
+Proposed background scan ≤60 seconds, independent of pages. Notify current assignee/active IT Managers; if unassigned, Managers; if no active Manager, Admin [D-10]. Domain events/workers share rules.
 
-Khóa chống trùng theo ticket + loại đồng hồ + ngưỡng 80/100 + phiên điều chỉnh ngân sách + người nhận. Chạy lại không tạo trùng. Mở lại/chuyển nhóm không tạo phiên ngân sách mới. Nếu lần kiểm tra đầu đã vượt 100%, chỉ gửi thông báo quá hạn, không gửi thêm cảnh báo 80% đã lỗi thời. Điều chỉnh ưu tiên có thể phát sinh cảnh báo theo ngân sách mới, nhưng không ghi lại cùng một vi phạm trong cùng phiên. Lịch sử lưu thời điểm thực sự vượt ngưỡng nếu suy ra được từ đồng hồ, cùng thời điểm worker phát hiện.
+Dedup key: ticket + clock type + threshold 80/100 + budget-adjustment version + recipient. Repeats do not duplicate. Reopen/team transfer does not create a budget version. First scan beyond 100% sends overdue only, not obsolete 80% warning. Priority changes may alert under new budgets, never repeat a breach within that version. Record actual threshold-crossing time if derivable and worker detection time.
 
-## BR-11 — Tài sản
+## BR-11 — Assets
 
-Mã tài sản duy nhất; serial có thể trống, nhưng serial đã khai báo không trùng trong MVP [D-11]. Loại: laptop, máy tính, màn hình, máy in, thiết bị mạng. Ngày mua không sau ngày hết bảo hành nếu cả hai cùng có.
+Unique asset code; serial optional but unique if supplied [D-11]. Types: laptop, desktop, monitor, printer, network device. If both exist, purchase date must not follow warranty expiry.
 
-| Trạng thái | Cấp phát mới | Quy tắc |
-|---|---|---|
-| Trong kho | Có | Không có assignment hiệu lực |
-| Đang sử dụng | Không | Phải có đúng một assignment hiệu lực |
-| Đang sửa chữa | Không | Có thể giữ assignment để thể hiện trách nhiệm sử dụng; cần ghi rõ |
-| Ngừng sử dụng | Không | Phải thu hồi assignment trước |
+| State | New issue | Rule |
+| --- | --- | --- |
+| In Stock | Yes | No active assignment |
+| In Use | No | Exactly one active assignment |
+| Under Repair | No | May retain assignment to record responsibility; explicit label |
+| Retired | No | Return assignment first |
 
-Cấp phát chỉ từ Trong kho cho user hoạt động; ghi người dùng, phòng ban lúc giao, thời điểm, người giao và ghi chú. Hai lượt giao đồng thời chỉ một thành công. Thu hồi kết thúc assignment, không xóa; chọn trạng thái Trong kho hoặc Đang sửa chữa. Không sửa tay user đang sử dụng trong form tài sản. Chuyển Đang sửa chữa→Đang sử dụng chỉ khi còn assignment; nếu không còn thì về Trong kho. M/A thay đổi trạng thái có lý do và lịch sử.
+Issue only In Stock to active users; record user, department-at-issue, timestamp, issuer, notes. Concurrent issue allows one success. Return ends assignment without deletion, target In Stock/Under Repair. Do not edit current holder in metadata forms. Repair→In Use requires retained assignment; otherwise In Stock. M/A state edits need reason/history.
 
-### Cạnh trạng thái tài sản và guard thiết kế
+### Asset state edges and guards
 
-![State và assignment tài sản](../diagrams/asset-states.svg)
+![Asset states and assignments](../diagrams/asset-states.svg)
 
-| Từ | Đến | Guard / effect |
-|---|---|---|
-| Trong kho | Đang sử dụng | M/A; user active; tạo assignment nguyên tử; một lượt hiệu lực |
-| Đang sử dụng | Trong kho | Thu hồi, kết thúc assignment; giữ lịch sử |
-| Đang sử dụng | Đang sửa chữa | M/A ghi lý do; có thể giữ assignment để xác định trách nhiệm |
-| Đang sửa chữa | Đang sử dụng | Sửa xong và còn assignment hiệu lực |
-| Trong kho | Đang sửa chữa | Bảo trì có lý do; chưa có assignment |
-| Đang sửa chữa | Trong kho | Sửa xong/thu hồi; không còn assignment |
-| Trong kho | Ngừng sử dụng | M/A có lý do; không assignment hiệu lực |
-| Đang sửa chữa | Ngừng sử dụng | Thu hồi assignment trước; M/A có lý do |
+| From | To | Guard / effect |
+| --- | --- | --- |
+| In Stock | In Use | M/A, active user, atomic single assignment |
+| In Use | In Stock | Return/end assignment, preserve history |
+| In Use | Under Repair | M/A reason, assignment may remain |
+| Under Repair | In Use | Repair complete, active assignment remains |
+| In Stock | Under Repair | Reasoned maintenance, no assignment |
+| Under Repair | In Stock | Repair/return complete, no assignment |
+| In Stock | Retired | M/A reason, no assignment |
+| Under Repair | Retired | Return assignment first, M/A reason |
 
-Không đặc tả chuyển trực tiếp Đang sử dụng → Ngừng sử dụng mà còn holder hoặc cạnh tái kích hoạt Ngừng sử dụng. Đây là cạnh thiết kế theo invariant BR-11; không phải tác vụ đã chạy hoặc policy cho AI tự cấp phát.
+No direct In Use→Retired with holder or Retired reactivation specified. These are BR-11 design edges, not executed actions or AI asset-issue policy.
 
-## BR-12 — Sự kiện, thông báo, audit
+## BR-12 — Events, notifications, audit
 
-TicketEvent lưu thay đổi trạng thái, ưu tiên, nhóm và assignee cùng actor, thời điểm, cũ/mới, lý do. Event có visibility: hoạt động công khai không mang nội dung note hoặc lý do nội bộ. AssetAssignment/AuditLog ghi cấp phát, thu hồi, trạng thái. Audit quyền user/SLA chỉ Admin xem.
+TicketEvent records state/priority/team/assignee changes with actor/time/old/new/reason. Visibility excludes notes/internal reasons from public events. AssetAssignment/AuditLog records issue/return/state. User-permission/SLA audit is Admin-only.
 
-Thông báo phân công tới người được giao; public comment/status tới requester và assignee còn quyền, trừ chính actor; note chỉ tới assignee còn quyền, trừ actor. Không gửi nội dung nội bộ tới requester. Notification lưu người nhận, tham chiếu sự kiện và trạng thái đọc; hiển thị preview tối thiểu, kiểm tra quyền lại khi đọc. Không có email trong MVP.
+Assignment notifies assignee; public comments/states notify currently authorized requester/assignee excluding actor; notes notify authorized assignee excluding actor only. No internal requester content. Notifications store recipient/event/read state, minimal previews, and read-time authorization. No MVP email.
 
-## BR-13 — Thời gian và dữ liệu demo
+## BR-13 — Time and DEMO data
 
-Thời gian nghiệp vụ lưu UTC; mặc định hiển thị **Asia/Ho_Chi_Minh**, định dạng `dd/MM/yyyy HH:mm`. Khoảng lọc ngày được đổi thành biên UTC theo múi giờ hiển thị. SLA chạy 24/7, không bỏ tối/cuối tuần. Bản vẽ ghi “Dữ liệu minh họa”; seed demo và cờ demo chỉ là yêu cầu cho giai đoạn triển khai, hiện chưa tạo seed. Đợt 31/10 chỉ cập nhật tài liệu.
+Store business time in UTC; display default **Asia/Ho_Chi_Minh**, `dd/MM/yyyy HH:mm`. Convert date filters into UTC boundaries using display timezone. SLA runs 24/7 including nights/weekends. Designs label illustrative data; DEMO seeds/flags are future implementation requirements, no seed exists. The 31 October phase updated documentation only.
 
-## BR-14 — Ticket, plan và task
+## BR-14 — Tickets, plans, tasks
 
-Ticket giữ trạng thái BR-04 và SLA; một ticket có nhiều task, nhiều phiên bản plan nhưng chỉ một version Effective. Plan: Draft → Effective → Superseded/Cancelled; kích hoạt version mới phải xử lý tác động task đang thực hiện/lock, giữ lịch sử. Không áp unique một plan/ticket cho toàn lịch sử.
+Tickets retain BR-04/SLA. Each has multiple tasks/plan versions, only one Effective version. Plan: Draft → Effective → Superseded/Cancelled. Activating versions handles in-progress/locked tasks and preserves history. Do not enforce one plan per ticket across all history.
 
-Task chứa team/assignee, skills, estimated/remaining minutes, start/deadline, dependency và kết quả/version. Plan/task nội bộ không trả cho Requester; có thể tổng hợp tiến độ công khai đã lọc. Hoàn thành hết task không tự Resolved/Closed ticket; người có quyền vẫn thực hiện BR-04. AI không tự xác nhận Done, Resolved, Closed.
+Task has team/assignee, skills, estimated/remaining minutes, start/deadline, dependencies, result/version. Internal plans/tasks are not returned to Requesters; filtered public progress may be aggregated. All tasks finished does not auto-Resolve/Close; authorized humans perform BR-04. AI cannot autonomously confirm Done/Resolved/Closed.
 
-## BR-15 — Trạng thái task và phụ thuộc
+## BR-15 — Task states and dependencies
 
-![Sơ đồ từ cùng quy tắc nghiệp vụ](../diagrams/task-states.svg)
+![Diagram from the same business rules](../diagrams/task-states.svg)
 
-| Từ | Đến | Điều kiện |
-|---|---|---|
-| To Do | Ready | Các predecessor bắt buộc Done, đã phân công hợp lệ, đủ dữ liệu/cửa sổ lịch |
-| Ready | In Progress | Assignee hoặc M/A có quyền; recheck dependency, active/membership và version |
-| Ready / In Progress | Blocked | Người xử lý/M/A có lý do, sự kiện blocked, giữ remaining và lịch sử |
-| Blocked | Ready | Lý do gỡ chặn, đánh giá lại dependency/capacity; nếu tiếp tục công việc thì qua Ready → In Progress |
-| In Progress | Done | Người thực hiện hoặc M/A có quyền, kết quả có nội dung, remaining=0 |
-| To Do / Ready / Blocked / In Progress | Cancelled | M/A có lý do, đánh giá tác động downstream/plan; không xóa history |
-| Done / Cancelled | — | Không tự mở lại hoặc lùi trạng thái; thay đổi bằng task/plan mới có kiểm soát |
+| From | To | Conditions |
+| --- | --- | --- |
+| To Do | Ready | Required predecessors Done, valid assignment, sufficient data/schedule window |
+| Ready | In Progress | Authorized assignee/M/A; recheck dependencies/active membership/version |
+| Ready / In Progress | Blocked | Performer/M/A reason/event; preserve remaining/history |
+| Blocked | Ready | Unblock reason, dependency/capacity review; resume through Ready→In Progress |
+| In Progress | Done | Authorized performer/M/A, substantive result, remaining=0 |
+| To Do / Ready / Blocked / In Progress | Cancelled | M/A reason, downstream/plan impact review; preserve history |
+| Done / Cancelled | — | No autonomous reopening/regression; controlled replacement task/plan |
 
-Progress cùng trạng thái được cập nhật remaining/result với version; tăng estimate phải kiểm tải/feasibility lại. Dependency cùng plan version, không self-edge/cycle/unknown reference; thay DAG khi có việc đang làm cần review/approval. Cancelled predecessor không tự được coi Done; successor bị chặn cho đến khi kế hoạch được điều chỉnh hợp lệ.
+Same-state progress updates remaining/result with version. Increased estimates recheck load/feasibility. Dependencies belong to one plan version, no self/cycle/unknown references. DAG changes with active work need review/approval. Cancelled predecessors do not satisfy Done; successors remain blocked until valid replanning.
 
-## BR-16 — Ứng viên, lịch và sức chứa
+## BR-16 — Candidates, schedules, capacity
 
-Backend lọc tài khoản active, role IT và quyền thực hiện hành động chuyên môn (ví dụ cấp user phải Admin), membership nhóm được phép, kỹ năng bắt buộc đã xác nhận và khoảng khả dụng. Model chỉ xếp hạng trong tập đó; lý do dùng dữ liệu vận hành, không đánh giá hiệu suất nhân sự.
+Backend filters active IT users with action-specific authority (e.g., Admin for account creation), permitted memberships, verified required skills, availability. Model ranks only this set, with operational reasons, not personnel performance appraisal.
 
-Công sức tính phút trong khoảng kế hoạch cụ thể. Với người u/kỳ p: capacity = min(ngân sách công việc cấu hình, số phút lịch làm việc sau khi trừ hợp các khoảng vắng mặt); load = tổng remaining đã phân bổ vào p của task chưa Done/Cancelled, gồm Blocked và mọi plan liên quan; free = capacity − load. Khi ngân sách áp theo ngày, tính từng ngày rồi cộng; không trừ absence hai lần hoặc cộng khoảng trùng. Chỉ giao nếu allocation mới không vượt từng kỳ/slot, không chỉ tổng toàn kỳ.
+Use minutes within concrete planning windows. For person u/period p: capacity = min (configured work budget, scheduled minutes minus union of absences); load = summed allocated remaining effort of non-Done/non-Cancelled tasks, including Blocked across relevant plans; free = capacity − load. Daily budgets apply day-by-day then sum. No double absence subtraction/overlap counting. New allocations must fit every period/slot, not aggregate alone.
 
-Task nhiều kỳ phải có phân bổ cụ thể theo giao lịch/kỳ, tổng allocation bằng remaining; không lặp toàn bộ effort ở mỗi kỳ hoặc chia đều tùy ý. Task chưa phân bổ không được tự coi bằng 0: hiển thị rủi ro và hỏi/đánh giá trước tự giao. Capacity đủ về tổng vẫn phải kiểm DAG/khả dụng/khung thực thi/deadline và SLA. Lịch nhân sự không đổi SLA 24/7.
+Multi-period tasks need explicit schedule/period allocations totaling remaining effort, not repeated full effort or arbitrary even splits. Unallocated tasks are not zero: expose risk/clarify before automatic assignment. Total capacity still requires DAG/window/deadline/SLA checks. Staff schedules do not change 24/7 SLA.
 
-Kiểm tra/giữ chỗ atomic với version/khóa nhân lực/allocation phù hợp; hai worker không dùng lại cùng sức chứa. Thiếu skills/lịch/estimate đã duyệt thì hỏi bổ sung hoặc template đã xác nhận, không giả định rảnh. Giá trị kỳ/ngân sách/slot/lịch vận hành: Cần quyết định D-40.
+Check/reserve atomically with appropriate workforce/allocation versions/locks; two workers cannot reuse capacity. Missing verified skills/schedules/estimates require clarification/confirmed templates, not assumed availability. Period/budget/slot/calendar values: D-40.
 
-## BR-17 — Policy và quyền tự động
+## BR-17 — Automation policies and grants
 
-Default deny; manager cấp workflow/nhóm/priority/actions/giới hạn và grantor/thời hạn/version. AI_COORDINATOR chỉ dùng phạm vi grant hiện hành. Không policy hợp lệ thì plan nháp/approval, không assignment hiệu lực. Giao/giao lại task chưa bắt đầu trong scope được phép; task đang làm/khóa cần duyệt. Sửa SLA/cam kết/priority/chuyển ngoài nhóm cần quản lý duyệt. Nhắc giới hạn tần suất/người nhận; không tự đóng/hoàn thành/cấp tài khoản hoặc chạy shell.
+Default deny. Manager grants workflow/team/priority/actions/limits, grantor/expiry/version. AI_COORDINATOR uses current grants only. Without valid policy: draft/approval, no effective assignment. Unstarted-task assignment/reassignment within scope allowed; in-progress/locked requires approval. SLA/commitment/priority/out-of-team changes require management approval. Reminders have rate/recipient limits. No autonomous completion/closure/account creation/shell.
 
-Mỗi tool recheck policy/grantor/quyền/version/feasibility ngay trước ghi, kể cả retry và sau duyệt. Không tự bật demo policy thành policy doanh nghiệp.
+Every tool rechecks policy/grantor/rights/version/feasibility immediately before writing, including retries/post-approval. DEMO policies never become enterprise policies automatically.
 
-## BR-18 — Phê duyệt và can thiệp thủ công
+## BR-18 — Approval and manual intervention
 
-![Sơ đồ từ cùng quy tắc nghiệp vụ](../diagrams/approval-states.svg)
+![Diagram from the same business rules](../diagrams/approval-states.svg)
 
-Approval có before/after/lý do/tác động, sources và snapshot của ticket/plan/task/policy/workforce liên quan. Pending → Approved/Rejected/Expired/Superseded; trạng thái thực thi tách riêng Pending/Running/Succeeded/Failed/Conflict. Chỉ M/A có thẩm quyền quyết định. Stale không được áp; đánh giá lại tạo proposal/approval mới, giữ cũ.
+Approval contains before/after/reason/impact, sources, snapshots of ticket/plan/task/policy/workforce. Pending → Approved/Rejected/Expired/Superseded; execution separately Pending/Running/Succeeded/Failed/Conflict. Authorized M/A decide. Stale proposals cannot apply; re-evaluation creates new proposal/approval retaining old records.
 
-Approved vẫn cần policy hiệu lực và candidate/capacity hợp lệ; không ép vượt tải chỉ bằng bấm duyệt. Ngoại lệ vượt scope tự động cần service quản lý có thẩm quyền hoặc grant ngoại lệ giới hạn theo action/phạm vi/thời hạn mà policy cho phép; không dùng approval làm quyền Admin chung. Nếu policy không cho loại ngoại lệ đó, quản lý phải điều chỉnh policy/nguồn lực hoặc xử lý thủ công, rồi đánh giá lại snapshot. Ngoại lệ không có nghiệm có thể yêu cầu điều chỉnh nguồn lực/cam kết bằng service/quyền riêng. Manual assignment/lock và việc đang làm được tôn trọng, không tự đổi qua lần chạy sau. Tắt automation chặn action mới; hoàn tác chỉ compensating action còn hợp lệ/audit, không xóa lịch sử.
+Approved still needs effective policy/eligible candidate/capacity; approval does not permit overbooking. Beyond-scope exceptions require authorized management services or bounded action/scope/expiry grants allowed by policy, never general Admin rights. If policy disallows the exception, management adjusts policy/resources or handles manually, then re-evaluates. Infeasibility may require separately authorized resource/commitment changes. Respect manual assignments/locks/in-progress work on later runs. Disabling automation blocks new actions; undo uses valid audited compensation, never history deletion.
 
-## BR-19 — Sự kiện, retry và chống trùng
+## BR-19 — Events, retries, deduplication
 
-Ghi domain + outbox + audit trong transaction; worker xử lý at-least-once, idempotent theo intent/target/version. Event gồm ticket created/information updated, task progress/blocked/done, lịch/kỹ năng/tải/membership, SLA/deadline risk, policy/approval và KB/index. Duplicate/replay/retry không nhân đôi plan version/task/assignment/allocation/notification.
+Commit domain + outbox + audit atomically. At-least-once workers are idempotent by intent/target/version. Events include ticket creation/information, task progress/blocked/done, schedules/skills/load/membership, SLA/deadline risk, policy/approval, KB/index. Duplicate/replay/retry does not multiply versions/tasks/assignments/allocations/notifications.
 
-Snapshot đọc đóng transaction trước model; execution mở transaction mới re-read và kiểm version/lock. Timeout/output lỗi không sinh task nửa vời; lỗi tạm retry hữu hạn/backoff, lỗi quyền/stale/không khả thi chuyển đánh giá lại hoặc quản lý. Outbox phục hồi khi broker gián đoạn; lưu failed/dead-letter và thao tác retry có audit. Key và cơ chế claim vật lý cần refinement theo kiến trúc, không chỉ Redis lock.
+Close snapshot transactions before models; new execution transactions re-read versions/locks. Timeouts/invalid output create no partial tasks. Transient errors use bounded backoff; rights/stale/infeasibility go to re-evaluation/management. Durable outbox recovers broker outages. Persist failures/dead-letter with audited retries. Physical keys/claims need architectural refinement, not Redis locks alone.
 
-## BR-20 — Trợ lý, xác nhận và bảo mật model
+## BR-20 — Assistant, confirmation, model security
 
-Q&A/tra cứu/summary/nháp không ghi domain. Tạo ticket qua hội thoại cần user xác nhận preview có digest/version/TTL; mutation dùng quyền user và idempotency, nội dung đổi phải xác nhận lại. Reply luôn để kỹ thuật viên duyệt/gửi; chat không first response.
+Q&A/search/summaries/drafts do not write domains. Conversational tickets need confirmed preview digest/version/TTL; user-authorized idempotent mutation; changed content requires reconfirmation. Assistant prepares existing-use-case cards/forms; users review/confirm; core APIs recheck rights/state/version and save with user actor. IT reviews/sends replies through workspace/ticket composers; chat/preview is not first response. Done needs human result/remaining 0; correct requester accepts tickets. D-42 grants neither AI_COORDINATOR borrowing nor autonomous users/roles.
 
-Nội dung ticket/KB là dữ liệu, không chỉ dẫn cấp quyền; model không có credential DB/session và không tự thêm tool/SQL/URL. Lọc payload trước provider, escape output, recheck quyền trước render/history/cache. Không đưa prompt/body/secrets vào audit mặc định.
+Ticket/KB content is data, not authorization instructions. Models have no DB/session credentials or self-added tools/SQL/URLs. Filter payloads before providers, escape output, recheck access before render/history/cache. No prompt/body/secrets in default audit.
 
-## BR-21 — Kiến thức và RAG
+## BR-21 — Knowledge and RAG
 
-KB Draft/Published/Retired, version đã xuất bản bất biến, ACL/audience và publisher rõ. Chỉ Published/version còn quyền vào retrieval/model/citation; thay/thu hồi ACL hiệu lực tức thì ở query và recheck output/history, không đợi embedding. Chunks/vector gắn source version/model/index state; Celery index nền; không có nguồn thì nói thiếu căn cứ. KB editor/ACL chi tiết theo D-40; keyword search không được tuyên bố là RAG hoàn chỉnh.
+KB Draft/Published/Retired, immutable published versions, explicit ACL/audience/publisher. Only accessible Published versions enter retrieval/model/citations. ACL changes/revocation apply immediately at query/output/history without waiting for embeddings. Chunks/vectors bind source version/model/index state; Celery indexes in background. No sources means explicit insufficient evidence. Detailed editor/ACL rights remain D-40; keyword search alone is not full RAG.
 
-## BR-22 — Báo cáo, trace và nghiệm thu
+## BR-22 — Reporting, traces, acceptance
 
-Mỗi action truy về event/run/policy version/grantor/actor/source/record versions, intent/args đã lọc, before/after/result/error; model/prompt/usage/latency/cost khi có. Không ghi giả usage/cost khi provider không trả. Facts do service/query tính theo scope/kỳ/timestamp; giữ MET01–15 và bổ sung MET16–22, không đếm draft thành execution.
+Trace each action to event/run/policy version/grantor/actor/source/record versions, intent/redacted arguments, before/after/result/error; model/prompt/usage/latency/cost where available. Do not fabricate missing usage/cost. Services/queries compute facts by scope/period/timestamp. Retain MET01–15/add MET16–22; drafts are not executions.
 
-A1–A13 và AC-OPS01–12 là điều kiện tương lai; cần success + exception, model thật, dữ liệu lưu thật, replay/concurrency/permission/failure và restore. Mock chỉ dùng kiểm thử phù hợp, không thay nghiệm thu. Hiện chưa có test/ứng dụng hoặc chỉ số hiệu quả đo được.
+A1–A13/AC-OPS01–12 are future criteria requiring success/exceptions, real model/persisted data, replay/concurrency/permissions/failure/restore. Mocks support suitable tests, not replacement acceptance. No current application/test/measured efficiency results.

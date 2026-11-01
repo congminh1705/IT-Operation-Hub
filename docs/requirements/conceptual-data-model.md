@@ -1,87 +1,88 @@
 ---
 id: itoh-docs-requirements-conceptual-data-model
-title: "Mô hình dữ liệu và ERD thiết kế mục tiêu"
+title: "Target data model and ERD"
 type: reference
 domain: database
 module: domain-model
 tags: [database, domain-model, reference]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Định nghĩa entity logic, quan hệ, cardinality, invariant và vòng đời dữ liệu."
+purpose: "Define logical entities, relationships, cardinalities, invariants, and data lifecycles."
 ---
 
-# Mô hình dữ liệu và ERD thiết kế mục tiêu
+# Target data model and ERD
 
-**31/10/2026 · Mô hình logic, chưa phải schema/DDL/migration đang chạy.** Giữ các đối tượng lõi; bổ sung work management/workforce/automation/knowledge. Field/type/index vật lý cần refinement theo PostgreSQL + SQLAlchemy + Alembic, không Django ORM.
+**31 October 2026 · Logical model, not a running schema/DDL/migration.** Retain core entities and add work management/workforce/automation/knowledge. Physical fields/types/indexes need PostgreSQL + SQLAlchemy + Alembic refinement, not Django ORM.
 
-## Đối tượng lõi
+## Core entities
 
-| Đối tượng | Dữ liệu/ràng buộc |
-|---|---|
-| User / Department | Email chuẩn hóa unique, role/active/department/version; Argon2id; không xóa lịch sử |
-| Session | User, opaque token hash, expiry/revoked, CSRF; khóa user thu hồi phiên |
-| Team / TeamMembership / TicketCategory | Active/intake, membership hiện tại; lịch sử tham chiếu không bị xóa |
-| Ticket | Requester, loại/category, impact/urgency/priority, team/assignee/asset, status/version; mục tiêu/deadline và thông tin cấu trúc workflow khi có |
-| TicketComment / TicketEvent / Attachment | Visibility, actor, nội dung/event cũ/mới/lý do, object key riêng tư; quyền theo nội dung cha |
-| SLAPolicy / TicketSLA / SLAInterval / SLAViolation | Snapshot P1–P4, clocks/elapsed/first response, adjustment revision, breach/dedup |
-| Asset / AssetAssignment | Mã/serial/model/bảo hành/status; user/department snapshot/actor/returnedAt; tối đa một assignment hiệu lực |
-| Notification / AuditLog | Recipient/event/readAt; actor/time/before/after/reason đã lọc secret; scope hiện tại |
+| Entity | Data/constraints |
+| --- | --- |
+| User / Department | Normalized unique email, role/active/department/version; Argon2id; preserve history |
+| Session | User, opaque token hash, expiry/revoked, CSRF; user lock revokes sessions |
+| Team / TeamMembership / TicketCategory | Active/intake, current membership; referenced history retained |
+| Ticket | Requester/type/category/impact/urgency/priority/team/assignee/asset/status/version; workflow goal/deadline/structured data where applicable |
+| TicketComment / TicketEvent / Attachment | Visibility, actor, content/old-new-reason events, private object keys; parent authorization |
+| SLAPolicy / TicketSLA / SLAInterval / SLAViolation | P1–P4 snapshot, clocks/elapsed/first response, adjustment revision, breach/dedup |
+| Asset / AssetAssignment | Code/serial/model/warranty/status; user/department snapshot/actor/returnedAt; at most one active assignment |
+| Notification / AuditLog | Recipient/event/readAt; redacted actor/time/before-after/reason; current scope |
 
-## Đối tượng công việc, nhân lực, automation và AI
+## Work, workforce, automation, and AI entities
 
-| Đối tượng | Dữ liệu/ràng buộc |
-|---|---|
-| WorkPlan / PlanVersion | Ticket, mục tiêu, version, Draft/Effective/Superseded/Cancelled, sources; một version Effective/ticket; các version cũ bất biến |
-| Task | PlanVersion, title, team/assignee, status/version, estimated/remaining minutes, earliestStart/deadline, required skills, result, assignment lock/actor/reason |
-| TaskDependency | Task và predecessor cùng PlanVersion; không self-edge/cycle; dependency bắt buộc Done trước Ready/start |
-| TaskSkillRequirement | Task, skill, mức tối thiểu nếu có và nguồn yêu cầu; dùng taxonomy được xác nhận, không tự suy ra chứng chỉ |
-| Skill / UserSkill | Nhãn chuẩn, mức nếu có, người xác nhận/thời điểm/version; skill chưa xác nhận không mặc định hợp lệ |
-| WorkCalendar / AvailabilityException | User, timezone, working intervals/weekdays, absence intervals/version; không phải hệ thống chấm công |
-| CapacityPeriod / WorkAllocation | User, khoảng kỳ và capacity; task/version + phân bổ remaining theo kỳ/slot; tổng không vượt capacity sau trừ absence |
-| WorkflowTemplate / TemplateVersion | Workflow, Published/Draft/Retired, steps/DAG/skills/effort đã duyệt, sources/version; không tự coi estimate model là đã xác thực |
-| AutomationPolicy / PolicyVersion | Enabled, workflow/team/priority/action/limits, grantor và thời hạn/version; default deny |
-| ServiceIdentity / PolicyGrant | AI_COORDINATOR và scope được giao, grantor; không đăng nhập bằng Admin chung |
-| DomainEvent / OutboxDelivery | Event ID/type/aggregate/version/correlation/actor/payload tối thiểu; delivery attempt/lease/nextAttempt/result |
-| AutomationRun / AutomationAction | Event/purpose, policy/grantor/source/model/prompt versions, snapshot, proposal/tool intent, target/idempotency, result/error/usage |
-| ApprovalRequest / ApprovalDecision | Before/after/tác động/lý do/snapshot version; owner/decider/decision, trạng thái quyết định tách execution |
-| AIConversation / AIMessage / AISourceReference / AIDraft | Owner/visibility/context; source/version/ACL; nháp không là domain entity |
-| ConfirmedCommand | User, preview digest/version, xác nhận/TTL, idempotency key/result reference; cùng key khác nội dung conflict |
-| KnowledgeArticle / KnowledgeVersion / KnowledgeACL | Nháp/Published/Retired, immutable version, owner/publisher/read scope; thu hồi hiệu lực ngay |
-| KnowledgeChunk / KnowledgeEmbedding | Version/chunk, vector/model/dimension/index status; truy xuất vẫn kiểm ACL hiện tại |
-| AIUsage / AIBudgetLedger | Run/request, input/output/cached/reasoning usage khi có, giá/version/ngày, reserved/actual/unknown cost, quota/calls |
+| Entity | Data/constraints |
+| --- | --- |
+| WorkPlan / PlanVersion | Ticket/goal/version/Draft/Effective/Superseded/Cancelled/sources; one Effective version per ticket; immutable previous versions |
+| Task | PlanVersion/title/team/assignee/state/version/estimated-remaining minutes/earliestStart/deadline/skills/result/assignment lock-actor-reason |
+| TaskDependency | Task/predecessor in same version; no self/cycle; required predecessors Done before Ready/start |
+| TaskSkillRequirement | Task/skill/optional minimum level/source; verified taxonomy, no inferred certifications |
+| Skill / UserSkill | Standard label/optional level/verifier/time/version; unverified skill not automatically eligible |
+| WorkCalendar / AvailabilityException | User/timezone/work intervals/weekdays/absence/version; not attendance tracking |
+| CapacityPeriod / WorkAllocation | User/period/capacity; task/version remaining by period/slot; total within absence-adjusted capacity |
+| WorkflowTemplate / TemplateVersion | Workflow/Published-Draft-Retired/reviewed steps-DAG-skills-effort/sources/version; model estimates not automatically verified |
+| AutomationPolicy / PolicyVersion | Enabled/workflow/team/priority/action/limits/grantor/expiry/version; default deny |
+| ServiceIdentity / PolicyGrant | AI_COORDINATOR/scoped grants/grantor; no generic Admin login |
+| DomainEvent / OutboxDelivery | Event ID/type/aggregate/version/correlation/actor/minimal payload; attempt/lease/nextAttempt/result |
+| AutomationRun / AutomationAction | Event/purpose/policy/grantor/source/model-prompt versions/snapshot/proposal-tool intent/target/idempotency/result/error/usage |
+| ApprovalRequest / ApprovalDecision | Before-after/impact/reason/snapshot; owner/decider/decision; decision separate from execution |
+| AIConversation / AIMessage / AISourceReference / AIDraft | Owner/visibility/context/source-version-ACL; drafts are not domain entities |
+| ConfirmedCommand | User/preview digest-version/confirmation-TTL/idempotency/result reference; same key/different content conflicts |
+| KnowledgeArticle / KnowledgeVersion / KnowledgeACL | Draft/Published/Retired/immutable versions/owner-publisher-read scope; immediate revocation |
+| KnowledgeChunk / KnowledgeEmbedding | Version/chunk/vector/model/dimension/index state; current ACL still checked |
+| AIUsage / AIBudgetLedger | Run/request/input-output-cached-reasoning usage if provided/price-version-date/reserved-actual-unknown cost/quota-calls |
 
-[DBML và ánh xạ schema](../database/README.md) cung cấp biểu diễn trường chọn lọc có thể đọc bằng công cụ DBML; không là DDL/migration. Map source_versions/snapshot_versions là JSON nhiều aggregate/version, không một số nguyên.
+[DBML/schema mapping](../database/README.md) provides selected fields, not DDL/migrations. source_versions/snapshot_versions maps are multi-aggregate/version JSON, not integers.
 
-## ERD logic
+## Logical ERD
 
-Các góc nhìn tách theo miền để đọc entity, khóa và cardinality. Các trường là phần chọn lọc theo mục đích từng hình, không phải toàn bộ schema. Tên field/type là đề xuất logic, cần review trước SQLAlchemy/Alembic; nullable/index/FK vật lý và exact naming chưa đóng băng. Entity lặp ở hai hình là cùng entity, không tạo bảng mới. Cardinality của nguồn tổng được giữ nguyên.
+Views separate domains to show entities/keys/cardinality. Selected fields are not the full schema. Logical names/types require SQLAlchemy/Alembic review; physical nullability/indexes/FKs/naming remain open. Repeated entities are the same entity, not new tables. Preserve overall-source cardinalities.
 
-| Góc nhìn | Phạm vi |
-|---|---|
-| FIG-ERD02 | [Danh tính và tổ chức](../diagrams/erd-identity.svg) |
-| FIG-ERD03 | [Ticket, hội thoại và tệp](../diagrams/erd-ticket-sla.svg) |
-| FIG-ERD04 | [Tài sản và lịch sử cấp phát](../diagrams/erd-assets.svg) |
-| FIG-ERD05 | [Kế hoạch, task và dependency](../diagrams/erd-work-plans.svg) |
-| FIG-ERD06 | [Kỹ năng, lịch và allocation](../diagrams/erd-workforce.svg) |
-| FIG-ERD07 | [Policy, phiên bản và grant](../diagrams/erd-policy.svg) |
-| FIG-ERD08 | [Sự kiện, thực thi và audit](../diagrams/erd-execution.svg) |
-| FIG-ERD09 | [Kiến thức, ACL và chỉ mục](../diagrams/erd-knowledge.svg) |
-| FIG-ERD10 | [Hội thoại và nguồn tham chiếu](../diagrams/erd-assistant.svg) |
-| FIG-ERD11 | [Xác nhận ticket và chi phí AI](../diagrams/erd-confirmation-usage.svg) |
-| FIG-ERD12 | [Snapshot và đồng hồ SLA](../diagrams/erd-sla-clocks.svg) |
+| View | Scope |
+| --- | --- |
+| FIG-ERD02 | [Identity and organization](../diagrams/erd-identity.svg) |
+| FIG-ERD03 | [Tickets, conversations, and files](../diagrams/erd-ticket-sla.svg) |
+| FIG-ERD04 | [Assets and assignment history](../diagrams/erd-assets.svg) |
+| FIG-ERD05 | [Plans, tasks, and dependencies](../diagrams/erd-work-plans.svg) |
+| FIG-ERD06 | [Skills, schedules, and allocations](../diagrams/erd-workforce.svg) |
+| FIG-ERD07 | [Policies, versions, and grants](../diagrams/erd-policy.svg) |
+| FIG-ERD08 | [Events, execution, and audit](../diagrams/erd-execution.svg) |
+| FIG-ERD09 | [Knowledge, ACL, and indexing](../diagrams/erd-knowledge.svg) |
+| FIG-ERD10 | [Conversations and source references](../diagrams/erd-assistant.svg) |
+| FIG-ERD11 | [Ticket confirmation and AI costs](../diagrams/erd-confirmation-usage.svg) |
+| FIG-ERD12 | [SLA snapshots and clocks](../diagrams/erd-sla-clocks.svg) |
 
-TaskDependency có hai đầu task/predecessor cùng PlanVersion. Các field actor/source là tham chiếu logic theo loại, không cam kết FK đa hình. Entity bên ngoài miền được lặp lại để giữ ngữ cảnh. Đọc quy tắc actor, nguồn usage và unique có điều kiện tại bảng invariant phía dưới.
 
-### FIG-ERD02 — Danh tính và tổ chức
+TaskDependency endpoints are task/predecessor in the same version. Actor/source fields are typed logical references, not promised polymorphic FKs. External entities repeat for context. Actor/usage-source/partial-unique rules are below.
 
-![Danh tính và tổ chức](../diagrams/erd-identity.svg)
+### FIG-ERD02 — Identity and organization
+
+![Identity and organization](../diagrams/erd-identity.svg)
 
 <details>
-<summary>Nguồn Mermaid và cardinality</summary>
+<summary>Mermaid source and cardinality</summary>
 
 ```mermaid
 erDiagram
@@ -134,12 +135,12 @@ erDiagram
 
 </details>
 
-### FIG-ERD03 — Ticket, hội thoại và tệp
+### FIG-ERD03 — Tickets, conversations, and files
 
-![Ticket, hội thoại và tệp](../diagrams/erd-ticket-sla.svg)
+![Tickets, conversations, and files](../diagrams/erd-ticket-sla.svg)
 
 <details>
-<summary>Nguồn Mermaid và cardinality</summary>
+<summary>Mermaid source and cardinality</summary>
 
 ```mermaid
 erDiagram
@@ -180,12 +181,12 @@ erDiagram
 
 </details>
 
-### FIG-ERD04 — Tài sản và lịch sử cấp phát
+### FIG-ERD04 — Assets and assignment history
 
-![Tài sản và lịch sử cấp phát](../diagrams/erd-assets.svg)
+![Assets and assignment history](../diagrams/erd-assets.svg)
 
 <details>
-<summary>Nguồn Mermaid và cardinality</summary>
+<summary>Mermaid source and cardinality</summary>
 
 ```mermaid
 erDiagram
@@ -227,12 +228,12 @@ erDiagram
 
 </details>
 
-### FIG-ERD05 — Kế hoạch, task và dependency
+### FIG-ERD05 — Plans, tasks, and dependencies
 
-![Kế hoạch, task và dependency](../diagrams/erd-work-plans.svg)
+![Plans, tasks, and dependencies](../diagrams/erd-work-plans.svg)
 
 <details>
-<summary>Nguồn Mermaid và cardinality</summary>
+<summary>Mermaid source and cardinality</summary>
 
 ```mermaid
 erDiagram
@@ -307,12 +308,12 @@ erDiagram
 
 </details>
 
-### FIG-ERD06 — Kỹ năng, lịch và allocation
+### FIG-ERD06 — Skills, schedules, and allocations
 
-![Kỹ năng, lịch và allocation](../diagrams/erd-workforce.svg)
+![Skills, schedules, and allocations](../diagrams/erd-workforce.svg)
 
 <details>
-<summary>Nguồn Mermaid và cardinality</summary>
+<summary>Mermaid source and cardinality</summary>
 
 ```mermaid
 erDiagram
@@ -383,12 +384,12 @@ erDiagram
 
 </details>
 
-### FIG-ERD07 — Policy, phiên bản và grant
+### FIG-ERD07 — Policies, versions, and grants
 
-![Policy, phiên bản và grant](../diagrams/erd-policy.svg)
+![Policies, versions, and grants](../diagrams/erd-policy.svg)
 
 <details>
-<summary>Nguồn Mermaid và cardinality</summary>
+<summary>Mermaid source and cardinality</summary>
 
 ```mermaid
 erDiagram
@@ -440,12 +441,12 @@ erDiagram
 
 </details>
 
-### FIG-ERD08 — Sự kiện, thực thi và audit
+### FIG-ERD08 — Events, execution, and audit
 
-![Sự kiện, thực thi và audit](../diagrams/erd-execution.svg)
+![Events, execution, and audit](../diagrams/erd-execution.svg)
 
 <details>
-<summary>Nguồn Mermaid và cardinality</summary>
+<summary>Mermaid source and cardinality</summary>
 
 ```mermaid
 erDiagram
@@ -530,12 +531,12 @@ erDiagram
 
 </details>
 
-### FIG-ERD09 — Kiến thức, ACL và chỉ mục
+### FIG-ERD09 — Knowledge, ACL, and indexing
 
-![Kiến thức, ACL và chỉ mục](../diagrams/erd-knowledge.svg)
+![Knowledge, ACL, and indexing](../diagrams/erd-knowledge.svg)
 
 <details>
-<summary>Nguồn Mermaid và cardinality</summary>
+<summary>Mermaid source and cardinality</summary>
 
 ```mermaid
 erDiagram
@@ -581,12 +582,12 @@ erDiagram
 
 </details>
 
-### FIG-ERD10 — Hội thoại và nguồn tham chiếu
+### FIG-ERD10 — Conversations and source references
 
-![Hội thoại và nguồn tham chiếu](../diagrams/erd-assistant.svg)
+![Conversations and source references](../diagrams/erd-assistant.svg)
 
 <details>
-<summary>Nguồn Mermaid và cardinality</summary>
+<summary>Mermaid source and cardinality</summary>
 
 ```mermaid
 erDiagram
@@ -631,12 +632,12 @@ erDiagram
 
 </details>
 
-### FIG-ERD11 — Xác nhận ticket và chi phí AI
+### FIG-ERD11 — Ticket confirmation and AI costs
 
-![Xác nhận ticket và chi phí AI](../diagrams/erd-confirmation-usage.svg)
+![Ticket confirmation and AI costs](../diagrams/erd-confirmation-usage.svg)
 
 <details>
-<summary>Nguồn Mermaid và cardinality</summary>
+<summary>Mermaid source and cardinality</summary>
 
 ```mermaid
 erDiagram
@@ -702,12 +703,12 @@ erDiagram
 
 </details>
 
-### FIG-ERD12 — Snapshot và đồng hồ SLA
+### FIG-ERD12 — SLA snapshots and clocks
 
-![Snapshot và đồng hồ SLA](../diagrams/erd-sla-clocks.svg)
+![SLA snapshots and clocks](../diagrams/erd-sla-clocks.svg)
 
 <details>
-<summary>Nguồn Mermaid và cardinality</summary>
+<summary>Mermaid source and cardinality</summary>
 
 ```mermaid
 erDiagram
@@ -755,10 +756,10 @@ erDiagram
 
 </details>
 
-### FIG-ERD01 — Danh sách quan hệ tổng
+### FIG-ERD01 — Overall relationship list
 
 <details>
-<summary>Toàn bộ quan hệ làm nguồn đối chiếu các góc nhìn</summary>
+<summary>All relationships used to reconcile domain views</summary>
 
 ```mermaid
 erDiagram
@@ -825,35 +826,39 @@ erDiagram
 
 </details>
 
-## Version, ràng buộc và quyền
+## Versions, constraints, authorization
 
-Không unique toàn bộ Ticket→Plan: cần lưu nhiều bản, chỉ một effective bằng ràng buộc có điều kiện. TaskDependency cùng version, DAG kiểm service trước commit; đổi plan phải xử lý task đã bắt đầu/lock bằng duyệt, không thay toàn bộ task đã thực hiện. AssetAssignment có partial unique cho returnedAt null; reservation thiết bị nếu chọn cần entity/vòng đời riêng, Cần quyết định D-40.
+Do not make Ticket→Plan globally unique: retain history with one conditionally unique effective version. TaskDependency is same-version, service-validated DAG before commit. Plan changes review active/locked tasks rather than replacing performed work. AssetAssignment partial uniqueness applies where returnedAt is null; optional inventory reservation needs a separate undecided lifecycle/entity under D-40.
 
-Allocation kiểm và ghi trong transaction/lock nguồn lực, không dựa một con số workload do model trả. Event/action/confirmed-command/notification có unique business key theo kiến trúc; mọi mutation versioned. Không cascade xóa domain từ chat/KB/vector. Retention/tombstone/audit cần chính sách rõ.
+Allocation checks/writes use resource transactions/locks, not model workload numbers. Events/actions/confirmed commands/notifications have architectural unique business keys; mutations are versioned. No chat/KB/vector cascade deletes of domain records. Retention/tombstones/audit require policy.
 
-Field projection cho Requester không gồm workforce/internal plan/action/approval. KB ACL hiện tại thắng vector/cache cũ; citation trỏ version còn đọc được. Danh tính service/grantor khác human actor. Schema vật lý/index isolation/exact field naming sẽ được chốt trước triển khai.
+Requester projections exclude workforce/internal plans/actions/approvals. Current KB ACL overrides stale vectors/caches; citations reference readable versions. Service identities/grantors differ from humans. Decide physical schema/index/isolation/exact names before implementation.
 
-## Từ điển quan hệ và ràng buộc liên thực thể
+## Relationship dictionary and cross-entity invariants
 
-ERD dùng FIG-ERD01, ký pháp crow's-foot: `||` đúng một, `o|` không hoặc một, `o{` không hoặc nhiều, `|{` một hoặc nhiều. Hai cạnh Task–TaskDependency tương ứng hai FK logic `task_id` và `predecessor_id`, không là hai bảng dependency. Các entity chưa ghi field trong hình được định nghĩa tại bảng từ điển, không ngầm có CRUD.
+FIG-ERD01 uses crow's-foot: `||` exactly one, `o|` zero/one, `o{` zero/many, `|{` one/many. Task–TaskDependency edges represent `task_id`/`predecessor_id`, not two tables. Dictionary entities without diagram fields do not imply CRUD.
 
-| Quan hệ / invariant | Ý nghĩa logic | Cách bảo đảm dự kiến |
-|---|---|---|
-| Ticket → WorkPlan → PlanVersion | Giữ lịch sử đề xuất; chỉ một version effective cho cùng ticket | Transaction, version và ràng buộc có điều kiện; cách đặt khóa vật lý cần refinement |
-| TaskDependency hai đầu | Hai task cùng plan version, không self-edge/cycle; predecessor Done trước Ready/start | FK/check phù hợp cộng DAG/state validation tại service, không chỉ frontend |
-| Task → TaskSkillRequirement → Skill | Yêu cầu kỹ năng khác kỹ năng được xác nhận của user | Taxonomy chuẩn, kiểm eligibility server và version khi assignment |
-| Task → WorkAllocation → User | Lịch phân bổ remaining theo kỳ; tổng không vượt capacity hiệu lực | Atomic lock/recheck lịch, absence, workload; đổi lịch cũng tuân thủ quy ước khóa |
-| Asset → AssetAssignment | Lịch sử nhiều lượt, tối đa một lượt chưa returnedAt | Unique có điều kiện và transaction; reservation nếu chọn là đối tượng riêng chưa chốt |
-| PolicyVersion / PolicyGrant → Run/Action | Run giữ dấu vết quyền đã dùng; quyền hiện tại vẫn phải kiểm lại | Grantor/scope/expiry/active/version; audit không cấp authority |
-| Approval → Decision và execution | Quyết định bất biến có người duyệt; kết quả effect riêng | Snapshot versions, transition guard, action idempotency; Approved không đồng nghĩa Succeeded |
-| AIUsage → Run hoặc AIMessage | Chi phí có thể phát sinh từ automation hoặc trợ lý; retry cũng là usage riêng | Tham chiếu nguồn request/run/message theo loại; không bắt mọi chat phải có AutomationRun |
-| AuditLog → User hoặc ServiceIdentity | Manual và automation đều có actor; action là tham chiếu tùy chọn | Phân biệt actor type; human có User, service có identity và grantor; không yêu cầu action cho mọi audit |
-| KB version/chunk/embedding | Dữ liệu dẫn xuất không sở hữu quyền đọc | ACL hiện tại ở article/version source; index/cache không được giữ quyền đã thu hồi |
+| Relationship / invariant | Logical meaning | Proposed enforcement |
+| --- | --- | --- |
+| Ticket → WorkPlan → PlanVersion | Proposal history; one effective version per ticket | Transactions/versions/conditional uniqueness; physical key refinement |
+| TaskDependency endpoints | Same version, no self/cycle, predecessor Done before Ready/start | FKs/checks plus service DAG/state validation, not frontend-only |
+| Task → TaskSkillRequirement → Skill | Required skills differ from verified user skills | Standard taxonomy/server eligibility/version rechecks |
+| Task → WorkAllocation → User | Scheduled remaining effort per period within current capacity | Atomic calendar/absence/load locks/rechecks; schedule edits share ordering |
+| Asset → AssetAssignment | Many historical, at most one unreturned | Partial unique/transaction; reservations separate/undecided |
+| PolicyVersion / PolicyGrant → Run/Action | Preserve used authorization evidence; current rights still rechecked | Grantor/scope/expiry/active/version; audit is not authority |
+| Approval → Decision/execution | Immutable decision/decider, separate effect result | Snapshot/transition guards/action idempotency; Approved ≠ Succeeded |
+| AIUsage → Run or AIMessage | Automation/assistant charges; retries separate usage | Typed request/run/message sources; not every chat needs a run |
+| AuditLog → User or ServiceIdentity | Manual/automatic actors, optional action reference | Human User versus service identity/grantor; not every audit needs action |
+| KB version/chunk/embedding | Derived data does not own reading rights | Current source article/version ACL; no retained revoked cache/index permissions |
 
-## Vòng đời, lưu trữ và xóa dữ liệu
+## Lifecycles, storage, deletion
 
-Ticket/Task/AssetAssignment/AuditLog và event history không cascade từ việc xóa chat hoặc vector. User bị khóa giữ tham chiếu lịch sử; revoke session/quyền có hiệu lực ngay. Version đã Published/Effective và decision đã ghi giữ nội dung lịch sử, thay đổi bằng version/quyết định mới có liên kết.
+Deleting chat/vectors never cascades to Ticket/Task/AssetAssignment/AuditLog/event history. Locked users retain historical references with immediate session/access revocation. Published/Effective versions/recorded decisions retain historical content; new linked versions/decisions replace them.
 
-Conversation deletion chỉ xử lý chat theo retention được phê duyệt; ConfirmedCommand và domain result cần giữ đủ bằng chứng chống trùng/audit. Object tệp stage/finalize có reconcile riêng vì DB không rollback object storage. KB thu hồi ACL phải chặn truy cập trước khi dọn chunk/cache. Retention, anonymization/tombstone, chu kỳ purge và thời hạn key/ledger còn D-40; chưa có tác vụ xóa hay migration.
+Conversation deletion follows approved chat retention; ConfirmedCommand/domain results retain required dedup/audit evidence. Files need stage/finalize/reconciliation since DB cannot roll back objects. KB revocation blocks reads before chunk/cache cleanup. Retention/anonymization/tombstones/purge/key-ledger lifetimes remain D-40; no deletion jobs/migrations exist.
 
-[Mô tả nghiệp vụ](business-rules.md) · [Quyền](permissions-matrix.md) · [Kiến trúc/transaction](../technical/architecture.md) · [API thiết kế](../technical/api-design.md).
+[Business rules](business-rules.md) · [Permissions](permissions-matrix.md) · [Architecture/transactions](../technical/architecture.md) · [API design](../technical/api-design.md).
+
+## Shared-workspace action cards — D-42
+
+Action cards are AssistantResult/message/draft UI declarations under owner/resource scope, not permission-granting entities. ConfirmedCommand/result_ticket_id retain ticket-draft meaning. Other forms store domain aggregate/audit/idempotency results, not tasks/assets/approvals in result_ticket_id. Redacted conversation/message/card correlation grants no chat access. Physical card storage/redaction/retention needs D-40 refinement; selected ERDs are not migrations. Automation event/run lifetimes do not depend on conversations.

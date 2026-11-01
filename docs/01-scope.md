@@ -1,65 +1,69 @@
 ---
 id: itoh-docs-01-scope
-title: "Phạm vi và định hướng sản phẩm"
+title: "Product scope and direction"
 type: reference
 domain: business
 module: product
 tags: [business, product, reference]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Xác định mục tiêu, phạm vi MVP, vai trò và phần loại trừ."
+purpose: "Define product goals, MVP scope, roles, and exclusions."
 ---
 
-# Phạm vi và định hướng sản phẩm
+# Product scope and direction
 
-**Thiết kế mục tiêu · Chưa triển khai/kiểm thử.** Giai đoạn hiện tại chỉ gồm tài liệu thiết kế. M0–M5 là kế hoạch phát triển dự kiến.
+**Target design · Not implemented or tested.** The current phase covers design documentation only. M0–M5 describe the proposed development roadmap.
 
-## Mục tiêu
+## Goals
 
-IT Operations Hub quản lý và vận hành một phòng IT nhiều nhóm trong một tổ chức. Giữ ticket, SLA, tài sản, người dùng/nhóm, thông báo, báo cáo, audit và kho kiến thức. Luồng trung tâm: **hiểu yêu cầu → lập kế hoạch/task → chọn người và giao việc → theo dõi → điều phối lại theo chính sách → tổng hợp kết quả**.
+IT Operations Hub manages an IT department with multiple specialist teams in one organization. It retains tickets, SLAs, assets, users/teams, notifications, reports, audit, and a knowledge base. The main workflow is **understand the request → create a plan/tasks → select people and assign work → monitor → reassign under policy → report results**.
 
-Ticket tiếp nhận yêu cầu và giữ cam kết SLA; Task là công việc thực thi, có người phụ trách, công sức, thời hạn và phụ thuộc. Trưởng phòng IT thiết lập chính sách, giám sát, can thiệp/khóa phân công và duyệt ngoại lệ. Nhân viên IT thực hiện chuyên môn và ghi nhận hoàn thành. AI không thay toàn bộ trưởng phòng hoặc kỹ thuật viên.
+A Ticket records an incoming request and its SLA commitments. A Task represents execution work with an assignee, effort, deadline, and dependencies. The IT Manager sets policies, supervises, intervenes/locks assignments, and approves exceptions. IT staff perform specialist work and record completion. AI does not replace the entire management or technician role.
 
-## Phạm vi MVP mục tiêu
+## Target MVP scope
 
-| Nhóm | Kết quả phải có khi triển khai và nghiệm thu sau này |
-|---|---|
-| Nền tảng | Tài khoản do Admin tạo, phòng ban, nhóm/thành viên, session server, CSRF, quyền theo bản ghi, audit |
-| Ticket | Tạo/phân loại/ưu tiên, hội thoại công khai/nội bộ, tệp riêng tư, lịch sử và trạng thái hiện hành |
-| Công việc | Kế hoạch có phiên bản, một phiên bản hiệu lực/ticket; task riêng, DAG, công sức dự kiến/còn lại, deadline |
-| Nhân lực | Kỹ năng được quản lý xác nhận; lịch làm việc, khoảng vắng mặt và ngân sách công việc theo kỳ |
-| Điều phối AI | Hiểu dữ liệu thiếu, sinh kế hoạch có schema, xếp hạng ứng viên hợp lệ, gọi service giao việc, theo dõi sự kiện và điều phối lại trong policy |
-| Kiểm soát | Default deny; policy theo workflow/nhóm/priority/giới hạn; phê duyệt ngoại lệ; version, chống trùng, kiểm tra tải trong transaction |
-| Trợ lý AI | Hỏi đáp có nguồn, tra cứu, tóm tắt, tạo ticket qua hội thoại sau xác nhận; soạn phản hồi để kỹ thuật viên duyệt trước khi gửi |
-| Kiến thức | Nháp/xuất bản, phiên bản, quyền đọc, truy xuất có nguồn; RAG qua PostgreSQL/pgvector, adapter embedding, cập nhật chỉ mục nền |
-| Vận hành | Hai đồng hồ SLA 24/7, cảnh báo/notification, tài sản/cấp phát/thu hồi, dashboard và báo cáo từ dữ liệu nguồn |
+| Area | Required outcome for future implementation and acceptance |
+| --- | --- |
+| Foundation | Admin-created accounts, departments, teams/membership, server sessions, CSRF, record-level authorization, audit |
+| Tickets | Creation/classification/prioritization, public/internal conversations, private files, history, and current states |
+| Work management | Versioned plans, one effective version per ticket; separate tasks, DAG, estimated/remaining effort, deadlines |
+| Workforce | Manager-verified skills, work schedules, absence intervals, and work capacity budgets by period |
+| AI coordination | Detect missing information, generate schema-constrained plans, rank eligible candidates, call assignment services, monitor events, and reassign within policy |
+| Controls | Default deny; workflow/team/priority/action limits; exception approval; version checks, deduplication, and transactional capacity validation |
+| AI assistant | One AI Workspace with background activity; Q&A/search/summaries and authorized actions for existing use cases through cards/forms/confirmation, including ticket creation and authorized reply submission |
+| Knowledge | Draft/published content, versions, read access, cited retrieval; PostgreSQL/pgvector RAG, embedding adapter, background indexing |
+| Operations | Two 24/7 SLA clocks, alerts/notifications, assets/issue/return, dashboards, and reports from source records |
 
-AI thuộc nghiệm thu MVP. Cờ bật/tắt là kiểm soát vận hành, không loại AI khỏi phạm vi. Q&A/summary/nháp không tự ghi nghiệp vụ; tạo ticket đã xác nhận và automation có policy được gọi service ghi. Văn bản “nên giao cho A” chưa phải kết quả phân công.
+AI is part of MVP acceptance. Operational enable/disable flags do not remove it from scope. Q&A, summaries, and drafts do not automatically write business records; confirmed ticket creation and policy-authorized automation call domain services to perform writes. “Assign this to A” as text is not a completed assignment.
 
-## Vai trò và dữ liệu
+## Roles and data
 
-Bốn vai trò người dùng: REQUESTER, TECHNICIAN, IT_MANAGER, ADMIN. AI_COORDINATOR là danh tính dịch vụ nền gắn policy/người cấp quyền, không phải role người dùng hoặc Admin chung. Trợ lý hội thoại dùng quyền của người yêu cầu. Chi tiết ở [ma trận quyền](requirements/permissions-matrix.md).
+The four user roles are REQUESTER, TECHNICIAN, IT_MANAGER, and ADMIN. AI_COORDINATOR is a background service identity tied to a policy and its grantor, not a user role or a general-purpose Admin. The conversational assistant acts with the requesting user's permissions. See the [permissions matrix](requirements/permissions-matrix.md).
 
-**IT Manager (IT_MANAGER) là Trưởng phòng IT; không có vai trò Trưởng nhóm IT riêng.** AI điều phối công việc theo chính sách; Trưởng phòng IT thiết lập chính sách, giám sát, can thiệp và duyệt ngoại lệ. Team là nhóm chuyên môn để tổ chức nhân sự và phạm vi công việc, không tạo thêm cấp quản lý. Trưởng các phòng ban khác gửi yêu cầu bằng quyền Requester.
+**IT Manager (IT_MANAGER) means the Head of IT; there is no separate IT Team Lead role.** AI coordinates work under policy; the IT Manager sets policy, supervises, intervenes, and approves exceptions. A Team groups specialists and defines work scope, without adding a management tier. Heads of other departments submit requests with Requester permissions.
 
-D-29 giữ nguyên: trưởng phòng ban gửi ticket bằng quyền Requester; chỉ Admin xác minh và tạo tài khoản. Bước cấp tài khoản trong onboarding là task cho người có quyền, không cho AI tự cấp user/role.
+D-29 remains unchanged: a department head submits a ticket as Requester; only Admin verifies the request and creates the account. An onboarding account-provisioning step is a task for an authorized person, not permission for AI to create users or roles.
 
-## Kịch bản mục tiêu
+## Target scenario
 
-Chuẩn bị máy và tài khoản cho 10 nhân viên mới trước hạn: xác nhận ticket → hỏi bổ sung danh sách/cấu hình/hạn nếu thiếu → tham chiếu quy trình Published → kiểm kê, chuẩn bị máy, cài đặt, đề nghị cấp tài khoản, kiểm tra, bàn giao với nhánh song song hợp lệ → kiểm tra inventory/nhân lực → giao task theo policy đã bật → cập nhật tiến độ → cập nhật nghỉ phép → giao lại task chưa bắt đầu hoặc trình ngoại lệ → người có quyền ghi hoàn thành/nghiệm thu → AI báo cáo.
+Prepare devices and accounts for 10 new employees before a deadline: confirm the ticket → request missing employee/configuration/deadline details → reference a Published workflow → check stock, prepare devices, install software, request account provisioning, test, and hand over with valid parallel branches → check inventory/workforce → assign tasks under an enabled policy → update progress → record absence → reassign unstarted tasks or request exception approval → an authorized person records completion/acceptance → AI reports results.
 
-Thiếu thiết bị/nhân lực hoặc không đáp ứng SLA phải báo ngoại lệ, không bịa dữ liệu hoặc tự nới ràng buộc. Seed tương lai có nhãn DEMO; hiện chưa có seed/database/luồng chạy.
+Insufficient devices/staff or an infeasible SLA must produce an exception, not fabricated data or relaxed constraints. Future seed data must be labeled DEMO; no seed, database, or running workflow exists yet.
 
-## Ngoài MVP
+## Outside the MVP
 
-SaaS đa khách hàng; lương/chấm công/đánh giá nhân sự; AI chạy shell, cài phần mềm trên máy thật, tự cấp tài khoản/quyền, mua sắm/duyệt chi phí, tự xác nhận hoàn thành hoặc đóng ticket. Email/calendar/HR thật, OCR scan, CMDB nâng cao, change và ca trực đầy đủ. Chưa thêm đăng ký công khai, SSO/MFA, xuất Excel/PDF hoặc dark mode.
+Multi-tenant SaaS; payroll/timekeeping/staff performance appraisal; AI shell access, software installation on real devices, autonomous account/permission provisioning, purchasing/cost approval, autonomous work completion or ticket closure. Real email/calendar/HR integrations, scanned OCR, advanced CMDB, full change management and shift scheduling are excluded. Public signup, SSO/MFA, Excel/PDF export, and dark mode are not added.
 
-## Trạng thái và nguồn chuẩn
+## Status and authoritative sources
 
-Đã đặc tả không đồng nghĩa đã triển khai hoặc kiểm thử. Các năng lực MVP dưới đây là thiết kế mục tiêu.
+Specified does not mean implemented or tested. The MVP capabilities above are target designs.
 
-[Quyết định](decisions/design-decisions.md) quản lý Đã chốt/Cần quyết định; [nghiệp vụ](requirements/business-rules.md), [kiến trúc](technical/architecture.md), [mô hình/ERD](requirements/conceptual-data-model.md), [API thiết kế](technical/api-design.md), [AI](10-ai-assistant.md), [lộ trình](09-design-readiness.md) là nguồn theo từng chủ đề.
+[Decisions](decisions/design-decisions.md) distinguishes Confirmed from Decision required. [Business rules](requirements/business-rules.md), [architecture](technical/architecture.md), [data model/ERD](requirements/conceptual-data-model.md), [API design](technical/api-design.md), [AI](10-ai-assistant.md), and [roadmap](09-design-readiness.md) are authoritative for their topics.
+
+## Shared AI Workspace — D-42
+
+Assistant and automation share a screen but have different triggers, identities, and permissions. The assistant is an app interaction channel through forms/previews/confirmation; automation continues through events/policies when chat is closed. Conversation adds no new permissions or business capabilities. See [AI design](10-ai-assistant.md) and [IA](04-information-architecture.md). Design only; no application code.

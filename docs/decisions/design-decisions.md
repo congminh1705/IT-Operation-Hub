@@ -1,121 +1,122 @@
 ---
 id: itoh-docs-decisions-design-decisions
-title: "Sổ quyết định và giả định thiết kế"
+title: "Design decisions and assumptions"
 type: reference
 domain: project
 module: decisions
 tags: [project, decisions, reference]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Ghi quyết định, giả định, trạng thái và các điểm còn cần chủ đề tài quyết định."
+purpose: "Record decisions, assumptions, their status, and matters requiring the project owner’s decision."
 ---
 
-# Sổ quyết định và giả định thiết kế
+# Design decisions and assumptions
 
-**Trạng thái:** D-29–D-39 và D-41 ghi các quyết định nghiệp vụ, kiến trúc, phạm vi thiết kế và cấu hình thử nghiệm đã được xác nhận trong giới hạn từng mục. Các giả định/đề xuất chưa được xác nhận và chi tiết vận hành còn mở được ghi rõ ở D-40. Chốt thiết kế không có nghĩa đã triển khai hoặc nghiệm thu phần mềm.
+**Status:** D-29–D-39 and D-41 record confirmed business, architecture, documentation-scope, and test-configuration decisions within each entry's limits. D-42 records the unified AI Workspace direction. Unconfirmed assumptions/proposals and operational details remain explicit in D-40. Design finalization does not mean software implementation or acceptance.
 
-Riêng **D-29 — cấp tài khoản nội bộ** đã được người dùng chấp thuận về nghiệp vụ; chi tiết triển khai kỹ thuật vẫn thuộc bước M1.
+**D-29 — internal account provisioning** is confirmed at business level; technical implementation details remain part of M1.
 
-## Trạng thái, thẩm quyền và cách đọc
+## Status, authority, and interpretation
 
-Chủ đề tài/người dùng quyết định phạm vi; agent biên soạn và ghi tác động. D-01–21 là các giả định/quyết định thiết kế đề xuất cần được đọc cùng D-29–41; không tự coi tất cả đã được người dùng phê duyệt. D-22–28 giữ lịch sử và phạm vi còn hiệu lực được chỉ rõ tại từng dòng. D-29–39 đã được xác nhận trong giới hạn ghi ở mỗi mục; D-40 là danh sách cần quyết định; D-41 xác nhận mô hình vai trò. Không mục nào là bằng chứng triển khai.
+The user/project owner decides scope; the agent documents decisions and impacts. D-01–21 are proposed assumptions/design decisions, read alongside D-29–41, not blanket user approvals. D-22–28 retain history with their current scope identified. D-29–39 are confirmed within their stated limits; D-40 contains open decisions; D-41 confirms the role model. No entry proves implementation.
 
-Mỗi dòng ghi ID, lựa chọn, lý do/hệ quả và tài liệu chịu ảnh hưởng. Các phương án bị loại rõ theo ràng buộc: Django ORM không thay SQLAlchemy/Alembic; AI chỉ chatbot hoặc chỉ đề xuất không đáp ứng MVP; AI có toàn quyền Admin không đáp ứng nguyên tắc policy. Chi tiết chưa được chọn không được bổ sung lịch sử “đã cân nhắc/phê duyệt” giả. Thay đổi quyết định đã chốt phải ghi mục thay thế/liên kết tác động, không lặng lẽ xóa trạng thái cũ.
+Each entry records ID, choice, rationale/consequences, and affected documents. Explicit constraints reject Django ORM replacing SQLAlchemy/Alembic, a chatbot-only or recommendation-only MVP, and unrestricted AI Admin access. Do not invent evaluation/approval history for unselected details. Changes to confirmed decisions need a superseding entry/impact link rather than silent removal.
 
-| ID | Quyết định đề xuất | Lý do, tác động và phương án cần xác nhận |
-|---|---|---|
-| D-01 | Một role/user; người có vai trò IT vẫn gửi được yêu cầu cá nhân, có hai scope “Của tôi”/“Công việc IT” | Không nhân bản tài khoản; scope riêng tránh vô tình mở nội bộ ticket cá nhân ngoài nhóm |
-| D-02 | Ticket mới vào một nhóm tiếp nhận do Admin chọn | Không thêm phân loại tự động; cần cấu hình nhóm hoạt động trước vận hành |
-| D-03 | M/A đổi ưu tiên; T xác minh bằng trao đổi và đề nghị | Theo quyền chính của Manager trong đề bài, hạn chế quyền chưa được nêu |
-| D-04 | Trang tạo và chi tiết ticket là page; phân công/đổi trạng thái dùng dialog ngắn | Hội thoại, tệp và timeline cần URL riêng và đủ không gian để đọc, theo dõi và xử lý |
-| D-05 | Công khai/nội bộ có composer và nháp riêng trong bộ nhớ; chưa lưu nháp lâu dài | Giảm rủi ro gửi nhầm và không thêm tính năng nháp được lưu server |
-| D-06 | PNG/JPEG/WebP/PDF; 10 MB theo 10.000.000 byte; ≤5/lần | Cụ thể hóa “ảnh/PDF”; loại SVG tránh nội dung chủ động. Có thể mở rộng allowlist sau đánh giá |
-| D-07 | Một lần gửi nội dung+tệp có kết quả nghiệp vụ nhất quán; retry phải có cơ chế chống tạo trùng | Tránh ticket có/không có nội dung không rõ. Cách transaction với file storage do bước kiến trúc kỹ thuật quyết định |
-| D-08 | Câu hỏi Pending/giải pháp tạo public comment; IT không tự tính phản hồi đầu ticket mình tạo | Giữ quy tắc “comment công khai có nội dung”, tránh coi event trạng thái là phản hồi |
-| D-09 | Snapshot toàn bảng P1–P4 khi tạo; override ưu tiên lấy ngân sách từ snapshot này | Vừa đổi ngân sách theo mức ưu tiên vừa không đổi ticket cũ khi Admin sửa mặc định |
-| D-10 | Cảnh báo cho assignee và các Manager hoạt động; fallback Admin nếu không có Manager | IT Manager là Trưởng phòng IT, không có cấp trưởng nhóm riêng. AI điều phối theo policy; cảnh báo vẫn có người chịu trách nhiệm giám sát |
-| D-11 | Serial không bắt buộc; serial có nhập không trùng; sửa chữa có thể giữ assignment | Phù hợp trách nhiệm sử dụng khi thiết bị sửa; UX phải chỉ rõ trạng thái và người giữ trách nhiệm |
-| D-12 | Mở lại phải có assignee hợp lệ; nếu assignee lịch sử bị khóa/mất nhóm, M/A phân công lại trước | Không phá quy tắc In Progress cần assignee. Đây là tình huống cần xác nhận ưu tiên với chủ nghiệp vụ; không tự tạo trạng thái “yêu cầu mở lại” |
-| D-13 | KPI hàng đợi hiện tại không bị filter ngày che ticket cũ; chart/báo cáo theo kỳ được gắn nhãn riêng | Tránh giấu tồn đọng. Công thức giải quyết gần nhất được công bố trong metrics catalog |
-| D-14 | Requester được xem tài sản đang được cấp và ticket của mình liên quan; Technician xem tài sản phục vụ ticket nhóm | Hạn chế lộ hồ sơ thiết bị/nhân sự ngoài nhiệm vụ; Manager/Admin toàn bộ |
-| D-15 | Từ chối bản ghi ngoài scope giống không tìm thấy; 403 cho chức năng theo role | Tránh dò tồn tại bản ghi; thông điệp UX chung và đường về an toàn |
-| D-16 | Password ban đầu do Admin nhập, bàn giao qua kênh nội bộ theo D-29; không có email tự động/reset qua email | Cách cấp và bàn giao tài khoản đã chốt về nghiệp vụ. Chính sách password và hỗ trợ quên mật khẩu vẫn cần refinement trước M1 |
-| D-17 | Khóa user, đổi role mất quyền IT hoặc bỏ membership cần xử lý assignment trên ticket/task đang mở; lịch sử giữ nguyên | Thu hồi quyền lập tức, không để ticket đang xử lý nằm ở assignee không còn quyền; không được khóa Admin hoạt động cuối cùng |
-| D-18 | Giao diện sáng, Inter/Segoe UI, xanh dương và nhận diện riêng | Nhận diện nhất quán, phù hợp công cụ vận hành IT |
-| D-19 | Không xuất báo cáo, đăng ký, nút quên mật khẩu gửi mail hoặc dark mode; phạm vi AI nay theo D-35 | Các giới hạn AI cũ được thay bởi trợ lý và automation có policy trong MVP |
-| D-20 | Lịch sử: để mở stack khi chỉ làm thiết kế; nay được thay bằng D-30–D-32 | Công nghệ mục tiêu đã chốt. Cài dependency, tạo lockfile và kiểm chứng runtime vẫn thuộc M1, chưa code |
-| D-21 | Ticket IT tự xử lý chưa có phản hồi hợp lệ từ người IT khác không được coi là đã đáp ứng phản hồi; dừng giám sát khi kết thúc, resume từ thời điểm tạo nếu mở lại | Làm rõ ngoại lệ của D-08, tránh timestamp giả hoặc cảnh báo tiếp trên ticket kết thúc. Cần xác nhận quy trình tự phục vụ của đội IT trước M3 |
+| ID | Proposed decision | Rationale, impact, and confirmation needed |
+| --- | --- | --- |
+| D-01 | One role per user; IT users can submit personal requests, with separate My requests/IT work scopes | Avoid duplicate accounts; prevent accidental access to internal content on personal tickets outside the user's team |
+| D-02 | New tickets enter one Admin-selected intake team | No automatic classification added; configure an active team before operations |
+| D-03 | M/A change priority; T verifies through discussion and suggests changes | Follows the specified Manager authority without inventing additional permissions |
+| D-04 | Ticket creation/details use pages; assignment/state changes use short dialogs | Conversations/files/timelines need URLs and space for reading/tracking/handling |
+| D-05 | Public/internal composers have separate in-memory drafts; no durable draft storage | Reduce wrong-audience posting without adding server-persisted drafts |
+| D-06 | PNG/JPEG/WebP/PDF; 10 MB means 10, 000, 000 bytes; at most 5 per submission | Defines images/PDF; excludes active SVG content; extend allowlist only after assessment |
+| D-07 | Content/files in one submission have a consistent business outcome; retries prevent duplicates | Avoid ambiguous partial tickets; file-storage transaction strategy belongs to technical architecture |
+| D-08 | Pending questions/solutions create public comments; IT cannot count its own reply as first response to its own ticket | Preserve substantive public-response semantics; state events are not responses |
+| D-09 | Snapshot the full P1–P4 table at creation; priority overrides use that snapshot | Change the budget by priority without retroactive changes from Admin defaults |
+| D-10 | Alert assignee and active Managers; fall back to Admin if no Manager | IT Manager is Head of IT, no team-lead tier; AI policy coordination still has human supervision |
+| D-11 | Serial optional; supplied serial unique; repair may retain assignment | Preserve usage responsibility during repair; UX shows state and responsible holder |
+| D-12 | Reopening requires a valid assignee; M/A reassign first if the historical assignee is locked/outside the team | Preserve In Progress assignee invariant; confirm this edge case with the business owner; no invented reopening-request state |
+| D-13 | Current queue KPIs are not hidden by date filters; period charts/reports are labeled separately | Avoid hiding backlog; publish latest-resolution formulas in metrics catalog |
+| D-14 | Requester sees currently assigned assets and own related tickets; Technician sees assets needed for team tickets | Minimize unrelated device/personnel exposure; Manager/Admin see all |
+| D-15 | Out-of-scope records appear not found; role-level functions return 403 | Prevent existence probing; use safe generic UX and return paths |
+| D-16 | Admin enters initial passwords, hands them over internally under D-29; no automated email/email reset | Provisioning/handover business flow confirmed; password/forgotten-password details need M1 refinement |
+| D-17 | Locking users/removing IT roles/membership requires handling open ticket/task assignments; preserve history | Revoke access immediately; no active work left with an unauthorized assignee; never lock the last active Admin |
+| D-18 | Light interface, Inter/Segoe UI, blue, distinct identity | Consistent identity for an IT operations tool |
+| D-19 | No report export, signup, email password-reset control, or dark mode; AI now follows D-35 | Earlier AI exclusions are replaced by MVP assistant/policy automation |
+| D-20 | Historical: stack left open during early design; superseded by D-30–32 | Target technologies selected; dependency install/lockfiles/runtime verification remain future M1 work |
+| D-21 | IT self-handled tickets without another IT person's valid response do not satisfy first response; stop monitoring at termination and resume from creation when reopened | Clarifies D-08; avoid fake timestamps/alerts on terminated tickets; confirm IT self-service process before M3 |
 
-Các quy tắc nhỏ như độ dài trường, phân trang mặc định 20/tối đa100, cửa sổ bảo hành30 ngày và nhịp worker60 giây là **giá trị đề xuất**, không phải số đã nghiên cứu từ doanh nghiệp. Điều chỉnh chúng không được thay đổi quyền, mô hình trạng thái hay mục tiêu MVP.
+Field lengths, paging default 20/maximum 100, a 30-day warranty window, and a 60-second worker cadence are **proposed values**, not researched enterprise policies. Adjusting them must not alter permissions, states, or MVP goals.
 
-## Quyết định bổ sung cho chatbot AI
+## Additional AI assistant decisions
 
-| ID | Quyết định | Lý do và tác động |
-|---|---|---|
-| D-22 | Lịch sử bổ sung trợ lý; phạm vi hiện hành theo D-33/D-35 (MVP); 8 UC/US và 3 mẫu screen có namespace AI riêng | Thay phần loại trừ AI trước đây; giữ mã use case/story và các bất biến lõi, bổ sung OPS theo thiết kế hiện hành |
-| D-23 | **Đã được thay một phần bởi D-35:** Q&A/summary/nháp phản hồi vẫn chỉ đọc/nháp; cấm mutation tuyệt đối không còn áp dụng cho tạo ticket đã xác nhận và automation có policy | Giữ state/validation/version/SLA; service, không model, kiểm tra quyền và ghi |
-| D-24 | Feature flag và provider adapter độc lập; thiếu cấu hình thì không bật | Không làm startup/core/worker phụ thuộc dịch vụ AI; production vendor/model Cần quyết định; không thêm dependency trong đợt tài liệu |
-| D-25 | Conversation, message, nguồn và draft là dữ liệu riêng | Không thêm trường bắt buộc vào Ticket/SLA/Asset; xóa chat không xóa nghiệp vụ; retention cần chốt trước vận hành |
-| D-26 | Tách phiên PUBLIC/INTERNAL; không handoff nội bộ ra public | Tránh mô hình tự lọc lịch sử trộn; nguồn public được lọc trước model, người IT vẫn review nội dung trước gửi |
-| D-27 | Citation, số liệu và scope do server xác định từ nguồn/dịch vụ hiện có | Không SQL hoặc metric do model tự viết; thu hồi quyền áp dụng cả cache/lịch sử/đầu ra đang sinh |
+| ID | Decision | Rationale and impact |
+| --- | --- | --- |
+| D-22 | Historical assistant addition; current MVP scope follows D-33/D-35; 8 UC/US and 3 AI screen patterns use separate namespaces | Supersedes earlier AI exclusion; retain core IDs/invariants and add OPS under the current design |
+| D-23 | **Partly superseded by D-35:** Q&A/summaries/reply drafts stay read-only/draft; the blanket mutation ban no longer applies to D-42 user-confirmed actions, including ticket creation, or policy automation | Preserve state/validation/version/SLA; services, not models, authorize and write |
+| D-24 | Independent feature flags/provider adapter; do not enable without configuration | AI is not a startup/core/worker dependency; production vendor/model undecided; no dependencies added in documentation work |
+| D-25 | Conversations/messages/sources/drafts are separate data | No mandatory Ticket/SLA/Asset fields; deleting chat does not delete business records; decide retention before operations |
+| D-26 | Separate PUBLIC/INTERNAL sessions; no internal-to-public handoff | Avoid mixed-history self-filtering; filter public sources before model calls; IT reviews before sending |
+| D-27 | Server determines citations, metrics, and scope from existing sources/services | No model-written SQL/metrics; revocation applies to caches/history/in-flight output |
 
-## Quyết định về giao diện v0.4
+## UI v0.4 decision
 
-| ID | Quyết định | Lý do và tác động |
-|---|---|---|
-| D-28 | Làm mới 13 bản UI, thêm 2 board, 44 icon vector riêng và đặc tả motion/responsive; lưu bản v0.3 | Theo yêu cầu giao diện đẹp, thân thiện và uyển chuyển hơn. Chỉ đổi cách trình bày, không thêm screen ID hoặc đổi nghiệp vụ. Chuyển động là đề xuất thiết kế, chưa có animation/prototype thực thi; xem [định hướng](../design/visual-refresh.md) |
+| ID | Decision | Rationale and impact |
+| --- | --- | --- |
+| D-28 | Refresh 13 UI designs, add 2 boards, 44 custom vector icons, motion/responsive specification; retain v0.3 | Requested friendlier, polished UI; presentation only, no new screen IDs/business behavior; motion is proposed, no runnable prototype; see [visual direction](../design/visual-refresh.md) |
 
-## Quyết định đã thống nhất về cấp tài khoản
+## Confirmed account-provisioning decision
 
-| ID | Quyết định | Trạng thái và phạm vi |
-|---|---|---|
-| D-29 | Trưởng phòng dùng quyền Requester tạo ticket Yêu cầu dịch vụ / Tài khoản ngay trong hệ thống. Admin xác minh người đề nghị, nhu cầu và phê duyệt vai trò IT rồi tạo user tại Quản trị → Người dùng, mặc định Requester. Bàn giao mật khẩu qua kênh doanh nghiệp; trưởng phòng theo dõi và xác nhận kết quả trên ticket | Cập nhật theo chỉ dẫn người dùng ngày 30/10/2026: người yêu cầu là trưởng phòng, yêu cầu nằm trong ứng dụng. Không thêm role HR/trưởng phòng, không tự cấp tài khoản từ ticket; dùng trạng thái và SLA hiện có. Admin đầu tiên và tài khoản trưởng phòng ban đầu thiết lập có ủy quyền; bootstrap kỹ thuật và password policy vẫn cần refinement M1. [Luồng chi tiết](../requirements/account-provisioning.md) |
+| ID | Decision | Status and scope |
+| --- | --- | --- |
+| D-29 | Department head submits a Service Request / Account ticket as Requester in the app. Admin verifies requester, need, and IT-role approval, then creates the user under Administration → Users, defaulting to Requester. Password handover uses an enterprise channel; the department head tracks/accepts the ticket result | Updated by user instruction on 30 October 2026: requester is a department head and requests stay in-app. No HR/head role or automatic ticket-to-user provisioning; existing states/SLA apply. First Admin/department-head accounts use authorized setup; bootstrap/password policy still need M1 refinement. [Detailed flow](../requirements/account-provisioning.md) |
 
-## Chốt kiến trúc mục tiêu ngày 30/10/2026
+## Target architecture confirmed on 30 October 2026
 
-| ID | Quyết định | Căn cứ và tác động |
-|---|---|---|
-| D-30 | Next.js App Router/React/TypeScript frontend; FastAPI/Python REST backend; modular monolith trong một repo | FastAPI sở hữu API và nghiệp vụ; Next.js sở hữu frontend. Giữ ranh giới modular monolith; [tech stack](../technical/tech-stack.md) |
-| D-31 | PostgreSQL + SQLAlchemy synchronous Session + Alembic/Psycopg 3; PostgreSQL server sessions, pwdlib Argon2id, CSRF | FastAPI sở hữu xác thực/quyền; maintained hashing library không thay dịch vụ session end-to-end. Bắt buộc test phiên, CSRF, scope, transaction/version; [kiến trúc](../technical/architecture.md) |
-| D-32 | Celery, một Beat 60 giây, Redis broker; private local/S3; pnpm/uv, Compose/Linux và bộ test đã chọn | PG giữ SLA/violation/dedup, không phụ thuộc UI/Redis làm nguồn chuẩn; worker Linux cả khi dev Windows. Version ứng viên được tra metadata nhưng phải resolve/build/test/lock tại M1; [phiên bản](../technical/version-baseline.md) |
-| D-33 | Trợ lý AI tích hợp thuộc phạm vi triển khai và nghiệm thu MVP; bật/tắt là lựa chọn vận hành, không phải loại trừ khỏi phạm vi | AI thuộc phạm vi nghiệm thu MVP; bật/tắt là lựa chọn vận hành. Giữ 8 UC/US trợ lý và quyền/nguồn/visibility; D-35–D-38 mở rộng automation và KB. D-23 cũ chỉ còn áp dụng phần đọc/nháp. Phải đạt 8 AC AI, 12 ca kiểm chứng và regression lõi trước bàn giao MVP; provider/model/SDK và chính sách dữ liệu production cần chốt; thử M3 chỉ trong phạm vi D-39, hiện chưa có chatbot chạy thật |
+| ID | Decision | Basis and impact |
+| --- | --- | --- |
+| D-30 | Next.js App Router/React/TypeScript frontend; FastAPI/Python REST backend; modular monolith in one repository | FastAPI owns APIs/business logic, Next.js owns frontend; [stack](../technical/tech-stack.md) |
+| D-31 | PostgreSQL + synchronous SQLAlchemy Session + Alembic/Psycopg 3; PostgreSQL server sessions, pwdlib Argon2id, CSRF | FastAPI owns authentication/authorization; a maintained hashing library is not an end-to-end session service. Test sessions/CSRF/scope/transactions/versions; [architecture](../technical/architecture.md) |
+| D-32 | Celery, one 60-second Beat, Redis broker; private local/S3; pnpm/uv, Compose/Linux, selected tests | PostgreSQL owns SLA/breaches/dedup, not UI/Redis; Linux workers even for Windows development. Candidate versions have metadata checks but need resolve/build/test/lock in M1; [versions](../technical/version-baseline.md) |
+| D-33 | Integrated AI assistant is included in MVP implementation/acceptance; enable/disable is operational, not a scope exclusion | Retain 8 assistant UC/US and source/visibility/permission constraints; D-35–38 add automation/KB. D-23 now applies only to read/draft operations. Require 8 AI AC, 18 verification cases, core regression before MVP handover; production provider/model/SDK/data policy undecided; M3 tests only under D-39; no running chatbot |
 
-## Quyết định cập nhật 31/10/2026 — chuẩn hiện hành
+## Decisions updated 31 October 2026 — current direction
 
-Các quyết định hiện hành xác định AI trợ lý và điều phối, KB/RAG trong MVP cùng lộ trình M0–M5. “Đã chốt mục tiêu” không có nghĩa đã code hoặc đã nghiệm thu.
+Assistant, coordination, and KB/RAG are in the MVP with the M0–M5 roadmap. Confirmed targets do not mean implemented or accepted software.
 
-| ID | Trạng thái | Quyết định và tác động |
-|---|---|---|
-| D-34 | Đã chốt phạm vi công việc hiện tại | Giai đoạn hiện tại chỉ hoàn thiện tài liệu thiết kế; chưa triển khai code/migration/dependency/test ứng dụng hoặc cấu hình vận hành. M0–M5 mô tả kế hoạch phát triển, không tự kích hoạt lập trình |
-| D-35 | Đã chốt mục tiêu MVP | AI gồm trợ lý và điều phối tự động. Giữ hỏi đáp/tra cứu/tóm tắt/nháp phản hồi; tạo ticket qua hội thoại sau user xác nhận. Plan/giao/theo dõi/giao lại qua service trong policy; thay cấm ghi toàn cục D-23 |
-| D-36 | Đã chốt mục tiêu | Ticket tiếp nhận/SLA khác task thực thi; plan có phiên bản/DAG, một version hiệu lực; kỹ năng xác nhận/lịch/capacity/remaining work, manual override/lock |
-| D-37 | Đã chốt phạm vi | KB/RAG trong MVP: Draft/Published/version/ACL/citation; PostgreSQL + pgvector; index nền không thay kiểm quyền hiện tại |
-| D-38 | Đã chốt nguyên tắc | Default deny, AI_COORDINATOR gắn policy/grantor, recheck quyền/policy/version/capacity mỗi action; outbox/retry/idempotency/audit, approval stale bị chặn, không giữ lock qua model call |
-| D-39 | Đã xác nhận riêng cho thử nghiệm; chưa cho chạy trong đợt tài liệu | M3 ban đầu dùng OpenAI API/gpt-5-mini, tối đa 5 USD tổng cả retry/embedding, chỉ dữ liệu DEMO và DB test. text-embedding-3-small chỉ là đề xuất nếu thử RAG, cần xác minh. Không tự tăng trần/chuyển model đắt hơn. Phải kiểm model access/billing/quota/pricing trước chạy; không key chat/log/repo. Không áp cấu hình này cho production |
-| D-40 | Cần quyết định trước triển khai phần liên quan | Bảng bên dưới là danh sách mở; các giá trị đề xuất không thành chính sách doanh nghiệp chỉ vì xuất hiện trong tài liệu |
-| D-41 | Đã được người dùng xác nhận về vai trò | IT_MANAGER là Trưởng phòng IT; không có vai trò/cấp Trưởng nhóm IT riêng. AI điều phối theo policy; Trưởng phòng IT thiết lập chính sách, giám sát, can thiệp và duyệt ngoại lệ. Nhân viên IT thực hiện chuyên môn; Team là nhóm chuyên môn. Trưởng phòng ban khác dùng Requester khi gửi yêu cầu. Ảnh hưởng scope, permissions, research, nội dung UI và sơ đồ |
+| ID | Status | Decision and impact |
+| --- | --- | --- |
+| D-34 | Current work scope confirmed | Design documentation only; no application code/migrations/dependencies/application tests/operational configuration. M0–M5 plans do not activate implementation |
+| D-35 | MVP target confirmed | AI assistant and automatic coordination; retain Q&A/search/summaries/reply drafts and user-confirmed conversational ticket creation. Plan/assign/monitor/reassign through services under policy; supersedes global D-23 write ban |
+| D-36 | Target confirmed | Ticket intake/SLA separate from task execution; versioned plans/DAG, one effective version; verified skills/schedules/capacity/remaining work, manual override/lock |
+| D-37 | Scope confirmed | KB/RAG in MVP: Draft/Published/version/ACL/citations; PostgreSQL + pgvector; background indexing does not replace current authorization |
+| D-38 | Principles confirmed | Default deny, AI_COORDINATOR tied to policy/grantor; recheck permissions/policy/version/capacity per action; outbox/retry/idempotency/audit; block stale approvals; no locks across model calls |
+| D-39 | Confirmed for testing only; execution not authorized in this documentation phase | Initial M3 uses OpenAI API/gpt-5-mini, maximum USD 5 total including retries/embeddings, DEMO data and test DB only. text-embedding-3-small is proposed if testing RAG and must be verified. No cap increases/more expensive fallback. Verify model access/billing/quota/pricing before running; no keys in chat/logs/repository. Not production approval |
+| D-40 | Decision required before affected implementation | Open list below; documented proposals do not automatically become enterprise policy |
+| D-41 | Role model confirmed by user | IT_MANAGER is Head of IT; no separate IT Team Lead role/tier. AI coordinates under policy; IT Manager sets policies, supervises, intervenes, approves exceptions. IT staff do specialist work; Team groups specialists. Other department heads use Requester. Affects scope/permissions/research/UI/diagrams |
+| D-42 | UI and action-assistant direction confirmed, 1 November 2026 | One AI Workspace for assistant and automatic coordination; assistant performs existing use cases through cards/forms/user-authorized confirmation. Background coordination continues when chat closes. Separate identities/permissions. Model/adapter may be shared with separate prompts/contexts/tools/limits; production provider/model undecided. Assistant does not depend on runs/approvals; automation does not depend on chat. Current UI spec defines layout/login/stepper; no implementation activation |
 
-### D-40 — Các điểm còn mở
+### D-40 — Open decisions
 
-| Nội dung | Trạng thái / hướng xử lý |
-|---|---|
-| Production provider/model/embedding và SDK | Cần quyết định theo chất lượng, dữ liệu và ngân sách; D-39 không phải phê duyệt production |
-| Giá/quota/quyền model lúc chạy M3 | Cần xác minh thực tế; hiện chưa key/billing/model-call evidence; nếu không khả dụng báo phương án/chi phí, không tự đổi model |
-| Ngân sách, retention và dữ liệu được gửi provider production | Cần quyết định; demo-only không cấp quyền dữ liệu thật; không hứa no-retention/no-training khi chưa có thỏa thuận |
-| Capacity kỳ/slot, giờ làm/ngân sách ngày, lịch nghỉ và người xác nhận kỹ năng | Cần quyết định giá trị vận hành; BR-16 nêu công thức và yêu cầu bảo thủ khi thiếu dữ liệu; seed demo phải gắn nhãn |
-| Scope workflow/nhóm/priority/action, hạn tự chỉnh và tần suất nhắc | Cần manager cấu hình/phê duyệt trước bật; mặc định chưa cấp quyền |
-| Template, skills taxonomy, công sức mẫu | Cần quản lý xác nhận dữ liệu ban đầu; không dùng estimate model chưa xác thực để tự giao |
-| KB author/publisher/ACL, chunking/embedding dimension/index freshness | Cần refinement; thu hồi ACL hiệu lực tức thì là nguyên tắc đã chốt |
-| Retention/redaction chat/run/action/audit; quyền điều tra sự cố | Cần quyết định; không mặc định Admin được đọc mọi chat hoặc log prompt/body |
-| Inventory reservation | Cần quyết định có giữ chỗ không, TTL/thu hồi/owner và tương tác cấp phát; không đồng nhất reservation với assignment |
-| Password/bootstrap/reset không email và D-12/D-17 bàn giao assignee mất quyền | Cần refinement chi tiết; quyền thu hồi ngay/không khóa Admin cuối vẫn giữ |
-| Thu hồi quyền khẩn khi chưa có người nhận bàn giao hợp lệ | Cần quyết định quy trình và cách giữ invariant cho ticket In Progress/Pending, task đang làm/lock; không giữ quyền đã thu hồi hoặc báo khóa thành công giả. Nhánh chưa giải quyết được đánh dấu tại Flow 5/FIG-FLOW07 |
-| DB lock granularity/isolation, exact idempotency keys, grant ngoại lệ sau duyệt và retry/backoff | Cần review schema trước code; bắt buộc atomic, không trùng/vượt tải và không giữ lock lúc model chờ |
-| OpenAPI DTO/vocabulary và DBML vật lý | Đã có hợp đồng tĩnh design-draft; cần review field/projection, tên cookie, exact schema/nullable/index/FK và phần trường chưa có trong view chọn lọc trước code. Artifact mới không tự phê duyệt schema/DTO hoặc tạo migration |
-| Backup retention/RPO/RTO, môi trường deploy, owner vận hành | Cần quyết định/đo sau triển khai; daily backup/restore rehearsal là mục tiêu |
+| Topic | Status / next step |
+| --- | --- |
+| Production provider/model/embedding/SDK | Decide by quality/data/budget; D-39 is not production approval |
+| M3 runtime prices/quotas/model access | Verify at execution; no key/billing/model-call evidence exists. If unavailable, report alternatives/costs rather than switching autonomously |
+| Production budget/retention/provider data | Decision required; DEMO-only permission does not authorize real data; no uncontracted no-retention/no-training claims |
+| Capacity periods/slots, work hours/daily budgets, holidays, skill verifiers | Decide operational values; BR-16 defines conservative handling for missing data; label DEMO seeds |
+| Workflow/team/priority/action scope, adjustment limits, reminder cadence | Manager configuration/approval before enabling; no grants by default |
+| Templates, skills taxonomy, effort samples | Manager-verified initial data; unverified model estimates cannot authorize auto-assignment |
+| KB author/publisher/ACL, chunking/dimensions/index freshness | Refine; immediate ACL revocation is confirmed |
+| Chat/run/action/audit retention/redaction, incident investigation rights | Decide; Admin does not automatically read all chats or prompt/body logs |
+| Inventory reservations | Decide whether used, TTL/release/owner, relation to issue; reservations are not assignments |
+| Password/bootstrap/non-email reset and D-12/D-17 reassignment after access loss | Refine; immediate revocation/no last-Admin lock remain |
+| Emergency revocation without eligible handover assignee | Decide process preserving In Progress/Pending ticket and in-progress/locked task invariants; do not retain revoked access or report false locking success. Open branch in Flow 5/FIG-FLOW07 |
+| DB lock granularity/isolation, exact idempotency keys, post-approval exception grants, retry/backoff | Review schema before code; atomicity/no duplicate effects/no overbooking/no locks during model waits are mandatory |
+| OpenAPI DTO/vocabulary and physical DBML | Static design-draft contracts exist; review fields/projections/cookie names/exact schema/nullability/indexes/FKs/omitted selected-view fields before code. Artifacts do not approve schemas/DTOs or create migrations |
+| Backup retention/RPO/RTO, deployment environment, operations owner | Decide/measure after implementation; daily backup/restore rehearsal is a target |
 
-Các sơ đồ/SVG/XMind là tài liệu, không bằng chứng implementation. [Lộ trình M0–M5](../09-design-readiness.md) thay phân bổ mốc cũ; những bản archive cũ chỉ phục vụ lịch sử.
+Diagrams/SVG/XMind are documents, not implementation evidence. [M0–M5 roadmap](../09-design-readiness.md) replaces earlier milestone allocation; archives are historical only.

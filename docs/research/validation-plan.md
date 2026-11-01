@@ -1,80 +1,96 @@
 ---
 id: itoh-docs-research-validation-plan
-title: "Kế hoạch kiểm chứng nghiên cứu và thiết kế"
+title: "Research and design validation plan"
 type: planning
 domain: quality
 module: discovery
 tags: [quality, discovery, planning]
 priority: 1
 status: planned
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Lập kế hoạch nghiên cứu, usability và ghi bằng chứng; chưa có kết quả thực địa."
+purpose: "Plan research, usability, and evidence collection without claiming field results."
 ---
 
-# Kế hoạch kiểm chứng nghiên cứu và thiết kế
+# Research and design validation plan
 
-**Chưa thực hiện.** Không có số người đã tham gia, tỷ lệ thành công thực tế hay lời trích dẫn phỏng vấn. Kế hoạch dưới đây chuẩn bị để kiểm chứng các giả thuyết H01–H06 sau khi review tài liệu.
+**Not conducted.** No actual participant counts/success rates/interview quotations. Plan to validate H01–H06 after document review.
 
-## Câu hỏi và người tham gia đề xuất
+## Proposed questions and participants
 
-Vòng discovery dự kiến: 2–3 Requester ở các phòng ban khác nhau, 2 Technician thuộc các nhóm chuyên môn, 1 Trưởng phòng IT và 1 Admin. Đây là mẫu định tính có chủ đích, không đại diện thống kê. Xin đồng ý trước ghi âm; dùng tình huống hư cấu, không yêu cầu gửi mật khẩu hoặc ticket có dữ liệu nhạy cảm.
+Discovery:2–3 Requesters from different departments, 2 specialist Technicians, 1 IT Manager, 1 Admin. Purposive qualitative sample, not statistical representation. Consent before recording; fictitious scenarios, no passwords/sensitive tickets.
 
-| Vai trò | Câu hỏi mở, không dẫn dắt | Bằng chứng cần tìm |
-|---|---|---|
-| Requester | Kể lần gần nhất bạn cần IT hỗ trợ. Bạn gửi ở đâu, làm gì sau khi gửi? Khi nào bạn xem là đã xong? | Kênh thực tế, vòng hỏi lại, cách hiểu chờ/giải quyết/đóng |
-| Technician | Bạn quyết định xử lý việc nào trước như thế nào? Khi cần hỏi đồng nghiệp bạn ghi ở đâu? Chuyển nhóm lần gần nhất ra sao? | Hàng đợi, thông tin tối thiểu, rủi ro công khai/nội bộ |
-| Manager | Bạn phát hiện việc bỏ sót và quá hạn bằng cách nào? Dữ liệu nào đủ để chuyển người/nhóm? | Chỉ số ưu tiên, ý nghĩa “tồn” và cách nhìn tải |
-| Admin | Khi nhân viên nghỉ hoặc đổi nhóm bạn xử lý phiên, ticket và tài sản ra sao? Ai sửa SLA? | Quy trình cấp/thu hồi quyền, assignee không còn hợp lệ, bàn giao password |
+| Role | Open, nonleading questions | Evidence sought |
+| --- | --- | --- |
+| Requester | Describe the last IT problem, submission channel/follow-up/completion definition | Actual channels/repeated inquiries/state comprehension |
+| Technician | How prioritize? Where consult colleagues? Last team transfer? | Queues/minimum context/public-internal risks |
+| Manager | How find forgotten/overdue work? What supports reassignment/transfer? | Priority metrics/backlog/load meaning |
+| Admin | How handle departure/team changes/sessions/tickets/assets? Who edits SLA? | Provision/revoke/invalid assignees/password handover |
 
-Quan sát tác vụ thật nếu được phép; không coi câu trả lời mong muốn là hành vi đã xảy ra. Sau mỗi buổi ghi: dữ kiện quan sát, câu nói được đồng ý trích, suy luận của nhóm, giả thuyết và mức tự tin riêng.
+Observe real tasks if permitted; desired answers are not observed behavior. Record observations/consented quotes/team inferences/hypotheses/confidence separately.
 
-## Tree test và kiểm tra thuật ngữ
+## Tree testing and terminology
 
-Trước usability test, cho người tham gia tìm nơi: gửi lỗi mạng; trả lời câu hỏi IT; xác nhận giải quyết; xem thiết bị được cấp; tìm việc nhóm chưa giao; đổi thành viên nhóm; xem SLA mặc định. Đo first choice, đường đi, thời gian và cách họ gọi các mục. Không gợi ý “hãy bấm menu Ticket”. So sánh “Yêu cầu của tôi” và “Công việc IT” khi người IT cũng là requester.
+Find where to report network failure/reply to IT/accept resolution/view assigned devices/find unclaimed team work/change members/view default SLA. Measure first choice/path/time/naming without suggesting menus. Compare My requests/IT work when IT is also requester.
 
-## Usability test có điều phối
+## Moderated usability
 
-SVG tĩnh chỉ dùng walkthrough; không đo thời gian click/task success như prototype tương tác. Có thể tạo paper prototype bằng cách chuyển giữa bản vẽ; ghi rõ người điều phối mô phỏng. Khi có prototype/ứng dụng, chạy các tác vụ sau với dữ liệu giả.
+Static SVGs support walkthrough only, not interactive click time/task-success measurement. Facilitated paper prototypes may switch drawings with explicit simulation disclosure. Use synthetic data in future prototypes/apps.
 
-| Task | Người tham gia và đề bài | Quan sát / tiêu chí thiết kế |
-|---|---|---|
-| UT01 | R: báo không truy cập được thư mục, ảnh hưởng một phòng ban | Tự chọn loại/category/impact/urgency; giải thích được priority đề xuất; không chọn assignee |
-| UT02 | R: IT đã hỏi thêm ảnh lỗi, hãy phản hồi | Tìm Pending, hiểu câu hỏi, biết ticket tiếp tục sau gửi |
-| UT03 | R: giải pháp chưa khắc phục, rồi trong lần khác đã ổn | Phân biệt mở lại có lý do với đóng; không vô tình đóng khi muốn trả lời |
-| UT04 | T: nhận một ticket chưa giao, tìm bối cảnh asset | Hiểu phạm vi nhóm, không nhận thay user khác, tìm được lịch sử được phép |
-| UT05 | T: gửi một câu cho requester, sau đó ghi nội dung chỉ IT đọc | Không gửi nhầm audience; hiểu note không tính first response |
-| UT06 | M: tìm việc cần điều phối và chuyển nhóm | Hiểu KPI hiện tại khác filter kỳ; chọn assignee mới và lý do |
-| UT07 | M: đổi P3→P1 trên ticket đã dùng3 giờ | Hiểu chỉ còn1 giờ resolution, không được thêm4 giờ; thấy lịch sử vi phạm |
-| UT08 | M: cấp một laptop, thu hồi vào sửa chữa | Hiểu một assignment, không cấp tiếp khi sửa; tìm lịch sử |
-| UT09 | A: sửa SLA, khóa user đang có ticket | Hiểu tác động ticket mới, revocation và chuyển giao |
-| UT10 | Bàn phím/mobile: lọc ticket, mở dialog, gặp lỗi trường | Không kẹt focus, thấy lỗi/nhãn, giữ form, truy cập tác vụ chính |
+| Task | Participant / prompt | Observation / target |
+| --- | --- | --- |
+| UT01 | R shared-folder failure affecting department | Correct type/category/impact/urgency, explain priority, no assignee choice |
+| UT02 | R answer IT's screenshot request | Find Pending/question, understand resume on send |
+| UT03 | R failed solution, later successful solution | Reasoned reopen versus close; no accidental closure |
+| UT04 | T claim unassigned ticket/find asset context | Team scope/self-claim/authorized history |
+| UT05 | T public reply then IT-only note | Correct audience, note not first response |
+| UT06 | M find/transfer work | Current KPI versus period, eligible assignee/reason |
+| UT07 | M P3→P1 after 3 h | 1 hremaining, not extra 4 h; breach history |
+| UT08 | M issue laptop/return for repair | One assignment/no repair reissue/history |
+| UT09 | A edit SLA/lock assigned user | New-ticket scope/revoke/handover |
+| UT10 | Keyboard/mobile filters/dialog/field error | No traps/readable errors/retained forms/main actions |
 
-Mục tiêu vòng đầu **đề xuất**, không là kết quả: ≥80% hoàn thành tác vụ cốt lõi không gợi ý trên mẫu thử; **0 trường hợp gửi nhầm nội bộ ra public hoặc hiểu sai quyền** trước chốt thiết kế. Ghi task success, lỗi nghiêm trọng, số lần cần trợ giúp, first click và mức dễ dùng tự đánh giá1–7. Thời gian chỉ dùng so sánh sau khi có môi trường tương tác phù hợp; không đặt số giây tùy ý với SVG.
+**Proposed** first-round target:≥80%unassisted core-task completion on the trial sample; **0 wrong-audience internal posts/authorization misunderstandings** before design sign-off. Record success/critical errors/help/first click/self-rated ease 1–7. Timing only with suitable interactive environments, no arbitrary SVG seconds.
 
-## Review chuyên gia và chất lượng
+## Expert and quality review
 
-Review heuristics theo [NN/g](https://www.nngroup.com/articles/ten-usability-heuristics/): thấy trạng thái, ngăn lỗi, nhất quán và phục hồi. Review accessibility theo checklist design system; conformance chỉ đánh giá trên UI thực thi. Review nghiệp vụ cùng chủ sở hữu quy trình cho máy trạng thái, first response, D-09 snapshot, D-12 reopen khi assignee mất quyền và công thức MET07/08.
+[NN/g heuristics](https://www.nngroup.com/articles/ten-usability-heuristics/): visibility/prevention/consistency/recovery. Accessibility checklist, conformance only on live UI. Process-owner review for states/first response/D-09 snapshot/D-12 invalid-assignee reopen/MET07–08.
 
-Mức độ lỗi: **nghiêm trọng** = rò rỉ quyền, mất dữ liệu, gửi nhầm audience, trạng thái/SLA sai; **cao** = không hoàn thành tác vụ hoặc hiểu sai đóng/mở lại; **vừa** = cần trợ giúp; **thấp** = chậm hoặc khó đọc nhưng vẫn hoàn thành. Sửa lỗi nghiêm trọng/cao và test lại trước chốt thiết kế cho triển khai.
+Severity: **critical** access leaks/data loss/wrong audience/incorrect state-SLA; **high** task blocked/closure-reopen misunderstanding; **medium** help needed; **low** slow/readability difficulty but completed. Fix/retest critical/high before implementation design sign-off.
 
-## Mẫu ghi kết quả
+## Results template
 
-Mỗi finding có ID, ngày, task/role, dữ kiện quan sát, tác động, mức độ, screen/story liên quan, thay đổi đề xuất và kết quả test lại. Không điền kết quả giả. Cập nhật sổ quyết định và truy vết sau khi một giả định được xác nhận hoặc bác bỏ.
+Finding ID/date/task-role/observed facts/impact/severity/screen-story/proposed change/retest. Never invent results. Update decisions/traceability after confirming/rejecting assumptions.
 
-## Kiểm chứng task và AI điều phối
+## Task and coordination validation
 
-| Task | Vai trò và đề bài | Quan sát / evidence cần có |
-|---|---|---|
-| UT-OPS01 | M: xác nhận skills/lịch và cấp policy onboarding | Hiểu default deny, phạm vi workflow/nhóm/priority/actions và tắt automation |
-| UT-OPS02 | R: tạo ticket bằng hội thoại, sửa preview rồi xác nhận | Phân biệt draft/xác nhận/result; không tưởng đã có ticket trước xác nhận |
-| UT-OPS03 | T: đọc plan, thử bắt đầu task có dependency, cập nhật remaining/kết quả | Hiểu lý do chặn, ticket khác task, Done không đóng ticket |
-| UT-OPS04 | M: ghi nghỉ phép, đọc reassign và exception | Nhận biết task nào tự giao lại, task đang làm/lock nào cần quyết định |
-| UT-OPS05 | M: duyệt phương án rồi dữ liệu/policy thay | Hiểu stale/conflict/đánh giá lại và Approved khác execution succeeded |
-| UT-OPS06 | M: đọc run/report/cost và can thiệp thủ công | Truy nguồn/event/policy/actor/result, nhận biết unknown cost và manual lock |
-| UT-OPS07 | Reader/publisher: xuất bản KB, thu hồi ACL, đọc lại nguồn | Hiểu Draft/Published/version/audience, không đọc nội dung thu hồi |
-| UT-OPS08 | Bàn phím/mobile/reduced motion | Board có table, DAG có list, diff đọc được, focus/error giữ bản nhập |
+| Task | Role / prompt | Observation / evidence |
+| --- | --- | --- |
+| UT-OPS01 | M verifies skills/schedules/grants onboarding | Default deny/workflow-team-priority-actions/disable |
+| UT-OPS02 | R conversational ticket/edit-confirm preview | Draft/confirmation/real result distinction |
+| UT-OPS03 | T plan/dependency-start/progress-result | Guard reasons/Ticket≠Task/Done≠Closed |
+| UT-OPS04 | M absence/reassign/exception | Automatic versus locked/in-progress decision |
+| UT-OPS05 | M approves then data/policy changes | Stale/conflict/re-evaluation/decision≠execution |
+| UT-OPS06 | M run/report/cost/manual intervention | Source-event-policy-actor-result/unknown cost/manual lock |
+| UT-OPS07 | Reader/publisher publish/revoke/re-read | Draft/Published/version/audience/no revoked content |
+| UT-OPS08 | Keyboard/mobile/reduced motion | Board table/DAG list/readable diff/focus/errors/drafts |
 
-Nghiệm thu kỹ thuật theo TC-OPS01–12 và A1–A13 tách khỏi usability. Chưa chạy nghiên cứu, benchmark/model eval hoặc test ứng dụng; chỉ được cập nhật kế hoạch ở đợt này.
+Technical TC-OPS01–12/A1–A13 acceptance is separate from usability. No research/benchmarks/model eval/application tests run; plan-only work.
+
+## D-42 — Shared workspace validation
+
+AI catalog UT-AI07: R replies/T updates/M approves through cards; distinguish asked/sent/approved/executed. Observe reading effort/action discovery/same-screen completion, no invented success metrics/results. Test compact tabs/focus/drafts/provider unavailable. PLANNED/NOT RUN.
+
+## Recognize and start assistance
+
+Extend UT-AI07: on first visit identify assistant/background activity, name a supported action, start from shortcut/example. Distinguish Send to assistant from Reply/Save progress. Test targets/compact/revocation/unavailable provider/existing drafts. No research results/success rates.
+
+## Coordination example versus assistant scope
+
+Simultaneous replacement proposal/report chat: recognize other assistant work without approving/waiting for run. Test no run/pending approval/automation off with available assistant, unchanged permissions/sources. No results.
+
+## Default-screen recognition
+
+Compare UI37/UI23: normal versus exception; chat without approvals; 4 successful assignment steps do not mean specialist completion. Test no-run/new-existing chats/R-T-M-A/exception-count changes/revocation. No usability results.

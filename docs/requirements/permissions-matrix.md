@@ -1,104 +1,108 @@
 ---
 id: itoh-docs-requirements-permissions-matrix
-title: "Ma trận quyền và phạm vi bản ghi"
+title: "Permissions matrix and record scope"
 type: reference
 domain: security
 module: authorization
 tags: [security, authorization, reference]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Là nguồn chuẩn quyền chức năng và phạm vi đọc/ghi cho từng principal."
+purpose: "Provide the authoritative feature and read/write scope permissions for each principal."
 ---
 
-# Ma trận quyền và phạm vi bản ghi
+# Permissions matrix and record scope
 
-Quyền dưới đây là yêu cầu đối với **backend tương lai**. Việc ẩn menu hoặc nút chỉ hỗ trợ UX. Requester = R, Technician = T, IT Manager = M, Admin = A. Mỗi user có một vai trò; tất cả có thể gửi yêu cầu cá nhân qua góc nhìn Requester [D-01](../decisions/design-decisions.md).
+These are **future backend** requirements. Hiding menus/buttons only supports UX. Requester = R, Technician = T, IT Manager = M, Admin = A. Each user has one role; all can submit personal requests as Requester under [D-01](../decisions/design-decisions.md).
 
-**IT Manager (IT_MANAGER) là Trưởng phòng IT; không có vai trò Trưởng nhóm IT riêng.** AI điều phối công việc theo chính sách; Trưởng phòng IT thiết lập chính sách, giám sát, can thiệp và duyệt ngoại lệ. Team là nhóm chuyên môn để tổ chức nhân sự và phạm vi công việc, không tạo thêm cấp quản lý. Trưởng các phòng ban khác gửi yêu cầu bằng quyền Requester.
+**IT_MANAGER means Head of IT; no separate IT Team Lead role.** AI coordinates under policy; IT Manager sets policies, supervises, intervenes, approves exceptions. Teams group specialists/work scope, not managers. Other department heads submit as Requesters.
 
-## Phạm vi đọc
+## Read scopes
 
-- **Của tôi:** `requester = người đăng nhập`. Không mở rộng theo cùng phòng ban.
-- **Nhóm:** ticket có nhóm phụ trách hiện tại nằm trong các nhóm IT mà Technician đang là thành viên hoạt động. Không dựa trên ID người xử lý đơn lẻ.
-- **Toàn bộ:** M/A trong một tổ chức.
-- Technician xem ticket của chính mình ngoài nhóm chỉ có quyền Requester trên ticket đó, không được xem nội bộ bằng vai trò kỹ thuật viên chung. Plan nhân sự và trace/approval không thuộc projection Requester.
-- Quyền ghi nội dung nội bộ yêu cầu quyền IT trên chính ticket; nhân viên không nhận cả số lượng, metadata tệp, trích đoạn hay event nội bộ.
+- **Mine:** `requester = current user`, not everyone in the same department.
+- **Team:** ticket's current team is among the Technician's active memberships, not merely an assignee ID.
+- **All:** M/A within the organization.
+- T reading own tickets outside team has only Requester rights, not internal IT access. Workforce plans/traces/approvals are excluded from Requester projections.
+- Internal reads/writes require IT rights on that ticket. Employees receive no internal counts/file metadata/excerpts/events.
 
-## Ticket
+## Tickets
 
-| Thao tác | R | T | M | A |
-|---|---|---|---|---|
-| Tạo ticket cho bản thân | Có | Có | Có | Có |
-| Xem, tìm, lọc, đếm | Của tôi | Nhóm + của tôi theo góc nhìn | Toàn bộ | Toàn bộ |
-| Xem timeline công khai | Của tôi | Nhóm/của tôi | Toàn bộ | Toàn bộ |
-| Bình luận công khai | Của tôi, chưa kết thúc | Nhóm, chưa kết thúc; hoặc quyền R | Có | Có |
-| Xem/ghi ghi chú nội bộ | Không | Nhóm | Có | Có |
-| Xem tệp | Theo ticket và visibility của nội dung cha | Theo ticket và visibility | Có | Có |
-| Tự nhận ticket chưa giao | Không | Trong nhóm; user hoạt động | Có nếu là thành viên hợp lệ của nhóm | Như M |
-| Giao cho người khác/chuyển nhóm | Không | Không | Có | Có |
-| New → Open | Không | Trong nhóm | Có | Có |
-| Open → In Progress | Không | Là người phụ trách hợp lệ | Có, cần assignee hợp lệ | Có, cần assignee hợp lệ |
-| In Progress → Pending/Resolved; Pending → In Progress | Không | Là người phụ trách hợp lệ | Có | Có |
-| Resolved → Closed | Người yêu cầu của ticket | Chỉ khi là người yêu cầu | Chỉ khi là người yêu cầu | Chỉ khi là người yêu cầu |
-| Resolved → In Progress | Người yêu cầu, có lý do | Chỉ khi là người yêu cầu | Có lý do | Có lý do |
-| Closed → In Progress | Không | Không | Có lý do | Có lý do |
-| Hủy New | Người yêu cầu | Người yêu cầu hoặc M/A | Có lý do | Có lý do |
-| Hủy Open/In Progress/Pending | Không | Không | Có lý do | Có lý do |
-| Hủy Resolved/Closed/Cancelled | Không | Không | Không | Không |
-| Đổi ưu tiên | Không | Không; có thể đề nghị trong ghi chú | Có lý do | Có lý do |
-| Sửa/xóa nội dung đã gửi, xóa ticket | Không | Không | Không | Không |
+| Action | R | T | M | A |
+| --- | --- | --- | --- | --- |
+| Create own ticket | Yes | Yes | Yes | Yes |
+| View/search/filter/count | Own | Team + own by view | All | All |
+| Public timeline | Own | Team/own | All | All |
+| Public comment | Own, not terminated | Team, not terminated; or R rights | Yes | Yes |
+| Read/write internal notes | No | Team | Yes | Yes |
+| Files | Ticket + parent visibility | Ticket + visibility | Yes | Yes |
+| Claim unassigned ticket | No | Active team member | If eligible team member | Same as M |
+| Assign others/transfer team | No | No | Yes | Yes |
+| New → Open | No | Team | Yes | Yes |
+| Open → In Progress | No | Eligible assignee | Valid assignee required | Valid assignee required |
+| In Progress → Pending/Resolved; Pending → In Progress | No | Eligible assignee | Yes | Yes |
+| Resolved → Closed | Ticket requester | Only if requester | Only if requester | Only if requester |
+| Resolved → In Progress | Requester, reason | Only if requester | Reason required | Reason required |
+| Closed → In Progress | No | No | Reason required | Reason required |
+| Cancel New | Requester | As requester or with M/A permissions | Reason required | Reason required |
+| Cancel Open/In Progress/Pending | No | No | Reason required | Reason required |
+| Cancel Resolved/Closed/Cancelled | No | No | No | No |
+| Change priority | No | No; may suggest in note | Reason required | Reason required |
+| Edit/delete sent content or delete ticket | No | No | No | No |
 
-“Có” với bình luận của M/A vẫn bị chặn trên Closed/Cancelled. Resolved cho phép trao đổi công khai; trao đổi không tự mở lại. Pending chỉ tự trở về In Progress khi **người yêu cầu** gửi nội dung công khai, không phải bất kỳ người nào bình luận.
+M/A comments are still blocked on Closed/Cancelled. Resolved allows public discussion without automatic reopening. Pending automatically resumes only when the **requester** posts public content, not any commenter.
 
-## Tài sản, dữ liệu quản trị và thông báo
+## Assets, administration, and notifications
 
-| Thao tác | R | T | M | A |
-|---|---|---|---|---|
-| Danh sách tài sản được cấp | Của mình | Của mình | Có | Có |
-| Xem hồ sơ phục vụ xử lý | Bản rút gọn tài sản của mình | Tài sản liên quan ticket nhóm và tài sản của mình | Toàn bộ | Toàn bộ |
-| Xem ticket liên quan tài sản | Chỉ ticket của mình | Chỉ ticket được phép đọc | Toàn bộ | Toàn bộ |
-| Tạo/sửa, cấp phát, thu hồi, đổi trạng thái | Không | Không | Có | Có |
-| Gắn tài sản lúc tạo ticket | Tài sản đang được cấp cho mình | Như R khi tạo yêu cầu cá nhân | Bất kỳ tài sản hợp lệ | Bất kỳ tài sản hợp lệ |
-| Dashboard | Cá nhân | Cá nhân/nhóm | Tổ chức | Tổ chức |
-| Báo cáo toàn tổ chức | Không | Không | Có | Có |
-| User/role/phòng ban/nhóm/thành viên/danh mục/SLA | Không | Chỉ đọc lookup cần thiết | Chỉ đọc lookup cần thiết | Quản lý |
-| Nhật ký kiểm tra toàn cục | Không | Không | Nghiệp vụ ticket/tài sản/nhân lực/automation trong scope | Thêm quản trị user/role/SLA theo quyền; không mặc định đọc chat |
-| Thông báo và đánh dấu đã đọc | Chỉ của mình | Chỉ của mình | Chỉ của mình | Chỉ của mình |
-| Hồ sơ/mật khẩu | Của mình | Của mình | Của mình | Của mình |
+| Action | R | T | M | A |
+| --- | --- | --- | --- | --- |
+| Assigned asset list | Own | Own | Yes | Yes |
+| Support asset record | Reduced own-asset view | Team-ticket-related and own assets | All | All |
+| Asset-related tickets | Own tickets only | Authorized tickets only | All | All |
+| Create/edit/issue/return/change state | No | No | Yes | Yes |
+| Link asset at ticket creation | Currently assigned to self | Same as R for personal request | Any eligible asset | Any eligible asset |
+| Dashboard | Personal | Personal/team | Organization | Organization |
+| Organization reports | No | No | Yes | Yes |
+| Users/roles/departments/teams/members/categories/SLA | No | Necessary lookup only | Necessary lookup only | Manage |
+| Global audit | No | No | Scoped ticket/asset/workforce/automation business audit | Additional user/role/SLA admin audit under permissions; not all chats |
+| Notifications/read state | Own only | Own only | Own only | Own only |
+| Profile/password | Own | Own | Own | Own |
 
-Không có endpoint hoặc menu liệt kê tất cả nhân viên cho Requester; form chỉ đọc dữ liệu tham chiếu tối thiểu. Technician không được duyệt lịch sử cấp phát của tài sản không liên quan chỉ bằng cách thay ID.
+No employee-directory endpoint/menu for Requesters; forms get minimal reference data. Technicians cannot inspect unrelated assignment histories by changing IDs.
 
-## Thay đổi quyền giữa phiên
+## Mid-session permission changes
 
-Chuyển nhóm ticket làm Technician nhóm cũ mất quyền ngay ở request tiếp theo; nhóm mới được đọc lịch sử nội bộ phục vụ xử lý. Nội dung nhạy cảm trong thông báo cũ không được giữ ở preview; mở link luôn kiểm tra lại quyền. Nếu quyền bị thu hồi khi đang soạn, giữ bản nhập trong bộ nhớ ở màn hình lỗi nhưng không hiển thị thêm dữ liệu server; cho sao chép nội dung do chính người dùng soạn.
+Team transfers revoke old-team T access on the next request; new teams can read needed internal history. Old notifications do not preserve sensitive previews; links recheck rights. If access is lost while composing, preserve user input in memory on the error screen without more server data, allowing copying of the user's own text.
 
-Loại thành viên, khóa user hoặc đổi role làm mất quyền thu hồi quyền ngay; không xóa lịch sử. Không cho giữ assignee đang hoạt động ngoài nhóm hoặc không còn vai trò IT: Admin cần chuyển giao hoặc bỏ assignee các ticket/task đang mở theo điều kiện trạng thái bằng một thao tác nhất quán; In Progress/Pending phải có người thay hợp lệ. Ticket Resolved/Closed giữ lịch sử assignee; nếu người đó không còn hợp lệ thì M/A phân công lại trước khi mở lại [D-12](../decisions/design-decisions.md).
+Membership removal/account locking/role loss revokes immediately without deleting history. Active assignees must remain eligible IT/team members. Admin consistently hands over/unassigns open tickets/tasks subject to state; In Progress/Pending needs a valid replacement. Resolved/Closed retain historical assignees; M/A reassigns before reopening if needed [D-12](../decisions/design-decisions.md).
 
-## Quy ước phản hồi để thiết kế UX
+## UX response conventions
 
-Chưa đăng nhập/hết phiên → đăng nhập lại. Trang chức năng cấm theo vai trò → trang 403. ID bản ghi/tệp không tồn tại hoặc ngoài phạm vi đọc → cùng một trang 404 “Không tìm thấy hoặc bạn không có quyền truy cập”. Không tiết lộ tên ticket/người tạo qua thông báo lỗi. Đây là hợp đồng hành vi, chưa phải API được triển khai.
+Unauthenticated/expired → login. Role-prohibited function → 403. Missing/out-of-scope record/file → generic 404, “Not found or you do not have access.” Do not reveal ticket/creator names in errors. Behavior contract only, not implemented APIs.
 
-## Quyền đối với Task, nhân lực, automation và KB
+## Tasks, workforce, automation, and KB
 
-| Thao tác | R | T | M | A | AI_COORDINATOR |
-|---|---|---|---|---|---|
-| Đọc task/plan nội bộ | Không | Nhóm còn membership | Trong phạm vi quản lý | Trong phạm vi nghiệp vụ | Policy/grant/service scope |
-| Cập nhật tiến độ/remaining/kết quả | Không | Task mình phụ trách; state/dependency hợp lệ | Có quyền và lý do khi can thiệp | Như M | Không tự ghi Done/kết quả kỹ thuật |
-| Giao/giao lại/khóa task | Không | Không giao người khác | Có; kiểm kỹ năng/lịch/tải | Như M | Chỉ actions được policy cấp; đang làm/lock cần duyệt |
-| Xem lịch/kỹ năng/tải | Không | Bản thân; lookup nhóm tối thiểu theo nhiệm vụ | Phòng IT được quản lý | Theo quyền nghiệp vụ | Tối thiểu cho candidate selection theo policy |
-| Xác nhận kỹ năng/lịch/capacity | Không | Không tự xác nhận | Có | Theo quyền M | Không |
-| Workflow/template/policy | Không | Đọc bản cần thực thi | Quản lý/xuất bản/bật/tắt có audit | Theo quyền M | Đọc effective scope, không tự cấp grant |
-| Duyệt ngoại lệ | Không | Đề nghị/bổ sung evidence trong scope | Có thẩm quyền, recheck snapshot | Theo quyền M | Chỉ tạo đề nghị, không tự duyệt |
-| Run/action trace | Không | Thông tin công việc cần thiết, không payload toàn cục | Trace scoped/redacted | Metadata vận hành theo quyền, không mặc định đọc mọi chat | Run/service scope |
-| Retry/re-evaluate | Không | Đề nghị trong scope | Có audit, không nhân đôi intent đã thành công | Theo quyền M | Retry bị giới hạn và recheck policy |
-| KB đọc/tìm/citation | Published + ACL cho mình | Published + ACL cho mình | Theo ACL | Theo ACL; admin không mặc định mọi nội dung | Published + ACL/service scope hiện tại |
-| KB nháp/sửa/xuất bản/ACL | Không mặc định | Cần cấp quyền author riêng nếu chốt | Quyền publisher/owner theo policy cần chốt | Quản trị kỹ thuật, không bỏ qua ACL | Không tự xuất bản/sửa ACL |
-| Tắt trợ lý/cấu hình provider | Không | Không | Tắt automation qua policy, không tự đổi credential hệ thống | Cấu hình khả dụng hệ thống | Không |
+| Action | R | T | M | A | AI_COORDINATOR |
+| --- | --- | --- | --- | --- | --- |
+| Internal tasks/plans | No | Current team | Management scope | Business scope | Policy/grant/service scope |
+| Progress/remaining/results | No | Assigned task, valid state/dependencies | Authorized intervention with reason | Same as M | No autonomous Done/technical result |
+| Assign/reassign/lock | No | No assigning others | Yes, skills/schedule/load checks | Same as M | Granted actions only; in-progress/lock needs approval |
+| Schedules/skills/load | No | Self/minimal task-related team lookup | Managed IT department | Business permissions | Minimum policy candidate-selection data |
+| Verify skills/schedules/capacity | No | No self-verification | Yes | M permissions | No |
+| Workflows/templates/policies | No | Execution-required version | Audited manage/publish/enable/disable | M permissions | Read effective scope; no self-grants |
+| Approve exception | No | Propose/add scoped evidence | Authorized, snapshot recheck | M permissions | Propose only, no self-approval |
+| Run/action traces | No | Required work information, not global payloads | Scoped/redacted traces | Authorized operations metadata, not all chats | Run/service scope |
+| Retry/re-evaluate | No | Request within scope | Audited; no repeat successful intent | M permissions | Bounded retry/current policy |
+| KB read/search/citations | Own Published + ACL | Own Published + ACL | ACL | ACL, no default all-content access | Current Published/ACL/service scope |
+| KB drafts/edit/publish/ACL | Not by default | Separately granted author rights if approved | Publisher/owner policy to decide | Technical admin without ACL bypass | No autonomous publishing/ACL edits |
+| Assistant disable/provider configuration | No | No | Disable automation through policy, not system credentials | System availability configuration | No |
 
-AI_COORDINATOR là service principal, không role đăng nhập thứ năm. Có thao tác được cấp không đồng nghĩa quyền trên mọi bản ghi. Hội thoại không được mượn service identity để nâng quyền Requester. Phê duyệt automation không thay phê duyệt tạo role IT D-29; AI không tự tạo user/role.
+AI_COORDINATOR is a service principal, not a fifth login role. An action grant is not blanket record access. Chat cannot borrow service identity to elevate Requesters. Automation approvals do not replace D-29 IT-role authorization; AI cannot create users/roles.
 
-Thu hồi account/membership/skills/policy/KB phải áp dụng request/action tiếp theo và phát sự kiện đánh giá task bị ảnh hưởng. Không để task mới được giao cho assignee mất quyền trong khoảng chờ model. Không tiết lộ title/count/args/sources/internal plan trong lỗi, notification hoặc report của Requester.
+Account/membership/skills/policy/KB revocation applies to the next request/action and emits affected-task evaluation events. Do not assign new work to someone who lost rights during a model call. Requester errors/notifications/reports expose no internal titles/counts/arguments/sources/plans.
+
+## Shared AI Workspace — D-42
+
+One shell changes no permissions. Assistant cards dispatch under the current user through the matching API; activity uses domain scope, not others' chats. R has no internal runs/candidates/policies/approvals; T cannot assign others; M cannot administer users. A provisions users/roles only through D-29 checks/secure forms, not autonomous model execution. Public/notes stay separate. Done/Resolved/Closed require authorized human confirmation, never model inference. Sessions cannot borrow AI_COORDINATOR to elevate rights.

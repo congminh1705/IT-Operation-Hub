@@ -1,82 +1,94 @@
 ---
 id: itoh-docs-ai-integration-and-non-regression
-title: "Tích hợp AI và bảo toàn nghiệp vụ"
+title: "AI integration and business invariants"
 type: reference
 domain: ai
 module: integration
 tags: [ai, integration, reference]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Định nghĩa tool boundary, giao dịch, retry và bảo toàn bất biến khi tích hợp AI."
+purpose: "Define tool boundaries, transactions, retries, and invariant preservation for AI integration."
 ---
 
-# Tích hợp AI và bảo toàn nghiệp vụ
+# AI integration and business invariants
 
-**Thiết kế mục tiêu 31/10/2026; chưa có adapter, endpoint hoặc test thực thi.** D-35 thay cấm mutation tuyệt đối của D-23; Q&A/summary/nháp phản hồi vẫn chỉ đọc/nháp. Đợt này chỉ sửa tài liệu.
+**Target design, 31 October 2026; no executable adapter/endpoint/tests.** D-35 replaces D-23's absolute mutation ban; Q&A/summaries/reply drafts remain read-only/draft. Documentation changes only.
 
-## Tool và danh tính
+## Tools and identities
 
-| Tool khái niệm | Actor/scope | Điều kiện |
-|---|---|---|
-| Search/read KB, ticket, asset, report | User hoặc service identity đúng policy | Chỉ đọc; lọc trước retrieval/provider/trả kết quả và đọc lại |
-| Prepare ticket/reply draft | Chủ phiên, audience rõ | Không ticket/comment/SLA/event nghiệp vụ |
-| Confirm/create ticket | User xác nhận preview cụ thể | Validation lõi, digest/version/idempotency; không chọn requester/role/priority override tùy ý |
-| Propose/validate plan, eligible candidates | AI_COORDINATOR gắn run/event/policy/grantor | DAG/estimate/deadline/inventory; proposal chưa có hiệu lực |
-| Activate plan/create/assign/reassign tasks | AI_COORDINATOR trong allowlist | Policy/grantor hiện tại, scope/version/capacity/transaction; ngoài quyền trình duyệt |
-| Approval/reminder/report | Cùng actor và visibility | Dedup/tần suất; approval chưa là execution |
-| Hoàn thành task, giải quyết/đóng ticket | Người có quyền | State machine; model không tự xác nhận |
-| User/role/SLA/asset mutation | Người có quyền, service chuyên trách | AI không tự cấp user/role/tài sản; sửa SLA/cam kết cần đúng quyền và duyệt |
+| Conceptual tool | Actor/scope | Conditions |
+| --- | --- | --- |
+| Search/read KB/tickets/assets/reports | User or policy-authorized service | Read-only; filter before retrieval/provider/results and recheck |
+| Prepare existing-use-case card/form/preview | Conversation owner, explicit audience/resource | No mutation; server registry/schema allowlist, no arbitrary URL/JS/tool |
+| Confirm/create ticket | User confirms exact preview | Core validation, digest/version/idempotency; no arbitrary requester/role/priority override |
+| Propose/validate plan, eligible candidates | AI_COORDINATOR/run/event/policy/grantor | DAG/estimates/deadlines/inventory; proposal not effective |
+| Activate plans/create/assign/reassign tasks | Allowlisted AI_COORDINATOR | Current policy/grantor/scope/version/capacity/transaction; outside authority needs approval |
+| Approval/reminder/report | Same actor/visibility | Dedup/rate limits; approval is not execution |
+| Complete tasks/resolve/close tickets | Authorized human | State machine, no autonomous model confirmation |
+| User/role/SLA/asset mutation | Authorized human/specialist service | No autonomous AI users/roles/assets; SLA/commitments need proper rights/approval |
 
-Provider không nhận DB credential/session/credential nghiệp vụ hoặc quyền Admin. Dữ liệu KB/ticket không cấp quyền. Không shell, SQL hoặc HTTP tùy ý.
+Providers get no DB/session/business credentials/Admin rights. Ticket/KB data grants no authority. No arbitrary shell/SQL/HTTP.
 
-## Giao dịch, sự kiện và retry
+## Transactions, events, retries
 
-1. Transaction nghiệp vụ lưu thay đổi + OutboxEvent.
-2. Worker claim event bằng DB/lease, tạo hoặc tiếp tục run theo event ID, commit.
-3. Snapshot nguồn/candidates đúng quyền; đóng transaction trước gọi model.
-4. Schema/refusal/timeout lỗi → run failure có thể xử lý lại, không task nửa vời.
-5. Transaction mới re-read, khóa nguồn lực theo thứ tự, kiểm tra version/policy/grantor/ACL/capacity; ghi domain/action/audit/notification/outbox nguyên tử.
-6. Ack sau commit; redelivery dùng khóa nghiệp vụ và kết quả đã lưu.
+1. Business transaction persists changes + OutboxEvent.
+2. Worker claims through DB/lease, creates/resumes run by event ID, commits.
+3. Read scoped sources/candidates; close snapshot transaction before model.
+4. Schema/refusal/timeout failures produce recoverable run failure, no partial tasks.
+5. New transaction re-reads/locks in order, checks versions/policy/grantor/ACL/capacity; atomically writes domain/action/audit/notification/outbox.
+6. Acknowledge after commit; redelivery uses business keys/stored results.
 
-PostgreSQL là nguồn khôi phục khi broker lỗi; Redis lock/Celery task ID không thay dedup domain. Xem [kiến trúc](../technical/architecture.md) về key, backoff và dead-letter.
+PostgreSQL is recovery authority for broker failures; Redis locks/Celery IDs do not replace domain dedup. See [architecture](../technical/architecture.md) for keys/backoff/dead-letter.
 
-## Public/internal và dữ liệu
+## Public/internal and data
 
-PUBLIC không nhận internal fields; INTERNAL gắn ticket và quyền IT hiện tại. Không handoff nội bộ ra public. Cache/history/nguồn kiểm tra lại ACL; mất quyền thì che cả nội dung phụ thuộc nguồn, không chỉ bỏ citation. KB phải Published/version hợp lệ; thu hồi hiệu lực ngay tại truy vấn.
+PUBLIC receives no internal fields; INTERNAL binds ticket/current IT rights. No internal-to-public handoff. Cache/history/sources recheck ACL; revocation hides source-dependent content, not only citations. KB requires valid Published/version; query-time revocation is immediate.
 
-Chỉ render text escape và source cards server xác nhận, không thực thi HTML/JS/tải URL model. Tệp private vẫn qua quyền cha, không đưa binary/URL public cho provider mặc định. Không hứa nhận diện hoàn hảo bí mật do user tự dán.
+Render escaped text/server-verified source cards, never model HTML/JS/URL fetches. Private files retain parent permissions; binaries/public URLs are not sent by default. No promise of perfect detection of user-pasted secrets.
 
-## Bất biến và mutation hợp lệ
+## Invariants and valid mutations
 
-| Nghiệp vụ | Bảo toàn | Thay đổi được phép |
-|---|---|---|
-| Ticket BR-02–06 | Requester, ma trận priority, state/quyền/version | Tạo sau xác nhận; không tự giải quyết/đóng |
-| Plan/task BR-14–15 | Tách ticket, DAG, một plan version hiệu lực | Tạo/giao/giao lại theo policy; Done do người thực hiện |
-| Phân bổ BR-16 | Thành viên/kỹ năng/lịch/tải thật | Recheck/giữ chỗ atomic; không ép vượt tải |
-| SLA BR-08–10 | 24/7, snapshot, pause/reopen, dedup/history | Lịch nhân lực không đổi SLA; thay SLA/cam kết phải duyệt |
-| First response | Chỉ public IT comment hợp lệ | Nháp do IT gửi thật mới xét; AI message/nhắc không tính |
-| Assets BR-11 | Một cấp phát hiệu lực | Task tham chiếu/kiểm kê; không tự cấp phát hoặc mua |
-| MET01–22 | Facts theo scope/kỳ/timestamp | Đếm thực thể/action đã commit; không đếm nháp |
-| Manual/approval | Không ghi đè lock/đang làm, chặn stale | Approved vẫn recheck policy/quyền/capacity |
+| Domain | Preserve | Allowed change |
+| --- | --- | --- |
+| Tickets BR-02–06 | Requester, priority matrix, state/rights/version | Confirmed creation, no autonomous resolution/closure |
+| Plans/tasks BR-14–15 | Ticket separation, DAG, one effective version | Policy create/assign/reassign; human Done |
+| Allocation BR-16 | Real membership/skills/schedule/load | Atomic recheck/reservation; no overbooking |
+| SLA BR-08–10 | 24/7, snapshot, pause/reopen, dedup/history | Workforce schedule does not change SLA; changes need approval |
+| First response | Eligible public IT comment only | Reviewed draft must actually be sent; AI messages/reminders do not count |
+| Assets BR-11 | One active assignment | Task references/inventory, no autonomous issue/purchase |
+| MET01–22 | Scoped/period/timestamp facts | Committed entities/actions, not drafts |
+| Manual/approval | Respect locks/in-progress work; reject stale | Approved still rechecks policy/rights/capacity |
 
-## Dữ liệu AI
+## AI data
 
-Conversation/Message/SourceReference/Draft tách domain; xóa chat không xóa ticket/task/audit. ConfirmedCommand lưu owner/digest nội dung/version/TTL/idempotency. Run/Action/Approval/Outbox/Usage lưu provenance và trạng thái/result/error. Không log prompt/body/secrets mặc định; retention/redaction/quyền review trace: Cần quyết định D-40.
+Conversation/Message/SourceReference/Draft are separate from domain data; deleting chat deletes no ticket/task/audit. ConfirmedCommand retains ticket-creation owner/digest/version/TTL/idempotency. Other cards use their original API commands/validation/idempotency, not every result in result_ticket_id. Run/Action/Approval/Outbox/Usage retain provenance/status/results/errors. No default prompt/body/secret logging; retention/redaction/trace-review rights require D-40 decisions.
 
-## Tắt automation và hoàn tác
+## Disable automation and compensate
 
-Tắt trợ lý dừng sinh nội dung; tắt automation chặn lệnh nền mới. Task chờ provider recheck trước ghi. Không xóa task đã tạo khi tắt AI; hoàn tác bằng hành động bù còn hợp lệ, có quyền/version/audit, không lùi âm thầm việc đã bắt đầu/hoàn thành. Luồng thủ công và SLA tiếp tục hoạt động.
+Disabling assistant stops generation; disabling automation blocks new background commands. Provider-waiting work rechecks before writing. Disabling AI does not delete created tasks; undo uses authorized/versioned/audited valid compensation, never silent regression of active/completed work. Manual flows/SLA continue.
 
-Retry hữu hạn/backoff; lỗi nghiệp vụ không khả thi chuyển ngoại lệ. Timeout kết quả phí không rõ phải giữ reservation chi phí bảo thủ; không retry vô hạn. Mất broker khôi phục từ event DB.
+Bounded retries/backoff; infeasibility becomes exception. Unknown timeout charges retain conservative cost reservations; no infinite retries. Recover broker failure from DB events.
 
-## Kế hoạch kiểm tra không hồi quy
+## Non-regression plan
 
-PLANNED/NOT RUN: giữ 47 AC lõi, 10 AC-X, 12 TC-SLA và 8 AC-AI/12 TC-AI. Q&A/summary/nháp chưa xác nhận không đổi domain. Xác nhận ticket chỉ tạo một ticket/SLA/event. Automation được cấp phải đổi task/assignment/action/notification đúng phạm vi và đủ trace; không áp điều kiện database luôn bất biến cho mọi lệnh AI.
+PLANNED/NOT RUN: retain 47 core AC, 10 AC-X, 12 TC-SLA, 8 AC-AI/18 TC-AI. Unconfirmed Q&A/summaries/drafts do not change domains. Ticket confirmation creates exactly one ticket/SLA/event. Granted automation changes tasks/assignments/actions/notifications within scope with full traces; do not require immutable databases for every AI command.
 
-Bổ sung AC-OPS01–12/A1–A13: lọc cứng candidates, cycle, nghỉ phép, task lock/đang làm, approval stale, 2 workers/replay/retry, policy/KB revoked, injection/provider/broker lỗi, report source và restore. Kiểm tra payload gửi model và API, không chỉ đáp án. Không chạy test trong đợt tài liệu.
+Add AC-OPS01–12/A1–A13: hard candidate filters, cycles, absence, locks/in-progress work, stale approval, two workers/replay/retry, revoked policies/KB, injection/provider/broker failure, report sources, restore. Inspect provider/API payloads, not only answers. No application tests run during documentation work.
 
-[Catalog AI](use-cases-stories-and-acceptance.md) · [AC tổng](../06-acceptance-criteria.md) · [Truy vết](../traceability/master-traceability.md) · [Lộ trình](../09-design-readiness.md).
+[AI catalog](use-cases-stories-and-acceptance.md) · [AC](../06-acceptance-criteria.md) · [Traceability](../traceability/master-traceability.md) · [Roadmap](../09-design-readiness.md).
+
+## Shared assistant-action and coordination screen
+
+Provider-suggested cards are data; backend chooses `form_key` from a user/source-authorized registry. Frontend uses trusted form renderers, not model HTML/JS. Registry maps to existing operations/schemas, not model/client-selected endpoint/method/actor/role/credentials. `AssistantResult.action_cards` prepares/hands off; it is not effect evidence.
+
+After explicit form confirmation, call the original API with session/CSRF/expectedVersion/idempotency. Recheck scope/state/validation; atomically persist domain/audit/outbox like the original screen. Freeze submitted payload; edits to data/resource/audience need renewed preview/confirmation. Tickets retain digest/TTL draft/confirm routes; other actions retain core contracts. “Confirmed” in a prompt is not HTTP confirmation. Unsupported intents cannot dispatch.
+
+Audit actor is the submitting user; correlation may link conversation/message/card without secrets/raw prompts. UI traces do not authorize Manager chat access. Background tasks keep AI_COORDINATOR/event/policy/grantor; tabs never change actors or let sessions borrow grants.
+
+Only trusted security forms accept passwords; no secrets in messages/prefill/card history/models. Cancelling unsent forms does not mutate. Closing chat does not cancel committed requests/workers; check in-flight outcomes before retry. Result cards use domain responses/current records, not model claims.
+
+Shared model/adapters are permitted with separate rate/concurrency/subquotas under one total budget including in-flight/unknown reservations. No model call merely to render existing activity. Provider failure retains native forms/read projections/SLA/recovery.

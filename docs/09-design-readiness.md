@@ -1,96 +1,96 @@
 ---
 id: itoh-docs-09-design-readiness
-title: "Trạng thái thiết kế và lộ trình M0–M5"
+title: "Design status and M0–M5 roadmap"
 type: planning
 domain: project
 module: delivery
 tags: [project, delivery, planning]
 priority: 1
 status: planned
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Mô tả lộ trình, epic/phụ thuộc và kế hoạch kiểm chứng; không cấp lệnh code."
+purpose: "Describe the roadmap, epics/dependencies, and validation plan without authorizing implementation."
 ---
 
-# Trạng thái thiết kế và lộ trình M0–M5
+# Design status and M0–M5 roadmap
 
-**Đợt hiện tại CHỈ tài liệu.** M1–M5 là kế hoạch, không lệnh khởi tạo code, dependency, migration, test hoặc cấu hình vận hành. Thứ tự này thay lịch M1–M6 cũ để đưa AI automation vào M3. Đã đặc tả không đồng nghĩa đã đạt gate phần mềm.
+**Current work is documentation ONLY.** M1–M5 are plans, not instructions to create code, dependencies, migrations, tests, or operational configuration. This replaces the old M1–M6 schedule to bring AI automation into M3. Specification does not mean a software gate has passed.
 
-## M0 — Hoàn thiện thiết kế
+## M0 — Complete the design
 
-Hoàn thiện scope/features/roles, UC/US/AC, state/quyền, kiến trúc/ERD/API, AI/policy/approval, worker/events/retry/security/audit, UI, kế hoạch kiểm thử/vận hành và sơ đồ. Nội dung được quản lý trực tiếp trong tài liệu nguồn theo từng chủ đề.
+Complete scope/features/roles, UC/US/AC, states/permissions, architecture/ERD/API, AI/policies/approvals, workers/events/retry/security/audit, UI, test/operations plans, and diagrams. Maintain content directly in each topic's authoritative source.
 
-Artifacts M0 hiện có: [DBML/ER Mermaid](database/README.md), [OpenAPI document](api/README.md), [C4 C1–C4](architecture/c4/README.md) và [cấu trúc folder/file mục tiêu](technical/code-structure.md). Đây là design draft; contract/schema vật lý phải review theo D-40, chưa tạo code/migration/manifest/test thực thi.
+Current M0 artifacts: [DBML/ER Mermaid](database/README.md), [OpenAPI document](api/README.md), [C4 C1–C4](architecture/c4/README.md), and [target folder/file structure](technical/code-structure.md). These are design drafts; physical contracts/schema require D-40 review. No application code/migrations/manifests/executable application tests are created.
 
-Kiểm tra cấu trúc tài liệu, liên kết và tính nhất quán giữa mã yêu cầu/sơ đồ; không chạy test ứng dụng hoặc gọi model. Các điểm chưa chốt nằm trong D-40. [Trạng thái hồ sơ](review-report.md) tổng hợp độ phủ và giới hạn kiểm chứng.
+Check document structure, links, and requirement/diagram consistency, without application tests or model calls. Open decisions are in D-40. The [review report](review-report.md) summarizes coverage and verification limits.
 
-## Lộ trình triển khai tương lai
+## Future implementation roadmap
 
-| Mốc | Kết quả mục tiêu | Gate nghiệm thu tương lai |
-|---|---|---|
-| M1 — Nền tảng | DB/auth/CSRF/scope; users/teams/skills/calendar; ticket/task thủ công; audit | Session revoke/scope/state/estimate chuẩn, migration và persistence được kiểm chứng |
-| M2 — Quy trình xác định | Plan version/DAG, template Published, policy/default deny, candidate/capacity, outbox/worker, approval/idempotency | Input cấu trúc chạy xuyên suốt; 2 workers/retry không trùng/vượt tải, stale/manual lock đúng |
-| M3 — AI automation | Adapter schema, hiểu yêu cầu, lập plan/rank/tool actions, theo dõi/replan, onboarding và ngoại lệ | Model thật + action/dữ liệu lưu thật trong DB test, đủ success/exception paths; bounded cost, injection/provider lỗi an toàn |
-| M4 — Vận hành đầy đủ | SLA/notification, assets/files, KB/RAG và trợ lý, dashboard/report | 47 AC lõi/8 AC-AI và MET source/scope/KB permissions được chứng minh; không UI giả |
-| M5 — Nghiệm thu | Quyền/concurrency/model, E2E/responsive/accessibility, backup/restore, CI/deploy/runbook/demo | A1–A13 + toàn bộ AC liên quan; README clean setup/upgrade/recovery và kết quả thực tế |
+| Milestone | Target outcome | Future acceptance gate |
+| --- | --- | --- |
+| M1 — Foundation | DB/auth/CSRF/scope; users/teams/skills/calendar; manual tickets/tasks; audit | Verified session revocation/scope/state/estimates, migrations, persistence |
+| M2 — Deterministic workflows | Plan versions/DAG, Published templates, default-deny policies, candidates/capacity, outbox/workers, approvals/idempotency | Structured input works end to end; two workers/retries do not duplicate effects/overbook; correct stale/lock behavior |
+| M3 — AI automation | Schema adapter, request understanding, planning/ranking/tool actions, monitoring/replanning, onboarding/exceptions | Real model + real persisted actions/data in test DB; success/exception paths; bounded cost; safe injection/provider failures |
+| M4 — Complete operations | SLA/notifications, assets/files, KB/RAG/assistant, dashboards/reports | 47 core AC/8 AC-AI and MET source/scope/KB permissions demonstrated; no simulated UI acceptance |
+| M5 — Acceptance | Authorization/concurrency/model, E2 E/responsive/accessibility, backup/restore, CI/deploy/runbook/demo | A1–A13 + all relevant AC; README clean setup/upgrade/recovery and actual results |
 
-M1 có thể chuẩn bị snapshot SLA/inventory/KB tối thiểu để M3 đủ dữ liệu; M4 hoàn thiện các nghiệp vụ này. Không dồn toàn bộ AI cuối dự án; không bỏ core scope để đạt riêng demo.
+M1 may prepare minimum SLA snapshots/inventory/KB data for M3; M4 completes these capabilities. Do not defer all AI to the end or drop core scope merely to achieve a demo.
 
-## Kế hoạch kiểm chứng — chưa chạy
+## Validation plan — not run
 
-### Entry, môi trường và bằng chứng
+### Entry, environment, and evidence
 
-Entry của giai đoạn kiểm thử ứng dụng: có yêu cầu triển khai riêng, slice/code và môi trường test đã sẵn sàng; quyết định ảnh hưởng slice được chốt; dữ liệu tổng hợp có nhãn DEMO, không credential hoặc dữ liệu thật. PostgreSQL thật kiểm chứng các bảo đảm PostgreSQL; fake clock dùng cho SLA. Provider mock kiểm nhánh tự động nhưng không thay kiểm chứng model thật tại A11.
+Application-testing entry requires a separate implementation request, a ready slice/code and test environment, relevant confirmed decisions, and synthetic DEMO data without real credentials/data. Use real PostgreSQL for PostgreSQL guarantees and a fake clock for SLA. Provider mocks exercise automated branches but do not replace real-model validation at A11.
 
-Mỗi kết quả sau này cần commit/build/môi trường, fixture, bước chạy, expected/actual, log đã redaction, test report và lỗi còn mở. Hiện tất cả nhóm dưới đây là **PLANNED / NOT RUN**; không có số liệu pass rate, chi phí hoặc benchmark thực tế.
+Each future result needs commit/build/environment, fixtures, steps, expected/actual outcomes, redacted logs, test reports, and open defects. All groups below are **PLANNED / NOT RUN**. No actual pass rates, costs, or benchmarks exist.
 
-| Nhóm kiểm chứng | Điều kiện và expected result | Nguồn / evidence tương lai |
-|---|---|---|
-| Quyền/session/CSRF | Đổi user/team/quyền, dùng phiên cũ và gọi API trực tiếp: từ chối đúng scope, không leak count/tệp/chat | NFR01/02/15/22, ma trận quyền; API negative report |
-| State và SLA | Các cạnh hợp lệ/sai, Pending/reopen/priority, clock cố định: không reset thời gian/vi phạm | BR-04/08–10/15, TC-SLA01–12; state/clock report |
-| Transaction/concurrency | Hai worker phân cùng task/nguồn lực, hai người cấp asset: chỉ effect hợp lệ, không vượt capacity | NFR03/19, AC-OPS04–07, BR-11/14/16; PostgreSQL integration report |
-| Outbox/retry | Crash sau commit trước ack, event lặp/lệch thứ tự, broker down: không mất event hoặc nhân effect, scan bù | NFR21, TC-OPS, BR-19; DB facts + worker trace |
-| Model và tool | Thiếu dữ liệu/nhân lực, schema lỗi/cycle/injection/provider timeout: không bịa nguồn hoặc ghi trái quyền | TC-AI01–12, TC-OPS01–12, A1–A11; model/output/action traces |
-| Approval/manual control | Duyệt stale, revoke policy khi model chờ, task đang làm/khóa: chặn hoặc lập đề nghị mới | BR-17/18, NFR18/25; trước/sau và decision/execution riêng |
-| KB/RAG | ACL đổi khi index/model pending, citation phiên bản cũ: không provider/render nguồn mất quyền | BR-21, NFR22, AC-OPS11; retrieval/ACL evidence |
-| Usage/budget | Concurrent request/retry/timeout unknown: reserve bảo thủ và dừng trước trần | NFR23, D-39; ledger và usage/billing có nguồn, không ước lượng thành actual |
-| UI/UX/a11y | 320/390/768/1440, bàn phím/zoom/reflow/reduced motion, form lỗi và cache đổi user | NFR07–09/16/26; Playwright và review thủ công, kế hoạch UX riêng |
-| Persistence/restore | Restart, restore cách ly DB/tệp, chặn outbound và replay cũ: dữ liệu nhất quán, không effect ngoài ý muốn | NFR04/21/24; recovery evidence và RPO/RTO thực đo |
+| Validation group | Conditions and expected result | Future source / evidence |
+| --- | --- | --- |
+| Permissions/session/CSRF | Change users/teams/permissions; reuse old sessions; call APIs directly: correct denial, no count/file/chat leakage | NFR01/02/15/22, permissions; negative API report |
+| States and SLA | Valid/invalid transitions, Pending/reopen/priority, fixed clock: no elapsed-time/breach reset | BR-04/08–10/15, TC-SLA01–12; state/clock report |
+| Transactions/concurrency | Two workers assign the same task/resource; two users issue an asset: only valid effects, no overbooking | NFR03/19, AC-OPS04–07, BR-11/14/16; PostgreSQL integration report |
+| Outbox/retry | Crash after commit before ack, duplicate/out-of-order events, broker failure: no lost events/duplicate effects; recovery scans | NFR21, TC-OPS, BR-19; DB facts + worker traces |
+| Model/tools | Missing data/staff, invalid schema/cycles/injection/provider timeout: no fabricated sources or unauthorized writes | TC-AI01–18, TC-OPS01–12, A1–A11; model/output/action traces |
+| Approvals/manual controls | Stale approval, policy revoked while model waits, in-progress/locked task: block or propose afresh | BR-17/18, NFR18/25; before/after and separate decision/execution |
+| KB/RAG | ACL changes during indexing/model call; old-version citations: revoked sources reach neither provider nor rendered output | BR-21, NFR22, AC-OPS11; retrieval/ACL evidence |
+| Usage/budget | Concurrent requests/retries/unknown timeout costs: conservative reservations and stop before cap | NFR23, D-39; sourced usage/billing ledger, estimates never labeled actual |
+| UI/UX/a11 y | 320/390/768/1440, keyboard/zoom/reflow/reduced motion, form errors, user-switch cache | NFR07–09/16/26; Playwright/manual review and separate UX plan |
+| Persistence/restore | Restart, isolated DB/file restore, outbound blocking, old-event replay: consistent data, no unintended effects | NFR04/21/24; recovery evidence and measured RPO/RTO |
 
-### Phương pháp theo lớp
+### Methods by layer
 
-- Backend: pytest/HTTPX; PostgreSQL thật cho transaction/locks/partial unique/concurrency, không dùng SQLite chứng minh bảo đảm PG.
-- Frontend: Vitest/RTL cho giữ form, field errors, polling/cache/user switch; Playwright cho requester → IT/task → nghiệm thu và nghỉ phép/approval.
-- AI: bộ cố định gồm rõ ràng/thiếu dữ liệu/thiếu người/cycle/nghỉ đột xuất/vượt quyền/lặp/stale/provider lỗi/prompt injection. Tách lỗi model và domain execution; mock chỉ cho test tự động phù hợp, không thay A11.
-- Core: giữ 47 AC, 10 AC-X, 12 TC-SLA; hỗ trợ 8 AC-AI/12 TC-AI; điều phối AC-OPS01–12 và A1–A13.
-- Ops: clean setup, migration một lần/release, persistence restart, outbox replay, restore cách ly và đối chiếu dữ liệu; không cam kết RPO/RTO khi chưa chốt/đo.
-- UX/research: phỏng vấn/tree test/usability/keyboard/responsive chưa thực hiện. 16 UI SVG + 2 board hiện có chưa phủ mọi SCR-OPS bằng hi-fi riêng.
+- Backend: pytest/HTTPX; real PostgreSQL for transactions/locks/partial uniqueness/concurrency, not SQLite as proof of PostgreSQL guarantees.
+- Frontend: Vitest/RTL for preserved forms, field errors, polling/cache/user switching; Playwright for requester → IT/task → acceptance and absence/approval.
+- AI: fixed clear/missing-data/understaffed/cycle/sudden-absence/unauthorized/duplicate/stale/provider-failure/prompt-injection cases. Separate model failures from domain execution; suitable mocks do not replace A11.
+- Core: retain 47 AC, 10 AC-X, 12 TC-SLA; support 8 AC-AI/18 TC-AI; coordination AC-OPS01–12 and A1–A13.
+- Operations: clean setup, one migration run per release, restart persistence, outbox replay, isolated restore/data reconciliation; no RPO/RTO promises before agreement/measurement.
+- UX/research: interviews/tree tests/usability/keyboard/responsive tests have not run. 37 SVGs (34 UI + 3 boards) illustrate 36 IDs, including all 7 OPS; not every state/breakpoint or assistive-technology test is covered.
 
-## Điều kiện bước sang lập trình
+## Conditions for implementation
 
-### Cấu trúc kế hoạch và phụ thuộc
+### Plan structure and dependencies
 
-Kế hoạch ở trạng thái **ROADMAP_DRAFT / chưa kích hoạt triển khai**. Các mục tiêu M1–M5 đã được mô tả nhưng chưa phải lệnh thực thi. Mỗi epic dưới đây là **EPIC_PROPOSED**; chưa có task triển khai được sinh hoặc bắt đầu. Owner sản phẩm là chủ đề tài; người phụ trách thực hiện/kiểm chứng cần được phân khi có yêu cầu triển khai riêng.
+The plan is **ROADMAP_DRAFT / implementation not activated**. M1–M5 goals are described, not execution instructions. Every epic below is **EPIC_PROPOSED**; no implementation tasks have been generated or started. The project owner is the product owner; delivery/verification owners must be assigned after a separate implementation request.
 
-| Epic | Mốc | Phạm vi / kết quả nghiệm thu | Phụ thuộc |
-|---|---|---|---|
-| E01 | M1 | Identity/session/CSRF/quyền/quản trị và thu hồi phiên đúng NFR01/02/15 | M0 và quyết định auth ảnh hưởng slice |
-| E02 | M1 | Workforce/kỹ năng/lịch/absence và dữ liệu demo có provenance | E01, quyết định capacity/skill D-40 |
-| E03 | M1 | Ticket/task thủ công, state, persistence và audit | E01; E02 cho assignment có capacity |
-| E04 | M2 | Plan version/DAG, Published templates, policy/default deny | E02/E03 |
-| E05 | M2 | Outbox/idempotency/approval/concurrency, manual lock và recovery | E04; BR-18/19 được refinement |
-| E06 | M3 | Provider adapter, plan/rank/tool/replan với model thật trong giới hạn D-39 | E05; model/billing/quota/pricing được xác minh khi được phép chạy |
-| E07 | M3–M4 | Nguồn KB tối thiểu cho E06; đầy đủ trợ lý/KB/RAG/ACL/citation ở M4 | E01/E04; schema/ACL nguồn tối thiểu không chờ toàn bộ M4 |
-| E08 | M4 | SLA worker, notifications, files và assets đầy đủ | E03/E05; dữ liệu tối thiểu đã có cho E06 |
-| E09 | M4 | Dashboard/report/usage từ dữ liệu thật đúng MET/quyền | E06/E07/E08 |
-| E10 | M5 | Hồi quy/E2E/security/UX/restore và bộ bằng chứng A1–A13 | E01–E09; không thay toàn bộ AC bằng demo thành công |
+| Epic | Milestone | Scope / acceptance outcome | Dependencies |
+| --- | --- | --- | --- |
+| E01 | M1 | Identity/session/CSRF/authorization/administration and session revocation under NFR01/02/15 | M0 and slice-specific auth decisions |
+| E02 | M1 | Workforce/skills/calendar/absence and DEMO data with provenance | E01, D-40 capacity/skill decisions |
+| E03 | M1 | Manual tickets/tasks, states, persistence, audit | E01; E02 for capacity-aware assignment |
+| E04 | M2 | Plan versions/DAG, Published templates, default-deny policies | E02/E03 |
+| E05 | M2 | Outbox/idempotency/approvals/concurrency, manual locks, recovery | E04; refined BR-18/19 |
+| E06 | M3 | Provider adapter, planning/ranking/tools/replanning with real model within D-39 | E05; access/billing/quota/pricing verified when execution is authorized |
+| E07 | M3–M4 | Minimum KB sources for E06; full assistant/KB/RAG/ACL/citations in M4 | E01/E04; minimum source schema/ACL does not wait for all M4 |
+| E08 | M4 | Complete SLA workers, notifications, files, assets | E03/E05; minimum data already available for E06 |
+| E09 | M4 | Source-based dashboards/reports/usage under MET/permissions | E06/E07/E08 |
+| E10 | M5 | Regression/E2 E/security/UX/restore and A1–A13 evidence | E01–E09; a successful demo does not replace all AC |
 
-M3 phụ thuộc **phần nguồn tối thiểu** của E07, không phụ thuộc E07 hoàn tất toàn bộ; đây là phụ thuộc sản phẩm theo phần bàn giao, tránh vòng M3 chờ M4. Không tạo Task của hệ thống IT từ các epic của kế hoạch phát triển: hai khái niệm khác nhau.
+M3 depends on the **minimum-source delivery** of E07, not its full completion; partial product dependencies avoid M3 waiting for M4. Development epics are not execution Tasks inside the IT operations application.
 
-### Exit và điều kiện chuyển giai đoạn
+### Exit and phase-transition conditions
 
-Người dùng phải yêu cầu triển khai riêng. Sau đó refinement những chi tiết Cần quyết định ảnh hưởng lát cắt, resolve/pin dependency và tạo lock thật, review security và schema/API. Không coi metadata package hoặc tài liệu hiện tại là dependency/runtime đã kiểm chứng.
+The user must separately request implementation. Then refine slice-specific open decisions, resolve/pin dependencies and create actual lockfiles, review security and schema/API. Package metadata or current documentation is not proof of a validated dependency/runtime set.
 
-D-39 ghi cấu hình demo M3 đã được xác nhận riêng; chỉ gọi khi được chuyển sang triển khai, có key cấu hình an toàn và kiểm billing/quota/model/pricing. Chưa có kết quả model hoặc chi phí API thực tế.
+D-39 records separately confirmed M3 DEMO settings. Calls require implementation authorization, safely configured keys, and billing/quota/model/pricing verification. No model results or actual API costs exist.

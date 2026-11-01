@@ -1,203 +1,207 @@
 ---
 id: itoh-docs-03-use-cases
-title: "Actors và use cases"
+title: "Actors and use cases"
 type: reference
 domain: business
 module: requirements
 tags: [business, requirements, reference]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Đặc tả actor, mục tiêu, luồng và điều kiện use case lõi/OPS."
+purpose: "Specify actors, goals, flows, and conditions for core and OPS use cases."
 ---
 
-# Actors và use cases
+# Actors and use cases
 
-## Ranh giới hệ thống
+## System boundary
 
-Hệ thống là **IT Operations Hub cho một tổ chức**. Actor chính: Requester, Technician, IT Manager và Admin. “Người yêu cầu của ticket” là quan hệ với bản ghi, có thể là user thuộc bất kỳ role nào. Danh tính dịch vụ **AI_COORDINATOR** thực hiện điều phối trong policy; thành phần nội bộ **Bộ lập lịch** kích hoạt SLA/đánh giá nguy cơ; worker thuộc hệ thống, không có quyền tương tác như người dùng. Database và file storage là chi tiết nội bộ, không phải actor nghiệp vụ.
+The system is **IT Operations Hub for one organization**. Primary actors: Requester, Technician, IT Manager, Admin. A ticket's requester is a record relationship and may have any user role. Service identity **AI_COORDINATOR** coordinates under policy; the internal **Scheduler** triggers SLA/risk evaluation. Workers are internal and have no human interaction rights. Database/file storage are internal details, not business actors.
 
-Đăng nhập là use case riêng và là tiền điều kiện cho tác vụ cần bảo vệ; không vẽ mọi use case `include` đăng nhập. Association actor–use case thể hiện tham gia, không tự xác lập quyền trên mọi bản ghi; đọc cùng [ma trận quyền](requirements/permissions-matrix.md).
+Login is a separate use case and precondition for protected work; do not add login includes to every UC. Actor associations indicate participation, not blanket record authorization. Read with the [permissions matrix](requirements/permissions-matrix.md).
 
-## Sơ đồ use case XMind
+## XMind use-case diagrams
 
-![Use case theo vai trò](xmind/previews/00-use-cases-overview.svg)
+![Use cases by role](xmind/previews/00-use-cases-overview.svg)
 
-[Mở file XMind](xmind/02-use-cases.xmind). Bốn sheet gồm tổng quan 51 UC và ba góc nhìn lõi tài khoản/quản trị, ticket/SLA, tài sản/quan sát. Các chủ đề ghi mã UC để đối chiếu catalog; ghi chú có actor, story và điều kiện phạm vi.
+[Open XMind](xmind/02-use-cases.xmind). Four sheets provide a 51-UC overview and three core views: accounts/admin, tickets/SLA, assets/monitoring. Topics carry UC IDs; notes record actors/stories/scope.
 
-Bản đồ XMind tổ chức actor–goal để đọc và chỉnh sửa. Đây không phải cách thay thế ký pháp UML chính thức. Phụ lục UML vẫn được giữ để kiểm tra association và system boundary:
+XMind actor–goal maps support reading/editing, not replacement of formal UML notation. UML appendices retain associations/system boundaries:
 
-- [Tài khoản và quản trị — SVG](diagrams/use-cases-access.svg): UC01–UC09.
-- [Ticket, SLA, thông báo — SVG](diagrams/use-cases-ticket.svg): UC10–UC26.
-- [Tài sản và quan sát — SVG](diagrams/use-cases-operations.svg): UC27–UC33.
-- [UML tổng quan dạng SVG](diagrams/use-cases-overview.svg).
-- [Trợ lý AI — UC-AI01–08](diagrams/use-cases-ai.svg).
-- [Công việc/điều phối/KB — UC-OPS01–10](diagrams/use-cases-work-management.svg).
+- [Accounts and administration — SVG](diagrams/use-cases-access.svg): UC01–UC09.
+- [Tickets, SLA, notifications — SVG](diagrams/use-cases-ticket.svg): UC10–UC26.
+- [Assets and monitoring — SVG](diagrams/use-cases-operations.svg): UC27–UC33.
+- [UML overview SVG](diagrams/use-cases-overview.svg).
+- [AI assistant — UC-AI01–08](diagrams/use-cases-ai.svg).
+- [Work/coordination/KB — UC-OPS01–10](diagrams/use-cases-work-management.svg).
 
-[Xem tất cả sơ đồ và hướng dẫn mở trong VS Code/GitHub](diagrams/README.md).
+[All diagrams and VS Code/GitHub viewing instructions](diagrams/README.md).
 
-Các SVG được bố trí lại theo góc nhìn actor của cùng một hệ thống. Mã UC lặp ở nhiều góc nhìn vẫn biểu diễn cùng nghiệp vụ; Admin kế thừa IT Manager và mọi vai trò đều có các tác vụ dùng chung. Phạm vi đọc/ghi cụ thể theo ma trận quyền.
+SVGs use actor views of the same system. Repeated IDs denote the same UC; Admin inherits IT Manager capabilities and all roles have shared actions. Detailed read/write scope follows permissions.
 
-## Danh mục nghiệp vụ lõi — UC01–UC33
+## Core catalog — UC01–UC33
 
-| ID | Mục tiêu | Actor chính | Stories | Kết quả |
-|---|---|---|---|---|
-| UC01 | Đăng nhập | Tất cả | US01 | Phiên hợp lệ, workspace đúng quyền |
-| UC02 | Đăng xuất | Tất cả | US02 | Phiên hiện tại vô hiệu |
-| UC03 | Xem/cập nhật hồ sơ | Tất cả | US03 | Thông tin cá nhân được cập nhật trong giới hạn |
-| UC04 | Đổi mật khẩu | Tất cả | US04 | Mật khẩu mới có hiệu lực, phiên khác bị thu hồi |
-| UC05 | Quản lý tài khoản | Admin | US05–US07 | Tạo, đổi quyền/phòng ban, khóa/mở khóa có lịch sử |
-| UC06 | Quản lý phòng ban | Admin | US08 | Danh mục có trạng thái, không phá lịch sử |
-| UC07 | Quản lý nhóm/thành viên | Admin | US09–US10 | Phạm vi nhóm được cấu hình |
-| UC08 | Quản lý danh mục ticket | Admin | US11 | Danh mục mới/hiện hành/ngừng dùng |
-| UC09 | Cấu hình SLA mặc định | Admin | US12 | Phiên bản mặc định mới, không đổi ticket cũ |
-| UC10 | Tạo ticket | Tất cả, cho chính mình | US13 | Mã, trạng thái New, ưu tiên và snapshot |
-| UC11 | Tìm/lọc danh sách ticket | Tất cả | US14 | Kết quả đúng phạm vi, sort, phân trang |
-| UC12 | Đọc chi tiết và timeline | Tất cả theo scope | US15, US31 | Nội dung và lịch sử đúng visibility |
-| UC13 | Phân công/chuyển nhóm/tự nhận | T, M, A | US16–US17 | Assignee hợp lệ, không reset SLA |
-| UC14 | Tiếp nhận/bắt đầu xử lý | T, M, A | US18–US19 | Trạng thái theo đường hợp lệ |
-| UC15 | Trao đổi công khai | Requester của ticket, IT có scope | US20 | Nội dung lưu, thông báo, có thể resume Pending |
-| UC16 | Ghi chú nội bộ | IT có scope | US21 | Chỉ người có quyền IT đọc được |
-| UC17 | Gửi/tải tệp | Người có quyền nội dung cha | US22–US23 | Tệp hợp lệ, tải qua quyền |
-| UC18 | Chờ phản hồi/tiếp tục | Assignee, M, A | US24 | Câu hỏi công khai, đồng hồ pause/resume |
-| UC19 | Đề xuất giải quyết | Assignee, M, A | US25 | Giải pháp công khai, Resolved |
-| UC20 | Xác nhận đóng | Requester của ticket | US26 | Closed, lịch sử giữ nguyên |
-| UC21 | Mở lại | Requester khi Resolved; M/A | US27–US28 | In Progress có lý do, tiếp tục SLA |
-| UC22 | Hủy | Requester khi New; M/A trước Resolved | US29 | Cancelled, giữ lịch sử |
-| UC23 | Điều chỉnh ưu tiên | M, A | US30 | Lý do, ngân sách mới theo snapshot |
-| UC24 | Theo dõi hai đồng hồ SLA | Tất cả theo scope | US32 | Nhãn, thời gian và lịch sử nhất quán |
-| UC25 | Phát hiện và cảnh báo SLA | M/assignee nhận kết quả; scheduler kích hoạt nội bộ | US33 | Cảnh báo nền không trùng |
-| UC26 | Xem/đọc thông báo | Tất cả | US34 | Chỉ thông báo của mình, readAt |
-| UC27 | Tra cứu/quản lý hồ sơ tài sản | R/T đọc có scope, M/A quản lý | US35–US36 | Danh mục đúng quyền, thông tin hợp lệ |
-| UC28 | Xem lịch sử tài sản/ticket | Tất cả theo scope | US37 | Lịch sử và ticket không vượt quyền |
-| UC29 | Cấp phát | M, A | US38 | Một assignment hiệu lực |
-| UC30 | Thu hồi | M, A | US39 | Assignment kết thúc, giữ lịch sử |
-| UC31 | Đổi trạng thái tài sản | M, A | US40 | Hợp lệ với assignment, có lý do |
-| UC32 | Xem dashboard/báo cáo | Tất cả theo scope; báo cáo M/A | US41–US46 | Chỉ số đúng công thức, dữ liệu nguồn |
-| UC33 | Tra cứu nhật ký kiểm tra | M, A | US47 | Sự kiện đúng phạm vi, không bí mật |
+| ID | Goal | Primary actor | Stories | Outcome |
+| --- | --- | --- | --- | --- |
+| UC01 | Log in | All | US01 | Valid session, authorized workspace |
+| UC02 | Log out | All | US02 | Current session invalidated |
+| UC03 | View/update profile | All | US03 | Personal details updated within limits |
+| UC04 | Change password | All | US04 | New password effective, other sessions revoked |
+| UC05 | Manage accounts | Admin | US05–US07 | Audited creation/role/department changes/lock/unlock |
+| UC06 | Manage departments | Admin | US08 | Status-aware catalog, preserved history |
+| UC07 | Manage teams/members | Admin | US09–US10 | Configured team scope |
+| UC08 | Manage ticket categories | Admin | US11 | New/current/inactive categories |
+| UC09 | Configure default SLA | Admin | US12 | New default version; old tickets unchanged |
+| UC10 | Create ticket | All, for self | US13 | ID, New, priority, snapshot |
+| UC11 | Search/filter tickets | All | US14 | Scoped, sorted, paginated results |
+| UC12 | Read details/timeline | All within scope | US15, US31 | Correct content/history visibility |
+| UC13 | Assign/transfer/self-claim | T, M, A | US16–US17 | Eligible assignee; no SLA reset |
+| UC14 | Accept/start work | T, M, A | US18–US19 | Valid state transitions |
+| UC15 | Public conversation | Ticket requester, scoped IT | US20 | Persisted content, notification, possible Pending resume |
+| UC16 | Internal notes | Scoped IT | US21 | Authorized IT-only reading |
+| UC17 | Upload/download files | Parent-content authorized user | US22–US23 | Valid files, authorized downloads |
+| UC18 | Wait/resume | Assignee, M, A | US24 | Public question, clock pause/resume |
+| UC19 | Propose resolution | Assignee, M, A | US25 | Public solution, Resolved |
+| UC20 | Confirm closure | Ticket requester | US26 | Closed, preserved history |
+| UC21 | Reopen | Requester when Resolved; M/A | US27–US28 | Reasoned In Progress, resumed SLA |
+| UC22 | Cancel | Requester when New; M/A before Resolved | US29 | Cancelled, preserved history |
+| UC23 | Change priority | M, A | US30 | Reason, snapshot-based new budget |
+| UC24 | Track both SLA clocks | All within scope | US32 | Consistent labels/timing/history |
+| UC25 | Detect/alert SLA | M/assignee receive results; internal scheduler triggers | US33 | Deduplicated background alerts |
+| UC26 | View/read notifications | All | US34 | Own notifications only, readAt |
+| UC27 | Search/manage assets | Scoped R/T read, M/A manage | US35–US36 | Authorized catalog, valid data |
+| UC28 | Asset/ticket history | All within scope | US37 | No out-of-scope history/tickets |
+| UC29 | Issue asset | M, A | US38 | One active assignment |
+| UC30 | Return asset | M, A | US39 | Ended assignment, history retained |
+| UC31 | Change asset state | M, A | US40 | Consistent with assignment, reason |
+| UC32 | Dashboards/reports | All within scope; reports M/A | US41–US46 | Correct formulas/source data |
+| UC33 | Search audit trail | M, A | US47 | Scoped events, no secrets |
 
-## Hợp đồng dùng chung
+## Shared contracts
 
-### Cấu trúc đặc tả và phân loại tác nhân
+### Specification structure and actor classification
 
-Mỗi UC được đọc từ dòng catalog (ID/mục tiêu/actor/story/điều kiện) cùng hợp đồng chung dưới đây, AC của story liên quan và luồng chi tiết nếu có. Bảng OPS ghi riêng tiền điều kiện, luồng, hậu điều kiện và ngoại lệ. Catalog trợ lý AI là nguồn duy nhất cho UC-AI01–08, không sao chép thành UC lõi mới.
+Read each catalog row (ID/goal/actor/story/conditions) with shared contracts, related story AC, and detailed flows where provided. OPS separately specifies preconditions/flow/postconditions/exceptions. The assistant catalog is the sole source for UC-AI01–08; do not duplicate them as new core UCs.
 
-| Thành phần đặc tả | Nguồn và quy ước |
-|---|---|
-| ID / mục tiêu / phạm vi | Dòng catalog; một mã giữ nguyên qua nhiều góc nhìn actor |
-| Actor khởi tạo / giám sát | R/T/M/A là actor bên ngoài; IT Manager là Trưởng phòng IT, không có trưởng nhóm riêng |
-| Trigger | Tác vụ người dùng tại screen tương ứng; automation có thêm trigger event ở EVT01–17 |
-| Tiền điều kiện | Hợp đồng chung + điều kiện riêng trong catalog/luồng; không đồng nhất dữ liệu demo với cấu hình production |
-| Luồng chính / biến thể | Luồng trọng yếu, AC tương ứng và flows; các bước UI không tự mở rộng quyền |
-| Hậu điều kiện thành công | Kết quả trong AC, persisted domain + audit/outbox nếu mutation; tác vụ nền trả run reference chưa phải effect thành công |
-| Bảo đảm khi thất bại | Không effect trái phép/partial, không rò dữ liệu; validation/401/403/404/409 và provider lỗi theo API/BR |
-| Truy vết | US/AC/SCR/BR/API/EVT tại ma trận truy vết; mọi AC vẫn NOT RUN |
+| Element | Source / convention |
+| --- | --- |
+| ID / goal / scope | Catalog row; stable code across actor views |
+| Initiating / supervising actor | External R/T/M/A; IT Manager means Head of IT, no team-lead tier |
+| Trigger | User action on its screen; automation also uses EVT01–17 |
+| Preconditions | Shared contract + catalog/flow guards; DEMO data is not production configuration |
+| Main / alternative flows | Critical flows, AC, user flows; UI steps grant no additional rights |
+| Success postcondition | AC outcome; persisted domain + audit/outbox for mutations; background run reference is not successful effect |
+| Failure guarantee | No unauthorized/partial effects or leaks; API/BR validation/401/403/404/409/provider errors |
+| Traceability | US/AC/SCR/BR/API/EVT matrix; all application AC remain NOT RUN |
 
-AI_COORDINATOR và worker là thành phần thực hiện **nội bộ**, không là actor người dùng hoặc cấp quản lý. Khi catalog OPS ghi service AI, đó là executor của mục tiêu vận hành dưới sự giám sát M/A; không tạo actor thứ năm trên use-case view. Bộ lập lịch là trigger kỹ thuật nội bộ, khác người nhận cảnh báo. Xem [sequence](diagrams/architecture.md) cho thứ tự gọi và transaction thay vì suy thứ tự từ association use case.
+AI_COORDINATOR/workers are **internal executors**, not user actors/managers. OPS service-AI entries execute operational goals supervised by M/A without adding a fifth use-case actor. Scheduler is an internal technical trigger, distinct from alert recipients. Use [sequences](diagrams/architecture.md) for call/transaction order, not UC associations.
 
-### Tiền điều kiện và bảo đảm chung
+### Shared preconditions and guarantees
 
-**Tiền điều kiện:** phiên server hợp lệ, tài khoản hoạt động, role và quan hệ bản ghi thỏa ma trận. **Bảo đảm tối thiểu:** từ chối không thay đổi dữ liệu; không lộ nội dung ngoài quyền; dữ liệu nhập giữ khi lỗi có thể sửa. **Mutation:** kiểm tra version, lưu thay đổi và lịch sử nhất quán; thông báo tham chiếu một sự kiện để chống trùng. **Ngoại lệ chung:** validation, hết phiên, mất quyền, xung đột, lỗi lưu/tệp. Không retry âm thầm mutation người dùng; worker retry có idempotency và audit theo BR-19.
+**Preconditions:** valid server session, active account, role/record relations matching permissions. **Minimum guarantees:** denials change no data, reveal no out-of-scope content, and preserve correctable input. **Mutations:** check versions; persist changes/history consistently; notifications reference deduplicated events. **Shared failures:** validation, expired sessions, lost access, conflicts, persistence/files. No silent user-mutation retry; worker retries use BR-19 idempotency/audit.
 
-## Các use case trọng yếu
+## Critical use cases
 
-### UC10 — Tạo ticket
+### UC10 — Create ticket
 
-- **Kích hoạt:** người dùng chọn “Tạo yêu cầu”. Tiền điều kiện bổ sung: có nhóm tiếp nhận, danh mục và SLA mặc định hoạt động. UC-AI03 có thể kích hoạt cùng service sau user xác nhận preview; không tự tạo trước xác nhận.
-- **Luồng chính:** nhập tiêu đề/mô tả/loại/danh mục → chọn ảnh hưởng/khẩn cấp → thấy ưu tiên đề xuất → chọn tài sản của mình và tệp nếu có → gửi → hệ thống xác thực lại quyền và dữ liệu → tạo mã, New, nhóm tiếp nhận, snapshot SLA và event → mở chi tiết, thông báo thành công.
-- **Nhánh:** asset không còn được cấp hoặc tệp sai → giữ form, chỉ lỗi tại trường; cấu hình tiếp nhận thiếu → báo không thể gửi, giữ form, hướng dẫn liên hệ Admin; gửi lại do mạng → không nhân đôi ticket.
-- **Hậu điều kiện:** requester là actor; không nhận priority/assignee tùy ý từ client.
+- **Trigger:** user selects Create request. Additional preconditions: active intake team/category/default SLA. UC-AI03 may call the same service after preview confirmation, never before.
+- **Main flow:** title/description/type/category → impact/urgency → suggested priority → optional own asset/files → submit → server rechecks access/data → generate ID, New, intake team, SLA snapshot, event → open details/success.
+- **Branches:** no-longer-assigned asset/invalid file → preserve form/field error; missing intake configuration → explain inability to submit, retain input/contact Admin; network replay → no duplicate ticket.
+- **Postcondition:** actor is requester; client cannot supply arbitrary priority/assignee.
 
-### UC11/UC12 — Danh sách và chi tiết
+### UC11/UC12 — Lists and details
 
-- Chọn scope của tôi/công việc IT theo role → tìm mã/tiêu đề → kết hợp trạng thái, ưu tiên, danh mục, nhóm, assignee, SLA → sort → phân trang → mở chi tiết.
-- Quay lại giữ filter/trang. ID ngoài scope trả cùng thông điệp với ID không tồn tại. Count, comment, tệp và timeline dùng cùng quyền.
-- Requester không có tab nội bộ hay metadata của nội dung đó. Mất quyền sau chuyển nhóm → rời vùng dữ liệu bảo vệ, không tải thêm nội dung.
+- Select My requests/IT work by role → search code/title → combine state/priority/category/team/assignee/SLA filters → sort → paginate → open details.
+- Back navigation preserves filters/page. Out-of-scope and nonexistent IDs share messages. Counts/comments/files/timeline share scope.
+- Requesters receive no internal tab/content metadata. Post-transfer access loss exits protected data and stops loading.
 
-### UC13 — Phân công hoặc chuyển nhóm
+### UC13 — Assignment or team transfer
 
-- M/A mở “Phân công” → chọn nhóm → chọn thành viên hoạt động → nếu đổi nhóm nhập lý do → xem tóm tắt → xác nhận.
-- Hệ thống kiểm tra version/membership, trạng thái và assignee bắt buộc khi đang xử lý → ghi cũ/mới + event + thông báo → hiển thị người mới. SLA giữ thời gian đã dùng.
-- T chọn “Nhận xử lý” với ticket nhóm chưa giao; không chọn user khác. Nếu có người vừa nhận trước → báo xung đột, tải trạng thái mới; không ghi đè.
+- M/A opens assignment → team → active member → reason if team changes → summary → confirm.
+- Check version/membership/state/required assignee during active work → old/new event + notification → show new assignee. Preserve SLA usage.
+- T self-claims an unassigned team ticket, never selects another user. Concurrent claim returns conflict/fresh state without overwrite.
 
-### UC14 — Tiếp nhận và bắt đầu
+### UC14 — Accept and start
 
-- T trong nhóm tiếp nhận New→Open. Chưa có assignee vẫn có thể tiếp nhận.
-- Assignee hợp lệ chọn “Bắt đầu xử lý” Open→In Progress. Không có assignee → gợi ý tự nhận hoặc liên hệ M/A; backend từ chối thao tác trực tiếp.
-- Hai thao tác không ghi nhận first response; không có chuyển New→In Progress ẩn trong một nút.
+- Team T accepts New→Open; assignee may still be empty.
+- Valid assignee starts Open→In Progress. Without assignee, suggest self-claim/contact M/A; reject direct API attempts.
+- Neither action is first response; no hidden New→In Progress transition in one button.
 
-### UC15/UC16 — Công khai và nội bộ
+### UC15/UC16 — Public and internal
 
-- Người viết chọn đúng composer, nhập nội dung, tệp tùy chọn, đọc nhãn người xem rồi gửi.
-- Public comment của IT hợp lệ lần đầu ghi firstResponseAt. Public của requester khi Pending đồng thời chuyển In Progress và tiếp tục SLA giải quyết.
-- Note không ảnh hưởng first response và không thông báo nội dung cho requester. Chuyển composer không sao chép note sang public. Closed/Cancelled chỉ đọc.
+- Choose composer, enter content/optional files, review audience, send.
+- First eligible public IT comment records firstResponseAt. Requester public reply while Pending atomically resumes In Progress/resolution SLA.
+- Notes do not satisfy first response or expose content to requesters. Composer changes never copy notes into public. Closed/Cancelled are read-only.
 
-### UC18 — Chờ phản hồi
+### UC18 — Wait for requester
 
-- Assignee/M/A ở In Progress chọn “Chờ phản hồi” → nhập câu hỏi có nội dung → xác nhận công khai.
-- Hệ thống lưu public comment và trạng thái Pending, chốt đoạn thời gian giải quyết, thông báo requester. Phản hồi đầu chỉ hoàn tất nhờ comment hợp lệ, không nhờ trạng thái.
-- Requester trả lời qua UC15 → resume. IT chủ động tiếp tục phải ghi lý do; không được Pending→Resolved trực tiếp.
+- Assignee/M/A in In Progress selects waiting → substantive question → confirms public submission.
+- Save public comment + Pending, close current resolution interval, notify requester. Only a valid comment, not state change, satisfies first response.
+- Requester replies via UC15 to resume. IT-initiated resume requires a reason; no direct Pending→Resolved.
 
-### UC19/UC20 — Giải quyết và đóng
+### UC19/UC20 — Resolve and close
 
-- Assignee/M/A ở In Progress chọn “Đề xuất giải quyết”, nhập nội dung đã làm/kết quả/hướng kiểm tra → gửi công khai.
-- Hệ thống lưu giải pháp, public comment, event Resolved và dừng đồng hồ giải quyết; requester thấy banner “Cần bạn xác nhận”.
-- Requester thử lại rồi chọn “Xác nhận đóng” → dialog tóm tắt → Closed. Không có auto-close; IT không đóng thay chỉ vì có role cao.
+- Assignee/M/A in In Progress proposes resolution with work/result/test instructions publicly.
+- Save solution/public comment/Resolved event and stop resolution clock; requester sees acceptance banner.
+- Requester tests → confirms closure → summary dialog → Closed. No auto-close; higher IT roles cannot close on behalf of requester.
 
-### UC21 — Mở lại
+### UC21 — Reopen
 
-- Requester chọn “Yêu cầu xử lý lại” từ Resolved, ghi lý do; hoặc M/A mở lại Resolved/Closed có lý do.
-- Kiểm tra version/assignee hiện hợp lệ → In Progress → resume phần ngân sách còn lại, giữ mọi vi phạm trước đó → thông báo assignee/requester phù hợp.
-- Người yêu cầu không mở lại Closed bằng API. Nếu assignee cũ bị khóa/mất nhóm, hiển thị cần M/A phân công lại, không tạo đường chuyển trạng thái mới [D-12].
+- Requester requests further work from Resolved with a reason; M/A may reopen Resolved/Closed with a reason.
+- Recheck version/current assignee → In Progress → resume remaining budget, retain all breaches → notify eligible parties.
+- Requester cannot reopen Closed through API. Locked/out-of-team old assignees require M/A reassignment, not a new transition [D-12].
 
-### UC23/UC24/UC25 — Ưu tiên và SLA
+### UC23/UC24/UC25 — Priority and SLA
 
-- M/A xem đề xuất, ưu tiên hiện tại, ngân sách và thời gian đã dùng → chọn mức mới + lý do → hệ thống áp ngân sách snapshot tương ứng, lưu adjustment và event.
-- UI tách phản hồi/giải quyết; Remaining có thể âm, lịch sử vi phạm luôn còn. Pending chỉ pause giải quyết.
-- Bộ lập lịch gọi kiểm tra → xác định ngưỡng chưa gửi → tạo vi phạm/thông báo có khóa duy nhất → chạy lại không sinh thêm. Worker vẫn chạy khi không có phiên trình duyệt.
+- M/A reviews suggestion/current priority/budget/elapsed use → new level/reason → apply snapshot budget, record adjustment/event.
+- Separate response/resolution UI; remaining time may be negative; preserve breach history. Pending pauses resolution only.
+- Scheduler checks unsent thresholds → uniquely keyed breaches/notifications → repeated runs do not duplicate. Worker runs without browser sessions.
 
-### UC29/UC30/UC31 — Vòng đời cấp phát
+### UC29/UC30/UC31 — Asset assignment lifecycle
 
-- M/A mở asset Trong kho → “Cấp phát” → chọn user hoạt động, ngày giao, ghi chú → kiểm tra version và không có assignment hiệu lực → ghi assignment, Đang sử dụng và audit.
-- Khi thu hồi → chọn trạng thái đích Trong kho/Đang sửa chữa → kết thúc assignment và audit; không xóa dòng lịch sử.
-- Cấp phát tài sản sửa chữa/ngừng sử dụng hoặc đang có người giữ → từ chối. Hai người cấp đồng thời chỉ một thành công.
+- M/A opens In Stock asset → issue → active user/date/notes → version/no-active-assignment check → assignment, In Use, audit.
+- Return chooses In Stock/Under Repair → ends assignment/audits without deleting history.
+- Reject issue of Under Repair/Retired/already-held assets; concurrent issuance permits one success.
 
-### UC05/UC07/UC09 — Quản trị an toàn
+### UC05/UC07/UC09 — Safe administration
 
-- Theo [D-29 — cấp tài khoản nội bộ](requirements/account-provisioning.md), trưởng phòng dùng UC10 tạo ticket Yêu cầu dịch vụ / Tài khoản trong hệ thống bằng Requester. Admin xác minh đề nghị và dùng UC05 tạo user tại Quản trị → Người dùng, mặc định Requester; vai trò IT cần phê duyệt đúng thẩm quyền. Trưởng phòng theo dõi và xác nhận đóng ticket; không đổi requester sang nhân viên được cấp. Không thêm role trưởng phòng hoặc HR, không tự tạo user từ ticket.
-- Admin tạo user với role/phòng ban và password ban đầu, hoặc sửa role/khóa user có xác nhận. Mật khẩu không xuất hiện lại trong danh sách/audit.
-- Bỏ membership/khóa người đang xử lý cần xử lý các assignment mở; thu hồi quyền/phiên và giữ lịch sử. Không vô hiệu Admin cuối cùng.
-- Sửa SLA tạo phiên bản mặc định mới, hiển thị preview P1–P4 và phạm vi “Chỉ ticket tạo mới”; ticket cũ giữ snapshot. Các thay đổi quan trọng có audit.
+- Under [D-29](requirements/account-provisioning.md), department heads use UC10 for in-app Service Request / Account tickets as Requester. Admin verifies and creates through UC05, default Requester; IT roles need proper approval. Head tracks/accepts the ticket; requester is not replaced by the employee. No HR/head role or automatic ticket-to-user creation.
+- Admin supplies role/department/initial password or confirms role edits/locking. Passwords never reappear in lists/audit.
+- Membership removal/locking requires handling open assignments, immediate access/session revocation, and history retention. Do not disable the last active Admin.
+- SLA edits create a new default version with P1–P4 preview and new-tickets-only scope; old snapshots remain. Important changes are audited.
 
-### UC32 — Dashboard và báo cáo
+### UC32 — Dashboards and reports
 
-- Xác định role/scope → tải KPI hàng đợi hiện tại và báo cáo theo khoảng ngày có nhãn riêng → lọc → xem chi tiết chỉ số.
-- Drill-down giữ đúng công thức và tập nguồn; không có dữ liệu hiển thị trạng thái rỗng, không thay bằng demo. Khi tải lỗi không hiển thị0 thay cho “không tải được”.
+- Resolve role/scope → current-queue KPIs and separately labeled date-period reports → filter → metric details.
+- Drill-down retains exact formulas/source population. Empty data stays empty, never DEMO substitution; loading failure is not zero.
 
-Các UC còn lại dùng hợp đồng chung và AC tương ứng; chi tiết trường/interaction nằm trong [đặc tả UI/UX](07-uiux-specification.md).
+Other UCs use shared contracts and related AC; fields/interactions are in [UI/UX specification](07-uiux-specification.md).
 
-## Use case quản lý công việc và điều phối — UC-OPS01–10
+## Work management and coordination — UC-OPS01–10
 
-Giữ UC01–UC33 lõi và UC-AI01–08 trợ lý; thêm UC-OPS01–10. Tất cả chỉ được đặc tả, chưa thực thi.
+Retain core UC01–33 and assistant UC-AI01–08; add UC-OPS01–10. All are specified, not executed.
 
-| ID | Mục tiêu / actor | Tiền điều kiện → luồng → hậu điều kiện | Ngoại lệ |
-|---|---|---|---|
-| UC-OPS01 | Quản lý năng lực/lịch — M/A | Nhóm/nhân sự hợp lệ → xác nhận kỹ năng, lịch/ngân sách/absence → audit/version + sự kiện task ảnh hưởng | Sai quyền/lịch thiếu/overlap phải xử lý; không tự coi rảnh |
-| UC-OPS02 | Policy và quy trình mẫu — M/A | Template/schema/DAG/effort/source đã review → publish/version → cấp scope/actions/limits/grantor → bật/tắt/lock | Default deny; không tự dùng demo policy cho vận hành |
-| UC-OPS03 | Hiểu yêu cầu và hỏi bổ sung — user/service AI | Ticket/context đúng quyền → trích mục tiêu/hạn/fields → câu hỏi có cấu trúc chống lặp → chờ bổ sung | Thiếu nguồn/không hợp lệ không tự lập kế hoạch hiệu lực |
-| UC-OPS04 | Lập/kích hoạt plan — AI_COORDINATOR hoặc M/A | Template/KB Published, đầu vào đầy đủ → model schema/DAG/estimate/feasibility → effective version + tasks qua service | Không policy: Draft/approval; cycle/stale/thiếu inventory/nhân lực: không thực thi |
-| UC-OPS05 | Chọn và giao task — AI_COORDINATOR trong policy; M/A thủ công | Backend lọc candidates → AI rank có lý do → recheck/version/atomic allocation → assignment/notification/action | Candidate hết capacity hoặc mất quyền: re-evaluate/exception, không ép giao |
-| UC-OPS06 | Thực hiện task — assignee/M/A | Scope/dependency/assignment hợp lệ → Ready/In Progress/Blocked/progress/Done với kết quả → event/unlock successors | API chuyển sớm/sai cạnh/Done thiếu kết quả bị chặn; không tự đóng ticket |
-| UC-OPS07 | Theo dõi và điều phối lại — service AI/M/A | Event lịch/tải/blocked/risk → tìm task ảnh hưởng → giữ manual lock/đang làm → giao lại trong policy hoặc trình duyệt | Không nghiệm/vượt scope/cam kết: approval, không tự đổi SLA |
-| UC-OPS08 | Quyết định ngoại lệ — M/A | Proposal before/after/impact/reason/snapshot → approve/reject → execution recheck → kết quả riêng | Stale/policy revoked/capacity đổi: conflict hoặc proposal mới, không áp snapshot cũ |
-| UC-OPS09 | Theo dõi run/audit và báo cáo — M/A | Scope hợp lệ → event/policy/grantor/source/action/result/usage → đọc facts và retry có kiểm soát | Không expose nội bộ cho R; không trùng effect/giả cost hoặc kết quả |
-| UC-OPS10 | Quản lý/truy xuất KB — reader theo ACL; publisher được cấp | Draft/version → publish → index nền → retrieval Published/ACL/version → nguồn mở được | Thu hồi ACL hiệu lực ngay; thiếu nguồn nói rõ; quyền publisher cụ thể Cần quyết định |
+| ID | Goal / actor | Preconditions → flow → postconditions | Exceptions |
+| --- | --- | --- | --- |
+| UC-OPS01 | Manage skills/schedules — M/A | Valid teams/staff → verify skills/calendar/budget/absence → audited versions/events for affected tasks | Invalid rights/missing/overlapping schedules handled explicitly; no assumed availability |
+| UC-OPS02 | Policies/templates — M/A | Reviewed template/schema/DAG/effort/source → publish/version → grant scope/actions/limits/grantor → enable/disable/lock | Default deny; no DEMO policy promoted to operations |
+| UC-OPS03 | Understand/clarify — user/AI service | Authorized ticket/context → extract goal/deadline/fields → structured deduplicated questions → wait | Missing/invalid sources cannot create effective plans |
+| UC-OPS04 | Plan/activate — AI_COORDINATOR or M/A | Published template/KB, complete inputs → model schema/DAG/estimate/feasibility → effective version/tasks through service | No policy: Draft/approval; cycle/stale/inventory/staff shortage: no execution |
+| UC-OPS05 | Select/assign — policy AI_COORDINATOR; manual M/A | Backend candidate filter → reasoned AI ranking → version/recheck/atomic allocation → assignment/notification/action | Lost capacity/rights: re-evaluate/exception; no forced assignment |
+| UC-OPS06 | Execute tasks — assignee/M/A | Valid scope/dependency/assignment → Ready/In Progress/Blocked/progress/Done with result → events/unlock successors | Reject premature/invalid transitions or result-free Done; no automatic ticket closure |
+| UC-OPS07 | Monitor/replan — AI service/M/A | Schedule/load/blocker/risk events → affected tasks → respect locks/in-progress work → policy reassignment or approval | Infeasible/out-of-scope/commitment changes: approval, no autonomous SLA change |
+| UC-OPS08 | Decide exceptions — M/A | Before/after/impact/reason/snapshot proposal → approve/reject → execution recheck → separate result | Stale/revoked policy/changed capacity: conflict/new proposal, no old snapshot |
+| UC-OPS09 | Run/audit/reporting — M/A | Authorized scope → event/policy/grantor/source/action/result/usage → facts/controlled retries | No internal exposure to R, duplicate effects, or fabricated costs/results |
+| UC-OPS10 | Manage/retrieve KB — ACL reader; granted publisher | Draft/version → publish → background index → Published/ACL/version retrieval → openable sources | Immediate ACL revocation; explicit lack of evidence; publisher rights require decision |
 
-### Kịch bản chính liên use case
+### Cross-use-case scenario
 
-UC10 hoặc UC-AI03 đã xác nhận → UC-OPS03 → UC-OPS04/05 → UC-OPS06 → lịch nghỉ UC-OPS01 → UC-OPS07 → UC-OPS08 nếu cần → người IT UC19, requester UC20 → UC-OPS09. UC-OPS02/10 cung cấp policy/template/tri thức được duyệt. Bước cấp tài khoản là task người có quyền theo D-29, không cho model thực hiện UC05.
+UC10 or confirmed UC-AI03 → UC-OPS03 → UC-OPS04/05 → UC-OPS06 → absence UC-OPS01 → UC-OPS07 → UC-OPS08 if needed → IT UC19, requester UC20 → UC-OPS09. UC-OPS02/10 supply approved policy/templates/knowledge. Account provisioning is an authorized person's D-29 task, not model execution of UC05.
 
-Khi từ chối/timeout, giữ dữ liệu đã commit và proposal/error truy vết; không giả thành công hoặc kế hoạch một phần. Chi tiết quyền/state trong BR-14–22 và API thiết kế.
+Rejection/timeouts preserve committed data and traceable proposals/errors, without false success or partial plans. BR-14–22 and API design define permissions/states.
+
+## Shared AI action channel — D-42
+
+UC-AI03 covers existing use-case actions through cards/forms/confirmation; ticket creation is one subflow. UC01–33/OPS permissions and AC remain. Users review/confirm replies, progress, and decisions through domain services. Shared UI does not change background event actors, add UCs, or imply implemented actions.

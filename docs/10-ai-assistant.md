@@ -1,81 +1,128 @@
 ---
 id: itoh-docs-10-ai-assistant
-title: "Thiết kế AI trợ lý và điều phối tự động"
+title: "AI assistant and automatic coordination design"
 type: reference
 domain: ai
 module: orchestration
 tags: [ai, orchestration, reference]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Định nghĩa trợ lý và điều phối AI, nguồn, policy và ranh giới hành động."
+purpose: "Define the AI assistant/coordinator, sources, policies, and action boundaries."
 ---
 
-# Thiết kế AI trợ lý và điều phối tự động
+# AI assistant and automatic coordination design
 
-**Thiết kế mục tiêu · Chưa triển khai/kiểm thử.** D-35 thay giới hạn toàn cục “AI chỉ đọc/soạn nháp” của D-23 cũ. Hiện chỉ cập nhật tài liệu.
+**Target design · Not implemented or tested.** D-35 supersedes the old global D-23 “read-only/drafts only” limit. Current work updates documentation only.
 
-## Hai chế độ và danh tính
+## One AI Workspace, two execution modes
 
-| Chế độ | Danh tính/quyền | Hành động |
-|---|---|---|
-| Trợ lý theo yêu cầu | Người dùng hiện tại; role/scope/visibility trước mỗi tool và trước trả kết quả | Hỏi đáp KB đã xuất bản, tra cứu/tóm tắt; tạo ticket sau xác nhận; nháp phản hồi cho IT duyệt |
-| Điều phối nền | AI_COORDINATOR, gắn event/run/policy version/người cấp quyền | Sinh plan/task, phân công/giao lại, nhắc/báo cáo trong policy; ngoại lệ chuyển quản lý |
+| Mode | Identity/permissions | Actions |
+| --- | --- | --- |
+| On-demand assistant | Current user; role/scope/visibility checked before each tool and response | Q&A/search/summaries and existing use-case actions through cards/forms/confirmation; services write under user permissions |
+| Background coordination | AI_COORDINATOR tied to event/run/policy version/grantor | Generate plans/tasks, assign/reassign, remind/report within policy; escalate exceptions to management |
 
-Provider sinh output theo schema và đề xuất tool; backend quyết định quyền, hợp lệ và transaction. Model không có credential database/session. Requester không đọc nhân lực, kế hoạch nội bộ, trace hoặc approval.
+Providers generate schema-constrained output/tool proposals; the backend decides authorization, validity, and transactions. Models have no database/session credentials. Requesters cannot read workforce data, internal plans, traces, or approvals.
 
-## Trợ lý giữ trong MVP
+## Assistant retained in the MVP
 
-- Hỏi đáp dùng KB Published và còn quyền, có tên/version/link mở được; thiếu căn cứ phải nói rõ. Thu hồi quyền áp dụng tại retrieval, không đợi embedding.
-- Tra cứu/tóm tắt ticket/tài sản theo scope API; báo cáo lấy facts theo metric allowlist. Không SQL tự sinh.
-- Tạo ticket: thu thập trường → xem trước → user xác nhận chính nội dung/phiên bản đó → service tạo bằng quyền user và idempotency key → trả mã/kết quả đã lưu. Không xác nhận hoặc nội dung đổi thì không ghi. Có lựa chọn sửa tại SCR21; không bắt buộc rời hội thoại.
-- Nháp phản hồi: tách PUBLIC/INTERNAL, không chuyển nội bộ ra public; IT kiểm tra/chỉnh rồi gửi composer. Chat/nháp không là public comment, first response hoặc hoàn thành kỹ thuật.
-- Phiên cá nhân và lịch sử kiểm tra lại quyền nguồn; Admin không tự được đọc chat người khác. Retention: Cần quyết định D-40.
+- Q&A uses accessible Published KB with document name/version/openable links; insufficient evidence must be explicit. Revocation applies at retrieval without waiting for embeddings.
+- Ticket/asset search and summaries follow API scope; report facts come from metric allowlists. No generated SQL.
+- Ticket creation: collect fields → preview → user confirms that exact content/version → service creates with user permissions/idempotency → return persisted ID/result. No confirmation or changed content means no write. SCR21 editing is optional, not a mandatory chat exit.
+- Reply drafts: separate PUBLIC/INTERNAL; no internal-to-public handoff. IT reviews/edits and sends through the original composer or a card composer in the AI Workspace using the same service. Chat/drafts are not public comments, first responses, or technical completion.
+- Personal sessions/history recheck source access; Admin cannot automatically read others' chats. Retention: Decision required, D-40.
 
-## Điều phối theo sự kiện và chính sách
+## Event- and policy-driven coordination
 
-Hiểu mục tiêu/deadline/thông tin thiếu → lấy workflow/template/nguồn được phép → sinh task, kỹ năng/công sức/phụ thuộc → backend validate schema/DAG/feasibility → lọc ứng viên nhóm/kỹ năng/lịch/tải → AI xếp hạng trong tập hợp lệ, giải thích bằng dữ liệu vận hành → service tạo/giao task → notification/audit/outbox → sự kiện tiến độ/lịch/tải/blocked/deadline → đánh giá lại → giao lại trong quyền hoặc trình quản lý.
+Understand goal/deadline/missing information → retrieve authorized workflow/template/sources → generate tasks/skills/effort/dependencies → backend validates schema/DAG/feasibility → filter eligible team/skills/schedule/workload candidates → AI ranks only eligible candidates with operational evidence → services create/assign tasks → notifications/audit/outbox → progress/schedule/load/blocked/deadline events → re-evaluate → reassign under authorization or escalate.
 
-Thiếu dữ liệu thì hỏi có cấu trúc, chống lặp; không coi mọi người đều rảnh. Ước lượng model chưa được xác thực phải dùng template đã duyệt hoặc hỏi trước tự giao. Luồng template xác định M2 không thay bằng chứng model thật M3/A11.
+Missing information leads to structured, deduplicated clarification, not assumed free capacity. Unverified model estimates require approved template values or clarification before automatic assignment. Deterministic M2 templates do not replace real-model M3/A11 evidence.
 
-## Policy và phê duyệt
+## Policies and approval
 
-| Hành động | Quy tắc |
-|---|---|
-| Tạo plan/task | Tự thực hiện trong workflow/nhóm/priority/giới hạn được cấp; ngoài phạm vi tạo draft/approval |
-| Giao task chưa bắt đầu | Chỉ ứng viên hợp lệ, không vượt capacity; recheck trước ghi |
-| Giao lại task chưa bắt đầu | Policy cho phép, không đổi cam kết, tôn trọng manual lock |
-| Đổi người task In Progress hoặc bị khóa | Quản lý duyệt phương án cụ thể; không ghi đè thủ công |
-| Đổi hạn nội bộ | Trong policy, không vượt cam kết/SLA hoặc phá phụ thuộc |
-| Đổi SLA/cam kết/priority/chuyển ngoài nhóm | Cần IT_MANAGER/ADMIN có thẩm quyền duyệt; kiểm tra lại trước ghi |
-| Nhắc/báo cáo | Giới hạn tần suất/người nhận, đúng nguồn/visibility |
-| Done/Resolved/Closed/cấp tài khoản | Người có quyền thực hiện; AI không tự xác nhận |
+| Action | Rule |
+| --- | --- |
+| Create plans/tasks | Automatic within granted workflow/team/priority/limits; otherwise draft/approval |
+| Assign unstarted tasks | Eligible candidates only, within capacity; recheck before writing |
+| Reassign unstarted tasks | Policy permitted, commitments unchanged, manual locks respected |
+| Change assignee on In Progress/locked tasks | Manager approves a specific proposal; no overwrite of manual decisions |
+| Change internal deadlines | Within policy, commitments/SLA/dependencies preserved |
+| Change SLA/commitments/priority or transfer outside team | Authorized IT_MANAGER/ADMIN approval and pre-write revalidation |
+| Remind/report | Rate/recipient limits and correct source/visibility |
+| Done/Resolved/Closed/account creation | Authorized human actions; no autonomous AI confirmation |
 
-Default deny. Manager có thể tắt/thu hẹp policy hoặc khóa phân công. Execution/retry/sau duyệt đều kiểm tra policy và grantor hiện tại. Approval hiển thị hiện trạng, thay đổi, tác động, lý do, snapshot version; stale/không khả thi phải từ chối hoặc đánh giá lại. Duyệt không cho bỏ kiểm tra tải/quyền.
+Default deny. Manager can disable/narrow policies or lock assignments. Execution/retries/post-approval steps all recheck current policies/grantors. Approval shows current state, changes, impact, rationale, and snapshot versions. Stale/infeasible proposals are rejected or re-evaluated; approval never bypasses capacity/permission checks.
 
-## Kịch bản onboarding
+## Onboarding scenario
 
-10 nhân viên, danh sách/cấu hình/hạn đầy đủ, quy trình Published và policy bật: kiểm kê → chuẩn bị máy → cài đặt → kiểm tra → bàn giao; nhánh đề nghị cấp tài khoản song song khi đủ đầu vào và hoàn thành trước kiểm tra. AI không tự mua máy/tạo tài khoản.
+For 10 employees with complete names/configuration/deadline, a Published workflow, and enabled policy: inventory → device preparation → installation → testing → handover. Account requests can run in parallel once inputs are sufficient and must finish before testing. AI cannot purchase devices/create accounts.
 
-Nghỉ phép tạo sự kiện: xác định task ảnh hưởng, giao lại việc chưa bắt đầu nếu đủ điều kiện; task đang làm/khóa hoặc không có nghiệm thì mở ngoại lệ. Kỹ thuật viên ghi hoàn thành, ticket vẫn qua giải quyết/nghiệm thu; AI tổng hợp kết quả đã lưu.
+Absence events identify affected tasks, reassign eligible unstarted work, and open exceptions for in-progress/locked/infeasible work. Technicians record completion; ticket resolution/acceptance remain separate. AI summarizes persisted outcomes.
 
-## Tích hợp và bảo mật
+## Integration and security
 
-Adapter provider/model/embedding tách domain, schema output, allowlist tool, timeout và giới hạn lượt/token/retry. Snapshot → đóng transaction đọc → gọi model → transaction mới re-read/version/policy/ACL/capacity → ghi nguyên tử domain/action/audit/outbox. Không giữ lock lúc chờ model; không áp dụng plan lỗi một phần.
+Provider/model/embedding adapters are separate from domains, with output schemas, tool allowlists, timeouts, call/token/retry limits. Snapshot → close read transaction → call model → new transaction re-reads versions/policies/ACL/capacity → atomically write domain/action/audit/outbox. No locks during model waits; no partial application of invalid plans.
 
-Run/action truy về event/policy/grantor/actor, nguồn/version, model/prompt version, args đã lọc bí mật, kết quả/lỗi/usage nếu có. KB/ticket là dữ liệu không đáng tin về chỉ dẫn; không shell/HTTP/SQL tùy ý. Render escape, link trong tập được server xác nhận. Provider lỗi không chặn core hoặc worker SLA. Xem [ranh giới tích hợp](ai/integration-and-non-regression.md).
+Runs/actions trace event/policy/grantor/actor, sources/versions, model/prompt version, redacted arguments, results/errors/usage where available. KB/ticket content is untrusted instruction data; no arbitrary shell/HTTP/SQL. Escape rendered text and restrict links to server-verified sources. Provider failures do not block core operations/SLA workers. See [integration boundaries](ai/integration-and-non-regression.md).
 
-## Cấu hình AI và quyết định
+## AI configuration and decisions
 
-Xác nhận riêng trước đó chỉ dành cho **kiểm thử M3 ban đầu**: OpenAI API, `gpt-5-mini`, tổng tối đa 5 USD gồm retry/embedding, dữ liệu DEMO và database kiểm thử. `text-embedding-3-small` là đề xuất nếu thử RAG, cần xác minh trước dùng. Không tự đổi model đắt hơn/tăng trần. Chỉ dẫn hiện tại chỉ tài liệu, chưa được chạy API.
+Prior confirmation applies only to **initial M3 testing**: OpenAI API, `gpt-5-mini`, maximum USD 5 total including retries/embeddings, DEMO data and test database. `text-embedding-3-small` is proposed if testing RAG and requires verification. No more expensive model switch/cap increase. Current instructions authorize documentation only, not API calls.
 
-Quyền model tài khoản, billing/quota, giá tại ngày chạy, khả năng tool/schema và chất lượng chưa được kiểm chứng. Provider/model/embedding, ngân sách và chính sách dữ liệu **production: Cần quyết định**, theo D-39/40. Không đưa key vào chat/log/repo hoặc dùng phạm vi demo để gửi dữ liệu thật.
+Account model access, billing/quota, runtime prices, tool/schema support, and quality are unverified. Production provider/model/embedding/budget/data policy: **Decision required**, D-39/40. No keys in chat/logs/repository; DEMO permission does not authorize real data.
 
-## Màn hình và nghiệm thu
+## Screens and acceptance
 
-Giữ SCR-AI01–03; bổ sung SCR-OPS01–07 ở [IA](04-information-architecture.md): task board, plan, nhân lực, điều phối, approval, policy/template, KB. Draft/proposal tách kết quả thực thi.
+Retain SCR-AI01–03 and SCR-OPS01–07 in [IA](04-information-architecture.md): task board, plans, workforce, coordination, approval, policies/templates, KB. Drafts/proposals differ from execution outcomes.
 
-8 UC/US/AC trợ lý ở [catalog AI](ai/use-cases-stories-and-acceptance.md); 10 UC-OPS, 12 US/AC-OPS và A1–A13 ở catalog gốc. Tất cả PLANNED/NOT RUN. Cần cả đường automation thành công và ngoại lệ với model thật/dữ liệu lưu thật trong môi trường được phép; UI/chat tĩnh không đủ.
+The [AI catalog](ai/use-cases-stories-and-acceptance.md) has 8 assistant UC/US/AC; original catalogs contain 10 UC-OPS, 12 US/AC-OPS, and A1–A13. All PLANNED/NOT RUN. Both successful automation and exceptions require real-model/persisted-data evidence in an authorized environment; static UI/chat is insufficient.
+
+## AI Workspace and action assistant — D-42
+
+**One main screen at `/assistant`, labeled “Không gian AI” in the Vietnamese UI.** Regular layouts show conversation/action cards beside activity; compact layouts use two same-page tabs preserving drafts/context. SCR-AI01 is the shared shell; SCR-AI02 is preview/form inside it; SCR-OPS04 is scoped activity. `/coordination` is only an alias for `/assistant?view=activity`, not another sidebar item. OPS05 approval may open in the same shell's detail area; `/approvals` deep links preserve context.
+
+The assistant is an alternative app interaction channel, not only chat/links. User states a goal → retrieve authorized data → ask for missing details → build a trusted-registry card/form → user edits/reviews impact → explicitly confirm the action → domain service rechecks/writes → show the committed response result. The flow can finish on the same screen. Original forms remain available during AI failures.
+
+| User group | Supported work in the shared screen | Execution conditions |
+| --- | --- | --- |
+| R and all users in personal scope | Create/track requests; answer Pending; review results, confirm closure/request further work/cancel where allowed; consult assets/KB/notifications | Correct ticket/audience/content preview; separately confirmed requester actions; no internal/workforce data |
+| T | Search/self-claim eligible tickets; draft/send public replies or private notes; update tickets; progress/remaining effort/blockers/results on assigned tasks | Current team/assignee/state/dependency checks; IT confirms public submission; Done requires human result and remaining 0; no assigning others |
+| M/A within authority | Review plans/schedules/load, record absence, prepare interventions/assignments, decide exceptions, edit policies; assets and reports | Before/after, reason, expectedVersion, feasibility/capacity, proper domain service; decision differs from execution |
+| A and separately authorized users | Prepare existing administrative forms; KB only with granted author/publisher rights | Users/roles/passwords/secrets/permission changes use secure in-shell forms or contextual handoff; no secrets through models, no autonomous user/role grants; D-29 unchanged |
+
+This table grants no new rights and promises no universal model-driven CRUD. Registry entries are existing intents/use cases with reviewed schemas; unsupported intents say so and offer manual forms. Admin still verifies, enters passwords in secure forms, and explicitly creates users. Department-head status does not grant IT privileges.
+
+Cards identify user-requested actions with Not sent/Sending/Saved/Outcome unknown/Failed states. Background activity identifies policy automation with filtered run/action/approval/result records. Model replies/stream completion do not mean action success. Users need not chat to start/sustain coordination; closing/deleting a conversation does not stop workers, cancel tasks, or delete audit.
+
+Requesters receive only filtered public progress for their own tickets, never internal run/policy/candidate payloads hidden in the client. T sees authorized team/assigned work; M/A see scoped management activity, not others' private chats. The shared screen does not merge private histories.
+
+Both modes may share a model/provider adapter with separate system prompts, context, tool registries, actors, rate limits, queues/concurrency, and subquotas. One global budget limits both modes together: not USD 5 per mode or duplicate calls for one interaction. D-42 does not select production providers/models. Assistant availability and automation policies are independent; the workspace can still display status/manual actions when the provider fails or assistant is disabled.
+
+## Independent capabilities in one screen
+
+The assistant does not require a completed reassignment. It accepts supported intents with or without runs/exceptions and whether automation policies are enabled, subject to current user/permissions/data/assistant configuration. Conversely, workers do not need open chat. The UI does not attach every conversation to the latest task/run; context must be selected/confirmed by the user. A replacement proposal is a separate business example, not the chatbot's sole purpose.
+
+## When coordination starts and when work is manual
+
+Workers process committed domain events, not merely opening/messaging the AI Workspace. Each event checks workflow/policy/data/scope before effects; new tickets do not all require automatic plans/tasks.
+
+| Event / source | Expected handling |
+| --- | --- |
+| Ticket created or information added | Check workflow/policy eligibility; ask for missing information; plan/assign only when eligible |
+| Task progress/completion/blocker | Evaluate affected dependencies/risks, not regenerate the entire plan |
+| Schedule/absence/skills/membership/load change | Filter affected tasks; reassign under policy or escalate locked/in-progress/out-of-scope work |
+| Deadline/SLA risk | Remind/alert/re-evaluate under policy; do not extend SLA/commitments autonomously |
+| Approval decision or policy change | Recheck rights/grants/versions/schedules/load; do not execute stale snapshots |
+
+Concrete events/producers/consumers are in the [API/event catalog](technical/api-design.md). Scheduler handles risk scans/reminders/retries; UI polling reads status and does not continually trigger replanning.
+
+Authorized M/A may manually plan/assign/reassign, lock assignments, disable/narrow automation. T may execute/self-claim within permissions, not assign colleagues. Manual actions still check state/version/dependencies/skills/schedules/capacity and record audit/outbox. AI respects manual decisions/locks; Done/Resolved/Closed require valid performer/requester actions.
+
+UI23 shows one locked replan run in five steps: record absence → propose → approve → recheck/reassign → notify/monitor; currently waiting at 3/5. Eligible unstarted/unlocked tasks can follow a no-approval branch. Rejected/stale proposals do not falsely continue. The proposal and report chatbot are independent regions, not prerequisites.
+
+## Normal and exception screens
+
+[UI37 — normal AI Workspace](design/wireframes/37-ai-workspace.svg) is the default representative; the assistant does not need approval to function. [UI23 — exception proposal](design/wireframes/23-coordination.svg) appears only for an authorized exception, not permanently. The fixtures are independent, sharing route/actor/permission boundaries/capabilities. Normal activity may show automatic assignment without approval; this does not mean specialist tasks are Done.
