@@ -1,56 +1,56 @@
 ---
 id: itoh-docs-readme
-title: "Hồ sơ phân tích và thiết kế"
+title: "Analysis and design documentation"
 type: reference
 domain: project
 module: documentation
 tags: [project, documentation, reference]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Xác định cấu trúc hồ sơ, nguồn chuẩn, thẩm quyền và giới hạn bàn giao."
+purpose: "Define document structure, authoritative sources, decision authority, and handover limits."
 ---
 
-# Hồ sơ phân tích và thiết kế
+# Analysis and design documentation
 
-Hồ sơ mô tả **thiết kế mục tiêu**, chưa phải hệ thống đã triển khai. Mỗi chủ đề có một tài liệu nguồn; bảng tổng hợp, sơ đồ, bản vẽ và XMind dẫn về nguồn đó. Các mục trên [README dự án](../README.md) giữ nguyên thứ tự trình bày sản phẩm.
+This documentation describes the **target design**, not an implemented system. Each topic has an authoritative source; summaries, diagrams, UI designs, and XMind link back to it. The [project README](../README.md) retains its product-presentation heading order.
 
-## 1. Cấu trúc và nguồn chuẩn
+## 1. Structure and authoritative sources
 
-| Miền tài liệu | Nguồn chuẩn | Tài liệu chi tiết / biểu diễn |
-|---|---|---|
-| Quản lý hồ sơ | [Quy ước tài liệu](documentation-standard.md) | [Kết quả rà soát](review-report.md) |
-| Bài toán và phạm vi | [Phạm vi](01-scope.md) | [Nghiên cứu](00-research.md), [năng lực](02-features.md) |
-| Yêu cầu chức năng | [Use cases](03-use-cases.md), [stories](08-invest-requirements.md) | [Catalog trợ lý AI](ai/use-cases-stories-and-acceptance.md) |
-| Chất lượng và nghiệm thu | [NFR](requirements/non-functional-requirements.md), [AC/TC](06-acceptance-criteria.md) | [Kế hoạch kiểm chứng](research/validation-plan.md), [truy vết](traceability/master-traceability.md) |
-| Domain và phân quyền | [BR-01–22](requirements/business-rules.md), [ma trận quyền](requirements/permissions-matrix.md) | [Cấp tài khoản](requirements/account-provisioning.md), [chỉ số](requirements/metrics-catalog.md) |
-| Kiến trúc và tích hợp | [Kiến trúc](technical/architecture.md) | [C4 C1–C4](architecture/c4/README.md), [cấu trúc code](technical/code-structure.md), [các góc nhìn kiến trúc](diagrams/architecture.md), [stack](technical/tech-stack.md), [phiên bản ứng viên](technical/version-baseline.md) |
-| API và sự kiện | [Hợp đồng API](technical/api-design.md) | [OpenAPI](api/README.md), [operation catalog](api/operations.md), [tích hợp AI](ai/integration-and-non-regression.md) |
-| Dữ liệu | [Mô hình logic và ERD](requirements/conceptual-data-model.md) | [DBML](database/README.md); ràng buộc/giao dịch tại kiến trúc; chưa có schema vật lý/migration |
-| AI | [Thiết kế AI](10-ai-assistant.md) | Catalog AI, quy tắc policy/approval/KB và hợp đồng tool; cấu hình thử nghiệm D-39 |
-| IA và trải nghiệm | [IA/screen inventory](04-information-architecture.md), [UI/UX](07-uiux-specification.md) | [Flows](05-user-flows.md), [design system](design/design-system.md), [nội dung/trạng thái](design/content-and-states.md), [responsive/motion](design/motion-and-responsive.md), [định hướng thị giác](design/visual-refresh.md) |
-| Đồ họa | [Danh mục sơ đồ](diagrams/README.md) | [Bản vẽ](design/wireframes/README.md), [XMind](xmind/README.md); đây là biểu diễn dẫn xuất |
-| Quyết định và kế hoạch | [Sổ quyết định](decisions/design-decisions.md), [lộ trình M0–M5](09-design-readiness.md) | D-40 tập hợp điểm chưa chốt; lộ trình không cấp quyền bắt đầu code |
+| Domain | Authoritative source | Details / representations |
+| --- | --- | --- |
+| Documentation management | [Conventions](documentation-standard.md) | [Review report](review-report.md) |
+| Problem and scope | [Scope](01-scope.md) | [Research](00-research.md), [capabilities](02-features.md) |
+| Functional requirements | [Use cases](03-use-cases.md), [stories](08-invest-requirements.md) | [AI assistant catalog](ai/use-cases-stories-and-acceptance.md) |
+| Quality and acceptance | [NFR](requirements/non-functional-requirements.md), [AC/TC](06-acceptance-criteria.md) | [Validation plan](research/validation-plan.md), [traceability](traceability/master-traceability.md) |
+| Domain and authorization | [BR-01–22](requirements/business-rules.md), [permissions](requirements/permissions-matrix.md) | [Account provisioning](requirements/account-provisioning.md), [metrics](requirements/metrics-catalog.md) |
+| Architecture and integration | [Architecture](technical/architecture.md) | [C4 C1–C4](architecture/c4/README.md), [code structure](technical/code-structure.md), [architecture views](diagrams/architecture.md), [stack](technical/tech-stack.md), [candidate versions](technical/version-baseline.md) |
+| API and events | [API contract](technical/api-design.md) | [OpenAPI](api/README.md), [operation catalog](api/operations.md), [AI integration](ai/integration-and-non-regression.md) |
+| Data | [Logical model and ERD](requirements/conceptual-data-model.md) | [DBML](database/README.md); constraints/transactions in architecture; no physical schema/migration |
+| AI | [AI design](10-ai-assistant.md) | AI catalog, policy/approval/KB rules, tool contracts; D-39 test configuration |
+| IA and experience | [IA/screen inventory](04-information-architecture.md), [UI/UX](07-uiux-specification.md) | [Flows](05-user-flows.md), [design system](design/design-system.md), [content/states](design/content-and-states.md), [responsive/motion](design/motion-and-responsive.md), [visual direction](design/visual-refresh.md), [Apple Design Skill review](design/uiux-review.md) |
+| Graphics | [Diagram inventory](diagrams/README.md) | [UI designs](design/wireframes/README.md), [XMind](xmind/README.md); derived representations |
+| Decisions and planning | [Decision log](decisions/design-decisions.md), [M0–M5 roadmap](09-design-readiness.md) | D-40 collects open decisions; the roadmap does not authorize implementation |
 
-Các miền bảo mật, DevOps và observability được đặc tả tại kiến trúc, NFR và ma trận quyền; không tạo bản đặc tả thứ hai chỉ để khớp tên thư mục của một framework. Kiểm thử ứng dụng và vận hành có kế hoạch, chưa có báo cáo thực thi.
+Security, DevOps, and observability are specified in architecture, NFR, and permissions. No second specification is created just to match framework folder names. Application and operational testing is planned, with no execution report.
 
-README dự án giữ format hiển thị hiện có, không bắt buộc YAML frontmatter. Bản ghi tham chiếu: ID itoh-readme, type reference, domain project, module repository, authority derived, status design-draft, owner chủ đề tài. Metadata từng tài liệu trong docs/ lưu tại file nguồn; OpenAPI JSON/DBML là artifact được mô tả tại README cùng miền.
+The project README keeps its existing presentation format without mandatory YAML frontmatter. Reference record: ID itoh-readme, type reference, domain project, module repository, authority derived, status design-draft, owner Project owner. Each docs/ source contains its own metadata; OpenAPI JSON/DBML artifacts are described in their domain README.
 
-## 2. SRS của dự án
+## 2. Project SRS
 
-SRS được tổ chức theo các tài liệu nguồn trong bảng trên, không sao chép thành một tài liệu tổng hợp khác. Phạm vi và loại người dùng ở `01-scope.md`; chức năng có ID F/UC/US; ràng buộc ở BR/NFR; điều kiện nghiệm thu ở AC/TC; giả định ở nghiên cứu và D-40. [Ma trận truy vết](traceability/master-traceability.md) nối các phần này.
+The SRS is distributed across the authoritative sources above, without another duplicated master specification. Scope/user classes are in `01-scope.md`; capabilities use F/UC/US IDs; BR/NFR define constraints; AC/TC define acceptance; research and D-40 record assumptions. The [traceability matrix](traceability/master-traceability.md) connects them.
 
-Một tổ chức; bốn vai trò người dùng Requester, Technician, IT Manager (Trưởng phòng IT), Admin. Không có cấp Trưởng nhóm IT riêng. AI_COORDINATOR là danh tính dịch vụ nội bộ. Ticket tiếp nhận/SLA khác Task thực thi; AI trợ lý và điều phối cùng thuộc MVP.
+One organization; four user roles: Requester, Technician, IT Manager (Head of IT), Admin. No separate IT Team Lead tier. AI_COORDINATOR is an internal service identity. Ticket intake/SLA differs from Task execution; AI assistant and coordination are both in the MVP.
 
-## 3. Thẩm quyền và trạng thái
+## 3. Authority and status
 
-Người dùng/chủ đề tài xác nhận phạm vi và quyết định sản phẩm. Agent biên soạn, rà soát tính nhất quán; không tự ghi nhận phê duyệt thiết kế chi tiết, kiểm thử đạt hay nghiệm thu. Sổ quyết định ghi rõ phần đã chốt và phần cần quyết định; metadata `approval: needs-review` của hồ sơ không phủ nhận các quyết định đã được chốt riêng.
+The user/project owner confirms scope and product decisions. The agent writes and checks consistency; it does not claim independent approval, passing application tests, or acceptance. The decision log distinguishes confirmed decisions from open ones. Document metadata `approval: needs-review` does not invalidate individually confirmed decisions.
 
-Khi thay đổi một quy tắc, sửa nguồn chuẩn trước rồi cập nhật truy vết, API/dữ liệu, sơ đồ, UI/XMind và kế hoạch kiểm chứng chịu ảnh hưởng. Nếu hai tài liệu mâu thuẫn, dùng quyết định đã chốt đúng phạm vi để xử lý; thiếu quyết định thì ghi tại D-40, không chọn theo thời gian sửa file.
+When a rule changes, update its authoritative source first, then affected traceability, APIs/data, diagrams, UI/XMind, and validation plans. Resolve conflicts using confirmed decisions within their scope. If a decision is missing, record it in D-40 rather than choosing the most recently edited file.
 
-## 4. Giới hạn bàn giao
+## 4. Handover limits
 
-Metadata, liên kết, ID, quan hệ sơ đồ và nội dung dẫn xuất có thể kiểm tra tại giai đoạn tài liệu. Hiệu năng, bảo mật chạy thật, model, accessibility, concurrency và restore phải được chứng minh khi có ứng dụng và được yêu cầu triển khai riêng. Hồ sơ hiện không có bằng chứng phê duyệt độc lập hoặc chạy kiểm thử ứng dụng.
+Metadata, links, IDs, diagram relationships, and derived content can be checked during documentation work. Performance, live security, models, accessibility, concurrency, and restore need evidence from an application after a separate implementation request. No independent approval or application-test evidence is claimed.

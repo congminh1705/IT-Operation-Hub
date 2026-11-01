@@ -1,99 +1,100 @@
 ---
 id: itoh-docs-documentation-standard
-title: "Quy ước tài liệu và sơ đồ"
+title: "Documentation and diagram conventions"
 type: reference
 domain: project
 module: documentation
 tags: [project, documentation, reference]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Quy định metadata, cấu trúc, truy vết, ký pháp sơ đồ và mức bằng chứng."
+purpose: "Define metadata, structure, traceability, diagram notation, and evidence levels."
 ---
 
-# Quy ước tài liệu và sơ đồ
+# Documentation and diagram conventions
 
-## 1. Mục đích và phạm vi áp dụng
+## 1. Purpose and scope
 
-Quy ước áp dụng cho hồ sơ thiết kế IT Operations Hub. Tham khảo chuẩn metadata, phân tách tài liệu nguồn/biểu diễn, trạng thái và truy vết của Agentic SDLC Kit. Không cài framework, không sao chép dữ liệu quản trị của dự án khác, không thêm quy trình phê duyệt làm thay đổi chỉ dẫn của chủ đề tài.
+These conventions apply to IT Operations Hub design documentation. They draw on Agentic SDLC Kit metadata, source/representation separation, status, and traceability practices. Do not install the framework, copy another project's governance data, or add approval procedures that override the project owner's instructions.
 
-Giữ đường dẫn tài liệu nguồn đang được dùng và **giữ nguyên thứ tự các đầu mục README dự án**. Sắp xếp theo miền qua [mục lục hồ sơ](README.md), không di chuyển hàng loạt chỉ để đổi tên thư mục. Các quy tắc đồ họa dưới đây là quy ước của hồ sơ này; không tuyên bố kit cung cấp hoặc chứng nhận UML/C4.
+Retain existing authoritative document paths and **the project README heading order**. Organize domains through the [index](README.md), without mass moves solely to rename folders. Graphic rules below belong to this documentation set; they do not claim UML/C4 provision or certification by the kit.
 
-## 2. Metadata và cấu trúc
+## 2. Metadata and structure
 
-Markdown trong docs/ bắt đầu bằng YAML: `id`, `title`, `type`, `domain`, `module`, `tags`, `priority`. Bổ sung `status`, `owner`, `approval`, `updated`, `purpose`, `authority` để biết phạm vi và mức tin cậy. README dự án giữ format trình bày hiện có và là ngoại lệ frontmatter; bản ghi nhận diện được quản lý tại docs/README.md. README vẫn được kiểm heading, links và nội dung. ID tài liệu ổn định, không trùng; `priority` từ 1 đến 5 là độ quan trọng tra cứu tài liệu, khác độ ưu tiên ticket P1–P4.
+Markdown under docs/ starts with YAML: `id`, `title`, `type`, `domain`, `module`, `tags`, `priority`. Add `status`, `owner`, `approval`, `updated`, `purpose`, `authority` to identify scope and confidence. The project README retains its presentation format and is exempt from frontmatter; docs/README.md records its identity. Headings, links, and content still require checking. Document IDs are stable and unique. Document `priority` ranges from 1 to 5 for retrieval importance, distinct from ticket P1–P4.
 
-| Trường | Quy ước |
-|---|---|
-| type | reference: đặc tả/tham chiếu; planning: kế hoạch; report: kết quả rà soát tài liệu |
-| status | design-draft, planned, hypothesis hoặc self-reviewed; không dùng completed cho chức năng mới được mô tả |
-| owner | Chủ đề tài; đây là vai trò chịu trách nhiệm hồ sơ, không phải tên người được tự gán |
-| approval | needs-review; quyết định cụ thể được xác nhận riêng tại sổ quyết định |
-| authority | primary: nguồn chuẩn của chủ đề; derived: mục lục, hình minh họa hoặc bản tổng hợp |
-| purpose | Một câu xác định câu hỏi mà tài liệu trả lời |
+| Field | Convention |
+| --- | --- |
+| type | reference: specification/reference; planning: plan; report: documentation-review results |
+| status | design-draft, planned, hypothesis, or self-reviewed; no completed status for merely specified features |
+| owner | Project owner; the accountable documentation role, not an invented person's name |
+| approval | needs-review; individual decisions are confirmed separately in the decision log |
+| authority | primary: topic source of truth; derived: index, illustration, or summary |
+| purpose | One sentence defining the question answered |
 
-Cấu trúc nội dung phù hợp loại tài liệu: mục đích/phạm vi → khái niệm hoặc danh mục → hành vi/quan hệ/ràng buộc → ngoại lệ → kiểm chứng → nguồn liên quan. Các catalog bảng giữ ID và cột phù hợp, không thêm cùng một mẫu văn bản dài vào mọi file. H1 duy nhất; cấp heading không nhảy; bảng có tiêu đề rõ; code fence đóng đủ. Tài liệu dùng ngôn ngữ quy định nhất quán, không chia thiết kế hiện hành thành các đoạn “bổ sung” theo lịch sử hội thoại.
+Structure content by document type: purpose/scope → concepts/catalog → behavior/relationships/constraints → exceptions → verification → sources. Tables retain suitable IDs/columns; avoid repeating a long generic template in every file. Use one H1, sequential heading levels, clear table headers, and closed code fences. Describe the current design consistently instead of accumulating conversation-history supplements.
 
-## 3. Hợp đồng đặc tả và truy vết
+**Documentation language:** English, using clear, standard software and IT operations terminology. README, reports, specifications, contracts, diagram labels, and XMind text use English. UI/dashboard artwork, its screen copy, and embedded UI images remain Vietnamese. Quoted UI labels may remain Vietnamese when needed to identify the designed control. Preserve identifiers, paths, state enums, data contracts, and confirmed decisions. Language finalization does not approve open decisions or mark functionality implemented.
 
-| Loại | Nội dung bắt buộc |
-|---|---|
-| Use case | ID, mục tiêu, actor và scope, trigger, tiền điều kiện, luồng chính, nhánh lỗi, hậu điều kiện; điều kiện chung được tham chiếu thay vì chép lại |
-| Story | Vai trò, kết quả, giá trị, phụ thuộc, AC; INVEST là đánh giá refinement, không phải kết quả test |
-| BR/NFR/AC | ID ổn định; quy tắc/đại lượng rõ; tình huống kiểm chứng và nguồn; ngưỡng chưa chốt phải ghi đề xuất/Cần quyết định |
-| API/event | ID, method/path hoặc event type, actor/producer/consumer, input/output, quyền, transaction, idempotency, lỗi, truy vết UC/BR |
-| Dữ liệu | Entity/ownership/cardinality, version/lifecycle, unique/check/invariant, nguồn quyền, phân biệt logic với schema vật lý |
-| Kiến trúc | Context, container, module, sequence, triển khai dự kiến, trust boundary, failure/recovery và tradeoff |
-| Quyết định | ID, trạng thái, người quyết định có thẩm quyền, bối cảnh/lý do, phương án, hệ quả, tài liệu ảnh hưởng; không tự nhận quyết định đã được duyệt |
-| Kế hoạch kiểm chứng | Mục tiêu, dữ liệu/môi trường, phương pháp, expected result, evidence cần lưu, entry/exit; tách planned khỏi actual |
+## 3. Specification contracts and traceability
 
-Các namespace F/UC/US/AC/TC/SCR/BR/NFR/MET và D giữ nguyên. Thêm namespace API/EVT/FIG cho hợp đồng và hình, không đổi các ID nghiệp vụ đã có. Truy vết là khả năng quay về yêu cầu nguồn, không chỉ đếm số dòng.
+| Type | Required content |
+| --- | --- |
+| Use case | ID, goal, actor/scope, trigger, preconditions, main flow, error paths, postconditions; reference shared conditions rather than duplicating |
+| Story | Role, outcome, value, dependencies, AC; INVEST is a refinement assessment, not a test result |
+| BR/NFR/AC | Stable ID; explicit rules/measurements; verification cases and sources; unconfirmed thresholds marked proposed/Decision required |
+| API/event | ID, method/path or event type, actor/producer/consumer, input/output, permissions, transaction, idempotency, errors, UC/BR trace |
+| Data | Entity/ownership/cardinality, version/lifecycle, unique/check/invariant, authorization source, logical versus physical schema |
+| Architecture | Context, containers, modules, sequences, proposed deployment, trust boundaries, failure/recovery, tradeoffs |
+| Decision | ID, status, authorized decision-maker, context/reason, options, consequences, affected documents; no invented approval |
+| Validation plan | Goals, data/environment, method, expected result, evidence to retain, entry/exit; separate planned from actual |
 
-## 4. Quy ước sơ đồ
+Retain F/UC/US/AC/TC/SCR/BR/NFR/MET and D namespaces. Add API/EVT/FIG for contracts/figures without changing existing business IDs. Traceability means following requirements to their sources, not merely counting rows.
 
-| Loại | Biểu diễn | Không trộn vào cùng ký pháp |
-|---|---|---|
-| Use-case view | Actor người dùng bên ngoài boundary; ellipse chứa ID/mục tiêu; association không có nghĩa thứ tự | Component nội bộ, bảng DB, sequence hoặc cấp quản lý không tồn tại |
-| Kiến trúc context/container | Một mức trừu tượng mỗi hình; phân biệt người, hệ thống ngoài, ứng dụng, data store; cạnh có tên giao tiếp | Entity ERD hoặc các bước UI |
-| Sequence | Lifeline, thứ tự message, nhánh alt; transaction/commit và model call rõ | Gộp phê duyệt với hiệu ứng ghi thành công |
-| Activity/task flow | Bắt đầu, hành động, điều kiện rẽ nhánh và kết thúc; ngoại lệ có đường ra | Dùng mũi tên như quan hệ ERD hoặc quyền |
-| State transition | State, cạnh có trigger/guard/effect hoặc chú giải; một vòng đời mỗi vùng | Ticket, Task, quyết định approval và execution chung một bộ status |
-| ERD logic | Entity, hai đầu quan hệ, cardinality/optional; ràng buộc không diễn đạt được ghi bên cạnh | Dùng ERD để cam kết index/DDL đã triển khai |
-| Mind map | Cây phân rã, node/notes/source, tham chiếu chéo khi cần | Coi nhánh mind map là luồng thời gian hoặc foreign key |
-| Wireframe | Screen ID, role/scope, trạng thái và dữ liệu minh họa | Coi ảnh tĩnh là UI chạy thật hoặc bằng chứng accessibility |
+## 4. Diagram conventions
 
-Mỗi hình có FIG ID, mục đích, loại, nguồn và giới hạn tại [danh mục sơ đồ](diagrams/README.md). SVG có title/desc và metadata truy về tài liệu; Mermaid là nguồn văn bản ngay trong tài liệu chứa hình. Preview/PNG/XMind là biểu diễn dẫn xuất, không được đổi quy tắc độc lập. Archive UI cũ chỉ là lịch sử, không phải bản thiết kế hiện hành.
+| Type | Representation | Do not mix into the same notation |
+| --- | --- | --- |
+| Use-case view | User actors outside boundary; ellipses with IDs/goals; associations do not indicate order | Internal components, DB tables, sequences, nonexistent management tiers |
+| Context/container architecture | One abstraction level per view; distinguish people, external systems, applications, data stores; label communication edges | ER entities or UI steps |
+| Sequence | Lifelines, ordered messages, alt branches; explicit transactions/commit and model calls | Approval and successful write effects treated as the same |
+| Activity/task flow | Start, actions, branch conditions, end; exceptions have exits | Arrows interpreted as ER relationships or permissions |
+| State transition | States and trigger/guard/effect edges or legend; one lifecycle per region | One shared status set for Ticket, Task, approval decision, execution |
+| Logical ERD | Entities, relationship endpoints, cardinality/optionality; notes for other constraints | Claims of implemented indexes/DDL |
+| Mind map | Decomposition tree, nodes/notes/sources, cross-references where needed | Branches interpreted as timelines or foreign keys |
+| Wireframe | Screen ID, role/scope, state, illustrative data | Static images treated as live UI or accessibility evidence |
 
-Các góc nhìn theo vai trò có thể lặp cùng mã UC, nhưng mỗi vùng chỉ biểu diễn một góc nhìn của cùng hệ thống. AI_COORDINATOR thuộc kiến trúc/sequence, không là actor người dùng thứ năm trong use-case view. Luồng automation có thể chạy theo sự kiện dù người giám sát không bấm nút từng bước.
+Each figure has a FIG ID, purpose, type, source, and limits in the [diagram inventory](diagrams/README.md). SVGs include title/desc and source metadata. Mermaid text is maintained in the containing document. Previews/PNG/XMind are derived and cannot independently change rules. Old UI archives are historical, not current designs.
 
-## 5. Kiểm tra và giới hạn kết luận
+Role views may repeat UC IDs but represent views of the same system. AI_COORDINATOR belongs to architecture/sequences, not a fifth human use-case actor. Automation can run on events without the supervisor clicking each step.
 
-Kiểm tra UTF-8, frontmatter/ID, liên kết nội bộ, heading/bảng/fence, mã catalog và traceability; parse SVG/JSON/ZIP, đối chiếu sheet master/subset, cạnh trạng thái và nguồn hình. Review nội dung actor, scope, cardinality, event retry và nhánh lỗi riêng với kiểm tra cú pháp.
+## 5. Checks and conclusion limits
 
-Chỉ ghi `passed` cho phép kiểm đã thực hiện và ghi rõ phạm vi. Kiểm tra XML không chứng minh sơ đồ dễ đọc; đọc SVG không chứng minh XMind Desktop; kiểm tra AC trong tài liệu không chứng minh AC phần mềm đạt. Kết quả tự rà soát không thay phê duyệt độc lập. Không tạo mã nguồn/test thực thi để kiểm chứng tài liệu.
+Check UTF-8, frontmatter/IDs, internal links, headings/tables/fences, catalog IDs, traceability; parse SVG/JSON/ZIP; compare master/subset sheets, state edges, and figure sources. Review actors, scope, cardinalities, event retries, and failures separately from syntax.
 
+Use `passed` only for performed checks with explicit scope. XML validation does not prove diagram readability; SVG review does not prove XMind Desktop behavior; documented AC do not prove software acceptance. Self-review does not replace independent approval. Do not create application source/executable application tests to validate documentation.
 
-## 6. Bố cục và kiểm tra render
+## 6. Layout and render review
 
-Hình kỹ thuật có FIG ID, tiêu đề, mục đích và nguồn. Nội dung chia theo câu hỏi: use-case chỉ actor/mục tiêu; flow có nhánh lỗi; sequence chỉ một nhóm tương tác; ERD tách miền và giữ cardinality. Không dồn mọi entity/ngoại lệ vào một hình rồi thu chữ nhỏ.
+Technical figures have FIG IDs, titles, purposes, and sources. Split views by question: use cases show actors/goals, flows include failures, sequences cover one interaction group, ERDs separate domains while retaining cardinality. Do not crowd every entity/exception into one diagram and shrink the text.
 
-Use-case có ellipse và association không mũi tên, gom đường theo actor để giảm chéo. Flow/state có hướng và guard; cạnh hủy tách vùng vẫn giữ nguồn/đích. Màu đi kèm nhãn. Mind map dàn hai phía, khoảng cách theo chiều cao nội dung; nhánh không thay sequence/ERD.
+Use-case ellipses have undirected associations, grouped by actor to reduce crossings. Flows/states use direction/guards; cancellation edges keep endpoints when routed separately. Color accompanies labels. Mind maps use two-sided branches with spacing based on content height; they do not replace sequences/ERDs.
 
-Product map, IA và primary/support flows dùng nền sáng, viền chính xanh đậm và lớp viền xanh sáng bên ngoài. Khung có khoảng đệm đủ cho toàn bộ chữ; nhãn cạnh chỉ có nền theo bề rộng nội dung, không che khung/điều kiện. Product map phân rã năng lực; IA giữ mind map trung tâm/nhánh hai phía và ID/route, loại/scope chi tiết trong catalog/notes; primary flow dùng mũi tên/điều kiện và bên chịu trách nhiệm. Product/IA giữ format ban đầu, chỉ tăng nét khung và lớp viền sáng; không chuyển thành bảng thẻ hoặc khung lồng nhau. Primary flow dùng ký pháp hoạt động riêng. Quyền và trạng thái chưa chốt phải hiện rõ hoặc dẫn D-40, không tự suy diễn thành quy trình doanh nghiệp đã được phê duyệt.
+Product maps, IA, and primary/supporting flows use light backgrounds, dark blue borders, and bright blue outer outlines. Frames must fit all text with padding. Edge-label backgrounds fit their content without hiding frames/conditions. Product maps decompose capabilities; IA retains a central/two-sided mind map with IDs/routes and catalog/notes for detailed type/scope; primary flows show arrows/conditions/responsibility. Preserve original Product/IA format, thick borders, and bright outlines rather than converting to card tables/nested frames. Primary flows use activity notation. Unresolved rights/states are explicit or link to D-40, not assumed to be approved enterprise workflows.
 
-Render trước bàn giao; đo text width, canvas bounds, chữ trong node và đường ERD xuyên entity không liên quan. Xem tổng thể các hình đã đổi và phóng to hình trọng tâm. PNG phải xuất từ SVG hiện hành. Phép đo trên một browser/font không chứng minh mọi renderer/thiết bị hoặc XMind Desktop.
+Render before handover. Measure text width, canvas bounds, text containment, and ERD edges crossing unrelated entities. Review changed figures overall and key figures at full scale. PNGs must come from current SVGs. A single browser/font measurement does not prove all renderers/devices or XMind Desktop.
 
-Với Product/IA, các ý ngoài cùng cũng có khung kín riêng, viền đậm và lớp viền sáng; giữ nhánh cong hai phía. Preview dùng ô ngoài rộng 480 px, chữ 22 px, khoảng đệm ngang 22 px và khoảng cách dọc 22 px; chiều cao tự tăng theo nội dung, không cắt chữ. Ký hiệu code/escape Markdown không đưa vào chữ hiển thị của SVG. Đây là quy ước hình tài liệu, không phải kích thước component giao diện ứng dụng.
+Product/IA outer nodes also have closed frames, thick borders, and bright outlines, retaining curved branches on both sides. Previews use outer nodes 480 px wide, 22 px text, 22 px horizontal padding, 22 px vertical spacing, and content-driven heights without clipping. Markdown code/escape syntax does not appear as SVG display text. These are documentation graphics dimensions, not app component sizes.
 
-Phân cấp Product/IA: trung tâm nền navy, rộng 480 px, cao tối thiểu 230 px, chữ 34 px đậm; nhóm bậc hai rộng 360 px, cao tối thiểu 132 px, chữ 26 px sáng trên nền màu riêng của nhánh (xanh dương, teal, tím, nâu vàng, xanh xám, tím hồng). Các ý ngoài cùng giữ nền sáng và chữ 22 px. Nền nhóm dùng palette đa màu hiện có, không đồng loạt đổi sang một màu. Cấp trung tâm nổi bật bằng diện tích/cỡ chữ/độ đậm; không suy thứ bậc chỉ từ chiều rộng ô chứa nội dung dài.
+Product/IA hierarchy: navy center, 480 px wide, minimum 230 px high, bold 34 px text; second-level groups 360 px wide, minimum 132 px high, 26 px light text on each branch's existing distinct color (blue, teal, purple, ochre, slate blue, magenta). Outer nodes retain light backgrounds/22 px text. Keep the multicolor palette rather than one uniform fill. Center prominence comes from area/type size/weight; width alone does not define hierarchy for long content.
 
-Đường từ trung tâm tới nhóm bậc hai dùng điểm gắn riêng, xếp theo thứ tự trên–dưới để tránh chồng chéo. Từ mỗi nhóm tới các ô con, dây chụm ở giữa cạnh ngoài của ô nhóm rồi tỏa cong theo thứ tự các ô con. Chừa hành lang ngang giữa các cấp; đường cong không quay ngược hoặc xuyên ô. Preview rộng 2800 px; giữ kích thước ô/chữ và cấu trúc mind map hai phía.
+Center-to-second-level edges use separate anchors ordered top to bottom to avoid overlap. Each group's child edges converge at the middle of its outer side, then fan out as ordered curves. Keep horizontal routing corridors; no backward curves or lines through nodes. Previews are 2800 px wide, retaining node/type sizes and the two-sided mind map.
 
-## 7. Artifact DBML/OpenAPI/C4 và cây code
+## 7. DBML/OpenAPI/C4 artifacts and code trees
 
-Tham khảo cách trình bày C4, database/OpenAPI và folder structures của repo finance-manager; giữ thứ tự các đầu mục README cũ, thêm mục kỹ thuật tiếp theo trước Documentation. Không sao chép stack ASP.NET/JWT, số liệu hoàn thành hoặc quy trình governance của repo mẫu.
+Use finance-manager as a presentation reference for C4, database/OpenAPI, and folder structures. Preserve README heading order, placing additional technical sections before Documentation. Do not copy its ASP.NET/JWT stack, completion claims, or governance.
 
-DBML/OpenAPI JSON là tài liệu thiết kế máy đọc được, metadata/trạng thái/quyền sở hữu tại README cùng miền. Không bắt YAML frontmatter vào file có grammar riêng. Mô hình logic/BR và API rationale vẫn là nguồn quyết định; schema tĩnh/các view/cây code phải đồng bộ, không đổi quy tắc độc lập. C4 L4 và cây folder/file phải phân biệt planned/current, không tạo module/test/config ngoài phạm vi tài liệu.
+DBML/OpenAPI JSON are machine-readable design documents, with metadata/status/ownership in their domain README. Do not insert YAML frontmatter into formats with their own grammar. Logical models/BR and API rationale remain decision sources; static schemas/views/code trees stay synchronized without independent rule changes. C4 Level 4 and folder/file trees distinguish planned/current and do not create modules/tests/config outside documentation scope.
