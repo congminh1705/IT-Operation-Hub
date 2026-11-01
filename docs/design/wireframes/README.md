@@ -1,102 +1,203 @@
 ---
 id: itoh-docs-design-wireframes-readme
-title: "Bộ bản vẽ UI/UX"
+title: "UI/UX design set v0.8"
 type: reference
 domain: design
 module: wireframes
 tags: [design, wireframes, reference]
 priority: 2
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: derived
-purpose: "Điều hướng bản vẽ tới screen nguồn và nêu rõ dữ liệu minh họa/độ phủ."
+purpose: "Map designs to source screens and explain illustrative data and coverage."
 ---
 
-# Bộ bản vẽ UI/UX
+# UI/UX design set v0.8
 
-> **Thiết kế mục tiêu:** Chỉ tài liệu thiết kế; chưa triển khai/kiểm thử. AI trong MVP gồm trợ lý và điều phối theo policy; Ticket khác Task; KB/RAG trong phạm vi. Xem quyết định D-34–40 và tài liệu nguồn theo chủ đề.
+**37 SVGs: 34 UI designs + 3 boards**, synthetic DEMO only; no application/animation/live provider. Combines Apple Design Skill/earlier UI/P-047 quick cards, retaining business rules/roles/stack/**Vietnamese UI artwork**.
 
-**16 bản UI tĩnh (13 bản lõi và 3 bản AI) và 2 board thiết kế, phiên bản v0.4**, dùng dữ liệu hư cấu có nhãn. SVG là tài liệu thiết kế có thể phóng to, không có tương tác, không gửi request và không chứng minh ứng dụng đã có dữ liệu bền vững. Các thao tác lõi và AI đều thuộc phạm vi MVP; nghiệm thu yêu cầu chức năng thực tế thay cho tương tác hoặc phản hồi mẫu.
+## Viewing and coverage
 
-Mở trực tiếp SVG trong trình duyệt hoặc công cụ thiết kế để xem và chỉnh sửa. Các bản xuất PNG giao diện đã được bỏ; thư mục chỉ giữ SVG, tài liệu và [use-cases-overview.png](use-cases-overview.png) theo yêu cầu. Riêng login có [minh họa PNG nền trong suốt](../illustrations/login-it-support.png) nhúng trực tiếp trong SVG. Hiển thị font có thể khác nhẹ theo thiết bị.
+Open SVG in a browser or VS Code Preview or inline gallery. Standalone/zoomable; fonts may vary. Static controls are not executable. Root README keeps original heading order.
 
-| Bản vẽ SVG | Vai trò / nhiệm vụ | Điểm cần review |
-|---|---|---|
-| [01 — Đăng nhập](01-login.svg) | Tất cả · SCR01 | Một luồng truy cập, không đăng ký hoặc gửi mail giả |
-| [02 — Dashboard Manager](02-dashboard-manager.svg) | M/A · SCR12 | Hàng đợi hiện tại tách khỏi phân tích theo kỳ; KPI có thể chồng lấn |
-| [03 — Danh sách ticket](03-tickets.svg) | M/A · SCR20 | Tìm/filter/sort, trạng thái có chữ, SLA chỉ rõ loại đồng hồ |
-| [04 — Tạo yêu cầu](04-create-ticket.svg) | Requester · SCR21 | Priority đề xuất, tài sản tùy chọn, tệp có giới hạn |
-| [05 — Ticket Technician](05-ticket-technician.svg) | Assignee · SCR22 | Công khai/nội bộ, hành động phù hợp trạng thái và người phụ trách |
-| [06 — Ticket Requester](06-ticket-requester.svg) | Chủ ticket Resolved · SCR22 | Giải pháp, xác nhận đóng/mở lại, hoàn toàn không có nội dung nội bộ |
-| [07 — Tài sản](07-asset.svg) | M/A · SCR32 | User hiện tại qua assignment, history giữ lại, thu hồi rõ |
-| [08 — Cấu hình SLA](08-admin-sla.svg) | Admin · SCR64 | P1–P4, đơn vị thời lượng, phiên bản, tác động ticket mới |
-| [09 — Mobile](09-mobile.svg) | Requester · SCR20/22 | Hai view390 px, trả lời Pending và thao tác chính |
-| [10 — Trạng thái UX](10-ux-states.svg) | Các vai trò · mẫu dùng chung | Validation, conflict, filter rỗng và tải lỗi |
-| [11 — Trợ lý AI](11-ai-assistant.svg) | Requester · SCR-AI01/02 | Nguồn, preview rồi xác nhận tạo hoặc chỉnh form; chưa xác nhận chưa tạo |
-| [12 — AI trong ticket](12-ai-ticket-assistant.svg) | Technician · SCR-AI01/02 | Tóm tắt public và nháp phản hồi, chưa gửi bình luận |
-| [13 — Trạng thái AI](13-ai-states.svg) | Mẫu bổ sung | Lỗi, thiếu nguồn, mất quyền và tách nội bộ/công khai |
-| [14 — Icon và component](14-icons-and-components.svg) | Board thiết kế | 44 icon, nhãn, focus, hover và loading |
-| [15 — Responsive và motion](15-responsive-motion.svg) | Storyboard tĩnh | Desktop/tablet/mobile và các khung mở panel; chưa chạy animation |
-| [16 — Dashboard Requester/trưởng phòng](16-dashboard-requester.svg) | Requester · SCR10 | Chỉ dữ liệu cá nhân; Pending/Resolved và yêu cầu nhân sự mới theo D-29 |
-| [17 — Dashboard Admin](17-dashboard-admin.svg) | Admin · biến thể SCR12 | Hàng đợi dịch vụ/Tài khoản; KPI tổ chức tách biệt; quản lý user chỉ Admin |
-| [18 — Ticket cấp tài khoản](18-ticket-account-provisioning.svg) | Admin · SCR22 → SCR60 | Xác minh đề nghị, mở form quản trị; không tự tạo user/giải quyết ticket |
+R=Requester, T=Technician, M=IT Manager, A=Admin. A view may illustrate multiple screen/interaction patterns without new IDs. SHARED boards are not business screens.
 
-[Use case tổng quan hiện hành — PNG](use-cases-overview.png) · [SVG nguồn](../../diagrams/use-cases-overview.svg). Đây là sơ đồ phụ lục, không tính vào 16 bản UI hoặc 2 board.
+| Artifact | Role | Screen / interaction | Content |
+| --- | --- | --- | --- |
+| [01-login.svg](01-login.svg) | R | SCR01 | Login |
+| [02-dashboard-manager.svg](02-dashboard-manager.svg) | M | SCR12 | IT Manager operations dashboard |
+| [03-tickets.svg](03-tickets.svg) | M | SCR20 | Ticket list |
+| [04-create-ticket.svg](04-create-ticket.svg) | R | SCR21 | Create support request |
+| [05-ticket-technician.svg](05-ticket-technician.svg) | T | SCR22 | Technician ticket details |
+| [06-ticket-requester.svg](06-ticket-requester.svg) | R | SCR22 | Requester result acceptance |
+| [07-asset.svg](07-asset.svg) | M | SCR32 / SCR33 | Asset record |
+| [08-admin-sla.svg](08-admin-sla.svg) | A | SCR64 | Default SLA policy |
+| [09-mobile.svg](09-mobile.svg) | R | SCR20 / SCR22 | Mobile ticket and Pending reply |
+| [10-ux-states.svg](10-ux-states.svg) | R | SCR90 / SCR91 | UX errors and recovery |
+| [11-ai-assistant.svg](11-ai-assistant.svg) | R | SCR-AI01 / SCR-AI02 | AI Workspace — Requester |
+| [12-ai-ticket-assistant.svg](12-ai-ticket-assistant.svg) | T | SCR-AI01 / SCR-AI02 / SCR22 | AI Workspace — Technician |
+| [13-ai-states.svg](13-ai-states.svg) | R | SCR-AI01 / SCR-AI02 | AI availability and error states |
+| [14-icons-and-components.svg](14-icons-and-components.svg) | M | SHARED | Icons and component board |
+| [15-responsive-motion.svg](15-responsive-motion.svg) | M | SHARED | Responsive and motion storyboard |
+| [16-dashboard-requester.svg](16-dashboard-requester.svg) | R | SCR10 | Requester dashboard |
+| [17-dashboard-admin.svg](17-dashboard-admin.svg) | A | SCR12 / SCR60 | Admin dashboard |
+| [18-ticket-account-provisioning.svg](18-ticket-account-provisioning.svg) | A | SCR22 / SCR60 | Account-provisioning ticket — Admin |
+| [19-dashboard-technician.svg](19-dashboard-technician.svg) | T | SCR11 | Technician dashboard |
+| [20-task-board.svg](20-task-board.svg) | M | SCR-OPS01 | IT task board |
+| [21-plan-detail.svg](21-plan-detail.svg) | M | SCR-OPS02 | Plan details and dependencies |
+| [22-workforce.svg](22-workforce.svg) | M | SCR-OPS03 | Workforce and availability |
+| [23-coordination.svg](23-coordination.svg) | M | SCR-AI01 / SCR-AI02 / SCR-OPS04 | AI Workspace — exception proposal |
+| [24-approval.svg](24-approval.svg) | M | SCR-AI01 / SCR-OPS05 | AI Workspace — approval details |
+| [25-policy-workflow.svg](25-policy-workflow.svg) | M | SCR-OPS06 | Policies and workflows |
+| [26-knowledge.svg](26-knowledge.svg) | R | SCR-OPS07 | Knowledge base |
+| [27-admin-user-create.svg](27-admin-user-create.svg) | A | SCR60 | Create user — Admin |
+| [28-account-profile.svg](28-account-profile.svg) | R | SCR02 / SCR03 | Profile and account security |
+| [29-assets-list-form.svg](29-assets-list-form.svg) | M | SCR30 / SCR31 | Asset list and form |
+| [30-reports.svg](30-reports.svg) | M | SCR40 | Operations reports |
+| [31-notifications.svg](31-notifications.svg) | R | SCR50 | Notifications |
+| [32-organization-admin.svg](32-organization-admin.svg) | A | SCR61 / SCR62 / SCR63 | Organization and category administration |
+| [33-audit.svg](33-audit.svg) | M | SCR65 | Audit trail |
+| [34-ai-settings.svg](34-ai-settings.svg) | A | SCR-AI03 | AI assistant availability settings |
+| [35-task-progress.svg](35-task-progress.svg) | T | SCR-OPS01 / SCR-OPS02 | Task progress and results |
+| [36-login-states.svg](36-login-states.svg) | R | SCR01 | Login interaction board |
+| [37-ai-workspace.svg](37-ai-workspace.svg) | M | SCR-AI01 / SCR-AI02 / SCR-OPS04 | AI Workspace — normal state |
 
-Các ảnh cũng được đính kèm trong [file UI/UX XMind](../../xmind/07-uiux.xmind); phần sơ đồ hành trình và cấu trúc dùng topic XMind chỉnh sửa được. Ảnh wireframe đính kèm không biến thành các control UI chỉnh sửa riêng trong XMind.
+## Crosswalk to 36 IA patterns
 
-Xem [định hướng thị giác v0.4](../visual-refresh.md), [44 icon nguồn](../icons/), [motion/responsive](../motion-and-responsive.md) và [bản lưu giao diện v0.3](../archive/ui-v0.3.zip). Hai board bổ trợ không tạo thêm screen hoặc chức năng nghiệp vụ.
+All 36 IDs have at least one illustration. Profile 02/03, assets 30/31, organization 61/62/63, errors 90/91 share views/boards; not separate hi-fi variants for all. Dialog 23/24/25/33 are contextual/spec-defined, not standalone pages.
 
-## Gallery
+| Screen | SVG reference | Coverage |
+| --- | --- | --- |
+| SCR-AI01 | [11-ai-assistant.svg](11-ai-assistant.svg), [12-ai-ticket-assistant.svg](12-ai-ticket-assistant.svg), [13-ai-states.svg](13-ai-states.svg), [23-coordination.svg](23-coordination.svg), [24-approval.svg](24-approval.svg), [37-ai-workspace.svg](37-ai-workspace.svg) | Static sample, not every state/breakpoint |
+| SCR-AI02 | [11-ai-assistant.svg](11-ai-assistant.svg), [12-ai-ticket-assistant.svg](12-ai-ticket-assistant.svg), [13-ai-states.svg](13-ai-states.svg), [23-coordination.svg](23-coordination.svg), [37-ai-workspace.svg](37-ai-workspace.svg) | Static sample, not every state/breakpoint |
+| SCR-AI03 | [34-ai-settings.svg](34-ai-settings.svg) | Static sample, not every state/breakpoint |
+| SCR-OPS01 | [20-task-board.svg](20-task-board.svg), [35-task-progress.svg](35-task-progress.svg) | Static sample, not every state/breakpoint |
+| SCR-OPS02 | [21-plan-detail.svg](21-plan-detail.svg), [35-task-progress.svg](35-task-progress.svg) | Static sample, not every state/breakpoint |
+| SCR-OPS03 | [22-workforce.svg](22-workforce.svg) | Static sample, not every state/breakpoint |
+| SCR-OPS04 | [23-coordination.svg](23-coordination.svg), [37-ai-workspace.svg](37-ai-workspace.svg) | Static sample, not every state/breakpoint |
+| SCR-OPS05 | [24-approval.svg](24-approval.svg) | Static sample, not every state/breakpoint |
+| SCR-OPS06 | [25-policy-workflow.svg](25-policy-workflow.svg) | Static sample, not every state/breakpoint |
+| SCR-OPS07 | [26-knowledge.svg](26-knowledge.svg) | Static sample, not every state/breakpoint |
+| SCR01 | [01-login.svg](01-login.svg), [36-login-states.svg](36-login-states.svg) | Static sample, not every state/breakpoint |
+| SCR02 | [28-account-profile.svg](28-account-profile.svg) | Static sample, not every state/breakpoint |
+| SCR03 | [28-account-profile.svg](28-account-profile.svg) | Static sample, not every state/breakpoint |
+| SCR10 | [16-dashboard-requester.svg](16-dashboard-requester.svg) | Static sample, not every state/breakpoint |
+| SCR11 | [19-dashboard-technician.svg](19-dashboard-technician.svg) | Static sample, not every state/breakpoint |
+| SCR12 | [02-dashboard-manager.svg](02-dashboard-manager.svg), [17-dashboard-admin.svg](17-dashboard-admin.svg) | Static sample, not every state/breakpoint |
+| SCR20 | [03-tickets.svg](03-tickets.svg), [09-mobile.svg](09-mobile.svg) | Static sample, not every state/breakpoint |
+| SCR21 | [04-create-ticket.svg](04-create-ticket.svg) | Static sample, not every state/breakpoint |
+| SCR22 | [05-ticket-technician.svg](05-ticket-technician.svg), [06-ticket-requester.svg](06-ticket-requester.svg), [09-mobile.svg](09-mobile.svg), [12-ai-ticket-assistant.svg](12-ai-ticket-assistant.svg), [18-ticket-account-provisioning.svg](18-ticket-account-provisioning.svg) | Static sample, not every state/breakpoint |
+| SCR23 | [03-tickets.svg](03-tickets.svg), [05-ticket-technician.svg](05-ticket-technician.svg) | Contextual; variants specified |
+| SCR24 | [05-ticket-technician.svg](05-ticket-technician.svg), [06-ticket-requester.svg](06-ticket-requester.svg), [09-mobile.svg](09-mobile.svg) | Contextual; variants specified |
+| SCR25 | [03-tickets.svg](03-tickets.svg) | Contextual; variants specified |
+| SCR30 | [29-assets-list-form.svg](29-assets-list-form.svg) | Static sample, not every state/breakpoint |
+| SCR31 | [29-assets-list-form.svg](29-assets-list-form.svg) | Static sample, not every state/breakpoint |
+| SCR32 | [07-asset.svg](07-asset.svg) | Static sample, not every state/breakpoint |
+| SCR33 | [07-asset.svg](07-asset.svg) | Contextual; variants specified |
+| SCR40 | [30-reports.svg](30-reports.svg) | Static sample, not every state/breakpoint |
+| SCR50 | [31-notifications.svg](31-notifications.svg) | Static sample, not every state/breakpoint |
+| SCR60 | [17-dashboard-admin.svg](17-dashboard-admin.svg), [18-ticket-account-provisioning.svg](18-ticket-account-provisioning.svg), [27-admin-user-create.svg](27-admin-user-create.svg) | Static sample, not every state/breakpoint |
+| SCR61 | [32-organization-admin.svg](32-organization-admin.svg) | Static sample, not every state/breakpoint |
+| SCR62 | [32-organization-admin.svg](32-organization-admin.svg) | Static sample, not every state/breakpoint |
+| SCR63 | [32-organization-admin.svg](32-organization-admin.svg) | Static sample, not every state/breakpoint |
+| SCR64 | [08-admin-sla.svg](08-admin-sla.svg) | Static sample, not every state/breakpoint |
+| SCR65 | [33-audit.svg](33-audit.svg) | Static sample, not every state/breakpoint |
+| SCR90 | [10-ux-states.svg](10-ux-states.svg) | Static sample, not every state/breakpoint |
+| SCR91 | [10-ux-states.svg](10-ux-states.svg) | Static sample, not every state/breakpoint |
 
-![Icon và component](14-icons-and-components.svg)
 
-![Đăng nhập](01-login.svg)
+## Gallery — work and coordination
 
-![Dashboard Manager](02-dashboard-manager.svg)
+![Manager supervision](02-dashboard-manager.svg)
 
-![Dashboard Requester/trưởng phòng](16-dashboard-requester.svg)
+![Task board](20-task-board.svg)
 
-![Dashboard Admin](17-dashboard-admin.svg)
+![Plan and dependencies](21-plan-detail.svg)
 
-![Ticket cấp tài khoản — Admin](18-ticket-account-provisioning.svg)
+![Workforce](22-workforce.svg)
 
-![Tạo yêu cầu](04-create-ticket.svg)
+![Normal AI Workspace, no exception](37-ai-workspace.svg)
 
-![Ticket Technician](05-ticket-technician.svg)
+![Exception proposal, not default state](23-coordination.svg)
 
-![Ticket Requester](06-ticket-requester.svg)
+![Approval](24-approval.svg)
 
-![Tài sản](07-asset.svg)
+![Policies and workflows](25-policy-workflow.svg)
 
-![SLA Admin](08-admin-sla.svg)
+![Knowledge](26-knowledge.svg)
+
+## Gallery — Requester, Technician, Admin
+
+![Requester](16-dashboard-requester.svg)
+
+![Technician](19-dashboard-technician.svg)
+
+![Create request](04-create-ticket.svg)
+
+![IT ticket](05-ticket-technician.svg)
+
+![Requester acceptance](06-ticket-requester.svg)
+
+![Confirmed assistant action](11-ai-assistant.svg)
+
+![Contextual IT assistant](12-ai-ticket-assistant.svg)
+
+![Admin creates user](27-admin-user-create.svg)
 
 ![Mobile](09-mobile.svg)
 
-![Trạng thái UX](10-ux-states.svg)
+## Gallery — foundation and states
 
-![Trợ lý AI](11-ai-assistant.svg)
+![Login](01-login.svg)
 
-![AI theo ngữ cảnh ticket](12-ai-ticket-assistant.svg)
+![Components](14-icons-and-components.svg)
 
-![Trạng thái AI](13-ai-states.svg)
+![Responsive and motion](15-responsive-motion.svg)
 
-![Responsive và motion — storyboard tĩnh](15-responsive-motion.svg)
+![Business errors](10-ux-states.svg)
 
-## Ranh giới độ phủ bản vẽ
+![AI unavailable or insufficient sources](13-ai-states.svg)
 
-Wireframe tập trung luồng ticket và các quyết định UX rủi ro. Dashboard cá nhân/trưởng phòng và biến thể Admin đã có bản vẽ 16/17; bản 18 minh họa xử lý yêu cầu cấp tài khoản. Dashboard Technician, báo cáo chi tiết, thông báo, hồ sơ, đổi password và các form quản trị khác **đã có đặc tả trong [UI/UX](../../07-uiux-specification.md), chưa có bản vẽ riêng**. Form tạo người dùng SCR60 đã có đặc tả nhưng chưa có bản vẽ riêng. Các dialog chưa được vẽ ở mọi biến thể; đây chưa phải prototype tương tác cho mọi screen.
+## Content, dataset, limits
 
-Hai bản chi tiết ticket minh họa các thời điểm khác nhau của cùng ticket: Technician ở In Progress và Requester ở Resolved. Dữ liệu trong dashboard/bảng là bố cục minh họa, không phải một seed dataset đã kiểm chứng liên kết chéo.
+[Screen spec](../../07-uiux-specification.md) is authoritative; controls do not grant rights. DEMO onboarding 20–25 has a locked task, distinct from unlocked diagram replanning. [Dataset](../visual-refresh.md) separates tickets/snapshots. Admin assets are not Requester permissions; KB reader not default publisher.
 
-Ba bản AI là mẫu trợ lý trong MVP, có thể bật/tắt khi vận hành; không phủ hết automation. Bộ 13 bản ban đầu được làm mới ở v0.4; ba bản 16–18 bổ sung góc nhìn D-29 trên các screen hiện có. Không tạo role trưởng phòng hoặc trạng thái ticket mới. Task/approval có trạng thái riêng theo thiết kế hiện hành. Menu AI minh họa cấu hình đang bật; ẩn các điểm truy cập AI khi tắt tính năng. [Thiết kế chatbot](../../10-ai-assistant.md) mô tả ranh giới hành động và nguồn; chưa có chatbot thực thi.
+XMind images come from current SVGs. Reuse [44 icons](../icons/)/[login illustration](../illustrations/login-it-support.png). [Use-case PNG](use-cases-overview.png) is a separate appendix, not UI; [source SVG](../../diagrams/use-cases-overview.svg) must follow English diagram labels.
 
-Các hình 16/17/18 thể hiện mốc thời gian khác nhau. Xem [dữ liệu và công thức đối chiếu](../../requirements/account-provisioning.md) trước khi so sánh trạng thái cùng ticket giữa các bản.
+No live keyboard/HTML/zoom/reflow/assistive-technology/HTTP/provider checks. Loading/error boards are specifications; implementation needs real data. [Skill review](../uiux-review.md) separates measured/planned, no HIG/WCAG conformance claim.
 
-## Nguồn và trạng thái thiết kế
+## Designed interactions
 
-36 mẫu screen/interaction mục tiêu gồm 26 lõi, 3 AI, 7 OPS. 16 UI SVG + 2 board hiện có chưa phải hi-fi cho mọi mẫu. Đặc tả task board/plan/nhân lực/điều phối/phê duyệt/policy/KB nằm trực tiếp trong [UI/UX](../../07-uiux-specification.md) và [IA](../../04-information-architecture.md); các panel/empty/error/forbidden/conflict đã được mô tả.
+Labeled icon cards/chips/disclosures reduce reading. 37 static SVGs execute no business actions. [Content/states](../content-and-states.md) defines destinations/effects; retain tables/six Task states/sources-ACL/decision≠execution. [References/tradeoffs](../visual-refresh.md).
 
-SVG trợ lý 11 được sửa nội dung xác nhận ticket và tái xuất vào ba bản ảnh nhúng XMind tương ứng. PNG use-case tổng quan được cập nhật từ SVG hiện hành. Các ảnh UI không đổi giữ phạm vi minh họa; đặc tả Markdown quản lý nghiệp vụ mới. Không dùng ảnh tĩnh hoặc nút minh họa làm bằng chứng automation đã chạy.
+## AI Workspace v0.8
+
+UI11 R:Pending reply/public progress. UI12 T:confirmed composer. UI37 M:normal/no exception. UI23 M:conditional pending exception, not default. UI24:decision details in the same context. One screen, different rights/data, 37 artifacts/36 patterns, no added pages/rights. [D-42/registry](../../10-ai-assistant.md).
+
+## Login and alignment v0.8
+
+[Main login](01-login.svg) · [Six interaction groups](36-login-states.svg). Action icon-label groups centered; menus/cards/disclosures left. Board 36 supports SCR01, no new route. Input/password/focus/validation/loading/network/allowed return behavior specified in SCR01.
+
+![Login interaction states](36-login-states.svg)
+
+## Assistant recognition
+
+UI11/12/23/37 have prominent assistant identity/4 authorized quick tasks/named composer/examples. Background region separately named/iconed. Suggestions start existing flows, never auto-send/elevate. [Behavior](../../07-uiux-specification.md)/[copy](../content-and-states.md).
+
+## Assistant frame placement
+
+Same column, capability header immediately above continuous chat, 12 px gap. Messages/forms/composer share the chat frame. UI23 full replacement proposal outside chat opens UI24; report conversation independently shows other assistant work.
+
+## UI23 sequential progress
+
+DEMO-004:record absence→propose→approve→recheck and reassign→notify and monitor. Five numbered steps/arrows, current 3/5, future dashed/not run. Locked-task branch only, no fake mandatory approval or changes to parallel DAGs.
+
+## Normal and exception states
+
+- **37-ai-workspace.svg:** normal default, no approval card, assistant first/new empty chat/one successful policy assignment run. Selected existing chats retain context/history.
+- **23-coordination.svg:** explicit exception, locked T03 waiting 3/5, not yet reassigned; full before/after/review.
+- **24-approval.svg:** decision diff/impact/reason/recheck before effect.
+
+All states share /assistant, not three apps/routes. NORMAL/EXCEPTION fixtures independent; UI37 is not post-approval UI23. No actual runs→empty activity, no production DEMO logs.

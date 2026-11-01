@@ -1,97 +1,103 @@
 ---
 id: itoh-docs-design-visual-refresh
-title: "Định hướng giao diện v0.4"
+title: "Visual direction v0.8"
 type: reference
 domain: design
 module: visual
 tags: [design, visual, reference]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Giải thích định hướng thị giác, bộ bàn giao và giới hạn độ phủ."
+purpose: "Explain visual direction, deliverables, and coverage limits."
 ---
 
-# Định hướng giao diện v0.4
+# Visual direction v0.8
 
-Thiết kế được làm mới theo yêu cầu giao diện đẹp, thân thiện, uyển chuyển và icon rõ ràng. Phạm vi là bản vẽ và đặc tả; chưa có frontend, animation chạy thật hoặc chatbot đang hoạt động.
+**Target design, no frontend/animation/AI implementation.** Apple Design Skill refresh on confirmed IT Operations Hub workflows, retaining Vietnamese UI/light MVP/stack/four roles.
 
-## Ngôn ngữ thị giác
+## Design intent
 
-Không gian làm việc dùng nền xanh xám rất nhạt, bề mặt trắng, màu xanh dương cho hành động chính. Card bo mềm và bóng nhẹ giúp phân vùng; bảng vẫn ưu tiên việc đọc nhiều dòng. Màu tím chỉ nhận diện trợ lý AI có thể bật/tắt khi vận hành. Giữ chữ tiếng Việt, lời dẫn ngắn và tên hành động cụ thể.
+Help people know **what needs their action, why, and where to continue**. Action-needed cards match responsibility: R replies/accepts, T executes/reports, IT Manager supervises/intervenes/approves, Admin verifies/provisions/configures. AI identity belongs to proposals/sources, not a chatbot covering every screen.
 
-| Thành phần | Thiết kế mới | Mục đích |
-|---|---|---|
-| Điều hướng | Sidebar 244 px, icon cùng hệ nét, mục đang chọn xanh đậm và chữ trắng | Dễ nhận biết vị trí và chức năng |
-| Header | Tiêu đề rõ, mô tả ngắn, một hành động chính theo nhiệm vụ | Định hướng ngay khi vào trang |
-| Dashboard | Tách hàng đợi hiện tại khỏi phân tích theo kỳ, KPI có mô tả | Đọc đúng ý nghĩa số liệu |
-| Ticket | Bộ lọc thành hàng riêng, dòng thoáng, mã và tiêu đề rõ cấp bậc | Quét danh sách nhanh |
-| Chi tiết | Hội thoại là vùng chính; thông tin người yêu cầu, SLA và thiết bị ở bên | Giữ tập trung khi xử lý |
-| Form | Nhãn trên input, chia nhóm nội dung, hướng dẫn cạnh trường | Giảm cảm giác quá tải |
-| Mobile | Card một cột, CTA có chữ, câu hỏi chờ phản hồi được đưa lên trước | Dễ thao tác bằng tay |
-| AI | Nhãn AI, nguồn, bản nháp chưa gửi và đường về form | Người dùng hiểu bước nào đã hoàn tất |
+Light blue canvas/floating rounded shell/opaque white cards/soft shadows; pale icon backgrounds/short labels/chevrons. Combine P-047 quick choices with IT business rules/existing 44 icons. No decorative gradients/large KPIs/glass beneath tables or sparkles implying execution. Remove decoration that does not help decisions; reuse 24 px labeled icons.
 
-## Minh họa trang đăng nhập
+## Specific changes
 
-Thay thẻ ticket minh họa bằng hình đội IT phối hợp quanh thiết bị và các kết nối hỗ trợ. Hình dùng tông xanh dương, điểm tím/mint nhẹ và nền trong suốt để hòa vào nền login. Đây là minh họa trang trí, không biểu diễn trạng thái ticket hoặc dữ liệu vận hành.
+| Area | v0.6 design | Business basis |
+| --- | --- | --- |
+| M dashboard | Exceptions first; current queues/policy outcomes/period analytics separate | Manager supervises rather than assigns every task |
+| R/T/A dashboards | Role-specific next steps | Different requester/assignee/Admin scope |
+| Tickets | Public conversation primary, named SLA clocks | AI chat not first response; Pending asks requester |
+| Tasks/plans | Six DEMO task cards/table/dependencies | Separate lifecycle, human results |
+| Workforce | Verified skills/windows/remaining, missing≠free | Feasibility/atomic assignment |
+| Coordination/approval | Event→source→proposal→decision→execution | Approved≠Succeeded; stale snapshots cannot execute |
+| Policies | Business scopes/actions/limits/exceptions | M/A grants differ from Admin provider availability |
+| KB | Published/version/ACL/citation, no default reader publish | Publisher D-40 |
+| User admin | Verify ticket→empty-password form→separate result | Admin-only D-29/no ticket secrets |
+| Errors/compact | Draft retention/reflow/44 px/focus return | No blind retry/merge/covered fields |
 
-Nguồn ảnh: [login-it-support.png](illustrations/login-it-support.png). Tạo bằng công cụ imagegen tích hợp; giữ nguyên ảnh và kênh alpha. Bản [SVG login](wireframes/01-login.svg) nhúng ảnh PNG để mở độc lập; [bản vẽ toàn màn hình](wireframes/01-login.svg) và ảnh trong XMind được đồng bộ. Các trường đăng nhập, nội dung và vị trí form giữ nguyên.
+## Deliverables
 
-<details>
-<summary>Prompt tạo minh họa</summary>
+**37 SVG=34 UI views+3 boards.** Existing designs were refreshed and supporting coverage added for Technician/7 OPS/Admin user/account/asset list-form/reports/notifications/organization-categories/audit/AI availability/task progress/login states/normal workspace. Four roles/36 screen-interaction IDs have samples or boards; some share views, not every state/breakpoint separate.
 
-```text
-Use case: stylized-concept. Asset type: decorative hero illustration inside the left column of the IT Operations Hub login design. Generate a brand-new illustration, NOT a login screen, NOT a screenshot, NOT a ticket card. Subject: a welcoming internal IT support team connecting people and workplace devices: two or three elegant editorial illustrated adult coworkers collaborating around a laptop and a large desktop monitor, with a compact secure cloud/network hub and small linked device motifs. Tasteful contemporary enterprise SaaS editorial illustration with refined vector-like silhouettes, subtle soft dimensional shading, beautifully composed large simple forms and restrained details. Wide horizontal compact composition, approximately 1.9:1 aspect ratio, all subjects grouped together with balanced negative space and safe margin around edges; should remain clear at 620 by 330 CSS pixels. View at a slight isometric angle. Palette: cobalt blue #1D4ED8, powder blue, pale periwinkle, white, dark navy for accents, small lavender and mint accents; harmonizes with a light blue #EAF2FF login page. Friendly human proportions and natural professional poses, no photorealism. Soft ambient studio light and a very subtle grounding shadow under the group. Background genuinely transparent, no colored rectangular background, no frame. No text, no lettering, no numbers, no logos, no watermark. Avoid busy diagrams, fake UI text, floating dashboard or ticket cards, robots, chat bubbles, neon, excessive tiny icons. Deliver only the isolated illustration, ready to place in an existing login page.
-```
+[Gallery](wireframes/README.md) · [Screens](../07-uiux-specification.md) · [Tokens](design-system.md) · [Content](content-and-states.md) · [Responsive/motion](motion-and-responsive.md) · [Skill review](uiux-review.md).
 
-</details>
+## Retained illustration and assets
 
-## Bộ icon
+Login reuses [login-it-support.png](illustrations/login-it-support.png), a decorative imagegen asset from earlier work. Image/alpha unchanged, no external sending/raster edits; embedded SVG opens standalone. Reuse 44 SVG icons, not Apple SF Symbols/fonts/macOS windows.
 
-Bộ [44 SVG độc lập](icons/) được vẽ riêng trên lưới 24×24, nét khoảng 1,85 px, đầu và góc tròn. Có thể sửa vector, đổi màu khi triển khai và dùng ở 20–24 px. Đây là tài sản thiết kế, chưa phải thư viện React.
+[XMind](../xmind/README.md) embeds current SVG renders, not competing old UI. v0.3 archive is historical; v0.4 lives in Git history, not another active spec.
 
-| Ý nghĩa | Tệp | Cách dùng |
-|---|---|---|
-| Tổng quan | [dashboard.svg](icons/dashboard.svg) | Menu kèm chữ “Tổng quan” |
-| Ticket cá nhân / hàng đợi | [ticket.svg](icons/ticket.svg), [inbox.svg](icons/inbox.svg) | Phân biệt yêu cầu của tôi với công việc IT |
-| Tài sản cá nhân / phục vụ xử lý | [laptop.svg](icons/laptop.svg), [toolbox.svg](icons/toolbox.svg) | Menu theo quyền |
-| Thông báo / SLA | [bell.svg](icons/bell.svg), [clock.svg](icons/clock.svg) | Thông báo mới khác với thời hạn |
-| AI / ghi chú nội bộ | [ai.svg](icons/ai.svg), [lock.svg](icons/lock.svg) | Nhận diện tính năng và phạm vi nội dung |
-| Đính kèm / gửi | [paperclip.svg](icons/paperclip.svg), [send.svg](icons/send.svg) | Luôn có chữ ở thao tác quan trọng |
-| Bộ lọc / sắp xếp | [filter.svg](icons/filter.svg), [sort.svg](icons/sort.svg) | Hai tác vụ có nhãn riêng |
-| Đã giải quyết / cảnh báo | [check-circle.svg](icons/check-circle.svg), [alert.svg](icons/alert.svg) | Đi cùng nhãn trạng thái, không chỉ dựa màu |
+## Dataset and conclusion limits
 
-Không dùng cùng một icon cho nhiều hành động khác nghĩa trong cùng ngữ cảnh. Icon cạnh chữ là trang trí, tránh đọc lặp khi triển khai. Nút chỉ có icon phải có tên truy cập cụ thể, ví dụ “Mở thông báo”, “Đóng trợ lý AI”; tooltip là hỗ trợ thêm. Nút cần thao tác bằng Enter/Space và giữ hoặc trả focus phù hợp theo [hướng dẫn Button của WAI-ARIA APG](https://www.w3.org/WAI/ARIA/apg/patterns/button/).
+All names/numbers synthetic DEMO. Snapshot 31 October 2026, 10:00–10:01 GMT+7. TKT-000124 onboarding:10 devices/10 fictitious employees, T03 remaining 180/deadline 14:00; Minh absent 10–14; Bình11–14=180; Chi 12–14=120. UI adds manual lock→approval; unlocked diagram example is another valid branch. Handover 16:00 differs from task 14:00 and ticket SLA.
 
-Xem [board icon và component](wireframes/14-icons-and-components.svg) hoặc [nguồn vector](wireframes/14-icons-and-components.svg). Mỗi icon có title/description trong SVG nguồn; tên truy cập của control vẫn cần thiết lập theo ngữ cảnh sử dụng.
+TKT-000121 printer Resolved, 122 Wi-Fi In Progress, 123 user request, 125 Pending are separate fixtures, not one timeline. Dashboard/report counts are illustrations, not seed-query/runtime/model evidence.
 
-## Uyển chuyển trong trải nghiệm
+No interactive prototype/actual keyboard/screen-reader/usability results. Dark tokens reference only. No added roles/ticket states/AI privileges/integrations/native libraries/application code.
 
-Giữ vị trí bảng, nội dung đang nhập, bộ lọc và vị trí đọc khi mở panel hoặc cập nhật dữ liệu. Trạng thái loading nằm ở vùng đang tải. Chuyển động ngắn hỗ trợ nhận biết mở/đóng và phản hồi thao tác; không trì hoãn thông báo lỗi hoặc kết quả nghiệp vụ. [Motion và responsive](motion-and-responsive.md) quy định thời lượng, focus, reduced motion và cách bố trí theo kích thước màn hình.
+## Combining P-047 with existing IT UI
 
-## Bộ bàn giao và ranh giới
+Read `D:\BuildPhase-T047\P-047\web`: index.html/theme.css/portal.css/liquid-glass.css/background styles. Two references rendered from temporary inert HTML, scripts removed/HTTP-HTTPS-WebSocket blocked; no login/app execution/reference repository changes. Layout source, not IT rules.
 
-### Dashboard và xử lý cấp tài khoản — D-29
+| Source | Retained pattern | IT adaptation |
+| --- | --- | --- |
+| Prior UI | Scoped sidebar/public-internal/tasks-plans/approval diff/AI sources | Shorter screen explanations; details in disclosures/spec |
+| P-047 quick choices | Icon/label/subline/open direction | Device/network/account opens ticket forms, not automatic creation/provisioning |
+| P-047 layout | Light canvas/rounded shell/task grouping | Desktop sidebar for larger IT scope, no resident tabs copied |
+| Apple Design Skill | Hierarchy/meaningful icons/comfortable controls/agency | Semantic web/light MVP, no native Apple imitation |
 
-[Dashboard cá nhân/trưởng phòng](wireframes/16-dashboard-requester.svg) dùng phạm vi Requester; [biến thể Admin](wireframes/17-dashboard-admin.svg) có hàng đợi dịch vụ/Tài khoản và lối quản trị; [ticket cấp tài khoản](wireframes/18-ticket-account-provisioning.svg) chỉ hiện thao tác tạo user cho Admin. Bộ phận/chức danh trưởng phòng không cấp thêm quyền dữ liệu. Các hình chỉ dùng SCR10, SCR12, SCR22 và liên kết SCR60 hiện có.
+18 main views rearranged; all 37 assets use v0.6 visual language. R assistant+6 shortcuts+2 action requests; M exception/diff/shortcuts; T execution/start guards; A account requests/settings. SLA/audit/ticket tables/DAG retain suitable notation rather than universal cards.
 
-Hàng đợi Tài khoản gồm cả yêu cầu cấp mới và hỗ trợ khác, không dùng số này làm KPI cấp tài khoản. Tạo user và giải quyết ticket là hai thao tác riêng; không có trạng thái ticket “Chờ duyệt”; approval automation có vòng đời riêng. Các mốc 11:00/12:00 là hai thời điểm minh họa của cùng ví dụ TKT-000128. Xem [dữ liệu đối chiếu và hành vi](../requirements/account-provisioning.md).
+Approval retains lock/current-proposed users/skills/180 minute window/14:00 task-16:00 handover/SLA unchanged/10:01 snapshot/rechecks. Excluded candidates/history/policy expand. Fewer words never justify removing essential data or icon/color-only decisions.
 
-### Thành phần hiện tại
+A generic KPI-only dashboard could fit any product. Deadlines/dependencies/public audience/decision≠execution make this IT-specific. Remove repetitive copy when states/CTAs explain it; retain invariants in specs.
 
-- 16 bản UI: 13 bản lõi và 3 bản AI. Ba bản 16–18 bổ sung dashboard Requester/trưởng phòng, biến thể Admin và ticket cấp tài khoản trên các screen hiện có.
-- 2 board bổ trợ: icon/component và storyboard responsive/motion; không tính là 2 màn hình sản phẩm mới.
-- 44 icon SVG riêng; 18 ảnh UI/board được giữ bên trong bộ XMind tổng và UI/UX. Các bản PNG giao diện riêng đã được bỏ, tài liệu tham chiếu trực tiếp SVG.
-- [Bản lưu v0.3](archive/ui-v0.3.zip) để đối chiếu với giao diện trước khi làm mới.
+Coverage remains 36 IA patterns. v0.6 did not change architecture/API/data/Product-IA for aesthetics; D-42 v0.8 updates labels/contracts for new requirements while preserving mind-map format. No frontend-completion claim.
 
-Giữ mã 33 UC/47 stories lõi, trạng thái ticket, SLA và lịch sử tài sản; thiết kế hiện hành thêm UC/US/AC-OPS, quyền theo policy và MET16–22. Đợt thị giác v0.4 trước đây không tạo nghiệp vụ mới; thiết kế hiện hành hiện bổ sung OPS theo tài liệu gốc. Menu AI trong bản vẽ minh họa cấu hình đang bật; khi AI bị tắt, ẩn mục AI và các điểm mở panel, các tác vụ thường vẫn dùng bình thường.
+## Shared AI Workspace — v0.8
 
-Hình có dữ liệu hư cấu và trạng thái minh họa. Chưa xác nhận usability với người dùng thực, chưa chứng minh khả năng truy cập hoặc responsive bằng một ứng dụng chạy thật. Xem [biên bản rà soát](../review-report.md) và [gallery](wireframes/README.md) để biết độ phủ.
+D-42 replaces two AI entries with one workspace: chat/forms left/scoped automatic activity right. P-047 inspires task→form→review→confirmation, beyond links/recommendations. Reuse v0.6 cards/icons, no model call to draw stored feeds.
 
-## Giao diện công việc, điều phối và kiến thức
+UI11 R Pending draft/public progress; UI12 T contextual composer; UI23 M exception/chat/run/review; UI24 same-context decision. UI37 normal state below. Shared shell; 37 SVG/36 patterns, designs only.
 
-Bổ sung task/plan/workforce/coordination/approval/policy/KB theo SCR-OPS01–07, giữ nền sáng/xanh và hệ nét hiện có. Hình trợ lý 11–13 chỉ minh họa luồng trợ lý, không đại diện toàn bộ AI MVP. Nội dung xác nhận ticket/ranking/action/approval bám [UI/UX gốc](../07-uiux-specification.md); chưa có hi-fi riêng cho mọi màn OPS.
+## Login and buttons — v0.8
 
-Ảnh trợ lý 11 nhúng XMind và PNG use-case tổng quan đã được tái xuất từ SVG hiện hành; các ảnh UI không đổi và archive v0.3 giữ phạm vi minh họa/lịch sử. Text specification/SVG quyết định nghiệp vụ, không dùng hình tĩnh làm nghiệm thu tính năng.
+Keep palette/existing IT illustration, no new image. Clear introduction/form, 52 px fields and a 52 px primary button with 16 px text/separate help. Board 36 focus/validation/visibility/Caps Lock/loading/auth/network; main login does not show all states at once.
+
+Center full icon-label action groups across designs, retain content/card/menu/disclosure left alignment. 37 SVG=34 UI+3 boards; 36 IA unchanged. No additional auth features.
+
+## Recognizing assistant capabilities
+
+Prominent avatar/name/action tagline/4 role suggestions within AI Workspace. UI11/12/23/37 capability header above chat/preview with explicit composer examples; activity right. No new features/screens; retain login/alignment.
+
+## Immediately above chat
+
+Identity/four suggestions directly above one continuous chat. UI23 full proposal restored outside chat; October report conversation independent of T03 run. UI11/12 other work retained. No-proposal region takes no space; assistant does not wait for automation/approval.
+
+## Normal-screen representative
+
+UI37 represents normal workspace with assistant/chat first. UI23 explicitly conditional exception, not permanent replacement fixture. Proposal/approval content remains confirmed design. Independent snapshots; normal is not post-approvalT03.

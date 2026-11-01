@@ -1,76 +1,92 @@
 ---
 id: itoh-docs-design-motion-and-responsive
-title: "Chuyển động và responsive v0.4"
+title: "Motion and responsive design v0.8"
 type: reference
 domain: design
 module: responsive
 tags: [design, responsive, reference]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Định nghĩa responsive, motion, focus và phương án thay thế dễ tiếp cận."
+purpose: "Define responsive layouts, motion, focus, and accessible alternatives."
 ---
 
-# Chuyển động và responsive v0.4
+# Motion and responsive design v0.8
 
-Đặc tả này hướng dẫn bước triển khai UI sau này. [Storyboard](wireframes/15-responsive-motion.svg) và [SVG nguồn](wireframes/15-responsive-motion.svg) là các khung hình tĩnh, chưa phải prototype tương tác hoặc animation thực thi. Các mốc thời gian dưới đây là lựa chọn thiết kế, không phải yêu cầu thời lượng của WCAG.
+Guidance for future implementation. [Storyboard/source SVG](wireframes/15-responsive-motion.svg) contains static frames, not interactive animation. Timings are design choices, not WCAG duration requirements.
 
-## Chuyển động có mục đích
+## Purposeful motion
 
-| Tình huống | Đề xuất | Điều kiện |
-|---|---|---|
-| Hover / pressed | Đổi màu hoặc viền 120–160 ms | Không đổi kích thước, không đẩy chữ |
-| Mở / đóng panel AI | 180–240 ms, trượt tối đa 16 px và fade nhẹ | Không tự mở; không che nút gửi hoặc đổi trạng thái |
-| Dialog xác nhận | Fade 120–180 ms | Chỉ xuất hiện từ thao tác của người dùng; xử lý focus riêng |
-| Filter / chuyển tab | Cập nhật vùng dữ liệu, fade tối đa 120 ms nếu cần | Giữ chiều cao shell, thể hiện selected ngay |
-| Tải dữ liệu | Placeholder ổn định, chữ “Đang tải…” | Không biểu diễn tiến độ giả; không shimmer kéo dài |
-| Thành công / lỗi | Phản hồi bằng chữ ngay sau kết quả | Không chờ animation; lỗi giữ lại gần trường/vùng liên quan |
+| Situation | Proposal | Conditions |
+| --- | --- | --- |
+| Hover/pressed | Color/border 120–160 ms | No resizing/text movement |
+| AI panel open/close | 180 ms, ≤8 px slide/light fade | User-opened; no covered send/state controls |
+| Confirmation dialog | Fade 120–180 ms | User-triggered, separate focus handling |
+| Filter/tab | Regional update, optional≤120 ms fade | Stable shell height/immediate selection |
+| Loading | Stable placeholder/text | No fake progress/prolonged shimmer |
+| Success/error | Text immediately after result | No animation delay; errors persist nearby |
 
-Không parallax, bounce, tự cuộn hội thoại khi người dùng đang đọc, hoặc animation ăn mừng trong tác vụ vận hành. Thay đổi trạng thái luôn dựa trên kết quả nghiệp vụ; việc hiệu ứng kết thúc không xác nhận ticket đã được lưu.
+No parallax/bounce/celebration or forced chat scrolling while reading. State follows business outcomes, not animation completion.
 
-Với `prefers-reduced-motion: reduce`, bỏ dịch chuyển, zoom và shimmer; dùng trạng thái tĩnh và cập nhật trực tiếp. Đây là cam kết thiết kế bổ sung, phù hợp định hướng cho phép tắt chuyển động không thiết yếu của [SC 2.3.3 — Animation from Interactions (AAA)](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html). Mục tiêu accessibility chung của sản phẩm vẫn là WCAG 2.2 AA; chưa kiểm chứng trên ứng dụng.
+`prefers-reduced-motion: reduce` removes translation/zoom/shimmer, uses static direct updates. Additional design commitment aligned with [SC2.3.3 Animation from Interactions (AAA)](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html); overall target remains WCAG2.2 AA, unverified.
 
-## Panel AI, focus và bàn phím
+## AI panels, focus, keyboard
 
-Desktop dùng panel cạnh nội dung, không phải modal: giữ focus ở nút mở, thông báo ngắn panel đã mở; Tab tới nội dung panel theo thứ tự có thể dự đoán. Có nút đóng có tên truy cập; nếu đóng khi focus đang trong panel, trả focus về nút mở. Không khóa Tab trong panel cạnh trang. Nếu nút mở không còn tồn tại sau điều hướng, đưa focus về heading thích hợp.
+Desktop side panels are modeless: opening keeps focus on trigger/announces availability; predictable Tab order. Named close returns focus if it was inside; no focus trap. Missing trigger after navigation→appropriate heading.
 
-Ở chiều rộng hẹp, chuyển AI sang trang/khung riêng có nút quay lại. Không thu nhỏ trang ticket đến mức mất nút gửi. Khi quay lại, giữ bản nhập trong phạm vi phiên và quyền hiện tại; kiểm tra dữ liệu mới trước khi gửi. Không đưa bản nháp nhạy cảm vào URL hoặc lưu trình duyệt lâu dài khi chưa có chính sách dữ liệu.
+Narrow layouts use dedicated AI page/region with back; never shrink tickets until send disappears. Returning retains current-session/authorized drafts, rechecks data before send. No sensitive drafts in URLs/durable browser storage without policy.
 
-Dialog nghiệp vụ vẫn có modal semantics, focus ban đầu hợp lý, giới hạn focus bên trong và trả focus về trigger khi đóng; không dùng quy tắc modeless của panel AI cho dialog. Nút chỉ icon cần tên truy cập và hỗ trợ bàn phím theo [WAI-ARIA APG — Button](https://www.w3.org/WAI/ARIA/apg/patterns/button/).
+Business dialogs retain modal semantics/initial focus/trap/return; modeless rules do not apply. Icon-only controls named/keyboard accessible: [APG button](https://www.w3.org/WAI/ARIA/apg/patterns/button/).
 
-## Các mức bố cục
+## Layout ranges
 
-Các breakpoint là đề xuất, cần kiểm tra lại bằng nội dung tiếng Việt dài và trình duyệt thực tế.
+Proposed breakpoints need long Vietnamese/browser checks.
 
-| Chiều rộng viewport | Bố cục | Dữ liệu và thao tác |
-|---|---|---|
-| ≥1280 px | Sidebar 244 px, topbar 76 px; nội dung 2 cột khi phù hợp | Bảng đầy đủ; chi tiết khoảng 2/3 nội dung và 1/3 ngữ cảnh |
-| 768–1279 px | Sidebar chuyển drawer có nhãn; nội dung nới theo chiều rộng | Form/chi tiết một cột khi cần; bộ lọc mở vùng riêng; bảng cho cuộn cục bộ nếu cần |
-| 320–767 px | Một cột; header ngắn; điều hướng drawer, CTA dễ bấm | Ticket thành card; form và ngữ cảnh xếp dọc; AI ở khung riêng |
+| Viewport | Layout | Data/actions |
+| --- | --- | --- |
+| ≥1280 px | 244 rail/80 header, two columns where useful | Full tables, details 2/3 content+1/3 context |
+| 768–1279 px | Labeled nav drawer, flexible content | Single-column forms/details as needed; filters region; local table scrolling |
+| 320–767 px | Single column/short header/drawer/easy CTA | Ticket cards/vertical forms-context/dedicated AI region |
 
-Không ẩn SLA, trạng thái, người phụ trách hoặc nội dung câu hỏi chờ phản hồi chỉ để làm giao diện gọn. Card có link mã/tiêu đề; không bắt người dùng bấm một vùng không có nhãn. Bộ lọc đang áp dụng và tổng kết quả được giữ khi đổi kích thước. Quay về danh sách giữ filter, trang và vị trí đọc khi khả thi.
+Never hide SLA/state/assignee/Pending question to save space. Cards have named code/title links. Applied filters/scoped totals persist through resize; back preserves filter/page/reading position where feasible.
 
-Nội dung dài xuống dòng; mã thiết bị dài cho phép ngắt an toàn. Thanh hành động chỉ sticky khi không che trường lỗi, focus hoặc bàn phím ảo; có safe-area và khoảng trống cuối nội dung. Ở 320 px hoặc zoom lớn, tránh cuộn ngang toàn trang; bảng dữ liệu thật sự hai chiều có vùng cuộn được đặt tên, thao tác cốt lõi vẫn có lối truy cập.
+Wrap long text/device codes safely. Sticky actions only with error/focus/virtual-keyboard clearance, safe areas/end padding. 320 px/zoom avoid page-wide scrolling; genuinely two-dimensional tables may have named local scroll regions with accessible main actions.
 
-## Icon, vùng bấm và kiểm chứng
+## Icons, targets, validation
 
-Icon nhìn thấy 20–24 px; chọn vùng bấm **44×44 px cho thao tác chính/mobile**. Đây là mục tiêu riêng để dễ sử dụng. [SC 2.5.8 — Target Size Minimum (AA)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html) quy định 24×24 CSS px cùng các ngoại lệ; không diễn giải 44 px là bắt buộc của tiêu chí này. Các control nhỏ trong bản vẽ vẫn phải được kiểm tra vùng tương tác thực lúc triển khai.
+Visible 20–24 px icons; **44×44 px primary/mobile targets** are project usability choices. [SC2.5.8(AA)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html) specifies 24×24 CSS px with exceptions, not mandatory 44. Actual small-control hit areas need implementation checks.
 
-Các bước review chưa thực hiện trên UI chạy thật:
+Unrun live-UI reviews:
 
-- Kiểm tra 320/390/768/1024/1440 px, zoom, tiếng Việt dài và bàn phím ảo.
-- Tab/Shift+Tab/Enter/Space/Escape, focus sau mở/đóng panel và dialog.
-- Bật reduced motion; không mất trạng thái hoặc kết quả khi tắt hiệu ứng.
-- Mở panel khi đang nhập, lỗi mạng, đổi quyền và xung đột dữ liệu; không mất bản nhập hoặc lộ dữ liệu.
-- Đối chiếu label, thông báo cho screen reader, tương phản và kích thước vùng bấm.
+-320/390/768/1024/1440 px, zoom, long Vietnamese, virtual keyboards.
+-Tab/Shift+Tab/Enter/Space/Escape; panel/dialog focus.
+-Reduced motion preserves states/results.
+-Panel during typing/network errors/access changes/conflicts preserves drafts/privacy.
+-Labels/screen-reader messages/contrast/hit targets.
 
-Các bước này kiểm chứng trải nghiệm; không thay thế test phân quyền backend, máy trạng thái hoặc SLA.
+Experience checks do not replace backend authorization/state/SLA tests.
 
-## Task board, DAG và phê duyệt
+## Task boards, DAGs, approval
 
-Board phải có list/table và action bàn phím thay kéo thả; không animate chuyển task trước server xác nhận trạng thái. DAG có dependency list, không yêu cầu pan/zoom bằng chuột để đọc nội dung thiết yếu. Mobile hiển thị task/card và approval diff tuần tự “Hiện tại → Dự kiến → Tác động”.
+Provide keyboard list/table/actions instead of drag-only. No preconfirmation state animation. DAG dependency list avoids mandatory mouse pan/zoom. Mobile tasks/cards/approval diff order current→proposed→impact.
 
-Polling 30 giây chỉ tab hoạt động giữ vị trí/focus/form; run/action mới có thông báo ngắn, không tự nhảy tới cuối timeline. Không animation “AI đã giao” hoặc thanh tiến độ phần trăm khi chưa có dữ liệu thực. Reduced motion áp cho cả OPS; keyboard/focus/reading order vẫn phải kiểm khi có UI.
+30 s active-tab polling preserves position/focus/forms; concise updates do not jump timelines. No fabricated AI-assigned animation/percentage progress. Reduced motion includes OPS; live keyboard/focus/reading-order checks remain pending.
+
+## Card grids and disclosure v0.6
+
+Regular 3 task/admin/KB columns, Requester assistant+2 shortcut columns; medium 2/compact 1. No screenshot scaling/essential-label ellipsis. Desktop 220 sidebar/244 rail, 60 topbar/80 header; compact scoped drawer.
+
+Hover lightly adjusts borders/shadows without lifting/reflow. Disclosure expands in place; reduced motion updates directly. No reference-project aurora/refraction/loops; opaque data surfaces. 44 targets/2 focus+2 offset. Keyboard card/table toggle preserves position. Targets, not app test results.
+
+## Shared workspace — v0.8
+
+Regular chat/forms+activity; compact Conversation/Activity tabs with scoped counts, no horizontal drag. Tabs retain drafts/context/focus, create no runs/cancel no workers. Contextual action/approval details have back/close/focus return; compact full-width without nested modals. Run updates never steal focus/move active input.
+
+## Login — v0.8
+
+Compact 320 px+ single-column, ≥16 px margins/auto-height; remove illustration before shrinking type/inputs. 16 px input text/52 CTA; keyboard does not cover focus/send. No mobile autofocus opening keyboard. Clear focus/Tab/Shift+Tab/Enter/separate show-password behavior.
+
+Loading stable button dimensions; reduced-motion static icon/text retains aria-busy/status. No animation-delayed errors; long errors wrap/reflow. Application reflow/keyboard/zoom not tested.

@@ -1,362 +1,121 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1300" viewBox="0 0 1440 1300" role="img" aria-labelledby="title desc" data-figure-id="FIG-UI14" data-design-status="design-draft"><title id="title">Bộ icon và component · UI v0.4</title><desc id="desc">Thiết kế UI v0.4 của IT Operations Hub, dữ liệu minh họa hư cấu. Bản vẽ tĩnh, chưa có ứng dụng hoặc chatbot vận hành.</desc><metadata id="documentation-contract">{"figure_id": "FIG-UI14", "notation": "design-board", "status": "design-draft", "authority": "derived", "sources": ["docs/04-information-architecture.md", "docs/07-uiux-specification.md", "docs/design/design-system.md"], "documentation_standard": "docs/documentation-standard.md", "implementation": "not-started"}</metadata><style>text{font-family:Inter,Segoe UI,Arial,sans-serif}</style>
-<rect x="0" y="0" width="1440" height="1300" rx="0" fill="#F4F7FC" />
-<text x="40" y="53" font-size="12" fill="#1D4ED8" font-weight="600" text-anchor="start">IT OPERATIONS HUB · DESIGN SYSTEM</text>
-<text x="40" y="102" font-size="30" fill="#15263D" font-weight="700" text-anchor="start">Rõ biểu tượng, dễ nhận thao tác</text>
-<text x="40" y="136" font-size="14" fill="#52637A" font-weight="400" text-anchor="start">44 icon vector riêng · Nét viền thống nhất · Đi cùng nhãn và tên truy cập khi triển khai</text>
-<rect x="40" y="174" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="40" y="171" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="94" y="183" width="42" height="42" rx="12" fill="#EFF4FF" />
-<rect x="106.0" y="195.0" width="7.0" height="7.0" rx="1.5" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<rect x="117.0" y="195.0" width="7.0" height="5.0" rx="1.5" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<rect x="106.0" y="206.0" width="7.0" height="7.0" rx="1.5" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<rect x="117.0" y="204.0" width="7.0" height="9.0" rx="1.5" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<text x="115" y="249" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Tổng quan</text>
-<rect x="210" y="174" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="210" y="171" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="264" y="183" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 277.0 196.0 L 293.0 196.0 L 295.0 206.0 L 295.0 212.0 L 275.0 212.0 L 275.0 206.0 Z" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<path d="M 275.0 206.0 L 281.0 206.0 L 283.0 209.0 L 287.0 209.0 L 289.0 206.0 L 295.0 206.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<text x="285" y="249" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Hàng đợi</text>
-<rect x="380" y="174" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="380" y="171" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="434" y="183" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 446.0 197.0 L 464.0 197.0 L 464.0 201.0 C 460.0 201.0 460.0 207.0 464.0 207.0 L 464.0 211.0 L 446.0 211.0 L 446.0 207.0 C 450.0 207.0 450.0 201.0 446.0 201.0 Z" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<line x1="457.0" y1="200.0" x2="457.0" y2="202.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="457.0" y1="205.0" x2="457.0" y2="208.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="455" y="249" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Ticket</text>
-<rect x="550" y="174" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="550" y="171" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="604" y="183" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 625.0 194.0 L 628.0 201.0 L 635.0 204.0 L 628.0 207.0 L 625.0 214.0 L 622.0 207.0 L 615.0 204.0 L 622.0 201.0 Z" fill="none" stroke="#6D28D9" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<line x1="633.0" y1="194.0" x2="633.0" y2="198.0" stroke="#6D28D9" stroke-width="1.85" stroke-linecap="round" />
-<line x1="631.0" y1="196.0" x2="635.0" y2="196.0" stroke="#6D28D9" stroke-width="1.85" stroke-linecap="round" />
-<text x="625" y="249" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Trợ lý AI</text>
-<rect x="720" y="174" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="720" y="171" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="774" y="183" width="42" height="42" rx="12" fill="#EFF4FF" />
-<rect x="787.0" y="195.0" width="16.0" height="13.0" rx="1.5" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<path d="M 785.0 211.0 L 805.0 211.0 L 803.0 213.0 L 787.0 213.0 Z" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<line x1="793.0" y1="211.0" x2="797.0" y2="211.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="795" y="249" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Laptop</text>
-<rect x="890" y="174" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="890" y="171" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="944" y="183" width="42" height="42" rx="12" fill="#EFF4FF" />
-<rect x="956.0" y="201.0" width="18.0" height="12.0" rx="2.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<path d="M 961.0 201.0 L 961.0 197.0 L 969.0 197.0 L 969.0 201.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<line x1="956.0" y1="206.0" x2="974.0" y2="206.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="963.0" y1="205.0" x2="963.0" y2="208.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="967.0" y1="205.0" x2="967.0" y2="208.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="965" y="249" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Tài sản xử lý</text>
-<rect x="1060" y="174" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="1060" y="171" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="1114" y="183" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 1128.0 209.0 L 1142.0 209.0 L 1140.0 206.0 L 1140.0 201.0 C 1140.0 194.0 1130.0 194.0 1130.0 201.0 L 1130.0 206.0 Z" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<path d="M 1133.0 213.0 C 1134.0 214.0 1136.0 214.0 1137.0 213.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<line x1="1135.0" y1="194.0" x2="1135.0" y2="196.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="1135" y="249" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Thông báo</text>
-<rect x="1230" y="174" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="1230" y="171" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="1284" y="183" width="42" height="42" rx="12" fill="#EFF4FF" />
-<line x1="1296.0" y1="195.0" x2="1296.0" y2="213.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="1296.0" y1="213.0" x2="1315.0" y2="213.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<rect x="1300.0" y="204.0" width="3.0" height="6.0" rx="1.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<rect x="1306.0" y="200.0" width="3.0" height="10.0" rx="1.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<rect x="1312.0" y="196.0" width="3.0" height="14.0" rx="1.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<text x="1305" y="249" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Báo cáo</text>
-<rect x="40" y="281" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="40" y="278" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="94" y="290" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 106.0 306.0 C 108.0 301.0 115.0 299.0 121.0 304.0 C 127.0 309.0 124.0 319.0 117.0 321.0 C 111.0 323.0 105.0 318.0 105.0 313.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<path d="M 106.0 301.0 L 106.0 306.0 L 111.0 306.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<line x1="115.0" y1="306.0" x2="115.0" y2="311.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="115.0" y1="311.0" x2="119.0" y2="313.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="115" y="356" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Timeline</text>
-<rect x="210" y="281" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="210" y="278" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="264" y="290" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 295.0 311.0 L 292.73 313.07 L 293.66 316.0 L 292.07 318.07 L 289.0 317.93 L 287.59 320.66 L 285.0 321.0 L 282.93 318.73 L 280.0 319.66 L 277.93 318.07 L 278.07 315.0 L 275.34 313.59 L 275.0 311.0 L 277.27 308.93 L 276.34 306.0 L 277.93 303.93 L 281.0 304.07 L 282.41 301.34 L 285.0 301.0 L 287.07 303.27 L 290.0 302.34 L 292.07 303.93 L 291.93 307.0 L 294.66 308.41 Z" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<circle cx="285.0" cy="311.0" r="3.5" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<text x="285" y="356" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Cấu hình</text>
-<rect x="380" y="281" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="380" y="278" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="434" y="290" width="42" height="42" rx="12" fill="#EFF4FF" />
-<circle cx="453.5" cy="309.5" r="6.5" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<line x1="458.5" y1="314.5" x2="464.0" y2="320.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="455" y="356" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Tìm kiếm</text>
-<rect x="550" y="281" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="550" y="278" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="604" y="290" width="42" height="42" rx="12" fill="#EFF4FF" />
-<circle cx="625.0" cy="306.0" r="4.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<path d="M 617.0 320.0 C 617.0 310.0 633.0 310.0 633.0 320.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<text x="625" y="356" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Hồ sơ</text>
-<rect x="720" y="281" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="720" y="278" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="774" y="290" width="42" height="42" rx="12" fill="#EFF4FF" />
-<circle cx="792.0" cy="306.0" r="3.4" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<path d="M 785.0 320.0 C 785.0 311.0 799.0 311.0 799.0 320.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<path d="M 800.0 303.0 C 806.0 303.0 806.0 310.0 801.0 310.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<path d="M 802.0 314.0 C 805.0 315.0 806.0 317.0 806.0 320.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<text x="795" y="356" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Nhóm</text>
-<rect x="890" y="281" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="890" y="278" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="944" y="290" width="42" height="42" rx="12" fill="#EFF4FF" />
-<rect x="957.0" y="301.0" width="16.0" height="20.0" rx="1.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<line x1="955.0" y1="321.0" x2="975.0" y2="321.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<rect x="963.0" y="316.0" width="4.0" height="5.0" rx="0.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<line x1="961.0" y1="305.0" x2="961.0" y2="307.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="969.0" y1="305.0" x2="969.0" y2="307.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="961.0" y1="310.0" x2="961.0" y2="312.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="969.0" y1="310.0" x2="969.0" y2="312.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="965" y="356" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Phòng ban</text>
-<rect x="1060" y="281" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="1060" y="278" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="1114" y="290" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 1125.0 305.0 L 1132.0 305.0 L 1134.0 308.0 L 1145.0 308.0 L 1145.0 320.0 L 1125.0 320.0 Z" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<path d="M 1125.0 305.0 L 1125.0 302.0 L 1132.0 302.0 L 1134.0 305.0 L 1144.0 305.0 L 1144.0 308.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<text x="1135" y="356" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Thư mục</text>
-<rect x="1230" y="281" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="1230" y="278" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="1284" y="290" width="42" height="42" rx="12" fill="#EFF4FF" />
-<circle cx="1305.0" cy="311.0" r="9.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<line x1="1305.0" y1="305.0" x2="1305.0" y2="311.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="1305.0" y1="311.0" x2="1309.0" y2="314.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="1305" y="356" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">SLA</text>
-<rect x="40" y="388" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="40" y="385" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="94" y="397" width="42" height="42" rx="12" fill="#EFF4FF" />
-<rect x="106.0" y="411.0" width="18.0" height="17.0" rx="2.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<line x1="110.0" y1="408.0" x2="110.0" y2="414.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="120.0" y1="408.0" x2="120.0" y2="414.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="106.0" y1="417.0" x2="124.0" y2="417.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="110.0" y1="421.0" x2="113.0" y2="421.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="117.0" y1="421.0" x2="120.0" y2="421.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="115" y="463" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Lịch</text>
-<rect x="210" y="388" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="210" y="385" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="264" y="397" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 278.0 415.0 L 285.0 422.0 L 292.0 415.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<text x="285" y="463" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Menu xổ</text>
-<rect x="380" y="388" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="380" y="385" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="434" y="397" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 452.0 411.0 L 459.0 418.0 L 452.0 425.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<text x="455" y="463" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Đi tiếp</text>
-<rect x="550" y="388" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="550" y="385" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="604" y="397" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 623.0 411.0 L 616.0 418.0 L 623.0 425.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<line x1="616.0" y1="418.0" x2="634.0" y2="418.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="625" y="463" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Quay lại</text>
-<rect x="720" y="388" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="720" y="385" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="774" y="397" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 797.0 411.0 L 804.0 418.0 L 797.0 425.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<line x1="786.0" y1="418.0" x2="804.0" y2="418.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="795" y="463" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Tiếp tục</text>
-<rect x="890" y="388" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="890" y="385" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="944" y="397" width="42" height="42" rx="12" fill="#EFF4FF" />
-<line x1="965.0" y1="410.0" x2="965.0" y2="426.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="957.0" y1="418.0" x2="973.0" y2="418.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="965" y="463" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Thêm</text>
-<rect x="1060" y="388" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="1060" y="385" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="1114" y="397" width="42" height="42" rx="12" fill="#EFF4FF" />
-<line x1="1128.0" y1="411.0" x2="1142.0" y2="425.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="1142.0" y1="411.0" x2="1128.0" y2="425.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="1135" y="463" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Đóng</text>
-<rect x="1230" y="388" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="1230" y="385" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="1284" y="397" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 1297.0 418.0 L 1302.0 423.0 L 1313.0 412.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<text x="1305" y="463" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Đánh dấu</text>
-<rect x="40" y="495" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="40" y="492" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="94" y="504" width="42" height="42" rx="12" fill="#EFF4FF" />
-<circle cx="115.0" cy="525.0" r="9.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<path d="M 110.0 525.0 L 113.5 528.5 L 120.0 521.5" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<text x="115" y="570" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Xác nhận</text>
-<rect x="210" y="495" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="210" y="492" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="264" y="504" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 281.0 526.0 L 288.0 519.0 C 293.0 514.0 298.0 520.0 293.0 525.0 L 283.0 535.0 C 277.0 541.0 271.0 532.0 277.0 526.0 L 287.0 516.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<text x="285" y="570" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Đính kèm</text>
-<rect x="380" y="495" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="380" y="492" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="434" y="504" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 445.0 516.0 L 465.0 525.0 L 445.0 534.0 L 449.0 525.0 Z" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<line x1="449.0" y1="525.0" x2="458.0" y2="525.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="455" y="570" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Gửi</text>
-<rect x="550" y="495" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="550" y="492" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="604" y="504" width="42" height="42" rx="12" fill="#EFF4FF" />
-<rect x="618.0" y="523.0" width="14.0" height="12.0" rx="2.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<path d="M 621.0 523.0 L 621.0 519.0 C 621.0 513.0 629.0 513.0 629.0 519.0 L 629.0 523.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<line x1="625.0" y1="528.0" x2="625.0" y2="531.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="625" y="570" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Nội bộ</text>
-<rect x="720" y="495" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="720" y="492" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="774" y="504" width="42" height="42" rx="12" fill="#EFF4FF" />
-<rect x="785.0" y="517.0" width="20.0" height="16.0" rx="2.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<path d="M 786.0 519.0 L 795.0 526.0 L 804.0 519.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<text x="795" y="570" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Email</text>
-<rect x="890" y="495" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="890" y="492" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="944" y="504" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 955.0 525.0 C 960.0 516.0 970.0 516.0 975.0 525.0 C 970.0 534.0 960.0 534.0 955.0 525.0 Z" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<circle cx="965.0" cy="525.0" r="3.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<text x="965" y="570" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Xem mật khẩu</text>
-<rect x="1060" y="495" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="1060" y="492" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="1114" y="504" width="42" height="42" rx="12" fill="#EFF4FF" />
-<line x1="1126.0" y1="519.0" x2="1144.0" y2="519.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="1126.0" y1="525.0" x2="1144.0" y2="525.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="1126.0" y1="531.0" x2="1144.0" y2="531.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<circle cx="1131.0" cy="519.0" r="2.0" fill="white" stroke="#1D4ED8" stroke-width="1.85" />
-<circle cx="1139.0" cy="525.0" r="2.0" fill="white" stroke="#1D4ED8" stroke-width="1.85" />
-<circle cx="1133.0" cy="531.0" r="2.0" fill="white" stroke="#1D4ED8" stroke-width="1.85" />
-<text x="1135" y="570" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Bộ lọc</text>
-<rect x="1230" y="495" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="1230" y="492" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="1284" y="504" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 1300.0 516.0 L 1296.0 520.0 M 1300.0 516.0 L 1304.0 520.0 M 1300.0 516.0 L 1300.0 534.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<path d="M 1310.0 534.0 L 1306.0 530.0 M 1310.0 534.0 L 1314.0 530.0 M 1310.0 534.0 L 1310.0 516.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<text x="1305" y="570" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Sắp xếp</text>
-<rect x="40" y="602" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="40" y="599" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="94" y="611" width="42" height="42" rx="12" fill="#EFF4FF" />
-<circle cx="115.0" cy="625.0" r="1.3" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="1.85" />
-<circle cx="115.0" cy="632.0" r="1.3" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="1.85" />
-<circle cx="115.0" cy="639.0" r="1.3" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="1.85" />
-<text x="115" y="677" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Thao tác</text>
-<rect x="210" y="602" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="210" y="599" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="264" y="611" width="42" height="42" rx="12" fill="#EFF4FF" />
-<rect x="276.0" y="628.0" width="18.0" height="10.0" rx="2.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<rect x="279.0" y="622.0" width="12.0" height="6.0" rx="1.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<rect x="279.0" y="634.0" width="12.0" height="8.0" rx="1.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<line x1="290.0" y1="631.0" x2="291.0" y2="631.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="285" y="677" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Máy in</text>
-<rect x="380" y="602" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="380" y="599" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="434" y="611" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 445.0 627.0 C 451.0 621.0 459.0 621.0 465.0 627.0 M 448.0 631.0 C 452.0 627.0 458.0 627.0 462.0 631.0 M 451.0 635.0 C 453.0 633.0 457.0 633.0 459.0 635.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<circle cx="455.0" cy="640.0" r="1.2" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="1.85" />
-<text x="455" y="677" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Mạng</text>
-<rect x="550" y="602" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="550" y="599" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="604" y="611" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 625.0 622.0 L 636.0 641.0 L 614.0 641.0 Z" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<line x1="625.0" y1="628.0" x2="625.0" y2="633.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<circle cx="625.0" cy="637.0" r="0.7" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="1.85" />
-<text x="625" y="677" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Cảnh báo</text>
-<rect x="720" y="602" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="720" y="599" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="774" y="611" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 788.0 622.0 L 797.0 622.0 L 803.0 628.0 L 803.0 642.0 L 788.0 642.0 Z M 797.0 622.0 L 797.0 628.0 L 803.0 628.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<line x1="791.0" y1="632.0" x2="799.0" y2="632.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="791.0" y1="636.0" x2="799.0" y2="636.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="795" y="677" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Tài liệu</text>
-<rect x="890" y="602" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="890" y="599" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="944" y="611" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 959.0 629.0 L 965.0 623.0 L 971.0 629.0 M 965.0 623.0 L 965.0 636.0 M 956.0 636.0 L 956.0 641.0 L 974.0 641.0 L 974.0 636.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<text x="965" y="677" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Tải lên</text>
-<rect x="1060" y="602" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="1060" y="599" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="1114" y="611" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 1132.0 623.0 L 1126.0 623.0 L 1126.0 641.0 L 1132.0 641.0 M 1132.0 632.0 L 1145.0 632.0 M 1140.0 627.0 L 1145.0 632.0 L 1140.0 637.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<text x="1135" y="677" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Đăng xuất</text>
-<rect x="1230" y="602" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="1230" y="599" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="1284" y="611" width="42" height="42" rx="12" fill="#EFF4FF" />
-<circle cx="1305.0" cy="632.0" r="9.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<circle cx="1305.0" cy="627.0" r="0.8" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="1.85" />
-<line x1="1305.0" y1="631.0" x2="1305.0" y2="637.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="1305" y="677" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Thông tin</text>
-<rect x="40" y="709" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="40" y="706" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="94" y="718" width="42" height="42" rx="12" fill="#EFF4FF" />
-<path d="M 124.0 736.0 C 121.0 727.0 108.0 727.0 105.0 736.0 M 105.0 731.0 L 105.0 736.0 L 110.0 736.0 M 106.0 742.0 C 109.0 751.0 122.0 751.0 125.0 742.0 M 125.0 747.0 L 125.0 742.0 L 120.0 742.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<text x="115" y="784" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Làm mới</text>
-<rect x="210" y="709" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="210" y="706" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="264" y="718" width="42" height="42" rx="12" fill="#EFF4FF" />
-<line x1="276.0" y1="733.0" x2="294.0" y2="733.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="276.0" y1="739.0" x2="294.0" y2="739.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<line x1="276.0" y1="745.0" x2="294.0" y2="745.0" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" />
-<text x="285" y="784" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Menu</text>
-<rect x="380" y="709" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="380" y="706" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="434" y="718" width="42" height="42" rx="12" fill="#EFF4FF" />
-<rect x="449.0" y="731.0" width="4.0" height="16.0" rx="1.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<rect x="457.0" y="731.0" width="4.0" height="16.0" rx="1.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<text x="455" y="784" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Tạm dừng</text>
-<rect x="550" y="709" width="150" height="94" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="550" y="706" width="150" height="94" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<rect x="604" y="718" width="42" height="42" rx="12" fill="#EFF4FF" />
-<circle cx="625.0" cy="739.0" r="9.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" />
-<path d="M 622.0 735.0 C 622.0 731.0 629.0 731.0 629.0 735.0 C 629.0 738.0 625.0 737.0 625.0 741.0" fill="none" stroke="#1D4ED8" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
-<circle cx="625.0" cy="745.0" r="0.7" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="1.85" />
-<text x="625" y="784" font-size="12" fill="#15263D" font-weight="500" text-anchor="middle">Trợ giúp</text>
-<rect x="40" y="835" width="330" height="164" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="40" y="832" width="330" height="164" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<text x="62" y="867" font-size="17" fill="#15263D" font-weight="600" text-anchor="start">Mặc định</text>
-<rect x="62" y="892" width="286" height="44" rx="10" fill="#1D4ED8" />
-<line x1="163.05" y1="907.6666666666666" x2="163.05" y2="920.3333333333334" stroke="white" stroke-width="1.4645833333333333" stroke-linecap="round" />
-<line x1="156.71666666666667" y1="914.0" x2="169.38333333333335" y2="914.0" stroke="white" stroke-width="1.4645833333333333" stroke-linecap="round" />
-<text x="180.55" y="919.0" font-size="14" fill="white" font-weight="600" text-anchor="start">Tạo yêu cầu</text>
-<text x="62" y="971" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Hành động chính, có nhãn rõ</text>
-<rect x="390" y="835" width="330" height="164" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="390" y="832" width="330" height="164" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<text x="412" y="867" font-size="17" fill="#15263D" font-weight="600" text-anchor="start">Hover</text>
-<rect x="412" y="892" width="286" height="44" rx="10" fill="#1E40AF" />
-<line x1="513.05" y1="907.6666666666666" x2="513.05" y2="920.3333333333334" stroke="white" stroke-width="1.4645833333333333" stroke-linecap="round" />
-<line x1="506.7166666666667" y1="914.0" x2="519.3833333333333" y2="914.0" stroke="white" stroke-width="1.4645833333333333" stroke-linecap="round" />
-<text x="530.55" y="919.0" font-size="14" fill="white" font-weight="600" text-anchor="start">Tạo yêu cầu</text>
-<text x="412" y="971" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Đổi màu nhẹ, không nhảy bố cục</text>
-<rect x="740" y="835" width="330" height="164" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="740" y="832" width="330" height="164" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<text x="762" y="867" font-size="17" fill="#15263D" font-weight="600" text-anchor="start">Focus bàn phím</text>
-<rect x="758" y="888" width="294" height="52" rx="14" fill="none" stroke="#1D4ED8" stroke-width="2" />
-<rect x="762" y="892" width="286" height="44" rx="10" fill="#1D4ED8" />
-<line x1="863.05" y1="907.6666666666666" x2="863.05" y2="920.3333333333334" stroke="white" stroke-width="1.4645833333333333" stroke-linecap="round" />
-<line x1="856.7166666666666" y1="914.0" x2="869.3833333333333" y2="914.0" stroke="white" stroke-width="1.4645833333333333" stroke-linecap="round" />
-<text x="880.55" y="919.0" font-size="14" fill="white" font-weight="600" text-anchor="start">Tạo yêu cầu</text>
-<text x="762" y="971" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Viền focus tách khỏi nền</text>
-<rect x="1090" y="835" width="330" height="164" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="1090" y="832" width="330" height="164" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<text x="1112" y="867" font-size="17" fill="#15263D" font-weight="600" text-anchor="start">Đang gửi</text>
-<rect x="1112" y="892" width="286" height="44" rx="10" fill="#EDF3FF" />
-<path d="M 1227.075 911.625 C 1224.7 904.5 1214.408 904.5 1212.033 911.625 M 1212.033 907.667 L 1212.033 911.625 L 1215.992 911.625 M 1212.825 916.375 C 1215.2 923.5 1225.492 923.5 1227.867 916.375 M 1227.867 920.333 L 1227.867 916.375 L 1223.908 916.375" fill="none" stroke="#1D4ED8" stroke-width="1.4645833333333333" stroke-linecap="round" stroke-linejoin="round" />
-<text x="1237.45" y="919.0" font-size="14" fill="#1D4ED8" font-weight="600" text-anchor="start">Đang gửi…</text>
-<text x="1112" y="971" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Chỉ chặn thao tác gửi lặp</text>
-<rect x="40" y="1021" width="680" height="173" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="40" y="1018" width="680" height="173" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<text x="62" y="1053" font-size="17" fill="#15263D" font-weight="600" text-anchor="start">Input focus</text>
-<text x="62" y="1090" font-size="13" fill="#15263D" font-weight="600" text-anchor="start">Tiêu đề yêu cầu</text>
-<rect x="59" y="1099" width="642" height="54" rx="13" fill="#E9F0FF" stroke="#1D4ED8" stroke-width="1.5" />
-<rect x="62" y="1102" width="636" height="48" rx="10" fill="white" stroke="#1D4ED8" stroke-width="1" />
-<path d="M 78.5 1120.167 L 93.5 1120.167 L 93.5 1123.5 C 90.167 1123.5 90.167 1128.5 93.5 1128.5 L 93.5 1131.833 L 78.5 1131.833 L 78.5 1128.5 C 81.833 1128.5 81.833 1123.5 78.5 1123.5 Z" fill="none" stroke="#60728A" stroke-width="1.5416666666666667" stroke-linecap="round" stroke-linejoin="round" />
-<line x1="87.66666666666667" y1="1122.6666666666667" x2="87.66666666666667" y2="1124.3333333333333" stroke="#60728A" stroke-width="1.5416666666666667" stroke-linecap="round" />
-<line x1="87.66666666666667" y1="1126.8333333333333" x2="87.66666666666667" y2="1129.3333333333333" stroke="#60728A" stroke-width="1.5416666666666667" stroke-linecap="round" />
-<text x="106" y="1132" font-size="14" fill="#52637A" font-weight="400" text-anchor="start">Laptop không kết nối Wi-Fi</text>
-<rect x="740" y="1021" width="660" height="173" rx="17" fill="#EAF0F8" opacity="0.65" />
-<rect x="740" y="1018" width="660" height="173" rx="17" fill="white" stroke="#E4EBF4" stroke-width="1" />
-<text x="762" y="1053" font-size="17" fill="#15263D" font-weight="600" text-anchor="start">Trạng thái không chỉ có màu</text>
-<rect x="762" y="1101" width="180" height="28" rx="14" fill="#EEF4FF" />
-<circle cx="780.0" cy="1115.0" r="6.0" fill="none" stroke="#1D4ED8" stroke-width="1.4" />
-<line x1="780.0" y1="1111.0" x2="780.0" y2="1115.0" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round" />
-<line x1="780.0" y1="1115.0" x2="782.6666666666666" y2="1117.0" stroke="#1D4ED8" stroke-width="1.4" stroke-linecap="round" />
-<text x="794" y="1120" font-size="12" fill="#1D4ED8" font-weight="600" text-anchor="start">Đang xử lý</text>
-<rect x="962" y="1101" width="195" height="28" rx="14" fill="#FFF6DF" />
-<rect x="976.0" y="1109.6666666666667" width="2.6666666666666665" height="10.666666666666666" rx="0.6666666666666666" fill="none" stroke="#92400E" stroke-width="1.4" />
-<rect x="981.3333333333334" y="1109.6666666666667" width="2.6666666666666665" height="10.666666666666666" rx="0.6666666666666666" fill="none" stroke="#92400E" stroke-width="1.4" />
-<text x="994" y="1120" font-size="12" fill="#92400E" font-weight="600" text-anchor="start">Chờ phản hồi</text>
-<rect x="1177" y="1101" width="200" height="28" rx="14" fill="#ECFDF3" />
-<circle cx="1195.0" cy="1115.0" r="6.0" fill="none" stroke="#166534" stroke-width="1.4" />
-<path d="M 1191.667 1115.0 L 1194.0 1117.333 L 1198.333 1112.667" fill="none" stroke="#166534" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
-<text x="1209" y="1120" font-size="12" fill="#166534" font-weight="600" text-anchor="start">Đã giải quyết</text>
-<text x="762" y="1166" font-size="12" fill="#52637A" font-weight="400" text-anchor="start">Icon + nhãn chữ + ngữ cảnh, không dùng chấm màu đứng một mình.</text>
-<text x="40" y="1252" font-size="11" fill="#52637A" font-weight="400" text-anchor="start">BẢNG THIẾT KẾ · Vùng bấm mục tiêu 44 px · SVG icon có thể tái sử dụng · Chưa phải component chạy thật</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1220" viewBox="0 0 1440 1220" role="img" aria-labelledby="title desc"><title id="title">Design system v0.8 — component specimens</title><desc id="desc">UI/UX v0.8, thiết kế mục tiêu cho SHARED. Nội dung DEMO hư cấu; không có tương tác hay nghiệp vụ đã thực thi.</desc><metadata id="documentation-contract">{"figure_id": "UI-14", "notation": "ui-wireframe", "status": "design-draft", "authority": "derived", "implementation": "not-started", "version": "0.8", "screen_ids": ["SHARED"], "role": "M", "data": "synthetic DEMO only", "sources": ["docs/07-uiux-specification.md", "docs/design/design-system.md", "docs/requirements/permissions-matrix.md"], "skill": "apple-design", "documentation_standard": "docs/documentation-standard.md"}</metadata><defs><filter id="soft"><feDropShadow dx="0" dy="5" stdDeviation="10" flood-color="#182538" flood-opacity=".05"></feDropShadow></filter></defs><g font-family="Segoe UI,Arial,sans-serif"><rect x="0" y="0" width="1440" height="1220" rx="0" fill="#EDF5FC" stroke="none" stroke-width="1"></rect><text x="56" y="80" font-size="32" fill="#182538" font-weight="700" text-anchor="start" data-max-width="1328">Rõ việc, nhẹ mắt, có đường tiếp tục</text><text x="56" y="124" font-size="16" fill="#566579" font-weight="400" text-anchor="start" data-max-width="1328">Tokens, nhãn và tương tác dự kiến cho Next.js / shadcn · không là component đã cài</text><rect x="56" y="180" width="650" height="380" rx="16" fill="#FFFFFF" stroke="#D7E4F1" stroke-width="1" filter="url(#soft)"></rect><text x="80" y="214" font-size="18" fill="#182538" font-weight="650" text-anchor="start" data-max-width="602">Hành động và feedback</text><g data-control="button" data-label="Lưu thay đổi" data-x="80" data-y="255" data-width="192" data-height="44" data-alignment="center"><rect x="80" y="255" width="192" height="44" rx="12" fill="#2155CD" stroke="none" stroke-width="1"></rect><g data-button-content="center" data-center-x="176.0" data-center-y="277.0" transform="translate(134.6666259765625 267)"><text x="0" y="16" font-size="14.5" fill="#FFFFFF" font-weight="600" text-anchor="start" data-max-width="160">Lưu thay đổi</text></g></g><g data-control="button" data-label="Hủy" data-x="290" data-y="255" data-width="120" data-height="44" data-alignment="center"><rect x="290" y="255" width="120" height="44" rx="12" fill="#FFFFFF" stroke="#D7E4F1" stroke-width="1"></rect><g data-button-content="center" data-center-x="350.0" data-center-y="277.0" transform="translate(336.4383544921875 267)"><text x="0" y="16" font-size="14.5" fill="#182538" font-weight="600" text-anchor="start" data-max-width="88">Hủy</text></g></g><g data-control="button" data-label="Nhờ AI hỗ trợ" data-x="428" data-y="255" data-width="240" data-height="44" data-alignment="center"><rect x="428" y="255" width="240" height="44" rx="12" fill="#F3EFFF" stroke="#D7E4F1" stroke-width="1"></rect><g data-button-content="center" data-center-x="548.0" data-center-y="277.0" transform="translate(501.970947265625 267)"><text x="0" y="16" font-size="14.5" fill="#6841C5" font-weight="600" text-anchor="start" data-max-width="208">Nhờ AI hỗ trợ</text></g></g><rect x="76" y="251" width="200" height="52" rx="14" fill="none" stroke="#2155CD" stroke-width="1" stroke-dasharray="4 3"></rect><text x="80" y="342" font-size="14" fill="#566579" font-weight="500" text-anchor="start" data-max-width="594">Focus: vòng 2 px + khoảng cách 2 px; không dùng chỉ đổi màu.</text><text x="80" y="397" font-size="14" fill="#182538" font-weight="600" text-anchor="start" data-max-width="590">Tên trường luôn hiển thị</text><rect x="80" y="411" width="590" height="48" rx="10" fill="#FFFFFF" stroke="#718096" stroke-width="1"></rect><text x="94" y="440" font-size="15" fill="#182538" font-weight="400" text-anchor="start" data-max-width="562">Giữ nội dung khi báo lỗi</text><rect x="730" y="180" width="650" height="380" rx="16" fill="#FFFFFF" stroke="#D7E4F1" stroke-width="1" filter="url(#soft)"></rect><text x="754" y="214" font-size="18" fill="#182538" font-weight="650" text-anchor="start" data-max-width="602">Trạng thái không chỉ dùng màu</text><rect x="754" y="255" width="270" height="28" rx="8" fill="#EDF3FF" stroke="none" stroke-width="1"></rect><text x="765" y="274" font-size="13.5" fill="#2155CD" font-weight="600" text-anchor="start" data-max-width="248">Đang xử lý</text><rect x="1046" y="255" width="270" height="28" rx="8" fill="#FFF6E5" stroke="none" stroke-width="1"></rect><text x="1057" y="274" font-size="13.5" fill="#875500" font-weight="600" text-anchor="start" data-max-width="248">Chờ phản hồi</text><rect x="754" y="325" width="270" height="28" rx="8" fill="#EDF8F1" stroke="none" stroke-width="1"></rect><text x="765" y="344" font-size="13.5" fill="#18734B" font-weight="600" text-anchor="start" data-max-width="248">Đã giải quyết</text><rect x="1046" y="325" width="270" height="28" rx="8" fill="#FFF0F1" stroke="none" stroke-width="1"></rect><text x="1057" y="344" font-size="13.5" fill="#B42335" font-weight="600" text-anchor="start" data-max-width="248">Đã quá SLA</text><rect x="754" y="395" width="270" height="28" rx="8" fill="#F3EFFF" stroke="none" stroke-width="1"></rect><text x="765" y="414" font-size="13.5" fill="#6841C5" font-weight="600" text-anchor="start" data-max-width="248">AI · Chưa gửi</text><rect x="56" y="588" width="1324" height="446" rx="16" fill="#FFFFFF" stroke="#D7E4F1" stroke-width="1" filter="url(#soft)"></rect><text x="80" y="622" font-size="18" fill="#182538" font-weight="650" text-anchor="start" data-max-width="1276">44 icon cùng hệ nét · luôn có tên hành động</text><g transform="translate(110 668) scale(1.0)" color="#182538"><path d="M 12.0 2.0 L 15.0 9.0 L 22.0 12.0 L 15.0 15.0 L 12.0 22.0 L 9.0 15.0 L 2.0 12.0 L 9.0 9.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<line x1="20.0" y1="2.0" x2="20.0" y2="6.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="18.0" y1="4.0" x2="22.0" y2="4.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="122" y="720" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">ai</text><g transform="translate(226 668) scale(1.0)" color="#182538"><path d="M 12.0 2.0 L 23.0 21.0 L 1.0 21.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<line x1="12.0" y1="8.0" x2="12.0" y2="13.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<circle cx="12.0" cy="17.0" r="0.7" fill="#334155" stroke="currentColor" stroke-width="1.85"></circle>
+</g><text x="238" y="720" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">alert</text><g transform="translate(342 668) scale(1.0)" color="#182538"><path d="M 10.0 5.0 L 3.0 12.0 L 10.0 19.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<line x1="3.0" y1="12.0" x2="21.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="354" y="720" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">arrow-left</text><g transform="translate(458 668) scale(1.0)" color="#182538"><path d="M 14.0 5.0 L 21.0 12.0 L 14.0 19.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<line x1="3.0" y1="12.0" x2="21.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="470" y="720" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">arrow-right</text><g transform="translate(574 668) scale(1.0)" color="#182538"><path d="M 5.0 17.0 L 19.0 17.0 L 17.0 14.0 L 17.0 9.0 C 17.0 2.0 7.0 2.0 7.0 9.0 L 7.0 14.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M 10.0 21.0 C 11.0 22.0 13.0 22.0 14.0 21.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<line x1="12.0" y1="2.0" x2="12.0" y2="4.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="586" y="720" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">bell</text><g transform="translate(690 668) scale(1.0)" color="#182538"><rect x="4.0" y="2.0" width="16.0" height="20.0" rx="1.0" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+<line x1="2.0" y1="22.0" x2="22.0" y2="22.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<rect x="10.0" y="17.0" width="4.0" height="5.0" rx="0.0" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+<line x1="8.0" y1="6.0" x2="8.0" y2="8.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="16.0" y1="6.0" x2="16.0" y2="8.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="8.0" y1="11.0" x2="8.0" y2="13.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="16.0" y1="11.0" x2="16.0" y2="13.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="702" y="720" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">building</text><g transform="translate(806 668) scale(1.0)" color="#182538"><rect x="3.0" y="5.0" width="18.0" height="17.0" rx="2.0" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+<line x1="7.0" y1="2.0" x2="7.0" y2="8.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="17.0" y1="2.0" x2="17.0" y2="8.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="3.0" y1="11.0" x2="21.0" y2="11.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="7.0" y1="15.0" x2="10.0" y2="15.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="14.0" y1="15.0" x2="17.0" y2="15.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="818" y="720" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">calendar</text><g transform="translate(922 668) scale(1.0)" color="#182538"><line x1="3.0" y1="3.0" x2="3.0" y2="21.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="3.0" y1="21.0" x2="22.0" y2="21.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<rect x="7.0" y="12.0" width="3.0" height="6.0" rx="1.0" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+<rect x="13.0" y="8.0" width="3.0" height="10.0" rx="1.0" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+<rect x="19.0" y="4.0" width="3.0" height="14.0" rx="1.0" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+</g><text x="934" y="720" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">chart</text><g transform="translate(1038 668) scale(1.0)" color="#182538"><circle cx="12.0" cy="12.0" r="9.0" fill="none" stroke="currentColor" stroke-width="1.85"></circle>
+<path d="M 7.0 12.0 L 10.5 15.5 L 17.0 8.5" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+</g><text x="1050" y="720" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">check-circle</text><g transform="translate(1154 668) scale(1.0)" color="#182538"><path d="M 4.0 12.0 L 9.0 17.0 L 20.0 6.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+</g><text x="1166" y="720" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">check</text><g transform="translate(1270 668) scale(1.0)" color="#182538"><path d="M 5.0 9.0 L 12.0 16.0 L 19.0 9.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+</g><text x="1282" y="720" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">chevron-down</text><g transform="translate(110 750) scale(1.0)" color="#182538"><path d="M 9.0 5.0 L 16.0 12.0 L 9.0 19.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+</g><text x="122" y="802" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">chevron-right</text><g transform="translate(226 750) scale(1.0)" color="#182538"><circle cx="12.0" cy="12.0" r="9.0" fill="none" stroke="currentColor" stroke-width="1.85"></circle>
+<line x1="12.0" y1="6.0" x2="12.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="12.0" y1="12.0" x2="16.0" y2="15.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="238" y="802" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">clock</text><g transform="translate(342 750) scale(1.0)" color="#182538"><line x1="5.0" y1="5.0" x2="19.0" y2="19.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="19.0" y1="5.0" x2="5.0" y2="19.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="354" y="802" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">close</text><g transform="translate(458 750) scale(1.0)" color="#182538"><rect x="3.0" y="3.0" width="7.0" height="7.0" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+<rect x="14.0" y="3.0" width="7.0" height="5.0" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+<rect x="3.0" y="14.0" width="7.0" height="7.0" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+<rect x="14.0" y="12.0" width="7.0" height="9.0" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+</g><text x="470" y="802" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">dashboard</text><g transform="translate(574 750) scale(1.0)" color="#182538"><path d="M 2.0 12.0 C 7.0 3.0 17.0 3.0 22.0 12.0 C 17.0 21.0 7.0 21.0 2.0 12.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<circle cx="12.0" cy="12.0" r="3.0" fill="none" stroke="currentColor" stroke-width="1.85"></circle>
+</g><text x="586" y="802" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">eye</text><g transform="translate(690 750) scale(1.0)" color="#182538"><path d="M 5.0 2.0 L 14.0 2.0 L 20.0 8.0 L 20.0 22.0 L 5.0 22.0 Z M 14.0 2.0 L 14.0 8.0 L 20.0 8.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<line x1="8.0" y1="12.0" x2="16.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="8.0" y1="16.0" x2="16.0" y2="16.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="702" y="802" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">file</text><g transform="translate(806 750) scale(1.0)" color="#182538"><line x1="3.0" y1="6.0" x2="21.0" y2="6.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="3.0" y1="12.0" x2="21.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="3.0" y1="18.0" x2="21.0" y2="18.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<circle cx="8.0" cy="6.0" r="2.0" fill="white" stroke="currentColor" stroke-width="1.85"></circle>
+<circle cx="16.0" cy="12.0" r="2.0" fill="white" stroke="currentColor" stroke-width="1.85"></circle>
+<circle cx="10.0" cy="18.0" r="2.0" fill="white" stroke="currentColor" stroke-width="1.85"></circle>
+</g><text x="818" y="802" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">filter</text><g transform="translate(922 750) scale(1.0)" color="#182538"><path d="M 2.0 6.0 L 9.0 6.0 L 11.0 9.0 L 22.0 9.0 L 22.0 21.0 L 2.0 21.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M 2.0 6.0 L 2.0 3.0 L 9.0 3.0 L 11.0 6.0 L 21.0 6.0 L 21.0 9.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+</g><text x="934" y="802" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">folder</text><g transform="translate(1038 750) scale(1.0)" color="#182538"><circle cx="12.0" cy="12.0" r="9.0" fill="none" stroke="currentColor" stroke-width="1.85"></circle>
+<path d="M 9.0 8.0 C 9.0 4.0 16.0 4.0 16.0 8.0 C 16.0 11.0 12.0 10.0 12.0 14.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<circle cx="12.0" cy="18.0" r="0.7" fill="#334155" stroke="currentColor" stroke-width="1.85"></circle>
+</g><text x="1050" y="802" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">help</text><g transform="translate(1154 750) scale(1.0)" color="#182538"><path d="M 3.0 7.0 C 5.0 2.0 12.0 0.0 18.0 5.0 C 24.0 10.0 21.0 20.0 14.0 22.0 C 8.0 24.0 2.0 19.0 2.0 14.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M 3.0 2.0 L 3.0 7.0 L 8.0 7.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<line x1="12.0" y1="7.0" x2="12.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="12.0" y1="12.0" x2="16.0" y2="14.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="1166" y="802" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">history</text><g transform="translate(1270 750) scale(1.0)" color="#182538"><path d="M 4.0 4.0 L 20.0 4.0 L 22.0 14.0 L 22.0 20.0 L 2.0 20.0 L 2.0 14.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M 2.0 14.0 L 8.0 14.0 L 10.0 17.0 L 14.0 17.0 L 16.0 14.0 L 22.0 14.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+</g><text x="1282" y="802" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">inbox</text><g transform="translate(110 832) scale(1.0)" color="#182538"><circle cx="12.0" cy="12.0" r="9.0" fill="none" stroke="currentColor" stroke-width="1.85"></circle>
+<circle cx="12.0" cy="7.0" r="0.8" fill="#334155" stroke="currentColor" stroke-width="1.85"></circle>
+<line x1="12.0" y1="11.0" x2="12.0" y2="17.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="122" y="884" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">info</text><g transform="translate(226 832) scale(1.0)" color="#182538"><rect x="4.0" y="3.0" width="16.0" height="13.0" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+<path d="M 2.0 19.0 L 22.0 19.0 L 20.0 21.0 L 4.0 21.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<line x1="10.0" y1="19.0" x2="14.0" y2="19.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="238" y="884" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">laptop</text><g transform="translate(342 832) scale(1.0)" color="#182538"><rect x="5.0" y="10.0" width="14.0" height="12.0" rx="2.0" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+<path d="M 8.0 10.0 L 8.0 6.0 C 8.0 0.0 16.0 0.0 16.0 6.0 L 16.0 10.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<line x1="12.0" y1="15.0" x2="12.0" y2="18.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="354" y="884" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">lock</text><g transform="translate(458 832) scale(1.0)" color="#182538"><path d="M 9.0 3.0 L 3.0 3.0 L 3.0 21.0 L 9.0 21.0 M 9.0 12.0 L 22.0 12.0 M 17.0 7.0 L 22.0 12.0 L 17.0 17.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+</g><text x="470" y="884" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">logout</text><g transform="translate(574 832) scale(1.0)" color="#182538"><rect x="2.0" y="4.0" width="20.0" height="16.0" rx="2.0" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+<path d="M 3.0 6.0 L 12.0 13.0 L 21.0 6.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+</g><text x="586" y="884" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">mail</text><g transform="translate(690 832) scale(1.0)" color="#182538"><line x1="3.0" y1="6.0" x2="21.0" y2="6.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="3.0" y1="12.0" x2="21.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="3.0" y1="18.0" x2="21.0" y2="18.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="702" y="884" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">menu</text><g transform="translate(806 832) scale(1.0)" color="#182538"><circle cx="12.0" cy="5.0" r="1.3" fill="#334155" stroke="currentColor" stroke-width="1.85"></circle>
+<circle cx="12.0" cy="12.0" r="1.3" fill="#334155" stroke="currentColor" stroke-width="1.85"></circle>
+<circle cx="12.0" cy="19.0" r="1.3" fill="#334155" stroke="currentColor" stroke-width="1.85"></circle>
+</g><text x="818" y="884" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">more</text><g transform="translate(922 832) scale(1.0)" color="#182538"><path d="M 8.0 13.0 L 15.0 6.0 C 20.0 1.0 25.0 7.0 20.0 12.0 L 10.0 22.0 C 4.0 28.0 -2.0 19.0 4.0 13.0 L 14.0 3.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+</g><text x="934" y="884" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">paperclip</text><g transform="translate(1038 832) scale(1.0)" color="#182538"><rect x="6.0" y="4.0" width="4.0" height="16.0" rx="1.0" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+<rect x="14.0" y="4.0" width="4.0" height="16.0" rx="1.0" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+</g><text x="1050" y="884" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">pause</text><g transform="translate(1154 832) scale(1.0)" color="#182538"><line x1="12.0" y1="4.0" x2="12.0" y2="20.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="4.0" y1="12.0" x2="20.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="1166" y="884" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">plus</text><g transform="translate(1270 832) scale(1.0)" color="#182538"><rect x="3.0" y="8.0" width="18.0" height="10.0" rx="2.0" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+<rect x="6.0" y="2.0" width="12.0" height="6.0" rx="1.0" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+<rect x="6.0" y="14.0" width="12.0" height="8.0" rx="1.0" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+<line x1="17.0" y1="11.0" x2="18.0" y2="11.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="1282" y="884" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">printer</text><g transform="translate(110 914) scale(1.0)" color="#182538"><path d="M 21.0 9.0 C 18.0 0.0 5.0 0.0 2.0 9.0 M 2.0 4.0 L 2.0 9.0 L 7.0 9.0 M 3.0 15.0 C 6.0 24.0 19.0 24.0 22.0 15.0 M 22.0 20.0 L 22.0 15.0 L 17.0 15.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+</g><text x="122" y="966" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">refresh</text><g transform="translate(226 914) scale(1.0)" color="#182538"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.85"></circle>
+<line x1="15.5" y1="15.5" x2="21.0" y2="21.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="238" y="966" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">search</text><g transform="translate(342 914) scale(1.0)" color="#182538"><path d="M 2.0 3.0 L 22.0 12.0 L 2.0 21.0 L 6.0 12.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<line x1="6.0" y1="12.0" x2="15.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="354" y="966" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">send</text><g transform="translate(458 914) scale(1.0)" color="#182538"><path d="M 22.0 12.0 L 19.73 14.07 L 20.66 17.0 L 19.07 19.07 L 16.0 18.93 L 14.59 21.66 L 12.0 22.0 L 9.93 19.73 L 7.0 20.66 L 4.93 19.07 L 5.07 16.0 L 2.34 14.59 L 2.0 12.0 L 4.27 9.93 L 3.34 7.0 L 4.93 4.93 L 8.0 5.07 L 9.41 2.34 L 12.0 2.0 L 14.07 4.27 L 17.0 3.34 L 19.07 4.93 L 18.93 8.0 L 21.66 9.41 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<circle cx="12.0" cy="12.0" r="3.5" fill="none" stroke="currentColor" stroke-width="1.85"></circle>
+</g><text x="470" y="966" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">settings</text><g transform="translate(574 914) scale(1.0)" color="#182538"><path d="M 7.0 3.0 L 3.0 7.0 M 7.0 3.0 L 11.0 7.0 M 7.0 3.0 L 7.0 21.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M 17.0 21.0 L 13.0 17.0 M 17.0 21.0 L 21.0 17.0 M 17.0 21.0 L 17.0 3.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+</g><text x="586" y="966" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">sort</text><g transform="translate(690 914) scale(1.0)" color="#182538"><path d="M 3.0 5.0 L 21.0 5.0 L 21.0 9.0 C 17.0 9.0 17.0 15.0 21.0 15.0 L 21.0 19.0 L 3.0 19.0 L 3.0 15.0 C 7.0 15.0 7.0 9.0 3.0 9.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<line x1="14.0" y1="8.0" x2="14.0" y2="10.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="14.0" y1="13.0" x2="14.0" y2="16.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="702" y="966" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">ticket</text><g transform="translate(806 914) scale(1.0)" color="#182538"><rect x="3.0" y="9.0" width="18.0" height="12.0" rx="2.0" fill="none" stroke="currentColor" stroke-width="1.85"></rect>
+<path d="M 8.0 9.0 L 8.0 5.0 L 16.0 5.0 L 16.0 9.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<line x1="3.0" y1="14.0" x2="21.0" y2="14.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="10.0" y1="13.0" x2="10.0" y2="16.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+<line x1="14.0" y1="13.0" x2="14.0" y2="16.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></line>
+</g><text x="818" y="966" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">toolbox</text><g transform="translate(922 914) scale(1.0)" color="#182538"><path d="M 6.0 9.0 L 12.0 3.0 L 18.0 9.0 M 12.0 3.0 L 12.0 16.0 M 3.0 16.0 L 3.0 21.0 L 21.0 21.0 L 21.0 16.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+</g><text x="934" y="966" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">upload</text><g transform="translate(1038 914) scale(1.0)" color="#182538"><circle cx="12.0" cy="7.0" r="4.0" fill="none" stroke="currentColor" stroke-width="1.85"></circle>
+<path d="M 4.0 21.0 C 4.0 11.0 20.0 11.0 20.0 21.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+</g><text x="1050" y="966" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">user</text><g transform="translate(1154 914) scale(1.0)" color="#182538"><circle cx="9.0" cy="7.0" r="3.4" fill="none" stroke="currentColor" stroke-width="1.85"></circle>
+<path d="M 2.0 21.0 C 2.0 12.0 16.0 12.0 16.0 21.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M 17.0 4.0 C 23.0 4.0 23.0 11.0 18.0 11.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M 19.0 15.0 C 22.0 16.0 23.0 18.0 23.0 21.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+</g><text x="1166" y="966" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">users</text><g transform="translate(1270 914) scale(1.0)" color="#182538"><path d="M 2.0 7.0 C 8.0 1.0 16.0 1.0 22.0 7.0 M 5.0 11.0 C 9.0 7.0 15.0 7.0 19.0 11.0 M 8.0 15.0 C 10.0 13.0 14.0 13.0 16.0 15.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path>
+<circle cx="12.0" cy="20.0" r="1.2" fill="#334155" stroke="currentColor" stroke-width="1.85"></circle>
+</g><text x="1282" y="966" font-size="10.5" fill="#566579" font-weight="500" text-anchor="middle" data-max-width="110">wifi</text><text x="56" y="1094" font-size="14" fill="#566579" font-weight="400" text-anchor="start" data-max-width="1328">Icon trang trí aria-hidden; nút chỉ icon có accessible name. SVG không chứng minh screen reader/keyboard.</text><path d="M56 1156 L1408 1156" stroke="#D7E4F1" stroke-width="1" fill="none"></path><text x="56" y="1188" font-size="12.5" fill="#566579" font-weight="400" text-anchor="start" data-max-width="1352">Bản thiết kế v0.8 · Dữ liệu DEMO tổng hợp · Chưa có ứng dụng thực thi</text></g></svg>

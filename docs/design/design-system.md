@@ -1,108 +1,132 @@
 ---
 id: itoh-docs-design-design-system
-title: "Design system đề xuất — v0.4"
+title: "Design system — v0.8"
 type: reference
 domain: design
 module: components
 tags: [design, components, reference]
 priority: 1
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: primary
-purpose: "Quy định nền tảng thị giác, component và mục tiêu accessibility."
+purpose: "Define visual foundations, components, and accessibility targets."
 ---
 
-# Design system đề xuất — v0.4
+# Design system — v0.8
 
-Đây là specification, chưa phải thư viện component hay Tailwind/shadcn đã cài đặt. Nhận diện riêng cho công cụ doanh nghiệp, dùng nền sáng và xanh dương theo đề bài.
+**Next.js/React web design, not an installed component library.** Adapt Apple Design Skill accessibility/layout/type/forms/AI principles to semantic HTML/CSS tokens/shadcn-Radix. No simulated macOS chrome/native menu/SF font or out-of-scope dark-mode switch.
 
-## Nền tảng thị giác
+## Intent and hierarchy
 
-| Token | Giá trị | Cách dùng |
-|---|---|---|
-| Brand/primary | `#1D4ED8` | Primary action, link và lựa chọn hiện tại |
-| Primary hover | `#1E40AF` | Hover/pressed có tương phản |
-| Primary surface | `#EEF4FF` | Thông tin phụ và icon; nav đang chọn dùng primary với chữ trắng |
-| Canvas | `#F4F7FC` | Nền workspace |
-| Surface | `#FFFFFF` | Card, table, dialog |
-| Text strong | `#15263D` | Heading/body quan trọng |
-| Text secondary | `#52637A` | Metadata, mô tả |
-| Border decorative | `#E4EBF4` | Phân cách panel; không dùng làm dấu hiệu duy nhất nhận input |
-| Control boundary | `#64748B` | Viền input/control khi cần nhận biết |
-| Focus | `#1D4ED8`, vòng2 px + khoảng cách2 px | Focus visible; kiểm tra trên từng nền |
-| Success | Text `#166534`, nền `#ECFDF3` | Resolved, thành công |
-| Warning | Text `#92400E`, nền `#FFF6DF` | Pending, sắp hạn |
-| Danger | Text `#B91C1C`, nền `#FFF0F0` | Lỗi, quá hạn, thao tác hủy |
-| Neutral | Text `#52637A`, nền `#EFF3F8` | Closed, metadata |
+An easily scanned IT workspace: action cards, labeled icons, ownership, next steps. **Action-needed cards** are the visual signature; contextual banners distinguish reply/work/decision needs without turning every page into KPI dashboards. Shared role-scoped shell, task-specific views.
 
-Màu token không đồng nghĩa mọi component tự động đạt chuẩn. Kiểm tra từng cặp foreground/background, focus và trạng thái disabled khi triển khai.
+Regular 1440 px: 244 rail/220 floating sidebar at 12/12; 60 topbar at 260/16 in 80 header; 32 margins/24 gaps/1132 content. Pale blue canvas/opaque white surfaces/subtle borders/shadows; blue primary/purple AI/semantic statuses. Multicolor thick diagram borders are not applied indiscriminately to forms/tables.
 
-Font body Inter nếu có, fallback Segoe UI/Arial/sans-serif hỗ trợ tiếng Việt. Body14–16 px, line-height1,5; metadata12–13 px, không dùng chữ nhỏ cho nội dung thiết yếu. Heading page28–30/36, section17–19/26, số KPI36/44. Mã ticket dùng tabular numbers; không font trang trí.
+## Semantic color tokens
 
-Spacing theo4 px:4/8/12/16/20/24/28/32. Desktop1440 px: sidebar244 px, topbar76 px, nội dung cách sidebar32 px; khoảng cách panel20 px. Radius input/button10–11 px, card17 px, badge bo tròn; shadow nhẹ màu xanh xám. Nav đang chọn nền primary và chữ/icon trắng. Không dùng blur/gradient nặng làm giảm đọc bảng. Icon20–24 px, lưới24 px và nét khoảng1,85 px; vùng bấm mục tiêu44 px cho tác vụ chính/mobile.
+| Token | Light MVP | Dark reference | Responsibility |
+| --- | --- | --- | --- |
+| canvas | #EDF5FC | #141D2B | Workspace background |
+| surface | #FFFFFF | #1D293A | Content/tables/dialogs |
+| content | #182538 | #E6EDF7 | Main text |
+| secondary | #566579 | #B0BCD0 | Readable supporting text |
+| accent | #2155CD | #9CB7FF | Primary actions/focus/selection |
+| ai | #6841C5 | #CBB5FF | AI identity/sources/drafts, not success |
 
-Bộ [44 icon SVG](icons/) và [board component](wireframes/14-icons-and-components.svg) thống nhất nét, góc và ý nghĩa. Nút quan trọng có cả icon lẫn chữ; icon trang trí không được đọc lặp, nút chỉ icon có tên truy cập theo hành động. Xem [định hướng thị giác](visual-refresh.md) và [motion/responsive](motion-and-responsive.md). Viền input trong bản vẽ là đề xuất thị giác; khi triển khai cần kiểm tra và dùng token Control boundary nếu viền là dấu hiệu thiết yếu để nhận biết control.
+Success #18734B/#EDF8F1; warning #875500/#FFF6E5; danger #B42335/#FFF0F1. Decorative border #D7E4F1 is not sole input identification; control border #718096. Dark tokens are references for possible extensions, **not MVP expansion or an implemented dark UI**. No glass/blur beneath important data; opaque surfaces are primary under reduced transparency.
 
-## Trạng thái và ngữ nghĩa
+| Measured hex pair | Foreground / background | WCAG ratio |
+| --- | --- | --- |
+| Body on canvas | `#182538` / `#EDF5FC` | 14.01:1 |
+| Secondary on canvas | `#566579` / `#EDF5FC` | 5.4:1 |
+| Body | `#182538` / `#FFFFFF` | 15.43:1 |
+| Secondary | `#566579` / `#FFFFFF` | 5.94:1 |
+| Primary text | `#FFFFFF` / `#2155CD` | 6.47:1 |
+| AI label | `#6841C5` / `#F3EFFF` | 5.9:1 |
+| Success | `#18734B` / `#EDF8F1` | 5.37:1 |
+| Warning | `#875500` / `#FFF6E5` | 5.88:1 |
+| Danger | `#B42335` / `#FFF0F1` | 5.87:1 |
+| Input boundary | `#718096` / `#FFFFFF` | 4.02:1 |
+| Focus | `#2155CD` / `#FFFFFF` | 6.47:1 |
+| Dark body reference | `#E6EDF7` / `#141D2B` | 14.37:1 |
+| Dark secondary reference | `#B0BCD0` / `#141D2B` | 8.83:1 |
+| Dark accent reference | `#9CB7FF` / `#1D293A` | 7.43:1 |
 
-| Đối tượng | Nhãn và style |
-|---|---|
-| New | Mới, xanh dương |
-| Open | Đã tiếp nhận, xanh dương nhạt |
-| In Progress | Đang xử lý, xanh dương đậm |
-| Pending | Chờ phản hồi, vàng/nâu |
-| Resolved | Đã giải quyết, xanh lá |
-| Closed | Đã đóng, xám |
-| Cancelled | Đã hủy, xám/đỏ nhẹ |
-| P1/P2/P3/P4 | Luôn có P+số và nhãn Nghiêm trọng/Cao/Trung bình/Thấp; không dùng chỉ chấm màu |
-| SLA | Còn hạn / Sắp quá hạn / Đã quá hạn / Tạm dừng / Đã phản hồi / Đã giải quyết; trạng thái lịch sử có chữ riêng |
 
-Priority, status và SLA là ba chiều khác nhau; không dùng một badge “Cao” để thay tất cả. Badge không hành động thì không trông giống button.
+Values use sRGB relative luminance, not JPEG sampling. Token-pair checks do not certify application WCAG/HIG. Body≥4.5:1; applicable controls/focus≥3:1. Disabled colors alone do not explain ineligibility.
 
-## Hợp đồng component
+## Typography and spacing
 
-| Component | Biến thể và trạng thái cần có |
-|---|---|
-| Button | Primary, secondary, text, danger; default/hover/focus/disabled/loading; action có label |
-| Input/select | Label luôn có; required có giải thích; hint; invalid với text; disabled nêu lý do nếu cần |
-| Textarea | Nhãn audience, giới hạn, lỗi; cho xuống dòng; không gửi khi chỉ nhấn Enter |
-| Combobox | Search trong tập có quyền; keyboard arrows/Enter/Escape; empty và loading; không tự tải danh sách cấm |
-| Table | Caption/heading, header có tên, sort state, link mã focusable, pagination; không row click là cách duy nhất |
-| Filter chip | Tên filter và giá trị; nút xóa có tên “Bỏ bộ lọc…”; clear all |
-| Tabs | Selected/focus phân biệt, điều hướng bàn phím, panel có tên; không render tab nội bộ cho R |
-| Dialog | Title/description, focus vào điểm phù hợp, trap, Escape có kiểm soát, trả focus về trigger |
-| Alert/banner | Info/warning/error/success có text; lỗi quan trọng giữ lại, không chỉ toast tự biến mất |
-| Toast | Thành công ngắn, không là nơi duy nhất chứa lỗi/giải pháp; live announcement phù hợp |
-| SLA card | Tên đồng hồ, ngân sách, đã dùng/còn lại, trạng thái pause/dừng, breach history |
-| Attachment item | Tên, định dạng, kích thước, trạng thái tải/gửi; remove chỉ trước khi gửi |
-| Empty/error panel | Giải thích có dữ liệu hay không, filter reset/retry theo quyền |
+System stack `Segoe UI, system-ui, Arial, sans-serif`, Vietnamese support, no downloaded SVG fonts. One UI family, tabular numbers. Page 30/38 weight 700; section 21/29 weight 650; body 16/24; table 14.5/21 weight 400–600; essential badge 13.5/20 weight 600.12–13 only secondary metadata, not deadlines/rejections/actions. Icon specimen filenames 10.5 are asset annotations, not product text sizing.
 
-## Accessibility target
+Spacing 4/8/12/16/24/32. Radii input 10/button 12/panel 16–20/sidebar 24; 1 px borders/light 0-5-10 shadow at 5% ink. Quick-card icon 24 on44 background/title 18-650/subline 14, chevron means opens, not executed. Inputs 48/CTA44, persistent labels. Focus 2+2 offset. Allow long Vietnamese/errors/200% zoom with auto-growing height, not screenshot-fixed CSS.
 
-Mục tiêu [WCAG 2.2 AA](https://www.w3.org/TR/WCAG22/): body text≥4,5:1; chữ lớn≥3:1; các dấu hiệu giao diện thiết yếu≥3:1 khi tiêu chí áp dụng. Màu phải có nhãn chữ/icon bổ trợ. Kiểm tra thứ tự heading/label, error association, table semantics và live announcements.
+## Component contracts
 
-Theo [SC 2.5.8](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html), mức AA có ngưỡng24×24CSSpx với ngoại lệ; thiết kế chọn vùng bấm44 px cho tác vụ chính/mobile để dễ dùng. Focus phải rõ và không bị che hoàn toàn; mục tiêu thiết kế cao hơn là không che focus bởi sticky header/footer. Bàn phím thao tác được mọi chức năng, không trap ngoài dialog có chủ đích.
+| Component | v0.6 decision |
+| --- | --- |
+| Shell | One H1, authorized nav≤2 levels, pale selection/dark text-icon, named menus |
+| Primary/secondary | One task-primary; same-size choices/different emphasis; cancel/reject not false primary |
+| Next-step banner | Action/actor/conditions/textual status; no precommit success |
+| Table/list | Clear headings, code/title priority, 72–100 px content-dependent rows, named sort/paging/keyboard links |
+| Filters | Labels/applied state/clear, scope before count, no out-of-scope bulk |
+| Forms | Labels/help/field errors/more than color; preserve input, no prefilled passwords |
+| Badges | Separate Ticket/Task/priority/SLA/approval/execution; not button-shaped status |
+| Dialog | Short task, one modal, title/Cancel/focus/trap/return, no nested modals |
+| AI panel | User-opened, desktop modeless/compact dedicated region, preserve drafts/focus return |
+| Approval diff | Current/proposed/reason/impact/data timestamp; approval≠assigned; conflicts re-evaluate |
+| Citation | Name/version/audience/current-access link, no invented certainty percentages |
+| Empty/error/loading | Per-region states/manual fallback; no blind timeout mutation retry |
+| Notification | Recipient/current access; generic on revocation, no sensitive retained preview |
 
-Không ngăn paste vào password. Không dựa riêng tooltip hover cho điều kiện nghiệp vụ. Tôn trọng reduced motion. Không tuyên bố SVG wireframe đã chứng minh screen reader, semantic HTML hoặc conformance của ứng dụng.
+## Tasks, SLA, permissions
 
-## Component trợ lý AI
+Ticket intake differs from Task execution. Task To Do/Ready/In Progress/Blocked/Done/Cancelled; Vietnamese glossary labels retain API enums. Done requires result/remaining 0, no automatic ticket Resolved/Closed. Pending needs a requester-facing public question, not waiting on internal Admin. Only eligible public IT comments satisfy first response, not AI/drafts/notes/acceptance.
 
-Tái dùng token hiện có. Thêm message bubble có nhãn “Trợ lý AI”, source card với tên/version/time, badge phạm vi Công khai/Nội bộ, draft card có CTA xác nhận tạo ticket hoặc chỉnh trong form; reply draft chỉ chuyển composer, loading có Dừng và error panel có lối dùng chức năng thường. Không dùng badge “đã xử lý” cho một câu trả lời AI; không hiển thị phần trăm độ tin cậy nếu chưa có cơ sở đo.
+No IT Team Lead. M policy/exceptions, not user admin. T no colleague assignments/user provisioning. R no workforce plans/approvals/notes, including hidden payloads. Backend enforces.
 
-Panel AI không tự mở hoặc che thao tác chính. Mở/đóng giữ focus và dữ liệu form; stream chỉ thông báo thay đổi có kiểm soát, không đọc lại toàn bộ từng token cho screen reader. Nháp chỉ được xác nhận/chuyển sau khi sinh xong và nguồn/quyền đã kiểm tra; khi lỗi hoặc dữ liệu stale thì không có CTA gửi ngầm.
+## Accessibility and validation
 
-## Component công việc và điều phối
+WCAG2.2 AA target. 44 px is a comfortable design choice, not mandatory AA threshold. Named controls/decorative aria-hidden icons; actual HTML heading/table/dialog/error/live-region checks later. No gesture/drag-only task transitions. Sticky composer/keyboard must not obscure focus. Complete keyboard/list/diff access.
 
-| Component | Trạng thái và quy tắc |
-|---|---|
-| Task card/board/table | To Do/Ready/In Progress/Blocked/Done/Cancelled có nhãn chữ; assignee/remaining/deadline/dependency/lock; bàn phím thao tác thay kéo thả |
-| DAG/list dependency | Cùng dữ liệu, list thay thế; predecessor chưa Done có lý do blocked; không dựa vào màu/đường nối duy nhất |
-| Capacity/calendar | Capacity/load/free và kỳ/đơn vị/timezone; missing/unallocated khác zero; không xếp hạng hiệu suất |
-| Policy/grant card | Chưa cấp/Bật/Tắt/Hết hiệu lực; workflow/nhóm/actions/giới hạn/người cấp; không dùng badge Bật khi thiếu cấu hình |
-| Approval diff | Hiện tại/Dự kiến/Tác động/Lý do; Pending/Approved/Rejected/Expired/Superseded tách execution pending/succeeded/failed/conflict |
-| Run/action timeline | Đã đề xuất/Chờ duyệt/Đã thực thi/Thất bại; source/time, error/retry quyền; không hiển thị secret/raw prompt |
-| KB/citation | Draft/Published/Retired/version/audience, nguồn mở được; stale/revoked không render nội dung mất quyền |
+[Motion/responsive](motion-and-responsive.md) specifies 200% zoom/320 px/increased contrast/reduced motion-transparency; screenshots prove no reflow/keyboard/screen-reader behavior. [Review/HIG sources](uiux-review.md) separate findings/measurements/tradeoffs. [37 SVG set](wireframes/README.md) is static.
 
-Tái dùng token/spacing/focus hiện có. Approval modal theo quy tắc dialog; chi tiết dài dùng page. Không thêm hiệu ứng giả tiến độ hoặc phần trăm confidence không đo. Đây chưa phải component library/UI chạy.
+## Interactive cards and information density v0.6
+
+Borrow P-047 service-action/procedure-picker structure, reuse 44 project icons/colors; no imported code/mascot/assets. Pale blue/purple groups shortcuts; success/warning retain labels/semantics.
+
+- One card: icon/short task/one supporting line/clear destination. Navigation is one named anchor; multi-action cards use headings/separate links, never nested buttons.
+- Target 2–6 word task titles, one regular subline wrapping on compact; no limits on user-entered ticket/task titles or tiny text to fit prose.
+- Consistent 24 px icons/strokes. Status text; icon-only controls named with optional tooltip/44 px target; no additional 44 icon set.
+- Disclosure button 44 px+, aria-expanded/controls, logical reading order; no essential decision data hidden in tooltips. Expansion changes no domain state.
+- Regular 3 columns for task/admin/KB; Requester assistant+2 column shortcuts. Medium 2/compact 1, task-ordered DOM. SLA/audit/tickets keep comparison tables/reflow.
+- Task card/table views share scope/filter/sort/count; toggles are not state changes/success.
+- Sources/versions/permissions/formulas/history/technical details may expand. Locks/dependencies/recipient/deadlines/exception reasons/missing data/public audience/unsent-unexecuted state stay visible when acting.
+
+Canvas/white tokens reflect P-047's light feel while content remains opaque. No animated mesh/data blur/large operational heroes. Shadows alone do not identify interaction.
+
+## Shared AI Workspace — v0.8
+
+One nav item replaces separate assistant/coordinator entries without merging rights. Regular chat/cards+activity side by side; compact same-page tabs. User-requested cards show form/preview/confirm/result; policy cards show timelines/exceptions, no success flash on model response. Trusted native forms/composers, never model HTML/code. Security forms keep secret inputs outside AI composer. v0.6 color/type/radii retained.
+
+## Button alignment — v0.8
+
+107 text/icon-text buttons in 37 SVGs center the full content group by actual bounds horizontally/vertically, 8 px icon gap. Menus/disclosures/cards/tables stay meaningfully left aligned. Future flex centering uses real text sizes, not padding-left/fixed coordinates. Loading preserves dimensions/spinner-label grouping; disabled states explain reasons. Standard 44/login 52/icon 44 targets. Project web convention, not a claim Apple mandates universal centered buttons.
+
+## Workspace identity
+
+Assistant block:24 icon/purple 48 background/25 px700 heading/four 48 px icon-label buttons centered as groups. Assistant messages retain name/sources; user bubbles identify self. Composer names its recipient/examples rather than anonymous dashboard input. Background region uses clock/blue/distinct title. Color/text/position together distinguish capabilities. Existing unavailable/error contracts remain.
+
+## Assistant/chat framing
+
+Capability and chat frames share 744 px regular artifact width, 12 px gap. One continuous chat surface 24 padding, subtle transcript/composer divider, named speakers. Activity separate; no background exception card between assistant header/chat. Compact capability→chat→activity via tabs, not screenshot scaling.
+
+## Coordination stepper
+
+Continuous visual axis:32 px numbered markers/centered connectors/next arrows; titles/states nearby. Current state explicitly labeled; future markers keep contrast. Solid traversed/dashed future, no animation-as-action evidence. Header x/y reflects applicable branch. Ordered content, not arbitrary-state buttons.
+
+## Conditional exception region
+
+Exceptions are not mandatory workspace layout. Normal UI37 starts capability/chat; insert only authorized actionable exceptions, reserving no empty height. Normal activity may have 4 automatic steps; UI23's5 approval steps are a different branch.
