@@ -1,144 +1,144 @@
 ---
 id: itoh-docs-diagrams-readme
-title: "Sơ đồ Use Case và luồng nghiệp vụ — xem trực tiếp"
+title: "Use-case and business-flow diagrams"
 type: reference
 domain: architecture
 module: diagrams
 tags: [architecture, diagrams, reference]
 priority: 2
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: derived
-purpose: "Đăng ký FIG, ký pháp, nguồn, mục đích và giới hạn của các sơ đồ."
+purpose: "Register figure IDs, notation, sources, purposes, and limits."
 ---
 
-# Sơ đồ Use Case và luồng nghiệp vụ — xem trực tiếp
+# Use-case and business-flow diagrams
 
-**Thiết kế mục tiêu, chưa triển khai/kiểm thử ứng dụng.** Các diagram dùng cùng catalog UC, state machine và ma trận quyền. Chữ, khoảng cách, đường nối và điều kiện rẽ nhánh được thể hiện theo cùng một quy ước. Sơ đồ tổng quan và năm nhóm chi tiết bao phủ **51 UC = 33 lõi + 8 AI + 10 OPS**.
+**Target design, no implementation/application testing.** All views use the same UC catalog/state machines/permissions. Consistent labels/spacing/connectors/branch conditions. Overview and five detailed groups cover **51 UC=33 core+8 AI+10 OPS**.
 
-## Cách xem và đọc sơ đồ
+## Viewing and interpretation
 
-- VS Code: mở Markdown Preview hoặc SVG Image Preview; GitHub: xem trực tiếp các SVG.
-- Actor người dùng bên ngoài đường bao hệ thống; ellipse là use case; đường liền là association.
-- AI_COORDINATOR và bộ lập lịch là thành phần nội bộ, thể hiện ở sơ đồ kiến trúc/sequence và chú giải thực hiện, không vẽ thành actor của use-case view.
-- Các khung theo vai trò là các góc nhìn của cùng IT Operations Hub; mã UC lặp vẫn là cùng nghiệp vụ.
-- Association không tự cấp quyền trên mọi bản ghi. Điều kiện assignee/nhóm/visibility/version/policy/capacity theo catalog và permissions.
+- VS Code Markdown/SVG previews; GitHub displays SVGs directly.
+- Human actors outside system boundary, use-case ellipses, solid associations.
+- AI_COORDINATOR/scheduler are internal, shown in architecture/sequences/executor notes, not human use-case actors.
+- Role frames are views of one Hub; repeated IDs denote the same use case.
+- Associations grant no blanket access; assignee/team/visibility/version/policy/capacity guards remain.
 
-## Danh mục, nguồn và loại sơ đồ
+## Inventory, sources, notation
 
-Áp dụng [quy ước tài liệu/sơ đồ](../documentation-standard.md). Mọi FIG dưới đây ở trạng thái thiết kế; chủ đề tài là owner hồ sơ, chưa có phê duyệt độc lập hoặc bằng chứng hệ thống chạy. Kiến trúc/ERD có source Mermaid trong Markdown và SVG đã render; bố cục đường nối được rà thêm. Use-case, flow và state có source vector SVG. PNG và XMind preview là bản dẫn xuất.
+Follow [conventions](../documentation-standard.md). Figures are design-stage, owned by the project owner, without independent approval/running-system evidence. Architecture/ERD maintain Mermaid in Markdown plus rendered SVG. Use-case/flow/state vector SVGs are sources; PNG/XMind previews are derived.
 
-| FIG ID | Loại / câu hỏi trả lời | Nguồn và liên kết hình | Giới hạn |
-|---|---|---|---|
-| FIG-UC00 | Use-case overview: vai trò có mục tiêu gì? | [Tổng quan](use-cases-overview.svg); UC catalog/quyền | Chọn mục tiêu tiêu biểu, không phải đủ 51 ellipse |
-| FIG-UC01 | Use-case view: tài khoản/quản trị | [UC01–09](use-cases-access.svg) | Tác vụ dùng chung và quyền Admin khác nhau |
-| FIG-UC02 | Use-case view: ticket/SLA/thông báo | [UC10–26](use-cases-ticket.svg) | Bộ lập lịch là trigger nội bộ, không human actor |
-| FIG-UC03 | Use-case view: assets/report/audit | [UC27–33](use-cases-operations.svg) | Scope chi tiết theo permissions |
-| FIG-UC04 | Use-case view: trợ lý theo yêu cầu | [UC-AI01–08](use-cases-ai.svg) | Preview/nháp khác mutation đã xác nhận |
-| FIG-UC05 | Use-case view: work/automation/KB | [UC-OPS01–10](use-cases-work-management.svg) | AI thực hiện nội bộ; publisher là capability, không role thứ năm |
-| FIG-FLOW01 | Activity flow: onboarding và ngoại lệ | [Automation](automation-flow.svg); Flow 8–10, BR-14–22 | Luồng nghiệp vụ minh họa; transaction chi tiết ở sequence |
-| FIG-FLOW02 | Nghỉ phép và giao lại | [Replanning](replanning-flow.svg); Flow 9, BR-16–19 | Cửa sổ lịch DEMO; giữ lock/việc đang làm |
-| FIG-FLOW03 | Primary flow: gửi và nghiệm thu yêu cầu | [Requester](../xmind/previews/07-flow-requester.svg); Journey 1, BR-04/08–10/14–20 | Public projection; task Done không tự đóng ticket |
-| FIG-FLOW04 | Primary flow: kỹ thuật viên | [Technician](../xmind/previews/08-flow-technician.svg); Journey 2, BR-04/05/06/08/15/16 | Nhánh Task và Ticket có vòng đời riêng |
-| FIG-FLOW05 | Primary flow: Trưởng phòng IT giám sát | [Trưởng phòng](../xmind/previews/09-flow-manager.svg); Journey 3, BR-16–19 | Policy/giám sát/ngoại lệ; không cấp Trưởng nhóm IT |
-| FIG-FLOW06 | Luồng hỗ trợ: cấp phát và thu hồi | [Tài sản](../xmind/previews/10-flow-asset.svg); Flow 4, BR-11 | M/A mutation; AI không tự cấp thiết bị |
-| FIG-FLOW07 | Luồng hỗ trợ: thu hồi quyền và chuyển giao | [Admin](../xmind/previews/11-flow-admin.svg); Flow 5, BR-01/05/12 | Khóa khẩn khi thiếu người thay cần quyết định D-40 |
-| FIG-FLOW08 | Luồng hỗ trợ: lỗi/xung đột/retry | [Phục hồi lỗi](../xmind/previews/12-flow-conflict.svg); Flow 6, NFR | Không retry mù hoặc báo thành công khi chưa commit |
-| FIG-FLOW09 | Luồng hỗ trợ: thông báo | [Thông báo](../xmind/previews/13-flow-notification.svg); Flow 7, BR-06/10/12/19 | Recheck quyền hiện tại, không lộ payload cũ |
-| FIG-MAP01 | Product map: phân rã năng lực | [Product](../xmind/previews/01-product-map.svg); phạm vi/F/BR/quyền | Thiết kế mục tiêu; không là bằng chứng khảo sát doanh nghiệp |
-| FIG-MAP06 | IA: nhóm thông tin và phạm vi màn hình | [IA](../xmind/previews/06-information-architecture.svg); SCR catalog/quyền | 36 mẫu; khung nhóm không tự cấp quyền |
-| FIG-DAG01 | Task DAG onboarding | [Task và phụ thuộc](onboarding-task-dag.svg); Flow 8 | 6 task, công sức DEMO, nhánh song song; không tự đóng ticket |
-| FIG-ST01 | Task transition view | [Task states](task-states.svg); BR-15 | 6 trạng thái/10 cạnh; guards đọc cùng BR-15 |
-| FIG-ST02 | Approval decision và execution | [Approval states](approval-states.svg); BR-18 | Hai vùng vòng đời, Approved không phải Succeeded |
-| FIG-ST03 | Ticket transition view | [Ticket states](ticket-states.svg); BR-04 | Không dùng trạng thái Task/approval thay trạng thái ticket |
-| FIG-ST04 | Asset transition view | [Asset states](asset-states.svg); BR-11 | 4 trạng thái/8 cạnh; assignment là lịch sử riêng |
-| FIG-ERD01 | ERD logic, ownership và cardinality | [Mô hình dữ liệu](../requirements/conceptual-data-model.md) | Chưa phải schema vật lý hoặc migration |
-| FIG-ERD02 | ERD: Danh tính và tổ chức | [Danh tính và tổ chức](erd-identity.svg) | Khóa/trường logic chọn lọc, giữ cardinality nguồn tổng |
-| FIG-ERD03 | ERD: Ticket, hội thoại và tệp | [Ticket, hội thoại và tệp](erd-ticket-sla.svg) | Khóa/trường logic chọn lọc, giữ cardinality nguồn tổng |
-| FIG-ERD04 | ERD: Tài sản và lịch sử cấp phát | [Tài sản và lịch sử cấp phát](erd-assets.svg) | Khóa/trường logic chọn lọc, giữ cardinality nguồn tổng |
-| FIG-ERD05 | ERD: Kế hoạch, task và dependency | [Kế hoạch, task và dependency](erd-work-plans.svg) | Khóa/trường logic chọn lọc, giữ cardinality nguồn tổng |
-| FIG-ERD06 | ERD: Kỹ năng, lịch và allocation | [Kỹ năng, lịch và allocation](erd-workforce.svg) | Khóa/trường logic chọn lọc, giữ cardinality nguồn tổng |
-| FIG-ERD07 | ERD: Policy, phiên bản và grant | [Policy, phiên bản và grant](erd-policy.svg) | Khóa/trường logic chọn lọc, giữ cardinality nguồn tổng |
-| FIG-ERD08 | ERD: Sự kiện, thực thi và audit | [Sự kiện, thực thi và audit](erd-execution.svg) | Khóa/trường logic chọn lọc, giữ cardinality nguồn tổng |
-| FIG-ERD09 | ERD: Kiến thức, ACL và chỉ mục | [Kiến thức, ACL và chỉ mục](erd-knowledge.svg) | Khóa/trường logic chọn lọc, giữ cardinality nguồn tổng |
-| FIG-ERD10 | ERD: Hội thoại và nguồn tham chiếu | [Hội thoại và nguồn tham chiếu](erd-assistant.svg) | Khóa/trường logic chọn lọc, giữ cardinality nguồn tổng |
-| FIG-ERD11 | ERD: Xác nhận ticket và chi phí AI | [Xác nhận ticket và chi phí AI](erd-confirmation-usage.svg) | Khóa/trường logic chọn lọc, giữ cardinality nguồn tổng |
-| FIG-ERD12 | ERD: Snapshot và đồng hồ SLA | [Snapshot và đồng hồ SLA](erd-sla-clocks.svg) | Khóa/trường logic chọn lọc, giữ cardinality nguồn tổng |
-| FIG-CTX01 | System context | [Context](system-context.svg); kiến trúc mục 1/2 | Phân biệt người dùng/hệ thống ngoài |
-| FIG-CNT01 | Container và đường dữ liệu | [Container](system-containers.svg); kiến trúc mục 1–5 | Module không tự thành microservice |
-| FIG-SEQ01 | Sequence model/transaction/approval | [Sequence lập/giao việc](automation-sequence.svg); BR-17–19 | Một lượt event; action tiếp theo vẫn kiểm lại |
-| FIG-SEQ02 | Sequence duyệt và thực thi | [Approval execution](approval-sequence.svg); BR-18 | Approved khác Succeeded; revalidate sau quyết định |
-| FIG-DEP01 | Deployment logic và phục hồi | [Deployment](deployment-topology.svg); kiến trúc mục 9 | Chưa hosting/HA/RPO/RTO đã chốt |
-| FIG-CMP01 | C4 C3: API components | [API](c4-components-api.svg); [source/catalog](../architecture/c4/03-components.md) | Transport/identity/domain/UoW, không microservice |
-| FIG-CMP02 | C4 C3: worker components | [Worker](c4-components-worker.svg); [source/catalog](../architecture/c4/03-components.md) | Claim/snapshot/model/revalidation/commit; queue riêng |
-| FIG-CODE01 | C4 L4: code collaboration | [Assignment](c4-code-assignment.svg); [source](../architecture/c4/04-code.md) | Lớp/file dự kiến, chưa source code |
+| FIG ID | Type / question | Source / figure | Limit |
+| --- | --- | --- | --- |
+| FIG-UC00 | Role-goal overview | [Overview](use-cases-overview.svg), UC/permissions | Representative goals, not 51 ellipses |
+| FIG-UC01 | Accounts/admin | [UC01–09](use-cases-access.svg) | Shared actions differ from Admin rights |
+| FIG-UC02 | Tickets/SLA/notifications | [UC10–26](use-cases-ticket.svg) | Scheduler internal trigger |
+| FIG-UC03 | Assets/reports/audit | [UC27–33](use-cases-operations.svg) | Detailed permission scopes |
+| FIG-UC04 | On-demand assistant | [UC-AI01–08](use-cases-ai.svg) | Drafts/previews≠confirmed mutations |
+| FIG-UC05 | Work/automation/KB | [UC-OPS01–10](use-cases-work-management.svg) | Internal AI/publisher capability, no fifth role |
+| FIG-FLOW01 | Onboarding/exceptions | [Automation](automation-flow.svg), Flow 8–10, BR-14–22 | Illustrative flow; transactions in sequences |
+| FIG-FLOW02 | Absence/reassignment | [Replanning](replanning-flow.svg), Flow 9, BR-16–19 | DEMO windows/respect locks-active work |
+| FIG-FLOW03 | Request/acceptance | [Requester](../xmind/previews/07-flow-requester.svg), Journey 1, BR-04/08–10/14–20 | Public projection, Done≠Closed |
+| FIG-FLOW04 | Technician | [Technician](../xmind/previews/08-flow-technician.svg), Journey 2, BR-04/05/06/08/15/16 | Task/Ticket distinct lifecycles |
+| FIG-FLOW05 | IT Manager supervision | [Manager](../xmind/previews/09-flow-manager.svg), Journey 3, BR-16–19 | Policies/supervision/exceptions, no Team Lead |
+| FIG-FLOW06 | Asset issue/return | [Assets](../xmind/previews/10-flow-asset.svg), Flow 4, BR-11 | M/A writes, no autonomous AI issue |
+| FIG-FLOW07 | Revocation/handover | [Admin](../xmind/previews/11-flow-admin.svg), Flow 5, BR-01/05/12 | Emergency without replacement D-40 |
+| FIG-FLOW08 | Error/conflict/retry | [Recovery](../xmind/previews/12-flow-conflict.svg), Flow 6, NFR | No blind retry/precommit success |
+| FIG-FLOW09 | Notifications | [Notifications](../xmind/previews/13-flow-notification.svg), Flow 7, BR-06/10/12/19 | Current access, not stale sensitive payloads |
+| FIG-MAP01 | Capability decomposition | [Product](../xmind/previews/01-product-map.svg), scope/F/BR/permissions | Design, not enterprise survey evidence |
+| FIG-MAP06 | Information/screen grouping | [IA](../xmind/previews/06-information-architecture.svg), SCR/permissions | 36 patterns, groups do not grant access |
+| FIG-DAG01 | Onboarding DAG | [Dependencies](onboarding-task-dag.svg), Flow 8 | 6 DEMO tasks/parallelism, no ticket auto-close |
+| FIG-ST01 | Task transitions | [Task states](task-states.svg), BR-15 | 6 states/10 edges/BRguards |
+| FIG-ST02 | Approval/execution | [Approval](approval-states.svg), BR-18 | Separate lifecycles, Approved≠Succeeded |
+| FIG-ST03 | Ticket transitions | [Tickets](ticket-states.svg), BR-04 | Task/approval states never replace ticket states |
+| FIG-ST04 | Asset transitions | [Assets](asset-states.svg), BR-11 | 4 states/8 edges, separate assignment history |
+| FIG-ERD01 | Logical ownership/cardinality | [Data model](../requirements/conceptual-data-model.md) | Not physical schema/migration |
+| FIG-ERD02 | Identity/organization | [Identity](erd-identity.svg) | Selected keys/fields, source cardinality |
+| FIG-ERD03 | Tickets/conversations/files | [Tickets](erd-ticket-sla.svg) | Selected keys/fields, source cardinality |
+| FIG-ERD04 | Assets/assignments | [Assets](erd-assets.svg) | Selected keys/fields, source cardinality |
+| FIG-ERD05 | Plans/tasks/dependencies | [Plans](erd-work-plans.svg) | Selected keys/fields, source cardinality |
+| FIG-ERD06 | Skills/calendar/allocation | [Workforce](erd-workforce.svg) | Selected keys/fields, source cardinality |
+| FIG-ERD07 | Policies/versions/grants | [Policy](erd-policy.svg) | Selected keys/fields, source cardinality |
+| FIG-ERD08 | Events/execution/audit | [Execution](erd-execution.svg) | Selected keys/fields, source cardinality |
+| FIG-ERD09 | Knowledge/ACL/index | [Knowledge](erd-knowledge.svg) | Selected keys/fields, source cardinality |
+| FIG-ERD10 | Conversations/sources | [Assistant](erd-assistant.svg) | Selected keys/fields, source cardinality |
+| FIG-ERD11 | Confirmation/AI costs | [Usage](erd-confirmation-usage.svg) | Selected keys/fields, source cardinality |
+| FIG-ERD12 | SLA snapshots/clocks | [SLA](erd-sla-clocks.svg) | Selected keys/fields, source cardinality |
+| FIG-CTX01 | System context | [Context](system-context.svg), architecture§1/2 | Users versus external systems |
+| FIG-CNT01 | Containers/data paths | [Containers](system-containers.svg), architecture§1–5 | Modules not microservices |
+| FIG-SEQ01 | Model/transaction/approval | [Planning](automation-sequence.svg), BR-17–19 | One event; subsequent actions recheck |
+| FIG-SEQ02 | Approval/execution | [Approval](approval-sequence.svg), BR-18 | Decision≠effect/postdecision validation |
+| FIG-DEP01 | Deployment/recovery | [Deployment](deployment-topology.svg), architecture§9 | Hosting/HA/RPO/RTO open |
+| FIG-CMP01 | C4 C3 API | [API](c4-components-api.svg), [source](../architecture/c4/03-components.md) | Transport/identity/domain/UoW, not microservices |
+| FIG-CMP02 | C4 C3 worker | [Worker](c4-components-worker.svg), [source](../architecture/c4/03-components.md) | Claim/snapshot/model/revalidate/commit, separate queues |
+| FIG-CODE01 | C4 L4 code collaboration | [Assignment](c4-code-assignment.svg), [source](../architecture/c4/04-code.md) | Proposed classes/files, no code |
 
-Bộ 27 preview trong [XMind](../xmind/README.md) gồm 18 mind map phân rã chủ đề (gồm Product và IA), 7 activity flow có hướng và 2 state graph FIG-ST03/04. Product/IA giữ bố cục mind map trung tâm và các nhánh hai phía; chỉ làm khung viền đậm và sáng hơn. Các flow có hướng dùng ký pháp hoạt động riêng. Không coi mind map kiến trúc/dữ liệu là thay thế FIG-CNT01 hoặc ERD logic. [Wireframe gallery](../design/wireframes/README.md) ghi screen coverage và dữ liệu minh họa, không là sơ đồ UML hoặc ứng dụng đã chạy.
+27 XMind previews comprise 18 decomposition maps (including Product/IA), 7 directed activities, 2 state graphs FIG-ST03/04. Preserve two-sided central Product/IA format/thick bright borders; activities retain their own notation. Architecture/data mind maps do not replace containers/ERDs. [Wireframes](../design/wireframes/README.md) describe coverage/DEMO data, not UML/running UI.
 
-## Kiến trúc context, container, sequence và deployment
+## Context, containers, sequences, deployment
 
-Đọc [context, container, hai sequence và deployment](architecture.md) để theo dõi trust boundary, quyền sở hữu dữ liệu, model ngoài transaction, nhánh stale/approval và topology phục hồi. Không suy thứ tự thực thi từ association use case.
+[Architecture views](architecture.md) show trust/data ownership/model-outside-TX/stale-approval/recovery. Use-case associations do not define execution order.
 
-## Tổng quan theo vai trò
+## Overview by role
 
-![Tổng quan bốn vai trò người dùng và danh tính điều phối nội bộ](use-cases-overview.svg)
+![Four roles and internal coordination identity](use-cases-overview.svg)
 
-Hình tổng quan chọn mục tiêu tiêu biểu; năm nhóm dưới đây liệt kê đủ từng mã. [Catalog](../03-use-cases.md) và [ma trận quyền](../requirements/permissions-matrix.md) quản lý điều kiện chi tiết.
+Representative goals; detailed groups list each ID. [Catalog](../03-use-cases.md)/[permissions](../requirements/permissions-matrix.md) own guards.
 
-## Tài khoản và quản trị — UC01–UC09
+## Accounts and administration — UC01–UC09
 
-![Tài khoản và quản trị](use-cases-access.svg)
+![Accounts and administration](use-cases-access.svg)
 
-Chỉ Admin tạo user/role và cấu hình SLA mặc định. Policy nghiệp vụ của Manager thuộc UC-OPS02, khác cấu hình khả dụng AI UC-AI08.
+Admin alone creates users/roles/default SLA. Manager policies UC-OPS02 differ from assistant availability UC-AI08.
 
-## Ticket, SLA và thông báo — UC10–UC26
+## Tickets, SLA, notifications — UC10–UC26
 
-![Ticket, SLA và thông báo](use-cases-ticket.svg)
+![Tickets, SLA, notifications](use-cases-ticket.svg)
 
-UC10 dùng chung Ticket service với UC-AI03 sau user xác nhận. Giữ state ticket/SLA 24/7; task/plan có mô hình riêng, AI chat/nhắc không first response.
+UC10 shares Ticket service with confirmed UC-AI03. Preserve states/24-7 SLA/separate task-plans; AI chat/reminders not first response.
 
-## Tài sản, dashboard và audit — UC27–UC33
+## Assets, dashboards, audit — UC27–UC33
 
-![Tài sản, dashboard và audit](use-cases-operations.svg)
+![Assets, dashboards, audit](use-cases-operations.svg)
 
-Giữ một asset assignment hiệu lực; audit/report bổ sung workforce/automation qua UC-OPS09, KB qua UC-OPS10. Không có AI tự cấp phát hoặc tạo user từ nội dung ticket.
+One active asset assignment; workforce/automation reporting through UC-OPS09, KB through UC-OPS10. No autonomous issue/ticket-driven user creation.
 
-## Trợ lý theo yêu cầu — UC-AI01–08
+## On-demand assistant — UC-AI01–08
 
-![Hỏi đáp, tra cứu, xác nhận ticket, nháp phản hồi và cấu hình AI](use-cases-ai.svg)
+![Q&A, lookup, confirmed actions, drafts, AI settings](use-cases-ai.svg)
 
-Hội thoại dùng quyền user. Preview chưa xác nhận không tạo ticket; reply vẫn do IT duyệt/gửi. [UC/US/AC trợ lý](../ai/use-cases-stories-and-acceptance.md).
+User-authorized conversation; unconfirmed previews create no ticket; IT reviews/sends replies. [Assistant catalog](../ai/use-cases-stories-and-acceptance.md).
 
-## Công việc, điều phối và kiến thức — UC-OPS01–10
+## Work, coordination, knowledge — UC-OPS01–10
 
-![Task, workforce, policy, điều phối, ngoại lệ, audit và KB](use-cases-work-management.svg)
+![Tasks, workforce, policies, coordination, exceptions, audit, KB](use-cases-work-management.svg)
 
-AI nền chỉ thực hiện trong policy; task đang làm/khóa/vượt quyền cần quyết định quản lý. Publisher KB là quyền được cấp, không tự thêm role người dùng.
+Background AI within policy; active/locked/out-of-authority work escalates. KB publisher is granted capability, not new role.
 
-## Automation, task DAG và điều phối lại
+## Automation, task DAG, replanning
 
-![Onboarding theo policy và nhánh ngoại lệ](automation-flow.svg)
+![Policy onboarding and exceptions](automation-flow.svg)
 
-![DAG sáu task onboarding DEMO](onboarding-task-dag.svg)
+![Six-task DEMO onboarding DAG](onboarding-task-dag.svg)
 
-![Nghỉ phép và điều phối lại theo policy](replanning-flow.svg)
+![Policy absence/replanning](replanning-flow.svg)
 
-Nguồn: [Flow 8–10](../05-user-flows.md), [BR-14–22](../requirements/business-rules.md). Không giữ transaction/lock khi chờ model. Thiếu inventory/capacity hoặc stale không được ép thực thi.
+[Flow 8–10](../05-user-flows.md)/[BR-14–22](../requirements/business-rules.md). No locks during models; shortages/stale data cannot force execution.
 
-## Task và phê duyệt có trạng thái riêng
+## Separate task and approval states
 
-![Trạng thái task](task-states.svg)
+![Task states](task-states.svg)
 
-[BR-15](../requirements/business-rules.md): Blocked chỉ trở lại Ready sau kiểm lại; Done/Cancelled không tự mở lại; task Done không tự đóng ticket.
+BR-15:Blocked→Ready after checks; Done/Cancelled not automatically reopened; Done≠ticket Closed.
 
-![Quyết định phê duyệt và trạng thái thực thi](approval-states.svg)
+![Approval and execution](approval-states.svg)
 
-[BR-18](../requirements/business-rules.md): Approved khác Succeeded; quyết định và execution tách nhau. Duyệt vẫn kiểm policy/version/capacity; stale phải đánh giá lại.
+BR-18:Approved≠Succeeded; recheck policy/version/capacity; stale re-evaluated.
 
-## ERD, kiến trúc thông tin và XMind
+## ERD, IA, XMind
 
-[ERD logic theo miền](../requirements/conceptual-data-model.md) tách 11 góc nhìn có trường khóa và cardinality; nguồn tổng FIG-ERD01 giữ đầy đủ quan hệ. [IA](../04-information-architecture.md) định nghĩa đủ 36 mẫu screen. [XMind](../xmind/README.md) giữ các node UC/story/screen và notes truy về cùng nguồn Markdown; preview dùng hình nút/nhánh nối nhau, không bảng thẻ rút gọn.
+[Logical ERD](../requirements/conceptual-data-model.md) has 11 selected-field/cardinality views; FIG-ERD01 keeps full graph. [IA](../04-information-architecture.md) defines 36 patterns. [XMind](../xmind/README.md) retains source-linked UC/story/screen notes; previews are connected diagrams, not abbreviated card tables.
 
-Ảnh PNG tổng quan trong [wireframes](../design/wireframes/README.md) được đối chiếu với SVG hiện hành. Bản vẽ UI là minh họa, không chứng minh hành vi đã chạy. Archive UI cũ chỉ dùng cho lịch sử.
+Overview PNG in [wireframes](../design/wireframes/README.md) derives from current SVG. UI illustrations prove no runtime behavior; archives historical only.

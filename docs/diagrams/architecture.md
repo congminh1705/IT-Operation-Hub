@@ -1,46 +1,46 @@
 ---
 id: itoh-docs-diagrams-architecture
-title: "Các góc nhìn kiến trúc"
+title: "Architecture views"
 type: reference
 domain: architecture
 module: diagrams
 tags: [architecture, diagrams, reference]
 priority: 2
 status: design-draft
-owner: "Chủ đề tài"
+owner: "Project owner"
 approval: needs-review
-updated: 2026-10-31
+updated: 2026-11-01
 authority: derived
-purpose: "Biểu diễn context/container/sequence/deployment từ kiến trúc mục tiêu."
+purpose: "Represent target context, containers, sequences, and deployment."
 ---
 
-# Các góc nhìn kiến trúc
+# Architecture views
 
-SVG dưới đây đã được render từ nguồn Mermaid đi kèm. Các hình mô tả thiết kế mục tiêu, không phải triển khai đã chạy. Ký pháp context/container phân tầng theo C4; sequence thể hiện thứ tự gọi và transaction. [Kiến trúc chuẩn](../technical/architecture.md), [API/event](../technical/api-design.md) và [BR-14–22](../requirements/business-rules.md) quy định hành vi.
+SVGs are rendered from accompanying Mermaid sources. Target design, not deployed systems. C4-style context/container views separate levels; sequences show order/transactions. [Architecture](../technical/architecture.md), [API/events](../technical/api-design.md), [BR-14–22](../requirements/business-rules.md) define behavior.
 
-## FIG-CTX01 — Bối cảnh và ranh giới hệ thống
+## FIG-CTX01 — System context and boundaries
 
-Bốn vai trò người dùng; AI_COORDINATOR ở trong Hub; provider ở ngoài trust boundary.
+Four user roles; AI_COORDINATOR inside Hub; provider outside trust boundary.
 
-![Bối cảnh và ranh giới hệ thống](system-context.svg)
+![System context and boundaries](system-context.svg)
 
 <details>
-<summary>Nguồn Mermaid</summary>
+<summary>Mermaid source</summary>
 
 ```mermaid
 flowchart LR
-    R["Requester<br/>Gửi / bổ sung / nghiệm thu"]
-    T["Technician<br/>Thực hiện chuyên môn"]
-    M["Trưởng phòng IT<br/>Policy / giám sát / ngoại lệ"]
-    A["Admin<br/>Tài khoản / cấu hình"]
-    H["IT Operations Hub<br/>Ticket / Task / Workforce / SLA / Assets / KB<br/>AI trợ lý + điều phối nội bộ"]
-    P["AI provider bên ngoài<br/>Model / embedding qua adapter<br/>Production: cần quyết định"]
-    R -->|"Yêu cầu của mình"| H
-    T -->|"Task, public reply, kết quả"| H
-    M -->|"Scope, can thiệp, duyệt ngoại lệ"| H
-    A -->|"Quản trị đúng quyền"| H
-    H -->|"Payload lọc; M3 chỉ DEMO"| P
-    P -->|"Output chưa tin cậy"| H
+    R["Requester<br/>Submit / clarify / accept"]
+    T["Technician<br/>Perform specialist work"]
+    M["IT Manager<br/>Policies / supervision / exceptions"]
+    A["Admin<br/>Accounts / settings"]
+    H["IT Operations Hub<br/>Ticket / Task / Workforce / SLA / Assets / KB<br/>Internal AI assistant + coordinator"]
+    P["External AI provider<br/>Models / embeddings through adapter<br/>Production: decision required"]
+    R -->|"Own requests"| H
+    T -->|"Tasks, public replies, results"| H
+    M -->|"Scope, intervention, exception approval"| H
+    A -->|"Authorized administration"| H
+    H -->|"Filtered payload; M3 DEMO only"| P
+    P -->|"Untrusted output"| H
     classDef human fill:#F5F8FC,stroke:#B8CADD,color:#14283F
     classDef system fill:#EDF4FF,stroke:#2457C5,color:#14283F,stroke-width:2px
     classDef external fill:#FFF8ED,stroke:#B58437,color:#14283F
@@ -51,40 +51,40 @@ flowchart LR
 
 </details>
 
-## FIG-CNT01 — Container và đường dữ liệu
+## FIG-CNT01 — Containers and data paths
 
-Frontend không đọc DB; broker không là nguồn chuẩn; model không giữ transaction/lock.
+Frontend has no DB access; broker is not the system of record; model waits hold no transactions/locks.
 
-![Container và đường dữ liệu](system-containers.svg)
+![Containers and data paths](system-containers.svg)
 
 <details>
-<summary>Nguồn Mermaid</summary>
+<summary>Mermaid source</summary>
 
 ```mermaid
 flowchart TB
     B["Browser<br/>Cookie session / CSRF"]
-    N["Nginx / TLS<br/>Một origin"]
+    N["Nginx / TLS<br/>One origin"]
     F["Next.js frontend<br/>Form / URL filters / polling"]
     API["FastAPI API<br/>Auth → router/schema → domain service"]
-    BT["Một Celery Beat<br/>Lịch quét định kỳ"]
+    BT["One Celery Beat<br/>Periodic scanning"]
     R[("Redis broker<br/>At-least-once")]
-    W["Celery workers<br/>Outbox / automation / SLA / indexing<br/>Domain service chung, Session riêng"]
+    W["Celery workers<br/>Outbox / automation / SLA / indexing<br/>Shared domain services, own Session"]
     PG[("PostgreSQL + pgvector<br/>Domain / sessions / event-outbox / dedup<br/>Audit / run-action / ACL / usage")]
     FS[("Private storage<br/>Local dev / S3 production")]
-    AD["Provider adapter<br/>Model ngoài DB transaction<br/>Schema + semantic validation"]
-    P["AI provider bên ngoài"]
+    AD["Provider adapter<br/>Model outside DB transaction<br/>Schema + semantic validation"]
+    P["External AI provider"]
     B -->|"HTTPS"| N
-    N -->|"Trang / assets"| F
+    N -->|"Pages / assets"| F
     N -->|"/api/v1"| API
-    API -->|"Scope + mutation atomic"| PG
-    API -->|"Download kiểm quyền cha"| FS
-    BT -->|"Lịch công việc"| R
+    API -->|"Scope + atomic mutation"| PG
+    API -->|"Parent-authorized download"| FS
+    BT -->|"Scheduled jobs"| R
     R -->|"Deliver / redeliver"| W
     W -->|"Claim/lease, revalidate, commit"| PG
-    W -->|"Publish / ack sau commit"| R
-    W -->|"Nguồn đã lọc"| FS
+    W -->|"Publish / ack after commit"| R
+    W -->|"Filtered sources"| FS
     W -->|"Budget + request"| AD
-    AD -->|"Egress theo chính sách"| P
+    AD -->|"Policy-controlled egress"| P
     P -->|"Plan / ranking / embedding"| AD
     classDef app fill:#EEF5FF,stroke:#8BA9CF,color:#14283F
     classDef data fill:#EFF8F6,stroke:#68A49B,color:#14283F
@@ -96,109 +96,109 @@ flowchart TB
 
 </details>
 
-## FIG-SEQ01 — Ticket đến đề xuất và hành động
+## FIG-SEQ01 — Ticket to proposal and action
 
-Model đề xuất; domain service kiểm lại quyền, nguồn lực và version trước commit.
+Model proposes; domain services recheck rights/resources/versions before commit.
 
-![Ticket đến đề xuất và hành động](automation-sequence.svg)
+![Ticket to proposal and action](automation-sequence.svg)
 
 <details>
-<summary>Nguồn Mermaid</summary>
+<summary>Mermaid source</summary>
 
 ```mermaid
 sequenceDiagram
-    actor U as Người gửi yêu cầu
+    actor U as Requester
     participant API as Ticket service
     participant DB as PostgreSQL
     participant W as Worker / coordinator
     participant P as Provider adapter
     U->>API: API03 create / API13 confirm (key,<br/>version)
-    API->>DB: TX1: quyền / ticket / SLA / audit /<br/>EVT01/outbox
+    API->>DB: TX1: rights / ticket / SLA / audit /<br/>EVT01/outbox
     DB-->>API: COMMIT: ticket ID / version
-    API-->>U: Ticket đã lưu, chưa tuyên bố đã giao<br/>task
-    W->>DB: Claim event/purpose, run dedup, đọc<br/>snapshot
+    API-->>U: Ticket saved, no task assignment<br/>claimed
+    W->>DB: Claim event/purpose, run dedup, read<br/>snapshot
     DB-->>W: Sources, candidates,<br/>record/policy/workforce versions
-    Note over DB,W: Kết thúc transaction đọc trước model call
+    Note over DB,W: Close read transaction before model call
     W->>DB: Reserve upper-bound budget, COMMIT
-    W->>P: Plan / DAG / ranking trong eligible<br/>IDs
-    alt Provider timeout / refusal / schema không hợp lệ
-        P-->>W: Lỗi hoặc output không đạt
-        W->>DB: Run/error, retry hữu hạn nếu<br/>transient
-        Note over DB,W: Không có plan/task/assignment nửa vời
-    else Output hợp lệ
-        P-->>W: Proposal / nguồn/lý do
+    W->>P: Plan / DAG / ranking within eligible<br/>IDs
+    alt Provider timeout / refusal / invalid schema
+        P-->>W: Error or invalid output
+        W->>DB: Run/error, bounded retry if<br/>transient
+        Note over DB,W: No partial plan/task/assignment
+    else Valid output
+        P-->>W: Proposal / sources/reasons
         W->>DB: TX2: re-read<br/>policy/grant/version/capacity/DAG
-        alt Trong policy và khả thi
+        alt Within policy and feasible
             W->>DB: Plan / task/allocation /<br/>action/audit/outbox
             DB-->>W: COMMIT to action Succeeded
-        else Thiếu quyền / stale / không có nghiệm
-            W->>DB: Draft / exception / approval hoặc<br/>Conflict, COMMIT
-            Note over DB,W: Chưa có assignment hiệu lực, tiếp FIG-SEQ02
+        else Unauthorized / stale / infeasible
+            W->>DB: Draft / exception / approval or<br/>Conflict, COMMIT
+            Note over DB,W: No effective assignment, continue FIG-SEQ02
         end
     end
-    Note over W,DB: Ack sau commit, retry cùng intent đọc kết quả<br/>cũ
+    Note over W,DB: Ack after commit, same-intent retry reads<br/>stored result
 ```
 
 </details>
 
-## FIG-SEQ02 — Phê duyệt đến kết quả thực thi
+## FIG-SEQ02 — Approval to execution outcome
 
-Approved khác Succeeded; stale, revoke hoặc thiếu capacity không được ép ghi.
+Approved differs from Succeeded; stale/revoked/insufficient capacity cannot force writes.
 
-![Phê duyệt đến kết quả thực thi](approval-sequence.svg)
+![Approval to execution outcome](approval-sequence.svg)
 
 <details>
-<summary>Nguồn Mermaid</summary>
+<summary>Mermaid source</summary>
 
 ```mermaid
 sequenceDiagram
-    actor M as Trưởng phòng IT
+    actor M as IT Manager
     participant API as Approval service
     participant DB as PostgreSQL
     participant W as Execution worker
     M->>API: API11: decision / expectedVersion
-    API->>DB: Kiểm quyền/snapshot, ghi<br/>decision/audit / EVT15
-    alt Từ chối / hết hạn / proposal bị thay
+    API->>DB: Check rights/snapshot, write<br/>decision/audit / EVT15
+    alt Rejected / expired / superseded
         DB-->>API: COMMIT: Rejected / Expired /<br/>Superseded
-        API-->>M: Không enqueue domain effect
+        API-->>M: No domain effect enqueued
     else Approved
         DB-->>API: COMMIT: Approved, execution Pending
-        API-->>M: Đã duyệt, chưa khẳng định đã phân<br/>công
+        API-->>M: Approved, assignment not yet<br/>confirmed
         W->>DB: Claim intent, execution Running
-        W->>DB: TX mới:<br/>grant/ACL/policy/version/capacity/lock
-        alt Quyền và phương án hiện tại hợp lệ
+        W->>DB: New TX:<br/>grant/ACL/policy/version/capacity/lock
+        alt Current rights and proposal valid
             W->>DB: Effect / allocation /<br/>action/audit/outbox
             DB-->>W: COMMIT: execution Succeeded
-        else Stale / revoked / thiếu capacity / bị khóa
-            W->>DB: COMMIT: Conflict, giữ<br/>proposal/decision cũ
-            Note over M,W: Đánh giá mới, không ép snapshot cũ hoặc tự nới<br/>quyền
+        else Stale / revoked / no capacity / locked
+            W->>DB: COMMIT: Conflict, retain<br/>prior proposal/decision
+            Note over M,W: Re-evaluate, no forced old snapshot or expanded<br/>authority
         end
     end
-    Note over W,DB: Lỗi effect to Failed có lý do, retry vẫn<br/>idempotent
-    Note over M,W: Approval không cấp quyền Admin chung,<br/>BR-18/D-40
+    Note over W,DB: Effect errors become Failed with reason,<br/>retries stay idempotent
+    Note over M,W: Approval grants no general Admin rights,<br/>BR-18/D-40
 ```
 
 </details>
 
-## FIG-DEP01 — Triển khai và phục hồi dự kiến
+## FIG-DEP01 — Proposed deployment and recovery
 
-Topology logic; chưa chốt hosting/HA/RPO/RTO và chưa có production chạy.
+Logical topology; hosting/HA/RPO/RTO remain undecided, no production deployment.
 
-![Triển khai và phục hồi dự kiến](deployment-topology.svg)
+![Proposed deployment and recovery](deployment-topology.svg)
 
 <details>
-<summary>Nguồn Mermaid</summary>
+<summary>Mermaid source</summary>
 
 ```mermaid
 flowchart TB
-    USER["Thiết bị người dùng"]
-    EDGE["Nginx / TLS<br/>Cổng công khai"]
-    subgraph APP["MẠNG ỨNG DỤNG RIÊNG · LINUX DỰ KIẾN"]
+    USER["User device"]
+    EDGE["Nginx / TLS<br/>Public entry"]
+    subgraph APP["PRIVATE APP NETWORK · PROPOSED LINUX"]
         direction TB
         FE["Frontend process"]
         API["API process"]
         W["Workers<br/>SLA / automation / indexing"]
-        BEAT["Một Beat"]
+        BEAT["One Beat"]
         RED[("Redis")]
         PG[("PostgreSQL / pgvector")]
         STORE[("Private files")]
@@ -210,9 +210,9 @@ flowchart TB
         W -->|"Claim / dedup / commit"| PG
         W --> STORE
     end
-    PROVIDER["AI provider<br/>Outbound theo policy / budget"]
-    BACKUP["Backup DB + files<br/>Quyền riêng / retention cần chốt"]
-    RESTORE["Restore cách ly<br/>Pause workers + chặn outbound<br/>Kiểm references / SLA / dedup"]
+    PROVIDER["AI provider<br/>Outbound under policy / budget"]
+    BACKUP["Backup DB + files<br/>Private access / retention undecided"]
+    RESTORE["Isolated restore<br/>Pause workers + block outbound<br/>Check references / SLA / dedup"]
     USER -->|"HTTPS"| EDGE
     EDGE --> FE
     EDGE -->|"/api/v1"| API
@@ -228,6 +228,7 @@ flowchart TB
 
 </details>
 
-## Điều kiện đọc và giới hạn
 
-Không có cấp Trưởng nhóm IT riêng. AI/provider không có credential domain; Trưởng phòng IT thiết lập policy, giám sát và duyệt ngoại lệ. Core cần PG/storage sẵn sàng; lỗi provider không tự làm mất khả dụng core. Broker outage có thể làm SLA scan trễ và phải quét bù. Approval không thay quyền Admin cấp tài khoản. M3 chỉ thử DEMO/test trong giới hạn D-39 khi được yêu cầu triển khai riêng.
+## Interpretation and limits
+
+No IT Team Lead tier. AI/providers have no domain credentials; IT Manager sets policy/supervises/approves exceptions. Core requires healthy PostgreSQL/storage; provider failure alone does not disable it. Broker outages may delay SLA scans and require catch-up. Approval never replaces Admin provisioning rights. Future M3 is DEMO/test only within D-39 after a separate implementation request.
