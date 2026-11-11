@@ -52,3 +52,41 @@ domain service. Visual comparison is N/A; approved HTML is context only.
 Run `pnpm.cmd test` and `pnpm.cmd typecheck` from `src/frontend` (use `pnpm` outside
 Windows). Tests verify role isolation, reset determinism, scenario/error projections
 and compile-time rejection of unsafe result/profile shapes.
+
+## FE-01.03 adapter
+
+`createAccountGateway({ mode: "demo" })` in `../api/gateway.ts` creates a fresh
+`{ mode, gateway, controls }` adapter. Omitted/real mode throws clearly; no real
+HTTP client or fallback exists. Supply `gateway` to consumers; keep DEMO `controls`
+outside product forms. No app-wide singleton is created, so instances/tests are
+isolated. Do not create a shared server-side mock instance across user requests.
+
+Login matches a reserved synthetic email (case-insensitive, trimmed) and any
+nonblank **throwaway** password. It never compares/stores a password, authenticates
+real credentials or establishes server authorization. Explicit failure scenarios
+override success. A selected successful persona scenario must match the email;
+it cannot change another account into Admin. Never use a real password here.
+
+Use `controls.selectScenario(id)` with the catalog above. Selection persists per
+operation until `clearScenarios()`, reset or completed login/logout/password change.
+Failure/pending/unknown never apply mutations. Pending is a returned loading state,
+not an unresolved promise; clear it and retry explicitly to complete the simulation.
+Unknown simulates an unconfirmed result with no mock mutation: callers must
+reconcile with current state, not treat that simulation as a guarantee about real
+network timeouts. Successful profile/read scenarios return the current signed-in
+identity, not the catalog's example requester payload.
+
+`setSessionExpiry(utc)` and `advanceTime(ms)` control a deterministic clock; no
+production TTL is assumed. Expiry/revocation clears the mock identity and protected
+navigation. The permission-change scenario downgrades the active Technician to
+Requester once, preserving ID and incrementing its version. Profile updates check
+the current version and allow only a nonblank display name up to 120 characters.
+Password inputs only need to be nonblank in DEMO; failure can be selected explicitly.
+Simulated password success revokes this mock session for re-login, retaining no
+password material. This behavior is not a finalized production rotation policy.
+
+`snapshot()` returns detached DEMO identity/navigation/time projections, not tokens,
+passwords, draft contents or real permissions. Reset restores fresh identities,
+initial time, anonymous session and no selected scenarios. The adapter never reads
+or writes localStorage/sessionStorage, cookies or network services. Checks validate
+mock UX behavior only; server security and real authentication remain untested.
