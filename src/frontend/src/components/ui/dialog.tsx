@@ -9,6 +9,8 @@ export type DialogProps = {
   description: string;
   onRequestClose: () => void;
   children: ReactNode;
+  id?: string;
+  className?: string;
 };
 
 /** Native showModal supplies top-layer rendering, inert background and focus containment. */
@@ -18,6 +20,8 @@ export function Dialog({
   description,
   onRequestClose,
   children,
+  id: dialogId,
+  className = "",
 }: DialogProps) {
   const dialog = useRef<HTMLDialogElement>(null);
   const opener = useRef<HTMLElement | null>(null);
@@ -46,7 +50,8 @@ export function Dialog({
   return (
     <dialog
       ref={dialog}
-      className="ui-dialog"
+      id={dialogId}
+      className={`ui-dialog ${className}`}
       aria-labelledby={`${id}-title`}
       aria-describedby={`${id}-description`}
       onKeyDown={(event) => {

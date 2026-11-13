@@ -59,3 +59,29 @@ and `PLAYWRIGHT_BASE_URL=http://127.0.0.1:3102` before running the suite.
 Compatibility adjustment: ESLint 9.39.5 replaces the historical ESLint 10
 candidate because the resolved Next plugin peer ranges exclude ESLint 10.
 No peer-range overrides or disabled strict checks are used.
+
+## Workspace shell (FE-02.03)
+
+`/dashboard`, `/tickets`, `/work`, `/profile`, and the other declared navigation
+destinations render honest placeholder screens. Their real feature behavior and
+session routing belong to later tasks. The ordinary shell explicitly uses the
+REQUESTER fixture until FE-03 session integration; a `role` query cannot change it.
+
+For isolated four-role review, open `/preview/workspace/requester/dashboard`,
+`/preview/workspace/technician/dashboard`, `/preview/workspace/manager/dashboard`
+or `/preview/workspace/admin/dashboard`. These developer fixture routes are not
+role switching in product navigation or a service authorization mechanism.
+`?fixture=long-name` is an optional preview-only typography stress case.
+
+`navigation.ts` projects the declared persona's role/capabilities into visible
+destinations and bounded navigation scope. It never loads a whole department for
+client filtering. Search only navigates to a pending ticket destination; logout
+only opens an explicitly unimplemented placeholder and does not claim to end a
+session. Real route/service authorization and data remain owned by later tasks.
+
+The existing sprite and default avatar from the approved design are reused.
+Playwright covers the four-role matrix, desktop rail, mobile drawer, account
+disclosure, skip link, active queries, search encoding and 320/390/768/1440 layouts.
+Set `SHELL_EVIDENCE_DIR` explicitly to save a shell handoff; default captures remain
+under ignored `test-results`. Optional reference captures still require
+`DESIGN_REFERENCE_URL`. No new runtime or test package was added for this task.
