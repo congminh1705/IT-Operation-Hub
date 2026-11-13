@@ -44,3 +44,8 @@ Gemini free-tier direction, no paid allowance; future RAG/context/LangGraph/Lang
 ## Baseline publication
 
 PO explicitly authorized pushing the complete project on 13 November 2026: final design, task cards, workflow/history, skills and maintenance tools. Machine-local caches, dependencies and secrets are excluded. Retain phase/a-frontend and one PR per completed Parent. FE-02.02 remains review; publication does not imply PO visual acceptance or Parent completion. Identify this publication by its dedicated baseline commit in git log; final remote verification is reported in the handoff.
+
+
+## Latest PO approval / next assignment
+
+PO approved FE-02.02; it is DONE. [Closure](task-history.md#task-fe-02-02-attempt-02). FE-02.03 is now explicitly authorized; FE-02.04 is not. PR #2 exists and is open on the shared phase branch; use the existing PR at Parent completion. The baseline is fully published through f4ca603, superseding earlier local-only notes.

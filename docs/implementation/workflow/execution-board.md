@@ -18,7 +18,7 @@ purpose: "Maintain the single status and owner registry for every refined execut
 
 ## 1. Scope and authority
 
-All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. FE-01.01 through FE-01.03 and FE-02.01 are **done**; FE-02.02 is in review and 225 tasks remain pending. Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
+All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. FE-01.01 through FE-01.03 and FE-02.01/.02 are **done**; 225 tasks remain pending. Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
 
 The [package registry](../README.md#4-task-tracker) holds epic state; this board alone holds task state and PO ownership. Use the [task workflow](task-workflow.md). [Parent coverage and closure](../package-task-coverage.md) maps every parent criterion to outputs and names any external integration evidence. Package readiness means defined scope; dependencies, affected decisions and future coding authorization still gate execution.
 
@@ -34,7 +34,7 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FE-01.02](../tasks/FE-01.02.md) | [FE-01](../06-frontend-first.md#fe-01) | Define the typed mock contract and synthetic fixtures | [FE-01.01](../tasks/FE-01.01.md) | PO | done |
 | [FE-01.03](../tasks/FE-01.03.md) | [FE-01](../06-frontend-first.md#fe-01) | Implement the isolated mock gateway | [FE-01.02](../tasks/FE-01.02.md) | PO | done |
 | [FE-02.01](../tasks/FE-02.01.md) | [FE-02](../06-frontend-first.md#fe-02) | Implement visual tokens and basic primitives | [FE-01.01](../tasks/FE-01.01.md) | PO | done |
-| [FE-02.02](../tasks/FE-02.02.md) | [FE-02](../06-frontend-first.md#fe-02) | Implement form feedback and accessible dialogs | [FE-02.01](../tasks/FE-02.01.md) | PO | review |
+| [FE-02.02](../tasks/FE-02.02.md) | [FE-02](../06-frontend-first.md#fe-02) | Implement form feedback and accessible dialogs | [FE-02.01](../tasks/FE-02.01.md) | PO | done |
 | [FE-02.03](../tasks/FE-02.03.md) | [FE-02](../06-frontend-first.md#fe-02) | Build the role-aware responsive shell | [FE-01.02](../tasks/FE-01.02.md), [FE-02.02](../tasks/FE-02.02.md) | PO | pending |
 | [FE-02.04](../tasks/FE-02.04.md) | [FE-02](../06-frontend-first.md#fe-02) | Implement query lifecycle and timezone helpers | [FE-01.03](../tasks/FE-01.03.md), [FE-02.02](../tasks/FE-02.02.md) | PO | pending |
 | [FE-03.01](../tasks/FE-03.01.md) | [FE-03](../06-frontend-first.md#fe-03) | Build the complete login form interaction | [FE-01.03](../tasks/FE-01.03.md), [FE-02.02](../tasks/FE-02.02.md) | PO | pending |
