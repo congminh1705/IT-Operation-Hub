@@ -29,9 +29,9 @@ the IT Operations Hub heading and a Vietnamese foundation message. No API,
 database, credentials or remote fonts are needed. Stop with Ctrl+C. For a built
 production smoke check, run `pnpm.cmd start --hostname 127.0.0.1` after `build`.
 
-Vitest is the chosen unit-test harness. There are intentionally no boilerplate
-unit tests: `test` permits an empty suite and must not be reported as behavioral
-test coverage. Future tasks add meaningful tests with their deliverables.
+Vitest runs the task-owned unit tests. Playwright exercises the generic UI in
+Chromium: keyboard containment/return, Escape, field errors, pending states,
+draft preservation, small-screen reflow and 200% CSS zoom.
 `typecheck` generates Next route types before strict TypeScript checking, so it
 also works before the first build. Lint is separate from the production build.
 
@@ -41,9 +41,20 @@ unrelated packages. Run frozen install in a fresh checkout to reproduce this set
 do not hand-edit the lockfile. Build artifacts, dependency folders, local secrets
 and TypeScript cache files are ignored by the frontend-local `.gitignore`.
 
-The approved visual baseline remains v1.1 / D-47. Visual comparison is N/A for
-this nonvisual foundation task; do not confuse the minimal route with an approved
-feature screen. See the task handoff in the local implementation documentation.
+The current workspace visual baseline is v1.3 / D-51 (Mac/Teal); D-47 login
+remains unchanged. `/preview/primitives` and `/preview/feedback` are isolated
+component previews, not completed business routes.
+
+Run `pnpm.cmd exec playwright install chromium` once, then `pnpm.cmd test:e2e`.
+An existing Chromium executable can be selected with the
+`PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` environment variable. The tests reuse the
+local dev server at port 3000 or start it if absent. By default screenshots go to
+ignored `test-results/feedback-captures`; set `FEEDBACK_EVIDENCE_DIR` explicitly
+to save a task handoff. Optional reference captures require the approved local
+design server and `DESIGN_REFERENCE_URL=http://127.0.0.1:8790`; they are skipped
+when that variable is absent. No design server is required for application tests.
+For production-render verification after `build`, set `PLAYWRIGHT_USE_BUILD=1`
+and `PLAYWRIGHT_BASE_URL=http://127.0.0.1:3102` before running the suite.
 
 Compatibility adjustment: ESLint 9.39.5 replaces the historical ESLint 10
 candidate because the resolved Next plugin peer ranges exclude ESLint 10.

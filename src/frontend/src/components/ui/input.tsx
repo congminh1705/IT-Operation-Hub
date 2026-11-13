@@ -17,7 +17,9 @@ export function Input({
         id={inputId}
         aria-invalid={error ? true : props["aria-invalid"]}
         aria-describedby={
-          error ? `${inputId}-error` : props["aria-describedby"]
+          [props["aria-describedby"], error && `${inputId}-error`]
+            .filter(Boolean)
+            .join(" ") || undefined
         }
       />
       {error && <small id={`${inputId}-error`}>{error}</small>}
