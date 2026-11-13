@@ -1,0 +1,144 @@
+{
+  "installed_on": "2026-11-12",
+  "scope": "project-only",
+  "source_revisions": {
+    "taste": "f6b76575f949707b4e3c37cd86cb44b0b98643e8",
+    "emil": "4061b67b8d976a186aca118594f54b638c5f718a"
+  },
+  "source_revision_note": "HEAD provenance only; all copied bytes verified, not a clean-checkout claim",
+  "skills": [
+    {
+      "name": "design-taste-frontend",
+      "path": ".agents/skills/design-taste-frontend",
+      "source": "D:\\taste-skill\\skills\\taste-skill",
+      "files": 1631,
+      "manifest_sha256": "dfd1190acb78995c35294bc8bdd36aa14ce54aee9b0707ce9d6d12524209721f"
+    },
+    {
+      "name": "animate",
+      "path": ".agents/skills/animate",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\animate",
+      "files": 2,
+      "manifest_sha256": "350e0f0d0f8b0d62b78959909d1d8d4ac8a0d69e5d9617fc24c54956cb0f6f2d"
+    },
+    {
+      "name": "animate-expo",
+      "path": ".agents/skills/animate-expo",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\animate-expo",
+      "files": 2,
+      "manifest_sha256": "7a3dd553e23e15959ce8b3ec8cd4c1605c0d2e576c3a484a13b989e0700a48dc"
+    },
+    {
+      "name": "animation-performance",
+      "path": ".agents/skills/animation-performance",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\animation-performance",
+      "files": 1,
+      "manifest_sha256": "071c9d9473870315b6fc3c0a9c769cb63979b62fd6e67bb8f7a2111b3385ce5c"
+    },
+    {
+      "name": "animation-vocabulary",
+      "path": ".agents/skills/animation-vocabulary",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\animation-vocabulary",
+      "files": 1,
+      "manifest_sha256": "bd473dae686e85f6f82799aa7ef2aa11d357ddf3625de000fd8f28ea747562a4"
+    },
+    {
+      "name": "apple-design",
+      "path": ".agents/skills/apple-design",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\apple-design",
+      "files": 1,
+      "manifest_sha256": "bcab965ec01d05101b817714f8ccaf68632d1697b822f65718e811119a77c049"
+    },
+    {
+      "name": "ask-sonner",
+      "path": ".agents/skills/ask-sonner",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\ask-sonner",
+      "files": 2,
+      "manifest_sha256": "bc59ef252d11095cb7722be0ed6c0b882dcd4ae06cd64b3842709a89ab868c1a"
+    },
+    {
+      "name": "break-ui",
+      "path": ".agents/skills/break-ui",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\break-ui",
+      "files": 2,
+      "manifest_sha256": "c162e1a2f0ce720cc774b336089c7c4af01bb141bdca8dd7491b8727193ad11c"
+    },
+    {
+      "name": "choreograph",
+      "path": ".agents/skills/choreograph",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\choreograph",
+      "files": 2,
+      "manifest_sha256": "5de3f7d0fbdb411fb64027b3865fe2251b11c86ea2bd7a95549ecdeea70f2b09"
+    },
+    {
+      "name": "emil-design-eng",
+      "path": ".agents/skills/emil-design-eng",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\emil-design-eng",
+      "files": 1,
+      "manifest_sha256": "f66556037b4c416dd23a5176303f00337b945343cfa70fee1f4c774fa856c7a9"
+    },
+    {
+      "name": "find-animation-opportunities",
+      "path": ".agents/skills/find-animation-opportunities",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\find-animation-opportunities",
+      "files": 1,
+      "manifest_sha256": "59646cf5cde38dd146334ae791501d335d049a57c436c0eb8b895b68db96fb70"
+    },
+    {
+      "name": "gestures",
+      "path": ".agents/skills/gestures",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\gestures",
+      "files": 1,
+      "manifest_sha256": "bca58c26ad03b499548f40f3271e861b6516941d746fbd2c70d9e02c62e09eb1"
+    },
+    {
+      "name": "improve-animations",
+      "path": ".agents/skills/improve-animations",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\improve-animations",
+      "files": 3,
+      "manifest_sha256": "4c57bd88188834434022b8ea0ea47f361963db5746198a7ce752eaef9ac221db"
+    },
+    {
+      "name": "mobile-native",
+      "path": ".agents/skills/mobile-native",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\mobile-native",
+      "files": 1,
+      "manifest_sha256": "0952ba031c849ba11dcefa4755f178457b9bca6a794e9bb6fc725aa1c1cc0dea"
+    },
+    {
+      "name": "pick-ui-library",
+      "path": ".agents/skills/pick-ui-library",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\pick-ui-library",
+      "files": 1,
+      "manifest_sha256": "6a3532136cf7f2a82dcfd8f7edd84787739749d8a9c1a8081534ee549d284de4"
+    },
+    {
+      "name": "prototype",
+      "path": ".agents/skills/prototype",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\prototype",
+      "files": 2,
+      "manifest_sha256": "c7e70974979da914e45040a3ce31865fb94e7faef09c2cf188d19881a46eda42"
+    },
+    {
+      "name": "remove-animations",
+      "path": ".agents/skills/remove-animations",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\remove-animations",
+      "files": 1,
+      "manifest_sha256": "2931a063aa02b80e1b40c5f20a9748af095e8cddb2c58b0fe3a47e71ea61c701"
+    },
+    {
+      "name": "review-animations",
+      "path": ".agents/skills/review-animations",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\review-animations",
+      "files": 2,
+      "manifest_sha256": "7daf5ce2a323ab8b1e846e3071d39732c1a32004341ca9ca6589d58757c978d2"
+    },
+    {
+      "name": "write-swift",
+      "path": ".agents/skills/write-swift",
+      "source": "D:\\EMIL-animation-design-skill\\skills\\skills\\write-swift",
+      "files": 1,
+      "manifest_sha256": "7ff7bdc61fe95535b2be82af72e5e948599b72ccf189a6ac9038c6297bd934f5"
+    }
+  ]
+}

@@ -7,12 +7,14 @@ module: delivery
 tags: [project, delivery, planning]
 priority: 1
 status: planned
-owner: "Project owner"
+owner: PO
 approval: needs-review
-updated: 2026-11-01
+updated: 2026-11-09
 authority: primary
 purpose: "Describe the roadmap, epics/dependencies, and validation plan without authorizing implementation."
 ---
+> **Current presentation: v1.3 / D-51, approved by PO.** See [approved format](design/approved-format.md). All post-login screens use the selected Mac/Teal style; only coordination uses Night City; login stays unchanged. Current sources and renders cover all 47 grouped screens and four dashboards. Earlier measurements below remain historical evidence; application implementation and individual PO visual acceptance remain task-owned.
+
 
 # Design status and M0–M5 roadmap
 
@@ -66,13 +68,13 @@ Each future result needs commit/build/environment, fixtures, steps, expected/act
 - AI: fixed clear/missing-data/understaffed/cycle/sudden-absence/unauthorized/duplicate/stale/provider-failure/prompt-injection cases. Separate model failures from domain execution; suitable mocks do not replace A11.
 - Core: retain 47 AC, 10 AC-X, 12 TC-SLA; support 8 AC-AI/18 TC-AI; coordination AC-OPS01–12 and A1–A13.
 - Operations: clean setup, one migration run per release, restart persistence, outbox replay, isolated restore/data reconciliation; no RPO/RTO promises before agreement/measurement.
-- UX/research: interviews/tree tests/usability/keyboard/responsive tests have not run. 37 SVGs (34 UI + 3 boards) illustrate 36 IDs, including all 7 OPS; not every state/breakpoint or assistive-technology test is covered.
+- UX/research: interviews/tree tests/usability/keyboard/responsive tests have not run. Owner-approved v1.1 provides four dashboards and 47 grouped specimens across all 36 IDs, including all 7 OPS; not every state/breakpoint or assistive-technology test is covered.
 
 ## Conditions for implementation
 
 ### Plan structure and dependencies
 
-The plan is **ROADMAP_DRAFT / implementation not activated**. M1–M5 goals are described, not execution instructions. Every epic below is **EPIC_PROPOSED**; no implementation tasks have been generated or started. The project owner is the product owner; delivery/verification owners must be assigned after a separate implementation request.
+The plan is **ROADMAP_DRAFT / implementation not activated**. System epics below remain proposed capability groupings. D-43 confirms frontend-first task planning, and D-44 requests complete decomposition: [88 scoped packages](implementation/README.md) now have [230 pending executable tasks](implementation/workflow/execution-board.md), covering [all 67 stories](implementation/coverage.md) and [all 264 package criteria](implementation/package-task-coverage.md). Phase A has 63 frontend tasks and exits at FE-18.03 before the 137 decision/service tasks in B, 16 integration tasks in C and 14 acceptance tasks in D. Package readiness means bounded specifications exist; it does not satisfy dependencies, resolve D-40 choices or start coding. M1-M5 remain capability gates. No implementation is active or accepted.
 
 | Epic | Milestone | Scope / acceptance outcome | Dependencies |
 | --- | --- | --- | --- |

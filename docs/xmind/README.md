@@ -7,12 +7,14 @@ module: mindmaps
 tags: [design, mindmaps, reference]
 priority: 2
 status: design-draft
-owner: "Project owner"
+owner: PO
 approval: needs-review
 updated: 2026-11-01
 authority: derived
 purpose: "Define viewing, sources, coverage, and master/subset relationships for XMind."
 ---
+> **Current presentation: v1.3 / D-51, approved by PO.** See [approved format](../design/approved-format.md). All post-login screens use the selected Mac/Teal style; only coordination uses Night City; login stays unchanged. Current sources and renders cover all 47 grouped screens and four dashboards. Earlier measurements below remain historical evidence; application implementation and individual PO visual acceptance remain task-owned.
+
 
 # IT Operations Hub diagrams — XMind
 
@@ -43,7 +45,7 @@ Core IDs remain; work/coordination/source links added. Four AI sheets cover assi
 | [04 Flows](04-user-flows.xmind) | 7 | 7 core views with confirmation/replanning/approval |
 | [05 Rules](05-business-rules.xmind) | 5 | States/SLA/assets/priority/model/BR-14–22 |
 | [06 Backlog](06-invest-backlog.xmind) | 1 | 67 distinct stories:47 core+8 AI+12 OPS, AC/dependency notes |
-| [07 UI/UX](07-uiux.xmind) | 2 | UI/quality/OPS coverage, 37 v0.8 UI/board images |
+| [07 UI/UX](07-uiux.xmind) | 2 | UI/quality/OPS coverage, 37 current v1.3 canonical images; D-51 current format metadata |
 | [08 AI](08-ai-assistant.xmind) | 4 | Assistant/coordination, 8 UC-AI+10 UC-OPS/story-AC references, 3 assistant images |
 
 ## SVG previews from the same topic trees
@@ -61,7 +63,7 @@ Core IDs remain; work/coordination/source links added. Four AI sheets cover assi
 
 ## Coverage and embedded images
 
-37 SVGs (34 UI+3 boards) illustrate 36 IDs through views/boards/context, including 7 OPS. Master/UI archives embed all 37 current renders; AI archive retains 3 assistant resources. SVGs are image sources, not runtime screenshots/XMind controls. Some patterns share views; not every state/breakpoint. v0.3 archive historical only.
+The retained v1.1 layout set has four dashboards and 47 grouped specimens mapped to 36 IDs; current presentation is v1.3 / D-51. Master and UI files each embed 37 current v1.3 renders under stable resource names; the AI file embeds 3 current assistant renders. These are design captures, not a working application. See [current sources](../design/gallery-manifest.json) and [approval](../design/approval.md). Superseded XMind/image copies have been removed at the owner's request; current figures are explicitly classified in the gallery manifest. XMind metadata records D-51 and figure version 1.2; this is a design render, not application acceptance.
 
 [Logical ERD](../requirements/conceptual-data-model.md)/[automation flows](../05-user-flows.md) are separate. Topic trees do not replace ERD/schema/[permissions](../requirements/permissions-matrix.md).
 
@@ -73,9 +75,9 @@ Each root note identifies topic Markdown/permissions/conventions. XMind decompos
 
 R/T/M/A human actors; AI_COORDINATOR/scheduler internal. IT Manager=Head of IT; Teams add no Team Lead tier. Master/subsets retain matching IDs/content. Old UI archives never determine current behavior.
 
-## UI/UX v0.8 images
+## UI/UX v1.1 images
 
-Current [gallery](../design/wireframes/README.md). UI topics follow gallery, preserve old IDs/master-subset equality. Preview 20 comes from the same tree; Product/IA format and technical diagrams retained. 37 PNGs in master/UI are SVG renders, not competing designs.
+Current [gallery](../design/wireframes/README.md). UI topics follow gallery, preserve old IDs/master-subset equality. Preview 20 comes from the same tree; Product/IA format and technical diagrams retained. The 37 PNGs in master/UI are captures of current HTML or current AI SVG sources, not competing old designs.
 
 ## D-42 — One AI Workspace
 
@@ -83,4 +85,4 @@ Product/IA/AI/native UI images reflect one workspace. Retain topic/sheet IDs, 36
 
 ## AI Workspace: normal and exception
 
-UI37 normal default has no approval card; UI23 explicitly exception. Same route/screen IDs, independent fixtures; 37 master/UI images+3 AI resources=77 resource entries. Image notes reference current titles/variants, not old default UI23 names.
+UI37 normal default has no approval card; UI23 explicitly exception. Same route/screen IDs, independent fixtures; 37 master images + 37 UI subset images + 3 AI subset images = 77 updated v1.1 resource entries. Image notes reference current titles/variants, not old default UI23 names.

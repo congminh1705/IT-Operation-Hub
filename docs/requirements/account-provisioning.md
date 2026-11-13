@@ -7,7 +7,7 @@ module: identity
 tags: [domain, identity, reference]
 priority: 1
 status: design-draft
-owner: "Project owner"
+owner: PO
 approval: needs-review
 updated: 2026-11-01
 authority: primary
@@ -62,10 +62,10 @@ Head submits a service request naming the account; Admin verifies/locks/revokes 
 
 | v0.6 design | Screen | Snapshot / meaning |
 | --- | --- | --- |
-| [Requester](../design/wireframes/16-dashboard-requester.svg) | SCR10 | Linh DEMO personal data; Pending reply and Resolved acceptance |
-| [Admin](../design/wireframes/17-dashboard-admin.svg) | SCR12/SCR60 | TKT-000123 account provisioning differs from TKT-000125 login support |
-| [Provisioning ticket](../design/wireframes/18-ticket-account-provisioning.svg) | SCR22 → SCR60 | DEMO head is requester; employee remains description content |
-| [Create-user form](../design/wireframes/27-admin-user-create.svg) | SCR60 | Employee DEMO B, demo-b@example.invalid; default Requester; empty password |
+| [Requester](../design/final/dashboard.html?role=requester&capture=1) | SCR10 | Linh DEMO personal data; Pending reply and Resolved acceptance |
+| [Admin](../design/final/dashboard.html?role=admin&capture=1) | SCR12/SCR60 | TKT-000123 account provisioning differs from TKT-000125 login support |
+| [Provisioning ticket](../design/final/02-tickets.html#provision) | SCR22 → SCR60 | DEMO head is requester; employee remains description content |
+| [Create-user form](../design/final/08-admin-states.html#user-create) | SCR60 | Employee DEMO B, demo-b@example.invalid; default Requester; empty password |
 
 All fictitious, not seeds/queries/app screenshots. Do not explain current figures using v0.4 names/timelines/KPIs. TKT-000123 authority requires Admin verification; opening a form creates no user; creating a user does not resolve/close the ticket. Requester accepts under BR-04.
 

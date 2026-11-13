@@ -6,15 +6,23 @@ domain: design
 module: content
 tags: [design, content, reference]
 priority: 1
-status: design-draft
-owner: "Project owner"
-approval: needs-review
-updated: 2026-11-01
+status: design-approved
+owner: PO
+approval: approved
+approved_by: PO
+approved_on: 2026-11-12
+decision: D-51
+updated: 2026-11-12
 authority: primary
 purpose: "Standardize terminology, messages, errors, and interface states."
 ---
+> **Current presentation: v1.3 / D-51, approved by PO.** See [approved format](approved-format.md). All post-login screens use the selected Mac/Teal style; only coordination uses Night City; login stays unchanged. Current sources and renders cover all 47 grouped screens and four dashboards. Earlier measurements below remain historical evidence; application implementation and individual PO visual acceptance remain task-owned.
+
 
 # UI content, errors, and states
+
+**Current presentation: PO-approved v1.3 (D-51); original D-47 login retained.** [Design index](README.md) · [Approval scope](approval.md). Target business and accessibility behavior remains required; prototype checks do not prove production implementation.
+
 
 ## Writing principles
 
@@ -123,7 +131,7 @@ Next-step banners address the correct person: R replies/accepts; T executes/repo
 | Admin user | Empty password/requester≠employee | No redisplay/auto-close; last-Admin/handover invariants |
 | KB/notification | Current ACL; no retained sensitive revoked preview | Readers no publishing; read notification does not edit ticket |
 
-[Current SVGs](wireframes/README.md) are DEMO snapshots, not operational sources. Preserve API/session/CSRF/expectedVersion/idempotency contracts.
+[Current design specimens](README.md) are DEMO snapshots, not operational sources. Preserve API/session/CSRF/expectedVersion/idempotency contracts.
 
 ## Cards, icons, details v0.6
 
@@ -143,7 +151,7 @@ Account/access cards request current-user service. New-user requests still need 
 
 Disclosure has local loading/empty/error/keyboard/names. Disabled reasons cannot exist only on hover. Compact warnings/actions remain contextual; long user data is not truncated away. SVG controls are static.
 
-## App actions inside AI Workspace — v0.8
+## App actions inside AI Workspace — v1.1
 
 D-42 permits the same trusted composer inside workspace or ticket, superseding handoff-only replies. Cards show resource/audience/editable payload/preview/specific confirmation verb. Reply/progress/approval buttons are user-confirmed native commands; Ask AI/Open card are not mutations. No generic Agree for multiple actions or implicit mutation chains from one message.
 
@@ -151,7 +159,7 @@ Only native-service outcomes show Sent/Saved; timeouts show Unknown with outcome
 
 Sensitive admin cards open trusted detail forms; no secret prefill/chat/prompt/history. Landing shortcuts remain navigation; workspace native forms may submit when implemented, not yet now.
 
-## Login copy — v0.8
+## Login copy — v1.1
 
 | Situation | Vietnamese content / behavior |
 | --- | --- |

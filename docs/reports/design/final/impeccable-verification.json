@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-13",
+  "mode": "Operate",
+  "scope": "final design references; login excluded; no application/task lifecycle changes",
+  "desktop": {
+    "width": 1440,
+    "passed": 257,
+    "failed": 0
+  },
+  "mobile": {
+    "width": 390,
+    "passed": 257,
+    "failed": 0
+  },
+  "unique_captures_refreshed": 63,
+  "affected_captures_rerendered": 23,
+  "browser_warnings": 0,
+  "protected_login_hashes_match": 7,
+  "canonical_figures": 37,
+  "xmind_placements": 77,
+  "impeccable_cli_detector": "not run: engine/cache unavailable; playbooks read directly",
+  "application_acceptance": "not claimed"
+}

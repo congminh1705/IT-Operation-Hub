@@ -29,5 +29,5 @@
     "login.html"
   ],
   "scope_change": "presentation acceptance only; no added features or dependency changes",
-  "artifact_note": "All final application screenshots captured against production build. Current task/history/context files remain local with the pre-existing planning baseline."
+  "artifact_note": "Production captures verified. PO subsequently authorized publishing the full design/planning/execution baseline in a separate commit on 13 November 2026."
 }

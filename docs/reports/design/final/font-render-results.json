@@ -1,0 +1,450 @@
+[
+  {
+    "id": "01-account-login",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\01-account-login.png (1440x1316, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "01-account-profile",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\01-account-profile.png (1440x1078, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "01-account-security",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\01-account-security.png (1440x1117, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "02-tickets-tickets",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\02-tickets-tickets.png (1440x1168, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "02-tickets-my-tickets",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\02-tickets-my-tickets.png (1440x1125, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "02-tickets-create",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\02-tickets-create.png (1440x1440, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "02-tickets-ticket-it",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\02-tickets-ticket-it.png (1440x1602, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "02-tickets-ticket-requester",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\02-tickets-ticket-requester.png (1440x1605, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "02-tickets-ticket-active",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\02-tickets-ticket-active.png (1440x1125, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "02-tickets-ticket-result",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\02-tickets-ticket-result.png (1440x1125, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "02-tickets-provision",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\02-tickets-provision.png (1440x1977, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "02-tickets-assign",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\02-tickets-assign.png (1440x1253, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "02-tickets-transition",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\02-tickets-transition.png (1440x1313, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "02-tickets-priority",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\02-tickets-priority.png (1440x1175, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "03-work-work",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\03-work-work.png (1440x1453, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "03-work-my-work",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\03-work-my-work.png (1440x1453, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "03-work-plan",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\03-work-plan.png (1440x1268, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "03-work-progress",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\03-work-progress.png (1440x1288, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "04-workforce-workforce",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\04-workforce-workforce.png (1440x1679, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "05-ai-ai-normal",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\05-ai-ai-normal.png (1440x1704, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "05-ai-ai-requester",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\05-ai-ai-requester.png (1440x1762, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "05-ai-ai-tech",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\05-ai-ai-tech.png (1440x1762, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "05-ai-ai-exception",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\05-ai-ai-exception.png (1440x1897, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "05-ai-ai-approval",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\05-ai-ai-approval.png (1440x1704, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "05-ai-ai-states",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\05-ai-ai-states.png (1440x1520, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "05-ai-policies",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\05-ai-policies.png (1440x1267, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "06-knowledge-assets-knowledge",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\06-knowledge-assets-knowledge.png (1440x1078, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "06-knowledge-assets-article",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\06-knowledge-assets-article.png (1440x1095, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "06-knowledge-assets-knowledge-edit",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\06-knowledge-assets-knowledge-edit.png (1440x1173, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "06-knowledge-assets-assets",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\06-knowledge-assets-assets.png (1440x1078, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "06-knowledge-assets-my-assets",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\06-knowledge-assets-my-assets.png (1440x1078, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "06-knowledge-assets-asset-form",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\06-knowledge-assets-asset-form.png (1440x1206, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "06-knowledge-assets-asset",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\06-knowledge-assets-asset.png (1440x1144, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "06-knowledge-assets-asset-action",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\06-knowledge-assets-asset-action.png (1440x1475, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "07-monitoring-reports",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\07-monitoring-reports.png (1440x1538, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "07-monitoring-notifications",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\07-monitoring-notifications.png (1440x1078, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "07-monitoring-audit",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\07-monitoring-audit.png (1440x1078, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "08-admin-states-users",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\08-admin-states-users.png (1440x1185, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "08-admin-states-user-create",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\08-admin-states-user-create.png (1440x1209, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "08-admin-states-departments",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\08-admin-states-departments.png (1440x1185, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "08-admin-states-teams",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\08-admin-states-teams.png (1440x1185, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "08-admin-states-categories",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\08-admin-states-categories.png (1440x1185, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "08-admin-states-sla",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\08-admin-states-sla.png (1440x1398, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "08-admin-states-ai-settings",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\08-admin-states-ai-settings.png (1440x1185, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "08-admin-states-forbidden",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\08-admin-states-forbidden.png (1440x1078, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "08-admin-states-not-found",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\08-admin-states-not-found.png (1440x1078, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "08-admin-states-states",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\08-admin-states-states.png (1440x1291, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "dashboard-requester",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\dashboard-requester.png (1440x1294, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "dashboard-technician",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\dashboard-technician.png (1440x1303, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "dashboard-manager",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\dashboard-manager.png (1440x1729, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "dashboard-admin",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\dashboard-admin.png (1440x1729, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "mobile-01-account",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\mobile\\01-account.png (390x1602, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "mobile-02-tickets",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\mobile\\02-tickets.png (390x1564, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "mobile-03-work",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\mobile\\03-work.png (390x2693, 3 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "mobile-04-workforce",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\mobile\\04-workforce.png (390x3121, 4 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "mobile-05-ai",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\mobile\\05-ai.png (390x1162, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "mobile-06-knowledge-assets",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\mobile\\06-knowledge-assets.png (390x1921, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "mobile-07-monitoring",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\mobile\\07-monitoring.png (390x2080, 3 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "mobile-08-admin-states",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\mobile\\08-admin-states.png (390x1417, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "catalog",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\catalog.png (1440x1797, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "mobile-ticket-requester",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\mobile\\ticket-requester.png (390x2819, 3 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "mobile-ticket-active",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\mobile\\ticket-active.png (390x1603, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "font-specimen-desktop",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\font-specimen-desktop.png (1440x2071, 3 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "font-specimen-mobile",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\font-specimen-mobile.png (390x3125, 4 screens)\n",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,89 @@
+/* Software workspace. Client-requested KPI edges and the Night City remain. */
+:root{--ease:cubic-bezier(.2,.8,.2,1)}
+html body.taste-ui,html.violet body.taste-ui{--canvas:#f5f7fa;--paper:#f5f7fa;--surface:#fff;--ink:#233040;--text:#233040;--muted:#5e6d7e;--line:#dce3eb;--blue:#2468df;--accent:#2468df;--blue-light:#eaf1fd;--purple:#3466a3;--purple-light:#eaf1fd;--control:#cbd7e5;--rail:#1b2734;--type-page:30px;--type-section:18px;background:var(--paper);color:var(--ink);font:14px/1.65 Inter,sans-serif;caret-color:#2468df;scrollbar-color:#aab9ca #f5f7fa;--button-bg:#2468df}
+body.taste-ui ::selection{background:#cfe2ff;color:#18375c}
+html body.taste-ui :is(h1,.head h1),html.violet body.taste-ui h1{font-family:Manrope,sans-serif;font-size:30px;font-weight:700;line-height:1.3;letter-spacing:-.035em;color:#233040}
+html body.taste-ui :is(h2,.panel-head h2),html.violet body.taste-ui h2{font-family:Manrope,sans-serif;font-size:18px;font-weight:650;letter-spacing:-.02em;color:#233040}
+html body.taste-ui :is(h3,.panel h3),html.violet body.taste-ui h3{font-family:Manrope,sans-serif;color:#233040}
+html body.taste-ui :is(.subtitle,.muted,.small,.meta,.footer,.status-note,.code,dt,.crumb,.field small),html.violet body.taste-ui :is(.page-heading p,.capacity-caption,.capacity-footnote,.ticket-name .code,.table-footer,.decision-meta,.decision-item p){color:#5e6d7e}
+html body.taste-ui :is(.rail,.sidebar),html.violet body.taste-ui .sidebar{background:#1b2734;border-color:#344255}
+html body.taste-ui .rail :is(a,.nav,.nav-label,.who,small,strong),html.violet body.taste-ui :is(.nav-item,.nav-label,.help-link,.side-user small){color:#c7d3e2}
+html body.taste-ui .rail .nav.active,html.violet body.taste-ui .nav-item.active{background:#e3edfc;color:#193e70;box-shadow:inset 3px 0 #72a3f3}
+html body.taste-ui .rail .nav.ai{color:#c7d3e2}
+html body.taste-ui .rail .who,html body.taste-ui .rail .who *,html.violet body.taste-ui .side-user{color:#d6e0ec!important}
+html body.taste-ui .rail .btn,html.violet body.taste-ui .organization{background:#243447;color:#d6e0ec;border-color:#41526a}
+html.violet body.taste-ui .organization :is(svg,span){color:#c5d5e9}
+html.violet body.taste-ui .side-user{border-color:#40516a}
+html body.taste-ui :is(.topbar,.panel,.card,.task-card,.kanban-col,.auth-form,.modal-head,.modal-body,.modal-foot,dialog,.review-questions,.review-note,.panel-head,.panel-foot,.composer,.message,.activity-item,.context-card,.form-section,.list-card,.task){background:#fff;color:#233040;border-color:#dce3eb}
+html body.taste-ui :is(.panel,.list-card,.task){border-radius:8px;box-shadow:none}
+html body.taste-ui :is(.review-tabs,.review-bar),html.violet body.taste-ui .review-bar{background:#eef2f7;color:#455c76;border-color:#dce3eb}
+html body.taste-ui .review-bar :is(a,small,strong){color:#455c76}
+html body.taste-ui .review-tabs a{background:transparent;border-color:transparent;color:#455c76;border-radius:5px}
+html body.taste-ui .review-tabs a.active{background:#fff;border-color:#cbd7e5;color:#1b58b4;box-shadow:0 1px 3px #213d5d0c}
+html body.taste-ui :is(.btn,.button),html.violet body.taste-ui .button{font-family:Manrope,sans-serif;font-size:13px;font-weight:650;border-radius:5px;background:#fff;border-color:#cbd7e5;color:#314d6d;box-shadow:none;text-shadow:none}
+html body.taste-ui :is(.btn.primary,.button:not(.secondary)),html.violet body.taste-ui .button:not(.secondary){background:#2468df;border-color:#2468df;color:#fff}
+html body.taste-ui .btn.danger{background:#a73356;border-color:#a73356;color:white}
+html body.taste-ui .btn.purple{background:#eaf1fd;color:#1d56a8;border-color:#cbdcf8}
+html body.taste-ui :is(input,select,textarea){background:#fff!important;color:#233040!important;border-color:#cbd7e5!important;box-shadow:none!important}
+html body.taste-ui :is(input,textarea)::placeholder{color:#64758b!important}
+html body.taste-ui :is(.tile,.avatar),html.violet body.taste-ui :is(.avatar,.asset-icon){background:#e9f0fb;color:#3a6299}
+html body.taste-ui .rail .brand .tile{background:#2468df;color:white}
+html body.taste-ui :is(.lane,.dag,.tabs){background:#edf2f8;border-color:#d7e0ec;color:#233040}
+html body.taste-ui .dag .node{background:#fff;color:#233040;border-color:#cbd7e5}
+html body.taste-ui :is(.task p,.list-card p){color:#5e6d7e}
+html body.taste-ui .panel-head{padding-top:22px;padding-bottom:18px;align-items:center}
+html body.taste-ui .head,html.violet body.taste-ui .page-heading{padding-bottom:22px;border-bottom:1px solid #dce3eb;margin-bottom:24px;align-items:center}
+html body.taste-ui th,html.violet body.taste-ui .ticket-table th{background:#f6f8fb;color:#536780;font-weight:600}
+html body.taste-ui :is(td,th,.list-line,.line,.timeline,.timeline-item,.task-row,.row){border-color:#e1e7ee;color:#233040}
+html body.taste-ui .row-title{color:#233040}
+html body.taste-ui .tabs :is(button,a){border-radius:0;background:transparent;color:#536780;border-bottom:2px solid transparent}
+html body.taste-ui .tabs :is(button.active,a.active,button[aria-pressed=true]){background:transparent;color:#1955ad;border-bottom-color:#2468df}
+html body.taste-ui :is(.pill,.badge){background:#edf2f9;color:#3f5c81;text-shadow:none}
+html body.taste-ui .pill.blue{background:#eaf1fd;color:#285ca5}html body.taste-ui .pill.green{background:#e8f2e9;color:#386b4b}html body.taste-ui .pill.amber{background:#fff4dc;color:#8b5b0f}html body.taste-ui .pill.red{background:#fae9ef;color:#a73356}
+html body.taste-ui :is(.banner,.notice,.callout,.info,.note,.system-note){background:#edf3fd;border-color:#cbdcf7;color:#365b8a}
+html body.taste-ui .banner.amber{background:#fff4dc;color:#8b5b0f;border-color:#e5d3ac}
+html body.taste-ui .banner.red{background:#fae9ef;color:#a73356;border-color:#e7b9c8}
+html body.taste-ui .stat{border-top-color:#3f7add}html body.taste-ui .stat .value{color:#285ca5}
+html body.taste-ui :focus-visible,html.violet body.taste-ui :focus-visible{outline-color:#2468df}
+html body.taste-ui .rail :focus-visible,html.violet body.taste-ui .sidebar :focus-visible{outline-color:#aacfff}
+html body.taste-ui .ai-canvas,html body.taste-ui .svg-review{background:#f5f7fa}
+html body.taste-ui .svg-review img{border-color:#d1dce9;background:#fff}
+html body.taste-ui .spectrum-chart{background:#f7f9fc!important;border-color:#d3dfed!important}
+html body.taste-ui .spectrum-chart :is(.spectrum-chart-unit,.spectrum-chart-grid span,.spectrum-chart-date,.spectrum-chart-bottom,.spectrum-chart-bottom b,.spectrum-data-bar>b,.spectrum-chart-legend>span){color:#455c76!important}
+html.violet body.taste-ui .filter[aria-pressed=true]{background:#eaf1fd;color:#245ca7}
+html.violet body.taste-ui .text-button{color:#245ca7}
+html.violet body.taste-ui .capacity-fill{background:#618cce}
+html.violet body.taste-ui .capacity-track{background:#e0e8f4}
+html.violet body.taste-ui .journey-panel{background:#edf3fc;border-color:#cddbef}
+html.violet body.taste-ui .journey-copy h3{font-family:Manrope,sans-serif;font-size:27px;font-weight:650;color:#233040}
+html.violet body.taste-ui .journey-copy p{color:#536780}
+html.violet body.taste-ui .journey-step.current i{background:#fff;border-color:#2468df;box-shadow:0 0 0 4px #dce9fc}
+html.violet body.taste-ui .journey-step.done i{background:#618cce;border-color:#618cce}
+html.violet body.taste-ui .shift-title{background:#edf3fc}
+html.violet body.taste-ui .shift-row.active{background:#f0f5fd;border-left-color:#2468df}
+html.violet body.taste-ui .range-switch button[aria-pressed=true]{background:#eaf1fd;color:#245ca7}
+html.violet body.taste-ui .dispatch-queue-scope{color:#365b8a;border-color:#7da9e9}
+html.violet body.taste-ui .queue-box{border-color:#d4dfeb;border-radius:8px}
+html.violet body.taste-ui .city-building{transition:transform 150ms cubic-bezier(.2,.8,.2,1);transform-box:fill-box;transform-origin:center}
+@media(hover:hover) and (pointer:fine){html.violet body.taste-ui .city-building:hover{transform:translateY(-2px)}}
+@media(prefers-reduced-motion:reduce){html.violet body.taste-ui .city-building{transition:none!important;transform:none!important}}
+html body.taste-ui .list-card{position:relative;text-decoration:none}
+html body.taste-ui .list-card:after{content:'↗';position:absolute;right:20px;top:20px;color:#6a88ae}
+html body.taste-ui .list-card .tile{background:transparent;padding:0;justify-content:flex-start;width:30px}
+html body.taste-ui .three:has(>a.list-card){display:block;background:#fff;border-block:1px solid #dce3eb}
+html body.taste-ui .three>a.list-card{display:grid;grid-template-columns:40px minmax(0,1fr) 180px;gap:4px 18px;padding:22px 24px;border:0;border-bottom:1px solid #e1e7ee;border-radius:0;background:transparent;align-items:start}
+html body.taste-ui .three>a.list-card:last-child{border-bottom:0}
+html body.taste-ui .three>a.list-card>.tile{grid-column:1;grid-row:1 / span 3;margin-top:4px}
+html body.taste-ui .three>a.list-card>p:first-of-type{grid-column:2;grid-row:1;font-size:13px;margin:0}
+html body.taste-ui .three>a.list-card>h3{grid-column:2;grid-row:2;margin:2px 0!important;font-size:17px}
+html body.taste-ui .three>a.list-card>p:nth-of-type(2){grid-column:2;grid-row:3;margin:4px 0 0;max-width:68ch}
+html body.taste-ui .three>a.list-card>p:last-of-type{grid-column:3;grid-row:2;align-self:center;margin:0;padding-right:24px;text-align:right;font-size:13px}
+@media(max-width:720px){html body.taste-ui .three>a.list-card{grid-template-columns:30px minmax(0,1fr);gap:4px 12px;padding:20px 16px}html body.taste-ui .three>a.list-card>p:last-of-type{grid-column:2;grid-row:4;text-align:left;padding:10px 0 0}html body.taste-ui .three>a.list-card>h3{font-size:16px}}
+html body.taste-ui .kanban{gap:18px}
+html body.taste-ui .lane{padding:14px;background:#eaf0f7}
+html body.taste-ui .lane h2{font-size:14px;margin-bottom:18px;color:#455c76}
+html body.taste-ui .task{padding:18px;border-color:#d9e2ed;margin-bottom:12px}
+html body.taste-ui .task .btn{background:#f7f9fc;border-color:#d9e2ed}
+.taste-review-banner{display:flex;gap:15px;flex-wrap:wrap;justify-content:space-between;padding:9px 20px;background:#17283f;color:#d8e6f8;font:12px/1.6 Manrope,sans-serif}.taste-review-banner a{color:#b6d4ff;text-decoration:underline;text-underline-offset:4px}
+@media(hover:hover) and (pointer:fine){html body.taste-ui tbody tr:hover td,html.violet body.taste-ui .ticket-table tbody tr:hover{background:#f3f7fd}html body.taste-ui .list-card:hover{border-color:#9ebbe3}html body.taste-ui .rail .nav:hover,html.violet body.taste-ui .nav-item:not(.active):hover{background:#2b405a;color:#fff}html body.taste-ui .review-tabs a:not(.active):hover{background:#e2ebf7;color:#234e88}html body.taste-ui .row-title:hover{color:#2468df;text-decoration:underline;text-underline-offset:4px}}
+@media(max-width:720px){html body.taste-ui :is(h1,.head h1),html.violet body.taste-ui h1{font-size:26px}html body.taste-ui .head,html.violet body.taste-ui .page-heading{align-items:flex-start;padding-bottom:20px}html body.taste-ui .panel-head{padding-inline:16px}.taste-review-banner{padding:10px 14px;font-size:11px}}

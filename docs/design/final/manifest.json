@@ -1,0 +1,433 @@
+{
+  "groups": [
+    {
+      "id": "01-account",
+      "title": "Tài khoản",
+      "description": "Đăng nhập, hồ sơ và bảo mật",
+      "screens": [
+        {
+          "id": "login",
+          "title": "Đăng nhập",
+          "patterns": "SCR01",
+          "role": "public",
+          "svg": null
+        },
+        {
+          "id": "profile",
+          "title": "Hồ sơ cá nhân",
+          "patterns": "SCR02",
+          "role": "requester",
+          "svg": null
+        },
+        {
+          "id": "security",
+          "title": "Đổi mật khẩu",
+          "patterns": "SCR03",
+          "role": "requester",
+          "svg": null
+        }
+      ]
+    },
+    {
+      "id": "02-tickets",
+      "title": "Yêu cầu hỗ trợ",
+      "description": "Từ tiếp nhận đến xác nhận kết quả",
+      "screens": [
+        {
+          "id": "tickets",
+          "title": "Danh sách ticket",
+          "patterns": "SCR20",
+          "role": "manager",
+          "svg": null
+        },
+        {
+          "id": "my-tickets",
+          "title": "Yêu cầu của tôi",
+          "patterns": "SCR20",
+          "role": "requester",
+          "svg": null
+        },
+        {
+          "id": "create",
+          "title": "Tạo yêu cầu",
+          "patterns": "SCR21",
+          "role": "requester",
+          "svg": null
+        },
+        {
+          "id": "ticket-it",
+          "title": "Chi tiết · Kỹ thuật viên",
+          "patterns": "SCR22",
+          "role": "technician",
+          "svg": null
+        },
+        {
+          "id": "ticket-requester",
+          "title": "Chi tiết · Chờ phản hồi",
+          "patterns": "SCR22",
+          "role": "requester",
+          "svg": null
+        },
+        {
+          "id": "ticket-active",
+          "title": "Chi tiết · Theo dõi",
+          "patterns": "SCR22",
+          "role": "requester",
+          "svg": null
+        },
+        {
+          "id": "ticket-result",
+          "title": "Chi tiết · Chờ xác nhận",
+          "patterns": "SCR22 / SCR24",
+          "role": "requester",
+          "svg": null
+        },
+        {
+          "id": "provision",
+          "title": "Yêu cầu cấp tài khoản",
+          "patterns": "SCR22 / SCR60",
+          "role": "admin",
+          "svg": null
+        },
+        {
+          "id": "assign",
+          "title": "Phân công / tiếp nhận",
+          "patterns": "SCR23",
+          "role": "manager",
+          "svg": null
+        },
+        {
+          "id": "transition",
+          "title": "Xử lý trạng thái",
+          "patterns": "SCR24",
+          "role": "technician",
+          "svg": null
+        },
+        {
+          "id": "priority",
+          "title": "Đổi ưu tiên",
+          "patterns": "SCR25",
+          "role": "manager",
+          "svg": null
+        }
+      ]
+    },
+    {
+      "id": "03-work",
+      "title": "Công việc & kế hoạch",
+      "description": "Task, phụ thuộc và kết quả thực hiện",
+      "screens": [
+        {
+          "id": "work",
+          "title": "Bảng công việc",
+          "patterns": "SCR-OPS01",
+          "role": "manager",
+          "svg": null
+        },
+        {
+          "id": "my-work",
+          "title": "Công việc của tôi",
+          "patterns": "SCR-OPS01",
+          "role": "technician",
+          "svg": null
+        },
+        {
+          "id": "plan",
+          "title": "Kế hoạch & phụ thuộc",
+          "patterns": "SCR-OPS02",
+          "role": "manager",
+          "svg": null
+        },
+        {
+          "id": "progress",
+          "title": "Tiến độ & kết quả",
+          "patterns": "SCR-OPS01 / SCR-OPS02",
+          "role": "technician",
+          "svg": null
+        }
+      ]
+    },
+    {
+      "id": "04-workforce",
+      "title": "Nhân sự & năng lực",
+      "description": "Kỹ năng, lịch và khả năng tiếp nhận",
+      "screens": [
+        {
+          "id": "workforce",
+          "title": "Nhân sự & capacity",
+          "patterns": "SCR-OPS03",
+          "role": "manager",
+          "svg": null
+        }
+      ]
+    },
+    {
+      "id": "05-ai",
+      "title": "AI & điều phối",
+      "description": "Giữ bố cục AI v1.0, áp dụng phong cách Spectrum",
+      "screens": [
+        {
+          "id": "ai-normal",
+          "title": "Workspace · Bình thường",
+          "patterns": "SCR-AI01 / SCR-AI02 / SCR-OPS04",
+          "role": "manager",
+          "svg": "37-ai-workspace"
+        },
+        {
+          "id": "ai-requester",
+          "title": "Workspace · Nhân viên",
+          "patterns": "SCR-AI01 / SCR-AI02",
+          "role": "requester",
+          "svg": "11-ai-assistant"
+        },
+        {
+          "id": "ai-tech",
+          "title": "Workspace · Kỹ thuật viên",
+          "patterns": "SCR-AI01 / SCR-AI02",
+          "role": "technician",
+          "svg": "12-ai-ticket-assistant"
+        },
+        {
+          "id": "ai-exception",
+          "title": "Workspace · Ngoại lệ",
+          "patterns": "SCR-OPS04",
+          "role": "manager",
+          "svg": "23-coordination"
+        },
+        {
+          "id": "ai-approval",
+          "title": "Workspace · Phê duyệt",
+          "patterns": "SCR-OPS05",
+          "role": "manager",
+          "svg": "24-approval"
+        },
+        {
+          "id": "ai-states",
+          "title": "Workspace · Trạng thái",
+          "patterns": "SCR-AI01 / SCR-AI02",
+          "role": "requester",
+          "svg": "13-ai-states"
+        },
+        {
+          "id": "policies",
+          "title": "Chính sách & workflow",
+          "patterns": "SCR-OPS06",
+          "role": "manager",
+          "svg": null
+        }
+      ]
+    },
+    {
+      "id": "06-knowledge-assets",
+      "title": "Tri thức & tài sản",
+      "description": "Nguồn hỗ trợ và vòng đời thiết bị",
+      "screens": [
+        {
+          "id": "knowledge",
+          "title": "Kho kiến thức",
+          "patterns": "SCR-OPS07",
+          "role": "requester",
+          "svg": null
+        },
+        {
+          "id": "article",
+          "title": "Bài viết & nguồn",
+          "patterns": "SCR-OPS07",
+          "role": "requester",
+          "svg": null
+        },
+        {
+          "id": "knowledge-edit",
+          "title": "Phiên bản & quyền bài viết",
+          "patterns": "SCR-OPS07",
+          "role": "manager",
+          "svg": null
+        },
+        {
+          "id": "assets",
+          "title": "Danh sách tài sản",
+          "patterns": "SCR30",
+          "role": "manager",
+          "svg": null
+        },
+        {
+          "id": "my-assets",
+          "title": "Thiết bị của tôi",
+          "patterns": "SCR30 / SCR32",
+          "role": "requester",
+          "svg": null
+        },
+        {
+          "id": "asset-form",
+          "title": "Thêm / sửa tài sản",
+          "patterns": "SCR31",
+          "role": "manager",
+          "svg": null
+        },
+        {
+          "id": "asset",
+          "title": "Hồ sơ tài sản",
+          "patterns": "SCR32",
+          "role": "manager",
+          "svg": null
+        },
+        {
+          "id": "asset-action",
+          "title": "Cấp phát / thu hồi",
+          "patterns": "SCR33",
+          "role": "manager",
+          "svg": null
+        }
+      ]
+    },
+    {
+      "id": "07-monitoring",
+      "title": "Theo dõi vận hành",
+      "description": "Báo cáo, thông báo và nhật ký",
+      "screens": [
+        {
+          "id": "reports",
+          "title": "Báo cáo",
+          "patterns": "SCR40",
+          "role": "manager",
+          "svg": null
+        },
+        {
+          "id": "notifications",
+          "title": "Thông báo",
+          "patterns": "SCR50",
+          "role": "requester",
+          "svg": null
+        },
+        {
+          "id": "audit",
+          "title": "Nhật ký hoạt động",
+          "patterns": "SCR65",
+          "role": "manager",
+          "svg": null
+        }
+      ]
+    },
+    {
+      "id": "08-admin-states",
+      "title": "Quản trị & trạng thái",
+      "description": "Cấu hình tổ chức và các nhánh phục hồi",
+      "screens": [
+        {
+          "id": "users",
+          "title": "Người dùng",
+          "patterns": "SCR60",
+          "role": "admin",
+          "svg": null
+        },
+        {
+          "id": "user-create",
+          "title": "Tạo người dùng",
+          "patterns": "SCR60",
+          "role": "admin",
+          "svg": null
+        },
+        {
+          "id": "departments",
+          "title": "Phòng ban",
+          "patterns": "SCR61",
+          "role": "admin",
+          "svg": null
+        },
+        {
+          "id": "teams",
+          "title": "Nhóm & thành viên",
+          "patterns": "SCR62",
+          "role": "admin",
+          "svg": null
+        },
+        {
+          "id": "categories",
+          "title": "Danh mục",
+          "patterns": "SCR63",
+          "role": "admin",
+          "svg": null
+        },
+        {
+          "id": "sla",
+          "title": "Chính sách SLA",
+          "patterns": "SCR64",
+          "role": "admin",
+          "svg": null
+        },
+        {
+          "id": "ai-settings",
+          "title": "Cấu hình trợ lý AI",
+          "patterns": "SCR-AI03",
+          "role": "admin",
+          "svg": null
+        },
+        {
+          "id": "forbidden",
+          "title": "Không có quyền",
+          "patterns": "SCR90",
+          "role": "requester",
+          "svg": null
+        },
+        {
+          "id": "not-found",
+          "title": "Không tìm thấy",
+          "patterns": "SCR91",
+          "role": "requester",
+          "svg": null
+        },
+        {
+          "id": "states",
+          "title": "Loading / rỗng / lỗi",
+          "patterns": "SHARED",
+          "role": "requester",
+          "svg": null
+        }
+      ]
+    }
+  ],
+  "dashboards": [
+    "requester",
+    "technician",
+    "manager",
+    "admin"
+  ],
+  "ai_checks": [
+    {
+      "file": "ai/11-ai-assistant.svg",
+      "established_composition_preserved": true,
+      "approved_source_sha256": "e77a4c95a1cc6a872b103a3fc5349b2f05610a684dab763b82d9548184223505"
+    },
+    {
+      "file": "ai/12-ai-ticket-assistant.svg",
+      "established_composition_preserved": true,
+      "approved_source_sha256": "77213d766d563f3b9e718b90f5ecddd6a3cc61de6c0f2aed0e3c1805b87636c6"
+    },
+    {
+      "file": "ai/13-ai-states.svg",
+      "established_composition_preserved": true,
+      "approved_source_sha256": "a575e894fe1e1b7817652ff8c6b56900e710c7e33c1d010d0c279a1b7e522e08"
+    },
+    {
+      "file": "ai/23-coordination.svg",
+      "established_composition_preserved": true,
+      "approved_source_sha256": "ecbaf8a43578d461bbb8eee210e83b6da36e7457b8b08173d4d7e885204a70bb"
+    },
+    {
+      "file": "ai/24-approval.svg",
+      "established_composition_preserved": true,
+      "approved_source_sha256": "dcd9419840eb949e31a54d61cd55c64a2376b21bb72c24907c1372d308a49c91"
+    },
+    {
+      "file": "ai/37-ai-workspace.svg",
+      "established_composition_preserved": true,
+      "approved_source_sha256": "394a035a7dd6b1c40ecfa403e5de3d64f05d89e0d972bbb1f846416b1be69089"
+    }
+  ],
+  "status": "format-approved-design-ready-for-review",
+  "version": "1.3",
+  "approval": "approved",
+  "approved_by": "PO",
+  "approved_on": "2026-11-13",
+  "decision": "D-51"
+}

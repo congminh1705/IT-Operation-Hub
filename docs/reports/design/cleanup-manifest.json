@@ -1,0 +1,21 @@
+{
+  "decision": "D-51",
+  "approved_by": "PO",
+  "date": "2026-11-13",
+  "canonical": "docs/design/final",
+  "screens": 51,
+  "remove_directories": [
+    "docs/design/review-industrial",
+    "docs/design/taste-workspace"
+  ],
+  "retained_dependencies": [
+    "icons",
+    "wireframes/README.md",
+    "final/dashboard",
+    "final/ai",
+    "final/assets/motion",
+    "licensed fonts",
+    "base styles used by login and layouts"
+  ],
+  "scope": "Design only. No task completion, app source change or backend scope added."
+}

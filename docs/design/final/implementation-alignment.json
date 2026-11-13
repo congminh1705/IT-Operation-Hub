@@ -1,0 +1,513 @@
+{
+  "date": "2026-11-10",
+  "decision": "D-47",
+  "version": "1.1",
+  "frontend_cards_aligned": 63,
+  "integration_acceptance_constraints": 30,
+  "total_task_cards": 230,
+  "task_status_dependencies_evidence_unchanged": true,
+  "application_checks": "NOT RUN",
+  "note": "Documentation/design alignment only; task execution remains pending.",
+  "approved_sources_locked": 46,
+  "design_fragment_links_valid": true,
+  "design_browser_assertions": 1434,
+  "design_browser_failures": 0,
+  "html_first": true,
+  "html_reference_bindings": [
+    {
+      "task": "FE-01.01",
+      "html": [
+        "index.html"
+      ],
+      "visual_evidence_required": false
+    },
+    {
+      "task": "FE-01.02",
+      "html": [
+        "index.html"
+      ],
+      "visual_evidence_required": false
+    },
+    {
+      "task": "FE-01.03",
+      "html": [
+        "index.html"
+      ],
+      "visual_evidence_required": false
+    },
+    {
+      "task": "FE-02.01",
+      "html": [
+        "dashboard.html?role=manager",
+        "01-account.html#profile"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-02.02",
+      "html": [
+        "08-admin-states.html#states",
+        "login.html"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-02.03",
+      "html": [
+        "dashboard.html?role=requester",
+        "dashboard.html?role=technician",
+        "dashboard.html?role=manager",
+        "dashboard.html?role=admin"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-02.04",
+      "html": [
+        "08-admin-states.html#states"
+      ],
+      "visual_evidence_required": false
+    },
+    {
+      "task": "FE-03.01",
+      "html": [
+        "login.html",
+        "01-account.html#login"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-03.02",
+      "html": [
+        "login.html",
+        "dashboard.html?role=requester"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-03.03",
+      "html": [
+        "01-account.html#profile"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-03.04",
+      "html": [
+        "01-account.html#security"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-03.05",
+      "html": [
+        "login.html",
+        "01-account.html#profile"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-04.01",
+      "html": [
+        "08-admin-states.html#users",
+        "08-admin-states.html#user-create"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-04.02",
+      "html": [
+        "08-admin-states.html#users",
+        "02-tickets.html#provision"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-04.03",
+      "html": [
+        "08-admin-states.html#departments",
+        "08-admin-states.html#categories"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-04.04",
+      "html": [
+        "08-admin-states.html#teams"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-04.05",
+      "html": [
+        "08-admin-states.html#sla"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-05.01",
+      "html": [
+        "02-tickets.html#tickets",
+        "02-tickets.html#my-tickets"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-05.02",
+      "html": [
+        "02-tickets.html#create"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-05.03",
+      "html": [
+        "02-tickets.html#create",
+        "02-tickets.html#ticket-active"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-06.01",
+      "html": [
+        "02-tickets.html#ticket-it",
+        "02-tickets.html#ticket-requester",
+        "02-tickets.html#ticket-active"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-06.02",
+      "html": [
+        "02-tickets.html#ticket-it",
+        "02-tickets.html#ticket-requester"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-06.03",
+      "html": [
+        "02-tickets.html#assign",
+        "02-tickets.html#transition"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-06.04",
+      "html": [
+        "02-tickets.html#ticket-result",
+        "02-tickets.html#transition"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-06.05",
+      "html": [
+        "02-tickets.html#assign",
+        "02-tickets.html#priority"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-06.06",
+      "html": [
+        "02-tickets.html#ticket-it",
+        "02-tickets.html#ticket-active"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-07.01",
+      "html": [
+        "02-tickets.html#create",
+        "02-tickets.html#ticket-it"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-07.02",
+      "html": [
+        "02-tickets.html#create",
+        "08-admin-states.html#states"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-07.03",
+      "html": [
+        "02-tickets.html#ticket-it",
+        "02-tickets.html#ticket-requester"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-08.01",
+      "html": [
+        "03-work.html#work",
+        "03-work.html#my-work"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-08.02",
+      "html": [
+        "03-work.html#plan"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-08.03",
+      "html": [
+        "03-work.html#progress"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-08.04",
+      "html": [
+        "03-work.html#progress",
+        "03-work.html#plan"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-09.01",
+      "html": [
+        "04-workforce.html#workforce"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-09.02",
+      "html": [
+        "04-workforce.html#workforce"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-09.03",
+      "html": [
+        "04-workforce.html#workforce"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-10.01",
+      "html": [
+        "05-ai.html#policies"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-10.02",
+      "html": [
+        "05-ai.html#policies"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-10.03",
+      "html": [
+        "05-ai.html#ai-normal",
+        "05-ai.html#ai-exception"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-11.01",
+      "html": [
+        "05-ai.html#ai-exception",
+        "05-ai.html#ai-approval"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-11.02",
+      "html": [
+        "05-ai.html#ai-approval",
+        "05-ai.html#ai-states"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-12.01",
+      "html": [
+        "06-knowledge-assets.html#assets",
+        "06-knowledge-assets.html#my-assets"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-12.02",
+      "html": [
+        "06-knowledge-assets.html#asset-form"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-12.03",
+      "html": [
+        "06-knowledge-assets.html#asset"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-12.04",
+      "html": [
+        "06-knowledge-assets.html#asset-action"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-13.01",
+      "html": [
+        "06-knowledge-assets.html#knowledge",
+        "06-knowledge-assets.html#article"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-13.02",
+      "html": [
+        "06-knowledge-assets.html#knowledge-edit"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-13.03",
+      "html": [
+        "06-knowledge-assets.html#article",
+        "05-ai.html#ai-states"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-14.01",
+      "html": [
+        "05-ai.html#ai-requester",
+        "05-ai.html#ai-tech",
+        "05-ai.html#ai-normal"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-14.02",
+      "html": [
+        "05-ai.html#ai-requester",
+        "05-ai.html#ai-tech"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-14.03",
+      "html": [
+        "05-ai.html#ai-states",
+        "08-admin-states.html#ai-settings"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-15.01",
+      "html": [
+        "05-ai.html#ai-requester",
+        "05-ai.html#ai-tech"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-15.02",
+      "html": [
+        "05-ai.html#ai-requester",
+        "05-ai.html#ai-tech"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-15.03",
+      "html": [
+        "05-ai.html#ai-tech",
+        "05-ai.html#ai-approval"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-15.04",
+      "html": [
+        "05-ai.html#ai-normal",
+        "05-ai.html#ai-exception"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-16.01",
+      "html": [
+        "dashboard.html?role=requester",
+        "dashboard.html?role=technician"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-16.02",
+      "html": [
+        "dashboard.html?role=manager",
+        "dashboard.html?role=admin",
+        "07-monitoring.html#reports"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-16.03",
+      "html": [
+        "07-monitoring.html#reports",
+        "05-ai.html#ai-normal"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-17.01",
+      "html": [
+        "07-monitoring.html#notifications"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-17.02",
+      "html": [
+        "07-monitoring.html#audit"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-18.01",
+      "html": [
+        "index.html"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-18.02",
+      "html": [
+        "index.html",
+        "login.html",
+        "08-admin-states.html#states"
+      ],
+      "visual_evidence_required": true
+    },
+    {
+      "task": "FE-18.03",
+      "html": [
+        "index.html"
+      ],
+      "visual_evidence_required": true
+    }
+  ],
+  "visual_task_comparisons_required": 59,
+  "nonvisual_exemptions": [
+    "FE-01.01",
+    "FE-01.02",
+    "FE-01.03",
+    "FE-02.04"
+  ],
+  "evidence_created": false,
+  "html_reference_scope_reviewed": true
+}

@@ -7,7 +7,7 @@ module: rules
 tags: [domain, rules, reference]
 priority: 1
 status: design-draft
-owner: "Project owner"
+owner: PO
 approval: needs-review
 updated: 2026-11-01
 authority: primary

@@ -7,12 +7,14 @@ module: screens
 tags: [design, screens, reference]
 priority: 1
 status: design-draft
-owner: "Project owner"
+owner: PO
 approval: needs-review
 updated: 2026-11-01
 authority: primary
 purpose: "Specify fields, actions, states, and feedback for each screen."
 ---
+> **Presentation update:** [v1.3 / D-51](design/approved-format.md) governs all screens. Preserve business layout/state below; replace post-login Graphite presentation with the approved Mac/Teal format, keep Night City scoped to coordination and preserve login.
+
 
 # Screen-by-screen UI/UX specification
 
@@ -20,7 +22,7 @@ purpose: "Specify fields, actions, states, and feedback for each screen."
 
 Status: **target design, no executable UI**. Read with [IA](04-information-architecture.md), [permissions](requirements/permissions-matrix.md), [design system](design/design-system.md), [content/states](design/content-and-states.md). Screen IDs support AC/traceability. Documentation is English; **all UI/dashboard artwork and its user-facing copy remain Vietnamese**.
 
-Visual refresh **v0.6** introduced more space, 16 px body/14.5 px tables/24 px icons/controlled motion; current AI/login refinements are v0.8. See [visual direction](design/visual-refresh.md), [components](design/wireframes/14-icons-and-components.svg), [responsive/motion](design/motion-and-responsive.md). Core IDs retained; OPS/automation specified below.
+**Current presentation: v1.3 / D-51, approved by PO; Mac/Teal globally, Night City coordination only, original login preserved.** The [current design index](design/README.md) and [36-pattern coverage](design/final/coverage.md) replace the old SVG gallery for implementation. Existing business constraints below remain applicable; illustration-specific dimensions/counts from archived v0.8 are not current requirements. See [visual direction](design/visual-refresh.md), [components](design/final/index.html), [responsive/motion](design/motion-and-responsive.md). Core IDs retained; OPS/automation specified below.
 
 ## 1. App shell and interaction principles
 
@@ -32,7 +34,7 @@ Text and icons indicate status. Ordinary flows hide technical snapshot JSON/vers
 
 ## 2. Accounts — SCR01/02/03
 
-**Login:** short introduction left/form right; mobile title and form only. Labeled email/password, named show/hide. Primary “Đăng nhập”; Enter submits; pending “Đang đăng nhập…”. No signup/role picker/email reset/fake CTA. Static notice says Admin provisions accounts/contact internal IT. No DEMO passwords/default production accounts.
+**Login:** centered slate-glass form over a navy architectural workplace illustration, following the [approved login contract](design/implementation-scope.md#login-contract); ten interactive circuit tracks remain decorative. Labeled email/password, named show/hide. Primary “Đăng nhập”; Enter submits; pending “Đang đăng nhập…”. No signup/role picker/email reset/fake CTA. Help explains that Admin provisions accounts; keep the compact card free of a separate static account notice. No DEMO passwords/default production accounts.
 
 **Profile:** permitted name/contact editable; email/role/department read-only. Save only with changes, no self-role elevation. **Password:** current/new/confirmation with policy help before entry. Preserve nonsensitive data on errors, never log passwords. Clear passwords after success/session exit; independent show/hide controls.
 
@@ -40,23 +42,23 @@ Text and icons indicate status. Ordinary flows hide technical snapshot JSON/vers
 
 ### Requester
 
-[Personal dashboard](design/wireframes/16-dashboard-requester.svg) shows assistant card, six shortcuts, requests needing response. Device/network/account/other support opens SCR21 with category suggestions; tracking opens own SCR20; Knowledge opens Published/ACL. Cards never submit/create users. Assigned assets remain in navigation; dashboard need not contain every module.
+[Personal dashboard](design/final/dashboard.html?role=requester&capture=1) shows requester attention cards, four service shortcuts, own requests, assigned assets and an AI entry point. Device/network/account/other support opens SCR21 with category suggestions; tracking opens own SCR20; Knowledge opens Published/ACL. Cards never submit/create users. Assigned assets remain in navigation; dashboard need not contain every module.
 
 Pending/Resolved display clear states/links; actual reply/acceptance happens in details. Filter by logged-in requester, not entire department; department-head title grants no scope. New-account requests follow D-29.
 
 ### Technician
 
-[T dashboard](design/wireframes/19-dashboard-technician.svg) prioritizes assigned work/start guards, tickets needing reply, team queues. T03 is locked with Minh's changed schedule, not ready to start; TKT-000122 has 22 h40 resolution remaining. Ticket/task states remain separate; cards do not reassign.
+[T dashboard](design/final/dashboard.html?role=technician&capture=1) prioritizes assigned work/start guards, tickets needing reply, team queues. T03 is locked with Minh's changed schedule; T07 has a visible planned-window/deadline conflict. Current fixture remaining times come from the approved v1.1 source. Ticket/task states remain separate; cards do not reassign.
 
 Existing queues filter membership/unassigned/at-risk/overdue, showing state/priority/SLA/assignee. Self-claim only unassigned current-team tickets, not colleagues' assignment. T has no SCR60/user creation; waiting for internal Admin is not requester Pending.
 
 ### Manager/Admin
 
-[M dashboard](design/wireframes/02-dashboard-manager.svg) prioritizes exceptions, operational snapshot, shortcuts. DEMO12 unfinished tickets/3 blocked tasks/1 pending exception/4 at-risk SLA are different overlapping sets, not additive. Minh→Bình proposal retains not-yet-reassigned/lock/window/deadline. Shortcuts OPS01/03/06.
+[M dashboard](design/final/dashboard.html?role=manager&capture=1) prioritizes exceptions, operational snapshot, shortcuts. The v1.1 fixture has 12 unfinished tickets, 3 unassigned, 2 at risk excluding 1 overdue, and 1 pending exception. Queue populations and task exceptions must not be added together. Minh→Bình proposal retains not-yet-reassigned/lock/window/deadline. Shortcuts OPS01/03/06.
 
 Metrics open exact authorized populations; current queues retain old tickets despite period filters. Period analytics/formulas stay SCR40, not removed by dashboard simplification. No invented percentage trends/AI confidence.
 
-[A dashboard](design/wireframes/17-dashboard-admin.svg) prioritizes TKT-000123 verification, users/organization/categories/SLA/AI availability/audit. TKT-000125 login support is separate; title alone does not imply provisioning. Account queue filters Service Request/Account/nonterminal states, not automation approvals. Opening cards saves nothing.
+[A dashboard](design/final/dashboard.html?role=admin&capture=1) prioritizes TKT-000123 verification, users/organization/categories/SLA/AI availability/audit. TKT-000125 login support is separate; title alone does not imply provisioning. Account queue filters Service Request/Account/nonterminal states, not automation approvals. Opening cards saves nothing.
 
 Only Admin has user/team administration; Manager supervises/intervenes/policies/exceptions, not user admin. Organization reports/queues remain scoped without every KPI on every dashboard. Approval is a separate object/state, not a new ticket state.
 
@@ -90,7 +92,7 @@ Primary Submit request, secondary Cancel to list; confirm leaving dirty forms. N
 
 ## 6. Ticket details — SCR22
 
-[Admin provisioning ticket](design/wireframes/18-ticket-account-provisioning.svg) shows In Progress. Admin-only action opens SCR60 to review/enter description data; opening creates no user, passes no personal data in URLs, resolves no ticket. Preserve drafts per recovery rules. R/T/M neither see this block nor bypass backend Admin authorization. Head remains requester; employee is provisioning subject. No new Ticket–User link/automatic created-account detection is required.
+[Admin provisioning ticket](design/final/02-tickets.html#provision) illustrates the account request awaiting verification. Admin-only action opens SCR60 to review/enter description data; opening creates no user, passes no personal data in URLs, resolves no ticket. Preserve drafts per recovery rules. R/T/M neither see this block nor bypass backend Admin authorization. Head remains requester; employee is provisioning subject. No new Ticket–User link/automatic created-account detection is required.
 
 Desktop 2/3 content, 1/3 context. Header code/title/state/priority and role/state actions. Public/internal audience clear; internal label states only authorized IT can read. Requester gets no empty internal tabs/note-count badges.
 
@@ -174,7 +176,7 @@ Activity identifies policy automation; user cards identify requested actions. M/
 
 AI02 previews inside shell, OPS04 activity detail, OPS05 contextual decision; 36 patterns retained, no added page. Provider/assistant disable retains status/manual forms; background policy separately configured. AI03 remains Admin availability with no chat secrets.
 
-[AI design](10-ai-assistant.md) · [Requester](design/wireframes/11-ai-assistant.svg) · [IT actions](design/wireframes/12-ai-ticket-assistant.svg) · [Manager exception state](design/wireframes/23-coordination.svg).
+[AI design](10-ai-assistant.md) · [Requester](design/final/ai/11-ai-assistant.svg) · [IT actions](design/final/ai/12-ai-ticket-assistant.svg) · [Manager exception state](design/final/ai/23-coordination.svg).
 
 ## 13. Work and plans — SCR-OPS01/02
 
@@ -208,7 +210,7 @@ Keyboard/focus/reduced-motion/mobile design system. DAG list alternative; mobile
 
 ## 18. v0.6 design crosswalk and business gates
 
-37 SVG=34 UI+3 boards; [crosswalk](design/wireframes/README.md) links 36 IA patterns. Screen IDs/51 UC/67 stories/states/roles/SLA/APIs unchanged. [Apple review](design/uiux-review.md) records principles/hex measurements/judgment/unrun gates.
+Current v1.1 has four dashboards and 47 grouped specimens; [crosswalk](design/wireframes/README.md) links 36 IA patterns. Screen IDs/51 UC/67 stories/states/roles/SLA/APIs unchanged. [Apple review](design/uiux-review.md) records principles/hex measurements/judgment/unrun gates.
 
 | Confirmed journey | v0.6 examples | Invariant actions/conditions |
 | --- | --- | --- |
@@ -245,17 +247,17 @@ One main task per region, short label/supporting line, labeled icons rather than
 | User admin | Request ticket/identity/role-department/empty password/Admin-only | Permitted handover/authority evidence |
 | Reports | Period/scope/value/denominator where needed | Formula/source drill-down |
 
-UI20 uses 3×2 task cards; equivalent keyboard table, no new Kanban/drag transition capability. Position does not change state. Topbar searches SCR20 tickets, not globally. Quick cards open screens/forms, no implicit actions. Actual HTML card/accordion/toggle/zoom/focus gates NOT RUN.
+The approved task board uses labelled status columns and task-specific details. It does not permit drag/drop transitions. Preserve a keyboard-accessible equivalent and explicit state actions. Position does not change state. Topbar searches SCR20 tickets, not globally. Quick cards open screens/forms, no implicit actions. Actual HTML card/accordion/toggle/zoom/focus gates NOT RUN.
 
 ## 20. AI Workspace interaction states
 
 Action card: Not sent→Sending→Saved or Failed/Outcome unknown. Runs separately track event/proposal/approval/execution/result; do not merge lifecycles. Tabs/reading do not retry/mutate. Recheck scope/version at confirmation/render/poll; conflicts preserve input. Saved only from domain response/link, never draft/stream/model completion. Approval retains diff/impact/reason despite shorter copy.
 
-## 21. Button alignment and login v0.8
+## 21. Button alignment and login v1.1
 
-Primary/secondary/destructive/AI buttons center the entire icon-label group horizontally/vertically, 8 px gap, not separately centered text. Icon-only centers icon; menus/cards/rows remain content-left/chevron-trailing. Implement inline-flex center, not SVG coordinates. Standard CTA: at least 44 px, login 52 px/16 px text. Loading preserves size/blocks repeat click/Enter.
+Primary/secondary/destructive/AI buttons center the entire icon-label group horizontally/vertically, 8 px gap, not separately centered text. Icon-only centers icon; menus/cards/rows remain content-left/chevron-trailing. Implement inline-flex center, not SVG coordinates. Standard CTA: at least 44 px, login action 48 px with legible text and 50 px input fields. Loading preserves size/blocks repeat click/Enter.
 
-Regular SCR01: compact branding, 644 px introduction/624 px form card on a 1440 px canvas; 512 px form/52 px inputs/clear spacing. Mobile 320 px+ brand/form/help, decorative illustration hidden, auto-height single column.
+SCR01 follows the approved centered 460px slate-glass composition with persistent labels, contained 44px transparent eye control and a yellow action. Mobile uses responsive card padding and 16px input text, with exploration controls below the form. See the [login scope](design/implementation-scope.md#login-contract).
 
 - Email label/type=email/inputmode=email/autocomplete=username, API normalization, no autocorrect/capitalization. Password/current-password permits paste/managers, no trim/case conversion/truncation/prefill.
 - Show/hide 44 px, named/pressed/type=button, preserves value/caret/focus; Caps Lock only when actually active.
@@ -266,7 +268,7 @@ Regular SCR01: compact branding, 644 px introduction/624 px form card on a 1440 
 - Success uses current session/rights and allowed page/internal allowlisted return path; no open redirect/protected-data remnants.
 - D-16/19 retained: Admin accounts/internal IT help, no signup/role picker/email reset/SSO/MFA/remember-me without policy decisions.
 
-[Login](design/wireframes/01-login.svg) · [Six interaction groups](design/wireframes/36-login-states.svg). SVG design only, no working inputs/ARIA/auth.
+[Login](design/final/01-account.html#login) · [Six interaction groups](design/final/01-account.html#login). The approved HTML specimen supports local form interaction; authentication/API integration is not implemented.
 
 SCR-AI02 represents the scoped forms and previews inside the workspace. SCR-OPS04 provides activity drill-down, and SCR-OPS05 provides exception decisions in the same context. These are regions or interaction patterns within the existing inventory of 36 patterns. SCR-AI03 remains an Admin settings screen; secrets never belong in chat. When the provider is disabled or unavailable, authorized manual forms and recorded activity remain accessible. Assistant generation and background policy controls have separate availability states.
 
@@ -325,7 +327,7 @@ Future ordered-list/step semantics, aria-current=step, textual concise updates w
 | Exception needing action | UI23 | Explicit exception title, authorized M/A only; full proposal/5 steps/current 3/5 locked fixture |
 | Review/decide exception | UI24 | Before-after/impact/reason/state/version/authority; decision≠execution |
 
-UI37 is default representative; UI23 caption explicitly exceptional, not always-present reassignment. Same SCR-AI01/02/OPS04 and `/assistant`; 36 IA patterns/37 artifacts=34 UI+3 boards. No new role/UC/API.
+UI37 is default representative; UI23 caption explicitly exceptional, not always-present reassignment. Same SCR-AI01/02/OPS04 and `/assistant`; 36 IA patterns mapped by the approved v1.1 dashboards and 47 grouped specimens. No new role/UC/API.
 
 Independent NORMAL(DEMO-N01) and EXCEPTION(DEMO-004/T03) fixtures, not before/after one snapshot. NORMAL has granted DEMO onboarding policy/Published data/sources/feasible candidates/no locks/out-of-scope work: received 09:00, plan checked 09:01, assigned 09:02, notified 09:02. Four-step no-approval run is not specialist Task Done/Ticket Closed. IT staff continue execution; AI monitors events.
 

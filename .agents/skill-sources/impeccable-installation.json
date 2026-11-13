@@ -1,0 +1,13 @@
+﻿{
+    "name":  "impeccable",
+    "version":  "4.8.2",
+    "scope":  "project",
+    "source":  "D:\\impeccable-design\\impeccable\\.agents\\skills\\impeccable",
+    "destination":  "D:\\IT-Operation-Hub\\.agents\\skills\\impeccable",
+    "installed_on":  "2026-11-13",
+    "source_file_count":  63,
+    "verification":  "All source files copied with matching SHA256",
+    "license":  "Apache-2.0",
+    "hooks_installed":  false,
+    "engine_downloaded":  false
+}

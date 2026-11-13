@@ -7,7 +7,7 @@ module: system
 tags: [architecture, system, reference]
 priority: 1
 status: design-draft
-owner: "Project owner"
+owner: PO
 approval: needs-review
 updated: 2026-11-01
 authority: primary
@@ -138,7 +138,7 @@ One migration process per release before traffic, backup first, forward/backward
 
 Daily PostgreSQL/private-file/object-version backups with D-40 access/encryption/retention, including KB/history/events/audit/usage. Restore isolated with model/email egress blocked and workers paused. Restore DB/files, verify migrations/references/counts/SLA/outbox and no successful-action replay, then resume workers under control. Switch traffic after checks, rehearse regularly. RPO/RTO/retention/rehearsal owner remain undecided/unpromised.
 
-DEMO accounts/data/test DB separate from production. D-39 DEMO/USD5 permission grants no real-data access. No deployment/backup/restore has run.
+DEMO accounts/data/test DB separate from production. D-48 Gemini free-tier DEMO direction grants no real-data access. No deployment/backup/restore has run.
 
 ### Proposed release and recovery order
 
@@ -160,7 +160,7 @@ Trace to D-30–38/NFR14–25. HA/isolation/physical locks/retention/SLO/product
 
 ## 10. AI test cost controls — not run
 
-Before paid requests verify model access/billing/quota/prices, DEMO-only payloads/test DB. D-39 caps total generation/embedding/retries at USD5, no more expensive fallback. Set max calls/input/output/retries/concurrency/safety margin before execution; timeouts do not justify unlimited continuation.
+Before any authorized live test verify Gemini free-tier model access, quotas, data terms and DEMO-only payloads/test DB. D-48 supersedes the D-39 USD5 allowance: USD 0 paid spend for generation/embedding/retries, no paid fallback or billing activation. Set max calls/input/output/retries/concurrency/safety margin before execution; timeouts do not justify unlimited continuation.
 
 Ledger transaction/locks track actualSpent + reservedInFlight + unknownCost. Reserve conservative upper bounds from token limits/current prices, including provider-billed reasoning/cached/embedding usage. Send only when existing totals+new reservation remain below cap less safety margin. Every retry reserves separately. Timeout without known usage retains a conservative amount, never releases it as USD0. Settle only from sourced usage/reconcile billing; distinguish measured/estimated/unknown charges. No actual calls/ledger/billing evidence.
 

@@ -33,4 +33,4 @@ The loading skeleton is static, tinted gray-green instead of the specimen's reta
 
 The small approved UI changes refine appearance and acceptance, not business scope, task IDs or dependencies. The 93 FE/INT/QA cards now point explicitly to the same refinements. Sidebar/default-avatar implementation stays with FE-02.03; KPI/AI stepper refinements stay with their existing screen tasks. No domain form, nested modal, generic form engine, notification infrastructure, backend or model integration was added.
 
-Code and this evidence are delivered on `phase/a-frontend`. The pre-existing design/planning baseline (including centralized task history/current-context) remains local-only; it was not swept into the FE-02.02 commit. Parent FE-02 is incomplete, so there is no FE-02 PR yet.
+Code and this evidence are delivered on `phase/a-frontend`. The baseline was excluded from the task implementation commit. PO subsequently authorized full-project baseline publication on 13 November 2026. Parent FE-02 is incomplete, so there is no FE-02 PR yet.

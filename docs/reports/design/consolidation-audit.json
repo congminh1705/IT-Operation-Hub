@@ -1,0 +1,31 @@
+{
+  "requested_by": "PO",
+  "date": "2026-11-13",
+  "status": "design-suite-consolidated",
+  "current_root": "docs/design/final",
+  "grouped_screens": 47,
+  "role_dashboards": 4,
+  "desktop_render_count": 51,
+  "mobile_group_captures": 8,
+  "desktop_smoke_checks": {
+    "passed": 197,
+    "failed": 0
+  },
+  "mobile_smoke_checks": {
+    "passed": 197,
+    "failed": 0
+  },
+  "removed_alternatives": [
+    "docs/design/final/dashboard (selected components relocated)",
+    "standalone night-city dark/video entry pages and media",
+    "supplementary spatial 3D preview",
+    "unused old dashboard entry assets"
+  ],
+  "preserved": [
+    "original login",
+    "business layouts and role/state boundaries",
+    "historical decisions and task reports"
+  ],
+  "individual_PO_screen_review": "pending",
+  "application_acceptance": "not-claimed"
+}

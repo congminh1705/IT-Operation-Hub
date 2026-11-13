@@ -1,0 +1,163 @@
+[
+  {
+    "id": "03-work-work",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\03-work-work.png (1440x1447, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "03-work-my-work",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\03-work-my-work.png (1440x1447, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "03-work-plan",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\03-work-plan.png (1440x1275, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "03-work-progress",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\03-work-progress.png (1440x1290, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "05-ai-ai-normal",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\05-ai-ai-normal.png (1440x1710, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "05-ai-ai-requester",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\05-ai-ai-requester.png (1440x1768, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "05-ai-ai-tech",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\05-ai-ai-tech.png (1440x1768, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "05-ai-ai-exception",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\05-ai-ai-exception.png (1440x1903, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "05-ai-ai-approval",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\05-ai-ai-approval.png (1440x1710, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "05-ai-ai-states",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\05-ai-ai-states.png (1440x1527, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "05-ai-policies",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\05-ai-policies.png (1440x1274, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "06-knowledge-assets-knowledge",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\06-knowledge-assets-knowledge.png (1440x1081, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "06-knowledge-assets-article",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\06-knowledge-assets-article.png (1440x1081, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "06-knowledge-assets-knowledge-edit",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\06-knowledge-assets-knowledge-edit.png (1440x1173, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "06-knowledge-assets-assets",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\06-knowledge-assets-assets.png (1440x1081, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "06-knowledge-assets-my-assets",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\06-knowledge-assets-my-assets.png (1440x1081, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "06-knowledge-assets-asset-form",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\06-knowledge-assets-asset-form.png (1440x1204, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "06-knowledge-assets-asset",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\06-knowledge-assets-asset.png (1440x1152, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "06-knowledge-assets-asset-action",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\06-knowledge-assets-asset-action.png (1440x1480, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "mobile-03-work",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\mobile\\03-work.png (390x2677, 3 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "mobile-05-ai",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\mobile\\05-ai.png (390x1973, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "mobile-06-knowledge-assets",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\mobile\\06-knowledge-assets.png (390x1823, 2 screens)\n",
+    "stderr": ""
+  },
+  {
+    "id": "catalog",
+    "saved_png": true,
+    "idle_node_timer_cleanup": true,
+    "output": "saved D:\\IT-Operation-Hub\\docs\\design\\final\\images\\screens\\catalog.png (1440x1857, 2 screens)\n",
+    "stderr": ""
+  }
+]

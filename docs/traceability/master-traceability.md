@@ -7,12 +7,14 @@ module: traceability
 tags: [quality, traceability, reference]
 priority: 2
 status: design-draft
-owner: "Project owner"
+owner: PO
 approval: needs-review
-updated: 2026-11-01
+updated: 2026-11-10
 authority: derived
 purpose: "Link features, UCs, stories, AC, screens, BR, contracts, figures, and planned milestones."
 ---
+> **Current presentation: v1.3 / D-51, approved by PO.** See [approved format](../design/approved-format.md). All post-login screens use the selected Mac/Teal style; only coordination uses Night City; login stays unchanged. Current sources and renders cover all 47 grouped screens and four dashboards. Earlier measurements below remain historical evidence; application implementation and individual PO visual acceptance remain task-owned.
+
 
 # Master traceability matrix
 
@@ -91,6 +93,8 @@ F19/AC-X01–10 apply throughout; do not postpone mandatory per-feature controls
 
 ## Authoritative sources
 
+The derived [implementation coverage](../implementation/coverage.md) maps every existing story to delivery tasks. [Task cards and status](../implementation/README.md) add direct dependencies, bounded source context and verification without changing the UC/US/AC definitions here. All implementation tasks remain planned.
+
 [Features](../02-features.md) · [Use cases](../03-use-cases.md) · [Stories](../08-invest-requirements.md) · [AC](../06-acceptance-criteria.md) · [Screens](../04-information-architecture.md) · [Rules](../requirements/business-rules.md) · [Permissions](../requirements/permissions-matrix.md) · [Metrics](../requirements/metrics-catalog.md).
 
 ## Assistant traceability
@@ -143,7 +147,7 @@ A1–A13/TC-OPS01–12 are defined in the [AC catalog](../06-acceptance-criteria
 
 ## Current UI/UX — screens to flows
 
-37 SVG(34 UI+3 boards) illustrate 36 IA patterns via [crosswalk](../design/wireframes/README.md). No added UC/story/API/role. [Spec§18](../07-uiux-specification.md) maps flows/artifacts/guards; [skill review](../design/uiux-review.md) records token measures/limits.
+The approved v1.1 dashboards and 47 grouped specimens map 36 IA patterns via [crosswalk](../design/final/coverage.md). No added UC/story/API/role. [Spec§18](../07-uiux-specification.md) maps flows/artifacts/guards; [skill review](../design/uiux-review.md) records token measures/limits.
 
 | Flow | Artifacts | UC / BR |
 | --- | --- | --- |
@@ -182,3 +186,7 @@ Stepper ordinals are not backend enums or replacements for parallel DAGs. Applic
 ## Normal / exception variants
 
 UI37→SCR-AI01/02/OPS04, authorized UC-AI01–07/OPS09. UI23 same exceptional workspace/OPS07/08/09; UI24 decision details. Default assistant needs no approval. 37 artifacts/36 IA patterns; TC-AI13/UT-AI07/TC-OPS05/06/08 inherit normal/exception/no-approval cases.
+
+## Complete executable task decomposition
+
+[Execution board](../implementation/workflow/execution-board.md): 230 pending tasks under all 88 scope packages. [Parent criterion mapping](../implementation/package-task-coverage.md) assigns each of 264 numbered package outcomes to child evidence and external integration closure. Existing UC/US/AC/BR/MET IDs remain authoritative; the task matrix is derived. Frontend Phase A completes first at FE-18.03. All application evidence remains NOT RUN.

@@ -1,0 +1,156 @@
+<!doctype html>
+<html class="violet" lang="vi" data-type="software" data-radius="sharp">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="page-type" content="software"><meta name="site-kind" content="software">
+  <meta name="theme-color" content="#f2f3ef">
+  <meta name="description" content="Bản đề xuất dashboard IT Operations Hub theo vai trò. Dữ liệu DEMO để review thiết kế.">
+  <title>IT Operations Hub — Sổ vận hành</title>
+  <link rel="stylesheet" href="prompt-dashboard/public/assets/fonts.css"><link rel="stylesheet" href="style.css">
+  <script src="dashboard.js" defer></script>
+<link rel="stylesheet" href="../layout-refinement.css"><link rel="stylesheet" href="../taste.css"><link rel="stylesheet" href="../assets/motion/motion.css"><script src="../taste.js" defer></script><script type="module" src="../assets/motion/motion.js"></script><link rel="stylesheet" href="../mac.css"></head>
+<body class="taste-ui capture" data-role="manager">
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="i-ai" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 12.0 2.0 L 15.0 9.0 L 22.0 12.0 L 15.0 15.0 L 12.0 22.0 L 9.0 15.0 L 2.0 12.0 L 9.0 9.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="20.0" y1="2.0" x2="20.0" y2="6.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="18.0" y1="4.0" x2="22.0" y2="4.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-alert" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 12.0 2.0 L 23.0 21.0 L 1.0 21.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="12.0" y1="8.0" x2="12.0" y2="13.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<circle xmlns="http://www.w3.org/2000/svg" cx="12.0" cy="17.0" r="0.7" fill="currentColor" stroke="currentColor" stroke-width="1.85" />
+</symbol><symbol id="i-arrow-left" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 10.0 5.0 L 3.0 12.0 L 10.0 19.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="3.0" y1="12.0" x2="21.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-arrow-right" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 14.0 5.0 L 21.0 12.0 L 14.0 19.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="3.0" y1="12.0" x2="21.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-bell" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 5.0 17.0 L 19.0 17.0 L 17.0 14.0 L 17.0 9.0 C 17.0 2.0 7.0 2.0 7.0 9.0 L 7.0 14.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<path xmlns="http://www.w3.org/2000/svg" d="M 10.0 21.0 C 11.0 22.0 13.0 22.0 14.0 21.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="12.0" y1="2.0" x2="12.0" y2="4.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-building" viewBox="0 0 24 24"><rect xmlns="http://www.w3.org/2000/svg" x="4.0" y="2.0" width="16.0" height="20.0" rx="1.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+<line xmlns="http://www.w3.org/2000/svg" x1="2.0" y1="22.0" x2="22.0" y2="22.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<rect xmlns="http://www.w3.org/2000/svg" x="10.0" y="17.0" width="4.0" height="5.0" rx="0.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+<line xmlns="http://www.w3.org/2000/svg" x1="8.0" y1="6.0" x2="8.0" y2="8.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="16.0" y1="6.0" x2="16.0" y2="8.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="8.0" y1="11.0" x2="8.0" y2="13.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="16.0" y1="11.0" x2="16.0" y2="13.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-calendar" viewBox="0 0 24 24"><rect xmlns="http://www.w3.org/2000/svg" x="3.0" y="5.0" width="18.0" height="17.0" rx="2.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+<line xmlns="http://www.w3.org/2000/svg" x1="7.0" y1="2.0" x2="7.0" y2="8.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="17.0" y1="2.0" x2="17.0" y2="8.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="3.0" y1="11.0" x2="21.0" y2="11.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="7.0" y1="15.0" x2="10.0" y2="15.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="14.0" y1="15.0" x2="17.0" y2="15.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-chart" viewBox="0 0 24 24"><line xmlns="http://www.w3.org/2000/svg" x1="3.0" y1="3.0" x2="3.0" y2="21.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="3.0" y1="21.0" x2="22.0" y2="21.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<rect xmlns="http://www.w3.org/2000/svg" x="7.0" y="12.0" width="3.0" height="6.0" rx="1.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+<rect xmlns="http://www.w3.org/2000/svg" x="13.0" y="8.0" width="3.0" height="10.0" rx="1.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+<rect xmlns="http://www.w3.org/2000/svg" x="19.0" y="4.0" width="3.0" height="14.0" rx="1.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+</symbol><symbol id="i-check-circle" viewBox="0 0 24 24"><circle xmlns="http://www.w3.org/2000/svg" cx="12.0" cy="12.0" r="9.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+<path xmlns="http://www.w3.org/2000/svg" d="M 7.0 12.0 L 10.5 15.5 L 17.0 8.5" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+</symbol><symbol id="i-check" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 4.0 12.0 L 9.0 17.0 L 20.0 6.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+</symbol><symbol id="i-chevron-down" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 5.0 9.0 L 12.0 16.0 L 19.0 9.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+</symbol><symbol id="i-chevron-right" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 9.0 5.0 L 16.0 12.0 L 9.0 19.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+</symbol><symbol id="i-clock" viewBox="0 0 24 24"><circle xmlns="http://www.w3.org/2000/svg" cx="12.0" cy="12.0" r="9.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+<line xmlns="http://www.w3.org/2000/svg" x1="12.0" y1="6.0" x2="12.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="12.0" y1="12.0" x2="16.0" y2="15.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-close" viewBox="0 0 24 24"><line xmlns="http://www.w3.org/2000/svg" x1="5.0" y1="5.0" x2="19.0" y2="19.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="19.0" y1="5.0" x2="5.0" y2="19.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-dashboard" viewBox="0 0 24 24"><rect xmlns="http://www.w3.org/2000/svg" x="3.0" y="3.0" width="7.0" height="7.0" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.85" />
+<rect xmlns="http://www.w3.org/2000/svg" x="14.0" y="3.0" width="7.0" height="5.0" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.85" />
+<rect xmlns="http://www.w3.org/2000/svg" x="3.0" y="14.0" width="7.0" height="7.0" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.85" />
+<rect xmlns="http://www.w3.org/2000/svg" x="14.0" y="12.0" width="7.0" height="9.0" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.85" />
+</symbol><symbol id="i-eye" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 2.0 12.0 C 7.0 3.0 17.0 3.0 22.0 12.0 C 17.0 21.0 7.0 21.0 2.0 12.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<circle xmlns="http://www.w3.org/2000/svg" cx="12.0" cy="12.0" r="3.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+</symbol><symbol id="i-file" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 5.0 2.0 L 14.0 2.0 L 20.0 8.0 L 20.0 22.0 L 5.0 22.0 Z M 14.0 2.0 L 14.0 8.0 L 20.0 8.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="8.0" y1="12.0" x2="16.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="8.0" y1="16.0" x2="16.0" y2="16.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-filter" viewBox="0 0 24 24"><line xmlns="http://www.w3.org/2000/svg" x1="3.0" y1="6.0" x2="21.0" y2="6.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="3.0" y1="12.0" x2="21.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="3.0" y1="18.0" x2="21.0" y2="18.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<circle xmlns="http://www.w3.org/2000/svg" cx="8.0" cy="6.0" r="2.0" fill="white" stroke="currentColor" stroke-width="1.85" />
+<circle xmlns="http://www.w3.org/2000/svg" cx="16.0" cy="12.0" r="2.0" fill="white" stroke="currentColor" stroke-width="1.85" />
+<circle xmlns="http://www.w3.org/2000/svg" cx="10.0" cy="18.0" r="2.0" fill="white" stroke="currentColor" stroke-width="1.85" />
+</symbol><symbol id="i-folder" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 2.0 6.0 L 9.0 6.0 L 11.0 9.0 L 22.0 9.0 L 22.0 21.0 L 2.0 21.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<path xmlns="http://www.w3.org/2000/svg" d="M 2.0 6.0 L 2.0 3.0 L 9.0 3.0 L 11.0 6.0 L 21.0 6.0 L 21.0 9.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+</symbol><symbol id="i-help" viewBox="0 0 24 24"><circle xmlns="http://www.w3.org/2000/svg" cx="12.0" cy="12.0" r="9.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+<path xmlns="http://www.w3.org/2000/svg" d="M 9.0 8.0 C 9.0 4.0 16.0 4.0 16.0 8.0 C 16.0 11.0 12.0 10.0 12.0 14.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<circle xmlns="http://www.w3.org/2000/svg" cx="12.0" cy="18.0" r="0.7" fill="currentColor" stroke="currentColor" stroke-width="1.85" />
+</symbol><symbol id="i-history" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 3.0 7.0 C 5.0 2.0 12.0 0.0 18.0 5.0 C 24.0 10.0 21.0 20.0 14.0 22.0 C 8.0 24.0 2.0 19.0 2.0 14.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<path xmlns="http://www.w3.org/2000/svg" d="M 3.0 2.0 L 3.0 7.0 L 8.0 7.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="12.0" y1="7.0" x2="12.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="12.0" y1="12.0" x2="16.0" y2="14.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-inbox" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 4.0 4.0 L 20.0 4.0 L 22.0 14.0 L 22.0 20.0 L 2.0 20.0 L 2.0 14.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<path xmlns="http://www.w3.org/2000/svg" d="M 2.0 14.0 L 8.0 14.0 L 10.0 17.0 L 14.0 17.0 L 16.0 14.0 L 22.0 14.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+</symbol><symbol id="i-info" viewBox="0 0 24 24"><circle xmlns="http://www.w3.org/2000/svg" cx="12.0" cy="12.0" r="9.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+<circle xmlns="http://www.w3.org/2000/svg" cx="12.0" cy="7.0" r="0.8" fill="currentColor" stroke="currentColor" stroke-width="1.85" />
+<line xmlns="http://www.w3.org/2000/svg" x1="12.0" y1="11.0" x2="12.0" y2="17.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-laptop" viewBox="0 0 24 24"><rect xmlns="http://www.w3.org/2000/svg" x="4.0" y="3.0" width="16.0" height="13.0" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.85" />
+<path xmlns="http://www.w3.org/2000/svg" d="M 2.0 19.0 L 22.0 19.0 L 20.0 21.0 L 4.0 21.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="10.0" y1="19.0" x2="14.0" y2="19.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect xmlns="http://www.w3.org/2000/svg" x="5.0" y="10.0" width="14.0" height="12.0" rx="2.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+<path xmlns="http://www.w3.org/2000/svg" d="M 8.0 10.0 L 8.0 6.0 C 8.0 0.0 16.0 0.0 16.0 6.0 L 16.0 10.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="12.0" y1="15.0" x2="12.0" y2="18.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-logout" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 9.0 3.0 L 3.0 3.0 L 3.0 21.0 L 9.0 21.0 M 9.0 12.0 L 22.0 12.0 M 17.0 7.0 L 22.0 12.0 L 17.0 17.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+</symbol><symbol id="i-mail" viewBox="0 0 24 24"><rect xmlns="http://www.w3.org/2000/svg" x="2.0" y="4.0" width="20.0" height="16.0" rx="2.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+<path xmlns="http://www.w3.org/2000/svg" d="M 3.0 6.0 L 12.0 13.0 L 21.0 6.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+</symbol><symbol id="i-menu" viewBox="0 0 24 24"><line xmlns="http://www.w3.org/2000/svg" x1="3.0" y1="6.0" x2="21.0" y2="6.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="3.0" y1="12.0" x2="21.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="3.0" y1="18.0" x2="21.0" y2="18.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-more" viewBox="0 0 24 24"><circle xmlns="http://www.w3.org/2000/svg" cx="12.0" cy="5.0" r="1.3" fill="currentColor" stroke="currentColor" stroke-width="1.85" />
+<circle xmlns="http://www.w3.org/2000/svg" cx="12.0" cy="12.0" r="1.3" fill="currentColor" stroke="currentColor" stroke-width="1.85" />
+<circle xmlns="http://www.w3.org/2000/svg" cx="12.0" cy="19.0" r="1.3" fill="currentColor" stroke="currentColor" stroke-width="1.85" />
+</symbol><symbol id="i-paperclip" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 8.0 13.0 L 15.0 6.0 C 20.0 1.0 25.0 7.0 20.0 12.0 L 10.0 22.0 C 4.0 28.0 -2.0 19.0 4.0 13.0 L 14.0 3.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+</symbol><symbol id="i-pause" viewBox="0 0 24 24"><rect xmlns="http://www.w3.org/2000/svg" x="6.0" y="4.0" width="4.0" height="16.0" rx="1.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+<rect xmlns="http://www.w3.org/2000/svg" x="14.0" y="4.0" width="4.0" height="16.0" rx="1.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+</symbol><symbol id="i-plus" viewBox="0 0 24 24"><line xmlns="http://www.w3.org/2000/svg" x1="12.0" y1="4.0" x2="12.0" y2="20.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="4.0" y1="12.0" x2="20.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-printer" viewBox="0 0 24 24"><rect xmlns="http://www.w3.org/2000/svg" x="3.0" y="8.0" width="18.0" height="10.0" rx="2.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+<rect xmlns="http://www.w3.org/2000/svg" x="6.0" y="2.0" width="12.0" height="6.0" rx="1.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+<rect xmlns="http://www.w3.org/2000/svg" x="6.0" y="14.0" width="12.0" height="8.0" rx="1.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+<line xmlns="http://www.w3.org/2000/svg" x1="17.0" y1="11.0" x2="18.0" y2="11.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 21.0 9.0 C 18.0 0.0 5.0 0.0 2.0 9.0 M 2.0 4.0 L 2.0 9.0 L 7.0 9.0 M 3.0 15.0 C 6.0 24.0 19.0 24.0 22.0 15.0 M 22.0 20.0 L 22.0 15.0 L 17.0 15.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+</symbol><symbol id="i-search" viewBox="0 0 24 24"><circle xmlns="http://www.w3.org/2000/svg" cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.85" />
+<line xmlns="http://www.w3.org/2000/svg" x1="15.5" y1="15.5" x2="21.0" y2="21.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-send" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 2.0 3.0 L 22.0 12.0 L 2.0 21.0 L 6.0 12.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="6.0" y1="12.0" x2="15.0" y2="12.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-settings" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 22.0 12.0 L 19.73 14.07 L 20.66 17.0 L 19.07 19.07 L 16.0 18.93 L 14.59 21.66 L 12.0 22.0 L 9.93 19.73 L 7.0 20.66 L 4.93 19.07 L 5.07 16.0 L 2.34 14.59 L 2.0 12.0 L 4.27 9.93 L 3.34 7.0 L 4.93 4.93 L 8.0 5.07 L 9.41 2.34 L 12.0 2.0 L 14.07 4.27 L 17.0 3.34 L 19.07 4.93 L 18.93 8.0 L 21.66 9.41 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<circle xmlns="http://www.w3.org/2000/svg" cx="12.0" cy="12.0" r="3.5" fill="none" stroke="currentColor" stroke-width="1.85" />
+</symbol><symbol id="i-sort" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 7.0 3.0 L 3.0 7.0 M 7.0 3.0 L 11.0 7.0 M 7.0 3.0 L 7.0 21.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<path xmlns="http://www.w3.org/2000/svg" d="M 17.0 21.0 L 13.0 17.0 M 17.0 21.0 L 21.0 17.0 M 17.0 21.0 L 17.0 3.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+</symbol><symbol id="i-ticket" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 3.0 5.0 L 21.0 5.0 L 21.0 9.0 C 17.0 9.0 17.0 15.0 21.0 15.0 L 21.0 19.0 L 3.0 19.0 L 3.0 15.0 C 7.0 15.0 7.0 9.0 3.0 9.0 Z" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="14.0" y1="8.0" x2="14.0" y2="10.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="14.0" y1="13.0" x2="14.0" y2="16.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-toolbox" viewBox="0 0 24 24"><rect xmlns="http://www.w3.org/2000/svg" x="3.0" y="9.0" width="18.0" height="12.0" rx="2.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+<path xmlns="http://www.w3.org/2000/svg" d="M 8.0 9.0 L 8.0 5.0 L 16.0 5.0 L 16.0 9.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="3.0" y1="14.0" x2="21.0" y2="14.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="10.0" y1="13.0" x2="10.0" y2="16.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+<line xmlns="http://www.w3.org/2000/svg" x1="14.0" y1="13.0" x2="14.0" y2="16.0" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+</symbol><symbol id="i-upload" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 6.0 9.0 L 12.0 3.0 L 18.0 9.0 M 12.0 3.0 L 12.0 16.0 M 3.0 16.0 L 3.0 21.0 L 21.0 21.0 L 21.0 16.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+</symbol><symbol id="i-user" viewBox="0 0 24 24"><circle xmlns="http://www.w3.org/2000/svg" cx="12.0" cy="7.0" r="4.0" fill="none" stroke="currentColor" stroke-width="1.85" />
+<path xmlns="http://www.w3.org/2000/svg" d="M 4.0 21.0 C 4.0 11.0 20.0 11.0 20.0 21.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+</symbol><symbol id="i-users" viewBox="0 0 24 24"><circle xmlns="http://www.w3.org/2000/svg" cx="9.0" cy="7.0" r="3.4" fill="none" stroke="currentColor" stroke-width="1.85" />
+<path xmlns="http://www.w3.org/2000/svg" d="M 2.0 21.0 C 2.0 12.0 16.0 12.0 16.0 21.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<path xmlns="http://www.w3.org/2000/svg" d="M 17.0 4.0 C 23.0 4.0 23.0 11.0 18.0 11.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<path xmlns="http://www.w3.org/2000/svg" d="M 19.0 15.0 C 22.0 16.0 23.0 18.0 23.0 21.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+</symbol><symbol id="i-wifi" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" d="M 2.0 7.0 C 8.0 1.0 16.0 1.0 22.0 7.0 M 5.0 11.0 C 9.0 7.0 15.0 7.0 19.0 11.0 M 8.0 15.0 C 10.0 13.0 14.0 13.0 16.0 15.0" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" />
+<circle xmlns="http://www.w3.org/2000/svg" cx="12.0" cy="20.0" r="1.2" fill="currentColor" stroke="currentColor" stroke-width="1.85" />
+</symbol></svg>
+  <a class="skip" href="#main">Đến nội dung chính</a>
+  <div class="review-bar" aria-label="Chọn bản thiết kế theo vai trò">
+    <span><i></i> Bản đề xuất · 12.11.2026</span>
+    <nav aria-label="Vai trò xem trước"><a href="requester.html">Requester</a><a href="technician.html">Technician</a><a href="index.html">IT Manager</a><a href="admin.html">Admin</a></nav>
+    <span class="review-note">DEMO · Chưa thay bản chốt</span>
+  </div>
+  <div class="app">
+    <aside class="sidebar" id="sidebar" aria-label="Điều hướng chính"></aside>
+    <div class="workspace">
+      <header class="topbar">
+        <button class="icon-btn menu-toggle" aria-label="Mở điều hướng" aria-expanded="false" aria-controls="sidebar"><svg><use href="#i-menu"></use></svg></button>
+        <div class="breadcrumb">Không gian làm việc <span>/</span> <strong>Tổng quan</strong></div>
+        <div class="top-actions"><span class="workspace-name"><i></i> Tổ chức DEMO</span><button class="icon-btn" data-action="notifications" aria-label="Xem thông báo"><svg><use href="#i-bell"></use></svg><b class="notification-dot"></b></button><span class="avatar" id="top-avatar">IT</span></div>
+      </header>
+      <main id="main" tabindex="-1"></main>
+      <footer class="app-footer"><span>IT Operations Hub <span class="footer-slash">/</span> Bản thiết kế tương tác</span><span>Dữ liệu tổng hợp · Không kết nối hệ thống thật</span></footer>
+    </div>
+  </div>
+  <dialog id="detail" aria-labelledby="detail-title"><div class="dialog-head"><span class="eyebrow">Chi tiết DEMO</span><button class="icon-btn" data-close aria-label="Đóng chi tiết">×</button></div><div id="detail-content"></div><div class="dialog-foot"><span>Thao tác xem trước, không ghi dữ liệu thật.</span><button class="button secondary" data-close>Đóng chi tiết</button></div></dialog>
+  <div class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

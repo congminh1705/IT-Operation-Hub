@@ -1,0 +1,410 @@
+[
+  {
+    "id": "01-account-login",
+    "group": "01-account",
+    "screen": "login",
+    "title": "Đăng nhập",
+    "url": "01-account.html#login",
+    "image": "images/screens/01-account-login.png"
+  },
+  {
+    "id": "01-account-profile",
+    "group": "01-account",
+    "screen": "profile",
+    "title": "Hồ sơ cá nhân",
+    "url": "01-account.html#profile",
+    "image": "images/screens/01-account-profile.png"
+  },
+  {
+    "id": "01-account-security",
+    "group": "01-account",
+    "screen": "security",
+    "title": "Đổi mật khẩu",
+    "url": "01-account.html#security",
+    "image": "images/screens/01-account-security.png"
+  },
+  {
+    "id": "02-tickets-tickets",
+    "group": "02-tickets",
+    "screen": "tickets",
+    "title": "Danh sách ticket",
+    "url": "02-tickets.html#tickets",
+    "image": "images/screens/02-tickets-tickets.png"
+  },
+  {
+    "id": "02-tickets-my-tickets",
+    "group": "02-tickets",
+    "screen": "my-tickets",
+    "title": "Yêu cầu của tôi",
+    "url": "02-tickets.html#my-tickets",
+    "image": "images/screens/02-tickets-my-tickets.png"
+  },
+  {
+    "id": "02-tickets-create",
+    "group": "02-tickets",
+    "screen": "create",
+    "title": "Tạo yêu cầu",
+    "url": "02-tickets.html#create",
+    "image": "images/screens/02-tickets-create.png"
+  },
+  {
+    "id": "02-tickets-ticket-it",
+    "group": "02-tickets",
+    "screen": "ticket-it",
+    "title": "Chi tiết · Kỹ thuật viên",
+    "url": "02-tickets.html#ticket-it",
+    "image": "images/screens/02-tickets-ticket-it.png"
+  },
+  {
+    "id": "02-tickets-ticket-requester",
+    "group": "02-tickets",
+    "screen": "ticket-requester",
+    "title": "Chi tiết · Chờ phản hồi",
+    "url": "02-tickets.html#ticket-requester",
+    "image": "images/screens/02-tickets-ticket-requester.png"
+  },
+  {
+    "id": "02-tickets-ticket-active",
+    "group": "02-tickets",
+    "screen": "ticket-active",
+    "title": "Chi tiết · Theo dõi",
+    "url": "02-tickets.html#ticket-active",
+    "image": "images/screens/02-tickets-ticket-active.png"
+  },
+  {
+    "id": "02-tickets-ticket-result",
+    "group": "02-tickets",
+    "screen": "ticket-result",
+    "title": "Chi tiết · Chờ xác nhận",
+    "url": "02-tickets.html#ticket-result",
+    "image": "images/screens/02-tickets-ticket-result.png"
+  },
+  {
+    "id": "02-tickets-provision",
+    "group": "02-tickets",
+    "screen": "provision",
+    "title": "Yêu cầu cấp tài khoản",
+    "url": "02-tickets.html#provision",
+    "image": "images/screens/02-tickets-provision.png"
+  },
+  {
+    "id": "02-tickets-assign",
+    "group": "02-tickets",
+    "screen": "assign",
+    "title": "Phân công / tiếp nhận",
+    "url": "02-tickets.html#assign",
+    "image": "images/screens/02-tickets-assign.png"
+  },
+  {
+    "id": "02-tickets-transition",
+    "group": "02-tickets",
+    "screen": "transition",
+    "title": "Xử lý trạng thái",
+    "url": "02-tickets.html#transition",
+    "image": "images/screens/02-tickets-transition.png"
+  },
+  {
+    "id": "02-tickets-priority",
+    "group": "02-tickets",
+    "screen": "priority",
+    "title": "Đổi ưu tiên",
+    "url": "02-tickets.html#priority",
+    "image": "images/screens/02-tickets-priority.png"
+  },
+  {
+    "id": "03-work-work",
+    "group": "03-work",
+    "screen": "work",
+    "title": "Bảng công việc",
+    "url": "03-work.html#work",
+    "image": "images/screens/03-work-work.png"
+  },
+  {
+    "id": "03-work-my-work",
+    "group": "03-work",
+    "screen": "my-work",
+    "title": "Công việc của tôi",
+    "url": "03-work.html#my-work",
+    "image": "images/screens/03-work-my-work.png"
+  },
+  {
+    "id": "03-work-plan",
+    "group": "03-work",
+    "screen": "plan",
+    "title": "Kế hoạch & phụ thuộc",
+    "url": "03-work.html#plan",
+    "image": "images/screens/03-work-plan.png"
+  },
+  {
+    "id": "03-work-progress",
+    "group": "03-work",
+    "screen": "progress",
+    "title": "Tiến độ & kết quả",
+    "url": "03-work.html#progress",
+    "image": "images/screens/03-work-progress.png"
+  },
+  {
+    "id": "04-workforce-workforce",
+    "group": "04-workforce",
+    "screen": "workforce",
+    "title": "Nhân sự & capacity",
+    "url": "04-workforce.html#workforce",
+    "image": "images/screens/04-workforce-workforce.png"
+  },
+  {
+    "id": "05-ai-ai-normal",
+    "group": "05-ai",
+    "screen": "ai-normal",
+    "title": "Workspace · Bình thường",
+    "url": "05-ai.html#ai-normal",
+    "image": "images/screens/05-ai-ai-normal.png"
+  },
+  {
+    "id": "05-ai-ai-requester",
+    "group": "05-ai",
+    "screen": "ai-requester",
+    "title": "Workspace · Nhân viên",
+    "url": "05-ai.html#ai-requester",
+    "image": "images/screens/05-ai-ai-requester.png"
+  },
+  {
+    "id": "05-ai-ai-tech",
+    "group": "05-ai",
+    "screen": "ai-tech",
+    "title": "Workspace · Kỹ thuật viên",
+    "url": "05-ai.html#ai-tech",
+    "image": "images/screens/05-ai-ai-tech.png"
+  },
+  {
+    "id": "05-ai-ai-exception",
+    "group": "05-ai",
+    "screen": "ai-exception",
+    "title": "Workspace · Ngoại lệ",
+    "url": "05-ai.html#ai-exception",
+    "image": "images/screens/05-ai-ai-exception.png"
+  },
+  {
+    "id": "05-ai-ai-approval",
+    "group": "05-ai",
+    "screen": "ai-approval",
+    "title": "Workspace · Phê duyệt",
+    "url": "05-ai.html#ai-approval",
+    "image": "images/screens/05-ai-ai-approval.png"
+  },
+  {
+    "id": "05-ai-ai-states",
+    "group": "05-ai",
+    "screen": "ai-states",
+    "title": "Workspace · Trạng thái",
+    "url": "05-ai.html#ai-states",
+    "image": "images/screens/05-ai-ai-states.png"
+  },
+  {
+    "id": "05-ai-policies",
+    "group": "05-ai",
+    "screen": "policies",
+    "title": "Chính sách & workflow",
+    "url": "05-ai.html#policies",
+    "image": "images/screens/05-ai-policies.png"
+  },
+  {
+    "id": "06-knowledge-assets-knowledge",
+    "group": "06-knowledge-assets",
+    "screen": "knowledge",
+    "title": "Kho kiến thức",
+    "url": "06-knowledge-assets.html#knowledge",
+    "image": "images/screens/06-knowledge-assets-knowledge.png"
+  },
+  {
+    "id": "06-knowledge-assets-article",
+    "group": "06-knowledge-assets",
+    "screen": "article",
+    "title": "Bài viết & nguồn",
+    "url": "06-knowledge-assets.html#article",
+    "image": "images/screens/06-knowledge-assets-article.png"
+  },
+  {
+    "id": "06-knowledge-assets-knowledge-edit",
+    "group": "06-knowledge-assets",
+    "screen": "knowledge-edit",
+    "title": "Phiên bản & quyền bài viết",
+    "url": "06-knowledge-assets.html#knowledge-edit",
+    "image": "images/screens/06-knowledge-assets-knowledge-edit.png"
+  },
+  {
+    "id": "06-knowledge-assets-assets",
+    "group": "06-knowledge-assets",
+    "screen": "assets",
+    "title": "Danh sách tài sản",
+    "url": "06-knowledge-assets.html#assets",
+    "image": "images/screens/06-knowledge-assets-assets.png"
+  },
+  {
+    "id": "06-knowledge-assets-my-assets",
+    "group": "06-knowledge-assets",
+    "screen": "my-assets",
+    "title": "Thiết bị của tôi",
+    "url": "06-knowledge-assets.html#my-assets",
+    "image": "images/screens/06-knowledge-assets-my-assets.png"
+  },
+  {
+    "id": "06-knowledge-assets-asset-form",
+    "group": "06-knowledge-assets",
+    "screen": "asset-form",
+    "title": "Thêm / sửa tài sản",
+    "url": "06-knowledge-assets.html#asset-form",
+    "image": "images/screens/06-knowledge-assets-asset-form.png"
+  },
+  {
+    "id": "06-knowledge-assets-asset",
+    "group": "06-knowledge-assets",
+    "screen": "asset",
+    "title": "Hồ sơ tài sản",
+    "url": "06-knowledge-assets.html#asset",
+    "image": "images/screens/06-knowledge-assets-asset.png"
+  },
+  {
+    "id": "06-knowledge-assets-asset-action",
+    "group": "06-knowledge-assets",
+    "screen": "asset-action",
+    "title": "Cấp phát / thu hồi",
+    "url": "06-knowledge-assets.html#asset-action",
+    "image": "images/screens/06-knowledge-assets-asset-action.png"
+  },
+  {
+    "id": "07-monitoring-reports",
+    "group": "07-monitoring",
+    "screen": "reports",
+    "title": "Báo cáo",
+    "url": "07-monitoring.html#reports",
+    "image": "images/screens/07-monitoring-reports.png"
+  },
+  {
+    "id": "07-monitoring-notifications",
+    "group": "07-monitoring",
+    "screen": "notifications",
+    "title": "Thông báo",
+    "url": "07-monitoring.html#notifications",
+    "image": "images/screens/07-monitoring-notifications.png"
+  },
+  {
+    "id": "07-monitoring-audit",
+    "group": "07-monitoring",
+    "screen": "audit",
+    "title": "Nhật ký hoạt động",
+    "url": "07-monitoring.html#audit",
+    "image": "images/screens/07-monitoring-audit.png"
+  },
+  {
+    "id": "08-admin-states-users",
+    "group": "08-admin-states",
+    "screen": "users",
+    "title": "Người dùng",
+    "url": "08-admin-states.html#users",
+    "image": "images/screens/08-admin-states-users.png"
+  },
+  {
+    "id": "08-admin-states-user-create",
+    "group": "08-admin-states",
+    "screen": "user-create",
+    "title": "Tạo người dùng",
+    "url": "08-admin-states.html#user-create",
+    "image": "images/screens/08-admin-states-user-create.png"
+  },
+  {
+    "id": "08-admin-states-departments",
+    "group": "08-admin-states",
+    "screen": "departments",
+    "title": "Phòng ban",
+    "url": "08-admin-states.html#departments",
+    "image": "images/screens/08-admin-states-departments.png"
+  },
+  {
+    "id": "08-admin-states-teams",
+    "group": "08-admin-states",
+    "screen": "teams",
+    "title": "Nhóm & thành viên",
+    "url": "08-admin-states.html#teams",
+    "image": "images/screens/08-admin-states-teams.png"
+  },
+  {
+    "id": "08-admin-states-categories",
+    "group": "08-admin-states",
+    "screen": "categories",
+    "title": "Danh mục",
+    "url": "08-admin-states.html#categories",
+    "image": "images/screens/08-admin-states-categories.png"
+  },
+  {
+    "id": "08-admin-states-sla",
+    "group": "08-admin-states",
+    "screen": "sla",
+    "title": "Chính sách SLA",
+    "url": "08-admin-states.html#sla",
+    "image": "images/screens/08-admin-states-sla.png"
+  },
+  {
+    "id": "08-admin-states-ai-settings",
+    "group": "08-admin-states",
+    "screen": "ai-settings",
+    "title": "Cấu hình trợ lý AI",
+    "url": "08-admin-states.html#ai-settings",
+    "image": "images/screens/08-admin-states-ai-settings.png"
+  },
+  {
+    "id": "08-admin-states-forbidden",
+    "group": "08-admin-states",
+    "screen": "forbidden",
+    "title": "Không có quyền",
+    "url": "08-admin-states.html#forbidden",
+    "image": "images/screens/08-admin-states-forbidden.png"
+  },
+  {
+    "id": "08-admin-states-not-found",
+    "group": "08-admin-states",
+    "screen": "not-found",
+    "title": "Không tìm thấy",
+    "url": "08-admin-states.html#not-found",
+    "image": "images/screens/08-admin-states-not-found.png"
+  },
+  {
+    "id": "08-admin-states-states",
+    "group": "08-admin-states",
+    "screen": "states",
+    "title": "Loading / rỗng / lỗi",
+    "url": "08-admin-states.html#states",
+    "image": "images/screens/08-admin-states-states.png"
+  },
+  {
+    "id": "dashboard-requester",
+    "group": "dashboard",
+    "screen": "requester",
+    "title": "Dashboard requester",
+    "url": "dashboard.html?role=requester",
+    "image": "images/screens/dashboard-requester.png"
+  },
+  {
+    "id": "dashboard-technician",
+    "group": "dashboard",
+    "screen": "technician",
+    "title": "Dashboard technician",
+    "url": "dashboard.html?role=technician",
+    "image": "images/screens/dashboard-technician.png"
+  },
+  {
+    "id": "dashboard-manager",
+    "group": "dashboard",
+    "screen": "manager",
+    "title": "Dashboard manager",
+    "url": "dashboard.html?role=manager",
+    "image": "images/screens/dashboard-manager.png"
+  },
+  {
+    "id": "dashboard-admin",
+    "group": "dashboard",
+    "screen": "admin",
+    "title": "Dashboard admin",
+    "url": "dashboard.html?role=admin",
+    "image": "images/screens/dashboard-admin.png"
+  }
+]
