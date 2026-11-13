@@ -1,16 +1,192 @@
 @import "tailwindcss";
+@font-face {
+  font-family: Inter;
+  src: url("/fonts/inter-variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+:root {
+  --primary: #087f78;
+  --primary-hover: #076c65;
+  --canvas: #f5f7f6;
+  --surface: #fff;
+  --ink: #25332f;
+  --muted: #5b6b65;
+  --line: #dde5e1;
+  --radius-control: 8px;
+  --radius-panel: 12px;
+  --radius-dialog: 18px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 28px;
+  --kpi-amber: #a16b08;
+  --kpi-orange: #b65519;
+  --kpi-blue: #286bb8;
+  --kpi-rose: #af305d;
+}
+* {
+  box-sizing: border-box;
+}
+.ui-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  max-width: 100%;
+  padding: 10px 16px;
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-control);
+  background: var(--primary);
+  color: white;
+  font:
+    600 14px/1.5 Inter,
+    sans-serif;
+  text-align: center;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+.ui-button:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+.ui-button:disabled {
+  background: #e5ebe8;
+  color: #5b6b65;
+  border-color: #ccd9d3;
+  cursor: not-allowed;
+}
+:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
+.ui-field {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+.ui-field label {
+  font-weight: 600;
+}
+.ui-field input {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #ccd9d3;
+  border-radius: var(--radius-control);
+  background: white;
+  color: var(--ink);
+  font: inherit;
+}
+.ui-field input::placeholder {
+  color: var(--muted);
+}
+.ui-field input:disabled {
+  background: #eff3f1;
+  cursor: not-allowed;
+}
+.ui-field input[aria-invalid="true"] {
+  border-color: #a12946;
+}
+.ui-field small {
+  color: #a12946;
+  font-size: 13px;
+}
+.ui-badge {
+  display: inline-flex;
+  max-width: 100%;
+  padding: 4px 8px;
+  border: 1px solid #cdd3de;
+  border-radius: 6px;
+  background: #eef0f4;
+  color: #535e70;
+  font-size: 13px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.ui-badge[data-tone="blue"] {
+  background: #eaf2ff;
+  color: #2056a0;
+  border-color: #c4d8f6;
+}
+.ui-badge[data-tone="green"] {
+  background: #eaf6ee;
+  color: #24643d;
+  border-color: #c4e2ce;
+}
+.ui-badge[data-tone="amber"] {
+  background: #fff5df;
+  color: #82540b;
+  border-color: #ead39e;
+}
+.ui-badge[data-tone="rose"] {
+  background: #fcecef;
+  color: #a12946;
+  border-color: #efc5ce;
+}
+.primitive-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.primitive-preview {
+  max-width: 960px;
+  margin: auto;
+}
+.primitive-preview section {
+  margin: 28px 0;
+  padding: 20px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.primitive-preview h2 {
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: 650;
+}
+.primitive-preview h1 {
+  font-size: 28px;
+  font-weight: 650;
+}
+.primitive-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+@media (max-width: 720px) {
+  main {
+    padding: 16px;
+  }
+  .primitive-fields {
+    grid-template-columns: 1fr;
+  }
+  .ui-field input {
+    font-size: 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ui-button {
+    transition: none;
+  }
+}
 
 /* Foundation only; shared visual tokens belong to FE-02.01. */
 html {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
   margin: 0;
-  background: #1a1d21;
-  color: #f2f5fa;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 15px;
+  background: #f5f7f6;
+  color: #25332f;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -20,4 +196,21 @@ main {
 
 h1 {
   font-size: 1.5rem;
+}
+.ui-button[data-variant="secondary"] {
+  background: white;
+  color: var(--ink);
+  border-color: #ccd9d3;
+}
+.ui-button[data-variant="secondary"]:hover:not(:disabled) {
+  background: #eff3f1;
+}
+.ui-button[data-variant="danger"] {
+  background: #a12946;
+  border-color: #a12946;
+}
+.ui-button svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
