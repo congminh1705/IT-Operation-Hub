@@ -1,0 +1,35 @@
+{
+  "task": "FE-02.03",
+  "owner": "PO",
+  "state": "review",
+  "visual_review": "pending",
+  "implementation_commit": "bce1219b7486c4aca1b5cb455f91456f82781984",
+  "branch": "phase/a-frontend",
+  "unit_tests": 58,
+  "unit_files": 5,
+  "browser": {
+    "startTime": "2026-11-13T05:27:04.711Z",
+    "duration": 19435.693,
+    "expected": 37,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "checks": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "format": "pass",
+    "build": "pass",
+    "role_matrix": "pass",
+    "keyboard_drawer_account": "pass",
+    "active_destinations": "pass",
+    "search_encoding_scope": "pass",
+    "viewport_320_390_768_1440_all_roles": "pass",
+    "css_zoom_200_percent_representative": "pass",
+    "reference_actual_capture": "pass",
+    "owner_visual_review": "not-run"
+  },
+  "real_auth_or_feature_implementation": false,
+  "existing_pr": "https://github.com/congminh1705/IT-Operation-Hub/pull/2",
+  "parent_complete": false
+}

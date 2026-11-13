@@ -18,7 +18,7 @@ purpose: "Maintain the single status and owner registry for every refined execut
 
 ## 1. Scope and authority
 
-All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. FE-01.01 through FE-01.03 and FE-02.01/.02 are **done**; 225 tasks remain pending. Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
+All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. FE-01.01 through FE-01.03 and FE-02.01/.02 are **done**; FE-02.03 is in review; 224 tasks remain pending. Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
 
 The [package registry](../README.md#4-task-tracker) holds epic state; this board alone holds task state and PO ownership. Use the [task workflow](task-workflow.md). [Parent coverage and closure](../package-task-coverage.md) maps every parent criterion to outputs and names any external integration evidence. Package readiness means defined scope; dependencies, affected decisions and future coding authorization still gate execution.
 
@@ -35,7 +35,7 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FE-01.03](../tasks/FE-01.03.md) | [FE-01](../06-frontend-first.md#fe-01) | Implement the isolated mock gateway | [FE-01.02](../tasks/FE-01.02.md) | PO | done |
 | [FE-02.01](../tasks/FE-02.01.md) | [FE-02](../06-frontend-first.md#fe-02) | Implement visual tokens and basic primitives | [FE-01.01](../tasks/FE-01.01.md) | PO | done |
 | [FE-02.02](../tasks/FE-02.02.md) | [FE-02](../06-frontend-first.md#fe-02) | Implement form feedback and accessible dialogs | [FE-02.01](../tasks/FE-02.01.md) | PO | done |
-| [FE-02.03](../tasks/FE-02.03.md) | [FE-02](../06-frontend-first.md#fe-02) | Build the role-aware responsive shell | [FE-01.02](../tasks/FE-01.02.md), [FE-02.02](../tasks/FE-02.02.md) | PO | pending |
+| [FE-02.03](../tasks/FE-02.03.md) | [FE-02](../06-frontend-first.md#fe-02) | Build the role-aware responsive shell | [FE-01.02](../tasks/FE-01.02.md), [FE-02.02](../tasks/FE-02.02.md) | PO | review |
 | [FE-02.04](../tasks/FE-02.04.md) | [FE-02](../06-frontend-first.md#fe-02) | Implement query lifecycle and timezone helpers | [FE-01.03](../tasks/FE-01.03.md), [FE-02.02](../tasks/FE-02.02.md) | PO | pending |
 | [FE-03.01](../tasks/FE-03.01.md) | [FE-03](../06-frontend-first.md#fe-03) | Build the complete login form interaction | [FE-01.03](../tasks/FE-01.03.md), [FE-02.02](../tasks/FE-02.02.md) | PO | pending |
 | [FE-03.02](../tasks/FE-03.02.md) | [FE-03](../06-frontend-first.md#fe-03) | Wire mock session routing and scoped entry | [FE-03.01](../tasks/FE-03.01.md), [FE-02.03](../tasks/FE-02.03.md), [FE-02.04](../tasks/FE-02.04.md) | PO | pending |
@@ -278,10 +278,10 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 
 ## 3. Start and phase exit
 
-FE-01.01 through FE-01.03 and FE-02.01 are complete; FE-02.02 is the next candidate, subject to assignment. Complete A1 foundations, then A2 core, A3 coordination/assistant and A4 visibility/handoff according to exact leaf dependencies. All frontend batches are already decomposed; refresh their assumptions at start.
+FE-01.01 through FE-01.03 and FE-02.01/.02 are complete; FE-02.03 awaits PO review. FE-02.04 is the next sequential candidate after this review. Complete A1 foundations, then A2 core, A3 coordination/assistant and A4 visibility/handoff according to exact leaf dependencies. All frontend batches are already decomposed; refresh their assumptions at start.
 
 Phase A exits at **FE-18.03** after all frontend output/checks are complete. Phase B decisions/services may then execute according to their leaf graph. Phase C integrates modules after named service outputs, and Phase D starts after integration readiness. A parent may await external integration evidence even when its service leaves are done; never leave those leaf tasks falsely “partially done.”
 
-All task evidence is currently NOT RUN. See [current context](current-context.md), the [task template](task-template.md) and [coverage/closure](../package-task-coverage.md). Preserve stable IDs when later implementation discovers a justified refinement; record changed edges and evidence instead of silently broadening scope.
+Evidence exists for completed tasks and the current FE-02.03 review; unopened tasks remain NOT RUN. See [current context](current-context.md), the [task template](task-template.md) and [coverage/closure](../package-task-coverage.md). Preserve stable IDs when later implementation discovers a justified refinement; record changed edges and evidence instead of silently broadening scope.
 
 The owner-facing [latest task report](current-context.md#latest-task-report) is maintained only in current context; this board remains the task state/owner/dependency registry.

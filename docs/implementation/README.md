@@ -16,11 +16,11 @@ purpose: "Provide one task tracker and a bounded-context workflow for implementi
 
 # Implementation backlog and task workflow
 
-**Approved frontend scope:** [v1.1 / D-47](../design/approval.md), including the final interactive login. Use the [63-task design map](../design/implementation-scope.md#task-map). Existing IDs, dependencies, business acceptance and lifecycle remain authoritative; visual approval does not start implementation.
+**Approved frontend scope:** [v1.3 / D-51](../design/approval.md), including the final interactive login. Use the [63-task design map](../design/implementation-scope.md#task-map). Existing IDs, dependencies, business acceptance and lifecycle remain authoritative; visual approval does not start implementation.
 
 This backlog maps **67 stories to 88 work packages and 230 executable tasks** across frontend, real services, integration and acceptance. Every package is fully decomposed; packages remain epic-level scope records rather than coding sessions. D-43 confirms the [task method](workflow/task-workflow.md), and D-44 requests complete decomposition. **Frontend DEMO is Phase A and must be delivered before backend implementation.** The [execution board](workflow/execution-board.md) contains all task states; [parent coverage/closure](package-task-coverage.md) assigns all 264 numbered package criteria. FE-01.01 through FE-01.03 are implemented and checked; FE-01 is EPIC_DONE for the DEMO foundation only. Remaining tasks and system acceptance are not complete.
 
-FE-01.01 is complete. For the next coding request use **[FE-02.02](tasks/FE-02.02.md)**. Its file contains the required context, output scope and checks. [Current context](workflow/current-context.md) records the resume pointer. The [execution board](workflow/execution-board.md) owns task status; the package registry below owns epic status.
+FE-02.01/.02 are complete. **[FE-02.03](tasks/FE-02.03.md)** is implemented and awaiting PO review; resume its findings before a new assignment. Its file contains the required context, output scope and checks. [Current context](workflow/current-context.md) records the resume pointer. The [execution board](workflow/execution-board.md) owns task status; the package registry below owns epic status.
 
 The `workflow/` folder contains current context, execution board, execution prompt, task record template, task workflow and the consolidated [task report history](workflow/task-history.md). Group summaries remain in 00–07; individual task records remain in `tasks/`.
 
@@ -39,7 +39,7 @@ This is a derived execution plan. [Stories](../08-invest-requirements.md), [AC](
 | C — Real integration | [INT-01–06](07-integration.md) | Replace mock adapters by module; verify UI with actual scoped services and outcomes |
 | D — M5 acceptance | [QA-01–05](05-acceptance.md) | Whole-system AC/security/UX/live-model evidence and isolated recovery |
 
-Start the next authorized coding session with **FE-02.02**, then follow the existing leaf dependencies across A1–A4. All frontend batches are already decomposed. **FE-18.03** is the Phase A exit and an ancestor of all Phase B/C/D work. PRE-02 decisions precede workforce/concurrency consumers, PRE-03 precedes AI/knowledge consumers and PRE-04 precedes recovery; unresolved choices do not become approved merely because task records exist.
+After FE-02.03 review, the next sequential candidate is **FE-02.04**; then follow the existing leaf dependencies across A1–A4. All frontend batches are already decomposed. **FE-18.03** is the Phase A exit and an ancestor of all Phase B/C/D work. PRE-02 decisions precede workforce/concurrency consumers, PRE-03 precedes AI/knowledge consumers and PRE-04 precedes recovery; unresolved choices do not become approved merely because task records exist.
 
 M1–M5 still describe system capabilities/acceptance, while phases A–D describe the requested implementation order. A frontend DEMO is not a completed M1–M4 capability. Within B, preserve the original service dependencies: AI-01/02 supply minimum sources before M3; full KB/RAG remains OPS-06/07. Phase C can integrate each module as its B dependencies become ready. Phase D starts after all six INT tasks. Batches are not timeboxed sprints and carry no duration commitment.
 
