@@ -1,8 +1,5 @@
-# FE-02.01 comparison
+# FE-02.01 review record
 
-Reference: [profile desktop](reference-desktop.png), [Manager desktop](reference-manager.png).
-Actual: [desktop](actual-desktop.png), [320px reduced motion](actual-mobile.png).
+PO approved the corrected UI and requested deletion of review screenshots. All four PNG captures were removed from the current tree. This file retains the review outcome only; no live screenshot links remain. Historical commits may still contain the deleted captures.
 
-Mac/Teal primary and pale canvas, Inter, rounded controls and text-bearing semantic badges are implemented. The isolated preview intentionally omits shell/business layout (FE-02.03/feature tasks). Long Vietnamese button wraps at 320px. Screenshots are full-page and may have different content heights; compare primitives, not page geometry. No production auth/API/model behavior added.
-
-Pending: mobile reference pair, keyboard focus/hover interaction, 200% zoom, final build after Button variants, PO visual approval. Reduced-motion media was used for the mobile capture; this alone is not a complete motion audit. No task completion claimed.
+Field alignment correction: 75df9fe. Tests: 38 passed. PO visual verdict: approved. Keyboard/200% zoom/full mobile reference pairing were not executed in the recorded attempt; approval does not turn those checks into passes.
