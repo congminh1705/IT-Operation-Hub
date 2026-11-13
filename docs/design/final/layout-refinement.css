@@ -1,0 +1,68 @@
+/* Impeccable / Operate refinement, 2026-11-13. Scoped out of the approved login. */
+html body.format-v12,html.violet body{--space-control:12px;--space-group:20px;--space-section:28px;--type-body:14px;--type-label:13px;--type-section:18px;--type-page:30px;font-family:Inter,sans-serif;font-size:var(--type-body);line-height:1.6;font-synthesis:none;font-optical-sizing:auto;caret-color:#2468df;scrollbar-color:#b9a9cc #f5f7fa;scrollbar-width:thin}
+html body.format-v12 ::selection,html.violet body ::selection{background:#dfcff6;color:#233040}
+html body.format-v12 :is(h1,.head h1),html.violet body h1{font-family:Lora,serif;font-size:var(--type-page);font-weight:500;line-height:1.3;letter-spacing:-.025em;text-wrap:balance;overflow-wrap:break-word}
+html body.format-v12 :is(h2,.panel-head h2),html.violet body h2{font-family:Manrope,sans-serif;font-size:var(--type-section);font-weight:650;line-height:1.4;letter-spacing:-.015em;text-wrap:balance}
+html body.format-v12 h3,html.violet body h3{font-family:Manrope,sans-serif;font-size:15px;font-weight:650;line-height:1.5;letter-spacing:0}
+html body.format-v12 :is(.head>.eyebrow,.head>div>.eyebrow),html.violet body .page-heading .eyebrow{display:none}
+html body.format-v12 :is(.subtitle,.panel-head p,.description,.message p,.list-card p),html.violet body :is(.page-heading p,.decision-item p,.journey-copy p){font-family:Inter,sans-serif;font-size:14px;line-height:1.7;max-width:72ch;text-wrap:pretty}
+html body.format-v12 :is(.main,.hub),html.violet body main{width:100%;max-width:1480px;padding:28px 32px;min-width:0}
+html body.format-v12 :is(.head,.stats),html.violet body :is(.page-heading,.metrics){margin-bottom:var(--space-section)}
+html body.format-v12 .head,html.violet body .page-heading{align-items:flex-start;gap:20px}
+html body.format-v12 :is(.grid,.two,.three,.four,.kanban),html.violet body :is(.board-grid,.bottom-grid){gap:var(--space-group);min-width:0}
+html body.format-v12 :is(.grid,.two,.three,.four)>*,html.violet body :is(.board-grid,.bottom-grid)>*{min-width:0}
+html body.format-v12 :is(.pad,.panel-head,.composer,.message){padding:20px 24px}
+html body.format-v12 .panel-head{align-items:flex-start;gap:16px;padding-bottom:16px}
+html body.format-v12 :is(.panel,.list-card,.task,.lane){border-radius:8px}
+html body.format-v12 :is(.list-card,.task,.dag .node,.auth){background:#fff;color:#233040;border-color:#dce3eb}
+html body.format-v12 :is(.lane,.dag){background:#f0edf7;color:#233040;border-color:#d8cee5}
+html body.format-v12 :is(.lane h2,.task h3,.list-card h2,.list-card h3){color:#233040}
+html body.format-v12 :is(.task p,.list-card p,.task small){color:#5e6d7e}
+html body.format-v12 .dag .node.locked{background:#fff4dc;border-color:#d8bc79;color:#704811}
+html body.format-v12 .bar{background:#e7e0ef}
+html body.format-v12 :is(.form-section,.field){min-width:0}
+html body.format-v12 .field{gap:8px;margin-bottom:20px;font-size:14px;line-height:1.5}
+html body.format-v12 .detail{grid-template-columns:minmax(110px,150px) minmax(0,1fr);gap:14px 20px;font-size:14px;line-height:1.6}
+html body.format-v12 :is(.detail dd,.row-title,.line .grow,.message>div){min-width:0;overflow-wrap:anywhere}
+html body.format-v12 :is(.btn,.tabs button,.tabs a),html.violet body :is(.button,.filter,.text-button){min-height:44px;line-height:1.4}
+html body.format-v12 .btn,html.violet body .button{font-family:Cabin,sans-serif;font-size:14px;border-radius:6px;white-space:normal}
+html body.format-v12 :is(.tabs,.actions,.form-actions){gap:8px}
+html body.format-v12 :is(input,select,textarea),html.violet body :is(input,select,textarea){font-family:Inter,sans-serif;font-size:14px;line-height:1.5;max-width:100%;min-width:0}
+html body.format-v12 :is(td,th),html.violet body :is(td,th){font-variant-numeric:tabular-nums;line-height:1.55}
+html body.format-v12 td{font-size:14px;padding:16px 20px;vertical-align:top}
+html body.format-v12 th{font-family:Manrope,sans-serif;font-size:13px;letter-spacing:0;padding:13px 20px;white-space:normal}
+html body.format-v12 .table-scroll{overscroll-behavior-x:contain;scrollbar-width:thin}
+html body.format-v12 .stat .value,html.violet body .metric-value{font-family:Manrope,sans-serif;font-size:30px;font-weight:550;line-height:1.3;letter-spacing:-.025em;font-variant-numeric:tabular-nums}
+html body.format-v12 :is(.stat p,.pill,.field small,.code),html.violet body :is(.metric-head,.metric-foot,.pill,.ticket-name .code,.capacity-caption,.capacity-footnote,.table-footer){font-size:13px;line-height:1.5}
+html body.format-v12 :is(.stat,.banner){padding:18px 20px}
+html body.format-v12 .rail{padding:24px 16px}
+html body.format-v12 .rail a.nav,html.violet body .nav-item{font-family:Manrope,sans-serif;font-size:14px;line-height:1.5;min-height:44px}
+html body.format-v12 .topbar,html.violet body .topbar{min-height:64px;height:auto;padding:12px 32px;gap:16px}
+html body.format-v12 .review-tabs{row-gap:8px}
+html body.format-v12 .svg-review{max-width:1480px;padding:0 24px;margin:24px auto}
+html body.format-v12 .ai-canvas{scrollbar-width:thin;overscroll-behavior-x:contain}
+html body.format-v12 .ai-canvas img{width:100%!important;min-width:0!important;max-width:100%!important}
+html.violet body .metric{padding:16px 18px;min-height:120px}
+html.violet body .metric-foot{margin-top:8px;align-items:flex-start}
+html.violet body .board-grid{grid-template-columns:minmax(0,1.7fr) minmax(300px,1fr);align-items:start}
+html.violet body .section-head{min-height:32px;margin-bottom:16px;align-items:flex-start}
+html.violet body .operations-rail{gap:28px}
+html.violet body .ticket-name{font-size:14px;line-height:1.55;white-space:normal;overflow-wrap:anywhere}
+html.violet body .ticket-table{font-size:13px}
+html.violet body .ticket-table th{font-size:13px;white-space:normal}
+html.violet body .ticket-table td{padding-top:16px;padding-bottom:16px;vertical-align:top}
+html.violet body .queue-tools{flex-wrap:wrap;gap:8px;padding:12px 16px}
+html.violet body .search{max-width:none;flex:1 1 240px;min-height:44px;min-width:0}
+html.violet body .search input{width:100%;min-height:42px}
+html.violet body .capacity-label .person-stack{font-size:14px;line-height:1.6}
+html.violet body .decision-item h3{font-size:15px}
+html.violet body .journey-copy h3{font-family:Lora,serif;font-size:26px;line-height:1.35;letter-spacing:-.02em}
+html.violet body .shift-row h3{font-size:15px}
+html.violet body .dispatch-panel :is(.city-name,.inspector-heading strong,.dispatch-ticket strong,.dispatch-person strong){font-family:Manrope,sans-serif}
+html.violet body .dispatch-panel .city-name{font-size:14px}
+html.violet body .dispatch-panel :is(.dispatch-layers button,.city-group-switch button){min-height:44px}
+@media(max-width:1100px){html body.format-v12 .main,html.violet body main{padding:24px}html.violet body .board-grid{grid-template-columns:minmax(0,1fr)}html.violet body .operations-rail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}html.violet body .operations-rail>*{min-width:0}html body.format-v12 .grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:720px){html body.format-v12,html.violet body{--type-page:26px;--type-section:18px;--space-group:16px;--space-section:24px}html body.format-v12 :is(.main,.hub),html.violet body main{padding:24px 16px}html body.format-v12 :is(.head,.panel-head),html.violet body .page-heading{flex-wrap:wrap;gap:16px}html body.format-v12 :is(.grid,.two,.three,.kanban),html.violet body .operations-rail{grid-template-columns:minmax(0,1fr)}html body.format-v12 :is(.pad,.panel-head,.composer,.message){padding:18px 16px}html body.format-v12 .head>.actions,html.violet body .heading-actions{width:100%;flex-wrap:wrap}html body.format-v12 .head>.actions .btn,html.violet body .heading-actions .button{flex:1}html body.format-v12 .detail{grid-template-columns:minmax(90px,110px) minmax(0,1fr);gap:12px}html body.format-v12 :is(input,select,textarea),html.violet body :is(input,select,textarea){font-size:16px}html body.format-v12 .topbar,html.violet body .topbar{padding:12px 16px}html body.format-v12 :is(.stat,.banner),html.violet body .metric{padding:16px 12px}html.violet body .metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}html.violet body .metric-head{font-size:13px;align-items:flex-start}html.violet body .metric-foot{font-size:12px}html.violet body .metric-value{font-size:28px}html.violet body .ticket-name{font-size:13px}html.violet body .ticket-table .pill{font-size:12px}html.violet body .queue-tools{padding:12px}html body.format-v12 .svg-review{padding:0 12px}html body.format-v12 .modal-body{max-height:65dvh;overflow:auto}}
+@media(prefers-reduced-motion:reduce){html body.format-v12 *,html.violet body *{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+@media(max-width:1100px){html body.format-v12 .ai-canvas img{width:max(100%,1280px)!important;min-width:1280px!important;max-width:none!important}}

@@ -7,7 +7,7 @@ module: documentation
 tags: [project, documentation, reference]
 priority: 1
 status: design-draft
-owner: "Project owner"
+owner: PO
 approval: needs-review
 updated: 2026-11-01
 authority: primary
@@ -30,6 +30,8 @@ Markdown under docs/ starts with YAML: `id`, `title`, `type`, `domain`, `module`
 | --- | --- |
 | type | reference: specification/reference; planning: plan; report: documentation-review results |
 | status | design-draft, planned, hypothesis, or self-reviewed; no completed status for merely specified features |
+| Explicit design approval | `status: design-approved`, `approval: approved`, `approved_by`, `approved_on` and decision ID are permitted only after an explicit owner decision for that design scope; this does not imply implementation completion |
+| Historical design | `status: superseded`, `authority: historical`; archived content cannot override the current baseline |
 | owner | Project owner; the accountable documentation role, not an invented person's name |
 | approval | needs-review; individual decisions are confirmed separately in the decision log |
 | authority | primary: topic source of truth; derived: index, illustration, or summary |

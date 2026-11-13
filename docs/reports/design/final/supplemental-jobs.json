@@ -1,0 +1,155 @@
+[
+  {
+    "id": "mobile-01-account",
+    "url": "01-account.html#profile",
+    "image": "images/mobile/01-account.png",
+    "width": 390
+  },
+  {
+    "id": "mobile-02-tickets",
+    "url": "02-tickets.html#tickets",
+    "image": "images/mobile/02-tickets.png",
+    "width": 390
+  },
+  {
+    "id": "mobile-03-work",
+    "url": "03-work.html#work",
+    "image": "images/mobile/03-work.png",
+    "width": 390
+  },
+  {
+    "id": "mobile-04-workforce",
+    "url": "04-workforce.html#workforce",
+    "image": "images/mobile/04-workforce.png",
+    "width": 390
+  },
+  {
+    "id": "mobile-05-ai",
+    "url": "05-ai.html#ai-normal",
+    "image": "images/mobile/05-ai.png",
+    "width": 390
+  },
+  {
+    "id": "mobile-06-knowledge-assets",
+    "url": "06-knowledge-assets.html#knowledge",
+    "image": "images/mobile/06-knowledge-assets.png",
+    "width": 390
+  },
+  {
+    "id": "mobile-07-monitoring",
+    "url": "07-monitoring.html#reports",
+    "image": "images/mobile/07-monitoring.png",
+    "width": 390
+  },
+  {
+    "id": "mobile-08-admin-states",
+    "url": "08-admin-states.html#users",
+    "image": "images/mobile/08-admin-states.png",
+    "width": 390
+  },
+  {
+    "id": "catalog",
+    "url": "index.html",
+    "image": "images/screens/catalog.png",
+    "width": 1440
+  },
+  {
+    "id": "mobile-ticket-requester",
+    "url": "02-tickets.html#ticket-requester",
+    "image": "images/mobile/ticket-requester.png",
+    "width": 390
+  },
+  {
+    "id": "mobile-ticket-active",
+    "url": "02-tickets.html#ticket-active",
+    "image": "images/mobile/ticket-active.png",
+    "width": 390
+  },
+  {
+    "id": "suite-desktop-checks",
+    "url": "suite-checks.html",
+    "image": "images/suite-desktop-checks.png",
+    "width": 1440
+  },
+  {
+    "id": "suite-mobile-checks",
+    "url": "suite-checks.html",
+    "image": "images/suite-mobile-checks.png",
+    "width": 390
+  },
+  {
+    "id": "05-ai-ai-normal",
+    "group": "05-ai",
+    "screen": "ai-normal",
+    "title": "Workspace · Bình thường",
+    "url": "05-ai.html#ai-normal",
+    "image": "images/screens/05-ai-ai-normal.png",
+    "width": 1440
+  },
+  {
+    "id": "05-ai-ai-requester",
+    "group": "05-ai",
+    "screen": "ai-requester",
+    "title": "Workspace · Nhân viên",
+    "url": "05-ai.html#ai-requester",
+    "image": "images/screens/05-ai-ai-requester.png",
+    "width": 1440
+  },
+  {
+    "id": "05-ai-ai-tech",
+    "group": "05-ai",
+    "screen": "ai-tech",
+    "title": "Workspace · Kỹ thuật viên",
+    "url": "05-ai.html#ai-tech",
+    "image": "images/screens/05-ai-ai-tech.png",
+    "width": 1440
+  },
+  {
+    "id": "05-ai-ai-exception",
+    "group": "05-ai",
+    "screen": "ai-exception",
+    "title": "Workspace · Ngoại lệ",
+    "url": "05-ai.html#ai-exception",
+    "image": "images/screens/05-ai-ai-exception.png",
+    "width": 1440
+  },
+  {
+    "id": "05-ai-ai-approval",
+    "group": "05-ai",
+    "screen": "ai-approval",
+    "title": "Workspace · Phê duyệt",
+    "url": "05-ai.html#ai-approval",
+    "image": "images/screens/05-ai-ai-approval.png",
+    "width": 1440
+  },
+  {
+    "id": "05-ai-ai-states",
+    "group": "05-ai",
+    "screen": "ai-states",
+    "title": "Workspace · Trạng thái",
+    "url": "05-ai.html#ai-states",
+    "image": "images/screens/05-ai-ai-states.png",
+    "width": 1440
+  },
+  {
+    "id": "07-monitoring-reports",
+    "group": "07-monitoring",
+    "screen": "reports",
+    "title": "Báo cáo",
+    "url": "07-monitoring.html#reports",
+    "image": "images/screens/07-monitoring-reports.png",
+    "width": 1440
+  },
+  {
+    "id": "suite-desktop-checks",
+    "url": "suite-checks.html",
+    "image": "images/suite-desktop-checks.png",
+    "width": 1440
+  },
+  {
+    "id": "suite-mobile-checks",
+    "url": "suite-checks.html",
+    "image": "images/suite-mobile-checks.png",
+    "width": 390
+  }
+]

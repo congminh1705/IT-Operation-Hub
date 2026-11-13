@@ -1,0 +1,230 @@
+/* Shared readable typography for the current Spectrum proposal, including login and spatial view. */
+:root{--reading-body:15px;--reading-ui:14px;--reading-small:13px;--reading-ink:#f5f8f1;--reading-muted:#cad5cd}
+body.readable-ui{--ink:var(--reading-ink);--text:var(--reading-ink);--muted:var(--reading-muted);--access-text:var(--reading-ink);--access-muted:var(--reading-muted);font-size:var(--reading-body);line-height:1.6;color:var(--reading-ink)}
+body.readable-ui :is(h1,.head h1,.page-top h1,.page-heading h1){font-size:30px;font-weight:600;line-height:1.25;letter-spacing:-.6px}
+body.readable-ui :is(h2,.panel-head h2,.section-head h2){font-size:20px;font-weight:600;line-height:1.4}
+body.readable-ui :is(h3,.proposal-title h3){font-size:17px;line-height:1.45}
+body.readable-ui :is(.subtitle,.page-heading p:not(.eyebrow),.head p:not(.eyebrow),.panel-head p,.panel-foot,.panel-foot p,.meta,.form-note,.small,.modal-body p,.dialog-body p){font-size:14px;line-height:1.65}
+body.readable-ui :is(.muted,.subtitle,.page-note,.stat-note,.stat-label,.footer,.crumb,.meta,.section-caption,.form-note,.access-form-subtitle,.access-intro,.access-help,.access-account-note){color:var(--reading-muted)}
+body.readable-ui :is(small,.eyebrow,.nav-label,.status-note,.review-note,.review-bar small,.reviewbar small,.review-questions,.review-questions p,.stat-note,.footer,.page-note,.crumb,.code,.pill,.status,.sla,.priority){font-size:13px;line-height:1.5}
+body.readable-ui :is(.shell,.app){grid-template-columns:224px minmax(0,1fr)}
+body.readable-ui :is(.rail,.sidebar){min-width:0}
+body.readable-ui :is(.rail a.nav,.nav-item,.nav-link,.nav-section button){font-size:14px;line-height:1.45;min-height:43px;padding:9px 10px;white-space:normal;overflow-wrap:anywhere}
+body.readable-ui :is(.nav-item span,.nav-link span,.rail a.nav span){font-size:inherit}
+body.readable-ui :is(.brand strong,.brand-name,.org strong,.user-card strong,.who strong){font-size:15px}
+body.readable-ui :is(.brand small,.brand-name span,.org small,.user-card small,.who p){font-size:13px;line-height:1.45}
+body.readable-ui :is(.topbar,header){min-width:0}
+body.readable-ui .topbar{height:auto;min-height:66px;padding-top:9px;padding-bottom:9px}
+body.readable-ui :is(.topbar input,.searchbox input,.header-search,.header-search span){font-size:14px;min-width:0}
+body.readable-ui :is(.top-date,.topbar .date,.topbar .user-name,.workspace-mark,.top-right,.avatar){font-size:13px}
+body.readable-ui :is(.topbar .actions,.top-right){flex-wrap:wrap;justify-content:flex-end;gap:9px;min-width:0}
+body.readable-ui :is(.btn,.button,.primary,.secondary,.form-actions button,.tabs button,.tabs a,.review-tabs a,.review-help,.role-picker button){font-size:14px;line-height:1.45;min-height:41px;white-space:normal;overflow-wrap:anywhere}
+body.readable-ui :is(.text-btn,.text-link){font-size:13px;line-height:1.45;min-height:34px}
+body.readable-ui :is(.field label,.filters label,.form-label){font-size:14px;line-height:1.5}
+body.readable-ui :is(.field input,.field select,.field textarea,.filters input,.filters select,.inline-search input,.toolbar input,.toolbar select){font-size:15px;line-height:1.5;min-height:44px;color:#f5f8f1}
+body.readable-ui :is(input,textarea)::placeholder{color:#c1cec5;opacity:1}
+body.readable-ui :is(input,textarea,select){font-size:15px;line-height:1.5}body.readable-ui .map-filters select{font-size:15px}
+body.readable-ui :is(.field small,.detail dt,.detail dd,.facts div){font-size:14px;line-height:1.6}
+body.readable-ui :is(table,.detail,.dialog-body dl){font-size:14px;line-height:1.55}
+body.readable-ui th{font-size:13px;line-height:1.5;padding:13px 14px;color:#d8e3d9;font-weight:550}
+body.readable-ui td{font-size:14px;line-height:1.55;padding:15px 14px}
+body.readable-ui :is(td small,td .muted,td .meta){font-size:13px;line-height:1.5;color:#c2d1c5}
+body.readable-ui :is(td .table-action,.ticket-id){font-size:14px}
+body.readable-ui :is(.table-scroll,.table-wrap){max-width:100%;overflow:auto}
+body.readable-ui .table-scroll table{min-width:780px}
+body.readable-ui :is(.stat .value,.stat-value,.metric strong){font-size:34px;line-height:1.2;letter-spacing:-.6px}
+body.readable-ui :is(.stat p,.stat-label,.metric-label,.metric small){font-size:13px;line-height:1.5}
+body.readable-ui :is(.stats .stat,.metric){padding:17px 15px}
+body.readable-ui :is(.proposal-facts,.person-box small,.person-box strong,.attention p,.attention strong,.list-item strong,.list-item p,.capacity-row,.load-row,.load-top,.load-sub,.capacity-meta,.schedule-item strong,.schedule-item p,.schedule-time){font-size:14px;line-height:1.55}
+body.readable-ui :is(.pill,.status){padding:4px 7px;white-space:normal}
+body.readable-ui .review-bar{flex-wrap:wrap;gap:10px}
+body.readable-ui :is(.review-bar strong,.review-brand,.review-bar select){font-size:13px}
+body.readable-ui .review-tabs{gap:7px}
+body.readable-ui .review-tabs a{font-size:13px;padding:8px 10px;min-height:40px}
+body.readable-ui .review-note{padding:11px 18px;line-height:1.6}
+body.readable-ui :is(.hub .group-card p,.hub .group-card .btn,.suite-shortcuts a){font-size:14px;line-height:1.6}
+body.readable-ui .hub .group-card h2{font-size:23px}
+body.readable-ui :is(.hub .group-card .status-note,.hub .group-card .eyebrow){font-size:13px}
+/* AI artwork retains its exact composition. A local horizontal canvas replaces shrink-to-fit. */
+body.readable-ui .ai-canvas{width:100%;max-width:100%;overflow:auto;border:1px solid #6b876f;border-radius:4px;background:#202322;overscroll-behavior:contain}
+body.readable-ui .ai-canvas:focus-visible{outline:2px solid #a8d8ff;outline-offset:3px}
+body.readable-ui .ai-canvas img{display:block;width:var(--ai-reading-width,1800px);min-width:var(--ai-reading-width,1800px);max-width:none;height:auto;border:0;border-radius:0}
+body.readable-ui .svg-review .status-note{font-size:14px;line-height:1.7;color:#cbd7cc}
+body.readable-ui :is(.spectrum-chart-legend,.spectrum-chart-unit,.spectrum-chart-instruction,.spectrum-chart-bottom,.spectrum-chart-date,.spectrum-chart-grid span,.spectrum-data-bar>b,.spectrum-chart-source,.chart .spectrum-chart-legend,.chart .spectrum-chart-unit,.chart .spectrum-chart-instruction,.chart .spectrum-chart-bottom,.chart .spectrum-chart-date,.chart .spectrum-chart-grid span,.chart .spectrum-data-bar>b){font-size:13px;line-height:1.4}
+body.readable-ui .spectrum-chart-top{align-items:start;flex-wrap:wrap;gap:10px}
+body.readable-ui .spectrum-chart-legend{gap:14px;flex-wrap:wrap}
+body.readable-ui .spectrum-chart-unit{font-size:13px}
+body.readable-ui :is(.spectrum-chart-plot,.chart .spectrum-chart-plot){margin-left:29px}
+body.readable-ui .chart .spectrum-chart-plot{height:170px}
+body.readable-ui :is(.spectrum-chart-grid span,.chart .spectrum-chart-grid span){left:-29px}
+body.readable-ui .spectrum-chart-days{gap:8px}
+body.readable-ui .chart .spectrum-chart-days{gap:3px}
+body.readable-ui .spectrum-chart-date{bottom:-30px}
+body.readable-ui .spectrum-chart-bottom{margin-top:46px;gap:9px;flex-wrap:wrap}
+body.readable-ui .chart .spectrum-chart-bottom{margin-top:46px;line-height:1.5}
+body.readable-ui .spectrum-chart-source :is(summary,th,td){font-size:13px;line-height:1.5}
+body.readable-ui .spectrum-data-bar>b{top:-25px}
+body.readable-ui .spectrum-chart-day{padding:0 2px;gap:6px}
+body.readable-ui .spectrum-chart-tip{min-width:230px;font-size:13px}
+body.readable-ui .spectrum-chart-tip strong{font-size:13px}
+body.readable-ui .access-form-wrap{max-width:440px}
+body.readable-ui .access-form-wrap h1{font-size:32px}
+body.readable-ui .access-editorial h2{font-size:clamp(44px,4.5vw,67px);line-height:1.08;font-weight:450;letter-spacing:-2px}
+body.readable-ui :is(.access-form-subtitle,.access-intro,.access-field>label,.access-help){font-size:15px;line-height:1.7}
+body.readable-ui :is(.access-input-wrap input,.access-input-wrap input::placeholder,.access-submit){font-size:15px}
+body.readable-ui .access-input-wrap input{min-height:53px}
+body.readable-ui .access-visibility{height:49px;width:49px;min-height:49px}
+body.readable-ui .access-submit{min-height:53px}
+body.readable-ui :is(.access-kicker,.access-step,.access-account-note,.access-bottom,.access-bottom small,.access-bottom .access-review,.access-top-note,.access-index,.access-coordinates,.access-brand small,.access-inline-error,.access-caps){font-size:13px;line-height:1.55;letter-spacing:.5px}
+body.readable-ui .access-kicker{flex-wrap:wrap}
+body.readable-ui .access-brand{font-size:19px}
+body.readable-ui .access-top{height:auto;min-height:95px;padding-top:16px;padding-bottom:16px}
+body.readable-ui .access-form-side{padding-top:50px;padding-bottom:50px}
+body.readable-ui .access-bottom{flex-wrap:wrap;padding-top:20px;padding-bottom:20px}
+body.readable-ui .access-index{gap:12px;flex-wrap:wrap}
+body.readable-ui :is(.access-form-side,.access-editorial){min-width:0}
+body.readable-ui .access-layout{min-height:780px}
+/* Initial Spectrum concept retains its fixed shell; full suite uses the grid shell. */
+body.spectrum-concept.readable-ui .sidebar{width:224px}
+body.spectrum-concept.readable-ui .body{margin-left:224px}
+body.spectrum-concept.readable-ui :is(.metric-label,.metric button,.staff-name,.staff-name small,.task-slot,.attention-tag,.attention-item p,.attention-item button,.activity-row,.activity-row small,.hours,.schedule-axis,.schedule-note){font-size:13px;line-height:1.5}
+body.spectrum-concept.readable-ui .schedule-axis,body.spectrum-concept.readable-ui .staff-lane{grid-template-columns:124px 1fr}
+body.spectrum-concept.readable-ui .staff-lane{min-height:108px}
+body.spectrum-concept.readable-ui .task-slot{height:48px;white-space:normal;overflow:auto;top:0}
+body.spectrum-concept.readable-ui .track{height:52px}
+body.spectrum-concept.readable-ui .hours{font-size:12px}
+/* Spatial labels live in the 3D canvas; all surrounding controls use the same readable scale. */
+body.readable-ui .metrics>div>span,body.readable-ui .metrics small,body.readable-ui .metric-link,body.readable-ui .map-filters label,body.readable-ui .map-filters select,body.readable-ui .demo-state,body.readable-ui .map-hint,body.readable-ui .map-top,body.readable-ui .legend,body.readable-ui .zoom span,body.readable-ui .camera-controls output,body.readable-ui .inspector .eyebrow,body.readable-ui .inspector dl>div,body.readable-ui .inspector .primary,body.readable-ui .inspector .secondary,body.readable-ui .room-row,body.readable-ui .room-row small{font-size:13px;line-height:1.5}
+body.readable-ui .room-row{min-height:60px}
+body.readable-ui #floorplan text{font-size:14px}body.readable-ui #floorplan .room-metric{font-size:13px}body.readable-ui #floorplan .room-code{font-size:12px}
+body.readable-ui .inspector{width:265px}
+body.readable-ui .inspector h2{font-size:22px}
+body.readable-ui .tabs button{min-height:40px}
+body.readable-ui .metrics strong{font-size:30px}
+body.readable-ui .map-bottom{flex-wrap:wrap;gap:12px}
+@media(max-width:1150px){body.readable-ui :is(.shell,.app){grid-template-columns:208px minmax(0,1fr)}body.spectrum-concept.readable-ui .sidebar{width:208px}body.spectrum-concept.readable-ui .body{margin-left:208px}body.readable-ui .stats{grid-template-columns:repeat(2,minmax(0,1fr))}body.readable-ui .three.stats{grid-template-columns:repeat(3,minmax(0,1fr))}body.readable-ui .metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:900px){body.readable-ui .topbar .date{display:none}body.readable-ui .columns{grid-template-columns:1fr}body.readable-ui .three.stats{grid-template-columns:1fr}body.spectrum-concept.readable-ui .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}body.readable-ui .inspector{width:240px}}
+@media(max-width:800px){body.readable-ui:has(.sidebar .building) .app{grid-template-columns:1fr}}
+@media(max-width:720px){body.readable-ui :is(.shell,.app){display:block}body.readable-ui h1{font-size:28px}body.readable-ui :is(h2,.panel-head h2){font-size:20px}body.readable-ui :is(.subtitle,.page-heading p:not(.eyebrow),.head p:not(.eyebrow),.panel-head p,.field label,.panel-foot,.small,.modal-body p,.dialog-body p){font-size:15px}body.readable-ui :is(.nav-item,.nav-link,.rail a.nav,.nav-section button){font-size:14px;min-height:44px}body.readable-ui .review-bar select{max-width:100%;width:auto}body.readable-ui .review-bar strong{overflow-wrap:anywhere}body.readable-ui .topbar{min-height:64px}body.readable-ui .topbar form{min-width:0;flex:1}body.readable-ui .topbar input{font-size:15px;width:100%}body.readable-ui .topbar .actions{flex-shrink:0}body.readable-ui .head,body.readable-ui .page-top{flex-wrap:wrap}body.readable-ui .stats,body.readable-ui .stats.four,body.readable-ui .four.stats{grid-template-columns:repeat(2,minmax(0,1fr))}body.readable-ui .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}body.readable-ui .access-top{padding-left:22px;padding-right:22px;gap:15px;flex-wrap:wrap}body.readable-ui .access-top-note{font-size:13px}body.readable-ui .access-brand{font-size:17px}body.readable-ui .access-brand small{font-size:12px}body.readable-ui .access-layout{min-height:auto}body.readable-ui .access-form-side{padding-top:32px;padding-bottom:35px}body.readable-ui .access-intro{font-size:14px}body.readable-ui .access-step{font-size:13px}body.readable-ui .access-form-wrap h1{font-size:30px}body.readable-ui .access-field>label{font-size:15px}body.readable-ui .access-help{font-size:14px}body.readable-ui .access-bottom{font-size:13px}body.readable-ui .access-bottom small,body.readable-ui .access-bottom .access-review{font-size:13px}body.readable-ui .access-account-note{font-size:13px}body.readable-ui .access-editorial h2{font-size:41px}body.readable-ui .spectrum-chart-legend{font-size:13px;gap:10px}body.readable-ui .spectrum-chart-date,body.readable-ui .chart .spectrum-chart-date{font-size:12px}body.readable-ui .spectrum-data-bar>b,body.readable-ui .chart .spectrum-data-bar>b{font-size:13px}body.readable-ui .spectrum-chart-unit,body.readable-ui .chart .spectrum-chart-unit{font-size:13px}body.readable-ui .spectrum-chart-days{gap:3px}body.readable-ui .spectrum-chart-day{gap:4px}body.readable-ui .spectrum-chart-bottom{font-size:13px}body.readable-ui .inspector{position:relative;width:auto;inset:auto}body.readable-ui .map-bottom{font-size:13px}body.readable-ui .map-filters{gap:7px}body.readable-ui .map-filters select{max-width:140px}body.readable-ui .demo-state{width:100%}}
+@media(max-width:700px){body.spectrum-concept.readable-ui .sidebar{width:100%;position:static}body.spectrum-concept.readable-ui .body{margin-left:0}body.spectrum-concept.readable-ui .staff-lane,body.spectrum-concept.readable-ui .schedule-axis{grid-template-columns:78px 1fr}body.spectrum-concept.readable-ui .hours{font-size:10px}body.spectrum-concept.readable-ui .task-slot{font-size:12px}body.spectrum-concept.readable-ui .hours>span:nth-child(even){display:none}}
+@media(max-width:430px){body.readable-ui .stats,body.readable-ui .stats.four,body.readable-ui .four.stats{grid-template-columns:1fr}body.readable-ui .metrics{grid-template-columns:1fr}body.readable-ui .metric:last-child{grid-column:auto}body.readable-ui .access-top-note{display:none}body.readable-ui .access-brand small{font-size:12px}body.readable-ui .access-top{min-height:89px}body.readable-ui .spectrum-chart-days{gap:2px}body.readable-ui .spectrum-chart-day{padding:0;gap:3px}}
+
+@media(max-width:720px){body.readable-ui :is(input,textarea,select,.field input,.field select,.field textarea,.access-input-wrap input){font-size:16px}}
+
+/* Reference-5 material treatment: crisp luminous edges, dark interiors, tightly bounded glow. */
+:root{--edge-yellow:#ffd600;--edge-pink:#ff499b;--edge-blue:#369eff;--edge-orange:#ff792e;--edge-green:#62d942;--edge-teal:#12d9a4;--edge-purple:#b75aff;--edge-neutral:#647d6b}
+body.readable-ui :is(.stat,.metric){--component-edge:var(--tone,#369eff);position:relative;border:1px solid color-mix(in srgb,var(--component-edge) 50%,#374b3d);border-top:3px solid var(--component-edge);border-radius:3px;background:linear-gradient(180deg,color-mix(in srgb,var(--component-edge) 13%,#17211b),#1b261f 70%);box-shadow:0 -2px 6px color-mix(in srgb,var(--component-edge) 21%,transparent),inset 0 1px 0 color-mix(in srgb,var(--component-edge) 55%,#ffffff);overflow:visible}
+body.readable-ui .stats .stat:nth-child(1),body.readable-ui .metrics .metric:nth-child(1){--component-edge:var(--edge-yellow)}
+body.readable-ui .stats .stat:nth-child(2),body.readable-ui .metrics .metric:nth-child(2){--component-edge:var(--edge-orange)}
+body.readable-ui .stats .stat:nth-child(3),body.readable-ui .metrics .metric:nth-child(3){--component-edge:var(--edge-blue)}
+body.readable-ui .stats .stat:nth-child(4),body.readable-ui .metrics .metric:nth-child(4){--component-edge:var(--edge-purple)}
+body.readable-ui .stats .stat:nth-child(5),body.readable-ui .metrics .metric:nth-child(5){--component-edge:var(--edge-teal)}
+body.readable-ui .metrics .metric:nth-child(4){--component-edge:var(--edge-teal)}body.readable-ui .metrics .metric:nth-child(5){--component-edge:var(--edge-purple)}
+body.readable-ui .stats .stat.red{--component-edge:var(--edge-pink);--tone:#ffa1c5}body.readable-ui .stats .stat.green{--component-edge:var(--edge-green);--tone:#b2ef95}
+body.readable-ui :is(.stat,.metric):before{content:'';position:absolute;left:1px;right:1px;top:0;height:1px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--component-edge) 55%,#fff),transparent);pointer-events:none}
+body.readable-ui :is(.stat .value,.stat-value,.metric strong){text-shadow:0 0 5px color-mix(in srgb,var(--component-edge) 18%,transparent)}
+body.readable-ui :is(.stat-ico,.metric-label .icon,.stat .tile){color:color-mix(in srgb,var(--component-edge) 65%,#fff)}
+body.readable-ui :is(.panel,.table-wrap,.schedule,.plan){border-color:#607966;background-color:#202a23;box-shadow:inset 0 1px 0 #e5ffe508,0 1px 0 #0e1813;border-radius:4px}
+body.readable-ui :is(.panel-head,.panel-foot,.card-bottom){border-color:#526d5b}
+body.readable-ui :is(.risk-panel,.attention-item){border-color:#8c754e}
+body.readable-ui .attention{border-color:#9c713e;background:linear-gradient(180deg,#563b25,#3e3022);box-shadow:inset 0 1px 0 #ffda9326}
+body.readable-ui :is(.btn,.button,.metric button,.metric-link,.filter-strip button,.camera-controls button){border-color:#718a77;background-color:#2b3b2f;box-shadow:inset 0 1px 0 #edffea15,inset 0 -1px 0 #0d19145c,0 1px 0 #0a170d59;border-radius:3px}
+body.readable-ui :is(.btn,.button,.metric button,.metric-link,.filter-strip button,.camera-controls button):hover{border-color:#b4cfb9;background-color:#344c3b;box-shadow:inset 0 1px 0 #f2fff126,0 0 5px #9bf5b00f}
+body.readable-ui :is(.btn.primary,.button.primary,.primary,.access-submit){background:#d0e9b9;border:1px solid #e0f9c7;color:#1b3422;box-shadow:inset 0 1px 0 #f5ffeb,inset 0 -2px 0 #8faa7b,0 1px 2px #101c13b3}
+body.readable-ui :is(.btn.primary,.button.primary,.primary,.access-submit):hover{background:#e0f4cc;border-color:#f1ffe3;color:#172d1e;box-shadow:inset 0 1px 0 #fff,inset 0 -2px 0 #abc393,0 0 5px #d7f3bf18}
+body.readable-ui :is(.btn.purple,.button.purple){border-color:#b68adc;background:linear-gradient(180deg,#44314f,#302638);color:#e1c7ff;box-shadow:inset 0 1px 0 #e5c5ff2b}
+body.readable-ui :is(.tabs button.active,.tabs a.active,.tabs button[aria-pressed=true],.filter-strip button[aria-pressed=true],.review-tabs a.active){color:#e8f5ff;border-color:#74b5f3;background:linear-gradient(180deg,#304759,#233644);box-shadow:inset 0 -2px 0 #369eff,inset 0 1px 0 #bfdeff2b}
+body.readable-ui :is(.rail a.nav.active,.nav-item.active,.nav-link[aria-current],nav a[aria-current]){background:linear-gradient(180deg,#304a39,#263c2d);border-color:#6b9d7b;color:#f0fff2;box-shadow:inset 2px 0 0 #48e6a7,inset 0 1px 0 #c3ffdb13}
+body.readable-ui :is(.pill,.status){--badge-edge:var(--tone,#9ed0ff);border-color:color-mix(in srgb,var(--badge-edge) 66%,#405245);box-shadow:inset 0 1px 0 color-mix(in srgb,var(--badge-edge) 15%,transparent);background-color:#28392e}
+body.readable-ui :is(.pill.blue,.status.blue){--badge-edge:#73baff;background:#233846;color:#b5ddff}
+body.readable-ui .pill.amber{--badge-edge:#ffad70;background:#453325;color:#ffd1a4}
+body.readable-ui .pill.purple{--badge-edge:#c397ff;background:#382b43;color:#e2c4ff}
+body.readable-ui .pill.green{--badge-edge:#8cda83;background:#273e2b;color:#b9efad}
+body.readable-ui .pill.red{--badge-edge:#ff82ab;background:#422b34;color:#ffb7ce}
+body.readable-ui :is(.field input,.field textarea,.field select,.filters input,.filters select,.toolbar input,.toolbar select,.inline-search,.access-input-wrap input,.search-field){border-color:#8b9e8e;background-color:#243128;color:#f5f8f1;box-shadow:inset 0 2px 2px #101a1259,inset 0 -1px 0 #d8ffe109;border-radius:3px}
+body.readable-ui :is(.field input,.field textarea,.field select,.filters input,.filters select,.toolbar input,.toolbar select,.access-input-wrap input,.search-field):focus-visible{outline:2px solid #a9d6ff;outline-offset:2px;border-color:#9bceff;box-shadow:inset 0 1px 2px #0a150f66,0 0 5px #369eff24}
+body.readable-ui :is(button,a,input,textarea,select):focus-visible{outline-color:#b9ddff;outline-offset:3px}
+body.readable-ui th{background:#2c3c30;border-bottom:1px solid #72977a;box-shadow:inset 0 1px 0 #e3ffe709}
+body.readable-ui td{border-bottom-color:#4b6653}
+body.readable-ui .spectrum-chart{border-color:#607f69;background:linear-gradient(180deg,#26372c1c,transparent 65%),#1d2a22;box-shadow:inset 0 1px 0 #d6ffe509}
+body.readable-ui .spectrum-data-bar{border-color:#9bd5ff;background:linear-gradient(180deg,#55b5ff,#286bb3);box-shadow:inset 0 1px 0 #d3efff,0 -1px 4px #369eff2b}
+body.readable-ui .spectrum-data-bar.resolved{border-color:#96f4cf;background:repeating-linear-gradient(-45deg,#93f4ce52 0 2px,transparent 2px 6px),linear-gradient(180deg,#25d3a5,#25826b);box-shadow:inset 0 1px 0 #d7ffe9,0 -1px 4px #12d9a42b}
+body.readable-ui :is(.loadbar,.bar){border-color:#6e977c;box-shadow:inset 0 1px 1px #0a160f}
+body.readable-ui :is(.loadbar span,.bar span){box-shadow:inset 0 1px 0 #effff83b,0 0 4px color-mix(in srgb,var(--workload-tone,#73baff) 20%,transparent)}
+body.readable-ui #floorplan .room.selected .room-surface{stroke:#8affc8;stroke-width:2.2}body.readable-ui #floorplan .room.warning.selected .room-surface{stroke:#ffcf83}
+body.readable-ui .inspector{border-color:#85aa8e;box-shadow:inset 0 1px 0 #e4ffec12,0 5px 16px #0d1b1259}
+body.readable-ui .access-symbol{border-color:#e0f9c7;box-shadow:inset 0 1px 0 #f3ffe9,inset 0 -1px 0 #93ad7e}
+body.readable-ui .access-gate:not(.two):not(.three){box-shadow:inset 0 1px 0 #c8ebff,0 0 7px #73baff28}
+@media(prefers-reduced-motion:reduce){body.readable-ui *{transition:none!important}}
+
+/* Two review-only surface/layout options. Spectrum accents and business content are shared. */
+body[data-surface=graphite]{--canvas:#1c201f;--surface:#282e2c;--surface-canvas:#1c201f;--surface-panel:#282e2c;--surface-rail:#151a17;--surface-header:#242b27;--surface-table:#323c36;--surface-border:#526459;background-color:#1c201f;background-image:none;color:#f1f5ef}
+body[data-surface] :is(.main,main,.body,.app-body){background-image:none;background-color:transparent}
+body[data-surface] :is(.rail,.sidebar){background:var(--surface-rail);border-color:var(--surface-border)}
+body[data-surface] :is(.topbar,.body>header){background:var(--surface-header);border-color:var(--surface-border)}
+body[data-surface] :is(.panel,.table-wrap,.table-scroll,.schedule,.plan){background-color:var(--surface-panel);border-color:var(--surface-border)}
+body[data-surface] :is(.panel-head,.panel-foot,.card-bottom){background:color-mix(in srgb,var(--surface-panel) 88%,#687f6c);border-color:var(--surface-border)}
+body[data-surface] th{background:var(--surface-table);border-bottom-color:#829b88}
+body[data-surface] td{border-bottom-color:color-mix(in srgb,var(--surface-border) 85%,transparent)}
+body[data-surface] tbody tr:hover td{background:#a9e2b308}
+body[data-surface] :is(.main,.hub){padding-top:26px}
+body[data-surface] :is(.head,.page-top,.page-heading){padding-bottom:17px;border-bottom:1px solid var(--surface-border);margin-bottom:23px}
+body[data-surface] :is(.grid,.columns,.content-split){gap:24px;align-items:start}
+body[data-surface] :is(.stack,.two,.three,.four){gap:20px}
+body[data-surface] :is(.main .panel,.main .panel.pad){border-radius:4px}
+body[data-surface] :is(.access-page,.access-form-side,.access-editorial){background-color:transparent}
+body[data-surface] .access-page{background:radial-gradient(ellipse at 23% 55%,#55536a12,transparent 45%),var(--surface-canvas)}
+body[data-surface] .access-form-side{background:none}
+body[data-surface] .access-editorial{border:0}
+body[data-surface] :is(.org,.sidebar-help){background:color-mix(in srgb,var(--surface-rail) 82%,#57735b)}
+/* Owner correction: retain vivid Spectrum edges; improve only neutral surface hierarchy. */
+body.readable-ui[data-surface=graphite]{--canvas:#1a1d21;--surface:#292e35;--surface-canvas:#1a1d21;--surface-panel:#292e35;--surface-rail:#13161b;--surface-header:#22272f;--surface-table:#343c47;--surface-border:#536071;--reading-ink:#f2f5fa;--reading-muted:#c0cad7;--ink:#f2f5fa;--text:#f2f5fa;--muted:#c0cad7;--blue-light:#24364b;--purple-light:#352b45;--green-light:#263b31;--amber-light:#413427;--red-light:#412b35;--access-bg:#1a1d21;--access-text:#f2f5fa;--access-muted:#c0cad7;background:#1a1d21;color:#f2f5fa}
+body.readable-ui[data-surface=graphite] :is(.rail,.sidebar){background:#13161b;border-color:#3b4655}
+body.readable-ui[data-surface=graphite] :is(.topbar,.body>header){background:#22272f;border-color:#475365}
+body.readable-ui[data-surface=graphite] :is(.panel:not(.risk-panel),.table-wrap,.table-scroll,.schedule,.plan){background-color:#292e35;border-color:#536071}
+body.readable-ui[data-surface=graphite] :is(.panel-head,.panel-foot,.card-bottom){background:#303741;border-color:#536071}
+body.readable-ui[data-surface=graphite] th{background:#343c47;border-bottom-color:#73829a;color:#e1e8f2}
+body.readable-ui[data-surface=graphite] td{border-bottom-color:#465364}
+body.readable-ui[data-surface=graphite] tbody tr:hover td{background:#a1c5ff0c}
+body.readable-ui[data-surface=graphite] :is(.stat,.metric){background:linear-gradient(180deg,color-mix(in srgb,var(--component-edge) 12%,#20252d),#20252d 78%);border-color:color-mix(in srgb,var(--component-edge) 58%,#394452);border-top-color:var(--component-edge);box-shadow:0 -2px 7px color-mix(in srgb,var(--component-edge) 27%,transparent),inset 0 1px 0 color-mix(in srgb,var(--component-edge) 55%,#fff)}
+body.readable-ui[data-surface=graphite] :is(.org,.sidebar-help){background:#232a33;border-color:#4d5a6e}
+body.readable-ui[data-surface=graphite] :is(.person-box,.person-box.proposed){background:#252f3a;border-color:#657a92}
+body.readable-ui[data-surface=graphite] :is(.ai-card,.focus-card,.task-feature,.mini-banner){background-color:#2b303a}
+body.readable-ui[data-surface=graphite] .ai-card{background:#2d2a37;border:1px solid #89709f;box-shadow:inset 0 1px 0 #dac8f015}
+body.readable-ui[data-surface=graphite] :is(.btn:not(.primary):not(.purple):not(.danger),.button:not(.primary):not(.purple),.metric button,.metric-link,.camera-controls button){background-color:#303947;border-color:#74839a;color:#eef3fb}
+body.readable-ui[data-surface=graphite] :is(.btn:not(.primary):not(.purple):not(.danger),.button:not(.primary):not(.purple),.metric button,.metric-link,.camera-controls button):hover{background-color:#3b4859;border-color:#b4c6df}
+body.readable-ui[data-surface=graphite] :is(.field input,.field textarea,.field select,.filters input,.filters select,.toolbar input,.toolbar select,.inline-search,.access-input-wrap input,.search-field,.header-search,.topbar input,.map-filters select){background-color:#1c2430;border-color:#8190a6;color:#f2f5fa}
+body.readable-ui[data-surface=graphite] :is(input,textarea)::placeholder{color:#bdc8d8;opacity:1}
+body.readable-ui[data-surface=graphite] :is(.spectrum-chart,.spectrum-chart-source){background-color:#222a34;border-color:#66778d}
+body.readable-ui[data-surface=graphite] .spectrum-chart{background-image:none}
+body.readable-ui[data-surface=graphite] .spectrum-chart-grid>div{border-top-color:#8da0b947}
+body.readable-ui[data-surface=graphite] .spectrum-chart-plot{border-bottom-color:#92a6c0}
+body.readable-ui[data-surface=graphite] .spectrum-chart-tip{background:#1d2734;border-color:#91aac8;color:#f2f5fa}
+body.readable-ui[data-surface=graphite] :is(.loadbar,.bar){background:#17202a!important;border-color:#65788f}
+body.readable-ui[data-surface=graphite] :is(.map-area){background:radial-gradient(ellipse at 48% 52%,#35424a,#20262d 70%)}
+body.readable-ui[data-surface=graphite] .inspector{background:#29323dee}
+body.readable-ui[data-surface=graphite] .access-page{background:radial-gradient(ellipse at 24% 62%,#809bd50a,transparent 48%),#1a1d21}
+body.readable-ui[data-surface=graphite] .access-form-side{background:none}
+body.readable-ui[data-surface=graphite] :is(dialog,#access-help-dialog,#spectrum-chart-dialog){background:#29323f;color:#f2f5fa;border-color:#879bb5}
+body.readable-ui[data-surface=graphite] :is(.review-bar,.reviewbar,.review-note,.review-tabs,.review-questions){background-color:#1b222c;border-color:#52627a}
+body.readable-ui[data-surface=graphite] .review-tabs a.active{background:#2e425a}
+
+/* Luminous lettering inside illuminated components; the source glyph stays sharp. */
+body.readable-ui :is(.stat .value,.stat-value,.metric strong){color:color-mix(in srgb,var(--tone,#73baff) 78%,#fff);text-shadow:0 0 1px color-mix(in srgb,var(--component-edge,#73baff) 45%,#fff),0 0 5px color-mix(in srgb,var(--component-edge,#73baff) 52%,transparent),0 0 11px color-mix(in srgb,var(--component-edge,#73baff) 18%,transparent)}
+body.readable-ui :is(.stat-label,.metric-label,.stat-top .stat-label){color:#f1f6ff;text-shadow:0 0 4px color-mix(in srgb,var(--component-edge,#73baff) 27%,transparent)}
+body.readable-ui :is(.stat-note,.metric small){text-shadow:0 0 3px color-mix(in srgb,var(--component-edge,#73baff) 13%,transparent)}
+body.readable-ui :is(.pill,.status){text-shadow:0 0 1px currentColor,0 0 5px color-mix(in srgb,currentColor 32%,transparent)}
+body.readable-ui :is(.btn.purple,.button.purple,.rail a.nav.ai,.nav-item.ai-nav,.nav.ai){color:#dfc4ff;text-shadow:0 0 1px #e4ceff50,0 0 5px #b75aff69}
+body.readable-ui :is(.ai-card h2,.ai-identity small,.ai-card .text-btn,.ai-shortcuts button){color:#dfc4ff;text-shadow:0 0 1px #e4ceff3d,0 0 6px #b75aff5e}
+body.readable-ui :is(.tabs button.active,.tabs a.active,.tabs button[aria-pressed=true],.filter-strip button[aria-pressed=true],.review-tabs a.active){color:#eef8ff;text-shadow:0 0 1px #f0faff5c,0 0 5px #369eff66}
+body.readable-ui :is(.rail a.nav.active,.nav-item.active,.nav-link[aria-current],nav a[aria-current]){text-shadow:0 0 4px #48e6a74d}
+body.readable-ui :is(.panel-head h2,.section-head h2,.attention strong){color:#f4f8ff;text-shadow:0 0 3px #e5efff29}
+body.readable-ui :is(.metric button,.metric-link,.btn:not(.primary):not(.purple):not(.danger),.button:not(.primary):not(.purple)){text-shadow:0 0 3px #afceff29}
+body.readable-ui :is(.btn.primary,.button.primary,.access-submit,.primary){text-shadow:0 1px 0 #ffffff4a}
+body.readable-ui .spectrum-data-bar>b{color:#c9e6ff;text-shadow:0 0 1px #d9eeff3d,0 0 5px #369eff66}
+body.readable-ui .spectrum-data-bar.resolved>b{color:#c0ffe4;text-shadow:0 0 1px #e1fff13d,0 0 5px #12d9a46b}
+body.readable-ui .spectrum-chart-legend>span:first-child{color:#c5e3ff;text-shadow:0 0 4px #369eff38}
+body.readable-ui .spectrum-chart-legend>span:last-child{color:#baffdf;text-shadow:0 0 4px #12d9a438}
+body.readable-ui .inspector .status{color:#ffe2ad;text-shadow:0 0 4px #ffb65b52}
+body.readable-ui .access-form-wrap h1{color:#f6faff;text-shadow:0 0 4px #bed7ff29}
+body.readable-ui :is(input,textarea),body.readable-ui input::placeholder,body.readable-ui textarea::placeholder{text-shadow:none}

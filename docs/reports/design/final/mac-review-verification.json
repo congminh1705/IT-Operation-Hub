@@ -1,0 +1,338 @@
+{
+  "date": "2026-11-13",
+  "kind": "software / internal operations review",
+  "style": "Mac / Apple inspired, pale sidebar, white surfaces, teal #087F78",
+  "approval": "proposal for PO review; canonical final unchanged",
+  "coverage": {
+    "post_login_screens": 50,
+    "role_dashboards": 4,
+    "screenshots": 60,
+    "desktop_width": 1440,
+    "mobile_width": 390,
+    "tablet_widths": [
+      768,
+      1024
+    ]
+  },
+  "runtime_checks": {
+    "desktop": {
+      "passed": 443,
+      "failed": 0
+    },
+    "mobile_reduced_motion": {
+      "passed": 493,
+      "failed": 0
+    }
+  },
+  "warnings_in_screen_captures": 0,
+  "original_final_files_preserved": 219,
+  "taste_motion_assets": "unmodified copies",
+  "ai_reference_font_payload": {
+    "before_bytes": 20540104,
+    "after_bytes": 7174360,
+    "reduction_percent": 65.1,
+    "active_inter_font_bytes": "unchanged"
+  },
+  "contrast": {
+    "white_on_primary": 4.86,
+    "body_on_canvas": 12.25,
+    "sidebar_text": 5.43,
+    "placeholder_on_white": 4.81
+  },
+  "taste_gate": {
+    "status": "open",
+    "rounds": 3,
+    "open_findings": 16,
+    "findings": [
+      {
+        "check": "text-only",
+        "where": "iframe#view",
+        "msg": "the closing section is only text: no picture, icon, mock or effect in it",
+        "fix": "give the section a visual: a photograph that fits, the real icons, or a UI fragment on a ground",
+        "widths": [
+          1440,
+          390
+        ],
+        "from": "consistency",
+        "ids": [
+          "text-only"
+        ],
+        "wheres": [
+          "iframe#view"
+        ]
+      },
+      {
+        "check": "cta",
+        "where": "iframe#view",
+        "msg": "the hero has no button (the nav's does not count)",
+        "fix": "add the action: a button in the hero, one on every priced item, one in the closing section",
+        "widths": [
+          1440,
+          390
+        ],
+        "from": "consistency",
+        "ids": [
+          "cta"
+        ],
+        "wheres": [
+          "iframe#view"
+        ]
+      },
+      {
+        "check": "copy-fact",
+        "where": "header > div > h1 \"IT Operation Hub — Mac / Teal review\"",
+        "msg": "the first screen holds no number, price, date, place, platform or genre",
+        "fix": "put one hard fact from the brief on the first screen: a number, a price, a date, the place, the platforms it runs on or a game's genre; take it from the brief or remove the claim",
+        "widths": [
+          1440
+        ],
+        "from": "consistency",
+        "ids": [
+          "copy-fact"
+        ],
+        "wheres": [
+          "header > div > h1 \"IT Operation Hub — Mac / Teal review\""
+        ]
+      },
+      {
+        "check": "empty-area",
+        "where": "iframe#view",
+        "msg": "the section shows no content at all: 710px of ground",
+        "fix": "fill the section: a picture or a second column beside the words, or more of its own content; the section stays one or two screens tall (T-height)",
+        "widths": [
+          1440,
+          390
+        ],
+        "from": "consistency",
+        "ids": [
+          "empty-area"
+        ],
+        "wheres": [
+          "iframe#view"
+        ]
+      },
+      {
+        "check": "moment-none",
+        "where": "(the page)",
+        "msg": "a software page (--type) deals no moment: every kind carries one, two on a long page (moments.md)",
+        "fix": "deal one (moments.mjs pick --page software) and mount it in its own section",
+        "widths": [
+          1440
+        ],
+        "from": "consistency",
+        "ids": [
+          "moment-none"
+        ],
+        "wheres": [
+          "(the page)"
+        ]
+      },
+      {
+        "check": "hero-screen",
+        "where": "main#catalog-main > div.catalog-tools \"Chọn màn để reviewHồ sơ cá nhânĐổi mật k\"",
+        "msg": "the hero ends at 183px on a 900px screen, 717px above the fold: it ends at the fold, 1px either way (SR-1)",
+        "fix": "make the hero exactly one screen (height: 100svh, its content fitted inside), never taller or shorter",
+        "widths": [
+          1440
+        ],
+        "from": "consistency",
+        "ids": [
+          "hero-screen"
+        ],
+        "wheres": [
+          "main#catalog-main > div.catalog-tools \"Chọn màn để reviewHồ sơ cá nhânĐổi mật k\""
+        ]
+      },
+      {
+        "check": "hero-screen",
+        "where": "iframe#view",
+        "msg": "717px of the next section shows on the first screen (from 183px on a 900px screen): nothing below the hero shows at load (SR-1)",
+        "fix": "end the hero at the fold so nothing of the next section shows at load (hero height: 100svh)",
+        "widths": [
+          1440
+        ],
+        "from": "consistency",
+        "ids": [
+          "hero-screen"
+        ],
+        "wheres": [
+          "iframe#view"
+        ]
+      },
+      {
+        "check": "section-height",
+        "where": "iframe#view",
+        "msg": "the section is 710px tall (0.8 screens), 190px short of one screen (900px): every section after the hero is one screen or two, 2px either way (SR-2)",
+        "fix": "set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit",
+        "widths": [
+          1440
+        ],
+        "from": "consistency",
+        "ids": [
+          "section-height"
+        ],
+        "wheres": [
+          "iframe#view"
+        ]
+      },
+      {
+        "check": "section-height",
+        "where": "main#catalog-main > div.catalog-tools \"Chọn màn để reviewHồ sơ cá nhânĐổi mật k\"",
+        "msg": "the section starts at 111px, 111px below the screen grid (0 x 900px): sections start on whole screens (SR-2)",
+        "fix": "make every section above it exactly one or two screens tall, so this one starts on a whole screen",
+        "widths": [
+          1440
+        ],
+        "from": "consistency",
+        "ids": [
+          "section-height"
+        ],
+        "wheres": [
+          "main#catalog-main > div.catalog-tools \"Chọn màn để reviewHồ sơ cá nhânĐổi mật k\""
+        ]
+      },
+      {
+        "check": "section-air",
+        "where": "iframe#view",
+        "msg": "the section shows no content: its content fills 0% of its 710px (55% or more) (SR-3)",
+        "fix": "fill the section to 55%: more content, a picture or a background layer, or merge it into the section above as its last block",
+        "widths": [
+          1440
+        ],
+        "from": "consistency",
+        "ids": [
+          "section-air"
+        ],
+        "wheres": [
+          "iframe#view"
+        ]
+      },
+      {
+        "check": "one-section",
+        "where": "main#catalog-main > div.catalog-tools \"Chọn màn để reviewHồ sơ cá nhânĐổi mật k\"",
+        "msg": "the screen at scroll 0px (stride 0) shows 72px of section 1 beside section 2: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)",
+        "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+        "widths": [
+          1440
+        ],
+        "from": "consistency",
+        "ids": [
+          "one-section"
+        ],
+        "wheres": [
+          "main#catalog-main > div.catalog-tools \"Chọn màn để reviewHồ sơ cá nhânĐổi mật k\""
+        ]
+      },
+      {
+        "check": "one-section",
+        "where": "iframe#view",
+        "msg": "a <iframe> sits directly in <main>: every part of <main> is a <section> (SR-4)",
+        "fix": "put every block of <main> in a <section>, and give a band its own section instead of a ground inside one",
+        "widths": [
+          1440
+        ],
+        "from": "consistency",
+        "ids": [
+          "one-section"
+        ],
+        "wheres": [
+          "iframe#view"
+        ]
+      },
+      {
+        "check": "container-edges",
+        "where": "main#catalog-main > div.catalog-tools \"Chọn màn để reviewHồ sơ cá nhânĐổi mật k\"",
+        "msg": "the content of section 1 runs 24px from the left and 24px from the right (read from its outermost blocks: no .wrap): the margin is 64-120px at 1440px (one container, equal margins, 2px either way) (SR-6)",
+        "fix": "use one container on every section and the nav (.wrap): one margin left and right, 64-120px on a desktop, 16-24px on a phone",
+        "widths": [
+          1440
+        ],
+        "from": "consistency",
+        "ids": [
+          "container-edges"
+        ],
+        "wheres": [
+          "main#catalog-main > div.catalog-tools \"Chọn màn để reviewHồ sơ cá nhânĐổi mật k\""
+        ]
+      },
+      {
+        "check": "container-edges",
+        "where": "header \"IT Operation Hub — Mac / Teal reviewKhôn\"",
+        "msg": "the nav's content runs 32px from the left and 44px from the right (read from its outermost blocks: no .wrap): the page's container starts at 24px; 32 and 44px are not one margin; the margin is 64-120px at 1440px (one container, equal margins, 2px either way) (SR-6)",
+        "fix": "use one container on every section and the nav (.wrap): one margin left and right, 64-120px on a desktop, 16-24px on a phone",
+        "widths": [
+          1440
+        ],
+        "from": "consistency",
+        "ids": [
+          "container-edges"
+        ],
+        "wheres": [
+          "header \"IT Operation Hub — Mac / Teal reviewKhôn\""
+        ]
+      },
+      {
+        "check": "container-edges",
+        "where": "a.skip \"Đến màn review\"",
+        "msg": "a <a> at the top of the page, outside header.nav, main, footer.closing and nav.actionbar (SR-6)",
+        "fix": "build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing",
+        "widths": [
+          1440
+        ],
+        "from": "consistency",
+        "ids": [
+          "container-edges"
+        ],
+        "wheres": [
+          "a.skip \"Đến màn review\""
+        ]
+      },
+      {
+        "check": "container",
+        "where": "page",
+        "msg": "no .wrap",
+        "fix": "put the content in one .wrap",
+        "widths": [
+          1440,
+          390
+        ],
+        "from": "layout",
+        "ids": [
+          "container"
+        ],
+        "wheres": [
+          "page"
+        ]
+      }
+    ],
+    "warnings": [
+      {
+        "check": "skip-link",
+        "where": "a.skip \"Đến màn review\"",
+        "msg": "the first Tab stop is \"Đến màn review\", not a skip link: a keyboard user tabs through the whole nav on every visit",
+        "fix": "add the starter's skip link as the header's first child: <a class=\"skip-link\" href=\"#top\">Skip to content</a>",
+        "widths": [
+          1440
+        ],
+        "from": "consistency"
+      },
+      {
+        "check": "share-meta",
+        "where": "head",
+        "msg": "the head lacks og:title, og:description, og:image, twitter:card, an icon, theme-color: a shared link shows no picture or title of its own",
+        "fix": "copy the head block of starter.html: og tags, twitter:card, the icon and theme-color (references/system.md, Head)",
+        "widths": [
+          1440
+        ],
+        "from": "consistency"
+      }
+    ],
+    "waivers": []
+  },
+  "limits": [
+    "Static AI references preserve geometry; no responsive AI app implemented",
+    "DEMO behavior and existing role scopes retained",
+    "No production app changes, API or external writes",
+    "No claim of full accessibility certification or passing the marketing Taste gate"
+  ]
+}

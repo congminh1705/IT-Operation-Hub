@@ -7,7 +7,7 @@ module: dependencies
 tags: [architecture, dependencies, reference]
 priority: 1
 status: design-draft
-owner: "Project owner"
+owner: PO
 approval: needs-review
 updated: 2026-11-01
 authority: primary
@@ -87,7 +87,7 @@ None performed during this documentation phase. No placeholder .env.example/Comp
 
 ## 5. MVP AI dependencies
 
-Assistant/coordination are MVP under D-35; PostgreSQL/pgvector RAG under D-37. D-39 confirms OpenAI API/gpt-5-mini/USD5/DEMO only for future M3; text-embedding-3-small remains proposed/verification-required. Production provider/model/embedding/SDK/budget/data policy D-40. After a separate coding request, resolve/lock packages and validate timeouts/retries/tools/schemas/quotas/all AC/A1–A13 before M5. No dependency installs/provider calls now.
+Assistant/coordination are MVP under D-35; PostgreSQL/pgvector RAG under D-37. D-48 supersedes the historical D-39 OpenAI selection: Gemini Developer API free tier, DEMO only, USD 0 paid spend. Exact generation model, embedding model, SDK and free-tier eligibility/quotas require verification before implementation; no OpenAI runtime dependency or paid fallback. Production provider/model/embedding/SDK/budget/data policy D-40. After a separate coding request, resolve/lock packages and validate timeouts/retries/tools/schemas/quotas/all AC/A1–A13 before M5. No dependency installs/provider calls now.
 
 ## Verification status
 

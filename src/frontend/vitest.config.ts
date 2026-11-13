@@ -5,5 +5,6 @@ export default defineConfig({
     environment: "node",
     // No artificial boilerplate tests. Future task-owned tests use this runner.
     passWithNoTests: true,
+    exclude: ["**/node_modules/**", "**/.next/**", "e2e/**"],
   },
 });

@@ -1,0 +1,3 @@
+# Approved design locks hash exact source bytes; preserve them across checkouts.
+docs/** -text
+tools/design/** -text

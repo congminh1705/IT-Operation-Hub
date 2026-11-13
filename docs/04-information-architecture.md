@@ -7,12 +7,14 @@ module: navigation
 tags: [design, navigation, reference]
 priority: 1
 status: design-draft
-owner: "Project owner"
+owner: PO
 approval: needs-review
 updated: 2026-11-01
 authority: primary
 purpose: "Define information areas, navigation, screen IDs, and access scope."
 ---
+> **Current presentation: v1.3 / D-51, approved by PO.** See [approved format](design/approved-format.md). All post-login screens use the selected Mac/Teal style; only coordination uses Night City; login stays unchanged. Current sources and renders cover all 47 grouped screens and four dashboards. Earlier measurements below remain historical evidence; application implementation and individual PO visual acceptance remain task-owned.
+
 
 # Information architecture
 
@@ -143,7 +145,7 @@ T navigation includes My work, Team work, Knowledge under ACL. M/A get Workforce
 
 Task filters: state/team/assignee/deadline/blocked/plan. Approval: pending/decision/execution. Runs: event/policy/outcome/time. URLs preserve filter/page/sort without sensitive bodies/notes/sources. Scope counts before returning; do not load the entire IT department for client filtering.
 
-Earlier core SVGs illustrate only part of the design; [UI/UX](07-uiux-specification.md) specifies OPS additions. Updated XMind/previews do not prove working routes.
+The approved v1.1 [coverage map](design/final/coverage.md) maps all current patterns; [UI/UX](07-uiux-specification.md) specifies OPS additions. Updated XMind/previews do not prove working routes.
 
 ## One screen, retained IDs
 

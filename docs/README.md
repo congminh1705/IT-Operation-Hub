@@ -7,14 +7,16 @@ module: documentation
 tags: [project, documentation, reference]
 priority: 1
 status: design-draft
-owner: "Project owner"
+owner: PO
 approval: needs-review
-updated: 2026-11-01
+updated: 2026-11-09
 authority: primary
 purpose: "Define document structure, authoritative sources, decision authority, and handover limits."
 ---
 
 # Analysis and design documentation
+
+**Current presentation: v1.3 / D-51, approved by PO; Mac/Teal globally, Night City coordination only, original login preserved.** [Design index](design/README.md) · [Eight approved groups](design/final/README.md). AI Workspace retains its prior composition with v1.3 light styling. superseded designs are removed and must not guide new implementation. Design approval is separate from application acceptance.
 
 This documentation describes the **target design**, not an implemented system. Each topic has an authoritative source; summaries, diagrams, UI designs, and XMind link back to it. The [project README](../README.md) retains its product-presentation heading order.
 
@@ -32,8 +34,8 @@ This documentation describes the **target design**, not an implemented system. E
 | Data | [Logical model and ERD](requirements/conceptual-data-model.md) | [DBML](database/README.md); constraints/transactions in architecture; no physical schema/migration |
 | AI | [AI design](10-ai-assistant.md) | AI catalog, policy/approval/KB rules, tool contracts; D-39 test configuration |
 | IA and experience | [IA/screen inventory](04-information-architecture.md), [UI/UX](07-uiux-specification.md) | [Flows](05-user-flows.md), [design system](design/design-system.md), [content/states](design/content-and-states.md), [responsive/motion](design/motion-and-responsive.md), [visual direction](design/visual-refresh.md), [Apple Design Skill review](design/uiux-review.md) |
-| Graphics | [Diagram inventory](diagrams/README.md) | [UI designs](design/wireframes/README.md), [XMind](xmind/README.md); derived representations |
-| Decisions and planning | [Decision log](decisions/design-decisions.md), [M0–M5 roadmap](09-design-readiness.md) | D-40 collects open decisions; the roadmap does not authorize implementation |
+| Graphics | [Diagram inventory](diagrams/README.md) | [Approved UI v1.3](design/README.md), [XMind](xmind/README.md); derived representations |
+| Decisions and planning | [Decision log](decisions/design-decisions.md), [M0–M5 roadmap](09-design-readiness.md) | [Frontend-first backlog](implementation/README.md): 88 scope packages, [230 executable tasks](implementation/workflow/execution-board.md), [parent criterion coverage](implementation/package-task-coverage.md), [task contract](implementation/workflow/task-workflow.md), [frontend DEMO](implementation/06-frontend-first.md), [integration](implementation/07-integration.md) and [67-story coverage](implementation/coverage.md); planning does not activate coding |
 
 Security, DevOps, and observability are specified in architecture, NFR, and permissions. No second specification is created just to match framework folder names. Application and operational testing is planned, with no execution report.
 
@@ -46,6 +48,10 @@ The SRS is distributed across the authoritative sources above, without another d
 One organization; four user roles: Requester, Technician, IT Manager (Head of IT), Admin. No separate IT Team Lead tier. AI_COORDINATOR is an internal service identity. Ticket intake/SLA differs from Task execution; AI assistant and coordination are both in the MVP.
 
 ## 3. Authority and status
+
+Project-local [UI/UX skills and usage](technical/ui-ux-skills.md) are installed under `.agents/skills/`. They support design/review work within the existing stack and task scope; their installation is separate from application implementation or design acceptance.
+
+**Project owner:** Hoang Cong Minh, as explicitly identified on 10 November 2026. References to "Project owner" in documentation and task records mean Hoang Cong Minh. Product/scope decisions, acceptance feedback and final reports are addressed to Hoang Cong Minh; the assigned coding agent is the task executor. This delivery role is distinct from application roles such as IT_MANAGER or ADMIN.
 
 The user/project owner confirms scope and product decisions. The agent writes and checks consistency; it does not claim independent approval, passing application tests, or acceptance. The decision log distinguishes confirmed decisions from open ones. Document metadata `approval: needs-review` does not invalidate individually confirmed decisions.
 

@@ -7,7 +7,7 @@ module: documentation
 tags: [quality, documentation, report]
 priority: 2
 status: self-reviewed
-owner: "Project owner"
+owner: PO
 approval: needs-review
 updated: 2026-11-01
 authority: derived
@@ -218,3 +218,8 @@ The original account-provisioning design remains in the project. Only its illust
 D-39 records the user's constraints for a **future** initial M3 DEMO test using OpenAI and a maximum total cost of USD 5, subject to a separate implementation request and secure key, billing/quota, access, capability, and current-price checks. Embedding use remains conditional. No live AI test was run during documentation work.
 
 Official OpenAPI/DBML CLI validation, generated clients, HTTP behavior, persistence, workers, authorization, concurrency, keyboard/ARIA, zoom, usability, live models, and restore remain untested. Local SVG measurements do not establish behavior in every browser/font or in XMind Desktop. No application code changes arose before or during this documentation finalization; the repository still contains only the backend/frontend placeholders.
+
+
+## Provider direction update - 11 November 2026
+
+The D-39 OpenAI/USD 5 reference above is historical and superseded by D-48: Gemini Developer API free tier only, USD 0 paid spend; exact model/embedding/quota eligibility must be verified before live testing. No provider calls have been made.

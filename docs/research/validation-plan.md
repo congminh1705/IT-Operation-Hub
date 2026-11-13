@@ -7,7 +7,7 @@ module: discovery
 tags: [quality, discovery, planning]
 priority: 1
 status: planned
-owner: "Project owner"
+owner: PO
 approval: needs-review
 updated: 2026-11-01
 authority: primary

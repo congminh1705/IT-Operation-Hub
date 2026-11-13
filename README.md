@@ -1,5 +1,7 @@
 # IT Operations Hub
 
+> **Frontend format approved by PO (13 November 2026):** [v1.3 / D-51](docs/design/approved-format.md): Mac/Teal application shell, Night City coordination, original login preserved. [Combined dashboard preview](docs/design/final/dashboard/prompt-dashboard/site/index.html). README highlights the main final screens; the linked gallery contains the complete design suite.
+
 IT Operations Hub is an internal IT department management and operations system. It brings support requests, execution work, workforce, assets, and operational information into one workspace. Employees track requests; technicians perform specialist work; the IT Manager sets policies, supervises, intervenes, and approves exceptions.
 
 The product serves **one organization**, with four user roles: **Requester, Technician, IT Manager, and Admin**. **AI_COORDINATOR** is an internal, policy-constrained service identity, not a fifth user or a general-purpose Admin. The main workflow is **receive requests → create plans/tasks → assign work → monitor/adjust → complete and report**. Tickets record incoming requests and SLAs; execution Tasks have effort, deadlines, and dependencies.
@@ -158,7 +160,7 @@ Login opens a workspace with a sidebar and topbar. Request creation and ticket d
 | Administration | Users, departments, teams/members, categories, SLA |
 | Access/errors | Access denied and record not found |
 
-The target inventory has **36 patterns: 26 core + 3 AI assistant + 7 OPS**, including pages/dialogs/error pages. Routes are navigation designs, not implemented. The v0.8 set illustrates all seven OPS patterns, but not every variant/state/breakpoint separately.
+The target inventory has **36 patterns: 26 core + 3 AI assistant + 7 OPS**, including pages/dialogs/error pages. Routes are navigation designs, not implemented. The approved v1.3 / D-51 baseline covers all 36 patterns through four dashboards and 47 grouped specimens, without claiming every state or breakpoint separately.
 
 ### 2.3 Primary user flows
 
@@ -174,57 +176,57 @@ See [user journeys and task flows](docs/05-user-flows.md) or the [XMind flow set
 
 ### 2.4 UI/UX design
 
-The UI uses light surfaces, cards with icons and short labels, clear hierarchy, and generous spacing. Seven capability groups and eight representative images show the core workflow: **receive requests → manage work and workforce → coordinate/execute → monitor assets and operational results**. The AI assistant supports authorized actions; the IT Manager supervises and intervenes when needed.
+**Approved format: v1.3 / D-51.** The main screens below illustrate the core workflow using the current final design. The Mac/Teal workspace includes Night City coordination; login remains unchanged. These are DEMO design images, not implemented application acceptance.
 
-These are static designs using synthetic DEMO data, not a running application. They combine Apple Design Skill principles, the earlier UI, and P-047 quick-action card layouts, with desktop/tablet/mobile and reduced-motion specifications. **UI and dashboard artwork intentionally remains in Vietnamese.**
+[Browse all 47 screens and four dashboards](docs/design/final/gallery.html) | [Open interactive catalog](docs/design/final/index.html) | [Approved format](docs/design/approved-format.md)
 
 #### Operations overview
 
 The IT Manager sees ticket/SLA status, blocked work, and actionable exceptions, with links into the relevant areas.
 
-![Dashboard — IT department operations overview](docs/design/wireframes/02-dashboard-manager.svg)
+![Dashboard — IT department operations overview](docs/design/final/images/02-dashboard-manager.png)
 
 #### Support request management
 
 Centralize tickets by status, priority, assignee, and SLA; filter, create requests, and open details to communicate, resolve issues, and track results.
 
-![Tickets — support request intake and tracking](docs/design/wireframes/03-tickets.svg)
+![Tickets — support request intake and tracking](docs/design/final/images/03-tickets.png)
 
 #### Execution work management
 
 Track tasks separately from tickets, with assignees, states, deadlines, and dependencies. Authorized users can plan, assign manually, and record work results.
 
-![Work — tasks, ownership, and execution progress](docs/design/wireframes/20-task-board.svg)
+![Work — tasks, ownership, and execution progress](docs/design/final/images/20-task-board.png)
 
 #### Workforce and availability
 
 Compare skills, work/absence schedules, and workload to make suitable assignments. AI coordination validates against the same data.
 
-![Workforce — skills, availability, and workload](docs/design/wireframes/22-workforce.svg)
+![Workforce — skills, availability, and workload](docs/design/final/images/22-workforce.png)
 
 #### AI Workspace — assistant and automatic coordination
 
 The assistant supports search, cited Q&A, and work through forms/previews/confirmation. Background coordination plans, selects people, assigns, and monitors under policy, requesting approval only for exceptions. The image below shows normal operation with no exception awaiting approval.
 
-![AI Workspace — assistant actions and policy-based coordination activity](docs/design/wireframes/37-ai-workspace.svg)
+![AI Workspace — assistant actions and policy-based coordination activity](docs/design/final/images/37-ai-workspace.png)
 
 **Exception proposal state:** AI suggests a replacement after availability changes, but the task has an assignment lock, so it waits for IT Manager approval and has not been reassigned. After approval, the system still rechecks permissions, schedules, and workload before execution. This is a state of the same AI Workspace, not its default screen.
 
-![AI Workspace — exception coordination proposal awaiting IT Manager approval](docs/design/wireframes/23-coordination.svg)
+![AI Workspace — exception coordination proposal awaiting IT Manager approval](docs/design/final/images/23-coordination.png)
 
 #### IT asset management
 
 Find devices, their condition, and current users; open records to manage issue/return, history, and related tickets.
 
-![Assets — device catalog and usage status](docs/design/wireframes/29-assets-list-form.svg)
+![Assets — device catalog and usage status](docs/design/final/images/29-assets-list-form.png)
 
 #### Operations reporting
 
 Review request volumes/outcomes, resolution time, and SLA metrics by period to evaluate IT operations.
 
-![Reports — resolution outcomes and operational metrics](docs/design/wireframes/30-reports.svg)
+![Reports — resolution outcomes and operational metrics](docs/design/final/images/30-reports.png)
 
-The full design set contains **34 UI SVGs, 3 supporting boards, and 44 separate SVG icons**. Detailed screens, exception approval, knowledge, notifications, audit, login, and administration remain in the [UI/UX gallery](docs/design/wireframes/README.md). See the [screen specification](docs/07-uiux-specification.md), [UI/UX XMind map](docs/xmind/07-uiux.xmind), and [design review](docs/design/uiux-review.md). Some patterns share a view/board; not every variant/state/breakpoint has a separate drawing.
+The full design set contains **47 grouped specimens, four role dashboards, six AI composition references, and shared SVG icons**. Detailed screens, exception approval, knowledge, notifications, audit, login, and administration remain in the [UI/UX gallery](docs/design/wireframes/README.md). See the [screen specification](docs/07-uiux-specification.md), [UI/UX XMind map](docs/xmind/07-uiux.xmind), and [design review](docs/design/uiux-review.md). Some patterns share a view/board; not every variant/state/breakpoint has a separate drawing.
 
 ### 2.5 States and experience quality
 
@@ -247,7 +249,7 @@ See [Design system](docs/design/design-system.md), [Content and states](docs/des
 
 AI has two modes: **on-demand assistance** and **policy-based automatic coordination**. Enable/disable flags are operational choices and do not remove AI from MVP acceptance. The assistant has 8 stories; coordination/work management/KB has 12 OPS stories.
 
-[Employee variant](docs/design/wireframes/11-ai-assistant.svg) · [Technician](docs/design/wireframes/12-ai-ticket-assistant.svg) · [Exception awaiting approval](docs/design/wireframes/23-coordination.svg).
+[Employee variant](docs/design/final/ai/11-ai-assistant.svg) · [Technician](docs/design/final/ai/12-ai-ticket-assistant.svg) · [Exception awaiting approval](docs/design/final/ai/23-coordination.svg).
 
 The **AI assistant** area has role-based suggestions and an explicitly labeled message field; background coordination has its own name/icon. Users choose a task, review it, and confirm before sending/saving. The assistant supports other work without a run or while approval is pending; it is not limited to post-reassignment work. Reassignment proposals retain full cards outside chat; coordination progress uses numbered steps and arrows for the current branch.
 
@@ -283,7 +285,7 @@ Diagrams are grouped by topic for editing and review. The master file contains *
 | [04 — User flows](docs/xmind/04-user-flows.xmind) | Seven business views, including updated onboarding/replanning/approval |
 | [05 — Business rules](docs/xmind/05-business-rules.xmind) | Ticket/task/approval states, SLA, assets, priority, data model |
 | [06 — INVEST backlog](docs/xmind/06-invest-backlog.xmind) | 67 stories with IDs/dependencies/AC: 47 core + 8 AI + 12 OPS |
-| [07 — UI/UX](docs/xmind/07-uiux.xmind) | Experience, UI quality, 37 attached images: 34 UI designs + 3 boards |
+| [07 — UI/UX](docs/xmind/07-uiux.xmind) | Experience and quality; retained layout figures, 37 retained v1.1 layout captures; current format v1.3 / D-51 |
 | [08 — AI assistant](docs/xmind/08-ai-assistant.xmind) | Assistant/coordination, 8 UC-AI + 10 UC-OPS, confirmation/tools/policies/exceptions; 3 assistant images |
 
 See [opening instructions and diagram inventory](docs/xmind/README.md). UI wireframes are separate documents and are also embedded as images in the UI/UX file.
@@ -445,7 +447,7 @@ Each module separates transport/schema, services, policy/domain, models, and rep
 | Machine-readable contracts and architecture | [DBML/ER](docs/database/README.md) · [OpenAPI](docs/api/README.md) · [C4 C1–C4](docs/architecture/c4/README.md) · [Folders/files](docs/technical/code-structure.md) |
 | Models and quality | [Data model/ERD](docs/requirements/conceptual-data-model.md) · [API design](docs/technical/api-design.md) · [NFR](docs/requirements/non-functional-requirements.md) |
 | Design | [XMind](docs/xmind/README.md) · [Wireframes](docs/design/wireframes/README.md) · [Design system](docs/design/design-system.md) · [Content and states](docs/design/content-and-states.md) |
-| Visuals and interaction | [UI v0.8](docs/design/visual-refresh.md) · [Motion and responsive](docs/design/motion-and-responsive.md) · [44 SVG icons](docs/design/icons/) |
+| Visuals and interaction | [UI v1.3](docs/design/visual-refresh.md) · [Motion and responsive](docs/design/motion-and-responsive.md) · [44 SVG icons](docs/design/icons) |
 | AI assistant and coordination | [Design](docs/10-ai-assistant.md) · [Use cases/INVEST/AC](docs/ai/use-cases-stories-and-acceptance.md) · [Integration and non-regression](docs/ai/integration-and-non-regression.md) |
 | Validation | [Validation plan](docs/research/validation-plan.md) · [Decisions](docs/decisions/design-decisions.md) · [Traceability](docs/traceability/master-traceability.md) |
 | Target technology | [Tech stack](docs/technical/tech-stack.md) · [Architecture](docs/technical/architecture.md) · [Versions](docs/technical/version-baseline.md) |
@@ -458,7 +460,7 @@ Each module separates transport/schema, services, policy/domain, models, and rep
 - [x] 67 target stories with INVEST review, AC, and traceability; not estimated for implementation.
 - [x] Information architecture, screen hierarchy, user flows.
 - [x] Editable XMind diagrams and previews.
-- [x] UI/UX v0.8: 34 UI designs, 3 supporting boards, 44 SVG icons; responsive/motion specifications.
+- [x] UI/UX v1.3 format approved by PO; all-screen Mac/Teal design consolidated, original login retained; application implementation/visual acceptance remains pending.
 - [ ] Interactive prototype and validation of animation, keyboard access, responsive behavior in a running UI.
 - [x] Target frontend/backend stack and architecture selected; metadata reviewed and M1 validation gates recorded.
 - [x] AI assistant/coordination, tasks/policies/approvals/KB, ERD, and API specified.

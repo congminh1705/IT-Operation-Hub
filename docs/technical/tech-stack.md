@@ -7,7 +7,7 @@ module: technology
 tags: [architecture, technology, reference]
 priority: 1
 status: design-draft
-owner: "Project owner"
+owner: PO
 approval: needs-review
 updated: 2026-11-01
 authority: primary
@@ -30,7 +30,7 @@ purpose: "Record the agreed stack and each technology group’s responsibility."
 | Database/ORM | PostgreSQL/synchronous SQLAlchemy Session/Alembic/Psycopg 3; no Django ORM |
 | Auth | PostgreSQL server sessions, opaque HttpOnly/Secure-in-production/SameSite cookies, Argon2id via pwdlib, CSRF/login Origin |
 | Workers | Celery + Redis + one Beat; Linux workers including Windows development; separate AI/SLA/index queues |
-| AI | Provider/model/embedding adapters, structured output/tool allowlist; backend services own write authorization |
+| AI | Gemini Developer API free tier per D-48; exact generation/embedding IDs and SDK verified at implementation; USD 0 paid spend, no paid fallback. Provider/model/embedding adapters, structured output/tool allowlist; backend services own write authorization |
 | KB/RAG | PostgreSQL + pgvector; version/ACL/Published, background Celery chunk/embedding/indexing; runtime authorization is independent of the index |
 | Storage | Private local development/private production S3 via boto 3; downloads check parent-record scope |
 | Dependencies | uv/pnpm; real lockfiles when implementation begins |

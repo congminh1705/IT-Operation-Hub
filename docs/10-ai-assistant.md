@@ -7,7 +7,7 @@ module: orchestration
 tags: [ai, orchestration, reference]
 priority: 1
 status: design-draft
-owner: "Project owner"
+owner: PO
 approval: needs-review
 updated: 2026-11-01
 authority: primary
@@ -70,7 +70,7 @@ Runs/actions trace event/policy/grantor/actor, sources/versions, model/prompt ve
 
 ## AI configuration and decisions
 
-Prior confirmation applies only to **initial M3 testing**: OpenAI API, `gpt-5-mini`, maximum USD 5 total including retries/embeddings, DEMO data and test database. `text-embedding-3-small` is proposed if testing RAG and requires verification. No more expensive model switch/cap increase. Current instructions authorize documentation only, not API calls.
+**Current provider direction (D-48): Gemini Developer API free tier only**, superseding the OpenAI/gpt-5-mini and USD 5 test allowance in D-39. Paid spending authorized: USD 0. Verify the exact free-tier generation model, account/region eligibility, quotas, structured output/tool support and data terms at implementation; do not assume any model is permanently free. Embeddings must also use a verified free-tier-compatible option, selected separately before RAG indexing; no OpenAI embedding dependency. Keep PostgreSQL/pgvector and existing provider/embedding adapters. Use synthetic DEMO data/test DB only; no paid fallback or automatic billing activation. Exhausted quota means bounded retry or explicit unavailable state, not paid switching. This documentation change makes no API calls.
 
 Account model access, billing/quota, runtime prices, tool/schema support, and quality are unverified. Production provider/model/embedding/budget/data policy: **Decision required**, D-39/40. No keys in chat/logs/repository; DEMO permission does not authorize real data.
 
@@ -99,7 +99,7 @@ Cards identify user-requested actions with Not sent/Sending/Saved/Outcome unknow
 
 Requesters receive only filtered public progress for their own tickets, never internal run/policy/candidate payloads hidden in the client. T sees authorized team/assigned work; M/A see scoped management activity, not others' private chats. The shared screen does not merge private histories.
 
-Both modes may share a model/provider adapter with separate system prompts, context, tool registries, actors, rate limits, queues/concurrency, and subquotas. One global budget limits both modes together: not USD 5 per mode or duplicate calls for one interaction. D-42 does not select production providers/models. Assistant availability and automation policies are independent; the workspace can still display status/manual actions when the provider fails or assistant is disabled.
+Both modes may share a model/provider adapter with separate system prompts, context, tool registries, actors, rate limits, queues/concurrency, and subquotas. One global budget limits both modes together: one free-tier quota shared across modes, with USD 0 paid spend or duplicate calls for one interaction. D-42 does not select production providers/models. Assistant availability and automation policies are independent; the workspace can still display status/manual actions when the provider fails or assistant is disabled.
 
 ## Independent capabilities in one screen
 
@@ -125,4 +125,17 @@ UI23 shows one locked replan run in five steps: record absence → propose → a
 
 ## Normal and exception screens
 
-[UI37 — normal AI Workspace](design/wireframes/37-ai-workspace.svg) is the default representative; the assistant does not need approval to function. [UI23 — exception proposal](design/wireframes/23-coordination.svg) appears only for an authorized exception, not permanently. The fixtures are independent, sharing route/actor/permission boundaries/capabilities. Normal activity may show automatic assignment without approval; this does not mean specialist tasks are Done.
+[UI37 — normal AI Workspace](design/final/ai/37-ai-workspace.svg) is the default representative; the assistant does not need approval to function. [UI23 — exception proposal](design/final/ai/23-coordination.svg) appears only for an authorized exception, not permanently. The fixtures are independent, sharing route/actor/permission boundaries/capabilities. Normal activity may show automatic assignment without approval; this does not mean specialist tasks are Done.
+
+
+## Future AI evolution direction
+
+Confirmed by Hoang Cong Minh on 11 November 2026 as a future solution direction, not an immediate implementation requirement:
+
+- Strengthen ACL-aware RAG with published/versioned sources and citations, using the existing PostgreSQL/pgvector boundary.
+- Manage context selectively: relevant conversation history, user scope, active work item and retrieved evidence; bound tokens and summarize where appropriate. Do not send the entire repository or conversation by default.
+- Read current operational facts through authorized domain services/tools rather than treating embeddings as the authority for ticket status, inventory, workforce capacity or report metrics.
+- Evaluate LangGraph when concrete workflows require branching, clarification, human confirmation and resumable execution. Evaluate LangChain only where its integrations materially simplify implementation; neither framework is selected or mandatory, and adopting both is not assumed.
+- Preserve Gemini free-tier constraints in D-48, backend authorization, confirmations and existing worker/domain boundaries. Framework choice alone does not authorize more model calls or spending.
+
+This direction adds no task, dependency, acceptance gate, package installation or frontend scope. Existing RAG deliverables remain required; only framework adoption and additional sophistication are deferred. Before adoption, record a separate technical decision with the concrete use case, trade-offs, persistence/recovery design, quota implications and bounded task refinement. See [decision D-49](decisions/design-decisions.md#d-49---future-rag-context-and-orchestration-direction).

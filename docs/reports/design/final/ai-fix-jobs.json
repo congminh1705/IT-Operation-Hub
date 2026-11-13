@@ -1,0 +1,56 @@
+[
+  {
+    "id": "05-ai-ai-normal",
+    "group": "05-ai",
+    "screen": "ai-normal",
+    "title": "Workspace · Bình thường",
+    "url": "05-ai.html#ai-normal",
+    "image": "images/screens/05-ai-ai-normal.png",
+    "width": 1440
+  },
+  {
+    "id": "05-ai-ai-requester",
+    "group": "05-ai",
+    "screen": "ai-requester",
+    "title": "Workspace · Nhân viên",
+    "url": "05-ai.html#ai-requester",
+    "image": "images/screens/05-ai-ai-requester.png",
+    "width": 1440
+  },
+  {
+    "id": "05-ai-ai-tech",
+    "group": "05-ai",
+    "screen": "ai-tech",
+    "title": "Workspace · Kỹ thuật viên",
+    "url": "05-ai.html#ai-tech",
+    "image": "images/screens/05-ai-ai-tech.png",
+    "width": 1440
+  },
+  {
+    "id": "05-ai-ai-exception",
+    "group": "05-ai",
+    "screen": "ai-exception",
+    "title": "Workspace · Ngoại lệ",
+    "url": "05-ai.html#ai-exception",
+    "image": "images/screens/05-ai-ai-exception.png",
+    "width": 1440
+  },
+  {
+    "id": "05-ai-ai-approval",
+    "group": "05-ai",
+    "screen": "ai-approval",
+    "title": "Workspace · Phê duyệt",
+    "url": "05-ai.html#ai-approval",
+    "image": "images/screens/05-ai-ai-approval.png",
+    "width": 1440
+  },
+  {
+    "id": "05-ai-ai-states",
+    "group": "05-ai",
+    "screen": "ai-states",
+    "title": "Workspace · Trạng thái",
+    "url": "05-ai.html#ai-states",
+    "image": "images/screens/05-ai-ai-states.png",
+    "width": 1440
+  }
+]
