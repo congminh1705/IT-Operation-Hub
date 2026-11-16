@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
@@ -66,7 +68,7 @@ export default function FeedbackPreview() {
         <Button id="dialog-trigger" onClick={() => setOpen(true)}>
           Mở hộp thoại minh họa
         </Button>
-        <a href="/preview/primitives">Xem primitive</a>
+        <Link href="/preview/primitives">Xem primitive</Link>
       </div>
       <div className="feedback-grid">
         {kinds.map((kind) => (

@@ -621,3 +621,321 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: PO review of FE-02.02, resolve findings, then close this prerequisite.
 - Eligibility / remaining prerequisite: FE-02.03 is the next sequential task after acceptance; not started. FE-02.04 also depends on FE-02.02. Create one Parent PR only after all FE-02 children and Parent criteria pass; remind PO to merge then. No per-Parent PR Markdown file.
+
+
+<a id="task-fe-02-02-attempt-02"></a>
+
+### FE-02.02 — Attempt 02 — 2026-11-13T12:15:33+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-02.02/attempt-02
+- Task: [specification](../tasks/FE-02.02.md)
+- Parent / phase: FE-02 / A
+- Executor: AI Agent; Owner and reviewer PO
+- Started at: 2026-11-13T12:15:33+07:00
+- Ended at: 2026-11-13T12:15:33+07:00 (Asia/Bangkok)
+- State before / after: review / done
+- Previous attempt / correction: [attempt-01](#task-fe-02-02-attempt-01); append acceptance without changing prior evidence.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record PO approval, close FE-02.02 and prepare the authorized next task.
+- Delivered this attempt: closure synchronized across task, board and current context.
+- Incomplete scope / deviations: none for FE-02.02 acceptance; no product code changed in closure.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-02.02.md | acceptance handoff | record PO verdict |
+| docs/implementation/workflow/ | state/history/context | dependency closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Technical AC 1–4 | verified generic feedback/modal behavior | retained 42 unit / 10 production browser passes and source checks | pass | prior report |
+| Visual AC 5 | PO verdict on implementation | explicitly approved in this conversation | pass | PO instruction |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | read task and board; verify PO approval | review can close | done recorded | pass |
+| src/frontend | new application tests | not needed for documentation-only closure | not rerun; prior results preserved | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO visual review, explicit approval.
+- Findings / resolution: no additional findings supplied; FE-02.02 accepted.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-02.02.
+- Required resolution / owner: none; baseline published on GitHub. Parent closure still needs FE-02.03/.04.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task](../tasks/FE-02.02.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-02.02/comparison.md); [checks](../evidence/FE-02.02/checks.json).
+- Commit / build / environment: implementation 54d3e92; evidence c72315f; full baseline f4ca603 published on phase/a-frontend. This closure commit is identified by Git history. PR [#2](https://github.com/congminh1705/IT-Operation-Hub/pull/2) open for current phase/Parent; do not duplicate or merge before Parent complete.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-02 linked.
+- Execution-board task row: done; Owner PO.
+- Current context: approval and FE-02.03 assignment recorded.
+- Parent state: FE-02 EPIC_IN_PROGRESS; FE-02.03/.04 not yet complete.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-02.03, explicitly authorized in the same message.
+- Eligibility / remaining prerequisite: FE-01.02 and FE-02.02 done. Do not start FE-02.04 in this assignment.
+
+
+<a id="task-fe-02-03-attempt-01"></a>
+
+### FE-02.03 — Attempt 01 — 2026-11-13T12:32:02+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-02.03/attempt-01
+- Task: [specification](../tasks/FE-02.03.md)
+- Parent / phase: FE-02 / A
+- Executor: AI Agent; Owner PO
+- Started at: 2026-11-13T12:16:14+07:00 (first persisted four-role reference capture; context reads preceded this timestamp)
+- Ended at: 2026-11-13T12:32:02+07:00 (Asia/Bangkok)
+- State before / after: pending / review
+- Previous attempt / correction: none; first implementation. Prerequisite FE-02.02 closed by PO in [closure](#task-fe-02-02-attempt-02).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: role-aware responsive shell and honest route stubs only.
+- Delivered this attempt: typed persona navigation projection, sidebar/topbar/account disclosure, default avatar/shared sprite, native mobile drawer, skip link, bounded scoped ticket-search navigation, active state and named destination placeholders. Isolated role preview fixtures permit real testing without a product role switch.
+- Incomplete scope / deviations: PO visual review pending. No feature pages, session routing/auth redirect, real logout/data search or service authorization. These remain with their existing tasks.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/lib/navigation.ts; navigation.test.ts | getNavigation, activeNavigation, effectiveScope, canOpenDestination, ticketSearchHref | typed role/capability projection and tests |
+| src/frontend/src/components/layout/ | WorkspaceShell, SidebarContent, Topbar, AccountMenu/Summary, WorkspacePage, Icon, scoped workspace.css | reusable shell |
+| src/frontend/src/app/(workspace)/[...destination]/page.tsx | explicit Requester fixture and route stubs | named ordinary destinations without auth integration |
+| src/frontend/src/app/preview/workspace/[persona]/[[...destination]]/page.tsx | validated injected persona fixtures | isolated four-role review/testing |
+| src/frontend/public/avatar-default.svg; icons.svg | approved assets reused | no second icon system |
+| src/frontend/src/components/ui/dialog.tsx | optional id/className | drawer styling/aria-controls without new modal behavior |
+| src/frontend/src/app/preview/feedback/page.tsx | Next Link in place of internal anchor | lint compatibility with expanded routes |
+| src/frontend/e2e/workspace.spec.ts; README.md | browser checks and reproducible preview instructions | verification/handoff |
+| docs/implementation/ | task/board/history/context, index, scoped evidence | delivery records |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| AC row 1 | four-role navigation and one AI entry, restricted Requester/Technician | typed fixture projection and role matrix verified; explicit self workforce scope | pass | navigation.test.ts; four role browser checks |
+| AC row 2 | desktop rail/mobile drawer/skip/account/search/active links; honest missing features | all named routes resolve to pending screens; logout/search do not pretend effects | pass | browser navigation/destination/search tests |
+| AC row 3 | keyboard focus/reading order and compact/long-label usability | drawer/account keyboard and return, skip link, all roles at 320/390/768/1440, long name + 200% CSS zoom pass | pass | browser JSON and captures |
+| AC row 4 | approved task-owned appearance without feature expansion | rail/topbar/avatar/tokens compared against four final role references; differences documented | pass | comparison.md |
+| AC row 5 | actual/reference evidence and explicit PO verdict | captures saved; PO visual verdict pending | not-run | task stays review |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd typecheck | strict routes/types | passed | pass |
+| src/frontend | pnpm.cmd lint | no lint issues | passed; old preview anchor converted to Link | pass |
+| src/frontend | pnpm.cmd format:check | formatted | passed | pass |
+| src/frontend | pnpm.cmd test | unit/regression suite | 58 tests / 5 files passed | pass |
+| src/frontend | pnpm.cmd build | production build including route stubs | passed; dynamic catch-all and persona preview routes generated | pass |
+| src/frontend | pnpm.cmd test:e2e --reporter=list,json | shell and feedback regression | 37 passed / 0 skipped / 0 flaky / 0 unexpected; no page/console errors; production build at :3102, optional references at :8790, portable Chromium executable supplied | pass |
+| browser | open four required dashboard.html?role references, compare 1440/390 and inspect actual shell | current sources guide only owned UI | all captured; intentional stub/content differences documented | pass |
+| repo | python -B tools/design/final/verify_baseline.py; python -B tools/design/verify_format.py | approved design/contracts preserved | 69 baseline hashes / 60 format hashes; 230 task IDs; 63 FE bindings; 93 cards; font checks passed | pass |
+| repo | GitHub PR list / git fetch origin | preceding Parent merged, current Parent PR known | PR #1 closed/merged; PR #2 open; same phase branch | pass |
+| repo | CodeGraph explore shell/persona | indexed source | transport closed; direct scoped reads used | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent source + screenshot self-review. PO visual review pending; no independent reviewer claimed.
+- Findings / resolution: test initially matched both visible rail and hidden drawer account blocks; scoped it to the desktop rail. Optional mobile reference capture waited for a hidden sidebar to be visible; corrected to wait for attached DOM and captured the closed mobile state. Final production run passes; no checks waived.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO visual verdict required to close FE-02.03.
+- Required resolution / owner: PO reviews the role previews and reports findings. Real feature/session/service authorization remains owned by later tasks, not a completion claim here.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task](../tasks/FE-02.03.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-02.03/comparison.md), [checks](../evidence/FE-02.03/checks.json), [browser results](../evidence/FE-02.03/browser-results.json).
+- Commit / build / environment: phase/a-frontend; implementation `bce1219b7486c4aca1b5cb455f91456f82781984` pushed and remote SHA verified before this report. Node 24.22.2 / pnpm 12.16.1 / Next 16.4.6 / React 19.3.1 / Playwright 1.65.0. No new dependency. Evidence/report delivery HEAD is identified by its own commit and final response. Existing PR [#2](https://github.com/congminh1705/IT-Operation-Hub/pull/2) receives same-Parent changes; no duplicate PR or PR Markdown file created.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-01 linked with real checks/differences.
+- Execution-board task row: review; Owner PO; no report body on board.
+- Current context: latest FE-02.03 summary and PO review pointer.
+- Parent state: FE-02 EPIC_IN_PROGRESS; FE-02.01/.02 done, FE-02.03 review, FE-02.04 pending. Phase A exit pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO visual review of FE-02.03, resolve findings and close; no additional task started.
+- Eligibility / remaining prerequisite: FE-02.04 is the next sequential candidate after this review and a new assignment. It depends on accepted FE-02.02 but is not authorized in this task scope. Only complete Parent FE-02 when all children/Parent criteria pass; then update PR #2 and remind PO to merge before the next Parent.
+
+
+<a id="task-fe-02-03-attempt-02"></a>
+
+### FE-02.03 — Attempt 02 — 2026-11-16T15:49:50+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-02.03/attempt-02
+- Task: [specification](../tasks/FE-02.03.md)
+- Parent / phase: FE-02 / A
+- Executor: AI Agent; Owner and reviewer PO
+- Started at: 2026-11-16T15:49:50+07:00
+- Ended at: 2026-11-16T15:49:50+07:00 (Asia/Bangkok)
+- State before / after: review / done
+- Previous attempt / correction: [attempt-01](#task-fe-02-03-attempt-01); preserve prior implementation/check evidence.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record PO review approval and close FE-02.03 only.
+- Delivered this attempt: synchronized done state and approval in task/board/history/context, implementation index and current evidence summary.
+- Incomplete scope / deviations: none for task acceptance. No product code or next task changed.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-02.03.md | latest handoff | PO approval |
+| docs/implementation/workflow/ | board/history/context | closure and next pointer |
+| docs/implementation/README.md | next candidate | remove stale review pointer |
+| docs/implementation/evidence/FE-02.03/ | checks/comparison approval | current verdict, prior test results retained |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Technical AC rows 1–4 | verified shell and role/navigation behavior | prior 58 unit / 37 production browser tests and static checks retained | pass | attempt-01 |
+| Visual AC row 5 | explicit PO verdict | PO approved review and requested done on 16 November 2026 | pass | current instruction; updated review summary |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | inspect task, board, current context and clean Git state | scoped closure | documentation updated consistently | pass |
+| src/frontend | new application test run | not needed for documentation-only approval | not rerun; prior checks retained without inventing a fresh run | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO visual review and explicit approval.
+- Findings / resolution: no additional findings supplied; accepted implementation unchanged.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-02.03.
+- Required resolution / owner: FE-02.04 still needs its own assignment and delivery; Parent not complete.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task](../tasks/FE-02.03.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-02.03/comparison.md), [checks](../evidence/FE-02.03/checks.json); prior screenshots retained.
+- Commit / build / environment: implementation bce1219; prior handoff c6c2e01; phase/a-frontend. This closure commit is identified in Git history and final delivery response; no new build claimed. No PR created or merged.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-02 linked, approved/done.
+- Execution-board task row: done; Owner PO.
+- Current context: no active task; FE-02.04 next, awaiting assignment.
+- Parent state: FE-02 EPIC_IN_PROGRESS; FE-02.01/.02/.03 done, FE-02.04 pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-02.04 upon assignment; not started here.
+- Eligibility / remaining prerequisite: task prerequisites satisfied. Complete Parent criteria before merge; retain one Parent PR and do not auto-merge.
+
+<a id="task-fe-02-04-attempt-01"></a>
+
+### FE-02.04 — Attempt 01 — 2026-11-16T16:00:49+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-02.04/attempt-01
+- Task: [task specification](../tasks/FE-02.04.md)
+- Parent / phase: FE-02 / A
+- Executor: Codex (AI Agent support); Owner: PO
+- Started at: 2026-11-16T15:55:01+07:00 (observed implementation start; context reading preceded it)
+- Ended at: 2026-11-16T16:00:49+07:00
+- State before / after: pending / review (in-progress recorded during implementation)
+- Previous attempt / correction: none; first attempt.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: query lifecycle and timezone helpers only.
+- Delivered this attempt: shared per-mount client/provider, canonical identity/scope keys, cancellation and stale-response rejection, explicit invalidation/logout hooks, active-tab 30-second polling, UTC/Vietnam formatting and half-open date windows.
+- Incomplete scope / deviations: no feature UI or session integration; those remain FE-03 and later. No dependency added. Visual comparison N/A: no owned visual change.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/app/providers.tsx, layout.tsx | Providers/useQueryClient/useQueryState | One client per mount; subscribed state and activity lifecycle |
+| src/frontend/src/lib/api/query-client.ts, query-keys.ts | QueryClient, bindQueryActivity, queryKey | Scoped cache, polling, late-response rejection |
+| src/frontend/src/lib/api/query-client.test.ts, QUERY-LIFECYCLE.md | Fake-clock/security lifecycle cases and integration guidance | Verify and document future session wiring |
+| src/frontend/src/lib/dates.ts, dates.test.ts | formatBusinessTime/localDateWindow | Vietnam display and UTC filter boundaries |
+| docs/implementation/tasks/FE-02.04.md and workflow records/README.md | Task handoff, state, history and resume pointer | Delivery synchronization |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | One client; private cache partition/clear | Per-mount provider, canonical keys, user/scope switch clear; old-user reads blocked | pass | query-client.test.ts; providers.tsx |
+| 2 | Active-tab polling and no late private restoration | Fake-clock tests verify 30 seconds, hidden/unfocused pause, cleanup; late logout/scope/user/invalidation responses discarded | pass | query-client.test.ts |
+| 3 | UTC/Vietnam dates; distinct states | Day/year/leap boundaries, invalid/reversed ranges; idle/pending/empty/success/error distinguished | pass | dates.test.ts; query-client.test.ts |
+| 4 | Preserve approved visual scope | No visual changes; 35 browser regressions pass | pass | root layout only wraps existing content |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd test | Required lifecycle/time cases and prior tests pass | 78 tests / 7 files passed | pass |
+| src/frontend | pnpm.cmd typecheck | No TS errors | Initial Promise generic error in test fixed; rerun passed | pass |
+| src/frontend | pnpm.cmd lint | No lint errors | Passed | pass |
+| src/frontend | pnpm.cmd format:check | Formatting consistent | Passed | pass |
+| src/frontend | pnpm.cmd build | Production compile/routes | Passed after test generic fix | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1; PLAYWRIGHT_BASE_URL=http://127.0.0.1:3102; pnpm.cmd test:e2e --reporter=list | Existing shell/dialog remain functional | 35 passed; portable Chromium; two optional reference-capture cases skipped without DESIGN_REFERENCE_URL | pass |
+| docs/design/final | Reference screenshots | N/A for nonvisual task | Not run; no UI changes or new screenshots required | not-run |
+
+#### 6. Review
+
+- Type / reviewer: self-review / Codex; PO acceptance pending.
+- Findings / resolution: explicit typed Promise fixed typecheck/build; stale-response guards cover ignored AbortSignal. No visual redesign, real service authorization or session implementation claimed.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: no implementation blocker; PO task acceptance and Parent closure remain open.
+- Required resolution / owner: PO review; FE-03.02 wires session hooks later. Date helper deliberately rejects pre-1976 historical timezone windows.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-02.04.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: executable tests and this report; no permanent screenshot set for nonvisual work. Browser artifacts are local ignored test-results.
+- Commit / build / environment: phase/a-frontend; implementation [4c4df89](https://github.com/congminh1705/IT-Operation-Hub/commit/4c4df89), pushed with matching remote SHA; Next production build passed on Windows/pnpm. Final documentation delivery SHA reported in final reply.
+- PR: [#2](https://github.com/congminh1705/IT-Operation-Hub/pull/2) verified merged; normal merge of origin/main preserved phase history. Remaining FE-02 delta needs a follow-up Parent delivery after acceptance; no open/duplicate PR claimed.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated with this report link.
+- Execution-board task row: review; Owner PO; no Executor column.
+- Current context: updated with current result and this report link.
+- Parent state: FE-02 EPIC_IN_PROGRESS; .01/.02/.03 done, .04 review. Phase A exit not reached.
+
+#### 10. Next step
+
+- Next eligible task / resume step: review FE-02.04; verify Parent closure and publish remaining FE-02 delta before FE-03.01.
+- Eligibility / remaining prerequisite: FE-03.01 prerequisites done, but Parent acceptance/PR delivery must finish first. No next task started.
