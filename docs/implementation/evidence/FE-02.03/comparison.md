@@ -1,6 +1,6 @@
 # FE-02.03 — role-aware workspace shell comparison
 
-State: **review**. PO visual verdict: **pending**. UI: v1.3 / D-51.
+State: **done**. PO visual verdict: **approved on 16 November 2026**. UI: v1.3 / D-51.
 
 ## Open the running implementation
 
@@ -40,7 +40,7 @@ Reference business cards/KPIs/tables/AI canvas were deliberately not implemented
 - Skip link focus, long Vietnamese labels/names, default avatar and 320/390/768/1440 reflow for all roles; representative 200% CSS layout zoom.
 - Ticket-search input is encoded and bounded to 180 characters; query text does not become role parameters. No domain fetch/write or auth redirect was added.
 - 58 unit tests / five files passed; 37 production Chromium tests passed (27 shell/reference + 10 feedback regression). Typecheck/lint/format/build passed. Final browser tests assert no page/console errors.
-- Native browser-menu zoom and screen-reader speech were not manually certified; PO visual approval is pending. The default Requester fixture and all route stubs must be replaced only in their owned session/feature tasks.
+- Native browser-menu zoom and screen-reader speech were not manually certified; PO visual approval was recorded on 16 November 2026. The default Requester fixture and all route stubs must be replaced only in their owned session/feature tasks.
 
 ## Scope / delivery
 
