@@ -37,8 +37,8 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FE-02.02](../tasks/FE-02.02.md) | [FE-02](../06-frontend-first.md#fe-02) | Implement form feedback and accessible dialogs | [FE-02.01](../tasks/FE-02.01.md) | PO | done |
 | [FE-02.03](../tasks/FE-02.03.md) | [FE-02](../06-frontend-first.md#fe-02) | Build the role-aware responsive shell | [FE-01.02](../tasks/FE-01.02.md), [FE-02.02](../tasks/FE-02.02.md) | PO | done |
 | [FE-02.04](../tasks/FE-02.04.md) | [FE-02](../06-frontend-first.md#fe-02) | Implement query lifecycle and timezone helpers | [FE-01.03](../tasks/FE-01.03.md), [FE-02.02](../tasks/FE-02.02.md) | PO | done |
-| [FE-03.01](../tasks/FE-03.01.md) | [FE-03](../06-frontend-first.md#fe-03) | Build the complete login form interaction | [FE-01.03](../tasks/FE-01.03.md), [FE-02.02](../tasks/FE-02.02.md) | PO | in-progress |
-| [FE-03.02](../tasks/FE-03.02.md) | [FE-03](../06-frontend-first.md#fe-03) | Wire mock session routing and scoped entry | [FE-03.01](../tasks/FE-03.01.md), [FE-02.03](../tasks/FE-02.03.md), [FE-02.04](../tasks/FE-02.04.md) | PO | in-progress |
+| [FE-03.01](../tasks/FE-03.01.md) | [FE-03](../06-frontend-first.md#fe-03) | Build the complete login form interaction | [FE-01.03](../tasks/FE-01.03.md), [FE-02.02](../tasks/FE-02.02.md) | PO | done |
+| [FE-03.02](../tasks/FE-03.02.md) | [FE-03](../06-frontend-first.md#fe-03) | Wire mock session routing and scoped entry | [FE-03.01](../tasks/FE-03.01.md), [FE-02.03](../tasks/FE-02.03.md), [FE-02.04](../tasks/FE-02.04.md) | PO | pending |
 | [FE-03.03](../tasks/FE-03.03.md) | [FE-03](../06-frontend-first.md#fe-03) | Implement own profile editing | [FE-03.02](../tasks/FE-03.02.md) | PO | pending |
 | [FE-03.04](../tasks/FE-03.04.md) | [FE-03](../06-frontend-first.md#fe-03) | Implement own password change interaction | [FE-03.02](../tasks/FE-03.02.md) | PO | pending |
 | [FE-03.05](../tasks/FE-03.05.md) | [FE-03](../06-frontend-first.md#fe-03) | Verify logout, account switching and A1 handoff | [FE-03.03](../tasks/FE-03.03.md), [FE-03.04](../tasks/FE-03.04.md) | PO | pending |
