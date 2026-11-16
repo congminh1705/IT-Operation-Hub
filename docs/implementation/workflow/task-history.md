@@ -857,3 +857,85 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-02.04 upon assignment; not started here.
 - Eligibility / remaining prerequisite: task prerequisites satisfied. Complete Parent criteria before merge; retain one Parent PR and do not auto-merge.
+
+<a id="task-fe-02-04-attempt-01"></a>
+
+### FE-02.04 — Attempt 01 — 2026-11-16T16:00:49+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-02.04/attempt-01
+- Task: [task specification](../tasks/FE-02.04.md)
+- Parent / phase: FE-02 / A
+- Executor: Codex (AI Agent support); Owner: PO
+- Started at: 2026-11-16T15:55:01+07:00 (observed implementation start; context reading preceded it)
+- Ended at: 2026-11-16T16:00:49+07:00
+- State before / after: pending / review (in-progress recorded during implementation)
+- Previous attempt / correction: none; first attempt.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: query lifecycle and timezone helpers only.
+- Delivered this attempt: shared per-mount client/provider, canonical identity/scope keys, cancellation and stale-response rejection, explicit invalidation/logout hooks, active-tab 30-second polling, UTC/Vietnam formatting and half-open date windows.
+- Incomplete scope / deviations: no feature UI or session integration; those remain FE-03 and later. No dependency added. Visual comparison N/A: no owned visual change.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/app/providers.tsx, layout.tsx | Providers/useQueryClient/useQueryState | One client per mount; subscribed state and activity lifecycle |
+| src/frontend/src/lib/api/query-client.ts, query-keys.ts | QueryClient, bindQueryActivity, queryKey | Scoped cache, polling, late-response rejection |
+| src/frontend/src/lib/api/query-client.test.ts, QUERY-LIFECYCLE.md | Fake-clock/security lifecycle cases and integration guidance | Verify and document future session wiring |
+| src/frontend/src/lib/dates.ts, dates.test.ts | formatBusinessTime/localDateWindow | Vietnam display and UTC filter boundaries |
+| docs/implementation/tasks/FE-02.04.md and workflow records/README.md | Task handoff, state, history and resume pointer | Delivery synchronization |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | One client; private cache partition/clear | Per-mount provider, canonical keys, user/scope switch clear; old-user reads blocked | pass | query-client.test.ts; providers.tsx |
+| 2 | Active-tab polling and no late private restoration | Fake-clock tests verify 30 seconds, hidden/unfocused pause, cleanup; late logout/scope/user/invalidation responses discarded | pass | query-client.test.ts |
+| 3 | UTC/Vietnam dates; distinct states | Day/year/leap boundaries, invalid/reversed ranges; idle/pending/empty/success/error distinguished | pass | dates.test.ts; query-client.test.ts |
+| 4 | Preserve approved visual scope | No visual changes; 35 browser regressions pass | pass | root layout only wraps existing content |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd test | Required lifecycle/time cases and prior tests pass | 78 tests / 7 files passed | pass |
+| src/frontend | pnpm.cmd typecheck | No TS errors | Initial Promise generic error in test fixed; rerun passed | pass |
+| src/frontend | pnpm.cmd lint | No lint errors | Passed | pass |
+| src/frontend | pnpm.cmd format:check | Formatting consistent | Passed | pass |
+| src/frontend | pnpm.cmd build | Production compile/routes | Passed after test generic fix | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1; PLAYWRIGHT_BASE_URL=http://127.0.0.1:3102; pnpm.cmd test:e2e --reporter=list | Existing shell/dialog remain functional | 35 passed; portable Chromium; two optional reference-capture cases skipped without DESIGN_REFERENCE_URL | pass |
+| docs/design/final | Reference screenshots | N/A for nonvisual task | Not run; no UI changes or new screenshots required | not-run |
+
+#### 6. Review
+
+- Type / reviewer: self-review / Codex; PO acceptance pending.
+- Findings / resolution: explicit typed Promise fixed typecheck/build; stale-response guards cover ignored AbortSignal. No visual redesign, real service authorization or session implementation claimed.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: no implementation blocker; PO task acceptance and Parent closure remain open.
+- Required resolution / owner: PO review; FE-03.02 wires session hooks later. Date helper deliberately rejects pre-1976 historical timezone windows.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-02.04.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: executable tests and this report; no permanent screenshot set for nonvisual work. Browser artifacts are local ignored test-results.
+- Commit / build / environment: phase/a-frontend; implementation [4c4df89](https://github.com/congminh1705/IT-Operation-Hub/commit/4c4df89), pushed with matching remote SHA; Next production build passed on Windows/pnpm. Final documentation delivery SHA reported in final reply.
+- PR: [#2](https://github.com/congminh1705/IT-Operation-Hub/pull/2) verified merged; normal merge of origin/main preserved phase history. Remaining FE-02 delta needs a follow-up Parent delivery after acceptance; no open/duplicate PR claimed.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated with this report link.
+- Execution-board task row: review; Owner PO; no Executor column.
+- Current context: updated with current result and this report link.
+- Parent state: FE-02 EPIC_IN_PROGRESS; .01/.02/.03 done, .04 review. Phase A exit not reached.
+
+#### 10. Next step
+
+- Next eligible task / resume step: review FE-02.04; verify Parent closure and publish remaining FE-02 delta before FE-03.01.
+- Eligibility / remaining prerequisite: FE-03.01 prerequisites done, but Parent acceptance/PR delivery must finish first. No next task started.
