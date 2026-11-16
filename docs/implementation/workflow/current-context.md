@@ -27,3 +27,7 @@ authority: derived
 ## Delivery rules and retained boundaries
 
 One named commit per task, one shared phase branch, one Parent delivery PR; no PR Markdown folder. Update task/history/current-context after each attempt; board stores status only. Keep all Phase A/B/C/D gates. Gemini free tier/USD0, future RAG/context/tool calling follow their own approved tasks; no live AI/backend scope here.
+
+## Active FE-03.01 checkpoint
+
+PR #3 merged, verified on GitHub; origin/main fast-forwarded. FE-02.04 approval closure committed/pushed as d37a0c9. FE-03.01 in-progress: initial /login form, typed DEMO gateway, email helper, validation/password visibility/Caps Lock handlers. Typecheck/lint passed. Incomplete: approved CSS composition, 10-circuit scene and cleanup, browser reference inspection/captures, required interaction tests, production build and PO review. Do not claim conformance or task completion. No next task started. See task-history attempt-01.

@@ -1014,3 +1014,81 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: publish and merge FE-02 remaining delta, then FE-03.01.
 - Eligibility / remaining prerequisite: FE-03.01 direct dependencies done; shared phase branch requires previous Parent PR merged. User has requested next task, but merge gate remains applicable.
+
+<a id="task-fe-03-01-attempt-01"></a>
+
+### FE-03.01 — Attempt 01 — 2026-11-16T16:18:00+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-03.01/attempt-01
+- Task: [task specification](../tasks/FE-03.01.md)
+- Parent / phase: FE-03 / A
+- Executor: Codex, AI Agent support; Owner PO
+- Started at: 2026-11-16T16:16:18+07:00 (implementation observation)
+- Ended at: 2026-11-16T16:18:00+07:00
+- State before / after: pending / in-progress
+- Previous attempt / correction: none; initial incomplete implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: complete login interaction according to retained design.
+- Delivered this attempt: initial route/form, typed gateway submission, visibility/Caps Lock/validation handlers, DEMO email helper and local asset.
+- Incomplete scope / deviations: scene, styling completeness and mandatory browser comparisons/tests unfinished. Reference source read; required browser inspection not yet performed, so conformance is not established.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/auth/ | LoginForm, static markup and initial styles | Initial form only |
+| src/frontend/src/app/login/page.tsx | LoginPage | Login entry |
+| src/frontend/public/login/login-background.svg | Approved local asset | Future scene |
+| docs/implementation/tasks/FE-03.01.md and workflow records | In-progress checkpoint | Honest resume pointer |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Approved form, visibility/Caps Lock | Initial handlers; browser checks missing | not-run | LoginForm |
+| 2 | Validation/failure/repeat prevention | Initial handlers; tests pending | not-run | LoginForm |
+| 3 | DEMO helper and gateway | Initial implementation; browser verification pending | not-run | LoginForm |
+| 4 | Full visual scope and scene | Incomplete | not-run | Task resume pointer |
+| 5 | Actual/reference captures | Not captured | not-run | No visual acceptance claimed |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd typecheck | Compiles | Passed | pass |
+| src/frontend | pnpm.cmd lint | No lint errors | Passed | pass |
+| src/frontend | Required task browser tests, motion/cleanup, screenshots and build | Full acceptance | Not run; implementation incomplete | not-run |
+
+#### 6. Review
+
+- Type / reviewer: self-check only; PO review not requested yet.
+- Findings / resolution: incomplete scene/style/test scope; resume before review.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: no external blocker; implementation remains unfinished.
+- Required resolution / owner: AI Agent completes remaining task; PO reviews afterward.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-03.01.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: no screenshots, tests still pending.
+- Commit / build / environment: phase/a-frontend; incomplete checkpoint commit/push reported in final response. No build claimed.
+- Parent delivery: PR #3 merged verified; phase synchronized. FE-02.04 approval d37a0c9 pushed before this implementation.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated with incomplete result and report link.
+- Execution-board task row: in-progress; Owner PO.
+- Current context: active checkpoint and remaining scope recorded.
+- Parent state: FE-03 active implementation; FE-02 closure bookkeeping still needs reconciliation with downstream evidence owners.
+
+#### 10. Next step
+
+- Next eligible task / resume step: resume FE-03.01, not another task.
+- Eligibility / remaining prerequisite: PR merge verified; finish scene, scoped styles, browser reference inspection and all required checks before review.
