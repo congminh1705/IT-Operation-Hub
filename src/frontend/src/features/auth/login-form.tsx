@@ -4,12 +4,14 @@ import { createDemoGateway } from "@/lib/demo/gateway";
 import { createDemoFixtures } from "@/lib/demo/fixtures";
 import { loginMarkup } from "./login-markup";
 import "./login.css";
+import { mountLoginScene } from "./login-scene";
 
 export function LoginForm() {
   const root = useRef<HTMLDivElement>(null);
   const [adapter] = useState(createDemoGateway);
   useEffect(() => {
     const host = root.current!;
+    const disposeScene = mountLoginScene(host);
     const email = host.querySelector<HTMLInputElement>("#login-email")!;
     const password = host.querySelector<HTMLInputElement>("#login-password")!;
     const form = host.querySelector<HTMLFormElement>("form")!;
@@ -142,6 +144,7 @@ export function LoginForm() {
     );
     return () => {
       alive = false;
+      disposeScene();
       events.abort();
       password.value = "";
       adapter.controls.reset();

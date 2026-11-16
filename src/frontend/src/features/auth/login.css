@@ -1011,7 +1011,7 @@
     padding-right: 20px;
   }
 }
-body.readable-ui {
+.login-root.readable-ui {
   --ink: var(--reading-ink);
   --text: var(--reading-ink);
   --muted: var(--reading-muted);
@@ -1021,7 +1021,7 @@ body.readable-ui {
   line-height: 1.6;
   color: var(--reading-ink);
 }
-body.readable-ui
+.login-root.readable-ui
   :is(
     .muted,
     .subtitle,
@@ -1040,19 +1040,19 @@ body.readable-ui
   ) {
   color: var(--reading-muted);
 }
-body.readable-ui .access-form-wrap {
+.login-root.readable-ui .access-form-wrap {
   max-width: 440px;
 }
-body.readable-ui .access-form-wrap h1 {
+.login-root.readable-ui .access-form-wrap h1 {
   font-size: 32px;
 }
-body.readable-ui .access-editorial h2 {
+.login-root.readable-ui .access-editorial h2 {
   font-size: clamp(44px, 4.5vw, 67px);
   line-height: 1.08;
   font-weight: 450;
   letter-spacing: -2px;
 }
-body.readable-ui
+.login-root.readable-ui
   :is(
     .access-form-subtitle,
     .access-intro,
@@ -1062,7 +1062,7 @@ body.readable-ui
   font-size: 15px;
   line-height: 1.7;
 }
-body.readable-ui
+.login-root.readable-ui
   :is(
     .access-input-wrap input,
     .access-input-wrap input::placeholder,
@@ -1070,18 +1070,18 @@ body.readable-ui
   ) {
   font-size: 15px;
 }
-body.readable-ui .access-input-wrap input {
+.login-root.readable-ui .access-input-wrap input {
   min-height: 53px;
 }
-body.readable-ui .access-visibility {
+.login-root.readable-ui .access-visibility {
   height: 49px;
   width: 49px;
   min-height: 49px;
 }
-body.readable-ui .access-submit {
+.login-root.readable-ui .access-submit {
   min-height: 53px;
 }
-body.readable-ui
+.login-root.readable-ui
   :is(
     .access-kicker,
     .access-step,
@@ -1100,48 +1100,48 @@ body.readable-ui
   line-height: 1.55;
   letter-spacing: 0.5px;
 }
-body.readable-ui .access-kicker {
+.login-root.readable-ui .access-kicker {
   flex-wrap: wrap;
 }
-body.readable-ui .access-brand {
+.login-root.readable-ui .access-brand {
   font-size: 19px;
 }
-body.readable-ui .access-top {
+.login-root.readable-ui .access-top {
   height: auto;
   min-height: 95px;
   padding-top: 16px;
   padding-bottom: 16px;
 }
-body.readable-ui .access-form-side {
+.login-root.readable-ui .access-form-side {
   padding-top: 50px;
   padding-bottom: 50px;
 }
-body.readable-ui .access-bottom {
+.login-root.readable-ui .access-bottom {
   flex-wrap: wrap;
   padding-top: 20px;
   padding-bottom: 20px;
 }
-body.readable-ui .access-index {
+.login-root.readable-ui .access-index {
   gap: 12px;
   flex-wrap: wrap;
 }
-body.readable-ui :is(.access-form-side, .access-editorial) {
+.login-root.readable-ui :is(.access-form-side, .access-editorial) {
   min-width: 0;
 }
-body.readable-ui .access-layout {
+.login-root.readable-ui .access-layout {
   min-height: 780px;
 }
 @media (max-width: 720px) {
-  body.readable-ui :is(.shell, .app) {
+  .login-root.readable-ui :is(.shell, .app) {
     display: block;
   }
-  body.readable-ui h1 {
+  .login-root.readable-ui h1 {
     font-size: 28px;
   }
-  body.readable-ui :is(h2, .panel-head h2) {
+  .login-root.readable-ui :is(h2, .panel-head h2) {
     font-size: 20px;
   }
-  body.readable-ui
+  .login-root.readable-ui
     :is(
       .subtitle,
       .page-heading p:not(.eyebrow),
@@ -1155,167 +1155,168 @@ body.readable-ui .access-layout {
     ) {
     font-size: 15px;
   }
-  body.readable-ui :is(.nav-item, .nav-link, .rail a.nav, .nav-section button) {
+  .login-root.readable-ui
+    :is(.nav-item, .nav-link, .rail a.nav, .nav-section button) {
     font-size: 14px;
     min-height: 44px;
   }
-  body.readable-ui .review-bar select {
+  .login-root.readable-ui .review-bar select {
     max-width: 100%;
     width: auto;
   }
-  body.readable-ui .review-bar strong {
+  .login-root.readable-ui .review-bar strong {
     overflow-wrap: anywhere;
   }
-  body.readable-ui .topbar {
+  .login-root.readable-ui .topbar {
     min-height: 64px;
   }
-  body.readable-ui .topbar form {
+  .login-root.readable-ui .topbar form {
     min-width: 0;
     flex: 1;
   }
-  body.readable-ui .topbar input {
+  .login-root.readable-ui .topbar input {
     font-size: 15px;
     width: 100%;
   }
-  body.readable-ui .topbar .actions {
+  .login-root.readable-ui .topbar .actions {
     flex-shrink: 0;
   }
-  body.readable-ui .head,
-  body.readable-ui .page-top {
+  .login-root.readable-ui .head,
+  .login-root.readable-ui .page-top {
     flex-wrap: wrap;
   }
-  body.readable-ui .stats,
-  body.readable-ui .stats.four,
-  body.readable-ui .four.stats {
+  .login-root.readable-ui .stats,
+  .login-root.readable-ui .stats.four,
+  .login-root.readable-ui .four.stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  body.readable-ui .metrics {
+  .login-root.readable-ui .metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  body.readable-ui .access-top {
+  .login-root.readable-ui .access-top {
     padding-left: 22px;
     padding-right: 22px;
     gap: 15px;
     flex-wrap: wrap;
   }
-  body.readable-ui .access-top-note {
+  .login-root.readable-ui .access-top-note {
     font-size: 13px;
   }
-  body.readable-ui .access-brand {
+  .login-root.readable-ui .access-brand {
     font-size: 17px;
   }
-  body.readable-ui .access-brand small {
+  .login-root.readable-ui .access-brand small {
     font-size: 12px;
   }
-  body.readable-ui .access-layout {
+  .login-root.readable-ui .access-layout {
     min-height: auto;
   }
-  body.readable-ui .access-form-side {
+  .login-root.readable-ui .access-form-side {
     padding-top: 32px;
     padding-bottom: 35px;
   }
-  body.readable-ui .access-intro {
+  .login-root.readable-ui .access-intro {
     font-size: 14px;
   }
-  body.readable-ui .access-step {
+  .login-root.readable-ui .access-step {
     font-size: 13px;
   }
-  body.readable-ui .access-form-wrap h1 {
+  .login-root.readable-ui .access-form-wrap h1 {
     font-size: 30px;
   }
-  body.readable-ui .access-field > label {
+  .login-root.readable-ui .access-field > label {
     font-size: 15px;
   }
-  body.readable-ui .access-help {
+  .login-root.readable-ui .access-help {
     font-size: 14px;
   }
-  body.readable-ui .access-bottom {
+  .login-root.readable-ui .access-bottom {
     font-size: 13px;
   }
-  body.readable-ui .access-bottom small,
-  body.readable-ui .access-bottom .access-review {
+  .login-root.readable-ui .access-bottom small,
+  .login-root.readable-ui .access-bottom .access-review {
     font-size: 13px;
   }
-  body.readable-ui .access-account-note {
+  .login-root.readable-ui .access-account-note {
     font-size: 13px;
   }
-  body.readable-ui .access-editorial h2 {
+  .login-root.readable-ui .access-editorial h2 {
     font-size: 41px;
   }
-  body.readable-ui .spectrum-chart-legend {
+  .login-root.readable-ui .spectrum-chart-legend {
     font-size: 13px;
     gap: 10px;
   }
-  body.readable-ui .spectrum-chart-date,
-  body.readable-ui .chart .spectrum-chart-date {
+  .login-root.readable-ui .spectrum-chart-date,
+  .login-root.readable-ui .chart .spectrum-chart-date {
     font-size: 12px;
   }
-  body.readable-ui .spectrum-data-bar > b,
-  body.readable-ui .chart .spectrum-data-bar > b {
+  .login-root.readable-ui .spectrum-data-bar > b,
+  .login-root.readable-ui .chart .spectrum-data-bar > b {
     font-size: 13px;
   }
-  body.readable-ui .spectrum-chart-unit,
-  body.readable-ui .chart .spectrum-chart-unit {
+  .login-root.readable-ui .spectrum-chart-unit,
+  .login-root.readable-ui .chart .spectrum-chart-unit {
     font-size: 13px;
   }
-  body.readable-ui .spectrum-chart-days {
+  .login-root.readable-ui .spectrum-chart-days {
     gap: 3px;
   }
-  body.readable-ui .spectrum-chart-day {
+  .login-root.readable-ui .spectrum-chart-day {
     gap: 4px;
   }
-  body.readable-ui .spectrum-chart-bottom {
+  .login-root.readable-ui .spectrum-chart-bottom {
     font-size: 13px;
   }
-  body.readable-ui .inspector {
+  .login-root.readable-ui .inspector {
     position: relative;
     width: auto;
     inset: auto;
   }
-  body.readable-ui .map-bottom {
+  .login-root.readable-ui .map-bottom {
     font-size: 13px;
   }
-  body.readable-ui .map-filters {
+  .login-root.readable-ui .map-filters {
     gap: 7px;
   }
-  body.readable-ui .map-filters select {
+  .login-root.readable-ui .map-filters select {
     max-width: 140px;
   }
-  body.readable-ui .demo-state {
+  .login-root.readable-ui .demo-state {
     width: 100%;
   }
 }
 @media (max-width: 430px) {
-  body.readable-ui .stats,
-  body.readable-ui .stats.four,
-  body.readable-ui .four.stats {
+  .login-root.readable-ui .stats,
+  .login-root.readable-ui .stats.four,
+  .login-root.readable-ui .four.stats {
     grid-template-columns: 1fr;
   }
-  body.readable-ui .metrics {
+  .login-root.readable-ui .metrics {
     grid-template-columns: 1fr;
   }
-  body.readable-ui .metric:last-child {
+  .login-root.readable-ui .metric:last-child {
     grid-column: auto;
   }
-  body.readable-ui .access-top-note {
+  .login-root.readable-ui .access-top-note {
     display: none;
   }
-  body.readable-ui .access-brand small {
+  .login-root.readable-ui .access-brand small {
     font-size: 12px;
   }
-  body.readable-ui .access-top {
+  .login-root.readable-ui .access-top {
     min-height: 89px;
   }
-  body.readable-ui .spectrum-chart-days {
+  .login-root.readable-ui .spectrum-chart-days {
     gap: 2px;
   }
-  body.readable-ui .spectrum-chart-day {
+  .login-root.readable-ui .spectrum-chart-day {
     padding: 0;
     gap: 3px;
   }
 }
 @media (max-width: 720px) {
-  body.readable-ui
+  .login-root.readable-ui
     :is(
       input,
       textarea,
@@ -1328,7 +1329,8 @@ body.readable-ui .access-layout {
     font-size: 16px;
   }
 }
-body.readable-ui :is(.btn.primary, .button.primary, .primary, .access-submit) {
+.login-root.readable-ui
+  :is(.btn.primary, .button.primary, .primary, .access-submit) {
   background: #d0e9b9;
   border: 1px solid #e0f9c7;
   color: #1b3422;
@@ -1337,7 +1339,7 @@ body.readable-ui :is(.btn.primary, .button.primary, .primary, .access-submit) {
     inset 0 -2px 0 #8faa7b,
     0 1px 2px #101c13b3;
 }
-body.readable-ui
+.login-root.readable-ui
   :is(.btn.primary, .button.primary, .primary, .access-submit):hover {
   background: #e0f4cc;
   border-color: #f1ffe3;
@@ -1347,7 +1349,7 @@ body.readable-ui
     inset 0 -2px 0 #abc393,
     0 0 5px #d7f3bf18;
 }
-body.readable-ui
+.login-root.readable-ui
   :is(
     .field input,
     .field textarea,
@@ -1368,7 +1370,7 @@ body.readable-ui
     inset 0 -1px 0 #d8ffe109;
   border-radius: 3px;
 }
-body.readable-ui
+.login-root.readable-ui
   :is(
     .field input,
     .field textarea,
@@ -1387,32 +1389,33 @@ body.readable-ui
     inset 0 1px 2px #0a150f66,
     0 0 5px #369eff24;
 }
-body.readable-ui .access-symbol {
+.login-root.readable-ui .access-symbol {
   border-color: #e0f9c7;
   box-shadow:
     inset 0 1px 0 #f3ffe9,
     inset 0 -1px 0 #93ad7e;
 }
-body.readable-ui .access-gate:not(.two):not(.three) {
+.login-root.readable-ui .access-gate:not(.two):not(.three) {
   box-shadow:
     inset 0 1px 0 #c8ebff,
     0 0 7px #73baff28;
 }
-body[data-surface] :is(.access-page, .access-form-side, .access-editorial) {
+.login-root[data-surface]
+  :is(.access-page, .access-form-side, .access-editorial) {
   background-color: transparent;
 }
-body[data-surface] .access-page {
+.login-root[data-surface] .access-page {
   background:
     radial-gradient(ellipse at 23% 55%, #55536a12, transparent 45%),
     var(--surface-canvas);
 }
-body[data-surface] .access-form-side {
+.login-root[data-surface] .access-form-side {
   background: none;
 }
-body[data-surface] .access-editorial {
+.login-root[data-surface] .access-editorial {
   border: 0;
 }
-body.readable-ui[data-surface="graphite"] {
+.login-root.readable-ui[data-surface="graphite"] {
   --canvas: #1a1d21;
   --surface: #292e35;
   --surface-canvas: #1a1d21;
@@ -1437,7 +1440,7 @@ body.readable-ui[data-surface="graphite"] {
   background: #1a1d21;
   color: #f2f5fa;
 }
-body.readable-ui[data-surface="graphite"]
+.login-root.readable-ui[data-surface="graphite"]
   :is(
     .field input,
     .field textarea,
@@ -1457,28 +1460,29 @@ body.readable-ui[data-surface="graphite"]
   border-color: #8190a6;
   color: #f2f5fa;
 }
-body.readable-ui[data-surface="graphite"] .access-page {
+.login-root.readable-ui[data-surface="graphite"] .access-page {
   background:
     radial-gradient(ellipse at 24% 62%, #809bd50a, transparent 48%), #1a1d21;
 }
-body.readable-ui[data-surface="graphite"] .access-form-side {
+.login-root.readable-ui[data-surface="graphite"] .access-form-side {
   background: none;
 }
-body.readable-ui[data-surface="graphite"]
+.login-root.readable-ui[data-surface="graphite"]
   :is(dialog, #access-help-dialog, #spectrum-chart-dialog) {
   background: #29323f;
   color: #f2f5fa;
   border-color: #879bb5;
 }
-body.readable-ui :is(.btn.primary, .button.primary, .access-submit, .primary) {
+.login-root.readable-ui
+  :is(.btn.primary, .button.primary, .access-submit, .primary) {
   text-shadow: 0 1px 0 #ffffff4a;
 }
-body.readable-ui .access-form-wrap h1 {
+.login-root.readable-ui .access-form-wrap h1 {
   color: #f6faff;
   text-shadow: 0 0 4px #bed7ff29;
 }
 /* Architectural workplace background, restrained color, high contrast glass form. */
-body.readable-ui[data-surface="graphite"] .access-page {
+.login-root.readable-ui[data-surface="graphite"] .access-page {
   --access-muted: #c8d3e5;
   background: #111d2a url("/login/login-background.svg") center/cover;
   min-height: 100dvh;
@@ -1520,7 +1524,9 @@ body.readable-ui[data-surface="graphite"] .access-page {
 .access-page .access-editorial {
   display: none;
 }
-body.readable-ui[data-surface="graphite"] .access-page .access-form-side {
+.login-root.readable-ui[data-surface="graphite"]
+  .access-page
+  .access-form-side {
   width: 460px;
   max-width: 100%;
   padding: 36px 44px 28px;
@@ -1544,7 +1550,7 @@ body.readable-ui[data-surface="graphite"] .access-page .access-form-side {
   border-color: #a1b7de;
   color: #f3f6ff;
 }
-body.readable-ui .access-page .access-form-wrap h1 {
+.login-root.readable-ui .access-page .access-form-wrap h1 {
   font-size: 30px;
   letter-spacing: -0.6px;
   color: #fff;
@@ -1565,7 +1571,7 @@ body.readable-ui .access-page .access-form-wrap h1 {
   font-weight: 500;
   margin-bottom: 7px;
 }
-body.readable-ui[data-surface="graphite"]
+.login-root.readable-ui[data-surface="graphite"]
   .access-page
   .access-input-wrap
   input {
@@ -1579,7 +1585,7 @@ body.readable-ui[data-surface="graphite"]
   font-size: 14px;
   box-shadow: inset 0 1px 3px #121a3217;
 }
-body.readable-ui[data-surface="graphite"]
+.login-root.readable-ui[data-surface="graphite"]
   .access-page
   .access-input-wrap
   input[data-password] {
@@ -1589,7 +1595,7 @@ body.readable-ui[data-surface="graphite"]
   color: #d4dcf1;
   font-size: 13px;
 }
-body.readable-ui .access-page button.access-visibility {
+.login-root.readable-ui .access-page button.access-visibility {
   position: absolute;
   inset: 3px 3px auto auto;
   display: grid;
@@ -1611,22 +1617,22 @@ body.readable-ui .access-page button.access-visibility {
     color 0.15s,
     background-color 0.15s;
 }
-body.readable-ui .access-page button.access-visibility:hover {
+.login-root.readable-ui .access-page button.access-visibility:hover {
   background: transparent;
   color: #fff;
   box-shadow: none;
   transform: none;
   border: 0;
 }
-body.readable-ui .access-page button.access-visibility:active {
+.login-root.readable-ui .access-page button.access-visibility:active {
   background: transparent;
   transform: none;
 }
-body.readable-ui .access-page button.access-visibility:focus-visible {
+.login-root.readable-ui .access-page button.access-visibility:focus-visible {
   outline: 2px solid #ffda6b;
   outline-offset: -2px;
 }
-body.readable-ui .access-page button.access-visibility .access-icon {
+.login-root.readable-ui .access-page button.access-visibility .access-icon {
   display: block;
   width: 18px;
   height: 18px;
@@ -1634,7 +1640,7 @@ body.readable-ui .access-page button.access-visibility .access-icon {
   stroke: currentColor;
   pointer-events: none;
 }
-body.readable-ui .access-page .access-submit {
+.login-root.readable-ui .access-page .access-submit {
   background: #ffd02b;
   color: #282133;
   border: 1px solid #ffde65;
@@ -1650,7 +1656,7 @@ body.readable-ui .access-page .access-submit {
 .access-page .access-submit .access-icon {
   display: none;
 }
-body.readable-ui .access-page .access-submit:hover {
+.login-root.readable-ui .access-page .access-submit:hover {
   background: #ffda6b;
   color: #151c2c;
   box-shadow: 0 6px 20px #070e2d4d;
@@ -1709,7 +1715,9 @@ body.readable-ui .access-page .access-submit:hover {
     min-height: 600px;
     padding: 18px 16px 32px;
   }
-  body.readable-ui[data-surface="graphite"] .access-page .access-form-side {
+  .login-root.readable-ui[data-surface="graphite"]
+    .access-page
+    .access-form-side {
     padding: 30px 24px 25px;
   }
   .access-page .access-form-subtitle br {
@@ -1734,7 +1742,8 @@ body.readable-ui .access-page .access-submit:hover {
   }
 }
 /* Interactive illustration stays behind the form and never receives pointer input. */
-body.readable-ui[data-surface="graphite"] .access-page:has(.login-scene) {
+.login-root.readable-ui[data-surface="graphite"]
+  .access-page:has(.login-scene) {
   background: #12213a;
   isolation: isolate;
 }

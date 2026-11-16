@@ -1092,3 +1092,80 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: resume FE-03.01, not another task.
 - Eligibility / remaining prerequisite: PR merge verified; finish scene, scoped styles, browser reference inspection and all required checks before review.
+
+<a id="task-fe-03-01-attempt-02"></a>
+
+### FE-03.01 — Attempt 02 — 2026-11-16T17:47:59+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-03.01/attempt-02
+- Task: [task specification](../tasks/FE-03.01.md)
+- Parent / phase: FE-03 / A
+- Executor: Codex; AI Agent support; Owner PO
+- Started at: 2026-11-16T17:47:59+07:00 (approval recording; code correction preceded this record)
+- Ended at: 2026-11-16T17:47:59+07:00 (approval checkpoint)
+- State before / after: in-progress / in-progress
+- Previous attempt / correction: [attempt-01](#task-fe-03-01-attempt-01); corrected appearance, recorded PO approval.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: correct login to final HTML and record PO visual approval.
+- Delivered this attempt: scoped selectors now match the login wrapper; ten circuit tracks and region/pointer/pause/motion lifecycle added. PO approved the displayed result.
+- Incomplete scope / deviations: remaining mandatory browser/mobile/zoom and interaction verification; no task completion claimed.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/auth/login.css | Correct wrapper selectors | Restore approved form and background |
+| src/frontend/src/features/auth/login-scene.ts, login-form.tsx | mountLoginScene and disposal | Ten tracks and interactions |
+| docs/implementation/tasks/FE-03.01.md and workflow records | Approval and remaining checks | Honest handoff |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Complete keyboard/visibility/Caps Lock behavior | Implemented; required browser suite incomplete | not-run | LoginForm |
+| 2 | Auth errors/delay/repeated submission | Required cases not yet verified | not-run | Task outstanding checks |
+| 3 | DEMO helper/gateway | Implemented; browser cases pending | not-run | LoginForm |
+| 4 | Approved visual appearance | PO approved current result | pass | PO message this turn |
+| 5 | Required viewport comparison | Desktop measured; mobile/zoom not yet verified | not-run | Local test-results/login-actual.png and login-reference.png |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd typecheck | Type-safe scene and form | Passed after correction | pass |
+| src/frontend | pnpm.cmd lint | No lint errors | Passed after correction | pass |
+| src/frontend | node test-results/login-check.cjs | Compare actual/reference at 1440x1000 | Reference 460x442.5 at 490,255.75; actual 460x441.39 at 490,256.30; 10 routes | pass |
+| src/frontend | Required mobile/zoom and interaction cases | Complete acceptance | Not run yet | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO visual approval on 2026-11-16; agent desktop comparison.
+- Findings / resolution: selectors targeted body instead of wrapper; corrected. Appearance approved, full verification still outstanding.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: no external blocker; required checks remain unfinished.
+- Required resolution / owner: AI Agent completes task verification; keep PO approval recorded.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-03.01.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: local ignored test-results captures; durable full viewport evidence still pending.
+- Commit / build / environment: phase/a-frontend; correction and approval commit reported after push. No new production build claimed.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated to attempt-02.
+- Execution-board task row: remains in-progress; Owner PO.
+- Current context: PO approval and unfinished checks appended.
+- Parent state: FE-03 implementation ongoing; no completed Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: complete FE-03.01 verification and resolve observed failures.
+- Eligibility / remaining prerequisite: current visual approval retained; required checks gate done. No next task started.

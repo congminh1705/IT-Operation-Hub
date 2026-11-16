@@ -31,3 +31,7 @@ One named commit per task, one shared phase branch, one Parent delivery PR; no P
 ## Active FE-03.01 checkpoint
 
 PR #3 merged, verified on GitHub; origin/main fast-forwarded. FE-02.04 approval closure committed/pushed as d37a0c9. FE-03.01 in-progress: initial /login form, typed DEMO gateway, email helper, validation/password visibility/Caps Lock handlers. Typecheck/lint passed. Incomplete: approved CSS composition, 10-circuit scene and cleanup, browser reference inspection/captures, required interaction tests, production build and PO review. Do not claim conformance or task completion. No next task started. See task-history attempt-01.
+
+## PO visual approval — 2026-11-16
+
+PO approved the corrected login appearance. FE-03.01 remains in-progress pending required mobile/zoom and interaction checks. CSS scoping fixed; ten routes and scene controls implemented; desktop comparison and typecheck/lint passed. [Latest report](task-history.md#task-fe-03-01-attempt-02). Resume outstanding verification, not another task.
