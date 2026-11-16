@@ -939,3 +939,78 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: review FE-02.04; verify Parent closure and publish remaining FE-02 delta before FE-03.01.
 - Eligibility / remaining prerequisite: FE-03.01 prerequisites done, but Parent acceptance/PR delivery must finish first. No next task started.
+
+<a id="task-fe-02-04-attempt-02"></a>
+
+### FE-02.04 — Attempt 02 — 2026-11-16T16:04:56+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-02.04/attempt-02
+- Task: [task specification](../tasks/FE-02.04.md)
+- Parent / phase: FE-02 / A
+- Executor: Codex, AI Agent support; Owner PO
+- Started at: 2026-11-16T16:03:44+07:00
+- Ended at: 2026-11-16T16:04:56+07:00
+- State before / after: review / done
+- Previous attempt / correction: [attempt-01](#task-fe-02-04-attempt-01); PO approval closure.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: close approved FE-02.04, then proceed to next task subject to Parent delivery gate.
+- Delivered this attempt: PO approval recorded; execution records synchronized. No application code changed.
+- Incomplete scope / deviations: FE-03.01 not started because remaining FE-02 delta requires PR merge on shared branch. Earlier PR #2 already merged before this delta.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-02.04.md | Approval and latest report | Task closure |
+| docs/implementation/workflow/execution-board.md, current-context.md, task-history.md | Done, resume and history | Consistent delivery records |
+| docs/implementation/README.md | Current task outcome | Remove stale review summary |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Scoped cache lifecycle | Prior tests passed; PO accepted | pass | [attempt-01](#task-fe-02-04-attempt-01) |
+| 2 | Active polling and stale-result protection | Prior fake-timer/race tests passed; PO accepted | pass | [attempt-01](#task-fe-02-04-attempt-01) |
+| 3 | Vietnam time and query states | Prior boundary/state tests passed; PO accepted | pass | [attempt-01](#task-fe-02-04-attempt-01) |
+| 4 | Preserve visual scope | No visual change; PO accepted | pass | Explicit PO instruction this turn |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Inspect task, board, current context and PO instruction | Approval correctly closes task | Recorded done | pass |
+| repo | git diff origin/main...HEAD --stat | Remaining Parent delta only | FE-02.04 implementation and delivery docs | pass |
+| src/frontend | Application tests | No application changes | Not rerun; prior 78 unit/35 browser, typecheck/lint/format/build retained | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance, explicit message on 2026-11-16.
+- Findings / resolution: no new defect reported; task approved and closed.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: next Parent must wait for FE-02 remaining-delta PR merge.
+- Required resolution / owner: PO merges the remaining PR; agent then verifies merge before FE-03.01. No automatic merge authorized.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-02.04.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [implementation report](#task-fe-02-04-attempt-01); no new screenshots for docs-only closure.
+- Commit / build / environment: implementation 4c4df89 and delivery e409d35 pushed on phase/a-frontend; closure commit/push reported in final reply. No new build.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: latest report updated to attempt-02.
+- Execution-board task row: done; Owner PO.
+- Current context: approval and pending Parent merge gate recorded.
+- Parent state: EPIC_IN_PROGRESS while final closure/delivery is verified; all four children done. FE-03.05 remains a downstream session integration evidence owner, not implemented by this closure.
+
+#### 10. Next step
+
+- Next eligible task / resume step: publish and merge FE-02 remaining delta, then FE-03.01.
+- Eligibility / remaining prerequisite: FE-03.01 direct dependencies done; shared phase branch requires previous Parent PR merged. User has requested next task, but merge gate remains applicable.
