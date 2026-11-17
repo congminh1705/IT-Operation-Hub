@@ -32,6 +32,7 @@ export interface DemoAdapter {
   mode: "demo";
   gateway: AccountGateway;
   controls: DemoControls;
+  subscribeInvalidation(listener: () => void): () => void;
 }
 
 /** Isolated, explicit simulation. No fetch, cookies, storage or credential state. */
@@ -43,6 +44,7 @@ export function createDemoGateway(): DemoAdapter {
   let expiresAt: number | null = null;
   let session: SessionState = "anonymous";
   const selected = new Map<AccountOperation, string>();
+  const invalidationListeners = new Set<() => void>();
 
   const failure = (
     kind: "unauthenticated" | "validation" | "conflict",
@@ -64,6 +66,7 @@ export function createDemoGateway(): DemoAdapter {
     userId = null;
     expiresAt = null;
     session = reason;
+    invalidationListeners.forEach((listener) => listener());
   };
   const current = () => {
     if (session === "active" && expiresAt !== null && now >= expiresAt)
@@ -269,5 +272,15 @@ export function createDemoGateway(): DemoAdapter {
       };
     },
   };
-  return { mode: "demo", gateway, controls };
+  return {
+    mode: "demo",
+    gateway,
+    controls,
+    subscribeInvalidation(listener) {
+      invalidationListeners.add(listener);
+      return () => {
+        invalidationListeners.delete(listener);
+      };
+    },
+  };
 }

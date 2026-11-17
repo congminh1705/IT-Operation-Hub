@@ -1,6 +1,7 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import { createDemoGateway } from "@/lib/demo/gateway";
+import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useSession, safeReturnPath } from "./session";
 import { createDemoFixtures } from "@/lib/demo/fixtures";
 import { loginMarkup } from "./login-markup";
 import "./login.css";
@@ -8,7 +9,12 @@ import { mountLoginScene } from "./login-scene";
 
 export function LoginForm() {
   const root = useRef<HTMLDivElement>(null);
-  const [adapter] = useState(createDemoGateway);
+  const session = useSession();
+  const login = useRef(session.login);
+  useEffect(() => {
+    login.current = session.login;
+  }, [session.login]);
+  const router = useRouter();
   useEffect(() => {
     const host = root.current!;
     const disposeScene = mountLoginScene(host);
@@ -59,14 +65,20 @@ export function LoginForm() {
         button.setAttribute("aria-busy", "true");
         button.querySelector("span")!.textContent = "Đang kiểm tra…";
         try {
-          const result = await adapter.gateway.login({
+          const result = await login.current({
             email: email.value,
             password: password.value,
           });
           if (!alive) return;
+          if (result.kind === "success")
+            router.replace(
+              safeReturnPath(
+                new URLSearchParams(window.location.search).get("returnTo"),
+              ),
+            );
           summary.textContent =
             result.kind === "success"
-              ? "Đăng nhập DEMO thành công. Điều hướng phiên sẽ được tích hợp ở bước tiếp theo."
+              ? "Đăng nhập DEMO thành công. Đang mở không gian làm việc…"
               : result.kind === "unauthenticated"
                 ? "Không thể đăng nhập. Kiểm tra thông tin hoặc liên hệ Admin."
                 : result.kind === "pending" || result.kind === "unknown"
@@ -92,6 +104,13 @@ export function LoginForm() {
       options,
     );
     toggle.addEventListener(
+      "pointerdown",
+      (event) => {
+        if (event.button === 0) event.preventDefault();
+      },
+      options,
+    );
+    toggle.addEventListener(
       "click",
       () => {
         const start = password.selectionStart,
@@ -100,6 +119,14 @@ export function LoginForm() {
         const visible = password.type === "password";
         password.type = visible ? "text" : "password";
         toggle.setAttribute("aria-pressed", String(visible));
+        toggle
+          .querySelector("path")!
+          .setAttribute(
+            "d",
+            visible
+              ? "M3 3l18 18M9 5a12 12 0 0 1 3 0c6 0 10 7 10 7a20 20 0 0 1-4 5M6 6a20 20 0 0 0-4 6s4 7 10 7c1 0 2-.2 3-.5"
+              : "M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zm10-3a3 3 0 1 0 0 6 3 3 0 0 0 0-6",
+          );
         toggle.setAttribute(
           "aria-label",
           visible ? "Ẩn mật khẩu" : "Hiện mật khẩu",
@@ -147,9 +174,8 @@ export function LoginForm() {
       disposeScene();
       events.abort();
       password.value = "";
-      adapter.controls.reset();
     };
-  }, [adapter]);
+  }, [router]);
   return (
     <div className="login-root readable-ui" data-surface="graphite">
       <div ref={root} dangerouslySetInnerHTML={{ __html: loginMarkup }} />

@@ -10,13 +10,16 @@ import {
 } from "react";
 import { bindQueryActivity, QueryClient } from "@/lib/api/query-client";
 import type { QueryKey } from "@/lib/api/query-keys";
+import { SessionProvider } from "@/features/auth/session";
 
 const QueryContext = createContext<QueryClient | null>(null);
 export function Providers({ children }: { children: ReactNode }) {
   const [client] = useState(() => new QueryClient());
   useEffect(() => bindQueryActivity(client, document, window), [client]);
   return (
-    <QueryContext.Provider value={client}>{children}</QueryContext.Provider>
+    <QueryContext.Provider value={client}>
+      <SessionProvider client={client}>{children}</SessionProvider>
+    </QueryContext.Provider>
   );
 }
 export function useQueryClient() {

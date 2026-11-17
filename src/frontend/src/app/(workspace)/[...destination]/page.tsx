@@ -1,8 +1,5 @@
-import {
-  WorkspacePage,
-  type WorkspaceSearch,
-} from "@/components/layout/workspace-page";
-import { createDemoFixtures } from "@/lib/demo/fixtures";
+import { type WorkspaceSearch } from "@/components/layout/workspace-page";
+import { WorkspaceEntry } from "@/features/auth/workspace-entry";
 
 export default async function WorkspaceRoute({
   params,
@@ -12,11 +9,9 @@ export default async function WorkspaceRoute({
   searchParams: Promise<WorkspaceSearch>;
 }) {
   const { destination } = await params;
-  // Explicit fixture, replaced by the session projection in the owned auth-routing task.
-  const persona = createDemoFixtures().personas.REQUESTER;
+  // The client boundary renders no private shell until a mock session exists.
   return (
-    <WorkspacePage
-      persona={persona}
+    <WorkspaceEntry
       pathname={`/${destination.join("/")}`}
       search={await searchParams}
     />
