@@ -1,4 +1,5 @@
 "use client";
+import { ProfileForm } from "./profile-form";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Feedback } from "@/components/feedback/feedback";
@@ -44,7 +45,16 @@ export function WorkspaceEntry({
     );
   return persona && pathname !== "/logout" ? (
     <WorkspacePage
-      key={`${persona.user.id}:${persona.user.version}`}
+      key={
+        pathname === "/profile"
+          ? persona.user.id
+          : `${persona.user.id}:${persona.user.version}`
+      }
+      content={
+        pathname === "/profile" ? (
+          <ProfileForm user={persona.user} />
+        ) : undefined
+      }
       persona={persona}
       pathname={pathname}
       search={search}

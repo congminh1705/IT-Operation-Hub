@@ -1,6 +1,11 @@
 import { createDemoGateway, type DemoAdapter } from "../../lib/demo/gateway";
 import { createDemoFixtures, type DemoPersona } from "../../lib/demo/fixtures";
-import type { LoginInput, ApiOutcome, UserView } from "../../lib/api/types";
+import type {
+  LoginInput,
+  ApiOutcome,
+  ProfileUpdate,
+  UserView,
+} from "../../lib/api/types";
 import type { QueryClient } from "../../lib/api/query-client";
 
 /** Memory-only session. Epochs fence late auth responses as well as query results. */
@@ -75,6 +80,28 @@ export class SessionStore {
     if (epoch !== this.epoch || read !== this.read) return;
     if (result.kind === "success") this.apply(result.data);
     else this.invalidate();
+  };
+  updateOwnProfile = async (
+    input: ProfileUpdate,
+  ): Promise<ApiOutcome<UserView>> => {
+    const epoch = this.epoch;
+    const result = await this.adapter.gateway.updateOwnProfile(input);
+    if (epoch !== this.epoch)
+      return {
+        kind: "unknown",
+        effect: "unconfirmed",
+        message: "Phiên đã thay đổi.",
+      };
+    if (result.kind === "unauthenticated") this.invalidate();
+    if (
+      result.kind === "success" &&
+      result.data.id === this.persona?.user.id &&
+      result.data.version >= this.persona.user.version
+    ) {
+      this.read++;
+      this.apply(result.data);
+    }
+    return result;
   };
   logout = async () => {
     this.invalidate();

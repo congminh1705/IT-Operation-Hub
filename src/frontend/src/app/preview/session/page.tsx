@@ -98,6 +98,21 @@ export default function SessionPreview() {
       )}
       <Link href="/dashboard">Open workspace</Link>
       <Link href="/login">Open login</Link>
+      <Link href="/profile?userId=other&role=ADMIN">
+        Open profile with forged query
+      </Link>
+      <button
+        onClick={() =>
+          store.adapter.controls.selectScenario("profile-conflict")
+        }
+      >
+        Profile conflict
+      </button>
+      <button
+        onClick={() => store.adapter.controls.selectScenario("profile-unknown")}
+      >
+        Profile network error
+      </button>
       <Link href="/tickets/missing-demo">Missing fixture</Link>
       <Link href="/tickets/out-of-scope-demo">Out-of-scope fixture</Link>
       <button
