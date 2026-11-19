@@ -1,4 +1,5 @@
 "use client";
+import { UsersScreen } from "@/features/administration/users-screen";
 import { PasswordForm } from "./password-form";
 import { ProfileForm } from "./profile-form";
 import { useEffect } from "react";
@@ -56,6 +57,8 @@ export function WorkspaceEntry({
           <ProfileForm user={persona.user} />
         ) : pathname === "/profile/security" ? (
           <PasswordForm />
+        ) : pathname === "/admin/users" || pathname === "/admin/users/new" ? (
+          <UsersScreen key={pathname} create={pathname.endsWith("/new")} />
         ) : undefined
       }
       persona={persona}
