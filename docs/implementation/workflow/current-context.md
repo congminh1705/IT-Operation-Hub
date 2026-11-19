@@ -3,39 +3,27 @@ id: itoh-current-context
 title: "Current task context"
 type: planning
 owner: PO
-updated: 2026-11-16
+updated: 2026-11-19
 authority: derived
 ---
 
 # Current task context
 
-- As of: 2026-11-16T16:00:49+07:00; Asia/Bangkok. Owner: PO; AI Agent supports implementation/checks.
-- State: seven tasks done; FE-02.04 done; 223 pending. FE-02 EPIC_IN_PROGRESS; Phase A DEMO only.
-- Current task: [FE-02.04](../tasks/FE-02.04.md); [report](task-history.md#task-fe-02-04-attempt-02).
-- Authority: [workflow](task-workflow.md), [board](execution-board.md), [v1.3 / D-51](../../design/approved-format.md). Original login unchanged.
+- As of: 2026-11-19, Asia/Bangkok. Owner PO.
+- State: 9 done, 221 pending. Current: [FE-03.02](../tasks/FE-03.02.md), **done**; Parent FE-03 EPIC_IN_PROGRESS; Phase A DEMO only.
+- Authority: [workflow](task-workflow.md), [board](execution-board.md), [v1.3 / D-51](../../design/approved-format.md).
 
 ## Latest task report
 
-- Delivered: one memory-only query client/provider, scoped keys, cancellation/late-result protection, 30-second visible/focused polling, Vietnam date display and UTC filter windows. No UI change, persistence or new package.
-- Important files: src/frontend/src/app/providers.tsx; src/frontend/src/lib/api/query-client.ts/query-keys.ts/QUERY-LIFECYCLE.md; src/frontend/src/lib/dates.ts and tests.
-- Checks: 78 unit tests, typecheck/lint/format/build passed; 35 production browser tests passed; two optional reference-capture cases skipped. Visual comparison N/A for nonvisual task.
-- Review: PO approved FE-02.04 on 2026-11-16; done. No new application tests for this documentation-only closure. Session hooks are intentionally left for FE-03.02; fixtures are not server authorization.
-- Git: phase/a-frontend; implementation 4c4df89 pushed, matching remote verified. Documentation delivery is a separate task commit.
-- PR: #2 verified merged, origin/main synchronized by normal merge. It cannot receive new commits. Complete Parent acceptance and deliver its remaining delta before another Parent; do not duplicate an open PR or auto-merge.
-- Next: remaining FE-02 PR delivery/merge, then implement FE-03.01 as requested. FE-03.01 remains pending until merge.
+- [FE-03.02/attempt-02](task-history.md#task-fe-03-02-attempt-02) records PO approval and closure. Implementation and checks are recorded in attempt-01.
+- Files: features/auth/session-store.ts, session.tsx, workspace-entry.tsx, login-form.tsx; providers/catch-all; query-client/demo gateway; preview/session, unit/browser tests.
+- Checks: 91 unit pass; 58 browser pass gồm 23 FE-03.02, 2 capture tùy chọn FE-02 skipped; typecheck/lint/format/build pass. [Ảnh/log/khác biệt và PO steps](../evidence/FE-03.02/comparison.md).
+- Review: PO confirmed review and directed done on 2026-11-19. Prior agent checks retained.
+- App: http://127.0.0.1:3102/login; accounts requester/technician/it_manager/admin @demo.invalid, password DEMO không rỗng (demo). Harness /preview/session. Reload mất phiên; không backend/production auth.
+- Git: phase/a-frontend; implementation [00483a5](https://github.com/congminh1705/IT-Operation-Hub/commit/00483a547d40062e96dca20be26685aa49041f6d) pushed, remote SHA khớp. Báo cáo giao bằng docs(delivery) commit kế tiếp; final HEAD ở final reply.
+- Parent PR: [#3 FE-02](https://github.com/congminh1705/IT-Operation-Hub/pull/3) verified merged; FE-03 chưa tạo PR vì .03/.04/.05 pending. FE-18.03 exit chưa đạt.
+- Next: FE-03.03 when separately assigned. FE-03.02 prerequisite is done.
 
-## Delivery rules and retained boundaries
+## Retained boundaries
 
-One named commit per task, one shared phase branch, one Parent delivery PR; no PR Markdown folder. Update task/history/current-context after each attempt; board stores status only. Keep all Phase A/B/C/D gates. Gemini free tier/USD0, future RAG/context/tool calling follow their own approved tasks; no live AI/backend scope here.
-
-## Active FE-03.01 checkpoint
-
-PR #3 merged, verified on GitHub; origin/main fast-forwarded. FE-02.04 approval closure committed/pushed as d37a0c9. FE-03.01 in-progress: initial /login form, typed DEMO gateway, email helper, validation/password visibility/Caps Lock handlers. Typecheck/lint passed. Incomplete: approved CSS composition, 10-circuit scene and cleanup, browser reference inspection/captures, required interaction tests, production build and PO review. Do not claim conformance or task completion. No next task started. See task-history attempt-01.
-
-## PO visual approval — 2026-11-16
-
-PO approved the corrected login appearance. FE-03.01 remains in-progress pending required mobile/zoom and interaction checks. CSS scoping fixed; ten routes and scene controls implemented; desktop comparison and typecheck/lint passed. [Latest report](task-history.md#task-fe-03-01-attempt-02). Resume outstanding verification, not another task.
-
-## Latest closure — FE-03.01
-
-PO explicitly requested done after the remaining verification was disclosed. FE-03.01 is done by owner decision; mobile/zoom and full interaction verification remain not-run, not passed. [Closure report](task-history.md#task-fe-03-01-attempt-03). FE-03.02 is pending and not started; its earlier in-progress row was an accidental broad text replacement and is corrected. Parent FE-03 is EPIC_IN_PROGRESS. Implementation 76abd6f is pushed.
+Giữ PO approval login/eye và closure FE-03.01; kiểm tra cũ từng not-run không tự thành pass. Lịch sử ở task-history. One Parent PR khi đủ closure; không merge, push main, force-push hoặc deploy. Giữ phase branch và dữ liệu tổng hợp; Gemini/USD0 và phase sau theo gate riêng.

@@ -1244,3 +1244,167 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-03.02 when assigned; preserve FE-03.01 verification gaps.
 - Eligibility / remaining prerequisite: predecessor task states done; this report does not claim all application checks passed.
+
+<a id="task-fe-03-02-attempt-01"></a>
+
+### FE-03.02 — Attempt 01 — 2026-11-17T09:04:19+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-03.02/attempt-01
+- Task: [task specification](../tasks/FE-03.02.md)
+- Parent / phase: FE-03 / A
+- Executor: Codex, AI Agent hỗ trợ; Owner PO
+- Started at: 2026-11-17T08:42:45+07:00 (mốc đồng hồ đầu tiên; đọc context/git trước mốc này)
+- Ended at: 2026-11-17T09:04:19+07:00; Asia/Bangkok (mốc tổng hợp kết quả, rà soát tài liệu sau mốc này)
+- State before / after: pending trong tài liệu, code đã làm dở / review; qua in-progress trong phiên
+- Previous attempt / correction: none cho FE-03.02; tiếp tục 5 file chưa commit, sửa resume pointer lỗi thời. Giữ [FE-03.01 closure](#task-fe-03-01-attempt-03).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: FE-03.02 — Wire mock session routing and scoped entry; giữ login/nút mắt PO đã duyệt.
+- Delivered this attempt: đăng nhập 4 persona và shell đúng quyền; guard không flash private content; safe return URL; forbidden/generic missing-out-of-scope; logout/expiry/revocation/401 xóa nội dung/cache; epoch chặn auth/query cũ; đổi cùng/khác account và scope. Giữ CSS/markup login và phần eye/selection đang làm dở.
+- Incomplete scope / deviations: triển khai và checks bắt buộc đã xong; PO nghiệm thu FE-03.02 pending nên chưa done. Chỉ DEMO memory-only; reload mất phiên. Không backend/cookie/CSRF/dashboard nghiệp vụ. Harness độc lập không nằm trong product navigation.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/auth/session.tsx, session-store.ts | SessionProvider, SessionStore, safeReturnPath | Phiên, identity/epoch, return allowlist |
+| src/frontend/src/features/auth/workspace-entry.tsx; src/frontend/src/app/(workspace)/[...destination]/page.tsx; src/frontend/src/app/providers.tsx | WorkspaceEntry và composition | Guard/shell từ principal |
+| src/frontend/src/features/auth/login-form.tsx | LoginForm | Login/điều hướng; giữ eye icon, hover, selection |
+| src/frontend/src/lib/demo/gateway.ts; src/frontend/src/lib/api/query-client.ts | subscribeInvalidation, onUnauthorized | Invalidation và bảo vệ stale result |
+| src/frontend/src/app/preview/session/page.tsx; src/frontend/e2e/session.spec.ts; src/frontend/src/features/auth/session.test.ts | Harness, 23 browser và 13 unit cases mới | Kiểm tra session/routing/races |
+| docs/implementation/evidence/FE-03.02/; task/workflow records | 8 ảnh, 6 logs, comparison/handoff | Bằng chứng và đồng bộ trạng thái |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | 4 persona đúng shell; protected URL không flash | 4 vai trò, server HTML/DOM observer, reload/back đạt | pass | [browser](../evidence/FE-03.02/browser.log) |
+| 2 | Return allowlist; forbidden khác generic missing/out-of-scope | URL ngoài/scheme/encoded/logout bị loại; role/userId không cấp quyền; các fixture đạt | pass | [browser](../evidence/FE-03.02/browser.log), [unit](../evidence/FE-03.02/unit.log) |
+| 3 | Expiry/revocation xóa content/cache, không khôi phục dữ liệu cũ | Expire/Revoke/Logout/401, real workspace re-entry, đổi account/cùng account/role scope đạt; không AI identity hoặc role grant | pass | Browser và SessionStore tests |
+| 4 | Giữ v1.3 và login đã chốt | Agent đối chiếu shell/login; không đổi CSS/markup; eye hover/icon/selection pass. PO đã duyệt login, chưa nghiệm thu task mới | pass | [comparison](../evidence/FE-03.02/comparison.md); đây là agent check |
+| 5 | Ảnh desktop/mobile và owner verdict | 8 ảnh 1440/390×1000, khác biệt ghi rõ; PO visual review FE-03.02 chưa diễn ra | not-run | [comparison](../evidence/FE-03.02/comparison.md); captures pass, owner verdict pending |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd typecheck | Type-safe | Exit 0 | pass |
+| src/frontend | pnpm.cmd lint | Không lint errors | Exit 0 | pass |
+| src/frontend | pnpm.cmd format:check | Đúng formatter | Exit 0 | pass |
+| src/frontend | pnpm.cmd test | Unit/regression | 91/91, 8 files, exit 0 | pass |
+| src/frontend | pnpm.cmd build | Production build | Exit 0, routes sinh thành công | pass |
+| src/frontend | pnpm.cmd exec next start --hostname 127.0.0.1 --port 3102; PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3102, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe; pnpm.cmd exec playwright test | Browser session và regression | 58 pass, 2 skipped, exit 0; 23 ca FE-03.02 pass | pass |
+| repo | python -m http.server 8010 --bind 127.0.0.1 --directory docs/design; mở login.html và dashboard.html?role=requester trước sửa; capture cùng viewport | So mẫu thật | 8 ảnh; desktop/mobile reduced motion; không overflow | pass |
+| src/frontend | Hai capture tùy chọn FE-02 khi DESIGN_REFERENCE_URL không đặt | Phân biệt với mandatory FE-03.02 | 2 skipped; lần thử bật trước đó lỗi 404 resource design server, không claim pass | not-run |
+| repo | PO nghiệm thu chức năng và ảnh FE-03.02 | Owner review | Chưa diễn ra; giữ approval login/eye đã có | not-run |
+| repo | git -c core.whitespace=cr-at-eol diff --cached --check; kiểm tra Format version 1/links/task scope | Diff và report hợp lệ | Đạt sau chuẩn hóa whitespace logs; đủ 10 mục, anchor duy nhất | pass |
+
+[Typecheck](../evidence/FE-03.02/typecheck.log), [lint](../evidence/FE-03.02/lint.log), [format](../evidence/FE-03.02/format.log), [unit](../evidence/FE-03.02/unit.log), [build](../evidence/FE-03.02/build.log), [browser](../evidence/FE-03.02/browser.log). Log thu stdout/stderr qua cmd /c, chỉ chuẩn hóa trailing whitespace. Lỗi trung gian đã sửa: generic Promise harness/import alias Vitest; test sửa href DOM không thay Next Link prop, đã thay Link thật. Một lượt dừng vì server/test teardown giữ tiến trình; lượt cuối dùng server riêng, exit 0. Không ghi lượt đầu là pass. CodeGraph đã dùng trước khi đọc code; một truy vấn sau lỗi Transport closed, đọc trực tiếp đúng file còn thiếu.
+
+#### 6. Review
+
+- Type / reviewer: agent self-review; PO đã duyệt login/nút mắt theo yêu cầu đầu phiên. PO review FE-03.02 pending.
+- Findings / resolution: thiếu session invalidation/race guard đã sửa và kiểm tra. Card mobile thấp hơn mẫu khoảng 18px, helper DEMO riêng; giữ UI đã duyệt. Shell FE-02.03 có header search/logo khác dashboard specimen, vùng nghiệp vụ ngoài scope; không gọi đây là dashboard hoàn chỉnh hoặc PO approval mới.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: không có blocker triển khai; PO acceptance mục 5 còn pending. Chromium desktop/mobile emulation đã chạy; Safari/Firefox/máy thật not-run. Không xác nhận production auth. Nợ verification FE-03.01 không tự đóng.
+- Required resolution / owner: PO kiểm tra và quyết định nghiệm thu; nếu yêu cầu sửa thì review → in-progress. Không tự done.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-03.02.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison, ảnh và PO steps](../evidence/FE-03.02/comparison.md). Báo cáo tổng hợp lưu tại ledger này, không tạo report/PR Markdown riêng.
+- Commit / build / environment: phase/a-frontend; implementation [00483a547d40062e96dca20be26685aa49041f6d](https://github.com/congminh1705/IT-Operation-Hub/commit/00483a547d40062e96dca20be26685aa49041f6d) đã push; git ls-remote xác nhận SHA khớp. Build pass. docs(delivery) commit theo sau ghi báo cáo; final delivery HEAD ở final response, không tự tham chiếu SHA của chính commit.
+- Parent delivery: [PR #3 FE-02](https://github.com/congminh1705/IT-Operation-Hub/pull/3) verified merged qua GitHub API. FE-03 chưa tạo PR vì .02 review và .03/.04/.05 pending; EPIC_IN_PROGRESS; Phase A exit FE-18.03 chưa đạt. Không merge/deploy/start task khác.
+- App / DEMO: http://127.0.0.1:3102/login; harness http://127.0.0.1:3102/preview/session. Nếu server dừng, chạy next start ở mục 5. Accounts requester@demo.invalid, technician@demo.invalid, it_manager@demo.invalid, admin@demo.invalid; mật khẩu DEMO bất kỳ không rỗng, ví dụ demo; không dùng mật khẩu thật.
+- PO steps: đăng nhập 4 role, xem sidebar/scoped tickets; logout rồi Back/reload; protected direct URL; unsafe returnTo; harness chọn role → Load private query → Start late query → Expire/Revoke/Logout/Query 401 → Resolve late query, xác nhận DOM/cache không trở lại; đổi cùng/khác account; Expire/Revoke after navigation → Open workspace phải về login. Kiểm tra eye bằng chuột/bàn phím và ảnh desktop/mobile. Hướng dẫn đầy đủ ở comparison.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: FE-03.02/attempt-01, link chính xác; sections 1–5 giữ nguyên.
+- Execution-board task row: review, Owner PO; 8 done / 1 review / 221 pending. FE-03.03/.04/.05 vẫn pending.
+- Current context: thay resume pointer cũ bằng summary mới, actual tests/gaps/Git và report link; giữ lịch sử trong task-history.
+- Parent state: FE-03 EPIC_IN_PROGRESS; thiếu profile/password/logout-A1 closure, không PR hoàn tất Parent. Report validation đủ 10 mục, 5 AC, commands/results, links/artifacts, state/owner, previous attempt.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO review FE-03.02; sau done và được giao riêng, ứng viên FE-03.03 — Implement own profile editing.
+- Eligibility / remaining prerequisite: FE-03.03 cần FE-03.02 done; hiện chưa đủ. Không bắt đầu task khác. FE-03.04/.05 và parent criteria vẫn chờ.
+
+<a id="task-fe-03-02-attempt-02"></a>
+
+### FE-03.02 — Attempt 02 — 2026-11-19T09:56:02+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-03.02/attempt-02
+- Task: [task specification](../tasks/FE-03.02.md)
+- Parent / phase: FE-03 / A
+- Executor: Codex; Owner PO
+- Started at: 2026-11-19T09:56:02+07:00 (approval checkpoint)
+- Ended at: 2026-11-19T09:56:02+07:00 (approval checkpoint)
+- State before / after: review / done
+- Previous attempt / correction: [attempt-01](#task-fe-03-02-attempt-01)
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record PO review and close FE-03.02.
+- Delivered this attempt: PO approval recorded and workflow records synchronized.
+- Incomplete scope / deviations: none for FE-03.02. DEMO boundaries and previously skipped checks remain recorded.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-03.02.md; docs/implementation/workflow/{task-history,current-context,execution-board}.md | PO approval and done status | Task closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Four personas and protected route guard | Prior browser evidence retained | pass | [attempt-01](#task-fe-03-02-attempt-01) |
+| 2 | Safe return and generic error states | Prior browser evidence retained | pass | [attempt-01](#task-fe-03-02-attempt-01) |
+| 3 | Session invalidation and stale-result isolation | Prior browser evidence retained | pass | [attempt-01](#task-fe-03-02-attempt-01) |
+| 4 | Approved UI | Existing login approval and PO review recorded | pass | [comparison](../evidence/FE-03.02/comparison.md) |
+| 5 | Actual/reference captures and owner verdict | Captures retained and PO confirmed review and requested done on 2026-11-19 | pass | [comparison](../evidence/FE-03.02/comparison.md), PO instruction |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Compare task, board, context and both history anchors | Consistent closure | Done and linked | pass |
+| src/frontend | Unit/browser/typecheck/lint/format/build rerun | No application changes | Documentation-only closure. Prior results retained, including two skipped optional captures | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO confirmed review and directed done on 2026-11-19.
+- Findings / resolution: no further changes requested.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for this task.
+- Required resolution / owner: none. Parent still needs remaining children and closure checks.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-03.02.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-03.02/comparison.md) and attempt-01.
+- Commit / build / environment: implementation 00483a5 previously pushed and verified on phase/a-frontend. Closure commit and remote verification reported in final handoff.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-02 linked.
+- Execution-board task row: done, Owner PO.
+- Current context: closure summary and report link updated.
+- Parent state: FE-03 EPIC_IN_PROGRESS. FE-03.03 through FE-03.05 remain pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-03.03 — Implement own profile editing.
+- Eligibility / remaining prerequisite: FE-03.02 done. Start only when separately assigned.
