@@ -21,11 +21,13 @@ export function WorkspacePage({
   pathname,
   search = {},
   prefix = "",
+  content,
 }: {
   persona: DemoPersona;
   pathname: string;
   search?: WorkspaceSearch;
   prefix?: string;
+  content?: React.ReactNode;
 }) {
   if (!knownDestinations.has(pathname)) notFound();
   const scope = effectiveScope(persona, pathname, first(search.scope));
@@ -48,30 +50,32 @@ export function WorkspacePage({
         Không gian làm việc <span aria-hidden="true">/</span> {label}
       </p>
       <div className="workspace-heading">
-        <h1>{label}</h1>
+        <h1>{content && pathname === "/profile" ? "Hồ sơ cá nhân" : label}</h1>
         <p>Bố cục làm việc theo quyền của bạn.</p>
       </div>
       {allowed ? (
-        <div className="shell-pending" data-effective-scope={scope}>
-          {pathname === "/tickets" && query && (
-            <p className="shell-search-summary">
-              Từ khóa: <strong>{query}</strong>. Chưa thực hiện tìm kiếm dữ
-              liệu.
-            </p>
-          )}
-          <Feedback
-            kind="empty"
-            title="Chức năng chưa triển khai"
-            description={
-              pathname === "/logout"
-                ? "Chưa thực hiện đăng xuất. Phiên hiện tại chưa bị thay đổi; đây là màn chờ triển khai chức năng."
-                : "Điều hướng đã sẵn sàng. Nội dung và thao tác nghiệp vụ sẽ được bổ sung ở bước triển khai tiếp theo; chưa có dữ liệu được tải hoặc thay đổi."
-            }
-          />
-          <Link href={`${prefix}/dashboard`} className="shell-return-link">
-            Về tổng quan
-          </Link>
-        </div>
+        (content ?? (
+          <div className="shell-pending" data-effective-scope={scope}>
+            {pathname === "/tickets" && query && (
+              <p className="shell-search-summary">
+                Từ khóa: <strong>{query}</strong>. Chưa thực hiện tìm kiếm dữ
+                liệu.
+              </p>
+            )}
+            <Feedback
+              kind="empty"
+              title="Chức năng chưa triển khai"
+              description={
+                pathname === "/logout"
+                  ? "Chưa thực hiện đăng xuất. Phiên hiện tại chưa bị thay đổi; đây là màn chờ triển khai chức năng."
+                  : "Điều hướng đã sẵn sàng. Nội dung và thao tác nghiệp vụ sẽ được bổ sung ở bước triển khai tiếp theo; chưa có dữ liệu được tải hoặc thay đổi."
+              }
+            />
+            <Link href={`${prefix}/dashboard`} className="shell-return-link">
+              Về tổng quan
+            </Link>
+          </div>
+        ))
       ) : (
         <div className="shell-pending">
           <Feedback kind="forbidden" />

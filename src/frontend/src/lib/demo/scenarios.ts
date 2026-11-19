@@ -160,6 +160,11 @@ export function createDemoScenarios(): AccountScenario[] {
       { kind: "success", status: 204, data: null },
       "committed",
     ),
+    scenario("password-unavailable", "changeOwnPassword", {
+      kind: "unavailable",
+      status: 503,
+      error: error("DEMO_UNAVAILABLE", "Chưa kết nối được."),
+    }),
     scenario("password-failed", "changeOwnPassword", {
       kind: "validation",
       status: 422,

@@ -20,6 +20,13 @@ export class QueryClient {
   private identity: QueryIdentity | null = null;
   private entries = new Map<string, Entry>();
   private listeners = new Set<() => void>();
+  private unauthorizedListeners = new Set<() => void>();
+  onUnauthorized(listener: () => void) {
+    this.unauthorizedListeners.add(listener);
+    return () => {
+      this.unauthorizedListeners.delete(listener);
+    };
+  }
   private polls = new Set<() => void>();
   private active = false;
   private timer?: ReturnType<typeof setInterval>;
@@ -98,6 +105,11 @@ export class QueryClient {
           !this.owns(key)
         )
           return;
+        if (outcome.kind === "unauthenticated") {
+          this.logout();
+          this.unauthorizedListeners.forEach((listener) => listener());
+          return;
+        }
         if (outcome.kind === "success")
           entry.state = {
             status: isEmpty(outcome.data) ? "empty" : "success",

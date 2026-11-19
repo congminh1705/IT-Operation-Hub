@@ -1,0 +1,14 @@
+PASS delayed mock / pending button / duplicate / 503 / retry
+PASS motion / zones / parallax / ripple / pause / reduced motion / cleanup
+reference 320 [ 320, 320 ]
+actual 320 [ 320, 320 ]
+PASS CSS zoom 200% 320px
+reference 390 [ 390, 390 ]
+actual 390 [ 390, 390 ]
+PASS CSS zoom 200% 390px
+reference 768 [ 768, 768 ]
+actual 768 [ 768, 768 ]
+PASS CSS zoom 200% 768px
+reference 1440 [ 1440, 1440 ]
+actual 1440 [ 1440, 1440 ]
+PASS CSS zoom 200% 1440px

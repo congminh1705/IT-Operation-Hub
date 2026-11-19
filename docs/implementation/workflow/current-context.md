@@ -3,27 +3,19 @@ id: itoh-current-context
 title: "Current task context"
 type: planning
 owner: PO
-updated: 2026-11-16
+updated: 2026-11-19
 authority: derived
 ---
 
 # Current task context
 
-- As of: 2026-11-16T16:00:49+07:00; Asia/Bangkok. Owner: PO; AI Agent supports implementation/checks.
-- State: six tasks done; FE-02.04 review; 223 pending. FE-02 EPIC_IN_PROGRESS; Phase A DEMO only.
-- Current task: [FE-02.04](../tasks/FE-02.04.md); [report](task-history.md#task-fe-02-04-attempt-01).
-- Authority: [workflow](task-workflow.md), [board](execution-board.md), [v1.3 / D-51](../../design/approved-format.md). Original login unchanged.
+- As of: 2026-11-19T12:04:21+07:00. Owner PO.
+- State: 12 done, 218 pending. FE-03.04 and FE-03.05 done by PO. FE-03 EPIC_DONE theo PO.
 
 ## Latest task report
 
-- Delivered: one memory-only query client/provider, scoped keys, cancellation/late-result protection, 30-second visible/focused polling, Vietnam date display and UTC filter windows. No UI change, persistence or new package.
-- Important files: src/frontend/src/app/providers.tsx; src/frontend/src/lib/api/query-client.ts/query-keys.ts/QUERY-LIFECYCLE.md; src/frontend/src/lib/dates.ts and tests.
-- Checks: 78 unit tests, typecheck/lint/format/build passed; 35 production browser tests passed; two optional reference-capture cases skipped. Visual comparison N/A for nonvisual task.
-- Review: self-review passed; PO acceptance pending. Session hooks are intentionally left for FE-03.02; fixtures are not server authorization.
-- Git: phase/a-frontend; implementation 4c4df89 pushed, matching remote verified. Documentation delivery is a separate task commit.
-- PR: #2 verified merged, origin/main synchronized by normal merge. It cannot receive new commits. Complete Parent acceptance and deliver its remaining delta before another Parent; do not duplicate an open PR or auto-merge.
-- Next: review FE-02.04, then Parent closure/remaining PR delivery; FE-03.01 not started.
-
-## Delivery rules and retained boundaries
-
-One named commit per task, one shared phase branch, one Parent delivery PR; no PR Markdown folder. Update task/history/current-context after each attempt; board stores status only. Keep all Phase A/B/C/D gates. Gemini free tier/USD0, future RAG/context/tool calling follow their own approved tasks; no live AI/backend scope here.
+- [FE-03.05/attempt-02](task-history.md#task-fe-03-05-attempt-02) verifies logout, cache isolation and four-account A1 journeys at 1440 and 390px. [Task](../tasks/FE-03.05.md).
+- Checks: 91 unit and 69 Chromium pass, 2 optional captures skipped. Build, typecheck, lint and format passed.
+- Review: [captures, behavior and API01 handoff](../evidence/FE-03.05/comparison.md). PO confirmed review and requested done. Existing FE-03.01 verification gaps retained.
+- Git: phase/a-frontend, 78d0f99 pushed and verified. FE-03.04 approved in 17f4fa7. FE-03 [Parent PR #4](https://github.com/congminh1705/IT-Operation-Hub/pull/4) opened into main; awaiting PO merge. FE-02 remains EPIC_IN_PROGRESS in registry.
+- Next: PO reviews and merges PR #4 before the next Parent. FE-04.01 remains pending until Parent delivery conditions are met and PO assigns it.
