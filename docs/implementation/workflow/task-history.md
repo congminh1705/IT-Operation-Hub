@@ -2023,3 +2023,84 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-04.02, assigned by PO.
 - Eligibility / remaining prerequisite: FE-04.01 done; FE-04.02 assigned..
+
+<a id="task-fe-04-02-attempt-01"></a>
+
+### FE-04.02 — Attempt 01 — 2026-11-19T14:12:49.6180305+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-04.02/attempt-01
+- Task: [task specification](../tasks/FE-04.02.md)
+- Parent / phase: FE-04 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-19T14:08:50+07:00 (first recorded test checkpoint; implementation preceded it)
+- Ended at: 2026-11-19T14:12:49.6180305+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none. [FE-04.01 PO approval](#task-fe-04-01-attempt-02).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: preview role, department, lock and unlock impacts over DEMO assignments.
+- Delivered this attempt: Admin review, before/after account state, session effect, active work and eligible fixture candidate, self-lock and last-Admin guards, and unresolved emergency branch.
+- Incomplete scope / deviations: PO review pending. Actual mutating access and handover workflow are outside this preview; D-40 emergency procedure requires a business decision.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/administration/access-review.tsx and users-screen files | AccessReview and per-row entry | Accessible review and responsive table |
+| src/frontend/src/lib/demo/access-impact.ts and user-directory.ts | reviewAccessImpact and reviewAccess | Admin-scoped synthetic impact calculations |
+| src/frontend/e2e/access-review.spec.ts | Four browser cases | Guards, handover, session copy and captures |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Preview with guards, handover and session impact | Self-lock, last Admin role downgrade/lock, eligible and missing replacement, emergency and unlock verified | pass | [targeted browser](../evidence/FE-04.02/final-layout-browser.log) |
+| 2 | Preserve related Parent scope | Current/proposed states, no restored session or ownerless change; no policy invented | pass | access-impact.ts and browser |
+| 3 | Synthetic transport and no false completion | Admin adapter scope, read-only review, unchanged rows and explicit preview notice | pass | browser |
+| 4 | Approved presentation | Compared users and provisioning references at two widths; missing matching conflict specimen documented | pass | [comparison](../evidence/FE-04.02/comparison.md) |
+| 5 | Evidence and PO verdict | Eight captures, Agent comparison complete. PO verdict pending | not-run | comparison |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd format:check; pnpm.cmd test | Build, static and unit | Passed including build after CSS refinement; 91 unit | pass |
+| src/frontend | pnpm.cmd exec eslint . --ignore-pattern test-results/** | Application lint | Passed; ignores local verification artifacts | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3113, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe, ADMIN_DESIGN_URL=http://127.0.0.1:8010; pnpm.cmd exec playwright test e2e/access-review.spec.ts e2e/administration.spec.ts | Affected browser checks after layout refinement | 9 pass | pass |
+| src/frontend | Same environment; pnpm.cmd exec playwright test | Production Chromium regression | 78 pass, two optional captures skipped | pass |
+| repo | Local design server; open 08-admin-states.html#users and 02-tickets.html#provision before work, capture actual/reference 1440 and 390 | Matching viewport evidence | Eight captures. No page overflow at checked widths | pass |
+| src/frontend | Earlier optional reference capture tests | Optional | Two skipped | not-run |
+| repo | PO review of FE-04.02 | Owner verdict | Pending | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent verification and visual comparison. PO review pending.
+- Findings / resolution: mobile rows initially expanded due to button text wrapping. Table now scrolls inside its region with a minimum width. Preliminary regression overlapped the rebuild and reported a 500 and a missing forbidden heading; final result is above.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO review pending; D-40 emergency process remains open. No actual session revocation performed by the review.
+- Required resolution / owner: PO validates task and evidence before marking done.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-04.02.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison and PO walkthrough](../evidence/FE-04.02/comparison.md), [browser log](../evidence/FE-04.02/browser.log).
+- Commit / build / environment: f8149a67b6721a287b7bd6a499a562d24ce14d2e pushed to phase/a-frontend and verified. FE-04.01 PO acceptance d3a35d8 also pushed. Preview http://127.0.0.1:3113/login?returnTo=%2Fadmin%2Fusers.
+- Parent delivery: FE-04 EPIC_IN_PROGRESS, no Parent PR. Prior FE-03 PR #4 merged and verified.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-01 linked.
+- Execution-board task row: review, Owner PO. FE-04.01 is done.
+- Current context: FE-04.02 findings, evidence and next prerequisite.
+- Parent state: FE-04 EPIC_IN_PROGRESS, further children pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FE-04.02. Next candidate FE-04.03.
+- Eligibility / remaining prerequisite: FE-04.02 done and separate assignment before FE-04.03.
