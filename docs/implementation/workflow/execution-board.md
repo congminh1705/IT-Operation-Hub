@@ -18,7 +18,7 @@ purpose: "Maintain the single status and owner registry for every refined execut
 
 ## 1. Scope and authority
 
-All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. Nine tasks through FE-03.02 are **done**; 221 tasks remain pending. Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
+All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. Nine tasks through FE-03.02 are **done**; FE-03.03 is in review and 220 tasks remain pending. Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
 
 The [package registry](../README.md#4-task-tracker) holds epic state; this board alone holds task state and PO ownership. Use the [task workflow](task-workflow.md). [Parent coverage and closure](../package-task-coverage.md) maps every parent criterion to outputs and names any external integration evidence. Package readiness means defined scope; dependencies, affected decisions and future coding authorization still gate execution.
 
@@ -39,7 +39,7 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FE-02.04](../tasks/FE-02.04.md) | [FE-02](../06-frontend-first.md#fe-02) | Implement query lifecycle and timezone helpers | [FE-01.03](../tasks/FE-01.03.md), [FE-02.02](../tasks/FE-02.02.md) | PO | done |
 | [FE-03.01](../tasks/FE-03.01.md) | [FE-03](../06-frontend-first.md#fe-03) | Build the complete login form interaction | [FE-01.03](../tasks/FE-01.03.md), [FE-02.02](../tasks/FE-02.02.md) | PO | done |
 | [FE-03.02](../tasks/FE-03.02.md) | [FE-03](../06-frontend-first.md#fe-03) | Wire mock session routing and scoped entry | [FE-03.01](../tasks/FE-03.01.md), [FE-02.03](../tasks/FE-02.03.md), [FE-02.04](../tasks/FE-02.04.md) | PO | done |
-| [FE-03.03](../tasks/FE-03.03.md) | [FE-03](../06-frontend-first.md#fe-03) | Implement own profile editing | [FE-03.02](../tasks/FE-03.02.md) | PO | pending |
+| [FE-03.03](../tasks/FE-03.03.md) | [FE-03](../06-frontend-first.md#fe-03) | Implement own profile editing | [FE-03.02](../tasks/FE-03.02.md) | PO | review |
 | [FE-03.04](../tasks/FE-03.04.md) | [FE-03](../06-frontend-first.md#fe-03) | Implement own password change interaction | [FE-03.02](../tasks/FE-03.02.md) | PO | pending |
 | [FE-03.05](../tasks/FE-03.05.md) | [FE-03](../06-frontend-first.md#fe-03) | Verify logout, account switching and A1 handoff | [FE-03.03](../tasks/FE-03.03.md), [FE-03.04](../tasks/FE-03.04.md) | PO | pending |
 | [FE-04.01](../tasks/FE-04.01.md) | [FE-04](../06-frontend-first.md#fe-04) | Build user management list and provisioning form | [FE-03.05](../tasks/FE-03.05.md) | PO | pending |

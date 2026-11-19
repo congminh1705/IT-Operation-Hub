@@ -9,21 +9,19 @@ authority: derived
 
 # Current task context
 
-- As of: 2026-11-19, Asia/Bangkok. Owner PO.
-- State: 9 done, 221 pending. Current: [FE-03.02](../tasks/FE-03.02.md), **done**; Parent FE-03 EPIC_IN_PROGRESS; Phase A DEMO only.
-- Authority: [workflow](task-workflow.md), [board](execution-board.md), [v1.3 / D-51](../../design/approved-format.md).
+- As of: 2026-11-19T11:38:22+07:00. Owner PO.
+- State: 9 done, 1 review, 220 pending. FE-03.03 is in review. Parent FE-03 EPIC_IN_PROGRESS.
+- Authority: [workflow](task-workflow.md), [board](execution-board.md), [approved design](../../design/approved-format.md).
 
 ## Latest task report
 
-- [FE-03.02/attempt-02](task-history.md#task-fe-03-02-attempt-02) records PO approval and closure. Implementation and checks are recorded in attempt-01.
-- Files: features/auth/session-store.ts, session.tsx, workspace-entry.tsx, login-form.tsx; providers/catch-all; query-client/demo gateway; preview/session, unit/browser tests.
-- Checks: 91 unit pass; 58 browser pass gồm 23 FE-03.02, 2 capture tùy chọn FE-02 skipped; typecheck/lint/format/build pass. [Ảnh/log/khác biệt và PO steps](../evidence/FE-03.02/comparison.md).
-- Review: PO confirmed review and directed done on 2026-11-19. Prior agent checks retained.
-- App: http://127.0.0.1:3102/login; accounts requester/technician/it_manager/admin @demo.invalid, password DEMO không rỗng (demo). Harness /preview/session. Reload mất phiên; không backend/production auth.
-- Git: phase/a-frontend; implementation [00483a5](https://github.com/congminh1705/IT-Operation-Hub/commit/00483a547d40062e96dca20be26685aa49041f6d) pushed, remote SHA khớp. Báo cáo giao bằng docs(delivery) commit kế tiếp; final HEAD ở final reply.
-- Parent PR: [#3 FE-02](https://github.com/congminh1705/IT-Operation-Hub/pull/3) verified merged; FE-03 chưa tạo PR vì .03/.04/.05 pending. FE-18.03 exit chưa đạt.
-- Next: FE-03.03 when separately assigned. FE-03.02 prerequisite is done.
+- [FE-03.03/attempt-01](task-history.md#task-fe-03-03-attempt-01) implements own display name editing with a read-only email, validation, cancel, draft preservation on failure and shell synchronization. [Task card](../tasks/FE-03.03.md).
+- Key files: profile-form.tsx and CSS, SessionStore, workspace route, profile.spec.ts.
+- Checks: 91 unit and 62 Chromium browser cases passed, 2 earlier optional captures skipped. Build, typecheck, lint and format passed.
+- Review: PO acceptance pending. [Actual and reference captures, differences and PO walkthrough](../evidence/FE-03.03/comparison.md).
+- Git: phase/a-frontend, implementation 1ce788e pushed and remote verified. FE-02 PR #3 previously verified merged. FE-03 PR awaits Parent completion.
+- Next: review FE-03.03. FE-03.04 may start upon separate assignment and its direct dependency FE-03.02 is done. FE-03.05 still needs profile/password work to be done.
 
 ## Retained boundaries
 
-Giữ PO approval login/eye và closure FE-03.01; kiểm tra cũ từng not-run không tự thành pass. Lịch sử ở task-history. One Parent PR khi đủ closure; không merge, push main, force-push hoặc deploy. Giữ phase branch và dữ liệu tổng hợp; Gemini/USD0 và phase sau theo gate riêng.
+Phase A uses DEMO data. No deployment or automatic merge. Preserve prior PO approvals and FE-03.01 verification gaps in task-history.

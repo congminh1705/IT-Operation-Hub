@@ -1408,3 +1408,83 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-03.03 — Implement own profile editing.
 - Eligibility / remaining prerequisite: FE-03.02 done. Start only when separately assigned.
+
+<a id="task-fe-03-03-attempt-01"></a>
+
+### FE-03.03 — Attempt 01 — 2026-11-19T11:38:22+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-03.03/attempt-01
+- Task: [task specification](../tasks/FE-03.03.md)
+- Parent / phase: FE-03 / A
+- Executor: Codex; Owner PO
+- Started at: 2026-11-19T11:33:56+07:00 (first recorded clock checkpoint; source review and implementation preceded it)
+- Ended at: 2026-11-19T11:38:22+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none; FE-03.02 done.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: own profile editing in the DEMO workspace.
+- Delivered this attempt: edit display name with expectedVersion, read-only email, identity from current session, shell synchronization, cancel/reset, field validation and recoverable failure/conflict handling.
+- Incomplete scope / deviations: PO visual acceptance pending. Contact/department/title are absent from current typed mock DTO. Password, admin and directory work are separate.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/auth/profile-form.tsx, profile-form.css | ProfileForm and responsive panels | Edit own display name |
+| src/frontend/src/features/auth/session-store.ts, workspace-entry.tsx, src/frontend/src/components/layout/workspace-page.tsx | updateOwnProfile and protected profile composition | Use session principal, refresh shell |
+| src/frontend/e2e/profile.spec.ts, src/frontend/src/app/preview/session/page.tsx | Chromium checks and isolated fixtures | Verify normal flow and failure paths |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Own identity, display name only | Read-only email, no mutable role/ID input; restricted typed mutation | pass | browser and gateway tests |
+| 2 | Errors preserve draft and focus feedback; save updates shell | Invalid, unknown/network and conflict scenarios passed; reload shows saved name without submitting | pass | [browser log](../evidence/FE-03.03/browser.log) |
+| 3 | Forged URL/payload cannot edit another account; cancel preserves saved data | Browser ignores forged query; existing mock gateway suite rejects unexpected fields; cancel restores saved value | pass | browser and gateway tests |
+| 4 | Approved profile structure | Agent observed two columns desktop, stacked mobile, Mac/Teal shell and labeled form | pass | [comparison](../evidence/FE-03.03/comparison.md) |
+| 5 | Actual and reference captures with owner verdict | Four captures and differences recorded. PO verdict pending | not-run | [comparison](../evidence/FE-03.03/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd typecheck; pnpm.cmd lint; pnpm.cmd format:check; pnpm.cmd test | Static checks and mock fixtures | Passed; 91 unit tests | pass |
+| src/frontend | pnpm.cmd build | Production build | Passed after final interaction fix | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3106, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe; pnpm.cmd exec playwright test | Profile and regressions | 62 pass, including 4 profile cases | pass |
+| repo | python -m http.server 8010 --bind 127.0.0.1 --directory docs/design | Open reference and capture 1440/390 × 1000 | Four captures; no horizontal overflow on application widths | pass |
+| src/frontend | Two optional earlier reference capture tests | Optional capture | DESIGN_REFERENCE_URL unset; skipped | not-run |
+| repo | PO visual review | Owner verdict | Pending | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent self-review. PO acceptance pending.
+- Findings / resolution: browser checks caught an unintended form submit when the conflict reload action became the save button. Separated the controls and prevented the reload click default. Final suite passed. See comparison for approved specimen differences.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO review outstanding. Chromium mobile emulation only. DEMO session resets on reload by design.
+- Required resolution / owner: PO checks application and comparison before recording done.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-03.03.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison and PO walkthrough](../evidence/FE-03.03/comparison.md), [production browser log](../evidence/FE-03.03/browser.log).
+- Commit / build / environment: 1ce788e4fb60faf7e490a83fa351a7434e34deaa pushed to phase/a-frontend and verified against remote. Documentation HEAD reported in final handoff. Preview http://127.0.0.1:3106/login?returnTo=%2Fprofile.
+- Parent delivery: FE-03 stays EPIC_IN_PROGRESS. FE-03.03 review and FE-03.04/.05 pending, so Parent PR creation has not run. Prior FE-02 PR #3 merge verified in FE-03.02 handoff.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-01 linked.
+- Execution-board task row: review, Owner PO.
+- Current context: latest results and report link updated.
+- Parent state: EPIC_IN_PROGRESS while profile review, password and A1 closure remain.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO review FE-03.03. FE-03.04 is the next candidate when assigned.
+- Eligibility / remaining prerequisite: FE-03.04 depends on FE-03.02, already done. FE-03.05 requires FE-03.03 and FE-03.04 done.
