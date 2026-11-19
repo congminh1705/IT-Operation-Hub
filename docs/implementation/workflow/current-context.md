@@ -1,4 +1,4 @@
----
+﻿---
 id: itoh-current-context
 title: "Current task context"
 type: planning
@@ -9,14 +9,13 @@ authority: derived
 
 # Current task context
 
-- As of: 2026-11-19T14:32:54.8800452+07:00. Owner PO.
-- State: 15 done, 215 pending. FE-04.03 done. FE-04 EPIC_IN_PROGRESS.
+- As of: 2026-11-19T14:56:42.9414834+07:00. Owner PO.
+- State: 15 done, 1 review, 214 pending. FE-04.04 review. FE-04 EPIC_IN_PROGRESS.
 
 ## Latest task report
 
-- [FE-04.03/attempt-02](task-history.md#task-fe-04-03-attempt-02) delivers department/category create, edit and deactivate with stable historical references. [Task card](../tasks/FE-04.03.md).
-- Main files: CatalogScreen, organization-catalog.ts, workspace entry and provisioning selector, organization-catalog.spec.ts.
-- Checks: 91 unit and 83 Chromium pass, two optional captures skipped. Final 10 affected browser checks, build, typecheck, format and scoped lint passed.
-- Review: [comparison and PO walkthrough](../evidence/FE-04.03/comparison.md). PO confirmed review and requested done. DEMO catalog only.
-- Git: phase/a-frontend, 2d4ab16 pushed and verified. FE-04.02 PO closure 798fa61. Parent FE-04 PR awaits completion.
-- Next: FE-04.04 is eligible and awaits separate assignment.
+- [FE-04.04/attempt-01](task-history.md#task-fe-04-04-attempt-01) implements teams, scoped membership, active intake and guarded work preview. [Task card](../tasks/FE-04.04.md).
+- Checks: 91 unit and 10 affected Chromium pass. Typecheck, build, format and scoped lint passed.
+- Review: [comparison and PO walkthrough](../evidence/FE-04.04/comparison.md). PO pending. Existing search edit kept outside task delivery.
+- Git: phase/a-frontend, d05fa3d pushed and verified. Parent FE-04 PR awaits completion.
+- Next: review FE-04.04. FE-04.05 requires FE-04.04 done and assignment.

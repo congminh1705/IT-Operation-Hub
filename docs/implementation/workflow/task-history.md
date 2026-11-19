@@ -2332,3 +2332,84 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-04.04, pending separate assignment.
 - Eligibility / remaining prerequisite: FE-04.03 done; FE-04.04 requires separate assignment.
+
+<a id="task-fe-04-04-attempt-01"></a>
+
+### FE-04.04 — Attempt 01 — 2026-11-19T14:56:42.9414834+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-04.04/attempt-01
+- Task: [task specification](../tasks/FE-04.04.md)
+- Parent / phase: FE-04 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-19T14:53:02+07:00 (first recorded implementation checkpoint)
+- Ended at: 2026-11-19T14:56:42.9414834+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none. FE-04.03 done.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: team/member/intake configuration with guarded handover preview.
+- Delivered this attempt: Admin can create/edit/deactivate teams, add/remove eligible members, and change a unique active intake. Preview blocks orphaning work and shows affected ticket/task states.
+- Incomplete scope / deviations: PO review pending. No execution of real transfer/revocation; mock state only. Existing uncommitted search change excluded from delivery.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/administration/teams-screen.tsx | TeamsScreen | Team, membership, intake forms and confirmation |
+| src/frontend/src/lib/demo/team-directory.ts and auth/session-store.ts | createTeamDirectory | Admin-scoped fixture, atomic intake and transfer guards |
+| src/frontend/src/features/auth/workspace-entry.tsx and administration/catalog-screen.tsx | Protected route, intake projection | Entry and category intake label |
+| src/frontend/e2e/team-directory.spec.ts | Five browser cases | Invariants, scope, fixtures and visuals |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Unique active intake and guarded removal/deactivation | Rejected empty/inactive intake, protected current intake, kept affected assignments, scoped membership | pass | [browser log](../evidence/FE-04.04/browser.log) |
+| 2 | Preserve selected Parent rules | Admin-only, atomic switch, existing work unchanged, mandatory handover blocks | pass | browser and team-directory.ts |
+| 3 | DEMO transport and no false completion | Preview before apply; only valid changes apply. Non-Admin denied | pass | browser |
+| 4 | Approved visual structure | Agent compared same-role widths. Missing conflict specimen documented | pass | [comparison](../evidence/FE-04.04/comparison.md) |
+| 5 | Actual/reference and PO verdict | Four captures saved. PO pending | not-run | comparison |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd format:check; pnpm.cmd test | Production and unit | Passed; 91 unit. Initial TS narrowing error fixed before passes | pass |
+| src/frontend | pnpm.cmd exec eslint . --ignore-pattern test-results/** | Application lint | Passed; ignored local probe folder | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3117, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe, ADMIN_DESIGN_URL=http://127.0.0.1:8010; pnpm.cmd exec playwright test e2e/team-directory.spec.ts e2e/organization-catalog.spec.ts | Affected Chromium cases | 10 pass | pass |
+| repo | Compare 08-admin-states.html#teams against workspace at 1440 and 390 | Desktop and mobile evidence | Four captures and no page overflow. Local build includes the separate unstaged search edit | pass |
+| src/frontend | Full unaffected Chromium regression | Outside affected check set | Not run for this attempt | not-run |
+| repo | PO visual review | Owner verdict | Pending | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent verification only; PO pending.
+- Findings / resolution: one inactive fixture exposes invalid intake. Handover blocks for both ticket and task. Preview UI adds explicit states beyond reference specimen.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO review pending. Actual authorization and handover are integration concerns.
+- Required resolution / owner: PO checks review evidence before done.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-04.04.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison and PO steps](../evidence/FE-04.04/comparison.md), [browser](../evidence/FE-04.04/browser.log).
+- Commit / build / environment: d05fa3d52671305209994ed25144700218707407 pushed and verified on phase/a-frontend; build passed. Preview http://127.0.0.1:3117/login?returnTo=%2Fadmin%2Fteams.
+- Parent delivery: FE-04 EPIC_IN_PROGRESS, no Parent PR. Previous FE-03 PR #4 verified merged.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-01 linked.
+- Execution-board task row: review, Owner PO.
+- Current context: latest results and review links updated.
+- Parent state: FE-04 EPIC_IN_PROGRESS; remaining children pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FE-04.04. Candidate FE-04.05.
+- Eligibility / remaining prerequisite: FE-04.04 done and separate assignment.

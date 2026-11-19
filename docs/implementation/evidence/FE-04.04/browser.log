@@ -1,0 +1,17 @@
+
+Running 10 tests using 1 worker
+
+(node:33296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 e2e\organization-catalog.spec.ts:16:3 › departments: create, validation, edit, cancel and preserve references on deactivation (2.5s)
+  ok  2 e2e\organization-catalog.spec.ts:91:3 › departments: non-Admin receives forbidden (848ms)
+  ok  3 e2e\organization-catalog.spec.ts:16:3 › categories: create, validation, edit, cancel and preserve references on deactivation (1.4s)
+  ok  4 e2e\organization-catalog.spec.ts:91:3 › categories: non-Admin receives forbidden (853ms)
+  ok  5 e2e\organization-catalog.spec.ts:101:1 › catalog reference and app at desktop and mobile widths (2.7s)
+  ok  6 e2e\team-directory.spec.ts:17:1 › intake stays unique and active; blocked transfer keeps assignments (1.4s)
+  ok  7 e2e\team-directory.spec.ts:67:1 › membership only changes selected team and guards active work (1.3s)
+  ok  8 e2e\team-directory.spec.ts:101:1 › create, rename, and deactivate unused group without changing intake (1.3s)
+  ok  9 e2e\team-directory.spec.ts:125:1 › non-Admin cannot configure team membership (878ms)
+  ok 10 e2e\team-directory.spec.ts:132:1 › teams reference and actual at desktop/mobile (1.9s)
+
+  10 passed (17.8s)
