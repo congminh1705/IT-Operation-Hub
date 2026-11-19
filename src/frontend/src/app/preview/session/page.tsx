@@ -98,6 +98,19 @@ export default function SessionPreview() {
       )}
       <Link href="/dashboard">Open workspace</Link>
       <Link href="/login">Open login</Link>
+      <Link href="/profile/security">Open password form</Link>
+      <button
+        onClick={() => store.adapter.controls.selectScenario("password-failed")}
+      >
+        Wrong current password
+      </button>
+      <button
+        onClick={() =>
+          store.adapter.controls.selectScenario("password-unavailable")
+        }
+      >
+        Password network error
+      </button>
       <Link href="/profile?userId=other&role=ADMIN">
         Open profile with forged query
       </Link>

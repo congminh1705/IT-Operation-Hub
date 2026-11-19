@@ -32,7 +32,9 @@ export interface DemoAdapter {
   mode: "demo";
   gateway: AccountGateway;
   controls: DemoControls;
-  subscribeInvalidation(listener: () => void): () => void;
+  subscribeInvalidation(
+    listener: (event?: "password-changed") => void,
+  ): () => void;
 }
 
 /** Isolated, explicit simulation. No fetch, cookies, storage or credential state. */
@@ -44,7 +46,7 @@ export function createDemoGateway(): DemoAdapter {
   let expiresAt: number | null = null;
   let session: SessionState = "anonymous";
   const selected = new Map<AccountOperation, string>();
-  const invalidationListeners = new Set<() => void>();
+  const invalidationListeners = new Set<(event?: "password-changed") => void>();
 
   const failure = (
     kind: "unauthenticated" | "validation" | "conflict",
@@ -62,11 +64,11 @@ export function createDemoGateway(): DemoAdapter {
     if (kind === "conflict") return { kind, status: 409, error };
     return { kind, status: 422, error };
   };
-  const invalidate = (reason: SessionState) => {
+  const invalidate = (reason: SessionState, event?: "password-changed") => {
     userId = null;
     expiresAt = null;
     session = reason;
-    invalidationListeners.forEach((listener) => listener());
+    invalidationListeners.forEach((listener) => listener(event));
   };
   const current = () => {
     if (session === "active" && expiresAt !== null && now >= expiresAt)
@@ -213,7 +215,7 @@ export function createDemoGateway(): DemoAdapter {
       const outcome = injected("changeOwnPassword");
       if (outcome) return outcome;
       // No password is retained or compared. Re-login after this DEMO-only transition.
-      invalidate("revoked");
+      invalidate("revoked", "password-changed");
       selected.clear();
       return { kind: "success", status: 204, data: null };
     },

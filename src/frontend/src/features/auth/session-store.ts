@@ -12,6 +12,7 @@ import type { QueryClient } from "../../lib/api/query-client";
 export class SessionStore {
   private persona: DemoPersona | null = null;
   private epoch = 0;
+  passwordChanged = false;
   private read = 0;
   private listeners = new Set<() => void>();
   constructor(
@@ -37,7 +38,10 @@ export class SessionStore {
     this.emit();
   };
   connect = () => {
-    const stopAdapter = this.adapter.subscribeInvalidation(this.invalidate);
+    const stopAdapter = this.adapter.subscribeInvalidation((event) => {
+      this.passwordChanged = event === "password-changed";
+      this.invalidate();
+    });
     const stopQuery = this.client.onUnauthorized(this.invalidate);
     return () => {
       stopAdapter();

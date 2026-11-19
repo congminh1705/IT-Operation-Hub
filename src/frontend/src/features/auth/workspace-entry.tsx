@@ -1,4 +1,5 @@
 "use client";
+import { PasswordForm } from "./password-form";
 import { ProfileForm } from "./profile-form";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -53,6 +54,8 @@ export function WorkspaceEntry({
       content={
         pathname === "/profile" ? (
           <ProfileForm user={persona.user} />
+        ) : pathname === "/profile/security" ? (
+          <PasswordForm />
         ) : undefined
       }
       persona={persona}

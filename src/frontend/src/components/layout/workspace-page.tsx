@@ -50,7 +50,7 @@ export function WorkspacePage({
         Không gian làm việc <span aria-hidden="true">/</span> {label}
       </p>
       <div className="workspace-heading">
-        <h1>{content ? "Hồ sơ cá nhân" : label}</h1>
+        <h1>{content && pathname === "/profile" ? "Hồ sơ cá nhân" : label}</h1>
         <p>Bố cục làm việc theo quyền của bạn.</p>
       </div>
       {allowed ? (

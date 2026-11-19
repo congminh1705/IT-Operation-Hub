@@ -10,6 +10,7 @@ import { mountLoginScene } from "./login-scene";
 export function LoginForm() {
   const root = useRef<HTMLDivElement>(null);
   const session = useSession();
+  const store = session.store;
   const login = useRef(session.login);
   useEffect(() => {
     login.current = session.login;
@@ -23,6 +24,11 @@ export function LoginForm() {
     const form = host.querySelector<HTMLFormElement>("form")!;
     const button = host.querySelector<HTMLButtonElement>("#access-submit")!;
     const summary = host.querySelector<HTMLElement>("#access-summary")!;
+    if (store.passwordChanged) {
+      summary.textContent =
+        "Đã mô phỏng đổi mật khẩu. Phiên DEMO đã kết thúc. Vui lòng đăng nhập lại.";
+      summary.focus();
+    }
     const toggle = host.querySelector<HTMLButtonElement>("#access-toggle")!;
     let busy = false,
       alive = true;
@@ -175,7 +181,7 @@ export function LoginForm() {
       events.abort();
       password.value = "";
     };
-  }, [router]);
+  }, [router, store]);
   return (
     <div className="login-root readable-ui" data-surface="graphite">
       <div ref={root} dangerouslySetInnerHTML={{ __html: loginMarkup }} />
