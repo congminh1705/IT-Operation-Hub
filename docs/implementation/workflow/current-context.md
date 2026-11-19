@@ -1,4 +1,4 @@
----
+﻿---
 id: itoh-current-context
 title: "Current task context"
 type: planning
@@ -9,18 +9,13 @@ authority: derived
 
 # Current task context
 
-- As of: 2026-11-19T11:52:09.5407799+07:00. Owner PO.
-- State: 11 done, 219 pending. FE-03.04 done. Parent FE-03 EPIC_IN_PROGRESS.
+- As of: 2026-11-19T11:58:35.9290655+07:00. Owner PO.
+- State: 11 done, 1 review, 218 pending. FE-03.04 done by PO. FE-03.05 review. FE-03 EPIC_IN_PROGRESS.
 
 ## Latest task report
 
-- [FE-03.04/attempt-02](task-history.md#task-fe-03-04-attempt-02) implements protected DEMO password change, validation, visibility, errors and mock session end. [Task card](../tasks/FE-03.04.md).
-- Main files: password-form.tsx and CSS, WorkspaceEntry, DemoGateway, SessionStore, LoginForm and password.spec.ts.
-- Checks: 91 unit and 67 Chromium pass, 2 earlier optional captures skipped. Build, typecheck, lint and format passed.
-- Review: [comparison, logs and PO steps](../evidence/FE-03.04/comparison.md). PO reviewed and requested done.
-- Git: phase/a-frontend, b3e3125 implementation pushed and verified. FE-03.03 done by [PO approval](task-history.md#task-fe-03-03-attempt-02), closure 40c6db7 pushed. FE-03 Parent PR awaits closure.
-- Next: FE-03.05 assigned with dependencies done.
-
-## Retained boundaries
-
-Phase A uses DEMO data. Preserve prior PO verdicts and FE-03.01 gaps in task-history.
+- [FE-03.05/attempt-01](task-history.md#task-fe-03-05-attempt-01) verifies logout, cache isolation and four-account A1 journeys at 1440 and 390px. [Task](../tasks/FE-03.05.md).
+- Checks: 91 unit and 69 Chromium pass, 2 optional captures skipped. Build, typecheck, lint and format passed.
+- Review: [captures, behavior and API01 handoff](../evidence/FE-03.05/comparison.md). PO review pending. Existing FE-03.01 verification gaps retained.
+- Git: phase/a-frontend, 78d0f99 pushed and verified. FE-03.04 approved in 17f4fa7. FE-03 Parent PR awaits closure. FE-02 remains EPIC_IN_PROGRESS in registry.
+- Next: PO reviews FE-03.05, then FE-04.01 only after task/Parent delivery conditions and separate assignment.

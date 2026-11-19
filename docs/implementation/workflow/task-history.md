@@ -1717,3 +1717,83 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 - Eligibility / remaining prerequisite: FE-03.03 and FE-03.04 done, PO assigned next task.
 
 
+
+<a id="task-fe-03-05-attempt-01"></a>
+
+### FE-03.05 — Attempt 01 — 2026-11-19T11:58:35.9290655+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-03.05/attempt-01
+- Task: [task specification](../tasks/FE-03.05.md)
+- Parent / phase: FE-03 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-19T11:55:56+07:00 (first recorded execution checkpoint; scope review preceded it)
+- Ended at: 2026-11-19T11:58:35.9290655+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none. [FE-03.04 approval](#task-fe-03-04-attempt-02).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: verify logout, four-account switching and A1 frontend handoff.
+- Delivered this attempt: keyboard journeys on desktop/mobile, production regression including expiry, cache and delayed responses, comparison captures, API01 handoff.
+- Incomplete scope / deviations: PO review pending. Earlier FE-03.01 verification gaps remain explicit. Mock session wiring already existed and was verified through the product entry.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/e2e/a1-handoff.spec.ts | A1 four-role same-tab and keyboard journeys | Regression and screenshots |
+| docs/implementation/evidence/FE-03.05 | Browser log, images, comparison and API01 notes | A1 frontend handoff |
+| docs/implementation/tasks/FE-03.05.md and workflow records | Evidence links and status | Review |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Logout, Back, delayed reads and account isolation | Production account switching and Back passed. Existing cache suite verified logout, expiry, revocation, 401 and stale query suppression | pass | [browser log](../evidence/FE-03.05/browser.log) |
+| 2 | A1 journeys and keyboard at desktop/mobile widths | Four roles in same tab at 1440/390, keyboard menu traversal, own profile save, password mismatch, logout. Password success and failure cases passed in regression | pass | browser log |
+| 3 | Commands, gaps and endpoint handoff | API01 mapping and remaining Parent gates recorded. Prior FE-03.01 gaps retained | pass | [A1 handoff](../evidence/FE-03.05/comparison.md) |
+| 4 | Approved UI structure | Agent compared existing login and profile to their approved specimens | pass | comparison |
+| 5 | Actual/reference and owner verdict | Eight captures saved, new evidence awaits PO | not-run | comparison |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd lint; pnpm.cmd format:check; pnpm.cmd test | Build, static and unit | All pass, 91 unit | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3109, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe, A1_DESIGN_URL=http://127.0.0.1:8010; pnpm.cmd exec playwright test | A1 and frontend regression | 69 passed including two new journeys | pass |
+| repo | Open login.html and 01-account.html#profile via local design server; compare 1440×1000 and 390×1000 | Actual and reference pairs | Eight captures and viewport checks | pass |
+| src/frontend | Earlier optional DESIGN_REFERENCE_URL checks | Optional reference checks | Two skipped | not-run |
+| repo | PO review of FE-03.05 | Owner verdict | Pending | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent verification. Prior login/profile approvals retained. PO review of FE-03.05 pending.
+- Findings / resolution: existing logout path clears private state and passed A1. No product UI edits. Differences documented in comparison.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO review outstanding. Parent FE-03 acceptance needs review of earlier FE-03.01 gaps, including delay/network and detailed motion lifecycle/zoom. FE-02 remains EPIC_IN_PROGRESS in registry. No backend security verification.
+- Required resolution / owner: PO reviews A1 and remaining Parent evidence before closing or publishing the Parent.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-03.05.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison and API01 handoff](../evidence/FE-03.05/comparison.md), [browser log](../evidence/FE-03.05/browser.log).
+- Commit / build / environment: 78d0f99bf80c5dcc287f1c168f556fa1cf9e2ac0 pushed to phase/a-frontend and remote verified. FE-03.04 approval commit 17f4fa7 also pushed. Build passed. Preview http://127.0.0.1:3109/login.
+- Parent delivery: FE-03 remains EPIC_IN_PROGRESS. FE-03.05 awaits review and Parent acceptance is not certified. No Parent PR.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-01 linked.
+- Execution-board task row: FE-03.05 review, FE-03.04 done, Owner PO.
+- Current context: review and A1 handoff recorded.
+- Parent state: unchanged until closure evidence passes.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FE-03.05. Next candidate FE-04.01.
+- Eligibility / remaining prerequisite: FE-03.05 done, verified Parent delivery/merge as applicable, and separate assignment.
+
