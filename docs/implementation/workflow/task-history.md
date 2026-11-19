@@ -1562,3 +1562,83 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 - Next eligible task / resume step: FE-03.04.
 - Eligibility / remaining prerequisite: FE-03.02 done, PO assigned next task.
 
+
+<a id="task-fe-03-04-attempt-01"></a>
+
+### FE-03.04 — Attempt 01 — 2026-11-19T11:52:09.5407799+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-03.04/attempt-01
+- Task: [task specification](../tasks/FE-03.04.md)
+- Parent / phase: FE-03 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-19T11:49:30+07:00 (first recorded clock checkpoint after implementation began)
+- Ended at: 2026-11-19T11:52:09.5407799+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none for FE-03.04. [FE-03.03 PO closure](#task-fe-03-03-attempt-02).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: implement own DEMO password-change interaction.
+- Delivered this attempt: protected form, independent visibility, autofill, confirmation, validation and duplicate-submit guard. Wrong-current and simulated 503 leave the session unchanged. Successful mock outcome clears fields, revokes the session and shows a re-entry message on login.
+- Incomplete scope / deviations: PO review pending. Password hashing, policy, actual credential changes and production session revocation are outside Phase A.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/auth/password-form.tsx and CSS, workspace-entry.tsx | PasswordForm and protected route | Three-field form and feedback |
+| src/frontend/src/lib/demo/gateway.ts and scenarios.ts, session-store.ts, login-form.tsx | Mock invalidation event and 503 fixture | Verified session end and login notice |
+| src/frontend/e2e/password.spec.ts and src/frontend/src/app/preview/session/page.tsx | Browser suite and isolated fixtures | Exercise failure, success and exit |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Password autofill, visibility, validation, transient values | Current/new autofill, separate controls and confirmation. Values drawn from DOM only on submit and not retained or logged | pass | PasswordForm and browser |
+| 2 | Rejected/network results keep session; success clears and revokes | Both failure fixtures retain shell. Duplicate submit blocked. Success returns to login, shows mock outcome and starts a fresh blank form after re-entry | pass | [browser log](../evidence/FE-03.04/browser.log) |
+| 3 | Explicit DEMO rules and cleared input on cancel/exit | Inline DEMO help. Cancel and normal route exit tested | pass | browser and comparison |
+| 4 | Retain approved screen structure | Agent compared single-panel Mac/Teal layout, validation focus and desktop/mobile reflow | pass | [comparison](../evidence/FE-03.04/comparison.md) |
+| 5 | Actual/reference images and PO verdict | Four matching-viewport images saved. PO review pending | not-run | [comparison](../evidence/FE-03.04/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd lint; pnpm.cmd format:check; pnpm.cmd test | Build and static checks; tests | All passed, 91 unit tests | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3107, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe; pnpm.cmd exec playwright test | All required browser cases | 67 pass including five FE-03.04 cases | pass |
+| repo | python -m http.server 8010 --bind 127.0.0.1 --directory docs/design; open /final/01-account.html?capture=1#security before changes; compare 1440×1000 and 390×1000 | Reference and actual | Four captures, no application horizontal overflow | pass |
+| src/frontend | Optional earlier captures | Optional evidence | Two skipped because DESIGN_REFERENCE_URL unset | not-run |
+| repo | PO acceptance for FE-03.04 | Owner verdict | Pending | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent self-review, PO verdict pending.
+- Findings / resolution: actual form adds DEMO help and visibility buttons to approved structure. Shared login summary shows successful session end. No separate error specimen. See comparison.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO review remains open. Chromium mobile emulation used.
+- Required resolution / owner: PO reviews FE-03.04 before done.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-03.04.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [Comparison and PO walkthrough](../evidence/FE-03.04/comparison.md), [browser log](../evidence/FE-03.04/browser.log).
+- Commit / build / environment: b3e3125cbf517de11f5e0c4ea211c43e41cfe052 and FE-03.03 approval 40c6db7 pushed to phase/a-frontend. Remote verified. Build passed. Local preview http://127.0.0.1:3107/login?returnTo=%2Fprofile%2Fsecurity.
+- Parent delivery: FE-03 EPIC_IN_PROGRESS. FE-03.04 awaits review and FE-03.05 is pending, so no Parent PR. FE-02 PR #3 merge was verified previously.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-01 linked.
+- Execution-board task row: review, Owner PO. FE-03.03 is done.
+- Current context: latest checks, gaps and report link updated.
+- Parent state: FE-03 EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO review FE-03.04, then FE-03.05 on separate assignment.
+- Eligibility / remaining prerequisite: FE-03.03 done. FE-03.04 must be done before FE-03.05.
+
