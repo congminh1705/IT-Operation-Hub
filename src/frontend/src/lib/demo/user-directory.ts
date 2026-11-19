@@ -30,7 +30,11 @@ type ProvisioningResult =
       message: string;
     };
 
-export function createUserDirectory(getActor: () => UserView | undefined) {
+export function createUserDirectory(
+  getActor: () => UserView | undefined,
+  getVerifiedDepartment = (): string | undefined =>
+    provisioningRequest.department,
+) {
   const users: DirectoryUser[] = Object.values(
     createDemoFixtures().personas,
   ).map(({ user }) => ({
@@ -81,7 +85,7 @@ export function createUserDirectory(getActor: () => UserView | undefined) {
     if (
       draft.reference.trim().toUpperCase() !== provisioningRequest.id ||
       email !== provisioningRequest.email ||
-      department !== provisioningRequest.department
+      department !== getVerifiedDepartment()
     )
       return {
         kind: "error",

@@ -1,4 +1,5 @@
 "use client";
+import { CatalogScreen } from "@/features/administration/catalog-screen";
 import { UsersScreen } from "@/features/administration/users-screen";
 import { PasswordForm } from "./password-form";
 import { ProfileForm } from "./profile-form";
@@ -59,6 +60,14 @@ export function WorkspaceEntry({
           <PasswordForm />
         ) : pathname === "/admin/users" || pathname === "/admin/users/new" ? (
           <UsersScreen key={pathname} create={pathname.endsWith("/new")} />
+        ) : pathname === "/admin/departments" ||
+          pathname === "/admin/categories" ? (
+          <CatalogScreen
+            key={pathname}
+            kind={
+              pathname === "/admin/departments" ? "departments" : "categories"
+            }
+          />
         ) : undefined
       }
       persona={persona}

@@ -154,7 +154,13 @@ function Directory({
 
 function ProvisioningForm() {
   const { store } = useSession();
-  const [draft, setDraft] = useState(initial);
+  const availableDepartments = store.catalog
+    .list("departments")
+    .filter((row) => row.active);
+  const [draft, setDraft] = useState({
+    ...initial,
+    department: availableDepartments[0]?.label ?? "",
+  });
   const [preview, setPreview] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<{ field?: string; message: string }>();
@@ -261,7 +267,7 @@ function ProvisioningForm() {
               value={draft.department}
               onChange={(e) => edit("department", e.target.value)}
             >
-              {departments.map((item) => (
+              {availableDepartments.map(({ label: item }) => (
                 <option key={item}>{item}</option>
               ))}
             </select>

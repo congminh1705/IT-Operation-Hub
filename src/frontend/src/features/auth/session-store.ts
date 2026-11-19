@@ -1,3 +1,4 @@
+import { createOrganizationCatalog } from "../../lib/demo/organization-catalog";
 import { createUserDirectory } from "../../lib/demo/user-directory";
 import { createDemoGateway, type DemoAdapter } from "../../lib/demo/gateway";
 import { createDemoFixtures, type DemoPersona } from "../../lib/demo/fixtures";
@@ -12,7 +13,14 @@ import type { QueryClient } from "../../lib/api/query-client";
 /** Memory-only session. Epochs fence late auth responses as well as query results. */
 export class SessionStore {
   private persona: DemoPersona | null = null;
-  readonly directory = createUserDirectory(() => this.persona?.user);
+  readonly catalog = createOrganizationCatalog(() => this.persona?.user);
+  readonly directory = createUserDirectory(
+    () => this.persona?.user,
+    () =>
+      this.catalog
+        .list("departments")
+        .find((row) => row.id === "dept-acc" && row.active)?.label,
+  );
   private epoch = 0;
   passwordChanged = false;
   private read = 0;
