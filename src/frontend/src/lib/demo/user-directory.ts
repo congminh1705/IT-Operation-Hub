@@ -1,4 +1,5 @@
-﻿import { createDemoFixtures } from "./fixtures";
+import { reviewAccessImpact, type AccessChange } from "./access-impact";
+import { createDemoFixtures } from "./fixtures";
 import type { Role, UserView } from "../api/types";
 
 export const departments = ["Kế toán", "IT", "Nhân sự", "Kinh doanh"] as const;
@@ -17,7 +18,7 @@ export type ProvisioningDraft = {
   role: Role;
 };
 
-type DirectoryUser = Omit<ProvisioningDraft, "reference"> & {
+export type DirectoryUser = Omit<ProvisioningDraft, "reference"> & {
   active: boolean;
 };
 
@@ -105,6 +106,14 @@ export function createUserDirectory(getActor: () => UserView | undefined) {
   return {
     list: (): DirectoryUser[] =>
       isAdmin() ? users.map((user) => ({ ...user })) : [],
+    reviewAccess(email: string, change: AccessChange) {
+      if (!isAdmin()) return null;
+      const user = users.find((row) => row.email === email);
+      const actor = getActor();
+      return user && actor
+        ? reviewAccessImpact(user, change, actor.email, users)
+        : null;
+    },
     preview: validate,
     create(draft: ProvisioningDraft, password: string): ProvisioningResult {
       const result = validate(draft, password);

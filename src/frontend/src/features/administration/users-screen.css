@@ -136,3 +136,46 @@
     padding-inline: 16px;
   }
 }
+.access-review {
+  margin: 16px;
+}
+.access-review-form,
+.access-result {
+  display: grid;
+  gap: 12px;
+}
+.access-review-form .access-emergency {
+  display: flex;
+  align-items: center;
+}
+.access-emergency input {
+  width: 20px;
+  min-height: 20px;
+}
+.access-result h3 {
+  font-weight: 650;
+}
+.access-result dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 12px;
+}
+.access-result dt {
+  font-weight: 600;
+}
+.access-result ul {
+  padding-inline-start: 22px;
+  list-style: disc;
+}
+.access-blocked {
+  border-radius: 6px;
+  background: #fff1f2;
+  color: #9f1239;
+  padding: 12px;
+}
+.directory-table table {
+  min-width: 640px;
+}
+.directory-table .ui-button {
+  white-space: nowrap;
+}

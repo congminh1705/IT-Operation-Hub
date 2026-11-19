@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { AccessReview } from "./access-review";
 import { useRef, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/features/auth/session";
@@ -8,6 +9,7 @@ import {
   departments,
   provisioningRequest,
   type ProvisioningDraft,
+  type DirectoryUser,
 } from "@/lib/demo/user-directory";
 import "./users-screen.css";
 
@@ -42,6 +44,8 @@ function Directory({
 }) {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("all");
+  const [selected, setSelected] = useState<DirectoryUser>();
+  const trigger = useRef<HTMLButtonElement>(null);
   const filtered = rows.filter(
     (row) =>
       normalize(row.name + " " + row.email).includes(normalize(query.trim())) &&
@@ -90,6 +94,7 @@ function Directory({
                 <th scope="col">Phòng ban</th>
                 <th scope="col">Vai trò</th>
                 <th scope="col">Trạng thái</th>
+                <th scope="col">Thao tác</th>
               </tr>
             </thead>
             <tbody>
@@ -106,6 +111,23 @@ function Directory({
                       {row.active ? "Đang hoạt động" : "Đã khóa"}
                     </span>
                   </td>
+                  <td>
+                    <Button
+                      variant="secondary"
+                      aria-label={`Xem tác động: ${row.name}`}
+                      onClick={(event) => {
+                        trigger.current = event.currentTarget;
+                        setSelected(row);
+                        requestAnimationFrame(() =>
+                          document
+                            .getElementById("access-review-title")
+                            ?.focus(),
+                        );
+                      }}
+                    >
+                      Xem tác động
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -115,6 +137,16 @@ function Directory({
         <p className="directory-empty" role="status">
           Không có người dùng phù hợp.
         </p>
+      )}
+      {selected && (
+        <AccessReview
+          key={selected.email}
+          user={selected}
+          onClose={() => {
+            setSelected(undefined);
+            trigger.current?.focus();
+          }}
+        />
       )}
     </section>
   );
