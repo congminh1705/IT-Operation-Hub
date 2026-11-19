@@ -2177,3 +2177,85 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-04.03, assigned by PO.
 - Eligibility / remaining prerequisite: FE-04.02 done; FE-04.03 assigned.
+
+<a id="task-fe-04-03-attempt-01"></a>
+
+### FE-04.03 — Attempt 01 — 2026-11-19T14:22:12.6324123+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-04.03/attempt-01
+- Task: [task specification](../tasks/FE-04.03.md)
+- Parent / phase: FE-04 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-19T14:19:01+07:00 (first logged test checkpoint; implementation preceded it)
+- Ended at: 2026-11-19T14:22:12.6324123+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none. [FE-04.02 approval](#task-fe-04-02-attempt-02).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Admin creates, edits and deactivates DEMO departments/categories.
+- Delivered this attempt: unique labels, protected routes, stable IDs with historical fixture links, active-only choices and provisioning guard, explicit confirmation.
+- Incomplete scope / deviations: PO review pending. Intake configuration is FE-04.04. Organization data is memory-only.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/administration/catalog-screen.tsx and CSS | CatalogScreen, forms and references | Admin UX |
+| src/frontend/src/lib/demo/organization-catalog.ts, auth/session-store.ts and workspace-entry.tsx | createOrganizationCatalog and guarded composition | Mock persistence and Admin scope |
+| src/frontend/src/features/administration/users-screen.tsx and lib/demo/user-directory.ts | Active departments and verified reference validation | Exclude inactive department from new provisioning |
+| src/frontend/e2e/organization-catalog.spec.ts | Five new browser cases | CRUD, denied entry and capture |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Create/edit/deactivate with validation and durable fixture references | Both catalog journeys pass; inactive no longer selectable; history stays readable | pass | [browser](../evidence/FE-04.03/final-browser.log) |
+| 2 | Parent criterion 1 within scope | Admin-only, independent catalogs; stable records and no destructive delete | pass | CatalogScreen, organization-catalog.ts |
+| 3 | DEMO transport and safe rejection | Invalid/duplicate/non-Admin states verified; inactive verified department cannot provision | pass | browser and adapter |
+| 4 | Approved layout | Agent compared desktop/mobile for both screens and recorded differences | pass | [comparison](../evidence/FE-04.03/comparison.md) |
+| 5 | Captures and owner verdict | Eight captures saved; owner verdict pending | not-run | comparison |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd format:check; pnpm.cmd test | Production build and basic checks | Pass, 91 unit; final build after lint cleanup also passed | pass |
+| src/frontend | pnpm.cmd exec eslint . --ignore-pattern test-results/** | Source lint | Initial warning simplified; clean rerun | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3114, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe, ADMIN_DESIGN_URL=http://127.0.0.1:8010; pnpm.cmd exec playwright test | Full regression | 83 pass, two prior optional captures skipped | pass |
+| src/frontend | Same settings with port 3115; pnpm.cmd exec playwright test e2e/organization-catalog.spec.ts e2e/administration.spec.ts | Final affected browser checks after equivalent focus cleanup | 10 pass | pass |
+| repo | Compare both approved hash views and running app at 1440 and 390 | Actual and reference | Eight captures; no page overflow | pass |
+| src/frontend | Two earlier optional DESIGN_REFERENCE_URL captures | Optional | Skipped | not-run |
+| repo | PO visual review | Owner verdict | Pending | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent verified Chromium behavior and visual comparison. PO pending.
+- Findings / resolution: updated form focus expression to remove lint warning; affected browser tests rerun. Fixture intake label is informational.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO review pending. Team intake management remains FE-04.04.
+- Required resolution / owner: PO reviews before done.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-04.03.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison and PO walkthrough](../evidence/FE-04.03/comparison.md), [full browser log](../evidence/FE-04.03/browser.log), [final targeted log](../evidence/FE-04.03/final-browser.log).
+- Commit / build / environment: implementation 2d4ab160aa2671a40c2b4767490696ac625c610b, FE-04.02 approval 798fa61, pushed to phase/a-frontend. Production build pass. Preview http://127.0.0.1:3115/login?returnTo=%2Fadmin%2Fdepartments.
+- Parent delivery: FE-04 EPIC_IN_PROGRESS, no Parent PR. Previous FE-03 PR #4 verified merged.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-01 linked.
+- Execution-board task row: review, Owner PO. FE-04.02 done.
+- Current context: FE-04.03 findings and next prerequisite.
+- Parent state: FE-04 EPIC_IN_PROGRESS, remaining children pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FE-04.03. Candidate FE-04.04.
+- Eligibility / remaining prerequisite: FE-04.03 done and separate assignment.
