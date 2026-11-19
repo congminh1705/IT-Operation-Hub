@@ -1,4 +1,5 @@
 "use client";
+import { TeamsScreen } from "@/features/administration/teams-screen";
 import { CatalogScreen } from "@/features/administration/catalog-screen";
 import { UsersScreen } from "@/features/administration/users-screen";
 import { PasswordForm } from "./password-form";
@@ -68,6 +69,8 @@ export function WorkspaceEntry({
               pathname === "/admin/departments" ? "departments" : "categories"
             }
           />
+        ) : pathname === "/admin/teams" ? (
+          <TeamsScreen />
         ) : undefined
       }
       persona={persona}

@@ -111,7 +111,7 @@ export function CatalogScreen({ kind }: { kind: CatalogKind }) {
                 {rows.map((row) => (
                   <tr key={row.id}>
                     <th scope="row">{row.label}</th>
-                    <td>{department ? row.code : "IT Support (DEMO)"}</td>
+                    <td>{department ? row.code : store.teams.intakeName()}</td>
                     <td>
                       <span
                         className="directory-status"
