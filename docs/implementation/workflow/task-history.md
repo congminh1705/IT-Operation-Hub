@@ -1797,3 +1797,75 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 - Next eligible task / resume step: PO reviews FE-03.05. Next candidate FE-04.01.
 - Eligibility / remaining prerequisite: FE-03.05 done, verified Parent delivery/merge as applicable, and separate assignment.
 
+<a id="task-fe-03-05-attempt-02"></a>
+
+### FE-03.05 — Attempt 02 — 2026-11-19T12:04:21+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-03.05/attempt-02
+- Task: [task specification](../tasks/FE-03.05.md)
+- Parent / phase: FE-03 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-19T12:04:21+07:00
+- Ended at: 2026-11-19T12:04:21+07:00
+- State before / after: review / done
+- Previous attempt / correction: [attempt-01](#task-fe-03-05-attempt-01)
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record PO review and close FE-03.05.
+- Delivered this attempt: confirmed approval, synchronized records.
+- Incomplete scope / deviations: none for this closure.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-03.05.md and workflow records | PO approval | Closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Logout and account isolation | Prior tests retained | pass | attempt-01 |
+| 2 | A1 desktop/mobile and keyboard journeys | Prior tests retained | pass | attempt-01 |
+| 3 | A1 evidence and API01 handoff | Prior tests retained | pass | attempt-01 |
+| 4 | Approved UI | PO reviewed and requested done | pass | PO instruction |
+| 5 | Captures and owner verdict | Prior captures, PO reviewed | pass | [comparison](../evidence/FE-03.05/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Verify task, board and report links | Consistent status | done | pass |
+| src/frontend | Application checks | Documentation-only closure | Prior results retained | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO confirmed review and requested done.
+- Findings / resolution: no changes requested.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-03.05.
+- Required resolution / owner: none.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-03.05.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [attempt-01](#task-fe-03-05-attempt-01).
+- Commit / build / environment: tests 78d0f99 and review handoff 4f14952 verified on phase/a-frontend. Closure delivery reported separately.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-02.
+- Execution-board task row: done, Owner PO.
+- Current context: closure and remaining Parent gates recorded.
+- Parent state: FE-03 EPIC_IN_PROGRESS. FE-03.01 verification gaps remain; no Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Reconcile FE-03 Parent acceptance and delivery; FE-04.01 remains pending.
+- Eligibility / remaining prerequisite: FE-03.05 done; FE-04.01 awaits Parent delivery gates and separate assignment.

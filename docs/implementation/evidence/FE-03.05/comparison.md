@@ -1,6 +1,6 @@
-﻿# FE-03.05 — Bàn giao A1
+# FE-03.05 — Bàn giao A1
 
-Cùng viewport 1440×1000 và 390×1000, Chromium, Requester, reduced motion. Các màn đăng nhập và hồ sơ đã được PO duyệt ở các task trước. Lượt đối chiếu FE-03.05 là kiểm tra của agent, bộ ảnh mới đang chờ PO.
+Cùng viewport 1440×1000 và 390×1000, Chromium, Requester, reduced motion. Các màn đăng nhập và hồ sơ đã được PO duyệt ở các task trước. Lượt đối chiếu FE-03.05 là kiểm tra của agent, PO đã xác nhận review và yêu cầu đóng FE-03.05 ngày 2026-11-19.
 
 | Màn | Mẫu desktop / mobile | Ứng dụng desktop / mobile |
 | --- | --- | --- |
@@ -20,6 +20,6 @@ Hai test A1 đi qua bốn tài khoản trong cùng tab, lưu tên, mở form m�
 | Hồ sơ chính mình | PATCH /auth/profile. Chỉ display_name và expectedVersion theo mock hiện tại; xử lý xung đột, không nhận role/email/userId từ client. |
 | Đổi mật khẩu | POST /auth/password. Tiêu chí mật khẩu thật, hashing và thu hồi phiên thuộc backend/tích hợp. |
 
-Giữ UI guard và cache phân vùng theo principal, scope và epoch. Xóa/hủy cache khi kết thúc phiên hoặc chuyển tài khoản, bỏ kết quả đến muộn. Browser fixture kiểm tra NFR02/16 phía frontend; việc thử lại cookie cũ và xác nhận server authorization vẫn thuộc tích hợp. A1 có dữ liệu kiểm tra frontend, còn PO review FE-03.05 và rà soát đóng Parent. FE-03.01 có nợ kiểm tra chi tiết về auth delay/network và vòng đời hiệu ứng/zoom như hồ sơ cũ đã ghi; hồi quy A1 không thay thế toàn bộ các ca đó. FE-02 tracker vẫn EPIC_IN_PROGRESS, cần đối chiếu tiêu chí Parent và trạng thái PR trước khi đóng. FE-04.01 là ứng viên kế tiếp sau khi FE-03.05 done và cổng PR Parent được giải quyết.
+Giữ UI guard và cache phân vùng theo principal, scope và epoch. Xóa/hủy cache khi kết thúc phiên hoặc chuyển tài khoản, bỏ kết quả đến muộn. Browser fixture kiểm tra NFR02/16 phía frontend; việc thử lại cookie cũ và xác nhận server authorization vẫn thuộc tích hợp. A1 có dữ liệu kiểm tra frontend, FE-03.05 đã được PO nghiệm thu và còn rà soát đóng Parent. FE-03.01 có nợ kiểm tra chi tiết về auth delay/network và vòng đời hiệu ứng/zoom như hồ sơ cũ đã ghi; hồi quy A1 không thay thế toàn bộ các ca đó. FE-02 tracker vẫn EPIC_IN_PROGRESS, cần đối chiếu tiêu chí Parent và trạng thái PR trước khi đóng. FE-04.01 là ứng viên kế tiếp sau khi FE-03.05 done và cổng PR Parent được giải quyết.
 
 PO có thể mở http://127.0.0.1:3109/login. Dùng requester@demo.invalid, technician@demo.invalid, it_manager@demo.invalid, admin@demo.invalid với mật khẩu DEMO không rỗng như demo. Đăng nhập, chỉnh tên, thử xác nhận mật khẩu sai, đăng xuất bằng menu tài khoản, nhấn Back rồi đăng nhập vai trò khác. Kiểm tra phiên và hồ sơ mới đúng tài khoản. Các tình huống chậm/hết hạn có trong /preview/session.
