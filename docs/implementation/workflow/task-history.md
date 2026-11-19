@@ -1869,3 +1869,84 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Reconcile FE-03 Parent acceptance and delivery; FE-04.01 remains pending.
 - Eligibility / remaining prerequisite: FE-03.05 done; FE-04.01 awaits Parent delivery gates and separate assignment.
+
+<a id="task-fe-04-01-attempt-01"></a>
+
+### FE-04.01 — Attempt 01 — 2026-11-19T12:44:33.2238993+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-04.01/attempt-01
+- Task: [task specification](../tasks/FE-04.01.md)
+- Parent / phase: FE-04 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-19T12:42:20+07:00 (first recorded test checkpoint; implementation preceded it)
+- Ended at: 2026-11-19T12:44:33.2238993+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none. FE-03.05 done; [FE-03 PR #4](https://github.com/congminh1705/IT-Operation-Hub/pull/4) verified merged, phase fast-forwarded to c051118 before coding.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Admin-only searchable DEMO user directory and request-verified provisioning.
+- Delivered this attempt: name/email search, status filter, default Requester, reference/email/department validation, duplicate handling, masked password, preview, cancel and explicit save.
+- Incomplete scope / deviations: PO review pending. IT roles require approved fixtures beyond this verified Requester request. Created entries are mock directory records, not login principals.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/administration/users-screen.tsx and CSS | UsersScreen, Directory, ProvisioningForm | Mac/Teal directory and form |
+| src/frontend/src/lib/demo/user-directory.ts, features/auth/session-store.ts and workspace-entry.tsx | createUserDirectory and session-based composition | Mock validation and Admin scope |
+| src/frontend/src/lib/navigation.ts, components/layout/workspace-page.tsx | Protected list and create routes | Entry guard and title |
+| src/frontend/e2e/administration.spec.ts | Five browser cases | Behavior and matching captures |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Admin list and explicit verified create | Search/filter, three non-Admin rejects, duplicate/unverified failures, preview/cancel/save passed | pass | [browser](../evidence/FE-04.01/browser.log) |
+| 2 | Parent criteria 1/2 within scope | Name/email/department/Requester and initial password; verified fixture and no ticket transition or grant | pass | mock directory and comparison |
+| 3 | Synthetic transport and safe failures | In-memory Admin guard, no password in preview/result, cancel adds nothing | pass | browser and user-directory.ts |
+| 4 | Retain approved layout | Agent compared two screens desktop/mobile; differences recorded | pass | [comparison](../evidence/FE-04.01/comparison.md) |
+| 5 | Capture reference/actual and record owner verdict | Eight captures complete, PO verdict pending | not-run | comparison |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd format:check; pnpm.cmd test | Build and static/unit | All passed, 91 unit | pass |
+| src/frontend | pnpm.cmd exec eslint . --ignore-pattern test-results/** | Lint tracked application and checks | Pass after excluding local FE-03.01 temporary CommonJS probe. Plain pnpm.cmd lint initially failed on that ignored local artifact | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3111, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe, ADMIN_DESIGN_URL=http://127.0.0.1:8010; pnpm.cmd exec playwright test | Production Chromium | 74 pass including five FE-04.01; initial role-label failure fixed | pass |
+| repo | Open 08-admin-states.html?capture=1#users and #user-create via local design server; compare 1440 and 390px | Actual/reference | Eight captures and viewport checks completed | pass |
+| src/frontend | Earlier optional captures requiring DESIGN_REFERENCE_URL | Optional | Two skipped | not-run |
+| repo | PO review | Owner verdict | Pending | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent comparison and browser checks, PO awaiting review.
+- Findings / resolution: explicit accessible name added to selects. Admin fixture is Requester-only. Mobile table scrolls within its own region. Adjacent access-change actions excluded.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO review outstanding. Physical mobile/Safari/Firefox not checked. No real provisioning, credential storage or role elevation.
+- Required resolution / owner: PO reviews task and evidence before done.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-04.01.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison and PO walkthrough](../evidence/FE-04.01/comparison.md), [browser](../evidence/FE-04.01/browser.log).
+- Commit / build / environment: implementation 6cd8fe16123f6c4850e7b49cbd62ada37ef6afdd pushed to phase/a-frontend, remote verified. Production build pass. Local preview http://127.0.0.1:3111/login?returnTo=%2Fadmin%2Fusers.
+- Parent delivery: FE-04 EPIC_IN_PROGRESS, no Parent PR. Previous PR #4 verified merged at c051118.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-01 linked.
+- Execution-board task row: FE-04.01 review, Owner PO.
+- Current context: updated to FE-04.01 handoff and verified FE-03 merge.
+- Parent state: FE-04 EPIC_IN_PROGRESS; remaining children and closure gates pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FE-04.01. Next candidate FE-04.02.
+- Eligibility / remaining prerequisite: FE-04.01 done and separate assignment before FE-04.02.

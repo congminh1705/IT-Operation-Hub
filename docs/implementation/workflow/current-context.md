@@ -1,4 +1,4 @@
----
+﻿---
 id: itoh-current-context
 title: "Current task context"
 type: planning
@@ -9,13 +9,14 @@ authority: derived
 
 # Current task context
 
-- As of: 2026-11-19T12:04:21+07:00. Owner PO.
-- State: 12 done, 218 pending. FE-03.04 and FE-03.05 done by PO. FE-03 EPIC_DONE theo PO.
+- As of: 2026-11-19T12:44:33.2238993+07:00. Owner PO.
+- State: 12 done, 1 review, 217 pending. FE-04.01 review. FE-04 EPIC_IN_PROGRESS.
 
 ## Latest task report
 
-- [FE-03.05/attempt-02](task-history.md#task-fe-03-05-attempt-02) verifies logout, cache isolation and four-account A1 journeys at 1440 and 390px. [Task](../tasks/FE-03.05.md).
-- Checks: 91 unit and 69 Chromium pass, 2 optional captures skipped. Build, typecheck, lint and format passed.
-- Review: [captures, behavior and API01 handoff](../evidence/FE-03.05/comparison.md). PO confirmed review and requested done. Existing FE-03.01 verification gaps retained.
-- Git: phase/a-frontend, 78d0f99 pushed and verified. FE-03.04 approved in 17f4fa7. FE-03 [Parent PR #4](https://github.com/congminh1705/IT-Operation-Hub/pull/4) opened into main; awaiting PO merge. FE-02 remains EPIC_IN_PROGRESS in registry.
-- Next: PO reviews and merges PR #4 before the next Parent. FE-04.01 remains pending until Parent delivery conditions are met and PO assigns it.
+- [FE-04.01/attempt-01](task-history.md#task-fe-04-01-attempt-01) delivers an Admin-only DEMO directory and verified-request provisioning. [Task card](../tasks/FE-04.01.md).
+- Main files: users-screen.tsx and CSS, user-directory.ts, workspace route guard and administration.spec.ts.
+- Checks: 91 unit and 74 Chromium pass, 2 optional captures skipped. Build, typecheck, format and application lint passed.
+- Review: [screenshots, limitations and PO walkthrough](../evidence/FE-04.01/comparison.md). PO acceptance pending.
+- Git: phase/a-frontend, 6cd8fe1 pushed and verified. FE-03 [PR #4](https://github.com/congminh1705/IT-Operation-Hub/pull/4) verified merged, baseline c051118. FE-04 Parent PR awaits completion.
+- Next: PO reviews FE-04.01. FE-04.02 needs FE-04.01 done and separate assignment.
