@@ -6,8 +6,10 @@ import { workStates } from "@/lib/demo/work-board";
 import { effectiveScope } from "@/lib/navigation";
 import { formatBusinessTime } from "@/lib/dates";
 import "./work-board.css";
+import { WorkPlan } from "./work-plan";
 export function WorkBoard({ scope }: { scope?: string }) {
   const { store, persona } = useSession();
+  const [showPlan, setShowPlan] = useState(false);
   const [view, setView] = useState<"cards" | "table">("cards");
   const [filter, setFilter] = useState("");
   const [state, setState] = useState("");
@@ -28,11 +30,37 @@ export function WorkBoard({ scope }: { scope?: string }) {
             .includes(filter.trim().toLocaleLowerCase("vi")),
         ),
     );
+  const planTasks = store.work.list(persona, store.teams.ownTeamIds(), "team");
+  const hasPlan = planTasks.some((row) => row.ticket === "TKT-000127");
+  if (showPlan && hasPlan)
+    return (
+      <div className="work-board">
+        <button
+          type="button"
+          className="ui-button work-back"
+          data-variant="secondary"
+          onClick={() => setShowPlan(false)}
+        >
+          Về bảng công việc
+        </button>
+        <WorkPlan rows={planTasks} />
+      </div>
+    );
   return (
     <div className="work-board">
       <div className="work-board-summary">
         <strong>{rows.length} công việc</strong>
         <p>Hoàn thành công việc không tự đóng yêu cầu.</p>
+        {hasPlan && (
+          <button
+            type="button"
+            className="ui-button"
+            data-variant="secondary"
+            onClick={() => setShowPlan(true)}
+          >
+            Xem kế hoạch
+          </button>
+        )}
       </div>
       <section className="work-panel" aria-label="Bộ lọc công việc">
         <div className="work-controls">

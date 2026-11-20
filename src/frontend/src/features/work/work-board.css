@@ -1,4 +1,4 @@
-﻿.work-board {
+.work-board {
   display: grid;
   gap: 16px;
   min-width: 0;
@@ -94,4 +94,27 @@
   .work-columns {
     grid-template-columns: 1fr;
   }
+}
+
+.work-back {
+  justify-self: start;
+}
+.work-plan-levels {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 12px;
+}
+.work-plan-levels > li {
+  min-width: 0;
+}
+.work-plan-levels .work-card {
+  margin-top: 8px;
+}
+.work-plan-item {
+  padding-block: 8px;
+}
+.work-plan-item p {
+  margin: 4px 0 0;
 }
