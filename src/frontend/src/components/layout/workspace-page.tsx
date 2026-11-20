@@ -6,7 +6,8 @@ import {
   canOpenDestination,
   effectiveScope,
   getAccountLinks,
-  knownDestinations,
+  isKnownDestination,
+  isTicketDetail,
 } from "@/lib/navigation";
 import { Feedback } from "../feedback/feedback";
 import { WorkspaceShell } from "./workspace-shell";
@@ -29,7 +30,7 @@ export function WorkspacePage({
   prefix?: string;
   content?: React.ReactNode;
 }) {
-  if (!knownDestinations.has(pathname)) notFound();
+  if (!isKnownDestination(pathname)) notFound();
   const scope = effectiveScope(persona, pathname, first(search.scope));
   const item = activeNavigation(persona, pathname, scope);
   const label =
@@ -37,6 +38,7 @@ export function WorkspacePage({
       ? "Tạo người dùng"
       : undefined) ??
     (pathname === "/tickets/new" ? "Tạo yêu cầu" : undefined) ??
+    (isTicketDetail(pathname) ? "Chi tiết yêu cầu" : undefined) ??
     item?.label ??
     getAccountLinks(persona).find((item) => item.href === pathname)?.label ??
     "Không có quyền truy cập";

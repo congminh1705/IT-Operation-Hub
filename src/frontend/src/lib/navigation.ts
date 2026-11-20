@@ -277,9 +277,13 @@ export function activeNavigation(
   );
 }
 
+export const isTicketDetail = (pathname: string) =>
+  /^\/tickets\/TKT-\d{6,}$/.test(pathname);
+export const isKnownDestination = (pathname: string) =>
+  knownDestinations.has(pathname) || isTicketDetail(pathname);
 export function canOpenDestination(persona: DemoPersona, pathname: string) {
   const destination =
-    pathname === "/tickets/new"
+    pathname === "/tickets/new" || isTicketDetail(pathname)
       ? "/tickets"
       : pathname === "/admin/users/new"
         ? "/admin/users"

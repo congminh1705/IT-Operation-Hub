@@ -1,4 +1,7 @@
-﻿"use client";
+"use client";
+import type { WorkspaceSearch } from "@/components/layout/workspace-page";
+import { submitFixtures } from "@/lib/demo/ticket-intake";
+
 import { useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -12,7 +15,7 @@ import {
 import "@/features/administration/users-screen.css";
 import "./ticket-form.css";
 
-export function TicketForm() {
+export function TicketForm({ search }: { search: WorkspaceSearch }) {
   const { persona, store } = useSession();
   const router = useRouter();
   const [type, setType] = useState("");
@@ -22,6 +25,30 @@ export function TicketForm() {
   const [dirty, setDirty] = useState(false);
   const [error, setError] = useState<{ field: string; message: string }>();
   const [draft, setDraft] = useState<TicketDraft>();
+  const [submission, setSubmission] = useState<
+    "pending" | "failure" | "stale" | "unknown"
+  >();
+  const intent = useRef("");
+  const busy = useRef(false);
+  const feedback = useRef<HTMLParagraphElement>(null);
+  async function send() {
+    if (!draft || !persona || busy.current || submission === "unknown") return;
+    busy.current = true;
+    setSubmission("pending");
+    const result = await store.tickets.submit(
+      persona,
+      draft,
+      intent.current,
+      submitFixtures.find((item) => item === search.demo),
+    );
+    busy.current = false;
+    if (result.kind === "success") {
+      router.replace("/tickets/" + result.id);
+      return;
+    }
+    setSubmission(result.kind);
+    requestAnimationFrame(() => feedback.current?.focus());
+  }
   const [files, setFiles] = useState<File[]>([]);
   const form = useRef<HTMLFormElement>(null);
   const fileInput = useRef<HTMLInputElement>(null);
@@ -43,6 +70,8 @@ export function TicketForm() {
       return;
     }
     setError(undefined);
+    intent.current = crypto.randomUUID();
+    setSubmission(undefined);
     setDraft(result.draft);
     requestAnimationFrame(() => heading.current?.focus());
   }
@@ -288,10 +317,49 @@ export function TicketForm() {
               {draft.title} · {draft.priority}
             </p>
             <p>{draft.category}</p>
-            <p>Chưa ghi nhận yêu cầu.</p>
+            {!submission && <p>Chưa ghi nhận yêu cầu.</p>}
+            {submission && (
+              <p
+                ref={feedback}
+                tabIndex={-1}
+                role={submission === "pending" ? "status" : "alert"}
+              >
+                {submission === "pending"
+                  ? "Đang gửi yêu cầu…"
+                  : submission === "failure"
+                    ? "Chưa gửi được yêu cầu. Bản nháp vẫn còn."
+                    : submission === "stale"
+                      ? "Ngữ cảnh đã thay đổi. Kiểm tra lại bản nháp trước khi gửi."
+                      : "Chưa xác nhận được kết quả. Kiểm tra trước khi gửi lại."}
+              </p>
+            )}
+            {submission === "unknown" ? (
+              <Button
+                onClick={() => {
+                  const result = store.tickets.check(intent.current);
+                  if (result.kind === "success")
+                    router.replace("/tickets/" + result.id);
+                  else {
+                    setSubmission("failure");
+                    requestAnimationFrame(() => feedback.current?.focus());
+                  }
+                }}
+              >
+                Kiểm tra kết quả
+              </Button>
+            ) : (
+              <Button
+                disabled={submission === "pending" || submission === "stale"}
+                onClick={() => void send()}
+              >
+                Xác nhận gửi
+              </Button>
+            )}
             <Button
+              disabled={submission === "pending" || submission === "unknown"}
               onClick={() => {
                 setDraft(undefined);
+                setSubmission(undefined);
                 requestAnimationFrame(() => {
                   const field = form.current?.elements.namedItem("title");
                   if (field instanceof HTMLElement) field.focus();

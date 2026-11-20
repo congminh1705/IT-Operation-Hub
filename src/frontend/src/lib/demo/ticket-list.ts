@@ -1,4 +1,4 @@
-﻿import type { DemoPersona } from "./fixtures";
+import type { DemoPersona } from "./fixtures";
 import { createDemoFixtures } from "./fixtures";
 
 const people = createDemoFixtures().personas;
@@ -40,7 +40,7 @@ const rows = Array.from({ length: 26 }, (_, i) => {
       (i >= titles.length ? ` · DEMO ${i + 1}` : ""),
     requesterId: author.user.id,
     requester: author.user.display_name,
-    teamId,
+    teamId: teamId as string,
     team: teams[teamId],
     assignee: i % 4 === 0 ? "Chưa phân công" : "DEMO TECHNICIAN",
     state: ticketStates[i % 4],
@@ -62,6 +62,7 @@ export function scopedTicketRows(
   scope: "mine" | "work",
   memberships: string[],
   unavailable = false,
+  created: readonly TicketRow[] = [],
 ) {
   if (
     !persona.user.active ||
@@ -71,7 +72,7 @@ export function scopedTicketRows(
   if (unavailable) return { kind: "error" } as const;
   return {
     kind: "success",
-    rows: rows
+    rows: [...created, ...rows]
       .filter((row) => {
         if (scope === "mine") return row.requesterId === persona.user.id;
         return (

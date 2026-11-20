@@ -53,6 +53,7 @@ export function TicketList({ search }: { search: WorkspaceSearch }) {
     scope,
     store.teams.ownTeamIds(),
     first(search.demo) === "unavailable",
+    store.tickets.rows(),
   );
   if (result.kind !== "success")
     return (
@@ -314,7 +315,7 @@ export function TicketList({ search }: { search: WorkspaceSearch }) {
             {filtered.slice((page - 1) * size, page * size).map((row) => (
               <tr key={row.id}>
                 <th scope="row">
-                  <span>{row.id}</span>
+                  <Link href={`/tickets/${row.id}`}>{row.id}</Link>
                   {row.title}
                 </th>
                 {scope === "work" && (

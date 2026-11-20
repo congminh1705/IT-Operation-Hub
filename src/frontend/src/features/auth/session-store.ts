@@ -1,3 +1,4 @@
+import { createTicketIntake } from "../../lib/demo/ticket-intake";
 import { createSlaPolicy } from "../../lib/demo/sla-policy";
 import { createTeamDirectory } from "../../lib/demo/team-directory";
 import { createOrganizationCatalog } from "../../lib/demo/organization-catalog";
@@ -25,6 +26,11 @@ export class SessionStore {
         .list("departments")
         .find((row) => row.id === "dept-acc" && row.active)?.label,
   );
+  readonly tickets = createTicketIntake({
+    identity: () => this.identity(),
+    intake: () => this.teams.intake(),
+    snapshot: (priority) => this.sla.snapshot(priority),
+  });
   private epoch = 0;
   passwordChanged = false;
   private read = 0;

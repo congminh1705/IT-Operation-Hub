@@ -121,6 +121,10 @@ export function createTeamDirectory(getActor: () => UserView | undefined) {
             .map((team) => team.id)
         : [];
     },
+    intake: () => {
+      const team = teams.find((item) => item.id === intakeId && item.active);
+      return team ? { id: team.id, name: team.name } : undefined;
+    },
     intakeName: () => teams.find((team) => team.id === intakeId)?.name,
     list: () =>
       allowed()

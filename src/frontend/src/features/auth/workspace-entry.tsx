@@ -1,4 +1,5 @@
 "use client";
+import { TicketDetail } from "@/features/tickets/intake/ticket-detail";
 import { TicketForm } from "@/features/tickets/intake/ticket-form";
 import { TicketList } from "@/features/tickets/intake/ticket-list";
 import { SlaScreen } from "@/features/administration/sla-screen";
@@ -10,7 +11,7 @@ import { ProfileForm } from "./profile-form";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Feedback } from "@/components/feedback/feedback";
-import { knownDestinations } from "@/lib/navigation";
+import { isKnownDestination, isTicketDetail } from "@/lib/navigation";
 import {
   WorkspacePage,
   type WorkspaceSearch,
@@ -38,7 +39,7 @@ export function WorkspaceEntry({
     if (!persona)
       router.replace(`/login?returnTo=${encodeURIComponent(target)}`);
   }, [persona, router, target]);
-  if (persona && !knownDestinations.has(pathname))
+  if (persona && !isKnownDestination(pathname))
     return (
       <Feedback
         kind="empty"
@@ -61,7 +62,9 @@ export function WorkspaceEntry({
         pathname === "/tickets" ? (
           <TicketList search={search} />
         ) : pathname === "/tickets/new" ? (
-          <TicketForm />
+          <TicketForm search={search} />
+        ) : isTicketDetail(pathname) ? (
+          <TicketDetail id={pathname.split("/").at(-1)!} />
         ) : pathname === "/profile" ? (
           <ProfileForm user={persona.user} />
         ) : pathname === "/profile/security" ? (

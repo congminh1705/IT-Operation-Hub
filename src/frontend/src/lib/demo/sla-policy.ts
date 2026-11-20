@@ -1,4 +1,4 @@
-﻿import type { UserView } from "../api/types";
+import type { UserView } from "../api/types";
 
 export const priorities = ["P1", "P2", "P3", "P4"] as const;
 export type Priority = (typeof priorities)[number];
@@ -90,6 +90,10 @@ export function createSlaPolicy(getActor: () => UserView | undefined) {
     return { ok: true, budgets, reason: reason.trim() };
   }
   return {
+    snapshot(priority: Priority) {
+      const active = current();
+      return { version: active.number, ...active.budgets[priority] };
+    },
     read() {
       if (!admin()) return null;
       const active = current();

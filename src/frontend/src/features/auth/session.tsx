@@ -8,7 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import type { QueryClient } from "../../lib/api/query-client";
-import { knownDestinations } from "../../lib/navigation";
+import { isKnownDestination } from "../../lib/navigation";
 import { SessionStore } from "./session-store";
 
 export function safeReturnPath(value: string | null): string {
@@ -22,7 +22,7 @@ export function safeReturnPath(value: string | null): string {
   const url = new URL(value, "http://demo.invalid");
   if (
     url.origin !== "http://demo.invalid" ||
-    !knownDestinations.has(url.pathname) ||
+    !isKnownDestination(url.pathname) ||
     url.pathname === "/logout"
   )
     return "/dashboard";
@@ -52,6 +52,11 @@ export function safeReturnPath(value: string | null): string {
     url.searchParams.get("demo") === "unavailable"
   )
     params.set("demo", "unavailable");
+  if (url.pathname === "/tickets/new") {
+    const demo = url.searchParams.get("demo");
+    if (demo === "failure" || demo === "stale" || demo === "unknown")
+      params.set("demo", demo);
+  }
   return url.pathname + (params.size ? `?${params}` : "");
 }
 const Context = createContext<SessionStore | null>(null);
