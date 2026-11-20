@@ -3327,3 +3327,80 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-06.04 wait, resolve, close and reopen dialogs.
 - Eligibility / remaining prerequisite: FE-06.03 agent checks passed. PO authorized sequencing with joint review.
+
+<a id="task-fe-06-04-attempt-01"></a>
+
+### FE-06.04 — Attempt 01 — 2026-11-20T14:53:47.0074805+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-06.04/attempt-01
+- Task: [task specification](../tasks/FE-06.04.md)
+- Parent / phase: FE-06 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T14:26:19.7949630+07:00 (first implementation file timestamp)
+- Ended at: 2026-11-20T14:53:47.0074805+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, first implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Public wait and resolution, requester closure and authorized reopen.
+- Delivered this attempt: Wait and resolution public preview and atomic submission, reasoned resume/reopen, requester-only closure and terminal cancellation.
+- Incomplete scope / deviations: DEMO fixtures and joint PO review pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/lib/demo/ticket-lifecycle.ts, ticket-intake.ts, ticket-detail.ts, ticket-list.ts | State guards and public messages | Lifecycle transitions and event history |
+| src/frontend/src/features/tickets/intake/ticket-lifecycle.tsx, ticket-detail.tsx | Preview and confirmation | Dialogs and requester next action |
+| src/frontend/e2e/ticket-follow-up.spec.ts | Browser scenarios and captures | Verification |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Public wait and resolution, requester closure and authorized reopen | Wait and resolution public preview and atomic submission, reasoned resume/reopen, requester-only closure and terminal cancellation | pass | [Chromium](../evidence/FE-06.04/chromium.log) |
+| 2 | Preserve relevant Parent rules | Empty questions and solutions blocked, Pending bypass denied, authorized reopen and terminal cancellation verified | pass | [Chromium](../evidence/FE-06.04/chromium.log) |
+| 3 | Frontend mock only, explicit failure handling | Scoped mock behavior and build checks verified | pass | [Chromium](../evidence/FE-06.04/chromium.log) |
+| 4 | Approved layout within task scope | Agent compared desktop/mobile and recorded differences | pass | [Comparison](../evidence/FE-06.04/comparison.md) |
+| 5 | Paired captures and PO visual verdict | Captures saved. Joint PO review pending | not-run | [Comparison](../evidence/FE-06.04/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd exec eslint src e2e/ticket-follow-up.spec.ts; pnpm.cmd format:check; pnpm.cmd test | Static/unit checks | Passed, 94 unit cases | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3134, TICKET_DETAIL_DESIGN_URL=http://127.0.0.1:8126, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe. node node_modules/@playwright/test/cli.js test e2e/ticket-follow-up.spec.ts e2e/ticket-lifecycle.spec.ts e2e/ticket-reply.spec.ts e2e/ticket-detail.spec.ts e2e/ticket-intake.spec.ts e2e/ticket-list.spec.ts --grep-invert 'matched create and detail evidence or matched comparison for or desktop/mobile references and actual list scope pair or compare lifecycle dialog or compare composer' --reporter=list (alternation uses a pipe) | Affected Chromium | 28 passed | pass |
+| repo | Compare approved HTML and app at 1440 and 390 px with reduced motion | Paired screenshots | See comparison and differences | pass |
+| src/frontend | Full unrelated Chromium suite | Expanded regression | Outside this run | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent functional and visual comparison. PO joint review pending.
+- Findings / resolution: IT requester self-response exclusion verified. Actual dialogs are modal over the detail; reference uses a standalone example.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent awaits joint PO acceptance.
+- Required resolution / owner: PO authorized continuing sequentially after each task passes agent checks.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-06.04.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-06.04/comparison.md), [Chromium](../evidence/FE-06.04/chromium.log).
+- Commit / build / environment: [09a944c](https://github.com/congminh1705/IT-Operation-Hub/commit/09a944cec67dadf276e2e113c866f21c577f1d42) pushed on phase/a-frontend and remote SHA verified.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: report and evidence linked.
+- Execution-board task row: review, Owner PO.
+- Current context: report and next step recorded.
+- Parent state: EPIC_IN_PROGRESS pending joint PO review.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-06.05 assignment, claim and priority dialogs.
+- Eligibility / remaining prerequisite: FE-06.04 agent checks passed. PO authorized sequencing with joint review.
