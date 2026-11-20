@@ -1,4 +1,10 @@
 import type { DemoPersona } from "./fixtures";
+import {
+  allowedLifecycleActions,
+  lifecycleActions,
+  requiresCancellationReason,
+  type LifecycleAction,
+} from "./ticket-lifecycle";
 import type { TicketDraft } from "./ticket-draft";
 import { scopedTicketRows, ticketStates, type TicketRow } from "./ticket-list";
 import type { Priority } from "./sla-policy";
@@ -29,6 +35,7 @@ export function createTicketIntake(config: {
   identity: () => { userId: string; scope: string } | null;
   actor: () => DemoPersona | null;
   memberships: () => string[];
+  isTeamMember: (teamId: string, userId: string) => boolean;
   intake: () => { id: string; name: string } | undefined;
   snapshot: (priority: Priority) => RecordSnapshot["budget"];
 }) {
@@ -80,7 +87,13 @@ export function createTicketIntake(config: {
         events,
         version: conversation?.version ?? 1,
         firstResponseAt,
-        canReply: row.state !== "Hoàn tất",
+        canReply: row.state !== "Hoàn tất" && row.state !== "Đã hủy",
+        actions: allowedLifecycleActions(
+          row,
+          persona,
+          internal,
+          !!row.assigneeId && config.isTeamMember(row.teamId, row.assigneeId),
+        ),
       };
     },
     async postMessage(
@@ -157,6 +170,71 @@ export function createTicketIntake(config: {
       });
       return "success" as const;
     },
+    async transition(
+      id: string,
+      action: LifecycleAction,
+      input: string,
+      expectedVersion: number,
+      simulateConflict: boolean,
+    ) {
+      const initial = config.identity();
+      await new Promise((resolve) => setTimeout(resolve, 450));
+      const current = config.identity();
+      const actor = config.actor();
+      if (
+        !initial ||
+        !current ||
+        !actor ||
+        initial.scope !== current.scope ||
+        initial.userId !== current.userId
+      )
+        return "forbidden" as const;
+      const detail = this.detail(actor, id, config.memberships());
+      if (!detail || !detail.actions.includes(action))
+        return "forbidden" as const;
+      if (simulateConflict || detail.version !== expectedVersion)
+        return "stale" as const;
+      const reason = input.trim();
+      if (
+        reason.length > 10000 ||
+        (action === "cancel" &&
+          requiresCancellationReason(actor) &&
+          reason.length < 10)
+      )
+        return "invalid" as const;
+      const at = new Date().toISOString();
+      const row = {
+        ...detail.row,
+        updated: at.slice(0, 10),
+        state: lifecycleActions[action].state,
+      };
+      const previousEvents =
+        conversations.get(id)?.events ??
+        (records.has(id) ? [] : ticketFixtureEvents(detail.row));
+      const transition: TicketEvent = {
+        id: `state-${expectedVersion}`,
+        audience: "public",
+        kind: "history",
+        actor: actor.user.display_name,
+        at,
+        text: `${detail.row.state} → ${row.state}`,
+      };
+      const events = [...previousEvents, transition];
+      if (reason)
+        events.push({
+          ...transition,
+          id: `reason-${expectedVersion}`,
+          audience: detail.internal ? "internal" : "public",
+          text: reason,
+        });
+      conversations.set(id, {
+        row,
+        events,
+        version: expectedVersion + 1,
+        firstResponseAt: detail.firstResponseAt,
+      });
+      return "success" as const;
+    },
     check(intent: string): Outcome {
       const entry = committed.get(intent);
       return entry && entry.owner === config.identity()?.userId
@@ -199,6 +277,7 @@ export function createTicketIntake(config: {
         teamId: team.id as TicketRow["teamId"],
         team: team.name,
         assignee: "Chưa phân công",
+        assigneeId: null,
         state: ticketStates[0],
         priority: draft.priority,
         category: draft.category,

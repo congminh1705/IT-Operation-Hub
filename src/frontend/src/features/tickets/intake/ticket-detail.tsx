@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import "./ticket-detail.css";
+import { TicketLifecycle } from "./ticket-lifecycle";
 import { TicketReplyComposer } from "./ticket-reply-composer";
 import { Feedback } from "@/components/feedback/feedback";
 import { useSession } from "@/features/auth/session";
@@ -11,10 +12,12 @@ export function TicketDetail({
   id,
   unavailable,
   simulateRevocation,
+  simulateTransitionConflict,
 }: {
   id: string;
   unavailable: boolean;
   simulateRevocation: boolean;
+  simulateTransitionConflict: boolean;
 }) {
   const router = useRouter();
   const { store, persona } = useSession();
@@ -64,6 +67,7 @@ export function TicketDetail({
     version,
     firstResponseAt,
     canReply,
+    actions,
   } = result;
   const visibleView = view === "internal" && !internal ? "public" : view;
   const shown = events.filter((event) =>
@@ -220,6 +224,13 @@ export function TicketDetail({
             quyết {budget.resolution} phút
           </p>
         )}
+        <TicketLifecycle
+          row={row}
+          actions={actions}
+          version={version}
+          simulateConflict={simulateTransitionConflict}
+          onChanged={() => setRevision((value) => value + 1)}
+        />
       </aside>
     </div>
   );

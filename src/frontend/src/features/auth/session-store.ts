@@ -30,6 +30,7 @@ export class SessionStore {
     identity: () => this.identity(),
     actor: () => this.persona,
     memberships: () => this.teams.ownTeamIds(),
+    isTeamMember: (teamId, userId) => this.teams.isMember(teamId, userId),
     intake: () => this.teams.intake(),
     snapshot: (priority) => this.sla.snapshot(priority),
   });

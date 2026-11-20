@@ -69,6 +69,7 @@ export function WorkspaceEntry({
             id={pathname.split("/").at(-1)!}
             unavailable={search.demo === "detail-error"}
             simulateRevocation={search.demo === "reply-revoked"}
+            simulateTransitionConflict={search.demo === "transition-stale"}
           />
         ) : pathname === "/profile" ? (
           <ProfileForm user={persona.user} />

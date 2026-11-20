@@ -130,3 +130,17 @@
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+
+.ticket-lifecycle {
+  margin-block-start: 18px;
+}
+
+.ticket-lifecycle-form {
+  display: grid;
+  gap: 12px;
+}
+
+.ticket-detail-badges [data-state="Đã hủy"] {
+  color: #90283e;
+  background: #fff0f2;
+}

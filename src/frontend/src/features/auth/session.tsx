@@ -59,7 +59,7 @@ export function safeReturnPath(value: string | null): string {
   }
   if (
     isTicketDetail(url.pathname) &&
-    ["detail-error", "reply-revoked"].includes(
+    ["detail-error", "reply-revoked", "transition-stale"].includes(
       url.searchParams.get("demo") ?? "",
     )
   )
