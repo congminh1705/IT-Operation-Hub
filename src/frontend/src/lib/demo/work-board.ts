@@ -21,6 +21,8 @@ export type WorkItem = {
   state: WorkState;
   locked: boolean;
   version: number;
+  lockReason?: string;
+  manualReason?: string;
   result?: string;
   history?: string[];
 };
@@ -37,6 +39,22 @@ export function progressActions(row: WorkItem): WorkProgressDraft["action"][] {
   if (row.state === "blocked") return ["unblock"];
   return [];
 }
+export type WorkControlDraft = {
+  action: "assign" | "lock" | "unlock";
+  assignee: string;
+  reason: string;
+  exception: boolean;
+  version: number;
+};
+export const workControlLabels = {
+  assign: "Đổi người thực hiện",
+  lock: "Khóa phân công",
+  unlock: "Bỏ khóa phân công",
+};
+type AssignmentOptions = {
+  teams: { id: string; members: string[]; active: boolean }[];
+  people: { id: string; display_name: string }[];
+};
 const { personas } = createDemoFixtures();
 export function createWorkBoard() {
   const tech = personas.TECHNICIAN.user;
@@ -62,6 +80,8 @@ export function createWorkBoard() {
       assigneeId: manager.id,
       assignee: manager.display_name,
       locked: true,
+      lockReason: "Giữ người phụ trách đã xác nhận trong kế hoạch DEMO.",
+      manualReason: "Phân công thủ công cho người theo dõi bàn giao.",
     },
     {
       ...base,
@@ -104,6 +124,7 @@ export function createWorkBoard() {
       assignee: manager.display_name,
     },
   ];
+  const historicalRows = structuredClone(rows);
   const visible = (
     row: WorkItem,
     persona: DemoPersona,
@@ -157,7 +178,94 @@ export function createWorkBoard() {
       return "Hoàn tất yêu cầu kết quả và thời gian còn lại bằng 0.";
     return null;
   }
+  function assignmentChoices(row: WorkItem, options: AssignmentOptions) {
+    const team = options.teams.find(
+      (item) => item.active && item.id === row.team,
+    );
+    const eligibility = new Map([
+      [tech.id, { verifiedSkill: true, availableMinutes: 180 }],
+      [manager.id, { verifiedSkill: true, availableMinutes: 120 }],
+    ]);
+    return options.people.filter(
+      (person) =>
+        person.id !== row.assigneeId &&
+        team?.members.includes(person.id) &&
+        eligibility.get(person.id)?.verifiedSkill &&
+        (eligibility.get(person.id)?.availableMinutes ?? 0) >= row.remaining,
+    );
+  }
+  function validateControl(
+    persona: DemoPersona,
+    id: string,
+    draft: WorkControlDraft,
+    options: AssignmentOptions,
+  ) {
+    const row = rows.find((item) => item.id === id);
+    if (
+      !row ||
+      !persona.user.active ||
+      (persona.user.role !== "IT_MANAGER" && persona.user.role !== "ADMIN")
+    )
+      return "Bạn không có quyền điều phối công việc.";
+    if (row.version !== draft.version)
+      return "Phiên bản công việc đã thay đổi.";
+    if (row.state === "done" || row.state === "cancelled")
+      return "Công việc đã kết thúc.";
+    if (draft.reason.trim().length < 10)
+      return "Nhập lý do thủ công ít nhất 10 ký tự.";
+    if (draft.action === "assign") {
+      if (row.locked) return "Cần bỏ khóa phân công trước.";
+      if (
+        !assignmentChoices(row, options).some(
+          (person) => person.id === draft.assignee,
+        )
+      )
+        return "Người thực hiện không đủ điều kiện trong khung DEMO.";
+      if (row.state === "active" && !draft.exception)
+        return "Cần xác nhận ngoại lệ khi công việc đang thực hiện.";
+    } else if ((draft.action === "lock") === row.locked)
+      return "Trạng thái khóa đã thay đổi.";
+    return null;
+  }
   return {
+    history(persona: DemoPersona, memberships: readonly string[]) {
+      return historicalRows
+        .filter((row) => visible(row, persona, memberships))
+        .map((row) => structuredClone(row));
+    },
+    assignmentChoices,
+    validateControl,
+    applyControl(
+      persona: DemoPersona,
+      id: string,
+      draft: WorkControlDraft,
+      options: AssignmentOptions,
+    ) {
+      const error = validateControl(persona, id, draft, options);
+      if (error) return error;
+      const row = rows.find((item) => item.id === id)!;
+      if (draft.action === "assign") {
+        const person = assignmentChoices(row, options).find(
+          (item) => item.id === draft.assignee,
+        )!;
+        row.assigneeId = person.id;
+        row.assignee = person.display_name;
+      } else {
+        row.locked = draft.action === "lock";
+        row.lockReason = row.locked ? draft.reason.trim() : undefined;
+      }
+      row.manualReason = draft.reason.trim();
+      row.version++;
+      row.history = [
+        ...(row.history ?? []),
+        persona.user.display_name +
+          " · " +
+          workControlLabels[draft.action] +
+          " · " +
+          row.manualReason,
+      ];
+      return null;
+    },
     validateProgress,
     changeProgress(
       persona: DemoPersona,

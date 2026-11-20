@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useState } from "react";
 import { Feedback } from "@/components/feedback/feedback";
 import {
@@ -9,9 +9,18 @@ import {
 } from "@/lib/demo/work-plan";
 import { workStates, type WorkItem } from "@/lib/demo/work-board";
 import { formatBusinessTime } from "@/lib/dates";
-export function WorkPlan({ rows }: { rows: WorkItem[] }) {
+export function WorkPlan({
+  rows,
+  history,
+}: {
+  rows: WorkItem[];
+  history: WorkItem[];
+}) {
   const [version, setVersion] = useState<PlanVersion>("v3");
-  const tasks = planRows(rows, version);
+  const tasks = planRows(
+    version === "v1" || version === "v2" ? history : rows,
+    version,
+  );
   const diagram = planLevels(tasks);
   const source =
     version === "v3"

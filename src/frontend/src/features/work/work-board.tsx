@@ -6,6 +6,7 @@ import { workStates } from "@/lib/demo/work-board";
 import { effectiveScope } from "@/lib/navigation";
 import { formatBusinessTime } from "@/lib/dates";
 import "./work-board.css";
+import { WorkControls } from "./work-controls";
 import { WorkProgress } from "./work-progress";
 import { WorkPlan } from "./work-plan";
 export function WorkBoard({
@@ -62,6 +63,10 @@ export function WorkBoard({
           stale={scenario === "work-stale"}
           onChanged={() => refresh((value) => value + 1)}
         />
+        <WorkControls
+          row={selectedRow}
+          onChanged={() => refresh((value) => value + 1)}
+        />
       </div>
     );
   const planTasks = store.work.list(persona, store.teams.ownTeamIds(), "team");
@@ -77,7 +82,10 @@ export function WorkBoard({
         >
           Về bảng công việc
         </button>
-        <WorkPlan rows={planTasks} />
+        <WorkPlan
+          rows={planTasks}
+          history={store.work.history(persona, store.teams.ownTeamIds())}
+        />
       </div>
     );
   return (
