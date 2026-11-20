@@ -5464,3 +5464,80 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-10.01.
 - Eligibility / remaining prerequisite: merge the FE-09 Parent PR. FE-10.01 awaits implementation authorization.
+
+<a id="task-fe-10-01-attempt-01"></a>
+
+### FE-10.01 — Attempt 01 — 2026-11-20T18:01:57.4474058+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-10.01/attempt-01
+- Task: [task specification](../tasks/FE-10.01.md)
+- Parent / phase: FE-10 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T18:00:16.0802357+07:00 (first implementation file timestamp)
+- Ended at: 2026-11-20T18:01:57.4474058+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, first implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Workflow draft editor and immutable published versions.
+- Delivered this attempt: Manager/Admin draft step, dependency, effort and source edits, explicit publish preview, immutable old versions and scoped Technician projection.
+- Incomplete scope / deviations: Session-local synthetic workflow. Joint PO review pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/lib/demo/automation-workflow.ts and auth session store | Fixture editor and validation | Validate dependency DAG and publish immutable copies |
+| src/frontend/src/features/automation and navigation | Workflow screen | Draft/published views and scoped entry |
+| src/frontend/e2e/automation-workflow.spec.ts | Browser behavior and captures | Workflow verification |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Workflow draft editor and immutable published versions | Manager/Admin draft step, dependency, effort and source edits, explicit publish preview, immutable old versions and scoped Technician projection | pass | [Chromium](../evidence/FE-10.01/chromium.log) |
+| 2 | Preserve relevant Parent rules | Invalid effort and cycle rejected; v4 published while v3 remained unchanged; Technician receives reduced data | pass | [Chromium](../evidence/FE-10.01/chromium.log) |
+| 3 | Frontend mock only, explicit failure handling | Scoped mock behavior and build checks verified | pass | [Chromium](../evidence/FE-10.01/chromium.log) |
+| 4 | Approved layout within task scope | Agent compared desktop/mobile and recorded differences | pass | [Comparison](../evidence/FE-10.01/comparison.md) |
+| 5 | Paired captures and PO visual verdict | Captures saved. Joint PO review pending | not-run | [Comparison](../evidence/FE-10.01/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd exec eslint src e2e/automation-workflow.spec.ts; pnpm.cmd format:check; pnpm.cmd test | Static/unit checks | Passed, 103 unit cases | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3171, TICKET_DETAIL_DESIGN_URL=http://127.0.0.1:8126, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe. node node_modules/@playwright/test/cli.js test e2e/automation-workflow.spec.ts --grep-invert 'matched create and detail evidence or matched comparison for' --reporter=list (alternation uses a pipe) | Affected Chromium | 3 passed | pass |
+| repo | Compare approved HTML and app at 1440 and 390 px with reduced motion | Paired screenshots | See comparison and differences | pass |
+| src/frontend | Full unrelated Chromium suite | Expanded regression | Outside this run | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent functional and visual comparison. PO joint review pending.
+- Findings / resolution: Reference shows a workflow summary. App adds scoped editable fields, validation and version picker. Policy UI is a later leaf.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent awaits joint PO acceptance.
+- Required resolution / owner: PO authorized continuing sequentially after each task passes agent checks.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-10.01.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-10.01/comparison.md), [Chromium](../evidence/FE-10.01/chromium.log).
+- Commit / build / environment: [8776dbc](https://github.com/congminh1705/IT-Operation-Hub/commit/8776dbcb0ad0669a0f4484ce75056be0c323038e) pushed on phase/a-frontend and remote SHA verified.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: report and evidence linked.
+- Execution-board task row: review, Owner PO.
+- Current context: report and next step recorded.
+- Parent state: EPIC_IN_PROGRESS pending joint PO review.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-10.02 policy scope and confirmation.
+- Eligibility / remaining prerequisite: FE-10.01 agent checks passed. PO authorized sequencing with joint review.

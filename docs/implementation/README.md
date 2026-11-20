@@ -97,7 +97,7 @@ This **work-package/epic registry** retains all 88 stable scope IDs. The registr
 | [FE-07](06-frontend-first.md#fe-07) | Attachment upload and download experience | FE-06 | EPIC_DONE |
 | [FE-08](06-frontend-first.md#fe-08) | Task board, plan and progress forms | FE-06 | EPIC_DONE |
 | [FE-09](06-frontend-first.md#fe-09) | Workforce skills, calendars and absence forms | FE-08 | EPIC_DONE |
-| [FE-10](06-frontend-first.md#fe-10) | Workflow, policy and coordination activity screens | FE-08 | EPIC_READY |
+| [FE-10](06-frontend-first.md#fe-10) | Workflow, policy and coordination activity screens | FE-08 | EPIC_IN_PROGRESS |
 | [FE-11](06-frontend-first.md#fe-11) | Exception review and approval dialogs | FE-09 FE-10 | EPIC_READY |
 | [FE-12](06-frontend-first.md#fe-12) | Asset inventory and lifecycle interactions | FE-05 | EPIC_READY |
 | [FE-13](06-frontend-first.md#fe-13) | Knowledge browsing, authoring and source states | FE-03 | EPIC_READY |
