@@ -28,4 +28,4 @@ authority: derived
 - Criterion 2: saved ticket/note state, progress, cancel, partial and unknown upload reconciliation/retry without duplicate records verified in FE-07.02.
 - Criterion 3: audience-scoped metadata, synthetic download, missing file and transfer access recheck verified in FE-07.03.
 - Preview: http://127.0.0.1:3144/tickets/TKT-000128. Use synthetic fixtures only.
-- Parent PR delivery pending. FE-08.01 remains pending through merge and authorization.
+- Parent [PR #9](https://github.com/congminh1705/IT-Operation-Hub/pull/9) is open from phase/a-frontend into main. FE-08.01 remains pending through merge and authorization.
