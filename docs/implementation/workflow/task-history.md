@@ -3559,3 +3559,429 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Joint PO review of FE-06.01–FE-06.06 and all three Parent criteria. FE-07.01 remains pending.
 - Eligibility / remaining prerequisite: FE-06.06 agent checks passed. PO authorized sequencing with joint review.
+
+<a id="task-fe-06-01-attempt-02"></a>
+
+### FE-06.01 — Attempt 02 — 2026-11-20T15:09:59.5541921+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-06.01/attempt-02
+- Task: [task specification](../tasks/FE-06.01.md)
+- Parent / phase: FE-06 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T15:09:59.5541921+07:00
+- Ended at: 2026-11-20T15:09:59.5541921+07:00
+- State before / after: review / done
+- Previous attempt / correction: [implementation and verification](#task-fe-06-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record the PO joint acceptance and close the task.
+- Delivered this attempt: PO accepted this task and Parent FE-06 on 2026-11-20.
+- Incomplete scope / deviations: Frontend DEMO boundaries apply. Parent Git delivery is tracked in current context.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-06.01.md, workflow/task-history.md, workflow/current-context.md, workflow/execution-board.md, README.md | Acceptance and status records | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1–3 | Scoped behavior, Parent rules and DEMO boundary | Agent verified in attempt 01 | pass | [Prior report](#task-fe-06-01-attempt-01) |
+| 4 | UI comparison | Comparison captured and differences recorded in attempt 01 | pass | [Comparison](../evidence/FE-06.01/comparison.md) |
+| 5 | Actual screenshots and PO review | PO accepted in joint review | pass | [Comparison](../evidence/FE-06.01/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Check task status and report references against PO verdict | Consistent closure | Updated to done and linked | pass |
+| src/frontend | Repeat implementation checks | Application verification | Documentation-only acceptance. Retain attempt 01 and final FE-06.06 results | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint Parent review by PO.
+- Findings / resolution: PO accepted and requested done. No additional changes requested.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for this task. Parent PR merge remains a delivery gate.
+- Required resolution / owner: PO merges the Parent PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-06.01.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-06.01/comparison.md), [Chromium](../evidence/FE-06.01/chromium.log).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-01-attempt-01). Parent PR status in [current context](current-context.md).
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: joint acceptance and delivery recorded.
+- Parent state: EPIC_DONE after all six tasks and Parent criteria were accepted.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-07.01.
+- Eligibility / remaining prerequisite: merge the FE-06 Parent PR and authorize implementation.
+
+<a id="task-fe-06-02-attempt-02"></a>
+
+### FE-06.02 — Attempt 02 — 2026-11-20T15:09:59.5541921+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-06.02/attempt-02
+- Task: [task specification](../tasks/FE-06.02.md)
+- Parent / phase: FE-06 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T15:09:59.5541921+07:00
+- Ended at: 2026-11-20T15:09:59.5541921+07:00
+- State before / after: review / done
+- Previous attempt / correction: [implementation and verification](#task-fe-06-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record the PO joint acceptance and close the task.
+- Delivered this attempt: PO accepted this task and Parent FE-06 on 2026-11-20.
+- Incomplete scope / deviations: Frontend DEMO boundaries apply. Parent Git delivery is tracked in current context.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-06.02.md, workflow/task-history.md, workflow/current-context.md, workflow/execution-board.md, README.md | Acceptance and status records | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1–3 | Scoped behavior, Parent rules and DEMO boundary | Agent verified in attempt 01 | pass | [Prior report](#task-fe-06-02-attempt-01) |
+| 4 | UI comparison | Comparison captured and differences recorded in attempt 01 | pass | [Comparison](../evidence/FE-06.02/comparison.md) |
+| 5 | Actual screenshots and PO review | PO accepted in joint review | pass | [Comparison](../evidence/FE-06.02/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Check task status and report references against PO verdict | Consistent closure | Updated to done and linked | pass |
+| src/frontend | Repeat implementation checks | Application verification | Documentation-only acceptance. Retain attempt 01 and final FE-06.06 results | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint Parent review by PO.
+- Findings / resolution: PO accepted and requested done. No additional changes requested.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for this task. Parent PR merge remains a delivery gate.
+- Required resolution / owner: PO merges the Parent PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-06.02.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-06.02/comparison.md), [Chromium](../evidence/FE-06.02/chromium.log).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-02-attempt-01). Parent PR status in [current context](current-context.md).
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: joint acceptance and delivery recorded.
+- Parent state: EPIC_DONE after all six tasks and Parent criteria were accepted.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-07.01.
+- Eligibility / remaining prerequisite: merge the FE-06 Parent PR and authorize implementation.
+
+<a id="task-fe-06-03-attempt-02"></a>
+
+### FE-06.03 — Attempt 02 — 2026-11-20T15:09:59.5541921+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-06.03/attempt-02
+- Task: [task specification](../tasks/FE-06.03.md)
+- Parent / phase: FE-06 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T15:09:59.5541921+07:00
+- Ended at: 2026-11-20T15:09:59.5541921+07:00
+- State before / after: review / done
+- Previous attempt / correction: [implementation and verification](#task-fe-06-03-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record the PO joint acceptance and close the task.
+- Delivered this attempt: PO accepted this task and Parent FE-06 on 2026-11-20.
+- Incomplete scope / deviations: Frontend DEMO boundaries apply. Parent Git delivery is tracked in current context.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-06.03.md, workflow/task-history.md, workflow/current-context.md, workflow/execution-board.md, README.md | Acceptance and status records | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1–3 | Scoped behavior, Parent rules and DEMO boundary | Agent verified in attempt 01 | pass | [Prior report](#task-fe-06-03-attempt-01) |
+| 4 | UI comparison | Comparison captured and differences recorded in attempt 01 | pass | [Comparison](../evidence/FE-06.03/comparison.md) |
+| 5 | Actual screenshots and PO review | PO accepted in joint review | pass | [Comparison](../evidence/FE-06.03/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Check task status and report references against PO verdict | Consistent closure | Updated to done and linked | pass |
+| src/frontend | Repeat implementation checks | Application verification | Documentation-only acceptance. Retain attempt 01 and final FE-06.06 results | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint Parent review by PO.
+- Findings / resolution: PO accepted and requested done. No additional changes requested.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for this task. Parent PR merge remains a delivery gate.
+- Required resolution / owner: PO merges the Parent PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-06.03.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-06.03/comparison.md), [Chromium](../evidence/FE-06.03/chromium.log).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-03-attempt-01). Parent PR status in [current context](current-context.md).
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: joint acceptance and delivery recorded.
+- Parent state: EPIC_DONE after all six tasks and Parent criteria were accepted.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-07.01.
+- Eligibility / remaining prerequisite: merge the FE-06 Parent PR and authorize implementation.
+
+<a id="task-fe-06-04-attempt-02"></a>
+
+### FE-06.04 — Attempt 02 — 2026-11-20T15:09:59.5541921+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-06.04/attempt-02
+- Task: [task specification](../tasks/FE-06.04.md)
+- Parent / phase: FE-06 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T15:09:59.5541921+07:00
+- Ended at: 2026-11-20T15:09:59.5541921+07:00
+- State before / after: review / done
+- Previous attempt / correction: [implementation and verification](#task-fe-06-04-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record the PO joint acceptance and close the task.
+- Delivered this attempt: PO accepted this task and Parent FE-06 on 2026-11-20.
+- Incomplete scope / deviations: Frontend DEMO boundaries apply. Parent Git delivery is tracked in current context.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-06.04.md, workflow/task-history.md, workflow/current-context.md, workflow/execution-board.md, README.md | Acceptance and status records | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1–3 | Scoped behavior, Parent rules and DEMO boundary | Agent verified in attempt 01 | pass | [Prior report](#task-fe-06-04-attempt-01) |
+| 4 | UI comparison | Comparison captured and differences recorded in attempt 01 | pass | [Comparison](../evidence/FE-06.04/comparison.md) |
+| 5 | Actual screenshots and PO review | PO accepted in joint review | pass | [Comparison](../evidence/FE-06.04/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Check task status and report references against PO verdict | Consistent closure | Updated to done and linked | pass |
+| src/frontend | Repeat implementation checks | Application verification | Documentation-only acceptance. Retain attempt 01 and final FE-06.06 results | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint Parent review by PO.
+- Findings / resolution: PO accepted and requested done. No additional changes requested.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for this task. Parent PR merge remains a delivery gate.
+- Required resolution / owner: PO merges the Parent PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-06.04.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-06.04/comparison.md), [Chromium](../evidence/FE-06.04/chromium.log).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-04-attempt-01). Parent PR status in [current context](current-context.md).
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: joint acceptance and delivery recorded.
+- Parent state: EPIC_DONE after all six tasks and Parent criteria were accepted.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-07.01.
+- Eligibility / remaining prerequisite: merge the FE-06 Parent PR and authorize implementation.
+
+<a id="task-fe-06-05-attempt-02"></a>
+
+### FE-06.05 — Attempt 02 — 2026-11-20T15:09:59.5541921+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-06.05/attempt-02
+- Task: [task specification](../tasks/FE-06.05.md)
+- Parent / phase: FE-06 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T15:09:59.5541921+07:00
+- Ended at: 2026-11-20T15:09:59.5541921+07:00
+- State before / after: review / done
+- Previous attempt / correction: [implementation and verification](#task-fe-06-05-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record the PO joint acceptance and close the task.
+- Delivered this attempt: PO accepted this task and Parent FE-06 on 2026-11-20.
+- Incomplete scope / deviations: Frontend DEMO boundaries apply. Parent Git delivery is tracked in current context.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-06.05.md, workflow/task-history.md, workflow/current-context.md, workflow/execution-board.md, README.md | Acceptance and status records | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1–3 | Scoped behavior, Parent rules and DEMO boundary | Agent verified in attempt 01 | pass | [Prior report](#task-fe-06-05-attempt-01) |
+| 4 | UI comparison | Comparison captured and differences recorded in attempt 01 | pass | [Comparison](../evidence/FE-06.05/comparison.md) |
+| 5 | Actual screenshots and PO review | PO accepted in joint review | pass | [Comparison](../evidence/FE-06.05/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Check task status and report references against PO verdict | Consistent closure | Updated to done and linked | pass |
+| src/frontend | Repeat implementation checks | Application verification | Documentation-only acceptance. Retain attempt 01 and final FE-06.06 results | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint Parent review by PO.
+- Findings / resolution: PO accepted and requested done. No additional changes requested.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for this task. Parent PR merge remains a delivery gate.
+- Required resolution / owner: PO merges the Parent PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-06.05.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-06.05/comparison.md), [Chromium](../evidence/FE-06.05/chromium.log).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-05-attempt-01). Parent PR status in [current context](current-context.md).
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: joint acceptance and delivery recorded.
+- Parent state: EPIC_DONE after all six tasks and Parent criteria were accepted.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-07.01.
+- Eligibility / remaining prerequisite: merge the FE-06 Parent PR and authorize implementation.
+
+<a id="task-fe-06-06-attempt-02"></a>
+
+### FE-06.06 — Attempt 02 — 2026-11-20T15:09:59.5541921+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-06.06/attempt-02
+- Task: [task specification](../tasks/FE-06.06.md)
+- Parent / phase: FE-06 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T15:09:59.5541921+07:00
+- Ended at: 2026-11-20T15:09:59.5541921+07:00
+- State before / after: review / done
+- Previous attempt / correction: [implementation and verification](#task-fe-06-06-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record the PO joint acceptance and close the task.
+- Delivered this attempt: PO accepted this task and Parent FE-06 on 2026-11-20.
+- Incomplete scope / deviations: Frontend DEMO boundaries apply. Parent Git delivery is tracked in current context.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-06.06.md, workflow/task-history.md, workflow/current-context.md, workflow/execution-board.md, README.md | Acceptance and status records | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1–3 | Scoped behavior, Parent rules and DEMO boundary | Agent verified in attempt 01 | pass | [Prior report](#task-fe-06-06-attempt-01) |
+| 4 | UI comparison | Comparison captured and differences recorded in attempt 01 | pass | [Comparison](../evidence/FE-06.06/comparison.md) |
+| 5 | Actual screenshots and PO review | PO accepted in joint review | pass | [Comparison](../evidence/FE-06.06/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Check task status and report references against PO verdict | Consistent closure | Updated to done and linked | pass |
+| src/frontend | Repeat implementation checks | Application verification | Documentation-only acceptance. Retain attempt 01 and final FE-06.06 results | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint Parent review by PO.
+- Findings / resolution: PO accepted and requested done. No additional changes requested.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for this task. Parent PR merge remains a delivery gate.
+- Required resolution / owner: PO merges the Parent PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-06.06.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-06.06/comparison.md), [Chromium](../evidence/FE-06.06/chromium.log).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-06-attempt-01). Parent PR status in [current context](current-context.md).
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: joint acceptance and delivery recorded.
+- Parent state: EPIC_DONE after all six tasks and Parent criteria were accepted.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-07.01.
+- Eligibility / remaining prerequisite: merge the FE-06 Parent PR and authorize implementation.

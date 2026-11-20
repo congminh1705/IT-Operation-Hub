@@ -18,7 +18,7 @@ purpose: "Maintain the single status and owner registry for every refined execut
 
 ## 1. Scope and authority
 
-All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. **20 tasks are done** through FE-05.03, including all three FE-05 tasks. **6 tasks are in review and 204 remain pending.** [FE-05 is EPIC_DONE in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
+All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. **26 tasks are done** through FE-06.06, including all six FE-06 tasks. **204 remain pending.** [FE-06 is EPIC_DONE in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
 
 The [package registry](../README.md#4-task-tracker) holds epic state; this board alone holds task state and PO ownership. Use the [task workflow](task-workflow.md). [Parent coverage and closure](../package-task-coverage.md) maps every parent criterion to outputs and names any external integration evidence. Package readiness means defined scope; dependencies, affected decisions and future coding authorization still gate execution.
 
@@ -50,12 +50,12 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FE-05.01](../tasks/FE-05.01.md) | [FE-05](../06-frontend-first.md#fe-05) | Build scoped ticket list and query navigation | [FE-03.05](../tasks/FE-03.05.md) | PO | done |
 | [FE-05.02](../tasks/FE-05.02.md) | [FE-05](../06-frontend-first.md#fe-05) | Build ticket form and conditional clarification | [FE-05.01](../tasks/FE-05.01.md) | PO | done |
 | [FE-05.03](../tasks/FE-05.03.md) | [FE-05](../06-frontend-first.md#fe-05) | Complete mock ticket submission and detail navigation | [FE-05.02](../tasks/FE-05.02.md) | PO | done |
-| [FE-06.01](../tasks/FE-06.01.md) | [FE-06](../06-frontend-first.md#fe-06) | Build ticket detail projection and authorized timeline | [FE-05.03](../tasks/FE-05.03.md) | PO | review |
-| [FE-06.02](../tasks/FE-06.02.md) | [FE-06](../06-frontend-first.md#fe-06) | Build public reply and internal-note composer | [FE-06.01](../tasks/FE-06.01.md) | PO | review |
-| [FE-06.03](../tasks/FE-06.03.md) | [FE-06](../06-frontend-first.md#fe-06) | Build acceptance, start and cancellation dialogs | [FE-06.02](../tasks/FE-06.02.md) | PO | review |
-| [FE-06.04](../tasks/FE-06.04.md) | [FE-06](../06-frontend-first.md#fe-06) | Build wait, resolve, close and reopen dialogs | [FE-06.03](../tasks/FE-06.03.md) | PO | review |
-| [FE-06.05](../tasks/FE-06.05.md) | [FE-06](../06-frontend-first.md#fe-06) | Build assignment, self-claim and priority dialogs | [FE-06.04](../tasks/FE-06.04.md) | PO | review |
-| [FE-06.06](../tasks/FE-06.06.md) | [FE-06](../06-frontend-first.md#fe-06) | Build separate SLA clock displays | [FE-06.05](../tasks/FE-06.05.md) | PO | review |
+| [FE-06.01](../tasks/FE-06.01.md) | [FE-06](../06-frontend-first.md#fe-06) | Build ticket detail projection and authorized timeline | [FE-05.03](../tasks/FE-05.03.md) | PO | done |
+| [FE-06.02](../tasks/FE-06.02.md) | [FE-06](../06-frontend-first.md#fe-06) | Build public reply and internal-note composer | [FE-06.01](../tasks/FE-06.01.md) | PO | done |
+| [FE-06.03](../tasks/FE-06.03.md) | [FE-06](../06-frontend-first.md#fe-06) | Build acceptance, start and cancellation dialogs | [FE-06.02](../tasks/FE-06.02.md) | PO | done |
+| [FE-06.04](../tasks/FE-06.04.md) | [FE-06](../06-frontend-first.md#fe-06) | Build wait, resolve, close and reopen dialogs | [FE-06.03](../tasks/FE-06.03.md) | PO | done |
+| [FE-06.05](../tasks/FE-06.05.md) | [FE-06](../06-frontend-first.md#fe-06) | Build assignment, self-claim and priority dialogs | [FE-06.04](../tasks/FE-06.04.md) | PO | done |
+| [FE-06.06](../tasks/FE-06.06.md) | [FE-06](../06-frontend-first.md#fe-06) | Build separate SLA clock displays | [FE-06.05](../tasks/FE-06.05.md) | PO | done |
 | [FE-07.01](../tasks/FE-07.01.md) | [FE-07](../06-frontend-first.md#fe-07) | Build attachment selection and validation feedback | [FE-06.06](../tasks/FE-06.06.md) | PO | pending |
 | [FE-07.02](../tasks/FE-07.02.md) | [FE-07](../06-frontend-first.md#fe-07) | Build upload outcome and retry interaction | [FE-07.01](../tasks/FE-07.01.md) | PO | pending |
 | [FE-07.03](../tasks/FE-07.03.md) | [FE-07](../06-frontend-first.md#fe-07) | Build audience-safe attachment download controls | [FE-07.02](../tasks/FE-07.02.md) | PO | pending |
