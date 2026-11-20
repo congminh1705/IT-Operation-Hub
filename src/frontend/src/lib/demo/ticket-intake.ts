@@ -7,7 +7,12 @@ import {
 } from "./ticket-lifecycle";
 import type { TicketDraft } from "./ticket-draft";
 import { scopedTicketRows, ticketStates, type TicketRow } from "./ticket-list";
-import type { Priority } from "./sla-policy";
+import {
+  baseline,
+  priorities,
+  type Budgets,
+  type Priority,
+} from "./sla-policy";
 import {
   canReadInternalTicket,
   projectTicketEvents,
@@ -20,7 +25,7 @@ export type SubmitFixture = (typeof submitFixtures)[number];
 type RecordSnapshot = {
   row: TicketRow;
   draft: TicketDraft;
-  budget: { version: number; response: number; resolution: number };
+  budget: { version: number; budgets: Budgets };
 };
 type Conversation = {
   row: TicketRow;
@@ -28,6 +33,10 @@ type Conversation = {
   version: number;
   firstResponseAt: string | null;
 };
+export type RoutingChange =
+  | { kind: "claim" }
+  | { kind: "assign"; teamId: string; assigneeId: string; reason: string }
+  | { kind: "priority"; priority: Priority; reason: string };
 type Outcome =
   { kind: "success"; id: string } | { kind: "failure" | "stale" | "unknown" };
 
@@ -37,7 +46,14 @@ export function createTicketIntake(config: {
   memberships: () => string[];
   isTeamMember: (teamId: string, userId: string) => boolean;
   intake: () => { id: string; name: string } | undefined;
-  snapshot: (priority: Priority) => RecordSnapshot["budget"];
+  snapshot: () => RecordSnapshot["budget"];
+  teams: () => {
+    id: string;
+    name: string;
+    active: boolean;
+    members: string[];
+  }[];
+  people: () => { id: string; display_name: string }[];
 }) {
   const records = new Map<string, RecordSnapshot>();
   const committed = new Map<string, { owner: string; id: string }>();
@@ -82,7 +98,22 @@ export function createTicketIntake(config: {
       return {
         row,
         draft: stored ? structuredClone(stored.draft) : null,
-        budget: stored ? { ...stored.budget } : null,
+        budget: stored
+          ? {
+              version: stored.budget.version,
+              ...stored.budget.budgets[row.priority],
+            }
+          : { version: 3, ...baseline[row.priority] },
+        assignable:
+          internal &&
+          persona.scope.tickets === "organization" &&
+          row.state !== "Đã hủy" &&
+          row.state !== "Hoàn tất",
+        claimable:
+          internal &&
+          memberships.includes(row.teamId) &&
+          !row.assigneeId &&
+          (row.state === "Đang chờ tiếp nhận" || row.state === "Đã tiếp nhận"),
         internal,
         events,
         version: conversation?.version ?? 1,
@@ -256,6 +287,94 @@ export function createTicketIntake(config: {
       });
       return "success" as const;
     },
+    async changeRouting(
+      id: string,
+      change: RoutingChange,
+      expectedVersion: number,
+      simulateConflict = false,
+    ) {
+      const initial = config.identity();
+      await new Promise((resolve) => setTimeout(resolve, 450));
+      const current = config.identity();
+      const actor = config.actor();
+      if (
+        !initial ||
+        !current ||
+        !actor ||
+        initial.scope !== current.scope ||
+        initial.userId !== current.userId
+      )
+        return "forbidden" as const;
+      const detail = this.detail(actor, id, config.memberships());
+      if (!detail || !detail.internal) return "forbidden" as const;
+      if (expectedVersion !== detail.version || simulateConflict)
+        return "stale" as const;
+      if (change.kind === "claim" ? !detail.claimable : !detail.assignable)
+        return "forbidden" as const;
+      const row = { ...detail.row };
+      const reason = change.kind === "claim" ? "" : change.reason.trim();
+      if (
+        change.kind !== "claim" &&
+        (reason.length < 10 || reason.length > 10000)
+      )
+        return "invalid" as const;
+      let description: string;
+      if (change.kind === "priority") {
+        if (
+          !priorities.includes(change.priority) ||
+          change.priority === row.priority
+        )
+          return "invalid" as const;
+        description = `Ưu tiên: ${row.priority} → ${change.priority}`;
+        row.priority = change.priority;
+      } else if (change.kind === "claim") {
+        description = `Tự nhận xử lý: ${actor.user.display_name}`;
+        row.assignee = actor.user.display_name;
+        row.assigneeId = actor.user.id;
+      } else {
+        const team = config
+          .teams()
+          .find((entry) => entry.active && entry.id === change.teamId);
+        const assignee = config
+          .people()
+          .find((entry) => entry.id === change.assigneeId);
+        const activeWork =
+          row.state === "Đang xử lý" || row.state === "Chờ bổ sung";
+        if (
+          !team ||
+          (change.assigneeId &&
+            (!assignee || !team.members.includes(assignee.id))) ||
+          (activeWork && !assignee)
+        )
+          return "invalid" as const;
+        description = `Phân công: ${row.team} / ${row.assignee} → ${team.name} / ${assignee?.display_name ?? "Chưa phân công"}`;
+        row.team = team.name;
+        row.teamId = team.id;
+        row.assignee = assignee?.display_name ?? "Chưa phân công";
+        row.assigneeId = assignee?.id ?? null;
+      }
+      const at = new Date().toISOString();
+      const previous =
+        conversations.get(id)?.events ??
+        (records.has(id) ? [] : ticketFixtureEvents(detail.row));
+      const event: TicketEvent = {
+        id: `routing-${expectedVersion}`,
+        audience: "internal",
+        kind: "history",
+        actor: actor.user.display_name,
+        at,
+        text: reason ? `${description}. ${reason}` : description,
+        priorPriority:
+          change.kind === "priority" ? detail.row.priority : undefined,
+      };
+      conversations.set(id, {
+        row,
+        events: [...previous, event],
+        firstResponseAt: detail.firstResponseAt,
+        version: detail.version + 1,
+      });
+      return "success" as const;
+    },
     check(intent: string): Outcome {
       const entry = committed.get(intent);
       return entry && entry.owner === config.identity()?.userId
@@ -308,7 +427,7 @@ export function createTicketIntake(config: {
       records.set(id, {
         row,
         draft: structuredClone(draft),
-        budget: config.snapshot(draft.priority),
+        budget: config.snapshot(),
       });
       committed.set(intent, { owner: identity.userId, id });
       return { kind: "success", id };

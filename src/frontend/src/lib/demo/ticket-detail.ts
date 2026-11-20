@@ -10,6 +10,7 @@ export type TicketEvent = {
   text: string;
   state?: TicketRow["state"];
   purpose?: "question" | "solution";
+  priorPriority?: TicketRow["priority"];
 };
 
 export function canReadInternalTicket(

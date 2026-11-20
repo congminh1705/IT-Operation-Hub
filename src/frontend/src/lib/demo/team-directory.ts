@@ -126,6 +126,27 @@ export function createTeamDirectory(getActor: () => UserView | undefined) {
         (team) =>
           team.active && team.id === teamId && team.members.includes(userId),
       ),
+    routingOptions: () => {
+      const actor = getActor();
+      if (
+        !actor?.active ||
+        (actor.role !== "ADMIN" && actor.role !== "IT_MANAGER")
+      )
+        return { teams: [], people: [] };
+      return {
+        teams: teams
+          .filter((team) => team.active)
+          .map((team) => ({
+            id: team.id,
+            name: team.name,
+            active: team.active,
+            members: [...team.members],
+          })),
+        people: people
+          .filter((user) => user.active)
+          .map(({ id, display_name }) => ({ id, display_name })),
+      };
+    },
     intake: () => {
       const team = teams.find((item) => item.id === intakeId && item.active);
       return team ? { id: team.id, name: team.name } : undefined;

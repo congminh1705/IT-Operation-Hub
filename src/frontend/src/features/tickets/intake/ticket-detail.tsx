@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import "./ticket-detail.css";
+import { TicketRouting } from "./ticket-routing";
 import { TicketLifecycle } from "./ticket-lifecycle";
 import { TicketReplyComposer } from "./ticket-reply-composer";
 import { Feedback } from "@/components/feedback/feedback";
@@ -68,6 +69,8 @@ export function TicketDetail({
     firstResponseAt,
     canReply,
     actions,
+    assignable,
+    claimable,
   } = result;
   const visibleView = view === "internal" && !internal ? "public" : view;
   const shown = events.filter((event) =>
@@ -237,6 +240,14 @@ export function TicketDetail({
           actions={actions}
           version={version}
           simulateConflict={simulateTransitionConflict}
+          onChanged={() => setRevision((value) => value + 1)}
+        />
+        <TicketRouting
+          row={row}
+          version={version}
+          assignable={assignable}
+          claimable={claimable}
+          conflict={simulateTransitionConflict}
           onChanged={() => setRevision((value) => value + 1)}
         />
       </aside>

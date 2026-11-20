@@ -144,3 +144,17 @@
   color: #90283e;
   background: #fff0f2;
 }
+
+.ticket-lifecycle + .ticket-history-controls {
+  margin-block-start: 8px;
+}
+
+.ticket-lifecycle-form select {
+  display: block;
+  min-height: 44px;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #baccc5;
+  border-radius: 8px;
+  background: white;
+}
