@@ -120,12 +120,12 @@ export function getNavigation(persona: DemoPersona): NavigationItem[] {
     },
     {
       id: "policies",
-      label: "Chính sách & quy trình",
+      label: technician ? "Quy trình nhóm" : "Chính sách & quy trình",
       href: "/automation/policies",
       icon: "settings",
       group: "workspace",
       capability: "assistant",
-      roles: managers,
+      roles: internal,
     },
     {
       id: "knowledge",

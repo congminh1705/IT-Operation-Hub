@@ -1,4 +1,5 @@
 "use client";
+import { AutomationScreen } from "@/features/automation/automation-screen";
 import { WorkforceScreen } from "@/features/workforce/workforce-screen";
 import { WorkBoard } from "@/features/work/work-board";
 import {
@@ -65,7 +66,9 @@ export function WorkspaceEntry({
           : `${persona.user.id}:${persona.user.version}`
       }
       content={
-        pathname === "/workforce" ? (
+        pathname === "/automation/policies" ? (
+          <AutomationScreen />
+        ) : pathname === "/workforce" ? (
           <WorkforceScreen
             persona={persona}
             conflict={params.get("demo") === "workforce-conflict"}
