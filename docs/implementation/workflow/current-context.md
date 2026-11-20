@@ -29,4 +29,4 @@ authority: derived
 - Criterion 1: card/table parity and scoped lookup, filters, plan versions and readable dependencies verified in FE-08.01/02 and the final history regression.
 - Criterion 2: guarded progress, blocked dependency, stale conflict, capacity and human Done without ticket closure verified in FE-08.03.
 - Criterion 3: management scope, lock and assignment preview, active exception and decision/history preservation verified in FE-08.04.
-- Preview: http://127.0.0.1:3156/work?scope=team. Parent PR delivery pending. PO authorized FE-09; FE-09.01 starts after verified merge.
+- Preview: http://127.0.0.1:3156/work?scope=team. Parent [PR #10](https://github.com/congminh1705/IT-Operation-Hub/pull/10) is open from phase/a-frontend into main. PO authorized FE-09; FE-09.01 starts after verified merge.
