@@ -3171,3 +3171,81 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-06.02 public reply and internal-note composer.
 - Eligibility / remaining prerequisite: FE-06.01 checks passed. PO authorized joint review for this Parent after sequential checked delivery.
+
+<a id="task-fe-06-02-attempt-01"></a>
+
+### FE-06.02 — Attempt 01 — 2026-11-20T14:20:42.2846286+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-06.02/attempt-01
+- Task: [task specification](../tasks/FE-06.02.md)
+- Parent / phase: FE-06 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T14:16:25.1251352+07:00 (first implementation file timestamp)
+- Ended at: 2026-11-20T14:20:42.2846286+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, first implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Separate public/internal drafts and confirmed submission with proper first response and Pending resumption.
+- Delivered this attempt: Isolated drafts, preview/confirm, role and version recheck, eligible first response and atomic requester Pending resumption.
+- Incomplete scope / deviations: Synthetic configuration and PO review pending. Attachments and AI links belong to other tasks.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/tickets/intake/ticket-reply-composer.tsx, ticket-detail.tsx, ticket-detail.css | TicketReplyComposer | Drafts, preview, feedback and responsive composer |
+| src/frontend/src/lib/demo/ticket-intake.ts, ticket-list.ts, ticket-detail.ts | postMessage | Scope/confirmation guards, audience, committed updates and timeline |
+| src/frontend/src/features/auth/session-store.ts, session.tsx, workspace-entry.tsx | Session integration | Current actor, membership and DEMO revocation fixture |
+| src/frontend/e2e/ticket-reply.spec.ts | Composer scenarios and captures | Browser verification |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Separate public/internal drafts and confirmed submission with proper first response and Pending resumption | Isolated drafts, preview/confirm, role and version recheck, eligible first response and atomic requester Pending resumption | pass | [Chromium](../evidence/FE-06.02/chromium.log) |
+| 2 | Preserve relevant Parent rules | Internal note and preview leave first response unchanged; confirmed public IT reply sets it; requester Pending reply resumes and revocation preserves own draft | pass | [Chromium](../evidence/FE-06.02/chromium.log) |
+| 3 | Frontend mock only, explicit failure handling | Scoped mock behavior and build checks verified | pass | [Chromium](../evidence/FE-06.02/chromium.log) |
+| 4 | Approved layout within task scope | Agent compared desktop/mobile and recorded differences | pass | [Comparison](../evidence/FE-06.02/comparison.md) |
+| 5 | Paired captures and PO visual verdict | Captures saved. Joint PO review pending | not-run | [Comparison](../evidence/FE-06.02/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd exec eslint src e2e/ticket-reply.spec.ts; pnpm.cmd format:check; pnpm.cmd test | Static/unit checks | Passed, 94 unit cases | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3132, TICKET_DETAIL_DESIGN_URL=http://127.0.0.1:8126, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe. node node_modules/@playwright/test/cli.js test e2e/ticket-reply.spec.ts e2e/ticket-detail.spec.ts e2e/ticket-intake.spec.ts --grep-invert 'matched create and detail evidence or matched comparison for' --reporter=list (alternation uses a pipe) | Affected Chromium | 14 passed | pass |
+| repo | Compare approved HTML and app at 1440 and 390 px with reduced motion | Paired screenshots | See comparison and differences | pass |
+| src/frontend | Full unrelated Chromium suite | Expanded regression | Outside this run | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent functional and visual comparison. PO joint review pending.
+- Findings / resolution: Final checks passed after a TypeScript guard fix and a browser runner retry. Technician comparison uses a different ticket status while exercising the same composer.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent awaits joint PO acceptance.
+- Required resolution / owner: PO authorized continuing sequentially after each task passes agent checks.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-06.02.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-06.02/comparison.md), [Chromium](../evidence/FE-06.02/chromium.log).
+- Commit / build / environment: [9f27f4b](https://github.com/congminh1705/IT-Operation-Hub/commit/9f27f4bdacffdd2703b6514c6a65d4f23c899743) pushed on phase/a-frontend and remote SHA verified.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: report and evidence linked.
+- Execution-board task row: review, Owner PO.
+- Current context: report and next step recorded.
+- Parent state: EPIC_IN_PROGRESS pending joint PO review.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-06.03 acceptance, start and cancellation dialogs.
+- Eligibility / remaining prerequisite: FE-06.02 agent checks passed. PO authorized sequencing with joint review.

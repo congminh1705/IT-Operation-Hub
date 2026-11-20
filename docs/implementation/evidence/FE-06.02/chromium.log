@@ -1,0 +1,21 @@
+
+Running 14 tests using 1 worker
+
+(node:25140) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 e2e\ticket-detail.spec.ts:14:1 › requester sees public conversation and public history only (957ms)
+  ok  2 e2e\ticket-detail.spec.ts:32:1 › technician sees team internal history and no out-of-team ticket (461ms)
+  ok  3 e2e\ticket-detail.spec.ts:48:3 › requester has no out-of-scope detail projection (355ms)
+  ok  4 e2e\ticket-detail.spec.ts:48:3 › technician has no out-of-scope detail projection (406ms)
+  ok  5 e2e\ticket-detail.spec.ts:54:1 › explicit detail failure retries into the same authorized ticket (440ms)
+  ok  6 e2e\ticket-intake.spec.ts:33:1 › confirmed delayed submit is deduplicated and navigates detail to own list (1.4s)
+  ok  7 e2e\ticket-intake.spec.ts:55:3 › failure preserves draft and creates no record (1.4s)
+  ok  8 e2e\ticket-intake.spec.ts:55:3 › stale preserves draft and creates no record (1.3s)
+  ok  9 e2e\ticket-intake.spec.ts:55:3 › unknown preserves draft and creates no record (1.4s)
+  ok 10 e2e\ticket-reply.spec.ts:25:1 › separate drafts and first response from committed public IT reply only (2.3s)
+  ok 11 e2e\ticket-reply.spec.ts:58:1 › requester Pending reply resumes after confirmation (1.2s)
+  ok 12 e2e\ticket-reply.spec.ts:75:1 › rights revoked while confirming keeps own draft and hides detail (1.3s)
+  ok 13 e2e\ticket-reply.spec.ts:94:3 › compare composer for technician (957ms)
+  ok 14 e2e\ticket-reply.spec.ts:94:3 › compare composer for requester (876ms)
+
+  14 passed (15.9s)
