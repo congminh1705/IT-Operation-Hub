@@ -64,7 +64,11 @@ export function WorkspaceEntry({
         ) : pathname === "/tickets/new" ? (
           <TicketForm search={search} />
         ) : isTicketDetail(pathname) ? (
-          <TicketDetail id={pathname.split("/").at(-1)!} />
+          <TicketDetail
+            key={pathname}
+            id={pathname.split("/").at(-1)!}
+            unavailable={search.demo === "detail-error"}
+          />
         ) : pathname === "/profile" ? (
           <ProfileForm user={persona.user} />
         ) : pathname === "/profile/security" ? (

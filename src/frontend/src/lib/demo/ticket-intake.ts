@@ -1,7 +1,12 @@
-﻿import type { DemoPersona } from "./fixtures";
+import type { DemoPersona } from "./fixtures";
 import type { TicketDraft } from "./ticket-draft";
 import { scopedTicketRows, ticketStates, type TicketRow } from "./ticket-list";
 import type { Priority } from "./sla-policy";
+import {
+  canReadInternalTicket,
+  projectTicketEvents,
+  ticketFixtureEvents,
+} from "./ticket-detail";
 
 export const submitFixtures = ["failure", "stale", "unknown"] as const;
 export type SubmitFixture = (typeof submitFixtures)[number];
@@ -44,9 +49,14 @@ export function createTicketIntake(config: {
       ].find((item) => item.id === id);
       if (!row) return null;
       const stored = records.get(id);
+      const internal = canReadInternalTicket(persona, row, memberships);
+      const events = projectTicketEvents(
+        stored ? [] : ticketFixtureEvents(row),
+        internal,
+      );
       return stored
-        ? structuredClone(stored)
-        : { row, draft: null, budget: null };
+        ? { ...structuredClone(stored), internal, events }
+        : { row, draft: null, budget: null, internal, events };
     },
     check(intent: string): Outcome {
       const entry = committed.get(intent);

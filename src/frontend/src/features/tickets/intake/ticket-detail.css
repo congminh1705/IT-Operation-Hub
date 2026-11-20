@@ -1,0 +1,106 @@
+.ticket-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+  overflow-wrap: anywhere;
+}
+
+.ticket-next-action {
+  grid-column: 1 / -1;
+  color: #82540b;
+  background: #fff5df;
+  border: 1px solid #ead39e;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.ticket-next-action p {
+  margin-block: 4px 0;
+}
+
+.ticket-detail-stack {
+  display: grid;
+  gap: 16px;
+}
+
+.ticket-detail-code {
+  color: #52645d;
+}
+
+.ticket-detail-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ticket-detail-badges span {
+  padding: 3px 8px;
+  border: 1px solid #dbe7e2;
+  border-radius: 6px;
+  background: #eff3f1;
+}
+
+.ticket-detail-badges [data-state="Đang xử lý"] {
+  color: #184a85;
+  background: #e9f1ff;
+}
+
+.ticket-detail-badges [data-state="Chờ bổ sung"] {
+  color: #82540b;
+  background: #fff5df;
+}
+
+.ticket-detail-badges [data-state="Hoàn tất"] {
+  color: #216246;
+  background: #e9f6ee;
+}
+
+.ticket-history-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ticket-history-controls button[aria-pressed="true"] {
+  background: #e3f2ee;
+  color: #086860;
+  border-color: #087f78;
+}
+
+.ticket-history-events {
+  list-style: none;
+  padding: 0;
+}
+
+.ticket-history-events li {
+  padding-block: 12px;
+  border-bottom: 1px solid #dbe7e2;
+}
+
+.ticket-history-events p {
+  margin-block: 4px 0;
+  white-space: pre-wrap;
+}
+
+.ticket-detail-context {
+  display: grid;
+  gap: 8px;
+}
+
+.ticket-detail-context div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ticket-detail-context dd {
+  margin: 0;
+  text-align: end;
+}
+
+@media (max-width: 850px) {
+  .ticket-detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

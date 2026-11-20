@@ -8,7 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import type { QueryClient } from "../../lib/api/query-client";
-import { isKnownDestination } from "../../lib/navigation";
+import { isKnownDestination, isTicketDetail } from "../../lib/navigation";
 import { SessionStore } from "./session-store";
 
 export function safeReturnPath(value: string | null): string {
@@ -57,6 +57,11 @@ export function safeReturnPath(value: string | null): string {
     if (demo === "failure" || demo === "stale" || demo === "unknown")
       params.set("demo", demo);
   }
+  if (
+    isTicketDetail(url.pathname) &&
+    url.searchParams.get("demo") === "detail-error"
+  )
+    params.set("demo", "detail-error");
   return url.pathname + (params.size ? `?${params}` : "");
 }
 const Context = createContext<SessionStore | null>(null);
