@@ -1,4 +1,4 @@
-﻿.workforce {
+.workforce {
   display: grid;
   gap: 16px;
   min-width: 0;
@@ -28,23 +28,35 @@
   margin: 0;
 }
 .workforce-metrics > div {
-  border-top: 3px solid #2c7baf;
+  --metric-ink: #805508;
+  --metric-border: #dfb758;
+  --metric-tint: #fff9e9;
+  border-color: var(--metric-border);
+  border-top-width: 3px;
+  background: linear-gradient(var(--metric-tint), white);
 }
 .workforce-metrics > div:nth-child(2) {
-  border-top-color: #bd6928;
+  --metric-ink: #9a430e;
+  --metric-border: #e5a773;
+  --metric-tint: #fff5ed;
 }
 .workforce-metrics > div:nth-child(3) {
-  border-top-color: #25806c;
+  --metric-ink: #184a85;
+  --metric-border: #8bb8f0;
+  --metric-tint: #edf5ff;
 }
 .workforce-metrics > div:nth-child(4) {
-  border-top-color: #a34b64;
+  --metric-ink: #90304e;
+  --metric-border: #eaa0bc;
+  --metric-tint: #fff1f6;
 }
 .workforce-metrics dt {
   font-weight: 650;
 }
 .workforce-metrics dd {
   margin: 8px 0;
-  font-size: 1.6rem;
+  color: var(--metric-ink);
+  font-size: 1.75rem;
   font-weight: 650;
 }
 .workforce-metrics p {
@@ -74,21 +86,31 @@
 }
 @media (max-width: 900px) {
   .workforce-metrics {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
   .workforce-table table {
     min-width: 40rem;
   }
 }
-@media (max-width: 380px) {
-  .workforce-metrics {
-    grid-template-columns: 1fr;
-  }
-}
+
 .workforce-metrics dd span {
   display: block;
   margin-top: 8px;
   font-size: 0.875rem;
   font-weight: 400;
   color: #52645d;
+}
+
+.workforce-panel h2 {
+  font-size: 1.125rem;
+  font-weight: 650;
+}
+.workforce-scroll-hint {
+  display: none;
+}
+@media (max-width: 900px) {
+  .workforce-scroll-hint {
+    display: block;
+    color: #52645d;
+  }
 }

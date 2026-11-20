@@ -64,6 +64,9 @@ export function WorkforceScreen({ persona }: { persona: DemoPersona }) {
       <section className="workforce-panel">
         <h2>Khả năng tiếp nhận theo ngày</h2>
         <p>20/11/2026 · GMT+7 · Dữ liệu DEMO</p>
+        <p className="workforce-scroll-hint">
+          Cuộn ngang để xem lịch và năng lực.
+        </p>
         <div
           className="workforce-table"
           role="region"
