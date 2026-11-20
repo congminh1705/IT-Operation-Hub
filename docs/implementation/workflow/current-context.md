@@ -15,4 +15,6 @@ authority: derived
 ## Latest task report
 
 - [FE-08.01/attempt-01](task-history.md#task-fe-08-01-attempt-01), review. Card/table parity, filters, person/deadline/dependency/lock and scoped task access. 100 unit and 4 Chromium passed. [Comparison](../evidence/FE-08.01/comparison.md). 3c2eaeb pushed and verified.
-- Next: FE-08.02 plan versions and dependencies.
+
+- [FE-08.02/attempt-01](task-history.md#task-fe-08-02-attempt-01), review. Effective and read-only historical versions and sources, dependency graph by levels and list, invalid/stale/cycle feedback. 100 unit and 4 affected Chromium passed. [Comparison](../evidence/FE-08.02/comparison.md). 36739dd pushed and verified.
+- Next: FE-08.03 task progress and human Done.
