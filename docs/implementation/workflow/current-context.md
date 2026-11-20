@@ -26,4 +26,4 @@ authority: derived
 - Registry: EPIC_DONE. Board: 39 done, 191 pending. PO accepted all three FE-10 leaves.
 - Criterion 1: workflow draft/versioning and explicit policy scope, limits and confirmation verified in FE-10.01/02.
 - Criteria 2/3: scoped activity, provenance, locks, retry, explicit approval vs execution and read-only entry verified in FE-10.03.
-- Preview: http://127.0.0.1:3175/automation/policies and http://127.0.0.1:3175/automation/activity. Parent PR delivery pending.
+- Preview: http://127.0.0.1:3175/automation/policies and http://127.0.0.1:3175/automation/activity. Parent [PR #12](https://github.com/congminh1705/IT-Operation-Hub/pull/12) is open from phase/a-frontend into main.
