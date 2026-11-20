@@ -28,4 +28,4 @@ authority: derived
 - PO accepted FE-09.01 individually, then FE-09.02 and FE-09.03 jointly. All three tasks and the Parent are closed.
 - Parent criterion 1: scoped skill/capacity view and unknown/missing distinction verified in FE-09.01.
 - Criteria 2 and 3: role-scoped edits, affected-work preview, confirmed local changes and separate evaluation pending verified in FE-09.02/03. Ticket SLA and state remained unchanged.
-- Preview: http://127.0.0.1:3167/workforce. Parent PR delivery pending.
+- Preview: http://127.0.0.1:3167/workforce. Parent [PR #11](https://github.com/congminh1705/IT-Operation-Hub/pull/11) is open from phase/a-frontend into main.
