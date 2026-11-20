@@ -1,8 +1,10 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./ticket-detail.css";
+import { TicketSlaClocks } from "./ticket-sla-clocks";
+import { formatBusinessTime } from "@/lib/dates";
 import { TicketRouting } from "./ticket-routing";
 import { TicketLifecycle } from "./ticket-lifecycle";
 import { TicketReplyComposer } from "./ticket-reply-composer";
@@ -24,6 +26,13 @@ export function TicketDetail({
   const { store, persona } = useSession();
   const [view, setView] = useState<"public" | "internal" | "history">("public");
   const [, setRevision] = useState(0);
+  useEffect(() => {
+    const timer = window.setInterval(
+      () => setRevision((value) => value + 1),
+      30000,
+    );
+    return () => window.clearInterval(timer);
+  }, []);
   const [revokedDraft, setRevokedDraft] = useState<string | null>(null);
   if (!persona) return null;
   if (revokedDraft !== null)
@@ -66,9 +75,9 @@ export function TicketDetail({
     events,
     internal,
     version,
-    firstResponseAt,
     canReply,
     actions,
+    sla,
     assignable,
     claimable,
   } = result;
@@ -165,11 +174,7 @@ export function TicketDetail({
                   <strong>{event.actor}</strong>
                   {" · "}
                   <time dateTime={event.at}>
-                    {new Intl.DateTimeFormat("vi-VN", {
-                      timeZone: "Asia/Ho_Chi_Minh",
-                      dateStyle: "short",
-                      timeStyle: "short",
-                    }).format(new Date(event.at))}
+                    {formatBusinessTime(new Date(event.at).toISOString())}
                   </time>
                   {event.audience === "internal" && <span> · Nội bộ</span>}
                   <p>{event.text}</p>
@@ -225,10 +230,9 @@ export function TicketDetail({
             </div>
           )}
         </dl>
-        <h3>Tiếp nhận và SLA</h3>
+        <h3>Nhóm tiếp nhận</h3>
         <p>{row.team}</p>
-        <p>{row.sla}</p>
-        {firstResponseAt && <p>Đã phản hồi lần đầu</p>}
+        <TicketSlaClocks response={sla.response} resolution={sla.resolution} />
         {budget && (
           <p>
             Phiên bản v{budget.version} · Phản hồi {budget.response} phút · Giải

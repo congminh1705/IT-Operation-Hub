@@ -1,4 +1,5 @@
 import type { DemoPersona } from "./fixtures";
+import { projectTicketSla, type TicketSlaSeed } from "./ticket-sla";
 import {
   allowedLifecycleActions,
   lifecycleActions,
@@ -24,6 +25,7 @@ export const submitFixtures = ["failure", "stale", "unknown"] as const;
 export type SubmitFixture = (typeof submitFixtures)[number];
 type RecordSnapshot = {
   row: TicketRow;
+  createdAt: number;
   draft: TicketDraft;
   budget: { version: number; budgets: Budgets };
 };
@@ -58,6 +60,7 @@ export function createTicketIntake(config: {
   const records = new Map<string, RecordSnapshot>();
   const committed = new Map<string, { owner: string; id: string }>();
   const conversations = new Map<string, Conversation>();
+  const clockSeeds = new Map<string, TicketSlaSeed>();
   let sequence = 152;
   return {
     rows: () => [
@@ -66,7 +69,12 @@ export function createTicketIntake(config: {
         .filter(({ row }) => !conversations.has(row.id))
         .map(({ row }) => ({ ...row })),
     ],
-    detail(persona: DemoPersona, id: string, memberships: string[]) {
+    detail(
+      persona: DemoPersona,
+      id: string,
+      memberships: string[],
+      now = Date.now(),
+    ) {
       const mine = scopedTicketRows(
         persona,
         "mine",
@@ -94,6 +102,31 @@ export function createTicketIntake(config: {
       const firstResponseAt = conversation
         ? conversation.firstResponseAt
         : (baseEvents.find((event) => event.id === "team-message")?.at ?? null);
+      let seed = clockSeeds.get(id);
+      if (!seed) {
+        const createdAt =
+          stored?.createdAt ?? Date.parse(`${row.updated}T09:00:00+07:00`);
+        const initialMinutes =
+          row.state === "Chờ bổ sung"
+            ? 35
+            : row.state === "Đã giải quyết" || row.state === "Hoàn tất"
+              ? 60
+              : 0;
+        seed = {
+          createdAt,
+          state: row.state,
+          stateAt: createdAt + initialMinutes * 60000,
+        };
+        clockSeeds.set(id, seed);
+      }
+      const sla = projectTicketSla({
+        seed,
+        events: baseEvents,
+        firstResponseAt,
+        now,
+        priority: row.priority,
+        budgets: stored?.budget.budgets ?? baseline,
+      });
       const events = projectTicketEvents(baseEvents, internal);
       return {
         row,
@@ -104,6 +137,7 @@ export function createTicketIntake(config: {
               ...stored.budget.budgets[row.priority],
             }
           : { version: 3, ...baseline[row.priority] },
+        sla,
         assignable:
           internal &&
           persona.scope.tickets === "organization" &&
@@ -427,6 +461,7 @@ export function createTicketIntake(config: {
       records.set(id, {
         row,
         draft: structuredClone(draft),
+        createdAt: Date.now(),
         budget: config.snapshot(),
       });
       committed.set(intent, { owner: identity.userId, id });
