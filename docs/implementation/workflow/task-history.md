@@ -2486,3 +2486,83 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-04.05, assigned by PO.
 - Eligibility / remaining prerequisite: FE-04.04 done; FE-04.05 assigned.
+
+<a id="task-fe-04-05-attempt-01"></a>
+
+### FE-04.05 — Attempt 01 — 2026-11-20T11:03:11.4200146+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-04.05/attempt-01
+- Task: [task specification](../tasks/FE-04.05.md)
+- Parent / phase: FE-04 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-20T11:01:14+07:00 (first recorded test checkpoint; implementation preceded it)
+- Ended at: 2026-11-20T11:03:11.4200146+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none. [FE-04.04 PO acceptance](#task-fe-04-04-attempt-02).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: positive P1–P4 SLA budgets with old/new preview, confirmation and unchanged existing ticket snapshots.
+- Delivered this attempt: Admin editor, validation and focus, draft preservation, version history with actor/reason/time, protected old snapshot and current-budget projection for a new ticket.
+- Incomplete scope / deviations: PO review pending. In-memory DEMO. Full frontend browser suite not run. Existing search edit excluded from commits.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/administration/sla-screen.tsx and CSS | SlaScreen/SlaEditor and BudgetTable | Preview, history and confirmation |
+| src/frontend/src/lib/demo/sla-policy.ts and features/auth/session-store.ts | createSlaPolicy and per-store version history | Positive budgets, guarded versions and ticket projections |
+| src/frontend/src/features/auth/workspace-entry.tsx and e2e/sla-policy.spec.ts | Admin route wiring and browser tests | Guard, behavior and captures |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Positive P1–P4, cancel/error preservation and old/new snapshots | Zero and negative rejected. Cancel retained draft; saved v4 changed only new-ticket projection | pass | [browser](../evidence/FE-04.05/browser.log) |
+| 2 | Preserve Parent criterion 3 | Reasoned version history, active version guard, no existing ticket rewrite | pass | createSlaPolicy and browser |
+| 3 | DEMO boundary and failure semantics | Admin-only and in-memory; no writes until confirmation | pass | browser |
+| 4 | Approved layout | Agent compared actual and reference at both widths with differences documented | pass | [comparison](../evidence/FE-04.05/comparison.md) |
+| 5 | Captures and owner verdict | Four captures, PO pending | not-run | comparison |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd format:check; pnpm.cmd test | Build and basic checks | Pass; 91 unit tests | pass |
+| src/frontend | pnpm.cmd exec eslint . --ignore-pattern test-results/** | Source lint | Pass; excludes local probe output | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3118, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe, ADMIN_DESIGN_URL=http://127.0.0.1:8010; pnpm.cmd exec playwright test e2e/sla-policy.spec.ts e2e/team-directory.spec.ts | Affected Chromium | 8 pass. Initial generic alert locator matched the framework announcer; scoped locator and reran successfully | pass |
+| repo | Open 08-admin-states.html#sla and compare 1440/390 | Actual/reference | Four captures, no horizontal page overflow | pass |
+| src/frontend | Full Chromium suite | Broad regression | Not run for this attempt | not-run |
+| repo | PO visual review | Owner verdict | Pending | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent checked behavior and references; PO pending.
+- Findings / resolution: preview and fixture comparison supplement the reference. Local screenshots include separate unstaged search edit.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: FE-04.05 PO review outstanding. No real server or ticket integration tested.
+- Required resolution / owner: PO reviews task, then assess Parent FE-04 closure before its PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-04.05.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison and walkthrough](../evidence/FE-04.05/comparison.md), [browser](../evidence/FE-04.05/browser.log).
+- Commit / build / environment: 6c50e63071eb72438eccf89bcb9669b162bd135e pushed and verified on phase/a-frontend; FE-04.04 closure bf76244 also pushed. Preview http://127.0.0.1:3118/login?returnTo=%2Fadmin%2Fsla.
+- Parent delivery: FE-04 EPIC_IN_PROGRESS. Final child awaits PO review, so no Parent PR.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-01 linked.
+- Execution-board task row: review, Owner PO; FE-04.04 done.
+- Current context: latest report, checks and gate recorded.
+- Parent state: FE-04 EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FE-04.05, then assess FE-04 Parent acceptance and delivery.
+- Eligibility / remaining prerequisite: FE-04.05 done, Parent closure and merge before another Parent on the shared branch.

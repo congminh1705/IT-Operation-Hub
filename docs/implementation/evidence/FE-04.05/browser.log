@@ -1,0 +1,15 @@
+
+Running 8 tests using 1 worker
+
+(node:15876) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 e2e\sla-policy.spec.ts:11:1 › invalid budgets preserve draft, cancel preserves version, confirm only updates new ticket (1.2s)
+  ok 2 e2e\sla-policy.spec.ts:64:1 › non-Admin cannot edit SLA (448ms)
+  ok 3 e2e\sla-policy.spec.ts:73:1 › SLA form desktop and mobile captures (1.1s)
+  ok 4 e2e\team-directory.spec.ts:17:1 › intake stays unique and active; blocked transfer keeps assignments (764ms)
+  ok 5 e2e\team-directory.spec.ts:67:1 › membership only changes selected team and guards active work (630ms)
+  ok 6 e2e\team-directory.spec.ts:101:1 › create, rename, and deactivate unused group without changing intake (649ms)
+  ok 7 e2e\team-directory.spec.ts:125:1 › non-Admin cannot configure team membership (435ms)
+  ok 8 e2e\team-directory.spec.ts:132:1 › teams reference and actual at desktop/mobile (979ms)
+
+  8 passed (7.6s)
