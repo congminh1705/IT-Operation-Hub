@@ -1,4 +1,4 @@
-﻿import type { DemoPersona } from "./fixtures";
+import type { DemoPersona } from "./fixtures";
 import { managesAutomation, workflowTeam } from "./automation-workflow";
 export const policyScenarios = {
   active: "Có ủy quyền",
@@ -98,6 +98,8 @@ export function createAutomationPolicy() {
     return null;
   }
   return {
+    allowsTeam: (team: string) =>
+      team === workflowTeam && (settings.get("active")?.draft.enabled ?? true),
     read,
     validate,
     save(

@@ -222,6 +222,7 @@ export const knownDestinations = new Set([
   "/assistant",
   "/approvals",
   "/automation/policies",
+  "/automation/activity",
   "/knowledge",
   "/assets",
   "/reports",
@@ -285,9 +286,11 @@ export function canOpenDestination(persona: DemoPersona, pathname: string) {
   const destination =
     pathname === "/tickets/new" || isTicketDetail(pathname)
       ? "/tickets"
-      : pathname === "/admin/users/new"
-        ? "/admin/users"
-        : pathname;
+      : pathname === "/automation/activity"
+        ? "/automation/policies"
+        : pathname === "/admin/users/new"
+          ? "/admin/users"
+          : pathname;
   return [...getNavigation(persona), ...getAccountLinks(persona)].some(
     (item) => item.href.split("?")[0] === destination,
   );

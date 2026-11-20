@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 import { Feedback } from "@/components/feedback/feedback";
 import { useSession } from "@/features/auth/session";
@@ -44,6 +45,15 @@ export function AutomationScreen() {
           DEMO.
         </p>
       </section>
+      <div>
+        <Link
+          href="/automation/activity"
+          className="ui-button"
+          data-variant="secondary"
+        >
+          Xem hoạt động điều phối
+        </Link>
+      </div>
       {management && (
         <AutomationPolicyPanel
           versions={versions.map((version) => version.number)}
