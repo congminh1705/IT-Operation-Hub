@@ -1,0 +1,26 @@
+
+Running 19 tests using 1 worker
+
+(node:28076) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 e2e\ticket-detail.spec.ts:14:1 › requester sees public conversation and public history only (923ms)
+  ok  2 e2e\ticket-detail.spec.ts:32:1 › technician sees team internal history and no out-of-team ticket (663ms)
+  ok  3 e2e\ticket-detail.spec.ts:48:3 › requester has no out-of-scope detail projection (444ms)
+  ok  4 e2e\ticket-detail.spec.ts:48:3 › technician has no out-of-scope detail projection (404ms)
+  ok  5 e2e\ticket-detail.spec.ts:54:1 › explicit detail failure retries into the same authorized ticket (538ms)
+  ok  6 e2e\ticket-sla.spec.ts:18:1 › fixed first response reaches at-risk then breached without pausing resolution (496ms)
+  ok  7 e2e\ticket-sla.spec.ts:38:1 › requester Pending reply resumes clock with stable elapsed usage (1.3s)
+  ok  8 e2e\ticket-sla.spec.ts:67:1 › reopen preserves used time and priority change keeps past first response breach (2.6s)
+  ok  9 e2e\work-board.spec.ts:12:1 › cards and keyboard-selectable table share filtered task set (423ms)
+  ok 10 e2e\work-board.spec.ts:37:1 › Requester cannot access tasks by direct link (379ms)
+  ok 11 e2e\work-controls.spec.ts:14:1 › technician gets unavailable management actions (401ms)
+  ok 12 e2e\work-controls.spec.ts:25:1 › unlock cancel preserves lock, confirmed unlock and lock retain decision and assignee (654ms)
+  ok 13 e2e\work-controls.spec.ts:70:1 › in-progress assignment needs explicit exception, history snapshot is stable (580ms)
+  ok 14 e2e\work-controls.spec.ts:99:3 › compare manual work controls plan (917ms)
+  ok 15 e2e\work-controls.spec.ts:99:3 › compare manual work controls progress (894ms)
+  ok 16 e2e\work-plan.spec.ts:10:1 › version navigation, dependency explanation and invalid variants (475ms)
+  ok 17 e2e\work-progress.spec.ts:21:1 › blocked dependency prevents unblock, start and block use explicit confirmation (560ms)
+  ok 18 e2e\work-progress.spec.ts:47:1 › capacity and result checks, then Done leaves ticket unchanged (577ms)
+  ok 19 e2e\work-progress.spec.ts:71:1 › stale progress does not overwrite task and keeps input (468ms)
+
+  19 passed (15.3s)
