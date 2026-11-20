@@ -3482,3 +3482,80 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-06.06 separate SLA clock displays.
 - Eligibility / remaining prerequisite: FE-06.05 agent checks passed. PO authorized sequencing with joint review.
+
+<a id="task-fe-06-06-attempt-01"></a>
+
+### FE-06.06 — Attempt 01 — 2026-11-20T15:03:37.4124513+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-06.06/attempt-01
+- Task: [task specification](../tasks/FE-06.06.md)
+- Parent / phase: FE-06 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T14:59:34.7580410+07:00 (first implementation file timestamp)
+- Ended at: 2026-11-20T15:03:37.4124513+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, first implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Independent response and resolution clocks with fixed-time Pending, reopen and priority cases.
+- Delivered this attempt: Separate DEMO 24/7 clocks with budget, used time, at-risk, breached, paused and stopped labels, preserved elapsed intervals and historical breach.
+- Incomplete scope / deviations: No production SLA calculation or worker. Owner joint review pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/lib/demo/ticket-sla.ts, ticket-intake.ts | projectTicketSla and immutable fixture clock seed | Interval projection, historical breaches and policy snapshot |
+| src/frontend/src/features/tickets/intake/ticket-sla-clocks.tsx, ticket-detail.tsx, ticket-detail.css | TicketSlaClocks | Role-scoped clock card and refresh |
+| src/frontend/src/lib/demo/ticket-sla.test.ts, src/frontend/e2e/ticket-sla.spec.ts | Fixed-time scenarios and browser pairs | Thresholds, pause, reopen and priority regression |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Independent response and resolution clocks with fixed-time Pending, reopen and priority cases | Separate DEMO 24/7 clocks with budget, used time, at-risk, breached, paused and stopped labels, preserved elapsed intervals and historical breach | pass | [Chromium](../evidence/FE-06.06/chromium.log) |
+| 2 | Preserve relevant Parent rules | Fixed-time thresholds, stopped response, Pending-only resolution pause, reopen keeps elapsed time and priority reuses the policy snapshot and breach history | pass | [Chromium](../evidence/FE-06.06/chromium.log) |
+| 3 | Frontend mock only, explicit failure handling | Scoped mock behavior and build checks verified | pass | [Chromium](../evidence/FE-06.06/chromium.log) |
+| 4 | Approved layout within task scope | Agent compared desktop/mobile and recorded differences | pass | [Comparison](../evidence/FE-06.06/comparison.md) |
+| 5 | Paired captures and PO visual verdict | Captures saved. Joint PO review pending | not-run | [Comparison](../evidence/FE-06.06/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd exec eslint src e2e/ticket-sla.spec.ts; pnpm.cmd format:check; pnpm.cmd test | Static/unit checks | Passed, 99 unit cases | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3136, TICKET_DETAIL_DESIGN_URL=http://127.0.0.1:8126, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe. node node_modules/@playwright/test/cli.js test e2e/ticket-sla.spec.ts e2e/ticket-routing.spec.ts e2e/ticket-follow-up.spec.ts e2e/ticket-lifecycle.spec.ts e2e/ticket-reply.spec.ts e2e/ticket-detail.spec.ts e2e/ticket-intake.spec.ts e2e/ticket-list.spec.ts --grep-invert 'matched create and detail evidence&#124;matched comparison for&#124;desktop/mobile references and actual list scope pair&#124;compare lifecycle dialog&#124;compare composer&#124;compare follow-up&#124;compare routing' --reporter=list | Affected Chromium | 35 passed | pass |
+| repo | Compare approved HTML and app at 1440 and 390 px with reduced motion | Paired screenshots | See comparison and differences | pass |
+| src/frontend | Full unrelated Chromium suite | Expanded regression | Outside this run | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent functional and visual comparison. PO joint review pending.
+- Findings / resolution: Clock values use the existing DEMO policy table, not production defaults. Requester active HTML has no dedicated two-clock card; technician support commitment is the nearest approved pattern.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent awaits joint PO acceptance.
+- Required resolution / owner: PO authorized continuing sequentially after each task passes agent checks.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-06.06.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-06.06/comparison.md), [Chromium](../evidence/FE-06.06/chromium.log).
+- Commit / build / environment: [7637f05](https://github.com/congminh1705/IT-Operation-Hub/commit/7637f0525a8693317ff6b0ee89e8047c04bfaf06) pushed on phase/a-frontend and remote SHA verified.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: report and evidence linked.
+- Execution-board task row: review, Owner PO.
+- Current context: report and next step recorded.
+- Parent state: EPIC_IN_PROGRESS pending joint PO review.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review of FE-06.01–FE-06.06 and all three Parent criteria. FE-07.01 remains pending.
+- Eligibility / remaining prerequisite: FE-06.06 agent checks passed. PO authorized sequencing with joint review.
