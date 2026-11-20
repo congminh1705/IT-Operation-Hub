@@ -1,0 +1,24 @@
+
+Running 17 tests using 1 worker
+
+(node:28440) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 e2e\ticket-attachment-picker.spec.ts:18:1 › picker keeps the exact boundary and rejects sixth, oversize and unsupported files (3.2s)
+  ok  2 e2e\ticket-attachment-picker.spec.ts:67:1 › public and internal selection stay separate when switching drafts (611ms)
+  ok  3 e2e\ticket-form.spec.ts:23:1 › required constraints, computed priority and permitted assets (600ms)
+  ok  4 e2e\ticket-form.spec.ts:41:1 › onboarding clarification fields required only for selected mode (565ms)
+  ok  5 e2e\ticket-intake.spec.ts:33:1 › confirmed delayed submit is deduplicated and navigates detail to own list (1.4s)
+  ok  6 e2e\ticket-intake.spec.ts:55:3 › failure preserves draft and creates no record (1.4s)
+  ok  7 e2e\ticket-intake.spec.ts:55:3 › stale preserves draft and creates no record (1.4s)
+  ok  8 e2e\ticket-intake.spec.ts:55:3 › unknown preserves draft and creates no record (1.4s)
+  ok  9 e2e\ticket-reply.spec.ts:25:1 › separate drafts and first response from committed public IT reply only (2.3s)
+  ok 10 e2e\ticket-reply.spec.ts:58:1 › requester Pending reply resumes after confirmation (1.3s)
+  ok 11 e2e\ticket-reply.spec.ts:75:1 › rights revoked while confirming keeps own draft and hides detail (1.3s)
+  ok 12 e2e\ticket-upload.spec.ts:45:1 › partial retry keeps saved ticket and already uploaded selection (3.6s)
+  ok 13 e2e\ticket-upload.spec.ts:64:1 › unknown upload is reconciled before deliberate retry (3.6s)
+  ok 14 e2e\ticket-upload.spec.ts:81:1 › cancel upload preserves saved ticket and valid files (2.7s)
+  ok 15 e2e\ticket-upload.spec.ts:96:1 › rejected file blocks preview until corrected, keeping text and valid files (582ms)
+  ok 16 e2e\ticket-upload.spec.ts:121:1 › internal note stays posted if file storage fails; retry only uploads (3.1s)
+  ok 17 e2e\ticket-upload.spec.ts:150:1 › compare upload recovery screens (3.1s)
+
+  17 passed (33.5s)

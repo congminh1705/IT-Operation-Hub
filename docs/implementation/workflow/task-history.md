@@ -4062,3 +4062,81 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-07.02 upload outcomes and retry.
 - Eligibility / remaining prerequisite: FE-07.01 agent checks passed. PO authorized sequencing with joint review.
+
+<a id="task-fe-07-02-attempt-01"></a>
+
+### FE-07.02 — Attempt 01 — 2026-11-20T15:48:46.1597461+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-07.02/attempt-01
+- Task: [task specification](../tasks/FE-07.02.md)
+- Parent / phase: FE-07 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T15:45:08.8867668+07:00 (first implementation file timestamp)
+- Ended at: 2026-11-20T15:48:46.1597461+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, first implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Explicit independent attachment outcomes and retry after saved ticket or message.
+- Delivered this attempt: Progress, cancel, partial and failure simulation, unknown upload check followed by deliberate retry, guarded metadata storage and no duplicate ticket or note.
+- Incomplete scope / deviations: DEMO metadata only. Joint PO review pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/tickets/intake/ticket-upload.tsx, ticket-form.tsx, ticket-reply-composer.tsx | Independent post-save upload state | Progress, cancellation and retry |
+| src/frontend/src/features/tickets/intake/ticket-attachment-picker.tsx | Native validity and correction | Reject submission until invalid selection is dismissed |
+| src/frontend/src/lib/demo/ticket-intake.ts, ticket-attachments.ts | Scoped metadata commit and result check | Separate ticket and upload writes |
+| src/frontend/e2e/ticket-upload.spec.ts | Failure, retry and comparison | Verification |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Explicit independent attachment outcomes and retry after saved ticket or message | Progress, cancel, partial and failure simulation, unknown upload check followed by deliberate retry, guarded metadata storage and no duplicate ticket or note | pass | [Chromium](../evidence/FE-07.02/chromium.log) |
+| 2 | Preserve relevant Parent rules | Partial retry produced one ticket; unknown had to be checked, cancel kept selections, invalid selection required correction, note retry retained one message | pass | [Chromium](../evidence/FE-07.02/chromium.log) |
+| 3 | Frontend mock only, explicit failure handling | Scoped mock behavior and build checks verified | pass | [Chromium](../evidence/FE-07.02/chromium.log) |
+| 4 | Approved layout within task scope | Agent compared desktop/mobile and recorded differences | pass | [Comparison](../evidence/FE-07.02/comparison.md) |
+| 5 | Paired captures and PO visual verdict | Captures saved. Joint PO review pending | not-run | [Comparison](../evidence/FE-07.02/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd exec eslint src e2e/ticket-upload.spec.ts; pnpm.cmd format:check; pnpm.cmd test | Static/unit checks | Passed, 99 unit cases | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3142, TICKET_DETAIL_DESIGN_URL=http://127.0.0.1:8126, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe. node node_modules/@playwright/test/cli.js test e2e/ticket-upload.spec.ts e2e/ticket-attachment-picker.spec.ts e2e/ticket-form.spec.ts e2e/ticket-reply.spec.ts e2e/ticket-intake.spec.ts --grep-invert 'matched create and detail evidence&#124;matched comparison for&#124;desktop/mobile references and actual list scope pair&#124;compare lifecycle dialog&#124;compare composer&#124;compare attachment picker&#124;matched desktop/mobile form captures' --reporter=list | Affected Chromium | 17 passed | pass |
+| repo | Compare approved HTML and app at 1440 and 390 px with reduced motion | Paired screenshots | See comparison and differences | pass |
+| src/frontend | Full unrelated Chromium suite | Expanded regression | Outside this run | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent functional and visual comparison. PO joint review pending.
+- Findings / resolution: Unit import alias initially failed, corrected to the existing relative import convention. Final static and unit checks passed. The visual reference has generic recovery feedback; the app distinguishes saved ticket and per-file state.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent awaits joint PO acceptance.
+- Required resolution / owner: PO authorized continuing sequentially after each task passes agent checks.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-07.02.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-07.02/comparison.md), [Chromium](../evidence/FE-07.02/chromium.log).
+- Commit / build / environment: [4eed4c4](https://github.com/congminh1705/IT-Operation-Hub/commit/4eed4c4089159be4874dbe172b2ceb031147e5fe) pushed on phase/a-frontend and remote SHA verified.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: report and evidence linked.
+- Execution-board task row: review, Owner PO.
+- Current context: report and next step recorded.
+- Parent state: EPIC_IN_PROGRESS pending joint PO review.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-07.03 audience-safe attachment downloads.
+- Eligibility / remaining prerequisite: FE-07.02 agent checks passed. PO authorized sequencing with joint review.
