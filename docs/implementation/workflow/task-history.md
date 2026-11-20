@@ -2947,3 +2947,149 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: PO reviews FE-05.02 and FE-05.03 together.
 - Eligibility / remaining prerequisite: PO acceptance and Parent closure checks before PR; no next Parent yet.
+
+<a id="task-fe-05-02-attempt-02"></a>
+
+### FE-05.02 — Attempt 02 — 2026-11-20T11:38:57.8596241+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-05.02/attempt-02
+- Task: [task specification](../tasks/FE-05.02.md)
+- Parent / phase: FE-05 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-20T11:38:57.8596241+07:00
+- Ended at: 2026-11-20T11:38:57.8596241+07:00
+- State before / after: review / done
+- Previous attempt / correction: [attempt-01](#task-fe-05-02-attempt-01)
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record joint PO acceptance and close the leaf.
+- Delivered this attempt: PO accepted both leaves and confirmed Parent closure.
+- Incomplete scope / deviations: DEMO boundaries and prior unrun checks remain documented.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-05.02.md and workflow records | Closure and references | Track PO acceptance |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Implement task-owned interaction | Prior checks retained | pass | [attempt-01](#task-fe-05-02-attempt-01) |
+| 2 | Preserve mapped Parent rules | Prior evidence retained | pass | attempt-01 |
+| 3 | DEMO boundary and failure behavior | Prior evidence retained | pass | attempt-01 |
+| 4 | UI within approved scope | PO reviewed and accepted | pass | PO instruction |
+| 5 | Actual/reference and owner verdict | Prior captures retained, PO accepted | pass | [comparison](../evidence/FE-05.02/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Compare execution-board, task handoff, report and Parent criteria | Consistent closure | Both leaves done; Parent approved | pass |
+| src/frontend | Application test rerun | Documentation-only closure | Existing results retained | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO joint review on 2026-11-20.
+- Findings / resolution: accepted, requested done and confirmed Parent closure.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for leaf.
+- Required resolution / owner: PO reviews and merges Parent PR before the next Parent.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-05.02.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-05.02/comparison.md) and attempt-01.
+- Commit / build / environment: prior review bundle a4f2db8 pushed. Parent PR and final SHA recorded in current context.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-02 linked.
+- Execution-board task row: done, Owner PO.
+- Current context: joint closure and Parent delivery updated.
+- Parent state: FE-05 EPIC_DONE by PO, delivery via one Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: review and merge the FE-05 Parent PR.
+- Eligibility / remaining prerequisite: verify merge before the next Parent on the shared phase branch and obtain assignment.
+
+<a id="task-fe-05-03-attempt-02"></a>
+
+### FE-05.03 — Attempt 02 — 2026-11-20T11:38:57.8596241+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-05.03/attempt-02
+- Task: [task specification](../tasks/FE-05.03.md)
+- Parent / phase: FE-05 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-20T11:38:57.8596241+07:00
+- Ended at: 2026-11-20T11:38:57.8596241+07:00
+- State before / after: review / done
+- Previous attempt / correction: [attempt-01](#task-fe-05-03-attempt-01)
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record joint PO acceptance and close the leaf.
+- Delivered this attempt: PO accepted both leaves and confirmed Parent closure.
+- Incomplete scope / deviations: DEMO boundaries and prior unrun checks remain documented.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-05.03.md and workflow records | Closure and references | Track PO acceptance |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Implement task-owned interaction | Prior checks retained | pass | [attempt-01](#task-fe-05-03-attempt-01) |
+| 2 | Preserve mapped Parent rules | Prior evidence retained | pass | attempt-01 |
+| 3 | DEMO boundary and failure behavior | Prior evidence retained | pass | attempt-01 |
+| 4 | UI within approved scope | PO reviewed and accepted | pass | PO instruction |
+| 5 | Actual/reference and owner verdict | Prior captures retained, PO accepted | pass | [comparison](../evidence/FE-05.03/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Compare execution-board, task handoff, report and Parent criteria | Consistent closure | Both leaves done; Parent approved | pass |
+| src/frontend | Application test rerun | Documentation-only closure | Existing results retained | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO joint review on 2026-11-20.
+- Findings / resolution: accepted, requested done and confirmed Parent closure.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for leaf.
+- Required resolution / owner: PO reviews and merges Parent PR before the next Parent.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-05.03.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-05.03/comparison.md) and attempt-01.
+- Commit / build / environment: prior review bundle a4f2db8 pushed. Parent PR and final SHA recorded in current context.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-02 linked.
+- Execution-board task row: done, Owner PO.
+- Current context: joint closure and Parent delivery updated.
+- Parent state: FE-05 EPIC_DONE by PO, delivery via one Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: review and merge the FE-05 Parent PR.
+- Eligibility / remaining prerequisite: verify merge before the next Parent on the shared phase branch and obtain assignment.
