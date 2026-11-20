@@ -1,12 +1,17 @@
-﻿"use client";
+"use client";
+import Link from "next/link";
 import { useState } from "react";
 import { useSession } from "@/features/auth/session";
 import type { WorkforceChange, WorkforcePreview } from "@/lib/demo/workforce";
 
 export function WorkforceEditor({
   people,
+  conflict,
+  onSaved,
 }: {
   people: { id: string; name: string }[];
+  conflict?: boolean;
+  onSaved: () => void;
 }) {
   const { store } = useSession();
   const [person, setPerson] = useState(people[0]?.id ?? "");
@@ -17,12 +22,45 @@ export function WorkforceEditor({
   const [skill, setSkill] = useState("");
   const [note, setNote] = useState("");
   const [preview, setPreview] = useState<WorkforcePreview>();
+  const [saved, setSaved] =
+    useState<
+      Extract<ReturnType<typeof store.workforce.save>, { kind: "saved" }>
+    >();
   const [error, setError] = useState("");
   return (
     <section className="workforce-panel" aria-label="Cập nhật nhân sự">
       <h2>Lịch nhân sự và kỹ năng</h2>
       <p>Khung DEMO ngày 20/11/2026 · GMT+7 · Ngân sách theo phút mỗi ngày</p>
       {error && <p role="alert">{error}</p>}
+      {saved && (
+        <section className="workforce-notice" aria-label="Kết quả ghi nhận">
+          <h3>Đã ghi nhận thay đổi</h3>
+          <p>
+            {saved.name} · {saved.summary}
+          </p>
+          {saved.note && <p>Ghi chú: {saved.note}</p>}
+          <h4>Chờ đánh giá công việc bị ảnh hưởng</h4>
+          {saved.affected.length ? (
+            <ul>
+              {saved.affected.map((task) => (
+                <li key={task.id}>
+                  {task.id} · {task.title} · Còn {task.remaining} phút ·{" "}
+                  <Link href={"/tickets/" + task.ticket}>{task.ticket}</Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>Không có công việc trong khung mẫu bị ảnh hưởng.</p>
+          )}
+          {saved.capacityMissing && (
+            <p>Chưa đủ dữ liệu năng lực trong khung đã lưu.</p>
+          )}
+          {saved.noCapacity && (
+            <p>Nhân sự này không còn năng lực trống trong khung đã lưu.</p>
+          )}
+          <p>Kết quả phân công và SLA vẫn theo bản ghi hiện tại.</p>
+        </section>
+      )}
       {preview ? (
         <div aria-label="Xem trước thay đổi">
           <h3>Xem trước thay đổi</h3>
@@ -41,6 +79,29 @@ export function WorkforceEditor({
           ) : (
             <p>Không có công việc trong khung mẫu bị ảnh hưởng.</p>
           )}
+          <button
+            className="ui-button"
+            type="button"
+            onClick={() => {
+              const actor = store.getSnapshot();
+              if (!actor) {
+                setError("Phiên đã thay đổi.");
+                return;
+              }
+              const outcome = store.workforce.save(actor, preview, conflict);
+              setPreview(undefined);
+              if (outcome.kind === "error") {
+                setError(outcome.message);
+                return;
+              }
+              setSaved(undefined);
+              setError("");
+              setSaved(outcome);
+              onSaved();
+            }}
+          >
+            Xác nhận lưu
+          </button>
           <button
             className="ui-button"
             type="button"
@@ -73,6 +134,7 @@ export function WorkforceEditor({
               setError(outcome.message);
               return;
             }
+            setSaved(undefined);
             setError("");
             setPreview(outcome);
           }}

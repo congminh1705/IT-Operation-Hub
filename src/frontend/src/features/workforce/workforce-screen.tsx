@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { Feedback } from "@/components/feedback/feedback";
 import type { DemoPersona } from "@/lib/demo/fixtures";
 import { useSession } from "@/features/auth/session";
@@ -14,8 +15,15 @@ const range = ([start, end]: readonly [number, number]) =>
 const minutes = (value: number | null) =>
   value === null ? "Chưa đủ dữ liệu" : value + " phút";
 
-export function WorkforceScreen({ persona }: { persona: DemoPersona }) {
+export function WorkforceScreen({
+  persona,
+  conflict,
+}: {
+  persona: DemoPersona;
+  conflict?: boolean;
+}) {
   const { store } = useSession();
+  const [, refresh] = useState(0);
   const projection = store.workforce.projection(persona);
   if (!projection) return <Feedback kind="forbidden" />;
   const { management, rows, unallocated } = projection;
@@ -141,7 +149,13 @@ export function WorkforceScreen({ persona }: { persona: DemoPersona }) {
           </table>
         </div>
       </section>
-      {management && <WorkforceEditor people={rows} />}
+      {management && (
+        <WorkforceEditor
+          people={rows}
+          conflict={conflict}
+          onSaved={() => refresh((value) => value + 1)}
+        />
+      )}
       {management && (
         <section className="workforce-panel">
           <h2>Công việc chưa phân bổ</h2>

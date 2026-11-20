@@ -127,6 +127,7 @@ export type WorkforceChange = {
 const affectedWork = [
   {
     person: tech.id,
+    ticket: "TKT-000127",
     id: "T07",
     title: "Kiểm tra kết nối VPN",
     remaining: 60,
@@ -134,6 +135,7 @@ const affectedWork = [
   },
   {
     person: "demo-02",
+    ticket: "TKT-000128",
     id: "T21",
     title: "Kiểm tra thiết bị DEMO",
     remaining: 120,
@@ -148,6 +150,7 @@ export type WorkforcePreview = {
   affected: typeof affectedWork;
   change: WorkforceChange;
   version: number;
+  actorId: string;
 };
 const error = (message: string) => ({ kind: "error" as const, message });
 const parseTime = (value: string) =>
@@ -236,10 +239,54 @@ export function createWorkforce() {
       affected,
       change: { ...change },
       version: target.version ?? 1,
+      actorId: actor.user.id,
+    };
+  }
+  function save(actor: DemoPersona, draft: WorkforcePreview, conflict = false) {
+    const current = preview(actor, draft.change);
+    if (current.kind === "error") return current;
+    if (
+      conflict ||
+      draft.actorId !== actor.user.id ||
+      current.version !== draft.version
+    )
+      return error("Dữ liệu đã thay đổi. Bản nháp được giữ lại.");
+    const change = current.change;
+    const target = source.find((item) => item.id === change.person)!;
+    if (change.kind === "skill") {
+      const name = change.skill.trim();
+      const existing = target.skills.find(
+        (item) =>
+          item.name.toLocaleLowerCase("vi") === name.toLocaleLowerCase("vi"),
+      );
+      if (existing) existing.verifier = actor.user.display_name;
+      else target.skills.push({ name, verifier: actor.user.display_name });
+    } else {
+      const period: [number, number] = [
+        parseTime(change.start),
+        parseTime(change.end),
+      ];
+      if (change.kind === "absence") target.absences.push(period);
+      else {
+        target.schedule = period;
+        target.budget = Number(change.budget);
+      }
+    }
+    target.version = current.version + 1;
+    const { free } = workforceRow(target);
+    return {
+      kind: "saved" as const,
+      name: target.name,
+      summary: current.after,
+      note: change.note.trim(),
+      affected: current.affected,
+      capacityMissing: free === null,
+      noCapacity: free !== null && free <= 0,
     };
   }
   return {
     preview,
+    save,
     projection: (actor: DemoPersona) => workforceProjection(actor, source),
   };
 }

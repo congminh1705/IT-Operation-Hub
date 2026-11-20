@@ -66,7 +66,10 @@ export function WorkspaceEntry({
       }
       content={
         pathname === "/workforce" ? (
-          <WorkforceScreen persona={persona} />
+          <WorkforceScreen
+            persona={persona}
+            conflict={params.get("demo") === "workforce-conflict"}
+          />
         ) : pathname === "/work" ? (
           <WorkBoard
             scope={params.get("scope") ?? undefined}

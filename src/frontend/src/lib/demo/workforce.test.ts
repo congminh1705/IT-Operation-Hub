@@ -1,6 +1,10 @@
-﻿import { expect, test } from "vitest";
+import { expect, test } from "vitest";
 import { createDemoFixtures } from "./fixtures";
-import { absentMinutes, workforceProjection } from "./workforce";
+import {
+  absentMinutes,
+  createWorkforce,
+  workforceProjection,
+} from "./workforce";
 
 test("absence union clips the window and counts overlapping intervals once", () => {
   expect(
@@ -38,4 +42,33 @@ test("workforce scope separates self, management and absent data", () => {
     free: null,
   });
   expect(management?.unallocated).toHaveLength(1);
+});
+
+test("workforce confirmation checks actor and record version before writes", () => {
+  const { personas } = createDemoFixtures();
+  const store = createWorkforce();
+  const actor = personas.IT_MANAGER;
+  const change = {
+    person: personas.TECHNICIAN.user.id,
+    kind: "absence" as const,
+    start: "09:00",
+    end: "17:00",
+    budget: "",
+    skill: "",
+    note: "DEMO",
+  };
+  expect(store.preview(personas.TECHNICIAN, change)).toMatchObject({
+    kind: "error",
+  });
+  const draft = store.preview(actor, change);
+  if (draft.kind !== "preview") throw new Error(draft.message);
+  expect(store.save(actor, draft, true)).toMatchObject({ kind: "error" });
+  expect(store.projection(actor)?.rows[0].absences).toHaveLength(0);
+  expect(store.save(actor, draft)).toMatchObject({
+    kind: "saved",
+    noCapacity: true,
+    affected: [{ id: "T07" }],
+  });
+  expect(store.save(actor, draft)).toMatchObject({ kind: "error" });
+  expect(store.projection(actor)?.rows[0].absences).toHaveLength(1);
 });
