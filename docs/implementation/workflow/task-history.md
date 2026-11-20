@@ -2793,3 +2793,157 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Continue FE-05.02 under the Parent assignment.
 - Eligibility / remaining prerequisite: FE-05.01 done. FE-05.03 depends on FE-05.02.
+
+<a id="task-fe-05-02-attempt-01"></a>
+
+### FE-05.02 — Attempt 01 — 2026-11-20T11:33:17.3081744+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-05.02/attempt-01
+- Task: [task specification](../tasks/FE-05.02.md)
+- Parent / phase: FE-05 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-20T11:28:24+07:00 (observed test checkpoint; implementation preceded it)
+- Ended at: 2026-11-20T11:33:17.3081744+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none for this task. FE-05.01 done by PO. PO authorized joint .02/.03 review.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Native required fields, derived priority, scoped assets and onboarding clarification.
+- Delivered this attempt: Opened create route from the scoped list. Validated draft, derived priority from the matrix, applied scoped assets and conditional onboarding inputs; preview only at this commit.
+- Incomplete scope / deviations: PO review pending. DEMO memory only. Search edit left outside commits.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend (files: ticket-form.tsx, ticket-form.css, ticket-draft.ts and test, navigation/workspace entry, organization-catalog.ts, e2e/ticket-form.spec.ts) | Ticket intake and checks | Scoped frontend behavior |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Native required fields, derived priority, scoped assets and onboarding clarification. | Required fields, scoped asset, derived priority and onboarding-only requirements passed. | pass | [browser](../evidence/FE-05.02/browser.log) |
+| 2 | Preserve selected Parent rules | Validated scoped input and explicit steps within leaf scope | pass | browser and task implementation |
+| 3 | DEMO boundary and clear failure | Synthetic inputs only, no real network/provider writes | pass | browser |
+| 4 | Approved layout within scope | Agent compared two viewport widths; state differences recorded | pass | [comparison](../evidence/FE-05.02/comparison.md) |
+| 5 | Capture reference and app; owner verdict | Images saved. PO joint verdict pending | not-run | comparison |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd test; pnpm.cmd exec eslint . --ignore-pattern test-results/**; final pnpm.cmd typecheck and pnpm.cmd format:check | Static and unit checks | 94 unit, 3 Chromium scoped cases, production build and source lint passed. Form cases also passed in final combined run. | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1; PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe; TICKET_DESIGN_URL=http://127.0.0.1:8010; PLAYWRIGHT_BASE_URL=http://127.0.0.1:3120; pnpm.cmd exec playwright test e2e/ticket-form.spec.ts | Affected Chromium | Passed. FE-05.02 first launch overlapped build, then ran successfully. | pass |
+| repo | Compare approved HTML and actual at 1440×1000 and 390×1000 | Visual evidence | Captures saved and compared | pass |
+| src/frontend | Full unrelated Chromium suites | Broad regression | Not run for these attempts | not-run |
+| repo | PO joint review | Owner verdict | Pending | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent behavioral and visual review. PO joint review pending.
+- Findings / resolution: scope differences documented. Existing search arrow edit appears in local evidence and remains unstaged.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: joint PO review of FE-05.02 and FE-05.03 outstanding.
+- Required resolution / owner: PO reviews both leaves and Parent before closure.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-05.02.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison and PO steps](../evidence/FE-05.02/comparison.md), [browser log](../evidence/FE-05.02/browser.log).
+- Commit / build / environment: implementation bb730fd pushed to phase/a-frontend. Final preview http://127.0.0.1:3121/login?returnTo=%2Ftickets%2Fnew.
+- Parent delivery: FE-05 EPIC_IN_PROGRESS, no Parent PR. FE-04 PR #5 verified merged.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-01 linked.
+- Execution-board task row: review, Owner PO.
+- Current context: joint acceptance and evidence recorded.
+- Parent state: FE-05 EPIC_IN_PROGRESS pending joint review.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FE-05.02 and FE-05.03 together.
+- Eligibility / remaining prerequisite: PO acceptance and Parent closure checks before PR; no next Parent yet.
+
+<a id="task-fe-05-03-attempt-01"></a>
+
+### FE-05.03 — Attempt 01 — 2026-11-20T11:33:17.3081744+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-05.03/attempt-01
+- Task: [task specification](../tasks/FE-05.03.md)
+- Parent / phase: FE-05 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-20T11:31:42+07:00 (observed test checkpoint; implementation preceded it)
+- Ended at: 2026-11-20T11:33:17.3081744+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none for this task. FE-05.02 implementation and scoped checks passed before .03 started. PO authorized proceeding with FE-05.02 awaiting joint review.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Confirmed mock submit, stable detail/list navigation, and explicit failure outcomes.
+- Delivered this attempt: Guarded duplicate submit, generated stable code, attached intake/SLA snapshot, exposed scoped detail and list, and kept drafts on failure/stale/unknown.
+- Incomplete scope / deviations: PO review pending. DEMO memory only. Search edit left outside commits.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend (files: ticket-intake.ts, ticket-detail.tsx, ticket-form.tsx, ticket-list.ts, session/workspace/navigation, SLA and intake snapshots, e2e/ticket-intake.spec.ts) | Ticket intake and checks | Scoped frontend behavior |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Confirmed mock submit, stable detail/list navigation, and explicit failure outcomes. | Delayed double-submit produced one record. Failure/stale/unknown preserved draft and wrote no record. | pass | [browser](../evidence/FE-05.03/browser.log) |
+| 2 | Preserve selected Parent rules | Validated scoped input and explicit steps within leaf scope | pass | browser and task implementation |
+| 3 | DEMO boundary and clear failure | Synthetic inputs only, no real network/provider writes | pass | browser |
+| 4 | Approved layout within scope | Agent compared two viewport widths; state differences recorded | pass | [comparison](../evidence/FE-05.03/comparison.md) |
+| 5 | Capture reference and app; owner verdict | Images saved. PO joint verdict pending | not-run | comparison |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd test; pnpm.cmd exec eslint . --ignore-pattern test-results/**; final pnpm.cmd typecheck and pnpm.cmd format:check | Static and unit checks | 94 unit, 15 Chromium ticket list/form/intake cases, build/typecheck/format and source lint passed. | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1; PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe; TICKET_DESIGN_URL=http://127.0.0.1:8010; PLAYWRIGHT_BASE_URL=http://127.0.0.1:3121; pnpm.cmd exec playwright test e2e/ticket-intake.spec.ts e2e/ticket-form.spec.ts e2e/ticket-list.spec.ts | Affected Chromium | Passed. FE-05.02 first launch overlapped build, then ran successfully. | pass |
+| repo | Compare approved HTML and actual at 1440×1000 and 390×1000 | Visual evidence | Captures saved and compared | pass |
+| src/frontend | Full unrelated Chromium suites | Broad regression | Not run for these attempts | not-run |
+| repo | PO joint review | Owner verdict | Pending | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent behavioral and visual review. PO joint review pending.
+- Findings / resolution: scope differences documented. Existing search arrow edit appears in local evidence and remains unstaged.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: joint PO review of FE-05.02 and FE-05.03 outstanding.
+- Required resolution / owner: PO reviews both leaves and Parent before closure.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-05.03.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison and PO steps](../evidence/FE-05.03/comparison.md), [browser log](../evidence/FE-05.03/browser.log).
+- Commit / build / environment: implementation d119815 pushed to phase/a-frontend. Final preview http://127.0.0.1:3121/login?returnTo=%2Ftickets%2Fnew.
+- Parent delivery: FE-05 EPIC_IN_PROGRESS, no Parent PR. FE-04 PR #5 verified merged.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-01 linked.
+- Execution-board task row: review, Owner PO.
+- Current context: joint acceptance and evidence recorded.
+- Parent state: FE-05 EPIC_IN_PROGRESS pending joint review.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FE-05.02 and FE-05.03 together.
+- Eligibility / remaining prerequisite: PO acceptance and Parent closure checks before PR; no next Parent yet.

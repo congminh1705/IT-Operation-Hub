@@ -1,0 +1,22 @@
+
+Running 15 tests using 1 worker
+
+(node:11088) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 e2e\ticket-form.spec.ts:23:1 › required constraints, computed priority and permitted assets (979ms)
+  ok  2 e2e\ticket-form.spec.ts:41:1 › onboarding clarification fields required only for selected mode (696ms)
+  ok  3 e2e\ticket-form.spec.ts:58:1 › matched desktop/mobile form captures (1.0s)
+  ok  4 e2e\ticket-intake.spec.ts:33:1 › confirmed delayed submit is deduplicated and navigates detail to own list (1.4s)
+  ok  5 e2e\ticket-intake.spec.ts:55:3 › failure preserves draft and creates no record (1.4s)
+  ok  6 e2e\ticket-intake.spec.ts:55:3 › stale preserves draft and creates no record (1.5s)
+  ok  7 e2e\ticket-intake.spec.ts:55:3 › unknown preserves draft and creates no record (1.5s)
+  ok  8 e2e\ticket-intake.spec.ts:78:1 › matched create and detail evidence (2.1s)
+  ok  9 e2e\ticket-list.spec.ts:17:3 › requester receives 4 scoped rows (417ms)
+  ok 10 e2e\ticket-list.spec.ts:17:3 › technician receives 22 scoped rows (545ms)
+  ok 11 e2e\ticket-list.spec.ts:17:3 › it_manager receives 26 scoped rows (518ms)
+  ok 12 e2e\ticket-list.spec.ts:17:3 › admin receives 26 scoped rows (518ms)
+  ok 13 e2e\ticket-list.spec.ts:32:1 › URL sorting, tie-breaker, paging and back/filter restoration (709ms)
+  ok 14 e2e\ticket-list.spec.ts:57:1 › empty query and mock error stay distinct; retry preserves query (733ms)
+  ok 15 e2e\ticket-list.spec.ts:70:1 › desktop/mobile references and actual list scope pair (1.6s)
+
+  15 passed (17.1s)
