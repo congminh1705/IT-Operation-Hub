@@ -1,4 +1,5 @@
-﻿import type { DemoPersona } from "./fixtures";
+import type { DemoPersona } from "./fixtures";
+import { attachmentError, maxAttachments } from "./ticket-attachments";
 
 export const levels = ["low", "medium", "high"] as const;
 export type Level = (typeof levels)[number];
@@ -100,16 +101,7 @@ export function readTicketDraft(
   const files = data
     .getAll("files")
     .filter((file): file is File => typeof file !== "string" && !!file.name);
-  if (
-    files.length > 5 ||
-    files.some(
-      (file) =>
-        file.size > 10 * 1024 * 1024 ||
-        !["image/png", "image/jpeg", "image/webp", "application/pdf"].includes(
-          file.type,
-        ),
-    )
-  )
+  if (files.length > maxAttachments || files.some(attachmentError))
     return fail(
       "files",
       "Chọn tối đa 5 tệp PNG, JPEG, WebP hoặc PDF, mỗi tệp không quá 10 MB.",

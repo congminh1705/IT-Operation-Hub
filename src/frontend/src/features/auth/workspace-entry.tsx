@@ -1,4 +1,8 @@
 "use client";
+import {
+  downloadRevokedFixture,
+  uploadFixtures,
+} from "@/lib/demo/ticket-attachments";
 import { TicketDetail } from "@/features/tickets/intake/ticket-detail";
 import { TicketForm } from "@/features/tickets/intake/ticket-form";
 import { TicketList } from "@/features/tickets/intake/ticket-list";
@@ -68,6 +72,10 @@ export function WorkspaceEntry({
             key={pathname}
             id={pathname.split("/").at(-1)!}
             unavailable={search.demo === "detail-error"}
+            simulateDownloadTransfer={search.demo === downloadRevokedFixture}
+            uploadFixture={uploadFixtures.find(
+              (value) => value === search.demo,
+            )}
             simulateRevocation={search.demo === "reply-revoked"}
             simulateTransitionConflict={search.demo === "transition-stale"}
           />

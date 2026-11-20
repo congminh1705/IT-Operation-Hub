@@ -8,6 +8,10 @@ import {
   type ReactNode,
 } from "react";
 import type { QueryClient } from "../../lib/api/query-client";
+import {
+  downloadRevokedFixture,
+  uploadFixtures,
+} from "../../lib/demo/ticket-attachments";
 import { isKnownDestination, isTicketDetail } from "../../lib/navigation";
 import { SessionStore } from "./session-store";
 
@@ -64,6 +68,19 @@ export function safeReturnPath(value: string | null): string {
     )
   )
     params.set("demo", url.searchParams.get("demo")!);
+  const upload = uploadFixtures.find(
+    (value) => value === url.searchParams.get("demo"),
+  );
+  if (
+    upload &&
+    (url.pathname === "/tickets/new" || isTicketDetail(url.pathname))
+  )
+    params.set("demo", upload);
+  if (
+    isTicketDetail(url.pathname) &&
+    url.searchParams.get("demo") === downloadRevokedFixture
+  )
+    params.set("demo", downloadRevokedFixture);
   return url.pathname + (params.size ? `?${params}` : "");
 }
 const Context = createContext<SessionStore | null>(null);

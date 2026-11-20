@@ -14,6 +14,13 @@ import {
 } from "@/lib/demo/ticket-draft";
 import "@/features/administration/users-screen.css";
 import "./ticket-form.css";
+import { TicketUpload } from "./ticket-upload";
+import {
+  uploadFixtures,
+  type UploadedAttachment,
+  type AttachmentTarget,
+} from "@/lib/demo/ticket-attachments";
+import { TicketAttachmentPicker } from "./ticket-attachment-picker";
 
 export function TicketForm({ search }: { search: WorkspaceSearch }) {
   const { persona, store } = useSession();
@@ -28,22 +35,42 @@ export function TicketForm({ search }: { search: WorkspaceSearch }) {
   const [submission, setSubmission] = useState<
     "pending" | "failure" | "stale" | "unknown"
   >();
+  const [saved, setSaved] = useState<{
+    target: AttachmentTarget;
+    files: UploadedAttachment[];
+  }>();
   const intent = useRef("");
   const busy = useRef(false);
   const feedback = useRef<HTMLParagraphElement>(null);
   async function send() {
     if (!draft || !persona || busy.current || submission === "unknown") return;
+    const identity = store.identity();
+    if (!identity) return;
     busy.current = true;
     setSubmission("pending");
     const result = await store.tickets.submit(
       persona,
-      draft,
+      { ...draft, attachments: [] },
       intent.current,
       submitFixtures.find((item) => item === search.demo),
     );
     busy.current = false;
     if (result.kind === "success") {
-      router.replace("/tickets/" + result.id);
+      if (files.length) {
+        setSaved({
+          target: {
+            ticketId: result.id,
+            owner: identity.userId,
+            scope: identity.scope,
+          },
+          files: files.map(({ name, type, size }, index) => ({
+            name,
+            type,
+            size,
+            id: intent.current + "-" + index,
+          })),
+        });
+      } else router.replace("/tickets/" + result.id);
       return;
     }
     setSubmission(result.kind);
@@ -51,9 +78,18 @@ export function TicketForm({ search }: { search: WorkspaceSearch }) {
   }
   const [files, setFiles] = useState<File[]>([]);
   const form = useRef<HTMLFormElement>(null);
-  const fileInput = useRef<HTMLInputElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   if (!persona) return null;
+  if (saved)
+    return (
+      <TicketUpload
+        target={saved.target}
+        files={saved.files}
+        fixture={uploadFixtures.find((value) => value === search.demo)}
+        label={"Yêu cầu đã lưu · " + saved.target.ticketId}
+        onClose={() => router.replace("/tickets/" + saved.target.ticketId)}
+      />
+    );
   const categories = store.catalog.activeLabels("categories");
   const priority = derivePriority(impact, urgency);
   function validate(event: FormEvent<HTMLFormElement>) {
@@ -257,35 +293,13 @@ export function TicketForm({ search }: { search: WorkspaceSearch }) {
               </div>
             </section>
           )}
-          <label>
-            Tệp đính kèm DEMO
-            <input
-              ref={fileInput}
-              name="files"
-              type="file"
-              accept="image/png,image/jpeg,image/webp,application/pdf"
-              multiple
-              {...invalid("files")}
-              onChange={(event) =>
-                setFiles(Array.from(event.target.files ?? []))
-              }
-            />
-          </label>
-          {files.map((file, index) => (
-            <p key={file.name + index}>
-              {file.name} · {Math.ceil(file.size / 1024)} KB{" "}
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  setFiles(files.filter((_, i) => i !== index));
-                  if (fileInput.current) fileInput.current.value = "";
-                  setError(undefined);
-                }}
-              >
-                Bỏ tệp
-              </Button>
-            </p>
-          ))}
+          <TicketAttachmentPicker
+            files={files}
+            onChange={(next) => {
+              setDirty(true);
+              setFiles(next);
+            }}
+          />
           <p className="directory-note">
             Nhóm tiếp nhận do cấu hình hệ thống xác định. IT xác minh ưu tiên và
             SLA.
@@ -317,6 +331,13 @@ export function TicketForm({ search }: { search: WorkspaceSearch }) {
               {draft.title} · {draft.priority}
             </p>
             <p>{draft.category}</p>
+            {!!draft.attachments.length && (
+              <ul aria-label="Tệp trong bản xem trước">
+                {draft.attachments.map((file, index) => (
+                  <li key={index}>{file.name}</li>
+                ))}
+              </ul>
+            )}
             {!submission && <p>Chưa ghi nhận yêu cầu.</p>}
             {submission && (
               <p
@@ -337,9 +358,9 @@ export function TicketForm({ search }: { search: WorkspaceSearch }) {
               <Button
                 onClick={() => {
                   const result = store.tickets.check(intent.current);
-                  if (result.kind === "success")
+                  if (result.kind === "success") {
                     router.replace("/tickets/" + result.id);
-                  else {
+                  } else {
                     setSubmission("failure");
                     requestAnimationFrame(() => feedback.current?.focus());
                   }

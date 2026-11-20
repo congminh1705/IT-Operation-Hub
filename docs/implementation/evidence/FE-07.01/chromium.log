@@ -1,0 +1,21 @@
+
+Running 14 tests using 1 worker
+
+(node:28344) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 e2e\ticket-attachment-picker.spec.ts:18:1 › picker keeps the exact boundary and rejects sixth, oversize and unsupported files (3.0s)
+  ok  2 e2e\ticket-attachment-picker.spec.ts:67:1 › public and internal selection stay separate when switching drafts (543ms)
+  ok  3 e2e\ticket-attachment-picker.spec.ts:94:3 › compare attachment picker create (4.0s)
+  ok  4 e2e\ticket-attachment-picker.spec.ts:94:3 › compare attachment picker ticket-it (4.0s)
+  ok  5 e2e\ticket-form.spec.ts:23:1 › required constraints, computed priority and permitted assets (503ms)
+  ok  6 e2e\ticket-form.spec.ts:41:1 › onboarding clarification fields required only for selected mode (604ms)
+  ok  7 e2e\ticket-form.spec.ts:58:1 › matched desktop/mobile form captures (513ms)
+  ok  8 e2e\ticket-intake.spec.ts:33:1 › confirmed delayed submit is deduplicated and navigates detail to own list (1.4s)
+  ok  9 e2e\ticket-intake.spec.ts:55:3 › failure preserves draft and creates no record (1.4s)
+  ok 10 e2e\ticket-intake.spec.ts:55:3 › stale preserves draft and creates no record (1.4s)
+  ok 11 e2e\ticket-intake.spec.ts:55:3 › unknown preserves draft and creates no record (1.4s)
+  ok 12 e2e\ticket-reply.spec.ts:25:1 › separate drafts and first response from committed public IT reply only (2.3s)
+  ok 13 e2e\ticket-reply.spec.ts:58:1 › requester Pending reply resumes after confirmation (1.4s)
+  ok 14 e2e\ticket-reply.spec.ts:75:1 › rights revoked while confirming keeps own draft and hides detail (1.4s)
+
+  14 passed (25.3s)

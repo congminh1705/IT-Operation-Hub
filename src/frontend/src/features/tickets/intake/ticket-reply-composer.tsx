@@ -1,6 +1,13 @@
-﻿"use client";
+"use client";
 
 import { useRef, useState } from "react";
+import { TicketUpload } from "./ticket-upload";
+import type {
+  UploadedAttachment,
+  AttachmentTarget,
+  UploadFixture,
+} from "@/lib/demo/ticket-attachments";
+import { TicketAttachmentPicker } from "./ticket-attachment-picker";
 import { useSession } from "@/features/auth/session";
 
 type Audience = "public" | "internal";
@@ -11,6 +18,7 @@ export function TicketReplyComposer({
   version,
   internal,
   simulateRevocation,
+  uploadFixture,
   onPosted,
   onRevoked,
 }: {
@@ -19,25 +27,49 @@ export function TicketReplyComposer({
   version: number;
   internal: boolean;
   simulateRevocation: boolean;
+  uploadFixture?: UploadFixture;
   onPosted: () => void;
   onRevoked: (draft: string) => void;
 }) {
   const { store } = useSession();
   const [drafts, setDrafts] = useState({ public: "", internal: "" });
+  const [files, setFiles] = useState<Record<Audience, File[]>>({
+    public: [],
+    internal: [],
+  });
   const [preview, setPreview] = useState<{
     audience: Audience;
     text: string;
     version: number;
   } | null>(null);
+  const [saved, setSaved] = useState<{
+    target: AttachmentTarget;
+    files: UploadedAttachment[];
+  }>();
   const [feedback, setFeedback] = useState("");
   const [sending, setSending] = useState(false);
   const lock = useRef(false);
   const currentPreview = preview?.audience === view ? preview : null;
+  if (saved)
+    return (
+      <TicketUpload
+        target={saved.target}
+        files={saved.files}
+        fixture={uploadFixture}
+        label="Nội dung trao đổi đã lưu"
+        onClose={() => {
+          setSaved(undefined);
+          onPosted();
+        }}
+      />
+    );
   if (view === "history") return null;
   const isInternal = view === "internal";
 
   async function confirm() {
     if (!currentPreview || lock.current) return;
+    const identity = store.identity();
+    if (!identity) return;
     lock.current = true;
     setSending(true);
     const outcome = await store.tickets.postMessage(
@@ -54,11 +86,30 @@ export function TicketReplyComposer({
       return;
     }
     setPreview(null);
-    if (outcome !== "success") {
+    if (typeof outcome === "string") {
       setFeedback("Chưa gửi được. Kiểm tra lại bản nháp và xem trước lần nữa.");
       return;
     }
     setDrafts((current) => ({ ...current, [currentPreview.audience]: "" }));
+    const selected = files[currentPreview.audience];
+    if (selected.length) {
+      const batch = crypto.randomUUID();
+      setSaved({
+        target: {
+          ticketId: id,
+          eventId: outcome.eventId,
+          owner: identity.userId,
+          scope: identity.scope,
+        },
+        files: selected.map(({ name, type, size }, index) => ({
+          name,
+          type,
+          size,
+          id: batch + "-" + index,
+        })),
+      });
+      setFiles((previous) => ({ ...previous, [currentPreview.audience]: [] }));
+    }
     setFeedback("Đã gửi nội dung.");
     onPosted();
   }
@@ -74,6 +125,13 @@ export function TicketReplyComposer({
               : "Xem trước phản hồi công khai"}
           </h3>
           <p className="ticket-reply-preview">{currentPreview.text}</p>
+          {!!files[view].length && (
+            <ul aria-label="Tệp trong bản xem trước">
+              {files[view].map((file, index) => (
+                <li key={index}>{file.name}</li>
+              ))}
+            </ul>
+          )}
           <div className="ticket-history-controls">
             <button
               className="ui-button"
@@ -124,6 +182,13 @@ export function TicketReplyComposer({
               const text = event.target.value;
               setDrafts((current) => ({ ...current, [view]: text }));
             }}
+          />
+          <TicketAttachmentPicker
+            key={view}
+            files={files[view]}
+            onChange={(next) =>
+              setFiles((previous) => ({ ...previous, [view]: next }))
+            }
           />
           <button className="ui-button" type="submit">
             {isInternal ? "Xem trước ghi chú" : "Xem trước phản hồi"}

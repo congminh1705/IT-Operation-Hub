@@ -6,6 +6,7 @@ export type TicketEvent = {
   audience: "public" | "internal";
   kind: "message" | "history";
   actor: string;
+  authorId?: string;
   at: string;
   text: string;
   state?: TicketRow["state"];
