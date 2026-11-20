@@ -1,0 +1,21 @@
+
+Running 14 tests using 1 worker
+
+(node:9316) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 e2e\automation-activity.spec.ts:17:1 › page opening is read-only, queued and approved are not success, normal skips approval (856ms)
+  ok  2 e2e\automation-activity.spec.ts:44:1 › failed retry requires confirmation and queues without clearing manual lock (524ms)
+  ok  3 e2e\automation-activity.spec.ts:66:1 › disabled policy blocks retry from the linked activity view (521ms)
+  ok  4 e2e\automation-activity.spec.ts:82:1 › technician view excludes activity outside the team (395ms)
+  ok  5 e2e\automation-activity.spec.ts:91:3 › compare activity ai-normal (952ms)
+  ok  6 e2e\automation-activity.spec.ts:91:3 › compare activity ai-exception (979ms)
+  ok  7 e2e\automation-policy.spec.ts:10:1 › default denies missing and expired grants and disabled policy independently (470ms)
+  ok  8 e2e\automation-policy.spec.ts:31:1 › preview cancellation does not save, confirmation disables only policy (573ms)
+  ok  9 e2e\automation-workflow.spec.ts:12:1 › invalid effort and cycle block publish; confirmed version leaves v3 immutable (563ms)
+  ok 10 e2e\automation-workflow.spec.ts:34:1 › technician sees reduced team workflow only (407ms)
+  ok 11 e2e\workforce-save.spec.ts:17:1 › absence persists and evaluation pending keeps ticket SLA unchanged (801ms)
+  ok 12 e2e\workforce-save.spec.ts:44:1 › conflict leaves workforce unchanged and retains draft (538ms)
+  ok 13 e2e\workforce-save.spec.ts:63:1 › no free capacity is visible without implying reassignment (2.4s)
+  ok 14 e2e\workforce-save.spec.ts:75:1 › confirmed schedule and skill edits update workforce projection (541ms)
+
+  14 passed (11.7s)
