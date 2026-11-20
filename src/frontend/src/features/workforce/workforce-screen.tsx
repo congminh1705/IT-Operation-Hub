@@ -1,6 +1,8 @@
+"use client";
 import { Feedback } from "@/components/feedback/feedback";
 import type { DemoPersona } from "@/lib/demo/fixtures";
-import { workforceProjection } from "@/lib/demo/workforce";
+import { useSession } from "@/features/auth/session";
+import { WorkforceEditor } from "./workforce-editor";
 import "./workforce-screen.css";
 
 const time = (minutes: number) =>
@@ -13,7 +15,8 @@ const minutes = (value: number | null) =>
   value === null ? "Chưa đủ dữ liệu" : value + " phút";
 
 export function WorkforceScreen({ persona }: { persona: DemoPersona }) {
-  const projection = workforceProjection(persona);
+  const { store } = useSession();
+  const projection = store.workforce.projection(persona);
   if (!projection) return <Feedback kind="forbidden" />;
   const { management, rows, unallocated } = projection;
   const identified = rows.filter((row) => row.capacity !== null);
@@ -138,6 +141,7 @@ export function WorkforceScreen({ persona }: { persona: DemoPersona }) {
           </table>
         </div>
       </section>
+      {management && <WorkforceEditor people={rows} />}
       {management && (
         <section className="workforce-panel">
           <h2>Công việc chưa phân bổ</h2>

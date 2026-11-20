@@ -114,3 +114,32 @@
     color: #52645d;
   }
 }
+
+.workforce-editor {
+  display: grid;
+  gap: 12px;
+  max-width: 44rem;
+}
+.workforce-editor label {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+.workforce-editor :is(input, textarea, select) {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px;
+  border: 1px solid #b9ccbf;
+  border-radius: 8px;
+  background: white;
+  font-size: 16px;
+}
+.workforce-editor-period {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.workforce-editor button {
+  justify-self: start;
+}

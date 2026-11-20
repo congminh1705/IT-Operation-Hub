@@ -1,6 +1,7 @@
-﻿import { createDemoFixtures, type DemoPersona } from "./fixtures";
+import { createDemoFixtures, type DemoPersona } from "./fixtures";
 type Interval = readonly [number, number];
 type WorkforceRecord = {
+  version?: number;
   id: string;
   name: string;
   skills: { name: string; verifier: string | null }[];
@@ -101,15 +102,144 @@ function workforceRow(record: WorkforceRecord) {
     free: capacity === null ? null : capacity - load,
   };
 }
-export function workforceProjection(persona: DemoPersona) {
+export function workforceProjection(persona: DemoPersona, source = records) {
   if (!persona.user.active || persona.scope.workforce === "none") return null;
   const management = persona.scope.workforce === "organization";
   const selected = management
-    ? records
-    : records.filter((record) => record.id === persona.user.id);
+    ? source
+    : source.filter((record) => record.id === persona.user.id);
   return {
     management,
     rows: selected.map(workforceRow),
     unallocated: management ? unallocated : [],
+  };
+}
+
+export type WorkforceChange = {
+  person: string;
+  kind: "absence" | "schedule" | "skill";
+  start: string;
+  end: string;
+  budget: string;
+  skill: string;
+  note: string;
+};
+const affectedWork = [
+  {
+    person: tech.id,
+    id: "T07",
+    title: "Kiểm tra kết nối VPN",
+    remaining: 60,
+    window: [660, 720] as Interval,
+  },
+  {
+    person: "demo-02",
+    id: "T21",
+    title: "Kiểm tra thiết bị DEMO",
+    remaining: 120,
+    window: [840, 960] as Interval,
+  },
+];
+export type WorkforcePreview = {
+  kind: "preview";
+  name: string;
+  before: string;
+  after: string;
+  affected: typeof affectedWork;
+  change: WorkforceChange;
+  version: number;
+};
+const error = (message: string) => ({ kind: "error" as const, message });
+const parseTime = (value: string) =>
+  /^([01]\d|2[0-3]):[0-5]\d$/.test(value)
+    ? Number(value.slice(0, 2)) * 60 + Number(value.slice(3))
+    : NaN;
+const clock = (minutes: number) =>
+  String(Math.floor(minutes / 60)).padStart(2, "0") +
+  ":" +
+  String(minutes % 60).padStart(2, "0");
+const windowLabel = (range: Interval) => range.map(clock).join("–");
+
+export function createWorkforce() {
+  const source = structuredClone(records);
+  function preview(
+    actor: DemoPersona,
+    change: WorkforceChange,
+  ): WorkforcePreview | ReturnType<typeof error> {
+    if (
+      !actor.user.active ||
+      !["IT_MANAGER", "ADMIN"].includes(actor.user.role) ||
+      actor.scope.workforce !== "organization"
+    )
+      return error("Bạn không có quyền xác minh hoặc cập nhật nhân sự.");
+    const target = source.find((row) => row.id === change.person);
+    if (!target) return error("Không tìm thấy nhân sự.");
+    if (change.note.length > 2000) return error("Ghi chú quá dài.");
+    let before: string;
+    let after: string;
+    const start = parseTime(change.start),
+      end = parseTime(change.end);
+    if (change.kind === "skill") {
+      const skill = change.skill.trim();
+      if (!skill || skill.length > 80) return error("Nhập kỹ năng hợp lệ.");
+      const existing = target.skills.find(
+        (item) =>
+          item.name.toLocaleLowerCase("vi") === skill.toLocaleLowerCase("vi"),
+      );
+      before = existing?.verifier
+        ? "Đã xác minh bởi " + existing.verifier
+        : existing
+          ? "Chưa xác minh"
+          : "Chưa có kỹ năng";
+      after = skill + " · Xác minh bởi " + actor.user.display_name;
+    } else {
+      if (!Number.isFinite(start) || !Number.isFinite(end) || start >= end)
+        return error("Giờ kết thúc phải sau giờ bắt đầu trong cùng ngày DEMO.");
+      if (change.kind === "absence") {
+        before = target.absences.length
+          ? target.absences.map(windowLabel).join(", ")
+          : "Chưa có lịch vắng";
+        after = "Thêm lịch vắng " + windowLabel([start, end]) + " · GMT+7";
+      } else {
+        const budget = Number(change.budget);
+        if (
+          !change.budget.trim() ||
+          !Number.isInteger(budget) ||
+          budget < 0 ||
+          budget > 1440
+        )
+          return error("Ngân sách phải là số phút nguyên từ 0 đến 1440.");
+        before = target.schedule
+          ? windowLabel(target.schedule) +
+            " · " +
+            (target.budget ?? "chưa có ngân sách") +
+            " phút/ngày"
+          : "Chưa có lịch";
+        after = windowLabel([start, end]) + " · " + budget + " phút/ngày";
+      }
+    }
+    const affected = affectedWork.filter(
+      (task) =>
+        task.person === target.id &&
+        (change.kind === "skill" ||
+          (change.kind === "absence"
+            ? start < task.window[1] && end > task.window[0]
+            : start > task.window[0] ||
+              end < task.window[1] ||
+              Number(change.budget) < task.remaining)),
+    );
+    return {
+      kind: "preview",
+      name: target.name,
+      before,
+      after,
+      affected,
+      change: { ...change },
+      version: target.version ?? 1,
+    };
+  }
+  return {
+    preview,
+    projection: (actor: DemoPersona) => workforceProjection(actor, source),
   };
 }
