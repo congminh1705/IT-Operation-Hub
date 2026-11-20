@@ -7,6 +7,7 @@ import { TicketSlaClocks } from "./ticket-sla-clocks";
 import { formatBusinessTime } from "@/lib/dates";
 import { TicketRouting } from "./ticket-routing";
 import { TicketLifecycle } from "./ticket-lifecycle";
+import type { UploadFixture } from "@/lib/demo/ticket-attachments";
 import { TicketReplyComposer } from "./ticket-reply-composer";
 import { Feedback } from "@/components/feedback/feedback";
 import { useSession } from "@/features/auth/session";
@@ -14,11 +15,13 @@ import "@/features/administration/users-screen.css";
 export function TicketDetail({
   id,
   unavailable,
+  uploadFixture,
   simulateRevocation,
   simulateTransitionConflict,
 }: {
   id: string;
   unavailable: boolean;
+  uploadFixture?: UploadFixture;
   simulateRevocation: boolean;
   simulateTransitionConflict: boolean;
 }) {
@@ -189,6 +192,7 @@ export function TicketDetail({
               version={version}
               internal={internal}
               simulateRevocation={simulateRevocation}
+              uploadFixture={uploadFixture}
               onPosted={() => setRevision((value) => value + 1)}
               onRevoked={setRevokedDraft}
             />

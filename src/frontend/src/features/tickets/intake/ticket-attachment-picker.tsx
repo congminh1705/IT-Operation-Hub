@@ -1,5 +1,5 @@
-﻿"use client";
-import { useId, useState } from "react";
+"use client";
+import { useId, useRef, useState } from "react";
 import {
   attachmentAccept,
   selectAttachments,
@@ -15,11 +15,13 @@ export function TicketAttachmentPicker({
   disabled?: boolean;
 }) {
   const id = useId();
+  const input = useRef<HTMLInputElement>(null);
   const [errors, setErrors] = useState<string[]>([]);
   return (
     <div className="ticket-attachment-picker">
       <label htmlFor={id}>Tệp đính kèm DEMO</label>
       <input
+        ref={input}
         id={id}
         name="files"
         type="file"
@@ -34,6 +36,9 @@ export function TicketAttachmentPicker({
           );
           event.currentTarget.value = "";
           setErrors(next.errors);
+          event.currentTarget.setCustomValidity(
+            next.errors.length ? "Bỏ các tệp không hợp lệ để tiếp tục." : "",
+          );
           onChange(next.files);
         }}
       />
@@ -52,7 +57,6 @@ export function TicketAttachmentPicker({
                 disabled={disabled}
                 aria-label={"Bỏ tệp " + file.name}
                 onClick={() => {
-                  setErrors([]);
                   onChange(files.filter((_, i) => i !== index));
                 }}
               >
@@ -68,6 +72,19 @@ export function TicketAttachmentPicker({
             <li key={index}>{error}</li>
           ))}
         </ul>
+      )}
+      {!!errors.length && (
+        <button
+          className="ui-button"
+          data-variant="secondary"
+          type="button"
+          onClick={() => {
+            setErrors([]);
+            input.current?.setCustomValidity("");
+          }}
+        >
+          Bỏ các tệp không hợp lệ
+        </button>
       )}
     </div>
   );

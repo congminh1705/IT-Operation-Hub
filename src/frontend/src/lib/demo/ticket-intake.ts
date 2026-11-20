@@ -1,4 +1,10 @@
 import type { DemoPersona } from "./fixtures";
+import {
+  attachmentError,
+  maxAttachments,
+  type UploadedAttachment,
+  type AttachmentTarget,
+} from "./ticket-attachments";
 import { projectTicketSla, type TicketSlaSeed } from "./ticket-sla";
 import {
   allowedLifecycleActions,
@@ -61,6 +67,7 @@ export function createTicketIntake(config: {
   const committed = new Map<string, { owner: string; id: string }>();
   const conversations = new Map<string, Conversation>();
   const clockSeeds = new Map<string, TicketSlaSeed>();
+  const uploads = new Map<string, UploadedAttachment & AttachmentTarget>();
   let sequence = 152;
   return {
     rows: () => [
@@ -219,6 +226,7 @@ export function createTicketIntake(config: {
           audience,
           kind: "message",
           actor: actor.user.display_name,
+          authorId: actor.user.id,
           at,
           text,
         },
@@ -229,6 +237,7 @@ export function createTicketIntake(config: {
           audience: "public",
           kind: "history",
           actor: actor.user.display_name,
+          authorId: actor.user.id,
           at,
           text: "Đã nhận phản hồi và tiếp tục xử lý.",
           state: row.state,
@@ -239,7 +248,10 @@ export function createTicketIntake(config: {
         version: expectedVersion + 1,
         firstResponseAt,
       });
-      return "success" as const;
+      return {
+        kind: "success",
+        eventId: `message-${expectedVersion}`,
+      } as const;
     },
     async transition(
       id: string,
@@ -408,6 +420,63 @@ export function createTicketIntake(config: {
         version: detail.version + 1,
       });
       return "success" as const;
+    },
+    saveAttachments(
+      target: AttachmentTarget,
+      files: readonly UploadedAttachment[],
+    ) {
+      const identity = config.identity();
+      const actor = config.actor();
+      if (
+        !identity ||
+        !actor ||
+        identity.scope !== target.scope ||
+        identity.userId !== target.owner
+      )
+        return false;
+      const detail = this.detail(actor, target.ticketId, config.memberships());
+      if (!detail) return false;
+      if (target.eventId) {
+        const message = detail.events.find(
+          (event) => event.id === target.eventId && event.kind === "message",
+        );
+        if (!message || message.authorId !== actor.user.id) return false;
+      } else if (detail.row.requesterId !== actor.user.id) {
+        return false;
+      }
+      if (files.length > maxAttachments || files.some(attachmentError))
+        return false;
+      const prior = [...uploads.values()].filter(
+        (file) =>
+          file.ticketId === target.ticketId && file.eventId === target.eventId,
+      );
+      if (
+        prior.length + files.filter((file) => !uploads.has(file.id)).length >
+        maxAttachments
+      )
+        return false;
+      for (const file of files) {
+        if (!uploads.has(file.id)) uploads.set(file.id, { ...file, ...target });
+      }
+      return true;
+    },
+    checkAttachments(
+      target: AttachmentTarget,
+      files: readonly UploadedAttachment[],
+    ) {
+      const identity = config.identity();
+      return (
+        identity?.scope === target.scope &&
+        identity.userId === target.owner &&
+        files.every(({ id }) => {
+          const file = uploads.get(id);
+          return (
+            file?.scope === target.scope &&
+            file.ticketId === target.ticketId &&
+            file.eventId === target.eventId
+          );
+        })
+      );
     },
     check(intent: string): Outcome {
       const entry = committed.get(intent);

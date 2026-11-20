@@ -1,4 +1,4 @@
-﻿const formats: Record<string, string> = {
+const formats: Record<string, string> = {
   png: "image/png",
   jpg: "image/jpeg",
   jpeg: "image/jpeg",
@@ -34,3 +34,23 @@ export function selectAttachments(
   }
   return { files, errors };
 }
+
+export type AttachmentTarget = {
+  ticketId: string;
+  eventId?: string;
+  owner: string;
+  scope: string;
+};
+
+export type UploadedAttachment = {
+  id: string;
+  name: string;
+  size: number;
+  type: string;
+};
+export const uploadFixtures = [
+  "upload-partial",
+  "upload-unknown",
+  "upload-failure",
+] as const;
+export type UploadFixture = (typeof uploadFixtures)[number];
