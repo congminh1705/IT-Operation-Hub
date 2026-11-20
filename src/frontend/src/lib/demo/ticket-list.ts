@@ -72,7 +72,10 @@ export function scopedTicketRows(
   if (unavailable) return { kind: "error" } as const;
   return {
     kind: "success",
-    rows: [...created, ...rows]
+    rows: [
+      ...created,
+      ...rows.filter((row) => !created.some((item) => item.id === row.id)),
+    ]
       .filter((row) => {
         if (scope === "mine") return row.requesterId === persona.user.id;
         return (

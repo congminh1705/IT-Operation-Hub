@@ -104,3 +104,29 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.ticket-reply {
+  margin-block: 16px;
+}
+
+.ticket-reply form {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+}
+
+.ticket-reply-input {
+  display: block;
+  width: 100%;
+  min-height: 84px;
+  resize: vertical;
+  padding: 10px;
+  border: 1px solid #baccc5;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.ticket-reply-preview {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

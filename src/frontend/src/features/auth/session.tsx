@@ -59,9 +59,11 @@ export function safeReturnPath(value: string | null): string {
   }
   if (
     isTicketDetail(url.pathname) &&
-    url.searchParams.get("demo") === "detail-error"
+    ["detail-error", "reply-revoked"].includes(
+      url.searchParams.get("demo") ?? "",
+    )
   )
-    params.set("demo", "detail-error");
+    params.set("demo", url.searchParams.get("demo")!);
   return url.pathname + (params.size ? `?${params}` : "");
 }
 const Context = createContext<SessionStore | null>(null);

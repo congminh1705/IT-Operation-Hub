@@ -1,4 +1,4 @@
-﻿import type { DemoPersona } from "./fixtures";
+import type { DemoPersona } from "./fixtures";
 import type { TicketRow } from "./ticket-list";
 
 export type TicketEvent = {
@@ -39,7 +39,7 @@ export function ticketFixtureEvents(row: TicketRow): TicketEvent[] {
     at: `${row.updated}T${time}+07:00`,
     text,
   });
-  return [
+  const events = [
     event(
       "created",
       "public",
@@ -81,6 +81,7 @@ export function ticketFixtureEvents(row: TicketRow): TicketEvent[] {
       "Đã ghi nhận kiểm tra cấu hình nội bộ.",
     ),
   ];
+  return row.state === "Đang chờ tiếp nhận" ? events.slice(0, 1) : events;
 }
 
 export function projectTicketEvents(

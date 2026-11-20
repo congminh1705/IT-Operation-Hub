@@ -3,20 +3,39 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import "./ticket-detail.css";
+import { TicketReplyComposer } from "./ticket-reply-composer";
 import { Feedback } from "@/components/feedback/feedback";
 import { useSession } from "@/features/auth/session";
 import "@/features/administration/users-screen.css";
 export function TicketDetail({
   id,
   unavailable,
+  simulateRevocation,
 }: {
   id: string;
   unavailable: boolean;
+  simulateRevocation: boolean;
 }) {
   const router = useRouter();
   const { store, persona } = useSession();
   const [view, setView] = useState<"public" | "internal" | "history">("public");
+  const [, setRevision] = useState(0);
+  const [revokedDraft, setRevokedDraft] = useState<string | null>(null);
   if (!persona) return null;
+  if (revokedDraft !== null)
+    return (
+      <section className="directory-panel directory-card">
+        <Feedback kind="forbidden" title="Quyền truy cập đã thay đổi" />
+        <label>
+          Bản nháp của bạn
+          <textarea
+            className="ticket-reply-input"
+            readOnly
+            value={revokedDraft}
+          />
+        </label>
+      </section>
+    );
   if (unavailable)
     return (
       <Feedback
@@ -36,7 +55,16 @@ export function TicketDetail({
         description="Yêu cầu không tồn tại hoặc bạn không có quyền xem."
       />
     );
-  const { row, draft, budget, events, internal } = result;
+  const {
+    row,
+    draft,
+    budget,
+    events,
+    internal,
+    version,
+    firstResponseAt,
+    canReply,
+  } = result;
   const visibleView = view === "internal" && !internal ? "public" : view;
   const shown = events.filter((event) =>
     visibleView === "history"
@@ -134,6 +162,17 @@ export function TicketDetail({
               ))}
             </ol>
           )}
+          {canReply && (
+            <TicketReplyComposer
+              id={id}
+              view={visibleView}
+              version={version}
+              internal={internal}
+              simulateRevocation={simulateRevocation}
+              onPosted={() => setRevision((value) => value + 1)}
+              onRevoked={setRevokedDraft}
+            />
+          )}
           <Link
             className="ui-button"
             data-variant="secondary"
@@ -174,6 +213,7 @@ export function TicketDetail({
         <h3>Tiếp nhận và SLA</h3>
         <p>{row.team}</p>
         <p>{row.sla}</p>
+        {firstResponseAt && <p>Đã phản hồi lần đầu</p>}
         {budget && (
           <p>
             Phiên bản v{budget.version} · Phản hồi {budget.response} phút · Giải

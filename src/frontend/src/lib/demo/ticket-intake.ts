@@ -6,6 +6,7 @@ import {
   canReadInternalTicket,
   projectTicketEvents,
   ticketFixtureEvents,
+  type TicketEvent,
 } from "./ticket-detail";
 
 export const submitFixtures = ["failure", "stale", "unknown"] as const;
@@ -15,19 +16,33 @@ type RecordSnapshot = {
   draft: TicketDraft;
   budget: { version: number; response: number; resolution: number };
 };
+type Conversation = {
+  row: TicketRow;
+  events: TicketEvent[];
+  version: number;
+  firstResponseAt: string | null;
+};
 type Outcome =
   { kind: "success"; id: string } | { kind: "failure" | "stale" | "unknown" };
 
 export function createTicketIntake(config: {
   identity: () => { userId: string; scope: string } | null;
+  actor: () => DemoPersona | null;
+  memberships: () => string[];
   intake: () => { id: string; name: string } | undefined;
   snapshot: (priority: Priority) => RecordSnapshot["budget"];
 }) {
   const records = new Map<string, RecordSnapshot>();
   const committed = new Map<string, { owner: string; id: string }>();
+  const conversations = new Map<string, Conversation>();
   let sequence = 152;
   return {
-    rows: () => [...records.values()].map((record) => ({ ...record.row })),
+    rows: () => [
+      ...[...conversations.values()].map(({ row }) => ({ ...row })),
+      ...[...records.values()]
+        .filter(({ row }) => !conversations.has(row.id))
+        .map(({ row }) => ({ ...row })),
+    ],
     detail(persona: DemoPersona, id: string, memberships: string[]) {
       const mine = scopedTicketRows(
         persona,
@@ -50,13 +65,97 @@ export function createTicketIntake(config: {
       if (!row) return null;
       const stored = records.get(id);
       const internal = canReadInternalTicket(persona, row, memberships);
-      const events = projectTicketEvents(
-        stored ? [] : ticketFixtureEvents(row),
+      const conversation = conversations.get(id);
+      const baseEvents =
+        conversation?.events ?? (stored ? [] : ticketFixtureEvents(row));
+      const firstResponseAt = conversation
+        ? conversation.firstResponseAt
+        : (baseEvents.find((event) => event.id === "team-message")?.at ?? null);
+      const events = projectTicketEvents(baseEvents, internal);
+      return {
+        row,
+        draft: stored ? structuredClone(stored.draft) : null,
+        budget: stored ? { ...stored.budget } : null,
         internal,
-      );
-      return stored
-        ? { ...structuredClone(stored), internal, events }
-        : { row, draft: null, budget: null, internal, events };
+        events,
+        version: conversation?.version ?? 1,
+        firstResponseAt,
+        canReply: row.state !== "Hoàn tất",
+      };
+    },
+    async postMessage(
+      id: string,
+      audience: TicketEvent["audience"],
+      input: string,
+      expectedVersion: number,
+      simulateRevocation: boolean,
+    ) {
+      const initial = config.identity();
+      const text = input.trim();
+      if (!text || text.length > 4000) return "invalid" as const;
+      await new Promise((resolve) => setTimeout(resolve, 450));
+      const current = config.identity();
+      const actor = config.actor();
+      if (
+        simulateRevocation ||
+        !initial ||
+        !current ||
+        !actor ||
+        initial.scope !== current.scope ||
+        initial.userId !== current.userId
+      )
+        return "forbidden" as const;
+      const currentDetail = this.detail(actor, id, config.memberships());
+      if (
+        !currentDetail ||
+        (audience === "internal" && !currentDetail.internal)
+      )
+        return "forbidden" as const;
+      if (!currentDetail.canReply) return "invalid" as const;
+      if (currentDetail.version !== expectedVersion) return "stale" as const;
+      const at = new Date().toISOString();
+      const row = { ...currentDetail.row };
+      if (audience === "public") row.updated = at.slice(0, 10);
+      const resumed =
+        audience === "public" &&
+        row.state === "Chờ bổ sung" &&
+        row.requesterId === actor.user.id;
+      let firstResponseAt = currentDetail.firstResponseAt;
+      if (audience === "public" && currentDetail.internal && !firstResponseAt) {
+        firstResponseAt = at;
+        row.sla = "Phản hồi · Đã phản hồi";
+      }
+      if (resumed) row.state = "Đang xử lý";
+      const previousEvents =
+        conversations.get(id)?.events ??
+        (records.has(id) ? [] : ticketFixtureEvents(currentDetail.row));
+      const events: TicketEvent[] = [
+        ...previousEvents,
+        {
+          id: `message-${expectedVersion}`,
+          audience,
+          kind: "message",
+          actor: actor.user.display_name,
+          at,
+          text,
+        },
+      ];
+      if (resumed)
+        events.push({
+          id: `resume-${expectedVersion}`,
+          audience: "public",
+          kind: "history",
+          actor: actor.user.display_name,
+          at,
+          text: "Đã nhận phản hồi và tiếp tục xử lý.",
+        });
+      conversations.set(id, {
+        row,
+        events,
+        version: expectedVersion + 1,
+        firstResponseAt,
+      });
+      return "success" as const;
     },
     check(intent: string): Outcome {
       const entry = committed.get(intent);

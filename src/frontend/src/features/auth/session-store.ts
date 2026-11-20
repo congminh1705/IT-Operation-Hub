@@ -28,6 +28,8 @@ export class SessionStore {
   );
   readonly tickets = createTicketIntake({
     identity: () => this.identity(),
+    actor: () => this.persona,
+    memberships: () => this.teams.ownTeamIds(),
     intake: () => this.teams.intake(),
     snapshot: (priority) => this.sla.snapshot(priority),
   });
