@@ -9,7 +9,7 @@ priority: 1
 status: planned
 owner: PO
 approval: needs-review
-updated: 2026-11-09
+updated: 2026-11-20
 authority: primary
 purpose: "Maintain the single status and owner registry for every refined executable task."
 ---
@@ -18,7 +18,7 @@ purpose: "Maintain the single status and owner registry for every refined execut
 
 ## 1. Scope and authority
 
-All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. Thirteen tasks through FE-04.01 are **done** and FE-04.02 is in review and FE-04.03 is in review and FE-04.04 is in review and 214 tasks remain pending. Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
+All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. **20 tasks are done** through FE-05.03, including all three FE-05 tasks. **210 tasks remain pending.** [FE-05 is EPIC_DONE in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
 
 The [package registry](../README.md#4-task-tracker) holds epic state; this board alone holds task state and PO ownership. Use the [task workflow](task-workflow.md). [Parent coverage and closure](../package-task-coverage.md) maps every parent criterion to outputs and names any external integration evidence. Package readiness means defined scope; dependencies, affected decisions and future coding authorization still gate execution.
 
