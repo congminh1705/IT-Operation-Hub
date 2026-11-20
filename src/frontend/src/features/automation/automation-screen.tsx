@@ -8,6 +8,7 @@ import {
   type WorkflowStep,
 } from "@/lib/demo/automation-workflow";
 import "./automation.css";
+import { AutomationPolicyPanel } from "./automation-policy-panel";
 export function AutomationScreen() {
   const { store, persona } = useSession();
   const [selection, setSelection] = useState<number>();
@@ -43,6 +44,11 @@ export function AutomationScreen() {
           DEMO.
         </p>
       </section>
+      {management && (
+        <AutomationPolicyPanel
+          versions={versions.map((version) => version.number)}
+        />
+      )}
       <section className="automation-panel" aria-label="Quy trình onboarding">
         <h2>Workflow onboarding</h2>
         {error && <p role="alert">{error}</p>}

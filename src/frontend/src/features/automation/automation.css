@@ -66,3 +66,21 @@
 .automation [role="alert"] {
   color: #90283e;
 }
+
+.automation-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  gap: 8px;
+}
+.automation-facts > div {
+  border: 1px solid #d4e2dc;
+  border-radius: 8px;
+  padding: 8px;
+}
+.automation-facts dt {
+  color: #52645d;
+}
+.automation-facts dd {
+  margin: 4px 0 0;
+  font-weight: 650;
+}
