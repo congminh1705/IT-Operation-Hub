@@ -4430,3 +4430,79 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-08.01.
 - Eligibility / remaining prerequisite: merge the FE-07 Parent PR and authorize implementation.
+
+<a id="task-fe-08-01-attempt-01"></a>
+
+### FE-08.01 — Attempt 01 — 2026-11-20T16:03:56.0570241+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-08.01/attempt-01
+- Task: [task specification](../tasks/FE-08.01.md)
+- Parent / phase: FE-08 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T16:01:00.5637504+07:00 (first implementation file timestamp)
+- Ended at: 2026-11-20T16:03:56.0570241+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, first implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Role-scoped card and table work views.
+- Delivered this attempt: Shared filters, counts, cards and keyboard-operable table with assignee, remaining effort, deadline, dependencies and lock.
+- Incomplete scope / deviations: DEMO fixtures and PO joint review pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/lib/demo/work-board.ts, src/frontend/src/features/auth | Scoped work projection and route | Own/team/organization authorization |
+| src/frontend/src/features/work/work-board.tsx and CSS, src/frontend/e2e/work-board.spec.ts | Shared filtering and layouts | Responsive board and browser checks |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Role-scoped card and table work views | Shared filters, counts, cards and keyboard-operable table with assignee, remaining effort, deadline, dependencies and lock | pass | [Chromium](../evidence/FE-08.01/chromium.log) |
+| 2 | Preserve relevant Parent rules | Task parity and keyboard switch passed, direct Requester route forbidden | pass | [Chromium](../evidence/FE-08.01/chromium.log) |
+| 3 | Frontend mock only, explicit failure handling | Scoped mock behavior and build checks verified | pass | [Chromium](../evidence/FE-08.01/chromium.log) |
+| 4 | Approved layout within task scope | Agent compared desktop/mobile and recorded differences | pass | [Comparison](../evidence/FE-08.01/comparison.md) |
+| 5 | Paired captures and PO visual verdict | Captures saved. Joint PO review pending | not-run | [Comparison](../evidence/FE-08.01/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd exec eslint src e2e/work-board.spec.ts; pnpm.cmd format:check; pnpm.cmd test | Static/unit checks | Passed, 100 unit cases | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3152, TICKET_DETAIL_DESIGN_URL=http://127.0.0.1:8126, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe. node node_modules/@playwright/test/cli.js test e2e/work-board.spec.ts --grep-invert 'matched create and detail evidence or matched comparison for' --reporter=list (alternation uses a pipe) | Affected Chromium | 4 passed | pass |
+| repo | Compare approved HTML and app at 1440 and 390 px with reduced motion | Paired screenshots | See comparison and differences | pass |
+| src/frontend | Full unrelated Chromium suite | Expanded regression | Outside this run | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent functional and visual comparison. PO joint review pending.
+- Findings / resolution: Exact filter locator initially failed; an explicit accessible name corrected it. App fixture labels/counts differ from design.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent awaits joint PO acceptance.
+- Required resolution / owner: PO authorized continuing sequentially after each task passes agent checks.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-08.01.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-08.01/comparison.md), [Chromium](../evidence/FE-08.01/chromium.log).
+- Commit / build / environment: [3c2eaeb](https://github.com/congminh1705/IT-Operation-Hub/commit/3c2eaeb76e2244db018e2e235f764864a606cffb) pushed on phase/a-frontend and remote SHA verified.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: report and evidence linked.
+- Execution-board task row: review, Owner PO.
+- Current context: report and next step recorded.
+- Parent state: EPIC_IN_PROGRESS pending joint PO review.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-08.02 plan versions and dependencies.
+- Eligibility / remaining prerequisite: FE-08.01 agent checks passed. PO authorized sequencing with joint review.
