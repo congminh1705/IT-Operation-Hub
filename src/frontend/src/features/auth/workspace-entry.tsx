@@ -1,4 +1,5 @@
 "use client";
+import { TicketForm } from "@/features/tickets/intake/ticket-form";
 import { TicketList } from "@/features/tickets/intake/ticket-list";
 import { SlaScreen } from "@/features/administration/sla-screen";
 import { TeamsScreen } from "@/features/administration/teams-screen";
@@ -59,6 +60,8 @@ export function WorkspaceEntry({
       content={
         pathname === "/tickets" ? (
           <TicketList search={search} />
+        ) : pathname === "/tickets/new" ? (
+          <TicketForm />
         ) : pathname === "/profile" ? (
           <ProfileForm user={persona.user} />
         ) : pathname === "/profile/security" ? (

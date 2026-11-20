@@ -36,6 +36,7 @@ export function WorkspacePage({
     (pathname === "/admin/users/new" && canOpenDestination(persona, pathname)
       ? "Tạo người dùng"
       : undefined) ??
+    (pathname === "/tickets/new" ? "Tạo yêu cầu" : undefined) ??
     item?.label ??
     getAccountLinks(persona).find((item) => item.href === pathname)?.label ??
     "Không có quyền truy cập";

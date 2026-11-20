@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { FormEvent } from "react";
@@ -180,6 +180,13 @@ export function TicketList({ search }: { search: WorkspaceSearch }) {
             ))}
           </nav>
         )}
+        <Link
+          className="ui-button ticket-create-link"
+          data-variant="primary"
+          href="/tickets/new"
+        >
+          Tạo yêu cầu
+        </Link>
       </header>
       <form
         className="ticket-list-filters"

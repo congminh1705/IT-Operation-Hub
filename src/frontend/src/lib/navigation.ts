@@ -216,6 +216,7 @@ export function getAccountLinks(persona: DemoPersona) {
 export const knownDestinations = new Set([
   "/dashboard",
   "/tickets",
+  "/tickets/new",
   "/work",
   "/workforce",
   "/assistant",
@@ -278,7 +279,11 @@ export function activeNavigation(
 
 export function canOpenDestination(persona: DemoPersona, pathname: string) {
   const destination =
-    pathname === "/admin/users/new" ? "/admin/users" : pathname;
+    pathname === "/tickets/new"
+      ? "/tickets"
+      : pathname === "/admin/users/new"
+        ? "/admin/users"
+        : pathname;
   return [...getNavigation(persona), ...getAccountLinks(persona)].some(
     (item) => item.href.split("?")[0] === destination,
   );
