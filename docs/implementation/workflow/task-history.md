@@ -3093,3 +3093,81 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: review and merge the FE-05 Parent PR.
 - Eligibility / remaining prerequisite: verify merge before the next Parent on the shared phase branch and obtain assignment.
+
+<a id="task-fe-06-01-attempt-01"></a>
+
+### FE-06.01 — Attempt 01 — 2026-11-20T14:14:06.4210094+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-06.01/attempt-01
+- Task: [task specification](../tasks/FE-06.01.md)
+- Parent / phase: FE-06 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T14:06:30.8256056+07:00 (first implementation file timestamp)
+- Ended at: 2026-11-20T14:14:06.4210094+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, first implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: ticket detail, audience-filtered events, stable history, requester next action and explicit view states.
+- Delivered this attempt: scoped detail for own/team tickets, public and internal views, stable event sorting, Pending banner, empty conversation feedback, access feedback and simulated read error with retry.
+- Incomplete scope / deviations: fixture fields and header differ from HTML. Composer, state actions and separate SLA clocks are scheduled in later FE-06 leaves. PO review pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/lib/demo/ticket-detail.ts, ticket-intake.ts | projectTicketEvents, canReadInternalTicket, detail | Authorized read and stable timeline |
+| src/frontend/src/features/tickets/intake/ticket-detail.tsx, ticket-detail.css | TicketDetail | Responsive detail and audience selection |
+| src/frontend/src/features/auth/session.tsx, workspace-entry.tsx | safeReturnPath, WorkspaceEntry | Detail routing and explicit DEMO read failure |
+| src/frontend/e2e/ticket-detail.spec.ts | Detail behavior and screenshots | Own/team/out-of-scope tests and visual evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Scoped context, audience, stable history, next-action and distinct feedback | Requester sees public only and Pending banner, technician sees team/internal and ordered history, out-of-scope routes hide the detail, explicit error retries successfully | pass | [Chromium log](../evidence/FE-06.01/chromium.log) |
+| 2 | Preserve FE-06 criterion 3 timeline scope | Ordered events and audience projection with intake regression passed | pass | [Chromium log](../evidence/FE-06.01/chromium.log) |
+| 3 | Frontend DEMO and explicit failures | Synthetic events and simulated failed reads, build and checks pass | pass | [Chromium log](../evidence/FE-06.01/chromium.log) |
+| 4 | Task UI compared to v1.3 references | Desktop/mobile comparisons captured and differences recorded | pass | [comparison](../evidence/FE-06.01/comparison.md) |
+| 5 | Actual screenshots and PO visual-review verdict | Actual/reference captures saved. PO review deferred to joint Parent review | not-run | [comparison](../evidence/FE-06.01/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd exec eslint src e2e/ticket-detail.spec.ts; pnpm.cmd format:check; pnpm.cmd test | Build, types, scoped lint, formatting and unit checks | All passed, 94 unit tests | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3130, TICKET_DETAIL_DESIGN_URL=http://127.0.0.1:8126, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe. node node_modules/@playwright/test/cli.js test e2e/ticket-detail.spec.ts e2e/ticket-intake.spec.ts --grep-invert 'matched create and detail evidence' --reporter=list | Detail and intake regression | 12 passed including 3 screenshot cases | pass |
+| repo | Compare approved HTML and actual at 1440 and 390 px, reduced motion | Reference/actual pairs and no mobile overflow | Six comparison pairs saved, horizontal overflow checks passed | pass |
+| src/frontend | Full unrelated Chromium suite, tablet and automated contrast audit | Expanded regression or accessibility checks | Outside this run | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent functional and visual comparison. PO review pending.
+- Findings / resolution: first browser run revealed the synthetic error flag was stripped at login and direct reload ends the in-memory session. The flag now survives the permitted detail return route and the retry navigates client-side. Final affected suite passed. Layout differences documented.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent awaits remaining leaves and joint PO acceptance.
+- Required resolution / owner: PO authorized the next FE-06 leaf after the preceding leaf passes agent checks, with joint PO review at the end.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-06.01.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-06.01/comparison.md), [Chromium log](../evidence/FE-06.01/chromium.log).
+- Commit / build / environment: [f58d7b2](https://github.com/congminh1705/IT-Operation-Hub/commit/f58d7b2591c2d4fcb18059c6bf99e62254b4250c), push and remote SHA verified on phase/a-frontend. Preview http://127.0.0.1:3130/tickets/TKT-000128.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: report and comparison linked.
+- Execution-board task row: review, Owner PO.
+- Current context: report, PO decision and next task recorded.
+- Parent state: EPIC_IN_PROGRESS. FE-06.02–FE-06.06 remain.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-06.02 public reply and internal-note composer.
+- Eligibility / remaining prerequisite: FE-06.01 checks passed. PO authorized joint review for this Parent after sequential checked delivery.
