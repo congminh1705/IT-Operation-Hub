@@ -1,6 +1,7 @@
-﻿"use client";
+"use client";
 
 import { useRef, useState } from "react";
+import { TicketAttachmentPicker } from "./ticket-attachment-picker";
 import { useSession } from "@/features/auth/session";
 
 type Audience = "public" | "internal";
@@ -24,6 +25,10 @@ export function TicketReplyComposer({
 }) {
   const { store } = useSession();
   const [drafts, setDrafts] = useState({ public: "", internal: "" });
+  const [files, setFiles] = useState<Record<Audience, File[]>>({
+    public: [],
+    internal: [],
+  });
   const [preview, setPreview] = useState<{
     audience: Audience;
     text: string;
@@ -124,6 +129,13 @@ export function TicketReplyComposer({
               const text = event.target.value;
               setDrafts((current) => ({ ...current, [view]: text }));
             }}
+          />
+          <TicketAttachmentPicker
+            key={view}
+            files={files[view]}
+            onChange={(next) =>
+              setFiles((previous) => ({ ...previous, [view]: next }))
+            }
           />
           <button className="ui-button" type="submit">
             {isInternal ? "Xem trước ghi chú" : "Xem trước phản hồi"}

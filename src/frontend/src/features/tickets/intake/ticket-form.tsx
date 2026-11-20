@@ -14,6 +14,7 @@ import {
 } from "@/lib/demo/ticket-draft";
 import "@/features/administration/users-screen.css";
 import "./ticket-form.css";
+import { TicketAttachmentPicker } from "./ticket-attachment-picker";
 
 export function TicketForm({ search }: { search: WorkspaceSearch }) {
   const { persona, store } = useSession();
@@ -51,7 +52,6 @@ export function TicketForm({ search }: { search: WorkspaceSearch }) {
   }
   const [files, setFiles] = useState<File[]>([]);
   const form = useRef<HTMLFormElement>(null);
-  const fileInput = useRef<HTMLInputElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   if (!persona) return null;
   const categories = store.catalog.activeLabels("categories");
@@ -257,35 +257,13 @@ export function TicketForm({ search }: { search: WorkspaceSearch }) {
               </div>
             </section>
           )}
-          <label>
-            Tệp đính kèm DEMO
-            <input
-              ref={fileInput}
-              name="files"
-              type="file"
-              accept="image/png,image/jpeg,image/webp,application/pdf"
-              multiple
-              {...invalid("files")}
-              onChange={(event) =>
-                setFiles(Array.from(event.target.files ?? []))
-              }
-            />
-          </label>
-          {files.map((file, index) => (
-            <p key={file.name + index}>
-              {file.name} · {Math.ceil(file.size / 1024)} KB{" "}
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  setFiles(files.filter((_, i) => i !== index));
-                  if (fileInput.current) fileInput.current.value = "";
-                  setError(undefined);
-                }}
-              >
-                Bỏ tệp
-              </Button>
-            </p>
-          ))}
+          <TicketAttachmentPicker
+            files={files}
+            onChange={(next) => {
+              setDirty(true);
+              setFiles(next);
+            }}
+          />
           <p className="directory-note">
             Nhóm tiếp nhận do cấu hình hệ thống xác định. IT xác minh ưu tiên và
             SLA.
