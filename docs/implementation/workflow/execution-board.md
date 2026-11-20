@@ -18,7 +18,7 @@ purpose: "Maintain the single status and owner registry for every refined execut
 
 ## 1. Scope and authority
 
-All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. **33 tasks are done** through FE-08.04, including all four FE-08 tasks. **One task is in review and 196 remain pending.** [FE-08 is EPIC_DONE in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
+All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. **34 tasks are done** through FE-09.01. **196 remain pending.** [FE-08 is EPIC_DONE in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
 
 The [package registry](../README.md#4-task-tracker) holds epic state; this board alone holds task state and PO ownership. Use the [task workflow](task-workflow.md). [Parent coverage and closure](../package-task-coverage.md) maps every parent criterion to outputs and names any external integration evidence. Package readiness means defined scope; dependencies, affected decisions and future coding authorization still gate execution.
 
@@ -63,7 +63,7 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FE-08.02](../tasks/FE-08.02.md) | [FE-08](../06-frontend-first.md#fe-08) | Build plan version, DAG and dependency detail | [FE-08.01](../tasks/FE-08.01.md) | PO | done |
 | [FE-08.03](../tasks/FE-08.03.md) | [FE-08](../06-frontend-first.md#fe-08) | Build task progress and human completion forms | [FE-08.02](../tasks/FE-08.02.md) | PO | done |
 | [FE-08.04](../tasks/FE-08.04.md) | [FE-08](../06-frontend-first.md#fe-08) | Build manual assignment lock and impact controls | [FE-08.03](../tasks/FE-08.03.md) | PO | done |
-| [FE-09.01](../tasks/FE-09.01.md) | [FE-09](../06-frontend-first.md#fe-09) | Build workforce skill and capacity views | [FE-08.04](../tasks/FE-08.04.md) | PO | review |
+| [FE-09.01](../tasks/FE-09.01.md) | [FE-09](../06-frontend-first.md#fe-09) | Build workforce skill and capacity views | [FE-08.04](../tasks/FE-08.04.md) | PO | done |
 | [FE-09.02](../tasks/FE-09.02.md) | [FE-09](../06-frontend-first.md#fe-09) | Build calendar, skill and absence edits | [FE-09.01](../tasks/FE-09.01.md) | PO | pending |
 | [FE-09.03](../tasks/FE-09.03.md) | [FE-09](../06-frontend-first.md#fe-09) | Complete saved-change and evaluation-pending flow | [FE-09.02](../tasks/FE-09.02.md) | PO | pending |
 | [FE-10.01](../tasks/FE-10.01.md) | [FE-10](../06-frontend-first.md#fe-10) | Build workflow version editor and publish preview | [FE-08.04](../tasks/FE-08.04.md) | PO | pending |
