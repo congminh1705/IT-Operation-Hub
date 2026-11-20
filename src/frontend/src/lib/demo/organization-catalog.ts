@@ -1,4 +1,4 @@
-﻿import type { UserView } from "../api/types";
+import type { UserView } from "../api/types";
 
 export type CatalogKind = "departments" | "categories";
 type CatalogRecord = {
@@ -50,6 +50,13 @@ export function createOrganizationCatalog(
     error: "Bạn không có quyền sửa cấu hình.",
   } as const;
   return {
+    activeLabels(kind: CatalogKind) {
+      return getActor()?.active
+        ? records[kind]
+            .filter((record) => record.active)
+            .map((record) => record.label)
+        : [];
+    },
     list(kind: CatalogKind) {
       return admin() ? records[kind].map((record) => ({ ...record })) : [];
     },

@@ -1,0 +1,29 @@
+﻿.ticket-create-form :is(fieldset, .ticket-create-fields) {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.ticket-create-form textarea {
+  min-height: 88px;
+  border: 1px solid #c6d6d0;
+  border-radius: 5px;
+  padding: 9px;
+  resize: vertical;
+}
+.ticket-create-form .ticket-onboarding {
+  display: flex;
+  align-items: center;
+}
+.ticket-onboarding input {
+  width: 20px;
+  min-height: 20px;
+}
+.ticket-list-header .ticket-create-link {
+  display: inline-flex;
+  align-items: center;
+}
+@media (max-width: 760px) {
+  .ticket-create-form .directory-pair {
+    grid-template-columns: 1fr;
+  }
+}
