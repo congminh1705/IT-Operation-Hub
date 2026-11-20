@@ -1,0 +1,134 @@
+﻿.automation {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.automation-panel,
+.automation-notice {
+  padding: 16px;
+  border: 1px solid #d4e2dc;
+  border-radius: 12px;
+  background: white;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.automation-notice {
+  background: #eaf5f0;
+  border-color: #cae5d9;
+}
+.automation :is(h2, h3) {
+  font-weight: 650;
+  margin: 0 0 10px;
+}
+.automation h2 {
+  font-size: 1.125rem;
+}
+.automation p {
+  margin: 6px 0;
+}
+.automation-steps {
+  padding-inline-start: 22px;
+  display: grid;
+  gap: 12px;
+}
+.automation-form {
+  display: grid;
+  gap: 12px;
+}
+.automation-form fieldset {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  border: 1px solid #d4e2dc;
+  padding: 12px;
+  border-radius: 8px;
+}
+.automation-form label {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+.automation :is(input, select) {
+  display: block;
+  min-height: 44px;
+  padding: 8px;
+  border: 1px solid #b9ccbf;
+  border-radius: 8px;
+  background: white;
+  max-width: 100%;
+  font-size: 16px;
+}
+.automation-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.automation [role="alert"] {
+  color: #90283e;
+}
+
+.automation-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  gap: 8px;
+}
+.automation-facts > div {
+  border: 1px solid #d4e2dc;
+  border-radius: 8px;
+  padding: 8px;
+}
+.automation-facts dt {
+  color: #52645d;
+}
+.automation-facts dd {
+  margin: 4px 0 0;
+  font-weight: 650;
+}
+
+.automation-coordination {
+  background: #101b31;
+  color: #e9effb;
+  border: 1px solid #334867;
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.automation-stepper {
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 10px;
+}
+.automation-stepper li,
+.automation-retry {
+  border: 1px solid #4c6082;
+  border-radius: 8px;
+  padding: 12px;
+  background: #192841;
+}
+.automation-stepper [data-stage="committed"] {
+  border-color: #65c29a;
+  color: #b7f1d5;
+}
+.automation-stepper [data-stage="approved"] {
+  border-color: #e5b35c;
+  color: #ffe0a6;
+}
+.automation-stepper [data-stage="queued"] {
+  border-color: #8ab9f1;
+  color: #cde1ff;
+}
+.automation-stepper [data-stage="failed"],
+.automation-coordination [role="alert"] {
+  border-color: #f4979a;
+  color: #ffd3d4;
+}
+.automation-stepper [data-stage="future"],
+.automation-stepper [data-stage="skipped"] {
+  color: #bcc9dc;
+}
+.automation-lock {
+  color: #ffe0a6;
+}

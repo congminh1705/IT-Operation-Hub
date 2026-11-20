@@ -18,7 +18,7 @@ purpose: "Provide one task tracker and a bounded-context workflow for implementi
 
 **Approved frontend scope:** [v1.3 / D-51](../design/approval.md), including the final interactive login. Use the [63-task design map](../design/implementation-scope.md#task-map). Existing IDs, dependencies, business acceptance and lifecycle remain authoritative; visual approval does not start implementation.
 
-This backlog maps **67 stories to 88 work packages and 230 executable tasks** across frontend, real services, integration and acceptance. Every package is fully decomposed; packages remain epic-level scope records rather than coding sessions. D-43 confirms the [task method](workflow/task-workflow.md), and D-44 requests complete decomposition. **Frontend DEMO is Phase A and must be delivered before backend implementation.** The [execution board](workflow/execution-board.md) contains all task states; [parent coverage/closure](package-task-coverage.md) assigns all 264 numbered package criteria. The execution board records 36 completed tasks through FE-09.03. PO has accepted FE-09 and all three of its child tasks. System acceptance is pending.
+This backlog maps **67 stories to 88 work packages and 230 executable tasks** across frontend, real services, integration and acceptance. Every package is fully decomposed; packages remain epic-level scope records rather than coding sessions. D-43 confirms the [task method](workflow/task-workflow.md), and D-44 requests complete decomposition. **Frontend DEMO is Phase A and must be delivered before backend implementation.** The [execution board](workflow/execution-board.md) contains all task states; [parent coverage/closure](package-task-coverage.md) assigns all 264 numbered package criteria. The execution board records 39 completed tasks through FE-10.03. PO has accepted FE-10 and all three of its child tasks. System acceptance is pending.
 
 FE-02.01/.02/.03 are complete. **[FE-02.04](tasks/FE-02.04.md)** is approved and done. Its file contains the required context, output scope and checks. [Current context](workflow/current-context.md) records the resume pointer. The [execution board](workflow/execution-board.md) owns task status; the package registry below owns epic status.
 
@@ -84,7 +84,7 @@ Some source details need review before the affected slice: draft DTOs/schema, ac
 
 ## 4. Task tracker
 
-This **work-package/epic registry** retains all 88 stable scope IDs. The registry below records current epic states. FE-09 is EPIC_DONE following PO acceptance of its three child tasks and parent criteria. This state does not satisfy prerequisites or decide D-40 values. Package planning links are navigational; the [230-task board](workflow/execution-board.md) and leaf cards define executable artifact dependencies. **FE-18.03** gates subsequent phases. [Coverage/closure](package-task-coverage.md) distinguishes DONE service output from package acceptance awaiting actual UI integration.
+This **work-package/epic registry** retains all 88 stable scope IDs. The registry below records current epic states. FE-10 is EPIC_DONE following PO acceptance of its three child tasks and parent criteria. This state does not satisfy prerequisites or decide D-40 values. Package planning links are navigational; the [230-task board](workflow/execution-board.md) and leaf cards define executable artifact dependencies. **FE-18.03** gates subsequent phases. [Coverage/closure](package-task-coverage.md) distinguishes DONE service output from package acceptance awaiting actual UI integration.
 
 | Work package | Outcome | Planning dependencies | Epic state |
 | --- | --- | --- | --- |
@@ -97,7 +97,7 @@ This **work-package/epic registry** retains all 88 stable scope IDs. The registr
 | [FE-07](06-frontend-first.md#fe-07) | Attachment upload and download experience | FE-06 | EPIC_DONE |
 | [FE-08](06-frontend-first.md#fe-08) | Task board, plan and progress forms | FE-06 | EPIC_DONE |
 | [FE-09](06-frontend-first.md#fe-09) | Workforce skills, calendars and absence forms | FE-08 | EPIC_DONE |
-| [FE-10](06-frontend-first.md#fe-10) | Workflow, policy and coordination activity screens | FE-08 | EPIC_READY |
+| [FE-10](06-frontend-first.md#fe-10) | Workflow, policy and coordination activity screens | FE-08 | EPIC_DONE |
 | [FE-11](06-frontend-first.md#fe-11) | Exception review and approval dialogs | FE-09 FE-10 | EPIC_READY |
 | [FE-12](06-frontend-first.md#fe-12) | Asset inventory and lifecycle interactions | FE-05 | EPIC_READY |
 | [FE-13](06-frontend-first.md#fe-13) | Knowledge browsing, authoring and source states | FE-03 | EPIC_READY |

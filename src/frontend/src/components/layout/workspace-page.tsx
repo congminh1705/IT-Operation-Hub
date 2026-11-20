@@ -39,6 +39,10 @@ export function WorkspacePage({
       : undefined) ??
     (pathname === "/tickets/new" ? "Tạo yêu cầu" : undefined) ??
     (isTicketDetail(pathname) ? "Chi tiết yêu cầu" : undefined) ??
+    (pathname === "/automation/activity" &&
+    canOpenDestination(persona, pathname)
+      ? "Hoạt động điều phối"
+      : undefined) ??
     item?.label ??
     getAccountLinks(persona).find((item) => item.href === pathname)?.label ??
     "Không có quyền truy cập";

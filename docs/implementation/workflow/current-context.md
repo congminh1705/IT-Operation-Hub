@@ -9,23 +9,21 @@ authority: derived
 
 # Current task context
 
-- FE-08 accepted. [PR #10](https://github.com/congminh1705/IT-Operation-Hub/pull/10) merged at 0daedd2 and phase/a-frontend fast-forwarded.
-- FE-09 EPIC_DONE. Board: 36 done, 194 pending.
+- FE-09 accepted. [PR #11](https://github.com/congminh1705/IT-Operation-Hub/pull/11) merged at a863bdc and the phase branch was fast-forwarded.
+- FE-10 is EPIC_DONE following joint PO acceptance.
 
 ## Latest task report
 
-- [FE-09.01/attempt-02](task-history.md#task-fe-09-01-attempt-02), done. Workforce skills, daily capacity, schedule/budget/load/free/unallocated indicators and scoped projections. Unknown values stay unknown and intervals are merged before subtraction.
-- Agent checks: production build, typecheck, scoped lint, format, 102 unit and four Chromium passed. Full unrelated Chromium suite not run. [Comparison](../evidence/FE-09.01/comparison.md).
-- Implementation d6944b6 and mobile follow-up 1b0180d pushed and verified. Preview http://127.0.0.1:3164/workforce. PO accepted FE-09.01.
+- [FE-10.01/attempt-02](task-history.md#task-fe-10-01-attempt-02), done. Workflow draft and immutable published history, with effort/DAG validation and reduced Technician projection. 103 unit and 3 Chromium passed. [Comparison](../evidence/FE-10.01/comparison.md). 8776dbc pushed and verified.
 
-- [FE-09.02/attempt-02](task-history.md#task-fe-09-02-attempt-02), done. Manager/Admin form, daily period and timezone, validation, before/after and affected task preview, technician self-verification denial. 102 unit and 6 affected Chromium passed. [Comparison](../evidence/FE-09.02/comparison.md). d03cd20 pushed and verified.
+- [FE-10.02/attempt-02](task-history.md#task-fe-10-02-attempt-02), done. Team/workflow/priority/action/limit and grantor preview, default-deny missing/expired/disabled grants, independent assistant availability and explicit cancel/save. 103 unit and 5 affected Chromium passed. [Comparison](../evidence/FE-10.02/comparison.md). 447dfcf pushed and verified.
 
-- [FE-09.03/attempt-02](task-history.md#task-fe-09-03-attempt-02), done. Session-local saves update recorded skill, schedule or absence, display affected work and explicit evaluation pending, preserve draft on conflict and leave ticket SLA unchanged. 103 unit and 13 affected Chromium passed. [Comparison](../evidence/FE-09.03/comparison.md). 7d46ef6 pushed and verified.
-- Next: FE-10.01 after Parent PR merge and implementation authorization.
+- [FE-10.03/attempt-02](task-history.md#task-fe-10-03-attempt-02), done. Read-only opening, scoped event/source/proposal projections, no-run/disabled/failed, approval distinct from execution, normal no-approval history and confirmed retry into queue with lock preserved. 103 unit and 14 affected Chromium passed. [Comparison](../evidence/FE-10.03/comparison.md). 42ec8bf pushed and verified.
+- Next: FE-11.01 after Parent PR merge and implementation authorization.
 
-## Parent FE-09 joint acceptance
+## Parent FE-10 joint acceptance
 
-- PO accepted FE-09.01 individually, then FE-09.02 and FE-09.03 jointly. All three tasks and the Parent are closed.
-- Parent criterion 1: scoped skill/capacity view and unknown/missing distinction verified in FE-09.01.
-- Criteria 2 and 3: role-scoped edits, affected-work preview, confirmed local changes and separate evaluation pending verified in FE-09.02/03. Ticket SLA and state remained unchanged.
-- Preview: http://127.0.0.1:3167/workforce. Parent [PR #11](https://github.com/congminh1705/IT-Operation-Hub/pull/11) is open from phase/a-frontend into main.
+- Registry: EPIC_DONE. Board: 39 done, 191 pending. PO accepted all three FE-10 leaves.
+- Criterion 1: workflow draft/versioning and explicit policy scope, limits and confirmation verified in FE-10.01/02.
+- Criteria 2/3: scoped activity, provenance, locks, retry, explicit approval vs execution and read-only entry verified in FE-10.03.
+- Preview: http://127.0.0.1:3175/automation/policies and http://127.0.0.1:3175/automation/activity. Parent [PR #12](https://github.com/congminh1705/IT-Operation-Hub/pull/12) is open from phase/a-frontend into main.

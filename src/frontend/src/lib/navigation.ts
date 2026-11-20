@@ -120,12 +120,12 @@ export function getNavigation(persona: DemoPersona): NavigationItem[] {
     },
     {
       id: "policies",
-      label: "Chính sách & quy trình",
+      label: technician ? "Quy trình nhóm" : "Chính sách & quy trình",
       href: "/automation/policies",
       icon: "settings",
       group: "workspace",
       capability: "assistant",
-      roles: managers,
+      roles: internal,
     },
     {
       id: "knowledge",
@@ -222,6 +222,7 @@ export const knownDestinations = new Set([
   "/assistant",
   "/approvals",
   "/automation/policies",
+  "/automation/activity",
   "/knowledge",
   "/assets",
   "/reports",
@@ -285,9 +286,11 @@ export function canOpenDestination(persona: DemoPersona, pathname: string) {
   const destination =
     pathname === "/tickets/new" || isTicketDetail(pathname)
       ? "/tickets"
-      : pathname === "/admin/users/new"
-        ? "/admin/users"
-        : pathname;
+      : pathname === "/automation/activity"
+        ? "/automation/policies"
+        : pathname === "/admin/users/new"
+          ? "/admin/users"
+          : pathname;
   return [...getNavigation(persona), ...getAccountLinks(persona)].some(
     (item) => item.href.split("?")[0] === destination,
   );
