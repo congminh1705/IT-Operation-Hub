@@ -3,19 +3,19 @@ id: itoh-current-context
 title: "Current task context"
 type: planning
 owner: PO
-updated: 2026-11-19
+updated: 2026-11-20
 authority: derived
 ---
 
 # Current task context
 
-- As of: 2026-11-19T12:04:21+07:00. Owner PO.
-- State: 12 done, 218 pending. FE-03.04 and FE-03.05 done by PO. FE-03 EPIC_DONE theo PO.
+- As of: 2026-11-20T11:04:39.8558772+07:00. Owner PO.
+- State: 17 done, 213 pending. FE-04.05 done. FE-04 EPIC_DONE after PO review.
 
 ## Latest task report
 
-- [FE-03.05/attempt-02](task-history.md#task-fe-03-05-attempt-02) verifies logout, cache isolation and four-account A1 journeys at 1440 and 390px. [Task](../tasks/FE-03.05.md).
-- Checks: 91 unit and 69 Chromium pass, 2 optional captures skipped. Build, typecheck, lint and format passed.
-- Review: [captures, behavior and API01 handoff](../evidence/FE-03.05/comparison.md). PO confirmed review and requested done. Existing FE-03.01 verification gaps retained.
-- Git: phase/a-frontend, 78d0f99 pushed and verified. FE-03.04 approved in 17f4fa7. FE-03 [Parent PR #4](https://github.com/congminh1705/IT-Operation-Hub/pull/4) opened into main; awaiting PO merge. FE-02 remains EPIC_IN_PROGRESS in registry.
-- Next: PO reviews and merges PR #4 before the next Parent. FE-04.01 remains pending until Parent delivery conditions are met and PO assigns it.
+- [FE-04.05/attempt-02](task-history.md#task-fe-04-05-attempt-02) delivers the DEMO SLA editor with version comparison, history and unaffected old-ticket snapshot. [Task card](../tasks/FE-04.05.md).
+- Checks: 91 unit and 8 targeted Chromium pass. Build, typecheck, format and scoped lint passed.
+- Review: [comparison and PO walkthrough](../evidence/FE-04.05/comparison.md). PO confirmed review and requested done. Search edit kept outside task commits.
+- Git: phase/a-frontend, 6c50e63 pushed and verified. FE-04.04 closure bf76244. Parent reviewed by PO; [PR #5](https://github.com/congminh1705/IT-Operation-Hub/pull/5) open into main.
+- Next: PO reviews and merges PR #5 before the next Parent.

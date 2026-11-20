@@ -1,0 +1,30 @@
+﻿.catalog-nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.catalog-nav a {
+  padding: 10px 14px;
+  border-radius: 6px;
+  color: #235b49;
+}
+.catalog-nav a[aria-current] {
+  background: #dcefe9;
+  font-weight: 650;
+}
+.catalog-table table {
+  min-width: 620px;
+}
+.catalog-row-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.catalog-feedback {
+  padding: 12px 20px;
+  color: #166534 !important;
+}
+.catalog-feedback.catalog-error {
+  color: #9f1239 !important;
+}

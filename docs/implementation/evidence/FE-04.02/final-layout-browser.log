@@ -1,0 +1,16 @@
+
+Running 9 tests using 1 worker
+
+(node:34084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 e2e\access-review.spec.ts:20:1 › last Admin and self-lock are blocked; closing returns focus (2.2s)
+  ok 2 e2e\access-review.spec.ts:55:1 › handover and revocation show the correct fixture and never mutate rows (1.7s)
+  ok 3 e2e\access-review.spec.ts:93:1 › non-Admin cannot review access (1.3s)
+  ok 4 e2e\access-review.spec.ts:102:1 › matching desktop and mobile evidence for directory and review (5.9s)
+  ok 5 e2e\administration.spec.ts:26:3 › requester cannot open admin create even by direct return (1.2s)
+  ok 6 e2e\administration.spec.ts:26:3 › technician cannot open admin create even by direct return (1.3s)
+  ok 7 e2e\administration.spec.ts:26:3 › it_manager cannot open admin create even by direct return (1.4s)
+  ok 8 e2e\administration.spec.ts:35:1 › search, status, rejected reference, duplicate, preview, cancel and explicit save (3.1s)
+  ok 9 e2e\administration.spec.ts:100:1 › admin reference and actual at desktop and mobile widths (3.5s)
+
+  9 passed (24.9s)

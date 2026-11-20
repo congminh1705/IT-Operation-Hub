@@ -91,7 +91,7 @@ This **work-package/epic registry** retains all 88 stable scope IDs. FE-01 is EP
 | [FE-01](06-frontend-first.md#fe-01) | Frontend scaffold and mock contract | — | EPIC_DONE |
 | [FE-02](06-frontend-first.md#fe-02) | Design system and responsive workspace shell | FE-01 | EPIC_IN_PROGRESS |
 | [FE-03](06-frontend-first.md#fe-03) | Login, profile and password interaction | FE-02 | EPIC_DONE |
-| [FE-04](06-frontend-first.md#fe-04) | Administration and SLA configuration screens | FE-03 | EPIC_READY |
+| [FE-04](06-frontend-first.md#fe-04) | Administration and SLA configuration screens | FE-03 | EPIC_DONE |
 | [FE-05](06-frontend-first.md#fe-05) | Ticket list, search and create form | FE-03 | EPIC_READY |
 | [FE-06](06-frontend-first.md#fe-06) | Ticket conversation, actions, timeline and SLA presentation | FE-05 | EPIC_READY |
 | [FE-07](06-frontend-first.md#fe-07) | Attachment upload and download experience | FE-06 | EPIC_READY |

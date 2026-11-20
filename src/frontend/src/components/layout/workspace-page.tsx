@@ -33,6 +33,9 @@ export function WorkspacePage({
   const scope = effectiveScope(persona, pathname, first(search.scope));
   const item = activeNavigation(persona, pathname, scope);
   const label =
+    (pathname === "/admin/users/new" && canOpenDestination(persona, pathname)
+      ? "Tạo người dùng"
+      : undefined) ??
     item?.label ??
     getAccountLinks(persona).find((item) => item.href === pathname)?.label ??
     "Không có quyền truy cập";

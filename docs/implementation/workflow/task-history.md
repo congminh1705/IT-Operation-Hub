@@ -1869,3 +1869,773 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Reconcile FE-03 Parent acceptance and delivery; FE-04.01 remains pending.
 - Eligibility / remaining prerequisite: FE-03.05 done; FE-04.01 awaits Parent delivery gates and separate assignment.
+
+<a id="task-fe-04-01-attempt-01"></a>
+
+### FE-04.01 — Attempt 01 — 2026-11-19T12:44:33.2238993+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-04.01/attempt-01
+- Task: [task specification](../tasks/FE-04.01.md)
+- Parent / phase: FE-04 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-19T12:42:20+07:00 (first recorded test checkpoint; implementation preceded it)
+- Ended at: 2026-11-19T12:44:33.2238993+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none. FE-03.05 done; [FE-03 PR #4](https://github.com/congminh1705/IT-Operation-Hub/pull/4) verified merged, phase fast-forwarded to c051118 before coding.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Admin-only searchable DEMO user directory and request-verified provisioning.
+- Delivered this attempt: name/email search, status filter, default Requester, reference/email/department validation, duplicate handling, masked password, preview, cancel and explicit save.
+- Incomplete scope / deviations: PO review pending. IT roles require approved fixtures beyond this verified Requester request. Created entries are mock directory records, not login principals.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/administration/users-screen.tsx and CSS | UsersScreen, Directory, ProvisioningForm | Mac/Teal directory and form |
+| src/frontend/src/lib/demo/user-directory.ts, features/auth/session-store.ts and workspace-entry.tsx | createUserDirectory and session-based composition | Mock validation and Admin scope |
+| src/frontend/src/lib/navigation.ts, components/layout/workspace-page.tsx | Protected list and create routes | Entry guard and title |
+| src/frontend/e2e/administration.spec.ts | Five browser cases | Behavior and matching captures |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Admin list and explicit verified create | Search/filter, three non-Admin rejects, duplicate/unverified failures, preview/cancel/save passed | pass | [browser](../evidence/FE-04.01/browser.log) |
+| 2 | Parent criteria 1/2 within scope | Name/email/department/Requester and initial password; verified fixture and no ticket transition or grant | pass | mock directory and comparison |
+| 3 | Synthetic transport and safe failures | In-memory Admin guard, no password in preview/result, cancel adds nothing | pass | browser and user-directory.ts |
+| 4 | Retain approved layout | Agent compared two screens desktop/mobile; differences recorded | pass | [comparison](../evidence/FE-04.01/comparison.md) |
+| 5 | Capture reference/actual and record owner verdict | Eight captures complete, PO verdict pending | not-run | comparison |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd format:check; pnpm.cmd test | Build and static/unit | All passed, 91 unit | pass |
+| src/frontend | pnpm.cmd exec eslint . --ignore-pattern test-results/** | Lint tracked application and checks | Pass after excluding local FE-03.01 temporary CommonJS probe. Plain pnpm.cmd lint initially failed on that ignored local artifact | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3111, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe, ADMIN_DESIGN_URL=http://127.0.0.1:8010; pnpm.cmd exec playwright test | Production Chromium | 74 pass including five FE-04.01; initial role-label failure fixed | pass |
+| repo | Open 08-admin-states.html?capture=1#users and #user-create via local design server; compare 1440 and 390px | Actual/reference | Eight captures and viewport checks completed | pass |
+| src/frontend | Earlier optional captures requiring DESIGN_REFERENCE_URL | Optional | Two skipped | not-run |
+| repo | PO review | Owner verdict | Pending | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent comparison and browser checks, PO awaiting review.
+- Findings / resolution: explicit accessible name added to selects. Admin fixture is Requester-only. Mobile table scrolls within its own region. Adjacent access-change actions excluded.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO review outstanding. Physical mobile/Safari/Firefox not checked. No real provisioning, credential storage or role elevation.
+- Required resolution / owner: PO reviews task and evidence before done.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-04.01.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison and PO walkthrough](../evidence/FE-04.01/comparison.md), [browser](../evidence/FE-04.01/browser.log).
+- Commit / build / environment: implementation 6cd8fe16123f6c4850e7b49cbd62ada37ef6afdd pushed to phase/a-frontend, remote verified. Production build pass. Local preview http://127.0.0.1:3111/login?returnTo=%2Fadmin%2Fusers.
+- Parent delivery: FE-04 EPIC_IN_PROGRESS, no Parent PR. Previous PR #4 verified merged at c051118.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-01 linked.
+- Execution-board task row: FE-04.01 review, Owner PO.
+- Current context: updated to FE-04.01 handoff and verified FE-03 merge.
+- Parent state: FE-04 EPIC_IN_PROGRESS; remaining children and closure gates pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FE-04.01. Next candidate FE-04.02.
+- Eligibility / remaining prerequisite: FE-04.01 done and separate assignment before FE-04.02.
+
+<a id="task-fe-04-01-attempt-02"></a>
+
+### FE-04.01 — Attempt 02 — 2026-11-19T14:06:05.5659638+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-04.01/attempt-02
+- Task: [task specification](../tasks/FE-04.01.md)
+- Parent / phase: FE-04 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-19T14:06:05.5659638+07:00
+- Ended at: 2026-11-19T14:06:05.5659638+07:00
+- State before / after: review / done
+- Previous attempt / correction: [attempt-01](#task-fe-04-01-attempt-01)
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record PO review and close FE-04.01.
+- Delivered this attempt: confirmed approval, synchronized records.
+- Incomplete scope / deviations: none for this closure.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-04.01.md and workflow records | PO approval | Closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Admin-only directory and verified provisioning | Prior tests retained | pass | attempt-01 |
+| 2 | Fixture validation and explicit save | Prior tests retained | pass | attempt-01 |
+| 3 | DEMO transport and no sensitive output | Prior tests retained | pass | attempt-01 |
+| 4 | Approved UI | PO reviewed and requested done | pass | PO instruction |
+| 5 | Captures and owner verdict | Prior captures, PO reviewed | pass | [comparison](../evidence/FE-04.01/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Verify task, board and report links | Consistent status | done | pass |
+| src/frontend | Application checks | Documentation-only closure | Prior results retained | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO confirmed review and requested done.
+- Findings / resolution: no changes requested.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-04.01.
+- Required resolution / owner: none.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-04.01.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [attempt-01](#task-fe-04-01-attempt-01).
+- Commit / build / environment: implementation 6cd8fe1 and handoff eeae71e verified on phase/a-frontend. Closure delivery reported separately.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-02.
+- Execution-board task row: done, Owner PO.
+- Current context: closure and remaining Parent gates recorded.
+- Parent state: FE-04 EPIC_IN_PROGRESS; remaining children pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-04.02, assigned by PO.
+- Eligibility / remaining prerequisite: FE-04.01 done; FE-04.02 assigned..
+
+<a id="task-fe-04-02-attempt-01"></a>
+
+### FE-04.02 — Attempt 01 — 2026-11-19T14:12:49.6180305+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-04.02/attempt-01
+- Task: [task specification](../tasks/FE-04.02.md)
+- Parent / phase: FE-04 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-19T14:08:50+07:00 (first recorded test checkpoint; implementation preceded it)
+- Ended at: 2026-11-19T14:12:49.6180305+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none. [FE-04.01 PO approval](#task-fe-04-01-attempt-02).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: preview role, department, lock and unlock impacts over DEMO assignments.
+- Delivered this attempt: Admin review, before/after account state, session effect, active work and eligible fixture candidate, self-lock and last-Admin guards, and unresolved emergency branch.
+- Incomplete scope / deviations: PO review pending. Actual mutating access and handover workflow are outside this preview; D-40 emergency procedure requires a business decision.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/administration/access-review.tsx and users-screen files | AccessReview and per-row entry | Accessible review and responsive table |
+| src/frontend/src/lib/demo/access-impact.ts and user-directory.ts | reviewAccessImpact and reviewAccess | Admin-scoped synthetic impact calculations |
+| src/frontend/e2e/access-review.spec.ts | Four browser cases | Guards, handover, session copy and captures |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Preview with guards, handover and session impact | Self-lock, last Admin role downgrade/lock, eligible and missing replacement, emergency and unlock verified | pass | [targeted browser](../evidence/FE-04.02/final-layout-browser.log) |
+| 2 | Preserve related Parent scope | Current/proposed states, no restored session or ownerless change; no policy invented | pass | access-impact.ts and browser |
+| 3 | Synthetic transport and no false completion | Admin adapter scope, read-only review, unchanged rows and explicit preview notice | pass | browser |
+| 4 | Approved presentation | Compared users and provisioning references at two widths; missing matching conflict specimen documented | pass | [comparison](../evidence/FE-04.02/comparison.md) |
+| 5 | Evidence and PO verdict | Eight captures, Agent comparison complete. PO verdict pending | not-run | comparison |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd format:check; pnpm.cmd test | Build, static and unit | Passed including build after CSS refinement; 91 unit | pass |
+| src/frontend | pnpm.cmd exec eslint . --ignore-pattern test-results/** | Application lint | Passed; ignores local verification artifacts | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3113, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe, ADMIN_DESIGN_URL=http://127.0.0.1:8010; pnpm.cmd exec playwright test e2e/access-review.spec.ts e2e/administration.spec.ts | Affected browser checks after layout refinement | 9 pass | pass |
+| src/frontend | Same environment; pnpm.cmd exec playwright test | Production Chromium regression | 78 pass, two optional captures skipped | pass |
+| repo | Local design server; open 08-admin-states.html#users and 02-tickets.html#provision before work, capture actual/reference 1440 and 390 | Matching viewport evidence | Eight captures. No page overflow at checked widths | pass |
+| src/frontend | Earlier optional reference capture tests | Optional | Two skipped | not-run |
+| repo | PO review of FE-04.02 | Owner verdict | Pending | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent verification and visual comparison. PO review pending.
+- Findings / resolution: mobile rows initially expanded due to button text wrapping. Table now scrolls inside its region with a minimum width. Preliminary regression overlapped the rebuild and reported a 500 and a missing forbidden heading; final result is above.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO review pending; D-40 emergency process remains open. No actual session revocation performed by the review.
+- Required resolution / owner: PO validates task and evidence before marking done.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-04.02.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison and PO walkthrough](../evidence/FE-04.02/comparison.md), [browser log](../evidence/FE-04.02/browser.log).
+- Commit / build / environment: f8149a67b6721a287b7bd6a499a562d24ce14d2e pushed to phase/a-frontend and verified. FE-04.01 PO acceptance d3a35d8 also pushed. Preview http://127.0.0.1:3113/login?returnTo=%2Fadmin%2Fusers.
+- Parent delivery: FE-04 EPIC_IN_PROGRESS, no Parent PR. Prior FE-03 PR #4 merged and verified.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-01 linked.
+- Execution-board task row: review, Owner PO. FE-04.01 is done.
+- Current context: FE-04.02 findings, evidence and next prerequisite.
+- Parent state: FE-04 EPIC_IN_PROGRESS, further children pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FE-04.02. Next candidate FE-04.03.
+- Eligibility / remaining prerequisite: FE-04.02 done and separate assignment before FE-04.03.
+
+<a id="task-fe-04-02-attempt-02"></a>
+
+### FE-04.02 — Attempt 02 — 2026-11-19T14:16:48.2204185+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-04.02/attempt-02
+- Task: [task specification](../tasks/FE-04.02.md)
+- Parent / phase: FE-04 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-19T14:16:48.2204185+07:00
+- Ended at: 2026-11-19T14:16:48.2204185+07:00
+- State before / after: review / done
+- Previous attempt / correction: [attempt-01](#task-fe-04-02-attempt-01)
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record PO review and close FE-04.02.
+- Delivered this attempt: confirmed approval, synchronized records.
+- Incomplete scope / deviations: none for this closure.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-04.02.md and workflow records | PO approval | Closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Admin access-change preview | Prior tests retained | pass | attempt-01 |
+| 2 | Last-Admin, self-lock and handover guards | Prior tests retained | pass | attempt-01 |
+| 3 | Old-session and emergency conflict presentation | Prior tests retained | pass | attempt-01 |
+| 4 | Approved UI | PO reviewed and requested done | pass | PO instruction |
+| 5 | Captures and owner verdict | Prior captures, PO reviewed | pass | [comparison](../evidence/FE-04.02/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Verify task, board and report links | Consistent status | done | pass |
+| src/frontend | Application checks | Documentation-only closure | Prior results retained | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO confirmed review and requested done.
+- Findings / resolution: no changes requested.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-04.02.
+- Required resolution / owner: none.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-04.02.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [attempt-01](#task-fe-04-02-attempt-01).
+- Commit / build / environment: implementation f8149a6 and handoff 968e1dc verified on phase/a-frontend. Closure delivery reported separately.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-02.
+- Execution-board task row: done, Owner PO.
+- Current context: closure and remaining Parent gates recorded.
+- Parent state: FE-04 EPIC_IN_PROGRESS; remaining children pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-04.03, assigned by PO.
+- Eligibility / remaining prerequisite: FE-04.02 done; FE-04.03 assigned.
+
+<a id="task-fe-04-03-attempt-01"></a>
+
+### FE-04.03 — Attempt 01 — 2026-11-19T14:22:12.6324123+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-04.03/attempt-01
+- Task: [task specification](../tasks/FE-04.03.md)
+- Parent / phase: FE-04 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-19T14:19:01+07:00 (first logged test checkpoint; implementation preceded it)
+- Ended at: 2026-11-19T14:22:12.6324123+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none. [FE-04.02 approval](#task-fe-04-02-attempt-02).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Admin creates, edits and deactivates DEMO departments/categories.
+- Delivered this attempt: unique labels, protected routes, stable IDs with historical fixture links, active-only choices and provisioning guard, explicit confirmation.
+- Incomplete scope / deviations: PO review pending. Intake configuration is FE-04.04. Organization data is memory-only.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/administration/catalog-screen.tsx and CSS | CatalogScreen, forms and references | Admin UX |
+| src/frontend/src/lib/demo/organization-catalog.ts, auth/session-store.ts and workspace-entry.tsx | createOrganizationCatalog and guarded composition | Mock persistence and Admin scope |
+| src/frontend/src/features/administration/users-screen.tsx and lib/demo/user-directory.ts | Active departments and verified reference validation | Exclude inactive department from new provisioning |
+| src/frontend/e2e/organization-catalog.spec.ts | Five new browser cases | CRUD, denied entry and capture |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Create/edit/deactivate with validation and durable fixture references | Both catalog journeys pass; inactive no longer selectable; history stays readable | pass | [browser](../evidence/FE-04.03/final-browser.log) |
+| 2 | Parent criterion 1 within scope | Admin-only, independent catalogs; stable records and no destructive delete | pass | CatalogScreen, organization-catalog.ts |
+| 3 | DEMO transport and safe rejection | Invalid/duplicate/non-Admin states verified; inactive verified department cannot provision | pass | browser and adapter |
+| 4 | Approved layout | Agent compared desktop/mobile for both screens and recorded differences | pass | [comparison](../evidence/FE-04.03/comparison.md) |
+| 5 | Captures and owner verdict | Eight captures saved; owner verdict pending | not-run | comparison |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd format:check; pnpm.cmd test | Production build and basic checks | Pass, 91 unit; final build after lint cleanup also passed | pass |
+| src/frontend | pnpm.cmd exec eslint . --ignore-pattern test-results/** | Source lint | Initial warning simplified; clean rerun | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3114, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe, ADMIN_DESIGN_URL=http://127.0.0.1:8010; pnpm.cmd exec playwright test | Full regression | 83 pass, two prior optional captures skipped | pass |
+| src/frontend | Same settings with port 3115; pnpm.cmd exec playwright test e2e/organization-catalog.spec.ts e2e/administration.spec.ts | Final affected browser checks after equivalent focus cleanup | 10 pass | pass |
+| repo | Compare both approved hash views and running app at 1440 and 390 | Actual and reference | Eight captures; no page overflow | pass |
+| src/frontend | Two earlier optional DESIGN_REFERENCE_URL captures | Optional | Skipped | not-run |
+| repo | PO visual review | Owner verdict | Pending | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent verified Chromium behavior and visual comparison. PO pending.
+- Findings / resolution: updated form focus expression to remove lint warning; affected browser tests rerun. Fixture intake label is informational.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO review pending. Team intake management remains FE-04.04.
+- Required resolution / owner: PO reviews before done.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-04.03.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison and PO walkthrough](../evidence/FE-04.03/comparison.md), [full browser log](../evidence/FE-04.03/browser.log), [final targeted log](../evidence/FE-04.03/final-browser.log).
+- Commit / build / environment: implementation 2d4ab160aa2671a40c2b4767490696ac625c610b, FE-04.02 approval 798fa61, pushed to phase/a-frontend. Production build pass. Preview http://127.0.0.1:3115/login?returnTo=%2Fadmin%2Fdepartments.
+- Parent delivery: FE-04 EPIC_IN_PROGRESS, no Parent PR. Previous FE-03 PR #4 verified merged.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-01 linked.
+- Execution-board task row: review, Owner PO. FE-04.02 done.
+- Current context: FE-04.03 findings and next prerequisite.
+- Parent state: FE-04 EPIC_IN_PROGRESS, remaining children pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FE-04.03. Candidate FE-04.04.
+- Eligibility / remaining prerequisite: FE-04.03 done and separate assignment.
+
+<a id="task-fe-04-03-attempt-02"></a>
+
+### FE-04.03 — Attempt 02 — 2026-11-19T14:32:54.8800452+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-04.03/attempt-02
+- Task: [task specification](../tasks/FE-04.03.md)
+- Parent / phase: FE-04 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-19T14:32:54.8800452+07:00
+- Ended at: 2026-11-19T14:32:54.8800452+07:00
+- State before / after: review / done
+- Previous attempt / correction: [attempt-01](#task-fe-04-03-attempt-01)
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record PO review and close FE-04.03.
+- Delivered this attempt: confirmed approval, synchronized records.
+- Incomplete scope / deviations: none for this closure.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-04.03.md and workflow records | PO approval | Closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Admin create/edit/deactivate for departments and categories | Prior tests retained | pass | attempt-01 |
+| 2 | Unique labels and preserved history | Prior tests retained | pass | attempt-01 |
+| 3 | Active-only choices and non-Admin denial | Prior tests retained | pass | attempt-01 |
+| 4 | Approved UI | PO reviewed and requested done | pass | PO instruction |
+| 5 | Captures and owner verdict | Prior captures, PO reviewed | pass | [comparison](../evidence/FE-04.03/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Verify task, board and report links | Consistent status | done | pass |
+| src/frontend | Application checks | Documentation-only closure | Prior results retained | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO confirmed review and requested done.
+- Findings / resolution: no changes requested.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-04.03.
+- Required resolution / owner: none.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-04.03.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [attempt-01](#task-fe-04-03-attempt-01).
+- Commit / build / environment: implementation 2d4ab16 and handoff 720ac2d verified on phase/a-frontend. Closure delivery reported separately.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-02.
+- Execution-board task row: done, Owner PO.
+- Current context: closure and remaining Parent gates recorded.
+- Parent state: FE-04 EPIC_IN_PROGRESS; remaining children pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-04.04, pending separate assignment.
+- Eligibility / remaining prerequisite: FE-04.03 done; FE-04.04 requires separate assignment.
+
+<a id="task-fe-04-04-attempt-01"></a>
+
+### FE-04.04 — Attempt 01 — 2026-11-19T14:56:42.9414834+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-04.04/attempt-01
+- Task: [task specification](../tasks/FE-04.04.md)
+- Parent / phase: FE-04 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-19T14:53:02+07:00 (first recorded implementation checkpoint)
+- Ended at: 2026-11-19T14:56:42.9414834+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none. FE-04.03 done.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: team/member/intake configuration with guarded handover preview.
+- Delivered this attempt: Admin can create/edit/deactivate teams, add/remove eligible members, and change a unique active intake. Preview blocks orphaning work and shows affected ticket/task states.
+- Incomplete scope / deviations: PO review pending. No execution of real transfer/revocation; mock state only. Existing uncommitted search change excluded from delivery.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/administration/teams-screen.tsx | TeamsScreen | Team, membership, intake forms and confirmation |
+| src/frontend/src/lib/demo/team-directory.ts and auth/session-store.ts | createTeamDirectory | Admin-scoped fixture, atomic intake and transfer guards |
+| src/frontend/src/features/auth/workspace-entry.tsx and administration/catalog-screen.tsx | Protected route, intake projection | Entry and category intake label |
+| src/frontend/e2e/team-directory.spec.ts | Five browser cases | Invariants, scope, fixtures and visuals |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Unique active intake and guarded removal/deactivation | Rejected empty/inactive intake, protected current intake, kept affected assignments, scoped membership | pass | [browser log](../evidence/FE-04.04/browser.log) |
+| 2 | Preserve selected Parent rules | Admin-only, atomic switch, existing work unchanged, mandatory handover blocks | pass | browser and team-directory.ts |
+| 3 | DEMO transport and no false completion | Preview before apply; only valid changes apply. Non-Admin denied | pass | browser |
+| 4 | Approved visual structure | Agent compared same-role widths. Missing conflict specimen documented | pass | [comparison](../evidence/FE-04.04/comparison.md) |
+| 5 | Actual/reference and PO verdict | Four captures saved. PO pending | not-run | comparison |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd format:check; pnpm.cmd test | Production and unit | Passed; 91 unit. Initial TS narrowing error fixed before passes | pass |
+| src/frontend | pnpm.cmd exec eslint . --ignore-pattern test-results/** | Application lint | Passed; ignored local probe folder | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3117, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe, ADMIN_DESIGN_URL=http://127.0.0.1:8010; pnpm.cmd exec playwright test e2e/team-directory.spec.ts e2e/organization-catalog.spec.ts | Affected Chromium cases | 10 pass | pass |
+| repo | Compare 08-admin-states.html#teams against workspace at 1440 and 390 | Desktop and mobile evidence | Four captures and no page overflow. Local build includes the separate unstaged search edit | pass |
+| src/frontend | Full unaffected Chromium regression | Outside affected check set | Not run for this attempt | not-run |
+| repo | PO visual review | Owner verdict | Pending | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent verification only; PO pending.
+- Findings / resolution: one inactive fixture exposes invalid intake. Handover blocks for both ticket and task. Preview UI adds explicit states beyond reference specimen.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO review pending. Actual authorization and handover are integration concerns.
+- Required resolution / owner: PO checks review evidence before done.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-04.04.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison and PO steps](../evidence/FE-04.04/comparison.md), [browser](../evidence/FE-04.04/browser.log).
+- Commit / build / environment: d05fa3d52671305209994ed25144700218707407 pushed and verified on phase/a-frontend; build passed. Preview http://127.0.0.1:3117/login?returnTo=%2Fadmin%2Fteams.
+- Parent delivery: FE-04 EPIC_IN_PROGRESS, no Parent PR. Previous FE-03 PR #4 verified merged.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-01 linked.
+- Execution-board task row: review, Owner PO.
+- Current context: latest results and review links updated.
+- Parent state: FE-04 EPIC_IN_PROGRESS; remaining children pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FE-04.04. Candidate FE-04.05.
+- Eligibility / remaining prerequisite: FE-04.04 done and separate assignment.
+
+<a id="task-fe-04-04-attempt-02"></a>
+
+### FE-04.04 — Attempt 02 — 2026-11-20T10:58:57.2319531+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-04.04/attempt-02
+- Task: [task specification](../tasks/FE-04.04.md)
+- Parent / phase: FE-04 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-20T10:58:57.2319531+07:00
+- Ended at: 2026-11-20T10:58:57.2319531+07:00
+- State before / after: review / done
+- Previous attempt / correction: [attempt-01](#task-fe-04-04-attempt-01)
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record PO review and close FE-04.04.
+- Delivered this attempt: confirmed approval, synchronized records.
+- Incomplete scope / deviations: none for this closure.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-04.04.md and workflow records | PO approval | Closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Admin team configuration and membership | Prior tests retained | pass | attempt-01 |
+| 2 | Unique active intake and transfer guards | Prior tests retained | pass | attempt-01 |
+| 3 | Scoped membership and non-Admin denial | Prior tests retained | pass | attempt-01 |
+| 4 | Approved UI | PO reviewed and requested done | pass | PO instruction |
+| 5 | Captures and owner verdict | Prior captures, PO reviewed | pass | [comparison](../evidence/FE-04.04/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Verify task, board and report links | Consistent status | done | pass |
+| src/frontend | Application checks | Documentation-only closure | Prior results retained | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO confirmed review and requested done.
+- Findings / resolution: no changes requested.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-04.04.
+- Required resolution / owner: none.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-04.04.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [attempt-01](#task-fe-04-04-attempt-01).
+- Commit / build / environment: implementation d05fa3d and handoff d032f7b verified on phase/a-frontend. Closure delivery reported separately.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-02.
+- Execution-board task row: done, Owner PO.
+- Current context: closure and remaining Parent gates recorded.
+- Parent state: FE-04 EPIC_IN_PROGRESS; remaining children pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-04.05, assigned by PO.
+- Eligibility / remaining prerequisite: FE-04.04 done; FE-04.05 assigned.
+
+<a id="task-fe-04-05-attempt-01"></a>
+
+### FE-04.05 — Attempt 01 — 2026-11-20T11:03:11.4200146+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-04.05/attempt-01
+- Task: [task specification](../tasks/FE-04.05.md)
+- Parent / phase: FE-04 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-20T11:01:14+07:00 (first recorded test checkpoint; implementation preceded it)
+- Ended at: 2026-11-20T11:03:11.4200146+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none. [FE-04.04 PO acceptance](#task-fe-04-04-attempt-02).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: positive P1–P4 SLA budgets with old/new preview, confirmation and unchanged existing ticket snapshots.
+- Delivered this attempt: Admin editor, validation and focus, draft preservation, version history with actor/reason/time, protected old snapshot and current-budget projection for a new ticket.
+- Incomplete scope / deviations: PO review pending. In-memory DEMO. Full frontend browser suite not run. Existing search edit excluded from commits.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/administration/sla-screen.tsx and CSS | SlaScreen/SlaEditor and BudgetTable | Preview, history and confirmation |
+| src/frontend/src/lib/demo/sla-policy.ts and features/auth/session-store.ts | createSlaPolicy and per-store version history | Positive budgets, guarded versions and ticket projections |
+| src/frontend/src/features/auth/workspace-entry.tsx and e2e/sla-policy.spec.ts | Admin route wiring and browser tests | Guard, behavior and captures |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Positive P1–P4, cancel/error preservation and old/new snapshots | Zero and negative rejected. Cancel retained draft; saved v4 changed only new-ticket projection | pass | [browser](../evidence/FE-04.05/browser.log) |
+| 2 | Preserve Parent criterion 3 | Reasoned version history, active version guard, no existing ticket rewrite | pass | createSlaPolicy and browser |
+| 3 | DEMO boundary and failure semantics | Admin-only and in-memory; no writes until confirmation | pass | browser |
+| 4 | Approved layout | Agent compared actual and reference at both widths with differences documented | pass | [comparison](../evidence/FE-04.05/comparison.md) |
+| 5 | Captures and owner verdict | Four captures, PO pending | not-run | comparison |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd format:check; pnpm.cmd test | Build and basic checks | Pass; 91 unit tests | pass |
+| src/frontend | pnpm.cmd exec eslint . --ignore-pattern test-results/** | Source lint | Pass; excludes local probe output | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3118, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe, ADMIN_DESIGN_URL=http://127.0.0.1:8010; pnpm.cmd exec playwright test e2e/sla-policy.spec.ts e2e/team-directory.spec.ts | Affected Chromium | 8 pass. Initial generic alert locator matched the framework announcer; scoped locator and reran successfully | pass |
+| repo | Open 08-admin-states.html#sla and compare 1440/390 | Actual/reference | Four captures, no horizontal page overflow | pass |
+| src/frontend | Full Chromium suite | Broad regression | Not run for this attempt | not-run |
+| repo | PO visual review | Owner verdict | Pending | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent checked behavior and references; PO pending.
+- Findings / resolution: preview and fixture comparison supplement the reference. Local screenshots include separate unstaged search edit.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: FE-04.05 PO review outstanding. No real server or ticket integration tested.
+- Required resolution / owner: PO reviews task, then assess Parent FE-04 closure before its PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-04.05.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison and walkthrough](../evidence/FE-04.05/comparison.md), [browser](../evidence/FE-04.05/browser.log).
+- Commit / build / environment: 6c50e63071eb72438eccf89bcb9669b162bd135e pushed and verified on phase/a-frontend; FE-04.04 closure bf76244 also pushed. Preview http://127.0.0.1:3118/login?returnTo=%2Fadmin%2Fsla.
+- Parent delivery: FE-04 EPIC_IN_PROGRESS. Final child awaits PO review, so no Parent PR.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-01 linked.
+- Execution-board task row: review, Owner PO; FE-04.04 done.
+- Current context: latest report, checks and gate recorded.
+- Parent state: FE-04 EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FE-04.05, then assess FE-04 Parent acceptance and delivery.
+- Eligibility / remaining prerequisite: FE-04.05 done, Parent closure and merge before another Parent on the shared branch.
+
+<a id="task-fe-04-05-attempt-02"></a>
+
+### FE-04.05 — Attempt 02 — 2026-11-20T11:04:39.8558772+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-04.05/attempt-02
+- Task: [task specification](../tasks/FE-04.05.md)
+- Parent / phase: FE-04 / A
+- Executor: Codex, Owner PO
+- Started at: 2026-11-20T11:04:39.8558772+07:00
+- Ended at: 2026-11-20T11:04:39.8558772+07:00
+- State before / after: review / done
+- Previous attempt / correction: [attempt-01](#task-fe-04-05-attempt-01)
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record PO review and close FE-04.05.
+- Delivered this attempt: confirmed approval, synchronized records.
+- Incomplete scope / deviations: none for this closure.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-04.05.md and workflow records | PO approval | Closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Admin SLA editor and version confirmation | Prior tests retained | pass | attempt-01 |
+| 2 | Positive budgets and unchanged old-ticket snapshots | Prior tests retained | pass | attempt-01 |
+| 3 | DEMO boundary and non-Admin denial | Prior tests retained | pass | attempt-01 |
+| 4 | Approved UI | PO reviewed and requested done | pass | PO instruction |
+| 5 | Captures and owner verdict | Prior captures, PO reviewed | pass | [comparison](../evidence/FE-04.05/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Verify task, board and report links | Consistent status | done | pass |
+| src/frontend | Application checks | Documentation-only closure | Prior results retained | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO confirmed review and requested done.
+- Findings / resolution: no changes requested.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-04.05.
+- Required resolution / owner: none.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-04.05.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [attempt-01](#task-fe-04-05-attempt-01).
+- Commit / build / environment: implementation 6c50e63 and handoff a9e467b verified on phase/a-frontend. Closure delivery reported separately.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: attempt-02.
+- Execution-board task row: done, Owner PO.
+- Current context: closure and remaining Parent gates recorded.
+- Parent state: FE-04 EPIC_IN_PROGRESS; all children done, Parent acceptance and delivery pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Assess FE-04 Parent acceptance and delivery.
+- Eligibility / remaining prerequisite: All children done; Parent acceptance and PR delivery remain.

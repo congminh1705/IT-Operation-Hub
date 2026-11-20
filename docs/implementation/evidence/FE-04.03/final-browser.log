@@ -1,0 +1,17 @@
+
+Running 10 tests using 1 worker
+
+(node:34144) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 e2e\administration.spec.ts:26:3 › requester cannot open admin create even by direct return (827ms)
+  ok  2 e2e\administration.spec.ts:26:3 › technician cannot open admin create even by direct return (366ms)
+  ok  3 e2e\administration.spec.ts:26:3 › it_manager cannot open admin create even by direct return (389ms)
+  ok  4 e2e\administration.spec.ts:35:1 › search, status, rejected reference, duplicate, preview, cancel and explicit save (915ms)
+  ok  5 e2e\administration.spec.ts:100:1 › admin reference and actual at desktop and mobile widths (1.2s)
+  ok  6 e2e\organization-catalog.spec.ts:16:3 › departments: create, validation, edit, cancel and preserve references on deactivation (708ms)
+  ok  7 e2e\organization-catalog.spec.ts:91:3 › departments: non-Admin receives forbidden (365ms)
+  ok  8 e2e\organization-catalog.spec.ts:16:3 › categories: create, validation, edit, cancel and preserve references on deactivation (624ms)
+  ok  9 e2e\organization-catalog.spec.ts:91:3 › categories: non-Admin receives forbidden (371ms)
+  ok 10 e2e\organization-catalog.spec.ts:101:1 › catalog reference and app at desktop and mobile widths (1.1s)
+
+  10 passed (8.0s)

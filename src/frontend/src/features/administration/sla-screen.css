@@ -1,0 +1,31 @@
+﻿.sla-editor fieldset {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.sla-editor textarea {
+  min-height: 88px;
+  border: 1px solid #c6d6d0;
+  border-radius: 4px;
+  padding: 8px 12px;
+  resize: vertical;
+}
+.sla-table table {
+  min-width: 0;
+}
+.sla-history {
+  display: grid;
+  gap: 12px;
+}
+.sla-history li + li {
+  border-top: 1px solid #d7e1dc;
+  padding-top: 12px;
+}
+@media (max-width: 760px) {
+  .sla-editor .directory-pair {
+    grid-template-columns: 1fr;
+  }
+  .sla-table :is(th, td) {
+    padding-inline: 8px;
+  }
+}
