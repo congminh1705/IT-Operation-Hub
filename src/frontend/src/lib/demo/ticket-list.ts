@@ -7,11 +7,17 @@ const teams = {
   infrastructure: "Infrastructure",
   field: "Field DEMO",
 };
-export const ticketStates = [
+const fixtureStates = [
   "Đang chờ tiếp nhận",
   "Đang xử lý",
   "Chờ bổ sung",
   "Hoàn tất",
+] as const;
+export const ticketStates = [
+  ...fixtureStates,
+  "Đã tiếp nhận",
+  "Đã hủy",
+  "Đã giải quyết",
 ] as const;
 export const ticketPriorities = ["P1", "P2", "P3", "P4"] as const;
 const categories = ["Thiết bị", "Mạng & kết nối", "Tài khoản"];
@@ -43,7 +49,12 @@ const rows = Array.from({ length: 26 }, (_, i) => {
     teamId: teamId as string,
     team: teams[teamId],
     assignee: i % 4 === 0 ? "Chưa phân công" : "DEMO TECHNICIAN",
-    state: ticketStates[i % 4],
+    assigneeId: i % 4 === 0 ? null : people.TECHNICIAN.user.id,
+    state: (i === 5
+      ? "Đã tiếp nhận"
+      : i === 3
+        ? "Đã giải quyết"
+        : fixtureStates[i % 4]) as (typeof ticketStates)[number],
     priority: ticketPriorities[i % 4],
     category: categories[i % 3],
     updated: `2026-11-${String(19 - Math.floor(i / 3)).padStart(2, "0")}`,
@@ -72,7 +83,10 @@ export function scopedTicketRows(
   if (unavailable) return { kind: "error" } as const;
   return {
     kind: "success",
-    rows: [...created, ...rows]
+    rows: [
+      ...created,
+      ...rows.filter((row) => !created.some((item) => item.id === row.id)),
+    ]
       .filter((row) => {
         if (scope === "mine") return row.requesterId === persona.user.id;
         return (

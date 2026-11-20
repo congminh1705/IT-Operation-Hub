@@ -15,7 +15,7 @@ type Version = {
   actor: string;
   savedAt: string;
 };
-const baseline: Budgets = {
+export const baseline: Budgets = {
   P1: { response: 15, resolution: 120 },
   P2: { response: 30, resolution: 240 },
   P3: { response: 60, resolution: 480 },
@@ -90,6 +90,10 @@ export function createSlaPolicy(getActor: () => UserView | undefined) {
     return { ok: true, budgets, reason: reason.trim() };
   }
   return {
+    snapshotTable: () => ({
+      version: current().number,
+      budgets: structuredClone(current().budgets),
+    }),
     snapshot(priority: Priority) {
       const active = current();
       return { version: active.number, ...active.budgets[priority] };

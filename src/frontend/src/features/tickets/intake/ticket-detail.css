@@ -1,0 +1,192 @@
+.ticket-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+  overflow-wrap: anywhere;
+}
+
+.ticket-next-action {
+  grid-column: 1 / -1;
+  color: #82540b;
+  background: #fff5df;
+  border: 1px solid #ead39e;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.ticket-next-action p {
+  margin-block: 4px 0;
+}
+
+.ticket-detail-stack {
+  display: grid;
+  gap: 16px;
+}
+
+.ticket-detail-code {
+  color: #52645d;
+}
+
+.ticket-detail-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ticket-detail-badges span {
+  padding: 3px 8px;
+  border: 1px solid #dbe7e2;
+  border-radius: 6px;
+  background: #eff3f1;
+}
+
+.ticket-detail-badges [data-state="Đang xử lý"] {
+  color: #184a85;
+  background: #e9f1ff;
+}
+
+.ticket-detail-badges [data-state="Chờ bổ sung"] {
+  color: #82540b;
+  background: #fff5df;
+}
+
+.ticket-detail-badges [data-state="Hoàn tất"] {
+  color: #216246;
+  background: #e9f6ee;
+}
+
+.ticket-history-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ticket-history-controls button[aria-pressed="true"] {
+  background: #e3f2ee;
+  color: #086860;
+  border-color: #087f78;
+}
+
+.ticket-history-events {
+  list-style: none;
+  padding: 0;
+}
+
+.ticket-history-events li {
+  padding-block: 12px;
+  border-bottom: 1px solid #dbe7e2;
+}
+
+.ticket-history-events p {
+  margin-block: 4px 0;
+  white-space: pre-wrap;
+}
+
+.ticket-detail-context {
+  display: grid;
+  gap: 8px;
+}
+
+.ticket-detail-context div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ticket-detail-context dd {
+  margin: 0;
+  text-align: end;
+}
+
+@media (max-width: 850px) {
+  .ticket-detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.ticket-reply {
+  margin-block: 16px;
+}
+
+.ticket-reply form {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+}
+
+.ticket-reply-input {
+  display: block;
+  width: 100%;
+  min-height: 84px;
+  resize: vertical;
+  padding: 10px;
+  border: 1px solid #baccc5;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.ticket-reply-preview {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.ticket-lifecycle {
+  margin-block-start: 18px;
+}
+
+.ticket-lifecycle-form {
+  display: grid;
+  gap: 12px;
+}
+
+.ticket-detail-badges [data-state="Đã hủy"] {
+  color: #90283e;
+  background: #fff0f2;
+}
+
+.ticket-lifecycle + .ticket-history-controls {
+  margin-block-start: 8px;
+}
+
+.ticket-lifecycle-form select {
+  display: block;
+  min-height: 44px;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #baccc5;
+  border-radius: 8px;
+  background: white;
+}
+
+.ticket-sla {
+  margin-block-start: 14px;
+}
+
+.ticket-sla-clock {
+  margin-block: 10px;
+  border: 1px solid #d6e4de;
+  border-inline-start: 3px solid #087f78;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-variant-numeric: tabular-nums;
+}
+.ticket-sla-clock h4,
+.ticket-sla-clock p {
+  margin: 2px 0;
+}
+.ticket-sla-clock[data-status="risk"],
+.ticket-sla-clock[data-status="paused"] {
+  border-inline-start-color: #b67818;
+  background: #fff9ed;
+}
+.ticket-sla-clock[data-status="breached"] {
+  border-inline-start-color: #b34259;
+  background: #fff3f5;
+}
+.ticket-sla-clock[data-status="stopped"] {
+  border-inline-start-color: #748981;
+}
+.ticket-sla-breach {
+  color: #992c43;
+}

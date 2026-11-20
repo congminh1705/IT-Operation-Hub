@@ -1,0 +1,19 @@
+
+Running 12 tests using 1 worker
+
+(node:27792) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 e2e\ticket-detail.spec.ts:14:1 › requester sees public conversation and public history only (814ms)
+  ok  2 e2e\ticket-detail.spec.ts:32:1 › technician sees team internal history and no out-of-team ticket (445ms)
+  ok  3 e2e\ticket-detail.spec.ts:48:3 › requester has no out-of-scope detail projection (355ms)
+  ok  4 e2e\ticket-detail.spec.ts:48:3 › technician has no out-of-scope detail projection (356ms)
+  ok  5 e2e\ticket-detail.spec.ts:54:1 › explicit detail failure retries into the same authorized ticket (486ms)
+  ok  6 e2e\ticket-detail.spec.ts:71:3 › matched comparison for ticket-it (1.2s)
+  ok  7 e2e\ticket-detail.spec.ts:71:3 › matched comparison for ticket-requester (878ms)
+  ok  8 e2e\ticket-detail.spec.ts:71:3 › matched comparison for ticket-active (758ms)
+  ok  9 e2e\ticket-intake.spec.ts:33:1 › confirmed delayed submit is deduplicated and navigates detail to own list (1.4s)
+  ok 10 e2e\ticket-intake.spec.ts:55:3 › failure preserves draft and creates no record (1.4s)
+  ok 11 e2e\ticket-intake.spec.ts:55:3 › stale preserves draft and creates no record (1.4s)
+  ok 12 e2e\ticket-intake.spec.ts:55:3 › unknown preserves draft and creates no record (1.4s)
+
+  12 passed (12.0s)

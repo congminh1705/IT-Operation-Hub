@@ -28,8 +28,13 @@ export class SessionStore {
   );
   readonly tickets = createTicketIntake({
     identity: () => this.identity(),
+    actor: () => this.persona,
+    memberships: () => this.teams.ownTeamIds(),
+    isTeamMember: (teamId, userId) => this.teams.isMember(teamId, userId),
     intake: () => this.teams.intake(),
-    snapshot: (priority) => this.sla.snapshot(priority),
+    snapshot: () => this.sla.snapshotTable(),
+    teams: () => this.teams.routingOptions().teams,
+    people: () => this.teams.routingOptions().people,
   });
   private epoch = 0;
   passwordChanged = false;
