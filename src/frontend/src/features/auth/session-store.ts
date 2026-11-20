@@ -1,3 +1,4 @@
+import { createWorkBoard } from "../../lib/demo/work-board";
 import { createTicketIntake } from "../../lib/demo/ticket-intake";
 import { createSlaPolicy } from "../../lib/demo/sla-policy";
 import { createTeamDirectory } from "../../lib/demo/team-directory";
@@ -16,6 +17,7 @@ import type { QueryClient } from "../../lib/api/query-client";
 /** Memory-only session. Epochs fence late auth responses as well as query results. */
 export class SessionStore {
   private persona: DemoPersona | null = null;
+  readonly work = createWorkBoard();
   readonly sla = createSlaPolicy(() => this.persona?.user);
   readonly teams = createTeamDirectory(() => this.persona?.user);
   readonly catalog = createOrganizationCatalog(() => this.persona?.user);

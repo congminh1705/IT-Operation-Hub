@@ -1,0 +1,97 @@
+﻿.work-board {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.work-board-summary {
+  background: #eaf5f0;
+  border: 1px solid #cae5d9;
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.work-board-summary p {
+  margin: 4px 0 0;
+}
+.work-panel,
+.work-card {
+  background: #fff;
+  border: 1px solid #d4e2dc;
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.work-card + .work-card {
+  margin-block-start: 10px;
+}
+.work-card p {
+  margin: 6px 0;
+}
+.work-controls {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.work-controls label {
+  display: grid;
+  gap: 4px;
+}
+.work-controls :is(input, select),
+.work-panel :is(select, textarea) {
+  display: block;
+  min-height: 44px;
+  border: 1px solid #b9ccbf;
+  border-radius: 8px;
+  padding: 8px;
+  background: white;
+  max-width: 100%;
+}
+.work-controls [aria-pressed="true"] {
+  background: #e3f2ee;
+  color: #086860;
+  border-color: #087f78;
+}
+.work-columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.work-columns h2 {
+  margin: 0 0 12px;
+}
+.work-state {
+  display: inline-block;
+  border-radius: 6px;
+  padding: 3px 8px;
+  background: #edf3ef;
+  color: #355247;
+}
+.work-state[data-state="active"] {
+  background: #e9f1ff;
+  color: #184a85;
+}
+.work-state[data-state="blocked"] {
+  background: #fff0f2;
+  color: #90283e;
+}
+.work-table {
+  overflow: auto;
+}
+.work-table table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.work-table :is(td, th) {
+  padding: 8px;
+  border-bottom: 1px solid #d4e2dc;
+}
+.work-table small {
+  display: block;
+}
+@media (max-width: 1000px) {
+  .work-columns {
+    grid-template-columns: 1fr;
+  }
+}

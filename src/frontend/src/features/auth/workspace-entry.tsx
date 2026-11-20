@@ -1,4 +1,5 @@
 "use client";
+import { WorkBoard } from "@/features/work/work-board";
 import {
   downloadRevokedFixture,
   uploadFixtures,
@@ -63,7 +64,9 @@ export function WorkspaceEntry({
           : `${persona.user.id}:${persona.user.version}`
       }
       content={
-        pathname === "/tickets" ? (
+        pathname === "/work" ? (
+          <WorkBoard scope={params.get("scope") ?? undefined} />
+        ) : pathname === "/tickets" ? (
           <TicketList search={search} />
         ) : pathname === "/tickets/new" ? (
           <TicketForm search={search} />
