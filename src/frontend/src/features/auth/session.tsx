@@ -83,6 +83,11 @@ export function safeReturnPath(value: string | null): string {
     params.set("demo", downloadRevokedFixture);
   if (url.pathname === "/work" && url.searchParams.get("demo") === "work-stale")
     params.set("demo", "work-stale");
+  if (
+    url.pathname === "/workforce" &&
+    url.searchParams.get("demo") === "workforce-conflict"
+  )
+    params.set("demo", "workforce-conflict");
   return url.pathname + (params.size ? `?${params}` : "");
 }
 const Context = createContext<SessionStore | null>(null);

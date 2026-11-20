@@ -1,4 +1,5 @@
 "use client";
+import { WorkforceScreen } from "@/features/workforce/workforce-screen";
 import { WorkBoard } from "@/features/work/work-board";
 import {
   downloadRevokedFixture,
@@ -64,7 +65,12 @@ export function WorkspaceEntry({
           : `${persona.user.id}:${persona.user.version}`
       }
       content={
-        pathname === "/work" ? (
+        pathname === "/workforce" ? (
+          <WorkforceScreen
+            persona={persona}
+            conflict={params.get("demo") === "workforce-conflict"}
+          />
+        ) : pathname === "/work" ? (
           <WorkBoard
             scope={params.get("scope") ?? undefined}
             scenario={params.get("demo") ?? undefined}

@@ -5020,3 +5020,447 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-09.01.
 - Eligibility / remaining prerequisite: merge the FE-08 Parent PR. PO already authorized the next Parent.
+
+<a id="task-fe-09-01-attempt-01"></a>
+
+### FE-09.01 — Attempt 01 — 2026-11-20T16:24:21.6502868+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-09.01/attempt-01
+- Task: [task specification](../tasks/FE-09.01.md)
+- Parent / phase: FE-09 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T16:21:02.6060926+07:00 (first implementation file timestamp)
+- Ended at: 2026-11-20T16:24:21.6502868+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, first implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Scoped read-only workforce skills and daily capacity.
+- Delivered this attempt: Verified and missing skills, schedule/budget/capacity/load/free/unallocated facts, merged absences and self/management projections.
+- Incomplete scope / deviations: Read-only synthetic data. Calendar and skill changes belong to FE-09.02. PO review pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/lib/demo/workforce.ts, workforce.test.ts | Clipped absence union, load and scoped projection | Capacity math and access tests |
+| src/frontend/src/features/workforce/workforce-screen.tsx, workforce-screen.css, auth workspace-entry.tsx | WorkforceScreen | Real route, KPI/table and responsive layout |
+| src/frontend/e2e/workforce.spec.ts | Role/missing/overlap and captures | Browser checks |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Scoped read-only workforce skills and daily capacity | Verified and missing skills, schedule/budget/capacity/load/free/unallocated facts, merged absences and self/management projections | pass | [Chromium](../evidence/FE-09.01/chromium.log) |
+| 2 | Preserve relevant Parent rules | Overlaps counted once, unknown capacity stays unknown, Technician sees self only, Requester blocked, Manager sees unallocated work | pass | [Chromium](../evidence/FE-09.01/chromium.log) |
+| 3 | Frontend mock only, explicit failure handling | Scoped mock behavior and build checks verified | pass | [Chromium](../evidence/FE-09.01/chromium.log) |
+| 4 | Approved layout within task scope | Agent compared desktop/mobile and recorded differences | pass | [Comparison](../evidence/FE-09.01/comparison.md) |
+| 5 | Paired captures and PO visual verdict | Captures saved. Joint PO review pending | not-run | [Comparison](../evidence/FE-09.01/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd exec eslint src e2e/workforce.spec.ts; pnpm.cmd format:check; pnpm.cmd test | Static/unit checks | Passed, 102 unit cases | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3163, TICKET_DETAIL_DESIGN_URL=http://127.0.0.1:8126, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe. node node_modules/@playwright/test/cli.js test e2e/workforce.spec.ts --grep-invert 'matched create and detail evidence&#124;matched comparison for&#124;desktop/mobile references and actual list scope pair&#124;compare lifecycle dialog&#124;compare composer&#124;compare routing&#124;compare follow-up&#124;compare SLA display&#124;compare attachment&#124;compare upload recovery&#124;matched desktop/mobile form captures' --reporter=list | Affected Chromium | 4 passed | pass |
+| repo | Compare approved HTML and app at 1440 and 390 px with reduced motion | Paired screenshots | See comparison and differences | pass |
+| src/frontend | Full unrelated Chromium suite | Expanded regression | Outside this run | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent functional and visual comparison. PO review pending.
+- Findings / resolution: Compared 04-workforce.html and refreshed screenshots after mobile KPI refinement. Editing controls are out of scope. Preview verified via Chromium at 3164.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: FE-09.01 awaits PO acceptance.
+- Required resolution / owner: PO reviews FE-09.01 before its direct dependent.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-09.01.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-09.01/comparison.md), [Chromium](../evidence/FE-09.01/chromium.log).
+- Commit / build / environment: [1b0180d](https://github.com/congminh1705/IT-Operation-Hub/commit/1b0180df0572e56893cfe6e129cc66fe82b6e7f4) pushed on phase/a-frontend and remote SHA verified.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: report and evidence linked.
+- Execution-board task row: review, Owner PO.
+- Current context: report and next step recorded.
+- Parent state: EPIC_IN_PROGRESS. Further leaves remain pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-09.02 calendar, skill and absence edits after FE-09.01 review.
+- Eligibility / remaining prerequisite: FE-09.01 agent checks passed. FE-09.02 depends on FE-09.01 being done.
+
+<a id="task-fe-09-01-attempt-02"></a>
+
+### FE-09.01 — Attempt 02 — 2026-11-20T16:29:09.4097824+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-09.01/attempt-02
+- Task: [task specification](../tasks/FE-09.01.md)
+- Parent / phase: FE-09 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T16:29:09.4097824+07:00
+- Ended at: 2026-11-20T16:29:09.4097824+07:00
+- State before / after: review / done
+- Previous attempt / correction: [implementation and verification](#task-fe-09-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record the PO acceptance and close the task.
+- Delivered this attempt: PO accepted this task on 2026-11-20.
+- Incomplete scope / deviations: Frontend DEMO boundaries apply. Parent Git delivery is tracked in current context.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-09.01.md, workflow/task-history.md, workflow/current-context.md, workflow/execution-board.md, README.md | Acceptance and status records | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1–3 | Scoped behavior, Parent rules and DEMO boundary | Agent verified in attempt 01 | pass | [Prior report](#task-fe-09-01-attempt-01) |
+| 4 | UI comparison | Comparison captured and differences recorded in attempt 01 | pass | [Comparison](../evidence/FE-09.01/comparison.md) |
+| 5 | Actual screenshots and PO review | PO accepted in joint review | pass | [Comparison](../evidence/FE-09.01/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Check task status and report references against PO verdict | Consistent closure | Updated to done and linked | pass |
+| src/frontend | Repeat implementation checks | Application verification | Documentation-only acceptance. Retain attempt 01 and final FE-09.01 results | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO review of FE-09.01.
+- Findings / resolution: PO accepted and requested done. No additional changes requested.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for this task. The Parent remains in progress.
+- Required resolution / owner: Continue the two authorized leaves; joint PO review remains.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-09.01.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-09.01/comparison.md), [Chromium](../evidence/FE-09.01/chromium.log).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-09-01-attempt-01). Parent PR status in [current context](current-context.md).
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: PO acceptance and next leaves recorded.
+- Parent state: EPIC_IN_PROGRESS. FE-09.02 and FE-09.03 remain.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-09.02.
+- Eligibility / remaining prerequisite: FE-09.01 is done and PO authorized the next two leaves.
+
+<a id="task-fe-09-02-attempt-01"></a>
+
+### FE-09.02 — Attempt 01 — 2026-11-20T16:30:32.7193921+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-09.02/attempt-01
+- Task: [task specification](../tasks/FE-09.02.md)
+- Parent / phase: FE-09 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T16:28:10.2421615+07:00 (first implementation file timestamp)
+- Ended at: 2026-11-20T16:30:32.7193921+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, first implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Manager-verified mock calendar, skill and absence edits with preview.
+- Delivered this attempt: Manager/Admin form, daily period and timezone, validation, before/after and affected task preview, technician self-verification denial.
+- Incomplete scope / deviations: Synthetic daily fixture. FE-09.03 owns save and evaluation-pending. Joint PO review pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/lib/demo/workforce.ts and auth session-store.ts | Session-local preview and validation | Scope, times and affected-work projection |
+| src/frontend/src/features/workforce/workforce-editor.tsx, workforce-screen.tsx and CSS | Manager form and preview | Valid input, draft and interaction |
+| src/frontend/e2e/workforce-editor.spec.ts | Invalid hours, role and comparison | Browser evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Manager-verified mock calendar, skill and absence edits with preview | Manager/Admin form, daily period and timezone, validation, before/after and affected task preview, technician self-verification denial | pass | [Chromium](../evidence/FE-09.02/chromium.log) |
+| 2 | Preserve relevant Parent rules | Incorrect time window rejected, note retained through correction and preview, affected T07 appears, technician cannot self-verify | pass | [Chromium](../evidence/FE-09.02/chromium.log) |
+| 3 | Frontend mock only, explicit failure handling | Scoped mock behavior and build checks verified | pass | [Chromium](../evidence/FE-09.02/chromium.log) |
+| 4 | Approved layout within task scope | Agent compared desktop/mobile and recorded differences | pass | [Comparison](../evidence/FE-09.02/comparison.md) |
+| 5 | Paired captures and PO visual verdict | Captures saved. Joint PO review pending | not-run | [Comparison](../evidence/FE-09.02/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd exec eslint src e2e/workforce-editor.spec.ts; pnpm.cmd format:check; pnpm.cmd test | Static/unit checks | Passed, 102 unit cases | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3165, TICKET_DETAIL_DESIGN_URL=http://127.0.0.1:8126, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe. node node_modules/@playwright/test/cli.js test e2e/workforce.spec.ts e2e/workforce-editor.spec.ts --grep-invert 'matched create and detail evidence or matched comparison for' --reporter=list (alternation uses a pipe) | Affected Chromium | 6 passed | pass |
+| repo | Compare approved HTML and app at 1440 and 390 px with reduced motion | Paired screenshots | See comparison and differences | pass |
+| src/frontend | Full unrelated Chromium suite | Expanded regression | Outside this run | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent functional and visual comparison. PO joint review pending.
+- Findings / resolution: The first browser run found an overly broad alert selector; scoped to the form and reran successfully.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent awaits joint PO acceptance.
+- Required resolution / owner: PO authorized continuing sequentially after each task passes agent checks.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-09.02.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-09.02/comparison.md), [Chromium](../evidence/FE-09.02/chromium.log).
+- Commit / build / environment: [d03cd20](https://github.com/congminh1705/IT-Operation-Hub/commit/d03cd20aa51dd9303b77d69a75c1ee7a700b062c) pushed on phase/a-frontend and remote SHA verified.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: report and evidence linked.
+- Execution-board task row: review, Owner PO.
+- Current context: report and next step recorded.
+- Parent state: EPIC_IN_PROGRESS pending joint PO review.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-09.03 save changes and evaluation pending.
+- Eligibility / remaining prerequisite: FE-09.02 agent checks passed. PO authorized sequencing with joint review.
+
+<a id="task-fe-09-03-attempt-01"></a>
+
+### FE-09.03 — Attempt 01 — 2026-11-20T16:34:04.8921094+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-09.03/attempt-01
+- Task: [task specification](../tasks/FE-09.03.md)
+- Parent / phase: FE-09 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T16:32:02.4114893+07:00 (first implementation file timestamp)
+- Ended at: 2026-11-20T16:34:04.8921094+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, first implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Confirmed workforce change and separate affected-work evaluation.
+- Delivered this attempt: Session-local saves update recorded skill, schedule or absence, display affected work and explicit evaluation pending, preserve draft on conflict and leave ticket SLA unchanged.
+- Incomplete scope / deviations: Synthetic daily data and in-memory record only. Joint PO review pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/lib/demo/workforce.ts, workforce.test.ts | Versioned mock saves and scope | Role, conflict, replay and projections |
+| src/frontend/src/features/workforce/workforce-editor.tsx, workforce-screen.tsx, auth routes | Saved and pending outcome UI | Confirm, retry and affected work |
+| src/frontend/e2e/workforce-save.spec.ts | Saved/conflict/no-capacity and ticket SLA regression | Browser evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Confirmed workforce change and separate affected-work evaluation | Session-local saves update recorded skill, schedule or absence, display affected work and explicit evaluation pending, preserve draft on conflict and leave ticket SLA unchanged | pass | [Chromium](../evidence/FE-09.03/chromium.log) |
+| 2 | Preserve relevant Parent rules | Confirmed save and affected T07, stale conflict preserves draft, zero capacity explicitly displayed, ticket and SLA unchanged, calendar and skill saves reflected | pass | [Chromium](../evidence/FE-09.03/chromium.log) |
+| 3 | Frontend mock only, explicit failure handling | Scoped mock behavior and build checks verified | pass | [Chromium](../evidence/FE-09.03/chromium.log) |
+| 4 | Approved layout within task scope | Agent compared desktop/mobile and recorded differences | pass | [Comparison](../evidence/FE-09.03/comparison.md) |
+| 5 | Paired captures and PO visual verdict | Captures saved. Joint PO review pending | not-run | [Comparison](../evidence/FE-09.03/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd exec eslint src e2e/workforce-save.spec.ts; pnpm.cmd format:check; pnpm.cmd test | Static/unit checks | Passed, 103 unit cases | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3166, TICKET_DETAIL_DESIGN_URL=http://127.0.0.1:8126, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe. node node_modules/@playwright/test/cli.js test e2e/workforce.spec.ts e2e/workforce-editor.spec.ts e2e/workforce-save.spec.ts e2e/ticket-sla.spec.ts --grep-invert 'matched create and detail evidence&#124;matched comparison for&#124;desktop/mobile references and actual list scope pair&#124;compare lifecycle dialog&#124;compare composer&#124;compare approved workforce view&#124;compare workforce editor&#124;compare routing&#124;compare follow-up&#124;compare SLA display&#124;compare attachment&#124;compare upload recovery&#124;matched desktop/mobile form captures' --reporter=list | Affected Chromium | 13 passed | pass |
+| repo | Compare approved HTML and app at 1440 and 390 px with reduced motion | Paired screenshots | See comparison and differences | pass |
+| src/frontend | Full unrelated Chromium suite | Expanded regression | Outside this run | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent functional and visual comparison. PO joint review pending.
+- Findings / resolution: Compared SLA innerText consistently before and after edit at fixed simulation time. Approved HTML lacks a saved-result specimen so the affected-work pattern was reused.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent awaits joint PO acceptance.
+- Required resolution / owner: PO authorized continuing sequentially after each task passes agent checks.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-09.03.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-09.03/comparison.md), [Chromium](../evidence/FE-09.03/chromium.log).
+- Commit / build / environment: [7d46ef6](https://github.com/congminh1705/IT-Operation-Hub/commit/7d46ef6ed0ae101d1365bf851c542e69646c859f) pushed on phase/a-frontend and remote SHA verified.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: report and evidence linked.
+- Execution-board task row: review, Owner PO.
+- Current context: report and next step recorded.
+- Parent state: EPIC_IN_PROGRESS pending joint PO review.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO acceptance for FE-09.02 and FE-09.03, then Parent closure. FE-10.01 awaits Parent merge and authorization.
+- Eligibility / remaining prerequisite: FE-09.03 agent checks passed. PO authorized sequencing with joint review.
+
+<a id="task-fe-09-02-attempt-02"></a>
+
+### FE-09.02 — Attempt 02 — 2026-11-20T17:54:36.9597052+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-09.02/attempt-02
+- Task: [task specification](../tasks/FE-09.02.md)
+- Parent / phase: FE-09 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T17:54:36.9597052+07:00
+- Ended at: 2026-11-20T17:54:36.9597052+07:00
+- State before / after: review / done
+- Previous attempt / correction: [implementation and verification](#task-fe-09-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record the PO joint acceptance and close the task.
+- Delivered this attempt: PO accepted this task and Parent FE-09 on 2026-11-20.
+- Incomplete scope / deviations: Frontend DEMO boundaries apply. Parent Git delivery is tracked in current context.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-09.02.md, workflow/task-history.md, workflow/current-context.md, workflow/execution-board.md, README.md | Acceptance and status records | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1–3 | Scoped behavior, Parent rules and DEMO boundary | Agent verified in attempt 01 | pass | [Prior report](#task-fe-09-02-attempt-01) |
+| 4 | UI comparison | Comparison captured and differences recorded in attempt 01 | pass | [Comparison](../evidence/FE-09.02/comparison.md) |
+| 5 | Actual screenshots and PO review | PO accepted in joint review | pass | [Comparison](../evidence/FE-09.02/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Check task status and report references against PO verdict | Consistent closure | Updated to done and linked | pass |
+| src/frontend | Repeat implementation checks | Application verification | Documentation-only acceptance. Retain attempt 01 and final FE-09.03 results | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint Parent review by PO.
+- Findings / resolution: PO accepted and requested done. No additional changes requested.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for this task. Parent PR merge remains a delivery gate.
+- Required resolution / owner: PO merges the Parent PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-09.02.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-09.02/comparison.md), [Chromium](../evidence/FE-09.02/chromium.log).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-09-02-attempt-01). Parent PR status in [current context](current-context.md).
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: joint acceptance and delivery recorded.
+- Parent state: EPIC_DONE after all three tasks and Parent criteria were accepted.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-10.01.
+- Eligibility / remaining prerequisite: merge the FE-09 Parent PR. FE-10.01 awaits implementation authorization.
+
+<a id="task-fe-09-03-attempt-02"></a>
+
+### FE-09.03 — Attempt 02 — 2026-11-20T17:54:36.9597052+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-09.03/attempt-02
+- Task: [task specification](../tasks/FE-09.03.md)
+- Parent / phase: FE-09 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T17:54:36.9597052+07:00
+- Ended at: 2026-11-20T17:54:36.9597052+07:00
+- State before / after: review / done
+- Previous attempt / correction: [implementation and verification](#task-fe-09-03-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record the PO joint acceptance and close the task.
+- Delivered this attempt: PO accepted this task and Parent FE-09 on 2026-11-20.
+- Incomplete scope / deviations: Frontend DEMO boundaries apply. Parent Git delivery is tracked in current context.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-09.03.md, workflow/task-history.md, workflow/current-context.md, workflow/execution-board.md, README.md | Acceptance and status records | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1–3 | Scoped behavior, Parent rules and DEMO boundary | Agent verified in attempt 01 | pass | [Prior report](#task-fe-09-03-attempt-01) |
+| 4 | UI comparison | Comparison captured and differences recorded in attempt 01 | pass | [Comparison](../evidence/FE-09.03/comparison.md) |
+| 5 | Actual screenshots and PO review | PO accepted in joint review | pass | [Comparison](../evidence/FE-09.03/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Check task status and report references against PO verdict | Consistent closure | Updated to done and linked | pass |
+| src/frontend | Repeat implementation checks | Application verification | Documentation-only acceptance. Retain attempt 01 and final FE-09.03 results | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint Parent review by PO.
+- Findings / resolution: PO accepted and requested done. No additional changes requested.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for this task. Parent PR merge remains a delivery gate.
+- Required resolution / owner: PO merges the Parent PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-09.03.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-09.03/comparison.md), [Chromium](../evidence/FE-09.03/chromium.log).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-09-03-attempt-01). Parent PR status in [current context](current-context.md).
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: joint acceptance and delivery recorded.
+- Parent state: EPIC_DONE after all three tasks and Parent criteria were accepted.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-10.01.
+- Eligibility / remaining prerequisite: merge the FE-09 Parent PR. FE-10.01 awaits implementation authorization.

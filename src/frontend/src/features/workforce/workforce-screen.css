@@ -1,0 +1,145 @@
+.workforce {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.workforce-notice,
+.workforce-panel,
+.workforce-metrics > div {
+  padding: 16px;
+  border: 1px solid #d4e2dc;
+  border-radius: 12px;
+  background: white;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.workforce-notice {
+  background: #eaf5f0;
+  border-color: #cae5d9;
+}
+.workforce-notice p,
+.workforce-panel p {
+  margin: 6px 0;
+}
+.workforce-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+.workforce-metrics > div {
+  --metric-ink: #805508;
+  --metric-border: #dfb758;
+  --metric-tint: #fff9e9;
+  border-color: var(--metric-border);
+  border-top-width: 3px;
+  background: linear-gradient(var(--metric-tint), white);
+}
+.workforce-metrics > div:nth-child(2) {
+  --metric-ink: #9a430e;
+  --metric-border: #e5a773;
+  --metric-tint: #fff5ed;
+}
+.workforce-metrics > div:nth-child(3) {
+  --metric-ink: #184a85;
+  --metric-border: #8bb8f0;
+  --metric-tint: #edf5ff;
+}
+.workforce-metrics > div:nth-child(4) {
+  --metric-ink: #90304e;
+  --metric-border: #eaa0bc;
+  --metric-tint: #fff1f6;
+}
+.workforce-metrics dt {
+  font-weight: 650;
+}
+.workforce-metrics dd {
+  margin: 8px 0;
+  color: var(--metric-ink);
+  font-size: 1.75rem;
+  font-weight: 650;
+}
+.workforce-metrics p {
+  margin: 0;
+  color: #52645d;
+}
+.workforce-table {
+  overflow: auto;
+}
+.workforce-table table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: start;
+}
+.workforce-table :is(td, th) {
+  padding: 12px 8px;
+  vertical-align: top;
+  border-bottom: 1px solid #d4e2dc;
+}
+.workforce-table ul {
+  margin: 6px 0;
+  padding-inline-start: 18px;
+}
+.workforce-missing {
+  color: #82540b;
+  font-weight: 650;
+}
+@media (max-width: 900px) {
+  .workforce-metrics {
+    grid-template-columns: 1fr;
+  }
+  .workforce-table table {
+    min-width: 40rem;
+  }
+}
+
+.workforce-metrics dd span {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #52645d;
+}
+
+.workforce-panel h2 {
+  font-size: 1.125rem;
+  font-weight: 650;
+}
+.workforce-scroll-hint {
+  display: none;
+}
+@media (max-width: 900px) {
+  .workforce-scroll-hint {
+    display: block;
+    color: #52645d;
+  }
+}
+
+.workforce-editor {
+  display: grid;
+  gap: 12px;
+  max-width: 44rem;
+}
+.workforce-editor label {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+.workforce-editor :is(input, textarea, select) {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px;
+  border: 1px solid #b9ccbf;
+  border-radius: 8px;
+  background: white;
+  font-size: 16px;
+}
+.workforce-editor-period {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.workforce-editor button {
+  justify-self: start;
+}

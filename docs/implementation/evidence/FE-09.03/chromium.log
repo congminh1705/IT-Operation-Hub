@@ -1,0 +1,20 @@
+
+Running 13 tests using 1 worker
+
+(node:11260) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 e2e\ticket-sla.spec.ts:18:1 › fixed first response reaches at-risk then breached without pausing resolution (781ms)
+  ok  2 e2e\ticket-sla.spec.ts:38:1 › requester Pending reply resumes clock with stable elapsed usage (1.3s)
+  ok  3 e2e\ticket-sla.spec.ts:67:1 › reopen preserves used time and priority change keeps past first response breach (2.2s)
+  ok  4 e2e\workforce-editor.spec.ts:10:1 › invalid hours keep note; corrected absence previews affected work (594ms)
+  ok  5 e2e\workforce-editor.spec.ts:33:1 › manager previews verification; technician cannot verify self (752ms)
+  ok  6 e2e\workforce-save.spec.ts:17:1 › absence persists and evaluation pending keeps ticket SLA unchanged (555ms)
+  ok  7 e2e\workforce-save.spec.ts:44:1 › conflict leaves workforce unchanged and retains draft (477ms)
+  ok  8 e2e\workforce-save.spec.ts:63:1 › no free capacity is visible without implying reassignment (471ms)
+  ok  9 e2e\workforce-save.spec.ts:75:1 › confirmed schedule and skill edits update workforce projection (526ms)
+  ok 10 e2e\workforce-save.spec.ts:94:1 › compare saved workforce state at desktop and mobile (1.2s)
+  ok 11 e2e\workforce.spec.ts:12:1 › management sees verified skills, union of overlapping absences and unknown capacity (436ms)
+  ok 12 e2e\workforce.spec.ts:30:1 › technician query cannot widen the projection (398ms)
+  ok 13 e2e\workforce.spec.ts:41:1 › requester sees forbidden state without workforce rows (415ms)
+
+  13 passed (11.4s)
