@@ -20,4 +20,4 @@ authority: derived
 - Checks: 94 unit, 15 Chromium ticket cases, production build, typecheck, format and scoped lint passed. Full unrelated browser suite not rerun.
 - Review: [FE-05.02](../evidence/FE-05.02/comparison.md) and [FE-05.03](../evidence/FE-05.03/comparison.md) captured at 1440/390. PO accepted the joint review and Parent on 2026-11-20.
 - Git: phase/a-frontend, aa8dea5 closes .01; bb730fd implements .02; d119815 implements .03. FE-04 PR #5 merged. Local search edit remains outside commits.
-- Next: Parent PR delivery into main.
+- Next: Parent PR [#6](https://github.com/congminh1705/IT-Operation-Hub/pull/6) is open into `main`.
