@@ -37,4 +37,4 @@ authority: derived
 - Criterion 2: separate drafts and confirmed reply, wait, resolution, requester closure and reopen verified by FE-06.02–FE-06.04.
 - Criterion 3: filtered timeline and separate clocks with elapsed and breach preservation verified by FE-06.01, FE-06.05 and FE-06.06.
 - Local preview: http://127.0.0.1:3137/tickets/TKT-000128. The app runs synthetic frontend DEMO only.
-- Parent PR delivery pending. FE-07.01 remains pending through merge and implementation authorization.
+- Parent PR [#8](https://github.com/congminh1705/IT-Operation-Hub/pull/8) is open from phase/a-frontend into main. FE-07.01 remains pending through merge and implementation authorization.

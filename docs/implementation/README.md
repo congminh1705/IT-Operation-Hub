@@ -84,7 +84,7 @@ Some source details need review before the affected slice: draft DTOs/schema, ac
 
 ## 4. Task tracker
 
-This **work-package/epic registry** retains all 88 stable scope IDs. The registry below records current epic states. FE-06 is EPIC_DONE following PO acceptance of its three child tasks and parent criteria. This state does not satisfy prerequisites or decide D-40 values. Package planning links are navigational; the [230-task board](workflow/execution-board.md) and leaf cards define executable artifact dependencies. **FE-18.03** gates subsequent phases. [Coverage/closure](package-task-coverage.md) distinguishes DONE service output from package acceptance awaiting actual UI integration.
+This **work-package/epic registry** retains all 88 stable scope IDs. The registry below records current epic states. FE-06 is EPIC_DONE following PO acceptance of its six child tasks and parent criteria. This state does not satisfy prerequisites or decide D-40 values. Package planning links are navigational; the [230-task board](workflow/execution-board.md) and leaf cards define executable artifact dependencies. **FE-18.03** gates subsequent phases. [Coverage/closure](package-task-coverage.md) distinguishes DONE service output from package acceptance awaiting actual UI integration.
 
 | Work package | Outcome | Planning dependencies | Epic state |
 | --- | --- | --- | --- |
