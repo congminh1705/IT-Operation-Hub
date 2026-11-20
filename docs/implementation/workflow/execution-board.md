@@ -45,7 +45,7 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FE-04.01](../tasks/FE-04.01.md) | [FE-04](../06-frontend-first.md#fe-04) | Build user management list and provisioning form | [FE-03.05](../tasks/FE-03.05.md) | PO | done |
 | [FE-04.02](../tasks/FE-04.02.md) | [FE-04](../06-frontend-first.md#fe-04) | Build account access-change and handover review | [FE-04.01](../tasks/FE-04.01.md) | PO | done |
 | [FE-04.03](../tasks/FE-04.03.md) | [FE-04](../06-frontend-first.md#fe-04) | Build department and category management | [FE-04.02](../tasks/FE-04.02.md) | PO | done |
-| [FE-04.04](../tasks/FE-04.04.md) | [FE-04](../06-frontend-first.md#fe-04) | Build team membership and intake management | [FE-04.03](../tasks/FE-04.03.md) | PO | review |
+| [FE-04.04](../tasks/FE-04.04.md) | [FE-04](../06-frontend-first.md#fe-04) | Build team membership and intake management | [FE-04.03](../tasks/FE-04.03.md) | PO | done |
 | [FE-04.05](../tasks/FE-04.05.md) | [FE-04](../06-frontend-first.md#fe-04) | Build versioned SLA editor | [FE-04.04](../tasks/FE-04.04.md) | PO | pending |
 | [FE-05.01](../tasks/FE-05.01.md) | [FE-05](../06-frontend-first.md#fe-05) | Build scoped ticket list and query navigation | [FE-03.05](../tasks/FE-03.05.md) | PO | pending |
 | [FE-05.02](../tasks/FE-05.02.md) | [FE-05](../06-frontend-first.md#fe-05) | Build ticket form and conditional clarification | [FE-05.01](../tasks/FE-05.01.md) | PO | pending |
