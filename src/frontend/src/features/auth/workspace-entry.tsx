@@ -1,4 +1,5 @@
 "use client";
+import { SlaScreen } from "@/features/administration/sla-screen";
 import { TeamsScreen } from "@/features/administration/teams-screen";
 import { CatalogScreen } from "@/features/administration/catalog-screen";
 import { UsersScreen } from "@/features/administration/users-screen";
@@ -71,6 +72,8 @@ export function WorkspaceEntry({
           />
         ) : pathname === "/admin/teams" ? (
           <TeamsScreen />
+        ) : pathname === "/admin/sla" ? (
+          <SlaScreen />
         ) : undefined
       }
       persona={persona}

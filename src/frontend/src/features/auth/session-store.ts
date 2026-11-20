@@ -1,3 +1,4 @@
+import { createSlaPolicy } from "../../lib/demo/sla-policy";
 import { createTeamDirectory } from "../../lib/demo/team-directory";
 import { createOrganizationCatalog } from "../../lib/demo/organization-catalog";
 import { createUserDirectory } from "../../lib/demo/user-directory";
@@ -14,6 +15,7 @@ import type { QueryClient } from "../../lib/api/query-client";
 /** Memory-only session. Epochs fence late auth responses as well as query results. */
 export class SessionStore {
   private persona: DemoPersona | null = null;
+  readonly sla = createSlaPolicy(() => this.persona?.user);
   readonly teams = createTeamDirectory(() => this.persona?.user);
   readonly catalog = createOrganizationCatalog(() => this.persona?.user);
   readonly directory = createUserDirectory(
