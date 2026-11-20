@@ -82,6 +82,14 @@ export function TicketDetail({
   ] as const;
   return (
     <div className="ticket-detail-grid">
+      {row.state === "Đã giải quyết" && row.requesterId === persona.user.id && (
+        <div className="ticket-next-action" role="status">
+          <strong>Kết quả đã sẵn sàng để bạn kiểm tra</strong>
+          <p>
+            {events.findLast((event) => event.purpose === "solution")?.text}
+          </p>
+        </div>
+      )}
       {!internal && row.state === "Chờ bổ sung" && (
         <div className="ticket-next-action" role="status">
           <strong>IT đang chờ phản hồi của bạn</strong>

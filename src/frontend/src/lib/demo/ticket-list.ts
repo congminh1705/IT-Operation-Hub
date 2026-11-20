@@ -17,6 +17,7 @@ export const ticketStates = [
   ...fixtureStates,
   "Đã tiếp nhận",
   "Đã hủy",
+  "Đã giải quyết",
 ] as const;
 export const ticketPriorities = ["P1", "P2", "P3", "P4"] as const;
 const categories = ["Thiết bị", "Mạng & kết nối", "Tài khoản"];
@@ -51,7 +52,9 @@ const rows = Array.from({ length: 26 }, (_, i) => {
     assigneeId: i % 4 === 0 ? null : people.TECHNICIAN.user.id,
     state: (i === 5
       ? "Đã tiếp nhận"
-      : fixtureStates[i % 4]) as (typeof ticketStates)[number],
+      : i === 3
+        ? "Đã giải quyết"
+        : fixtureStates[i % 4]) as (typeof ticketStates)[number],
     priority: ticketPriorities[i % 4],
     category: categories[i % 3],
     updated: `2026-11-${String(19 - Math.floor(i / 3)).padStart(2, "0")}`,

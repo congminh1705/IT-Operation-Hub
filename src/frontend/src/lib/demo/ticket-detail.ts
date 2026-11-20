@@ -8,6 +8,8 @@ export type TicketEvent = {
   actor: string;
   at: string;
   text: string;
+  state?: TicketRow["state"];
+  purpose?: "question" | "solution";
 };
 
 export function canReadInternalTicket(
@@ -81,6 +83,18 @@ export function ticketFixtureEvents(row: TicketRow): TicketEvent[] {
       "Đã ghi nhận kiểm tra cấu hình nội bộ.",
     ),
   ];
+  if (row.state === "Đã giải quyết")
+    events.push({
+      ...event(
+        "fixture-solution",
+        "public",
+        "message",
+        "10:00:00",
+        row.team,
+        "IT đã kiểm tra và khôi phục thiết bị DEMO. Vui lòng thử lại.",
+      ),
+      purpose: "solution",
+    });
   return row.state === "Đang chờ tiếp nhận" ? events.slice(0, 1) : events;
 }
 

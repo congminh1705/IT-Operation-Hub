@@ -1,10 +1,10 @@
-﻿"use client";
+"use client";
 import { useRef, useState } from "react";
 import { Dialog } from "@/components/ui/dialog";
 import { useSession } from "@/features/auth/session";
 import {
   lifecycleActions,
-  requiresCancellationReason,
+  lifecycleTextMinimum,
   type LifecycleAction,
 } from "@/lib/demo/ticket-lifecycle";
 import type { TicketRow } from "@/lib/demo/ticket-list";
@@ -30,13 +30,29 @@ export function TicketLifecycle({
   const [reason, setReason] = useState("");
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  const [preview, setPreview] = useState(false);
   const [sending, setSending] = useState(false);
   const lock = useRef(false);
   const action = selection && lifecycleActions[selection.action];
-  const requiresReason =
-    selection?.action === "cancel" &&
-    !!persona &&
-    requiresCancellationReason(persona);
+  const actionId = selection?.action;
+  const minimum =
+    actionId && persona ? lifecycleTextMinimum(actionId, persona) : 0;
+  const textLabel =
+    actionId === "wait"
+      ? "Câu hỏi công khai"
+      : actionId === "resolve"
+        ? "Giải pháp công khai"
+        : actionId === "resume"
+          ? "Lý do tiếp tục xử lý"
+          : actionId === "reopen"
+            ? "Lý do mở lại"
+            : actionId === "cancel"
+              ? minimum
+                ? "Lý do hủy (bắt buộc)"
+                : "Lý do hủy (tùy chọn)"
+              : null;
+  const needsPreview =
+    actionId === "wait" || actionId === "resolve" || actionId === "reopen";
 
   async function confirm() {
     if (!selection || lock.current) return;
@@ -81,6 +97,7 @@ export function TicketLifecycle({
                   setSelection({ action: id, version });
                   setReason("");
                   setError("");
+                  setPreview(false);
                 }}
               >
                 {lifecycleActions[id].label}
@@ -101,22 +118,37 @@ export function TicketLifecycle({
           className="ticket-lifecycle-form"
           onSubmit={(event) => {
             event.preventDefault();
+            if (reason.trim().length < minimum) {
+              setError("Nhập nội dung hợp lệ trước khi tiếp tục.");
+              return;
+            }
+            if (needsPreview && !preview) {
+              setError("");
+              setPreview(true);
+              return;
+            }
             void confirm();
           }}
         >
-          {selection?.action === "cancel" && (
+          {textLabel && !preview && (
             <label>
-              {requiresReason ? "Lý do hủy (bắt buộc)" : "Lý do hủy (tùy chọn)"}
+              {textLabel}
               <textarea
                 className="ticket-reply-input"
                 value={reason}
                 disabled={sending}
-                required={requiresReason}
-                minLength={requiresReason ? 10 : undefined}
+                required={minimum > 0}
+                minLength={minimum}
                 maxLength={10000}
                 onChange={(event) => setReason(event.target.value)}
               />
             </label>
+          )}
+          {preview && (
+            <section aria-label="Nội dung xem trước">
+              <h3>Nội dung xem trước</h3>
+              <p className="ticket-reply-preview">{reason.trim()}</p>
+            </section>
           )}
           {selection?.action === "start" && <p>Phụ trách: {row.assignee}</p>}
           {error && <p role="alert">{error}</p>}
@@ -126,12 +158,12 @@ export function TicketLifecycle({
               className="ui-button"
               data-variant="secondary"
               disabled={sending}
-              onClick={() => setSelection(null)}
+              onClick={() => (preview ? setPreview(false) : setSelection(null))}
             >
               Quay lại
             </button>
             <button type="submit" className="ui-button" disabled={sending}>
-              Xác nhận
+              {needsPreview && !preview ? "Xem trước" : "Xác nhận"}
             </button>
           </div>
         </form>

@@ -2,7 +2,7 @@ import type { DemoPersona } from "./fixtures";
 import {
   allowedLifecycleActions,
   lifecycleActions,
-  requiresCancellationReason,
+  lifecycleTextMinimum,
   type LifecycleAction,
 } from "./ticket-lifecycle";
 import type { TicketDraft } from "./ticket-draft";
@@ -134,7 +134,12 @@ export function createTicketIntake(config: {
         row.state === "Chờ bổ sung" &&
         row.requesterId === actor.user.id;
       let firstResponseAt = currentDetail.firstResponseAt;
-      if (audience === "public" && currentDetail.internal && !firstResponseAt) {
+      if (
+        audience === "public" &&
+        currentDetail.internal &&
+        row.requesterId !== actor.user.id &&
+        !firstResponseAt
+      ) {
         firstResponseAt = at;
         row.sla = "Phản hồi · Đã phản hồi";
       }
@@ -161,6 +166,7 @@ export function createTicketIntake(config: {
           actor: actor.user.display_name,
           at,
           text: "Đã nhận phản hồi và tiếp tục xử lý.",
+          state: row.state,
         });
       conversations.set(id, {
         row,
@@ -197,9 +203,7 @@ export function createTicketIntake(config: {
       const reason = input.trim();
       if (
         reason.length > 10000 ||
-        (action === "cancel" &&
-          requiresCancellationReason(actor) &&
-          reason.length < 10)
+        reason.length < lifecycleTextMinimum(action, actor)
       )
         return "invalid" as const;
       const at = new Date().toISOString();
@@ -218,20 +222,37 @@ export function createTicketIntake(config: {
         actor: actor.user.display_name,
         at,
         text: `${detail.row.state} → ${row.state}`,
+        state: row.state,
       };
       const events = [...previousEvents, transition];
+      const publicMessage = action === "wait" || action === "resolve";
       if (reason)
         events.push({
           ...transition,
           id: `reason-${expectedVersion}`,
-          audience: detail.internal ? "internal" : "public",
+          audience: publicMessage || !detail.internal ? "public" : "internal",
+          kind: publicMessage ? "message" : "history",
           text: reason,
+          state: undefined,
+          purpose:
+            action === "wait"
+              ? "question"
+              : action === "resolve"
+                ? "solution"
+                : undefined,
         });
+      const firstResponseAt =
+        detail.firstResponseAt ??
+        (publicMessage && detail.internal && actor.user.id !== row.requesterId
+          ? at
+          : null);
+      if (firstResponseAt && !detail.firstResponseAt)
+        row.sla = "Phản hồi · Đã phản hồi";
       conversations.set(id, {
         row,
         events,
         version: expectedVersion + 1,
-        firstResponseAt: detail.firstResponseAt,
+        firstResponseAt,
       });
       return "success" as const;
     },
