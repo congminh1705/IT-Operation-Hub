@@ -54,3 +54,41 @@ export const uploadFixtures = [
   "upload-failure",
 ] as const;
 export type UploadFixture = (typeof uploadFixtures)[number];
+
+export type TicketAttachment = UploadedAttachment & {
+  eventId?: string;
+  missing?: boolean;
+};
+export const downloadRevokedFixture = "download-revoked";
+
+export function demoAttachmentFixtures(ticketId: string): TicketAttachment[] {
+  if (ticketId !== "TKT-000127" && ticketId !== "TKT-000128") return [];
+  return [
+    {
+      id: ticketId + "-sample",
+      name: "demo-yeu-cau.pdf",
+      size: 590,
+      type: "application/pdf",
+    },
+    {
+      id: ticketId + "-missing",
+      name: "demo-khong-con.pdf",
+      size: 328,
+      type: "application/pdf",
+      eventId: "team-message",
+      missing: true,
+    },
+    {
+      id: ticketId + "-internal",
+      name: "demo-ghi-chu-noi-bo.pdf",
+      size: 590,
+      type: "application/pdf",
+      eventId: "internal-note",
+    },
+  ];
+}
+
+export function syntheticAttachmentMime(file: UploadedAttachment) {
+  const ext = file.name.split(".").at(-1)?.toLowerCase() ?? "";
+  return Object.hasOwn(formats, ext) ? formats[ext] : null;
+}

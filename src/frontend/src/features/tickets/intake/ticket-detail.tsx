@@ -8,6 +8,7 @@ import { formatBusinessTime } from "@/lib/dates";
 import { TicketRouting } from "./ticket-routing";
 import { TicketLifecycle } from "./ticket-lifecycle";
 import type { UploadFixture } from "@/lib/demo/ticket-attachments";
+import { TicketAttachmentDownloads } from "./ticket-attachment-downloads";
 import { TicketReplyComposer } from "./ticket-reply-composer";
 import { Feedback } from "@/components/feedback/feedback";
 import { useSession } from "@/features/auth/session";
@@ -16,12 +17,14 @@ export function TicketDetail({
   id,
   unavailable,
   uploadFixture,
+  simulateDownloadTransfer,
   simulateRevocation,
   simulateTransitionConflict,
 }: {
   id: string;
   unavailable: boolean;
   uploadFixture?: UploadFixture;
+  simulateDownloadTransfer: boolean;
   simulateRevocation: boolean;
   simulateTransitionConflict: boolean;
 }) {
@@ -36,8 +39,11 @@ export function TicketDetail({
     );
     return () => window.clearInterval(timer);
   }, []);
+  const [downloadRevoked, setDownloadRevoked] = useState(false);
   const [revokedDraft, setRevokedDraft] = useState<string | null>(null);
   if (!persona) return null;
+  if (downloadRevoked)
+    return <Feedback kind="forbidden" title="Quyền tải tệp đã thay đổi" />;
   if (revokedDraft !== null)
     return (
       <section className="directory-panel directory-card">
@@ -79,6 +85,7 @@ export function TicketDetail({
     internal,
     version,
     canReply,
+    attachments,
     actions,
     sla,
     assignable,
@@ -132,15 +139,12 @@ export function TicketDetail({
               <p>{draft.onboarding.deadline}</p>
             </section>
           )}
-          {!!draft?.attachments.length && (
-            <ul aria-label="Tệp đính kèm DEMO">
-              {draft.attachments.map(({ name, size }, i) => (
-                <li key={i}>
-                  {name} · {Math.ceil(size / 1024)} KB
-                </li>
-              ))}
-            </ul>
-          )}
+          <TicketAttachmentDownloads
+            ticketId={id}
+            files={attachments.filter((file) => !file.eventId)}
+            simulateTransfer={simulateDownloadTransfer}
+            onForbidden={() => setDownloadRevoked(true)}
+          />
         </section>
         <section
           className="directory-panel directory-card ticket-history"
@@ -181,6 +185,14 @@ export function TicketDetail({
                   </time>
                   {event.audience === "internal" && <span> · Nội bộ</span>}
                   <p>{event.text}</p>
+                  <TicketAttachmentDownloads
+                    ticketId={id}
+                    files={attachments.filter(
+                      (file) => file.eventId === event.id,
+                    )}
+                    simulateTransfer={simulateDownloadTransfer}
+                    onForbidden={() => setDownloadRevoked(true)}
+                  />
                 </li>
               ))}
             </ol>

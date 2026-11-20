@@ -1,8 +1,11 @@
 import type { DemoPersona } from "./fixtures";
 import {
   attachmentError,
+  demoAttachmentFixtures,
+  syntheticAttachmentMime,
   maxAttachments,
   type UploadedAttachment,
+  type TicketAttachment,
   type AttachmentTarget,
 } from "./ticket-attachments";
 import { projectTicketSla, type TicketSlaSeed } from "./ticket-sla";
@@ -135,6 +138,21 @@ export function createTicketIntake(config: {
         budgets: stored?.budget.budgets ?? baseline,
       });
       const events = projectTicketEvents(baseEvents, internal);
+      const attachments: TicketAttachment[] = [
+        ...demoAttachmentFixtures(id),
+        ...[...uploads.values()]
+          .filter((file) => file.ticketId === id)
+          .map(({ id, name, size, type, eventId }) => ({
+            id,
+            name,
+            size,
+            type,
+            eventId,
+          })),
+      ].filter(
+        (file) =>
+          !file.eventId || events.some((event) => event.id === file.eventId),
+      );
       return {
         row,
         draft: stored ? structuredClone(stored.draft) : null,
@@ -145,6 +163,7 @@ export function createTicketIntake(config: {
             }
           : { version: 3, ...baseline[row.priority] },
         sla,
+        attachments,
         assignable:
           internal &&
           persona.scope.tickets === "organization" &&
@@ -459,6 +478,25 @@ export function createTicketIntake(config: {
         if (!uploads.has(file.id)) uploads.set(file.id, { ...file, ...target });
       }
       return true;
+    },
+    attachmentForDownload(
+      ticketId: string,
+      fileId: string,
+      expectedScope: string,
+      simulateTransfer = false,
+    ) {
+      const identity = config.identity();
+      const actor = config.actor();
+      if (!identity || !actor || identity.scope !== expectedScope)
+        return { kind: "forbidden" } as const;
+      // Synthetic transfer fixture revokes a technician's team scope at request time.
+      const memberships = simulateTransfer ? [] : config.memberships();
+      const detail = this.detail(actor, ticketId, memberships);
+      const file = detail?.attachments.find((item) => item.id === fileId);
+      if (!file) return { kind: "forbidden" } as const;
+      const mime = syntheticAttachmentMime(file);
+      if (file.missing || !mime) return { kind: "missing" } as const;
+      return { kind: "success", name: file.name, mime } as const;
     },
     checkAttachments(
       target: AttachmentTarget,
