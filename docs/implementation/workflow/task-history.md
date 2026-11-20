@@ -5245,3 +5245,80 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-09.03 save changes and evaluation pending.
 - Eligibility / remaining prerequisite: FE-09.02 agent checks passed. PO authorized sequencing with joint review.
+
+<a id="task-fe-09-03-attempt-01"></a>
+
+### FE-09.03 — Attempt 01 — 2026-11-20T16:34:04.8921094+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-09.03/attempt-01
+- Task: [task specification](../tasks/FE-09.03.md)
+- Parent / phase: FE-09 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T16:32:02.4114893+07:00 (first implementation file timestamp)
+- Ended at: 2026-11-20T16:34:04.8921094+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, first implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Confirmed workforce change and separate affected-work evaluation.
+- Delivered this attempt: Session-local saves update recorded skill, schedule or absence, display affected work and explicit evaluation pending, preserve draft on conflict and leave ticket SLA unchanged.
+- Incomplete scope / deviations: Synthetic daily data and in-memory record only. Joint PO review pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/lib/demo/workforce.ts, workforce.test.ts | Versioned mock saves and scope | Role, conflict, replay and projections |
+| src/frontend/src/features/workforce/workforce-editor.tsx, workforce-screen.tsx, auth routes | Saved and pending outcome UI | Confirm, retry and affected work |
+| src/frontend/e2e/workforce-save.spec.ts | Saved/conflict/no-capacity and ticket SLA regression | Browser evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Confirmed workforce change and separate affected-work evaluation | Session-local saves update recorded skill, schedule or absence, display affected work and explicit evaluation pending, preserve draft on conflict and leave ticket SLA unchanged | pass | [Chromium](../evidence/FE-09.03/chromium.log) |
+| 2 | Preserve relevant Parent rules | Confirmed save and affected T07, stale conflict preserves draft, zero capacity explicitly displayed, ticket and SLA unchanged, calendar and skill saves reflected | pass | [Chromium](../evidence/FE-09.03/chromium.log) |
+| 3 | Frontend mock only, explicit failure handling | Scoped mock behavior and build checks verified | pass | [Chromium](../evidence/FE-09.03/chromium.log) |
+| 4 | Approved layout within task scope | Agent compared desktop/mobile and recorded differences | pass | [Comparison](../evidence/FE-09.03/comparison.md) |
+| 5 | Paired captures and PO visual verdict | Captures saved. Joint PO review pending | not-run | [Comparison](../evidence/FE-09.03/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd exec eslint src e2e/workforce-save.spec.ts; pnpm.cmd format:check; pnpm.cmd test | Static/unit checks | Passed, 103 unit cases | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3166, TICKET_DETAIL_DESIGN_URL=http://127.0.0.1:8126, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe. node node_modules/@playwright/test/cli.js test e2e/workforce.spec.ts e2e/workforce-editor.spec.ts e2e/workforce-save.spec.ts e2e/ticket-sla.spec.ts --grep-invert 'matched create and detail evidence&#124;matched comparison for&#124;desktop/mobile references and actual list scope pair&#124;compare lifecycle dialog&#124;compare composer&#124;compare approved workforce view&#124;compare workforce editor&#124;compare routing&#124;compare follow-up&#124;compare SLA display&#124;compare attachment&#124;compare upload recovery&#124;matched desktop/mobile form captures' --reporter=list | Affected Chromium | 13 passed | pass |
+| repo | Compare approved HTML and app at 1440 and 390 px with reduced motion | Paired screenshots | See comparison and differences | pass |
+| src/frontend | Full unrelated Chromium suite | Expanded regression | Outside this run | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent functional and visual comparison. PO joint review pending.
+- Findings / resolution: Compared SLA innerText consistently before and after edit at fixed simulation time. Approved HTML lacks a saved-result specimen so the affected-work pattern was reused.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent awaits joint PO acceptance.
+- Required resolution / owner: PO authorized continuing sequentially after each task passes agent checks.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-09.03.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-09.03/comparison.md), [Chromium](../evidence/FE-09.03/chromium.log).
+- Commit / build / environment: [7d46ef6](https://github.com/congminh1705/IT-Operation-Hub/commit/7d46ef6ed0ae101d1365bf851c542e69646c859f) pushed on phase/a-frontend and remote SHA verified.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: report and evidence linked.
+- Execution-board task row: review, Owner PO.
+- Current context: report and next step recorded.
+- Parent state: EPIC_IN_PROGRESS pending joint PO review.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO acceptance for FE-09.02 and FE-09.03, then Parent closure. FE-10.01 awaits Parent merge and authorization.
+- Eligibility / remaining prerequisite: FE-09.03 agent checks passed. PO authorized sequencing with joint review.
