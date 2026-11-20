@@ -6,10 +6,19 @@ import { workStates } from "@/lib/demo/work-board";
 import { effectiveScope } from "@/lib/navigation";
 import { formatBusinessTime } from "@/lib/dates";
 import "./work-board.css";
+import { WorkProgress } from "./work-progress";
 import { WorkPlan } from "./work-plan";
-export function WorkBoard({ scope }: { scope?: string }) {
+export function WorkBoard({
+  scope,
+  scenario,
+}: {
+  scope?: string;
+  scenario?: string;
+}) {
   const { store, persona } = useSession();
   const [showPlan, setShowPlan] = useState(false);
+  const [selected, setSelected] = useState<string>();
+  const [, refresh] = useState(0);
   const [view, setView] = useState<"cards" | "table">("cards");
   const [filter, setFilter] = useState("");
   const [state, setState] = useState("");
@@ -29,6 +38,31 @@ export function WorkBoard({ scope }: { scope?: string }) {
             .toLocaleLowerCase("vi")
             .includes(filter.trim().toLocaleLowerCase("vi")),
         ),
+    );
+  const selectedRow = store.work
+    .list(
+      persona,
+      store.teams.ownTeamIds(),
+      effectiveScope(persona, "/work", scope),
+    )
+    .find((row) => row.id === selected);
+  if (selectedRow)
+    return (
+      <div className="work-board">
+        <button
+          className="ui-button work-back"
+          type="button"
+          data-variant="secondary"
+          onClick={() => setSelected(undefined)}
+        >
+          Về bảng công việc
+        </button>
+        <WorkProgress
+          row={selectedRow}
+          stale={scenario === "work-stale"}
+          onChanged={() => refresh((value) => value + 1)}
+        />
+      </div>
     );
   const planTasks = store.work.list(persona, store.teams.ownTeamIds(), "team");
   const hasPlan = planTasks.some((row) => row.ticket === "TKT-000127");
@@ -139,6 +173,14 @@ export function WorkBoard({ scope }: { scope?: string }) {
                         {row.id} · {row.ticket}
                       </p>
                       <h3>{row.title}</h3>
+                      <button
+                        type="button"
+                        className="ui-button"
+                        data-variant="secondary"
+                        onClick={() => setSelected(row.id)}
+                      >
+                        Xem công việc {row.id}
+                      </button>
                       <p className="work-state" data-state={row.state}>
                         {workStates[row.state]}
                         {row.locked && " · Đang khóa"}
@@ -180,6 +222,14 @@ export function WorkBoard({ scope }: { scope?: string }) {
                   <th scope="row">
                     {row.id} · {row.title}
                     <small>{row.ticket}</small>
+                    <button
+                      type="button"
+                      className="ui-button"
+                      data-variant="secondary"
+                      onClick={() => setSelected(row.id)}
+                    >
+                      Xem công việc {row.id}
+                    </button>
                   </th>
                   <td>{workStates[row.state]}</td>
                   <td>{row.assignee}</td>

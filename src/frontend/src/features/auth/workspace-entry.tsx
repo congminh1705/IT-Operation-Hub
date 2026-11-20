@@ -65,7 +65,10 @@ export function WorkspaceEntry({
       }
       content={
         pathname === "/work" ? (
-          <WorkBoard scope={params.get("scope") ?? undefined} />
+          <WorkBoard
+            scope={params.get("scope") ?? undefined}
+            scenario={params.get("demo") ?? undefined}
+          />
         ) : pathname === "/tickets" ? (
           <TicketList search={search} />
         ) : pathname === "/tickets/new" ? (
