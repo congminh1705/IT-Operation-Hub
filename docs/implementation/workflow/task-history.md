@@ -3404,3 +3404,81 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-06.05 assignment, claim and priority dialogs.
 - Eligibility / remaining prerequisite: FE-06.04 agent checks passed. PO authorized sequencing with joint review.
+
+<a id="task-fe-06-05-attempt-01"></a>
+
+### FE-06.05 — Attempt 01 — 2026-11-20T15:00:31.2882173+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-06.05/attempt-01
+- Task: [task specification](../tasks/FE-06.05.md)
+- Parent / phase: FE-06 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-20T14:55:12.2097519+07:00 (first implementation file timestamp)
+- Ended at: 2026-11-20T15:00:31.2882173+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, first implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Eligible assignment and self-claim, reasoned priority preview and stable SLA history.
+- Delivered this attempt: Active-team transfer, required replacement for active work, own-team self-claim, role and version guards, priority reusing original policy table and history.
+- Incomplete scope / deviations: Synthetic fixture operation and joint PO review pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/lib/demo/ticket-intake.ts, ticket-detail.ts, sla-policy.ts | changeRouting and immutable policy table snapshot | Routing transactions and prior priority history |
+| src/frontend/src/lib/demo/team-directory.ts and src/frontend/src/features/auth/session-store.ts | routingOptions and wiring | Scoped eligible staff and active teams |
+| src/frontend/src/features/tickets/intake/ticket-routing.tsx, ticket-detail.tsx, ticket-detail.css | TicketRouting | Transfer, self-claim and priority preview dialogs |
+| src/frontend/e2e/ticket-routing.spec.ts and src/frontend/src/lib/demo/ticket-routing.test.ts | Browser/parallel claim fixtures | Behavioral and visual checks |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Eligible assignment and self-claim, reasoned priority preview and stable SLA history | Active-team transfer, required replacement for active work, own-team self-claim, role and version guards, priority reusing original policy table and history | pass | [Chromium](../evidence/FE-06.05/chromium.log) |
+| 2 | Preserve relevant Parent rules | Two concurrent claims produced one success and one stale, IT Manager transfer passed, stale preserved draft, technician priority denied, and old SLA policy/history preserved | pass | [Chromium](../evidence/FE-06.05/chromium.log) |
+| 3 | Frontend mock only, explicit failure handling | Scoped mock behavior and build checks verified | pass | [Chromium](../evidence/FE-06.05/chromium.log) |
+| 4 | Approved layout within task scope | Agent compared desktop/mobile and recorded differences | pass | [Comparison](../evidence/FE-06.05/comparison.md) |
+| 5 | Paired captures and PO visual verdict | Captures saved. Joint PO review pending | not-run | [Comparison](../evidence/FE-06.05/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd build; pnpm.cmd typecheck; pnpm.cmd exec eslint src e2e/ticket-routing.spec.ts; pnpm.cmd format:check; pnpm.cmd test | Static/unit checks | Passed, 95 unit cases | pass |
+| src/frontend | PLAYWRIGHT_USE_BUILD=1, PLAYWRIGHT_BASE_URL=http://127.0.0.1:3135, TICKET_DETAIL_DESIGN_URL=http://127.0.0.1:8126, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=C:/Program Files/Google/Chrome/Application/chrome.exe. node node_modules/@playwright/test/cli.js test e2e/ticket-routing.spec.ts e2e/ticket-follow-up.spec.ts e2e/ticket-lifecycle.spec.ts e2e/ticket-reply.spec.ts e2e/ticket-detail.spec.ts e2e/ticket-intake.spec.ts e2e/ticket-list.spec.ts --grep-invert 'matched create and detail evidence or matched comparison for or desktop/mobile references and actual list scope pair or compare lifecycle dialog or compare composer or compare follow-up' --reporter=list (alternation uses a pipe) | Affected Chromium | 32 passed | pass |
+| repo | Compare approved HTML and app at 1440 and 390 px with reduced motion | Paired screenshots | See comparison and differences | pass |
+| src/frontend | Full unrelated Chromium suite | Expanded regression | Outside this run | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent functional and visual comparison. PO joint review pending.
+- Findings / resolution: Initial browser run caught IT Manager using an Admin-only team list. Added scoped routing options and reran all affected cases successfully.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent awaits joint PO acceptance.
+- Required resolution / owner: PO authorized continuing sequentially after each task passes agent checks.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-06.05.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [comparison](../evidence/FE-06.05/comparison.md), [Chromium](../evidence/FE-06.05/chromium.log).
+- Commit / build / environment: [d018805](https://github.com/congminh1705/IT-Operation-Hub/commit/d018805a9d00624f73aafb7a83eb29866d31ac72) pushed on phase/a-frontend and remote SHA verified.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: report and evidence linked.
+- Execution-board task row: review, Owner PO.
+- Current context: report and next step recorded.
+- Parent state: EPIC_IN_PROGRESS pending joint PO review.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-06.06 separate SLA clock displays.
+- Eligibility / remaining prerequisite: FE-06.05 agent checks passed. PO authorized sequencing with joint review.
