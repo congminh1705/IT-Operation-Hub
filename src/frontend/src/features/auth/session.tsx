@@ -27,10 +27,31 @@ export function safeReturnPath(value: string | null): string {
   )
     return "/dashboard";
   const params = new URLSearchParams();
-  for (const name of ["scope", "q"]) {
+  const names =
+    url.pathname === "/tickets"
+      ? [
+          "scope",
+          "q",
+          "state",
+          "priority",
+          "team",
+          "category",
+          "assignee",
+          "sla",
+          "sort",
+          "size",
+          "page",
+        ]
+      : ["scope", "q"];
+  for (const name of names) {
     const item = url.searchParams.get(name);
     if (item) params.set(name, item.slice(0, 180));
   }
+  if (
+    url.pathname === "/tickets" &&
+    url.searchParams.get("demo") === "unavailable"
+  )
+    params.set("demo", "unavailable");
   return url.pathname + (params.size ? `?${params}` : "");
 }
 const Context = createContext<SessionStore | null>(null);
