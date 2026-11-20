@@ -81,6 +81,8 @@ export function safeReturnPath(value: string | null): string {
     url.searchParams.get("demo") === downloadRevokedFixture
   )
     params.set("demo", downloadRevokedFixture);
+  if (url.pathname === "/work" && url.searchParams.get("demo") === "work-stale")
+    params.set("demo", "work-stale");
   return url.pathname + (params.size ? `?${params}` : "");
 }
 const Context = createContext<SessionStore | null>(null);
