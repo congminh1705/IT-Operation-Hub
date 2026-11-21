@@ -85,6 +85,31 @@
   font-weight: 650;
 }
 
+.approval-diff {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  gap: 12px;
+  margin-block: 16px;
+}
+
+.approval-diff dt {
+  color: #52645d;
+}
+
+.approval-diff dd {
+  margin: 2px 0 10px;
+  font-weight: 650;
+}
+
+.automation .approval-lock {
+  background: #fff6df;
+  border: 1px solid #e5c684;
+  border-radius: 8px;
+  color: #75470c;
+  padding: 12px;
+  font-weight: 650;
+}
+
 .automation-coordination {
   background: #101b31;
   color: #e9effb;
