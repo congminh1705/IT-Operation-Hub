@@ -6204,3 +6204,80 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task: FE-12.01.
 - Remaining prerequisite: verified merge of the FE-11 PR.
+
+<a id="task-fe-12-01-attempt-01"></a>
+
+### FE-12.01 — Attempt 01 — 2026-11-21T14:27:00.1709554+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-12.01/attempt-01
+- Task: [task card](../tasks/FE-12.01.md)
+- Parent / phase: FE-12 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-21T14:21:00+07:00
+- Ended at: 2026-11-21T14:27:00.1709554+07:00
+- State before / after: in-progress / review
+- Previous attempt / correction: initial implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Render scoped asset list, detail, history and independently authorized ticket links.
+- Delivered this attempt: Scoped catalog, personal and support asset populations with search/filter counts, accessible history and independently authorized ticket links.
+- Incomplete scope / deviations: joint PO acceptance pending. See visual comparison for differences.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/assets/asset-screen.tsx and assets.css | Responsive list and detail | Scoped asset reading |
+| src/frontend/src/lib/demo/assets.ts and auth session/entry | Synthetic records and scoped projection | Role and ticket scope |
+| src/frontend/e2e/assets.spec.ts | Chromium coverage | Functional and visual checks |
+| docs/implementation/tasks/FE-12.01.md and workflow records | Handoff and status | Traceability |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scope and applicable Parent criteria | Render scoped asset list, detail, history and independently authorized ticket links. | Scoped catalog, personal and support asset populations with search/filter counts, accessible history and independently authorized ticket links. | pass | [Chromium](../evidence/FE-12.01/chromium.log) |
+| DEMO boundary | Synthetic fixture and scoped actor checks | In-memory workflow and scoped mock data | pass | [Implementation](https://github.com/congminh1705/IT-Operation-Hub/commit/93b8071bf742009e8cd3950e7785e8ef4a04643b) |
+| UI comparison | Matching wide and compact reference/application captures | Captures and differences documented | pass | [Comparison](../evidence/FE-12.01/comparison.md) |
+| PO review | Actual owner acceptance | Pending joint review | not-run | [Comparison](../evidence/FE-12.01/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | node node_modules/prettier/bin/prettier.cjs --check and node node_modules/eslint/bin/eslint.js on modified frontend paths | Formatting and lint pass | Exit 0 | pass |
+| src/frontend | node node_modules/vitest/vitest.mjs run | Existing unit tests pass | 103 tests passed | pass |
+| src/frontend | node node_modules/next/dist/bin/next build | Production build and TypeScript pass | Exit 0 | pass |
+| src/frontend | node node_modules/@playwright/test/cli.js test e2e/assets.spec.ts | Chromium interaction and comparison pass | See Chromium log | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent checks completed; Hoang Cong Minh functional and visual review pending.
+- Findings / resolution: Requester sees its own asset and reduced history. Browser checked direct unauthorized asset and ticket routes. Catalog/detail layout differences documented.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO acceptance pending for Parent closure.
+- Required resolution / owner: joint review by PO.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-12.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-12.01/comparison.md) · [Chromium](../evidence/FE-12.01/chromium.log).
+- Commit / build / environment: phase/a-frontend [implementation 93b8071bf742009e8cd3950e7785e8ef4a04643b](https://github.com/congminh1705/IT-Operation-Hub/commit/93b8071bf742009e8cd3950e7785e8ef4a04643b) pushed and verified; local production DEMO.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated.
+- Execution-board task row: review, Owner PO.
+- Current context: linked to attempt 01.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-12.02 can proceed under joint Parent review.
+- Eligibility / remaining prerequisite: verified dependent task checks or joint PO review before closure.

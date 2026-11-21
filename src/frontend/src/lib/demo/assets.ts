@@ -8,17 +8,27 @@ export const assetStates = {
   retired: "Ngừng sử dụng",
 } as const;
 export type AssetState = keyof typeof assetStates;
-const people = createDemoFixtures().personas;
-const requester = people.REQUESTER.user.id;
-const technician = people.TECHNICIAN.user.id;
-type Asset = {
-  id: string;
+export const assetTypes = [
+  "Laptop",
+  "Màn hình",
+  "Máy in",
+  "Thiết bị mạng",
+] as const;
+export type AssetMetadata = {
   code: string;
   serial: string;
   type: string;
   model: string;
   purchased: string;
   warranty: string;
+  notes: string;
+};
+const people = createDemoFixtures().personas;
+const requester = people.REQUESTER.user.id;
+const technician = people.TECHNICIAN.user.id;
+type Asset = AssetMetadata & {
+  id: string;
+  version: number;
   holder: string | null;
   state: AssetState;
   history: {
@@ -40,6 +50,7 @@ function seed(
 ): Asset {
   return {
     id,
+    version: 1,
     code: id,
     serial: "DEMO-" + id,
     type,
@@ -49,6 +60,7 @@ function seed(
     ticketIds,
     purchased: "2025-11-30",
     warranty: "2026-11-30",
+    notes: "",
     history: [
       ...(holder
         ? [
@@ -93,6 +105,68 @@ export function createAssets(ticketRows: () => TicketRow[]) {
     seed("PR-008", "Máy in", "Máy in DEMO", null, "repair", []),
     seed("LT-009", "Laptop", "Laptop lưu hồ sơ", null, "retired", []),
   ];
+  let sequence = 1;
+
+  function validateMetadata(
+    actor: DemoPersona,
+    id: string | null,
+    version: number,
+    input: AssetMetadata,
+  ) {
+    if (!managesAssets(actor))
+      return { error: "Bạn không có quyền sửa tài sản." } as const;
+    const existing = records.find((row) => row.id === id);
+    if (id && existing?.version !== version)
+      return {
+        error: "Tài sản đã thay đổi. Mở lại form để kiểm tra.",
+      } as const;
+    const fields = {
+      code: input.code.trim().toUpperCase(),
+      serial: input.serial.trim(),
+      type: input.type,
+      model: input.model.trim(),
+      purchased: input.purchased,
+      warranty: input.warranty,
+      notes: input.notes.trim(),
+    };
+    if (!/^[A-Z0-9-]{1,32}$/.test(fields.code))
+      return { error: "Nhập mã tài sản hợp lệ." } as const;
+    if (!assetTypes.some((type) => type === fields.type))
+      return { error: "Chọn loại tài sản hợp lệ." } as const;
+    if (
+      fields.serial.length > 80 ||
+      fields.model.length > 120 ||
+      fields.notes.length > 500
+    )
+      return { error: "Thông tin vượt giới hạn độ dài." } as const;
+    const validDate = (value: string) =>
+      !value ||
+      (/^\d{4}-\d{2}-\d{2}$/.test(value) &&
+        Number.isFinite(Date.parse(value)) &&
+        new Date(value).toISOString().slice(0, 10) === value);
+    if (
+      !validDate(fields.purchased) ||
+      !validDate(fields.warranty) ||
+      (fields.purchased &&
+        fields.warranty &&
+        fields.purchased > fields.warranty)
+    )
+      return {
+        error: "Ngày mua hoặc ngày hết bảo hành không hợp lệ.",
+      } as const;
+    if (records.some((row) => row.id !== id && row.code === fields.code))
+      return { error: "Mã tài sản đã tồn tại." } as const;
+    if (
+      fields.serial &&
+      records.some(
+        (row) =>
+          row.id !== id &&
+          row.serial.toLowerCase() === fields.serial.toLowerCase(),
+      )
+    )
+      return { error: "Serial đã tồn tại." } as const;
+    return { fields, existing } as const;
+  }
 
   function list(actor: DemoPersona, teams: string[], scope: string) {
     if (!actor.user.active) return [];
@@ -135,5 +209,39 @@ export function createAssets(ticketRows: () => TicketRow[]) {
         }),
       }));
   }
-  return { list };
+  return {
+    list,
+    validateMetadata: (
+      actor: DemoPersona,
+      id: string | null,
+      version: number,
+      input: AssetMetadata,
+    ) => validateMetadata(actor, id, version, input).error,
+    saveMetadata(
+      actor: DemoPersona,
+      id: string | null,
+      version: number,
+      input: AssetMetadata,
+    ) {
+      const result = validateMetadata(actor, id, version, input);
+      if ("error" in result) return result;
+      if (result.existing) {
+        Object.assign(result.existing, result.fields, { version: version + 1 });
+        return { id: result.existing.id } as const;
+      }
+      const newId = "ASSET-" + sequence++;
+      records.push({
+        ...seed(
+          newId,
+          result.fields.type,
+          result.fields.model,
+          null,
+          "stock",
+          [],
+        ),
+        ...result.fields,
+      });
+      return { id: newId } as const;
+    },
+  };
 }

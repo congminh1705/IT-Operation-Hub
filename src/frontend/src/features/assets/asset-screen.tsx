@@ -1,18 +1,23 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Feedback } from "@/components/feedback/feedback";
 import { useSession } from "@/features/auth/session";
-import { assetStates, type AssetState } from "@/lib/demo/assets";
+import { assetStates, managesAssets, type AssetState } from "@/lib/demo/assets";
+import { AssetMetadataForm } from "./asset-metadata";
 import { normalizeTicketText } from "@/lib/demo/ticket-list";
 import "../automation/automation.css";
 import "./assets.css";
 
 export function AssetScreen({ scope, id }: { scope: string; id?: string }) {
   const { store, persona } = useSession();
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const [state, setState] = useState<AssetState | "">("");
+  const [editing, setEditing] = useState(false);
+  const [, refresh] = useState(0);
   if (!persona) return null;
 
   const own = scope === "mine" || persona.user.role === "REQUESTER";
@@ -28,6 +33,21 @@ export function AssetScreen({ scope, id }: { scope: string; id?: string }) {
   );
 
   if (id && !asset) return <Feedback kind="forbidden" />;
+  const canEdit = managesAssets(persona);
+  if (editing && canEdit)
+    return (
+      <div className="automation assets">
+        <AssetMetadataForm
+          asset={asset}
+          onCancel={() => setEditing(false)}
+          onSaved={(savedId) => {
+            setEditing(false);
+            refresh((value) => value + 1);
+            router.push(`/assets?scope=work&id=${savedId}`);
+          }}
+        />
+      </div>
+    );
 
   return (
     <div className="automation assets">
@@ -43,6 +63,16 @@ export function AssetScreen({ scope, id }: { scope: string; id?: string }) {
             <p>
               {asset.code} · {asset.serial}
             </p>
+            {canEdit && (
+              <button
+                type="button"
+                className="ui-button"
+                data-variant="secondary"
+                onClick={() => setEditing(true)}
+              >
+                Sửa thông tin
+              </button>
+            )}
             <dl className="automation-facts">
               <div>
                 <dt>Loại</dt>
@@ -105,6 +135,15 @@ export function AssetScreen({ scope, id }: { scope: string; id?: string }) {
                 ? "Thiết bị hỗ trợ"
                 : "Danh mục tài sản"}
           </h2>
+          {canEdit && !own && (
+            <button
+              type="button"
+              className="ui-button"
+              onClick={() => setEditing(true)}
+            >
+              Thêm tài sản
+            </button>
+          )}
           <div className="automation-actions asset-filters">
             <label>
               Tìm trong danh sách

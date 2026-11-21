@@ -1,6 +1,11 @@
 .asset-filters {
   margin-block: 12px;
 }
+.asset-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: 12px;
+}
 .asset-filters label {
   display: grid;
   gap: 4px;
