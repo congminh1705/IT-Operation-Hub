@@ -6063,3 +6063,144 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Joint PO review at http://127.0.0.1:3184/approvals, then close and raise FE-11 PR; FE-12.01 follows after merge and authorization.
 - Eligibility / remaining prerequisite: joint PO approval and Parent PR delivery before the next Parent.
+
+<a id="task-fe-11-01-attempt-02"></a>
+
+### FE-11.01 — Attempt 02 — 2026-11-21T14:17:35.4124571+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-11.01/attempt-02
+- Task: [task card](../tasks/FE-11.01.md)
+- Parent / phase: FE-11 / A
+- Executor: AI Agent
+- Started at: 2026-11-21T14:17:35.4124571+07:00
+- Ended at: 2026-11-21T14:17:35.4124571+07:00
+- State before / after: review / done
+- Previous attempt: [implementation verification](#task-fe-11-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record joint acceptance and close FE-11.
+- Delivered this attempt: PO accepted the task and requested its closure and Parent PR.
+- Incomplete scope / deviations: Parent merge remains a delivery gate.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-11.01.md and workflow records | Closure and linked evidence | Synchronize the task and Parent |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Functional DEMO | Task scope verified | Agent passed the application checks | pass | [Prior checks](#task-fe-11-01-attempt-01) |
+| Visual acceptance | Comparison and PO verdict | Desktop and mobile compared; PO accepted both tasks | pass | [Comparison](../evidence/FE-11.01/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Compare cards, history, board, context and registry | Consistent closure | Done and linked | pass |
+| src/frontend | Repeat application checks | Application verification | Documentation-only closure; retain attempt 01 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint Parent review by PO Hoang Cong Minh.
+- Findings / resolution: PO accepted and requested done and PR delivery.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for acceptance. Parent merge gates FE-12.
+- Required resolution / owner: PO merges the FE-11 PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-11.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-11.01/comparison.md), [Chromium](../evidence/FE-11.01/chromium.log).
+- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-11-01-attempt-01). Parent PR status in [current context](current-context.md).
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board row: done, Owner PO.
+- Current context: updated.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- Next eligible task: FE-12.01.
+- Remaining prerequisite: verified merge of the FE-11 PR.
+
+
+<a id="task-fe-11-02-attempt-02"></a>
+
+### FE-11.02 — Attempt 02 — 2026-11-21T14:17:35.4124571+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-11.02/attempt-02
+- Task: [task card](../tasks/FE-11.02.md)
+- Parent / phase: FE-11 / A
+- Executor: AI Agent
+- Started at: 2026-11-21T14:17:35.4124571+07:00
+- Ended at: 2026-11-21T14:17:35.4124571+07:00
+- State before / after: review / done
+- Previous attempt: [implementation verification](#task-fe-11-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record joint acceptance and close FE-11.
+- Delivered this attempt: PO accepted the task and requested its closure and Parent PR.
+- Incomplete scope / deviations: Parent merge remains a delivery gate.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-11.02.md and workflow records | Closure and linked evidence | Synchronize the task and Parent |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Functional DEMO | Task scope verified | Agent passed the application checks | pass | [Prior checks](#task-fe-11-02-attempt-01) |
+| Visual acceptance | Comparison and PO verdict | Desktop and mobile compared; PO accepted both tasks | pass | [Comparison](../evidence/FE-11.02/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Compare cards, history, board, context and registry | Consistent closure | Done and linked | pass |
+| src/frontend | Repeat application checks | Application verification | Documentation-only closure; retain attempt 01 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint Parent review by PO Hoang Cong Minh.
+- Findings / resolution: PO accepted and requested done and PR delivery.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for acceptance. Parent merge gates FE-12.
+- Required resolution / owner: PO merges the FE-11 PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-11.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-11.02/comparison.md), [Chromium](../evidence/FE-11.02/chromium.log).
+- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-11-02-attempt-01). Parent PR status in [current context](current-context.md).
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board row: done, Owner PO.
+- Current context: updated.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- Next eligible task: FE-12.01.
+- Remaining prerequisite: verified merge of the FE-11 PR.
