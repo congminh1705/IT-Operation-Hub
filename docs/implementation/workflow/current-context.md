@@ -50,6 +50,10 @@ authority: derived
 
 ## Parent FE-13
 
-- FE-13.01 in progress. Joint review after sequential verification.
+- All three FE-13 tasks are in review. Registry: EPIC_IN_PROGRESS. Board: 45 done, 3 review, 182 pending.
 - [FE-13.01/attempt-01](task-history.md#task-fe-13-01-attempt-01), review. 105 unit, 5 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-13.01/comparison.md). FE-13.02 can proceed under joint Parent review.
 - [FE-13.02/attempt-01](task-history.md#task-fe-13-02-attempt-01), review. 105 unit, 4 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-13.02/comparison.md). FE-13.03 can proceed under joint Parent review.
+- [FE-13.03/attempt-01](task-history.md#task-fe-13-03-attempt-01), review. 107 unit, 12 Chromium including six knowledge/authoring regressions, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-13.03/comparison.md). Joint FE-13 PO review at http://127.0.0.1:3204/knowledge. FE-14.01 follows joint closure, PR merge and implementation authorization.
+
+- Joint PO review: http://127.0.0.1:3204/knowledge. Published reader, explicit KB-014 author/publisher grants and source lifecycle passed agent checks. PO functional and visual verdict pending.
+- Verified implementation pushes on phase/a-frontend: 1a67c21, bb3a807, b706fee. Parent PR follows joint PO acceptance.
