@@ -1,0 +1,10 @@
+
+Running 5 tests using 1 worker
+
+  ok 1 e2e\assistant.spec.ts:48:1 › send, cancel and error preserve the draft until a success (2.8s)
+  ok 2 e2e\assistant.spec.ts:69:1 › internal context, owner deletion and forged IDs (1.6s)
+  ok 3 e2e\assistant.spec.ts:91:3 › compare conversation ai-requester (1.3s)
+  ok 4 e2e\assistant.spec.ts:91:3 › compare conversation ai-tech (1.3s)
+  ok 5 e2e\assistant.spec.ts:91:3 › compare conversation ai-normal (1.3s)
+
+  5 passed (9.6s)
