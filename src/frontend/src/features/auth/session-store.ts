@@ -1,4 +1,5 @@
 import { createAutomationActivity } from "../../lib/demo/automation-activity";
+import { createApprovalDecisions } from "../../lib/demo/approval-decisions";
 import { createAutomationPolicy } from "../../lib/demo/automation-policy";
 import { createWorkflowStore } from "../../lib/demo/automation-workflow";
 import { createWorkforce } from "../../lib/demo/workforce";
@@ -22,6 +23,9 @@ import type { QueryClient } from "../../lib/api/query-client";
 export class SessionStore {
   private persona: DemoPersona | null = null;
   readonly automationPolicy = createAutomationPolicy();
+  readonly approvalDecisions = createApprovalDecisions((team) =>
+    this.automationPolicy.allowsTeam(team),
+  );
   readonly automationActivity = createAutomationActivity((team) =>
     this.automationPolicy.allowsTeam(team),
   );

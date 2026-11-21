@@ -110,6 +110,30 @@
   font-weight: 650;
 }
 
+.automation textarea {
+  width: 100%;
+  min-height: 84px;
+  border: 1px solid #b9ccbf;
+  border-radius: 8px;
+  padding: 10px;
+  background: white;
+  font-size: 16px;
+}
+
+.approval-result {
+  overflow-wrap: anywhere;
+}
+
+.approval-result [data-execution="pending"] {
+  color: #75470c;
+}
+.approval-result [data-execution="succeeded"] {
+  color: #226347;
+}
+.approval-result [data-execution="failed"] {
+  color: #90283e;
+}
+
 .automation-coordination {
   background: #101b31;
   color: #e9effb;
