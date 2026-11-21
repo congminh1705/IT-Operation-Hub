@@ -7913,3 +7913,80 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-15.04 can proceed under joint Parent review.
 - Eligibility / remaining prerequisite: verified dependent task checks or joint PO review before closure.
+
+<a id="task-fe-15-04-attempt-01"></a>
+
+### FE-15.04 — Attempt 01 — 2026-11-21T15:35:20.3208393+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-15.04/attempt-01
+- Task: [task card](../tasks/FE-15.04.md)
+- Parent / phase: FE-15 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-21T15:32:30+07:00
+- Ended at: 2026-11-21T15:35:20.3208393+07:00
+- State before / after: in-progress / review
+- Previous attempt / correction: initial implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Compose the normal and exception workspace with separately scoped activity and compact navigation.
+- Delivered this attempt: Workspace puts assistant identity and suggestions immediately above chat and uses separately scoped activity. Only a matching, permitted pending exception shows full proposal detail. Compact controls switch chat/activity, and closing chat preserves the current run.
+- Incomplete scope / deviations: joint PO acceptance pending. See visual comparison for differences.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/assistant/assistant-workspace.tsx and assistant.css | Independent scoped activity and conditional proposal | Desktop composition and compact switches |
+| src/frontend/src/features/assistant/assistant-screen.tsx and automation/automation-activity.tsx | Identity and suggestions; controlled activity scenario | Maintain activity across chat navigation |
+| src/frontend/e2e/assistant-workspace.spec.ts | Normal/no-run/no-approval/disabled, exception, compact and closing chat | Browser and visual evidence |
+| docs/implementation/tasks/FE-15.04.md and workflow records | Handoff and status | Traceability |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scope and applicable Parent criteria | Compose the normal and exception workspace with separately scoped activity and compact navigation. | Workspace puts assistant identity and suggestions immediately above chat and uses separately scoped activity. Only a matching, permitted pending exception shows full proposal detail. Compact controls switch chat/activity, and closing chat preserves the current run. | pass | [Chromium](../evidence/FE-15.04/chromium.log) |
+| DEMO boundary | Synthetic fixture and scoped actor checks | In-memory workflow and scoped mock data | pass | [Implementation](https://github.com/congminh1705/IT-Operation-Hub/commit/6e01c244b63813ec1db1a6fd9c4ce33a3ac29861) |
+| UI comparison | Matching wide and compact reference/application captures | Captures and differences documented | pass | [Comparison](../evidence/FE-15.04/comparison.md) |
+| PO review | Actual owner acceptance | Pending joint review | not-run | [Comparison](../evidence/FE-15.04/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | node node_modules/prettier/bin/prettier.cjs --check and node node_modules/eslint/bin/eslint.js on modified frontend paths | Formatting and lint pass | Exit 0 | pass |
+| src/frontend | node node_modules/vitest/vitest.mjs run | Existing unit tests pass | 109 tests passed | pass |
+| src/frontend | node node_modules/next/dist/bin/next build | Production build and TypeScript pass | Exit 0 | pass |
+| src/frontend | node node_modules/@playwright/test/cli.js test e2e/assistant-workspace.spec.ts e2e/assistant-intents.spec.ts e2e/assistant-ticket-actions.spec.ts e2e/assistant-management.spec.ts e2e/assistant.spec.ts e2e/automation-activity.spec.ts --grep-invert 'compare intent selector|compare confirmed ticket card|compare management card|compare conversation|compare activity' | Chromium interaction and comparison pass | See Chromium log | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent checks completed; Hoang Cong Minh functional and visual review pending.
+- Findings / resolution: Desktop shows activity apart from chat. Compact uses selectable panes because the static reference is a wider canvas. Disabled policy prevents the matching pending proposal panel. Scoped background fixture continues independently of chat.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO acceptance pending for Parent closure.
+- Required resolution / owner: joint review by PO.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-15.04.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-15.04/comparison.md) · [Chromium](../evidence/FE-15.04/chromium.log).
+- Commit / build / environment: phase/a-frontend [implementation 6e01c244b63813ec1db1a6fd9c4ce33a3ac29861](https://github.com/congminh1705/IT-Operation-Hub/commit/6e01c244b63813ec1db1a6fd9c4ce33a3ac29861) pushed and verified; local production DEMO.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated.
+- Execution-board task row: review, Owner PO.
+- Current context: linked to attempt 01.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint FE-15 PO review at http://127.0.0.1:3225/assistant. FE-16.01 follows acceptance, PR merge and implementation authorization.
+- Eligibility / remaining prerequisite: verified dependent task checks or joint PO review before closure.
