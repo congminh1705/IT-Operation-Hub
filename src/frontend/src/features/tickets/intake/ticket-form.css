@@ -27,3 +27,7 @@
     grid-template-columns: 1fr;
   }
 }
+.ticket-draft-description {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

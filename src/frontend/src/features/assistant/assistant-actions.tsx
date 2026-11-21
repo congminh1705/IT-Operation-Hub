@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useSession } from "@/features/auth/session";
 import {
   assistantIntent,
@@ -39,6 +40,23 @@ export function AssistantActions() {
   const selected = ticket
     ? { id: ticket.row.id, label: ticket.row.id + " · " + ticket.row.title }
     : options.find((item) => item.id === target);
+  const ticketAction = action?.kind === "allowed" ? action.id : null;
+  const ticketAllowed =
+    ticket &&
+    ((ticketAction === "reply" && ticket.canReply) ||
+      (ticketAction === "note" && ticket.internal && ticket.canReply) ||
+      (ticketAction === "accept" && ticket.actions.includes("close")) ||
+      (ticketAction === "ticketState" &&
+        ticket.internal &&
+        ticket.actions.some((item) => item !== "close")));
+  const formHref =
+    ticketAction === "create"
+      ? "/tickets/new"
+      : ticketAllowed
+        ? `/tickets/${ticket.row.id}${ticketAction === "note" ? "?view=internal#ticket-reply" : ticketAction === "reply" ? "#ticket-reply" : "#ticket-actions"}`
+        : undefined;
+  const ticketFormUnavailable =
+    ticket && !ticketAllowed && ticketAction !== "assignment";
   return (
     <section className="assistant-cards" aria-label="Thao tác được hỗ trợ">
       <h3>Thao tác được hỗ trợ</h3>
@@ -119,10 +137,26 @@ export function AssistantActions() {
             (needsTarget && !selected ? (
               <p role="alert">Không tìm thấy hồ sơ trong phạm vi của bạn.</p>
             ) : (
-              <p role="status">
-                {action.label}
-                {selected ? " · " + selected.label : ""} · Chưa thực hiện
-              </p>
+              <>
+                <p role="status">
+                  {action.label}
+                  {selected ? " · " + selected.label : ""} · Chưa thực hiện
+                </p>
+                {ticketFormUnavailable && (
+                  <p role="alert">
+                    Quyền hoặc trạng thái hiện tại không cho phép thao tác này.
+                  </p>
+                )}
+                {formHref && (
+                  <Link
+                    href={formHref}
+                    className="ui-button"
+                    data-variant="secondary"
+                  >
+                    Mở biểu mẫu xác nhận
+                  </Link>
+                )}
+              </>
             ))}
         </>
       )}

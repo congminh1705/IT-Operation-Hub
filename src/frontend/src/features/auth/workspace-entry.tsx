@@ -116,6 +116,7 @@ export function WorkspaceEntry({
           <TicketDetail
             key={pathname}
             id={pathname.split("/").at(-1)!}
+            initialInternal={search.view === "internal"}
             unavailable={search.demo === "detail-error"}
             simulateDownloadTransfer={search.demo === downloadRevokedFixture}
             uploadFixture={uploadFixtures.find(

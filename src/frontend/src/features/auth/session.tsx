@@ -58,6 +58,11 @@ export function safeReturnPath(value: string | null): string {
     /^CHAT-\d{1,9}$/.test(assetId)
   )
     params.set("id", assetId);
+  if (
+    isTicketDetail(url.pathname) &&
+    url.searchParams.get("view") === "internal"
+  )
+    params.set("view", "internal");
   if (url.pathname === "/knowledge") {
     const id = url.searchParams.get("id");
     const version = url.searchParams.get("version");
