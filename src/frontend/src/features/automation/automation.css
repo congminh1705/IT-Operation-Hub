@@ -85,6 +85,55 @@
   font-weight: 650;
 }
 
+.approval-diff {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  gap: 12px;
+  margin-block: 16px;
+}
+
+.approval-diff dt {
+  color: #52645d;
+}
+
+.approval-diff dd {
+  margin: 2px 0 10px;
+  font-weight: 650;
+}
+
+.automation .approval-lock {
+  background: #fff6df;
+  border: 1px solid #e5c684;
+  border-radius: 8px;
+  color: #75470c;
+  padding: 12px;
+  font-weight: 650;
+}
+
+.automation textarea {
+  width: 100%;
+  min-height: 84px;
+  border: 1px solid #b9ccbf;
+  border-radius: 8px;
+  padding: 10px;
+  background: white;
+  font-size: 16px;
+}
+
+.approval-result {
+  overflow-wrap: anywhere;
+}
+
+.approval-result [data-execution="pending"] {
+  color: #75470c;
+}
+.approval-result [data-execution="succeeded"] {
+  color: #226347;
+}
+.approval-result [data-execution="failed"] {
+  color: #90283e;
+}
+
 .automation-coordination {
   background: #101b31;
   color: #e9effb;

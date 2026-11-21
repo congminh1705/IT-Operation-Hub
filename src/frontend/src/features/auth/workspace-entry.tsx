@@ -1,4 +1,5 @@
 "use client";
+import { ApprovalProposal } from "@/features/automation/approval-proposal";
 import { AutomationActivity } from "@/features/automation/automation-activity";
 import { AutomationScreen } from "@/features/automation/automation-screen";
 import { WorkforceScreen } from "@/features/workforce/workforce-screen";
@@ -67,7 +68,9 @@ export function WorkspaceEntry({
           : `${persona.user.id}:${persona.user.version}`
       }
       content={
-        pathname === "/automation/activity" ? (
+        pathname === "/approvals" ? (
+          <ApprovalProposal />
+        ) : pathname === "/automation/activity" ? (
           <AutomationActivity />
         ) : pathname === "/automation/policies" ? (
           <AutomationScreen />

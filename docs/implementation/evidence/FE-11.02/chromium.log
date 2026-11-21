@@ -1,0 +1,16 @@
+
+Running 11 tests using 1 worker
+
+  ok  1 e2e\approval-decisions.spec.ts:20:3 › approval remains pending until a separate succeeded response (1.3s)
+  ok  2 e2e\approval-decisions.spec.ts:20:3 › approval remains pending until a separate failed response (813ms)
+  ok  3 e2e\approval-decisions.spec.ts:52:1 › rejection records its reason and never queues execution (717ms)
+  ok  4 e2e\approval-decisions.spec.ts:70:3 › stale holds decision input and blocks execution (830ms)
+  ok  5 e2e\approval-decisions.spec.ts:70:3 › revoked holds decision input and blocks execution (735ms)
+  ok  6 e2e\approval-decisions.spec.ts:70:3 › infeasible holds decision input and blocks execution (646ms)
+  ok  7 e2e\approval-decisions.spec.ts:94:1 › a disabled live DEMO policy blocks the decision (709ms)
+  ok  8 e2e\approval-decisions.spec.ts:110:3 › compare decision with ai-approval (3.3s)
+  ok  9 e2e\approval-decisions.spec.ts:110:3 › compare decision with ai-states (1.1s)
+  ok 10 e2e\approval-proposal.spec.ts:11:1 › reads the long and compact proposal and exposes missing evidence by keyboard (523ms)
+  ok 11 e2e\approval-proposal.spec.ts:43:1 › requester cannot read the proposal (475ms)
+
+  11 passed (12.8s)
