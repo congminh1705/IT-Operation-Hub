@@ -52,6 +52,13 @@ export function safeReturnPath(value: string | null): string {
     if (item) params.set(name, item.slice(0, 180));
   }
   const assetId = url.searchParams.get("id");
+  if (url.pathname === "/knowledge") {
+    const id = url.searchParams.get("id");
+    const version = url.searchParams.get("version");
+    if (id && /^KB-\d{3}$/.test(id)) params.set("id", id);
+    if (version && /^\d{1,4}$/.test(version)) params.set("version", version);
+    if (url.searchParams.get("edit") === "1") params.set("edit", "1");
+  }
   if (
     url.pathname === "/assets" &&
     assetId &&

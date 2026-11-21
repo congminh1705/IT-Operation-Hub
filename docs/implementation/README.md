@@ -100,7 +100,7 @@ This **work-package/epic registry** retains all 88 stable scope IDs. The registr
 | [FE-10](06-frontend-first.md#fe-10) | Workflow, policy and coordination activity screens | FE-08 | EPIC_DONE |
 | [FE-11](06-frontend-first.md#fe-11) | Exception review and approval dialogs | FE-09 FE-10 | EPIC_DONE |
 | [FE-12](06-frontend-first.md#fe-12) | Asset inventory and lifecycle interactions | FE-05 | EPIC_DONE |
-| [FE-13](06-frontend-first.md#fe-13) | Knowledge browsing, authoring and source states | FE-03 | EPIC_READY |
+| [FE-13](06-frontend-first.md#fe-13) | Knowledge browsing, authoring and source states | FE-03 | EPIC_DONE |
 | [FE-14](06-frontend-first.md#fe-14) | Assistant conversation, sources and availability | FE-06 FE-12 FE-13 | EPIC_READY |
 | [FE-15](06-frontend-first.md#fe-15) | Trusted action cards and shared AI Workspace | FE-08 FE-11 FE-14 | EPIC_READY |
 | [FE-16](06-frontend-first.md#fe-16) | Role dashboards and reporting interactions | FE-09 FE-10 FE-12 FE-14 | EPIC_READY |

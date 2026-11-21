@@ -1,4 +1,5 @@
 "use client";
+import { KnowledgeScreen } from "@/features/knowledge/knowledge-screen";
 import { AssetScreen } from "@/features/assets/asset-screen";
 import { ApprovalProposal } from "@/features/automation/approval-proposal";
 import { AutomationActivity } from "@/features/automation/automation-activity";
@@ -69,7 +70,15 @@ export function WorkspaceEntry({
           : `${persona.user.id}:${persona.user.version}`
       }
       content={
-        pathname === "/assets" ? (
+        pathname === "/knowledge" ? (
+          <KnowledgeScreen
+            edit={params.get("edit") === "1"}
+            id={params.get("id") ?? undefined}
+            version={
+              params.has("version") ? Number(params.get("version")) : undefined
+            }
+          />
+        ) : pathname === "/assets" ? (
           <AssetScreen
             scope={params.get("scope") ?? "work"}
             id={params.get("id") ?? undefined}
