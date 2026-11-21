@@ -30,7 +30,12 @@ import {
   type TicketEvent,
 } from "./ticket-detail";
 
-export const submitFixtures = ["failure", "stale", "unknown"] as const;
+export const submitFixtures = [
+  "failure",
+  "stale",
+  "unknown",
+  "asset-stale",
+] as const;
 export type SubmitFixture = (typeof submitFixtures)[number];
 type RecordSnapshot = {
   row: TicketRow;
@@ -48,8 +53,7 @@ export type RoutingChange =
   | { kind: "claim" }
   | { kind: "assign"; teamId: string; assigneeId: string; reason: string }
   | { kind: "priority"; priority: Priority; reason: string };
-type Outcome =
-  { kind: "success"; id: string } | { kind: "failure" | "stale" | "unknown" };
+type Outcome = { kind: "success"; id: string } | { kind: SubmitFixture };
 
 export function createTicketIntake(config: {
   identity: () => { userId: string; scope: string } | null;
@@ -65,6 +69,9 @@ export function createTicketIntake(config: {
     members: string[];
   }[];
   people: () => { id: string; display_name: string }[];
+  assetOptions?: (
+    actor: DemoPersona,
+  ) => readonly { id: string; version: number }[];
 }) {
   const records = new Map<string, RecordSnapshot>();
   const committed = new Map<string, { owner: string; id: string }>();
@@ -73,6 +80,10 @@ export function createTicketIntake(config: {
   const uploads = new Map<string, UploadedAttachment & AttachmentTarget>();
   let sequence = 152;
   return {
+    assetTicketIds: (assetId: string) =>
+      [...records.values()]
+        .filter(({ draft }) => draft.asset === assetId)
+        .map(({ row }) => row.id),
     rows: () => [
       ...[...conversations.values()].map(({ row }) => ({ ...row })),
       ...[...records.values()]
@@ -546,7 +557,20 @@ export function createTicketIntake(config: {
       const entry = committed.get(intent);
       if (entry && entry.owner === identity.userId)
         return { kind: "success", id: entry.id };
-      if (fixture) return { kind: fixture };
+      if (draft.asset) {
+        const actor = config.actor();
+        const eligible =
+          actor &&
+          config
+            .assetOptions?.(actor)
+            .some(
+              (item) =>
+                item.id === draft.asset && item.version === draft.assetVersion,
+            );
+        if (!eligible) return { kind: "asset-stale" };
+      }
+      if (fixture && (fixture !== "asset-stale" || draft.asset))
+        return { kind: fixture };
       const team = config.intake();
       if (!team) return { kind: "failure" };
       const id = `TKT-${String(sequence++).padStart(6, "0")}`;

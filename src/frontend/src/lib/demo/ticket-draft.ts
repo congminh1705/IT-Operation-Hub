@@ -1,4 +1,3 @@
-import type { DemoPersona } from "./fixtures";
 import { attachmentError, maxAttachments } from "./ticket-attachments";
 
 export const levels = ["low", "medium", "high"] as const;
@@ -8,17 +7,6 @@ const matrix = [
   ["P3", "P3", "P2"],
   ["P3", "P2", "P1"],
 ] as const;
-const assets = [
-  { id: "LT-001", label: "LT-001 · Dell Latitude 5440", owner: "REQUESTER" },
-  { id: "LT-014", label: "LT-014 · ThinkPad DEMO", owner: "TECHNICIAN" },
-] as const;
-export const allowedAssets = (persona: DemoPersona) =>
-  assets.filter(
-    (asset) =>
-      persona.user.active &&
-      (persona.scope.tickets === "organization" ||
-        asset.owner === persona.user.role),
-  );
 export function derivePriority(impact: string, urgency: string) {
   const i = levels.findIndex((level) => level === impact),
     u = levels.findIndex((level) => level === urgency);
@@ -33,6 +21,7 @@ export type TicketDraft = {
   urgency: Level;
   priority: NonNullable<ReturnType<typeof derivePriority>>;
   asset: string;
+  assetVersion?: number;
   onboarding?: {
     employees: string;
     configuration: string;
@@ -46,8 +35,8 @@ export type DraftResult =
   | { ok: false; field: string; message: string };
 export function readTicketDraft(
   data: FormData,
-  persona: DemoPersona,
   categories: string[],
+  assetOptions: readonly { id: string; version: number }[],
 ): DraftResult {
   const str = (key: string) => String(data.get(key) ?? "").trim();
   const fail = (field: string, message: string) =>
@@ -73,7 +62,8 @@ export function readTicketDraft(
       !levels.some((level) => level === impact) ? "impact" : "urgency",
       "Chọn mức ảnh hưởng và khẩn cấp hợp lệ.",
     );
-  if (asset && !allowedAssets(persona).some((item) => item.id === asset))
+  const selectedAsset = assetOptions.find((item) => item.id === asset);
+  if (asset && !selectedAsset)
     return fail("asset", "Thiết bị không thuộc phạm vi được phép.");
   let onboarding: TicketDraft["onboarding"];
   if (type === "service" && str("onboarding") === "yes") {
@@ -117,6 +107,7 @@ export function readTicketDraft(
       urgency: urgency as Level,
       priority,
       asset,
+      assetVersion: selectedAsset?.version,
       onboarding,
       attachments: files.map(({ name, size }) => ({ name, size })),
     },

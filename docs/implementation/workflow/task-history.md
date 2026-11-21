@@ -6204,3 +6204,595 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task: FE-12.01.
 - Remaining prerequisite: verified merge of the FE-11 PR.
+
+<a id="task-fe-12-01-attempt-01"></a>
+
+### FE-12.01 — Attempt 01 — 2026-11-21T14:27:00.1709554+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-12.01/attempt-01
+- Task: [task card](../tasks/FE-12.01.md)
+- Parent / phase: FE-12 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-21T14:21:00+07:00
+- Ended at: 2026-11-21T14:27:00.1709554+07:00
+- State before / after: in-progress / review
+- Previous attempt / correction: initial implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Render scoped asset list, detail, history and independently authorized ticket links.
+- Delivered this attempt: Scoped catalog, personal and support asset populations with search/filter counts, accessible history and independently authorized ticket links.
+- Incomplete scope / deviations: joint PO acceptance pending. See visual comparison for differences.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/assets/asset-screen.tsx and assets.css | Responsive list and detail | Scoped asset reading |
+| src/frontend/src/lib/demo/assets.ts and auth session/entry | Synthetic records and scoped projection | Role and ticket scope |
+| src/frontend/e2e/assets.spec.ts | Chromium coverage | Functional and visual checks |
+| docs/implementation/tasks/FE-12.01.md and workflow records | Handoff and status | Traceability |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scope and applicable Parent criteria | Render scoped asset list, detail, history and independently authorized ticket links. | Scoped catalog, personal and support asset populations with search/filter counts, accessible history and independently authorized ticket links. | pass | [Chromium](../evidence/FE-12.01/chromium.log) |
+| DEMO boundary | Synthetic fixture and scoped actor checks | In-memory workflow and scoped mock data | pass | [Implementation](https://github.com/congminh1705/IT-Operation-Hub/commit/93b8071bf742009e8cd3950e7785e8ef4a04643b) |
+| UI comparison | Matching wide and compact reference/application captures | Captures and differences documented | pass | [Comparison](../evidence/FE-12.01/comparison.md) |
+| PO review | Actual owner acceptance | Pending joint review | not-run | [Comparison](../evidence/FE-12.01/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | node node_modules/prettier/bin/prettier.cjs --check and node node_modules/eslint/bin/eslint.js on modified frontend paths | Formatting and lint pass | Exit 0 | pass |
+| src/frontend | node node_modules/vitest/vitest.mjs run | Existing unit tests pass | 103 tests passed | pass |
+| src/frontend | node node_modules/next/dist/bin/next build | Production build and TypeScript pass | Exit 0 | pass |
+| src/frontend | node node_modules/@playwright/test/cli.js test e2e/assets.spec.ts | Chromium interaction and comparison pass | See Chromium log | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent checks completed; Hoang Cong Minh functional and visual review pending.
+- Findings / resolution: Requester sees its own asset and reduced history. Browser checked direct unauthorized asset and ticket routes. Catalog/detail layout differences documented.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO acceptance pending for Parent closure.
+- Required resolution / owner: joint review by PO.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-12.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-12.01/comparison.md) · [Chromium](../evidence/FE-12.01/chromium.log).
+- Commit / build / environment: phase/a-frontend [implementation 93b8071bf742009e8cd3950e7785e8ef4a04643b](https://github.com/congminh1705/IT-Operation-Hub/commit/93b8071bf742009e8cd3950e7785e8ef4a04643b) pushed and verified; local production DEMO.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated.
+- Execution-board task row: review, Owner PO.
+- Current context: linked to attempt 01.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-12.02 can proceed under joint Parent review.
+- Eligibility / remaining prerequisite: verified dependent task checks or joint PO review before closure.
+
+<a id="task-fe-12-02-attempt-01"></a>
+
+### FE-12.02 — Attempt 01 — 2026-11-21T14:33:01.0270508+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-12.02/attempt-01
+- Task: [task card](../tasks/FE-12.02.md)
+- Parent / phase: FE-12 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-21T14:27:00+07:00
+- Ended at: 2026-11-21T14:33:01.0270508+07:00
+- State before / after: in-progress / review
+- Previous attempt / correction: initial implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Validate asset metadata edits while preserving holder and lifecycle fields.
+- Delivered this attempt: Manager/Admin create and edit asset metadata with duplicate code/serial and date checks, input preservation, preview and explicit save. New records start in stock. Overposted holder and state are ignored.
+- Incomplete scope / deviations: joint PO acceptance pending. See visual comparison for differences.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/assets/asset-metadata.tsx and asset-screen.tsx | Create/edit form and preview | Manager and Admin interface |
+| src/frontend/src/lib/demo/assets.ts and assets.test.ts | Whitelisted, versioned write and forged-field test | Preserve lifecycle and holder |
+| src/frontend/e2e/asset-metadata.spec.ts | Duplicate/date checks and saved detail | Browser evidence |
+| docs/implementation/tasks/FE-12.02.md and workflow records | Handoff and status | Traceability |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scope and applicable Parent criteria | Validate asset metadata edits while preserving holder and lifecycle fields. | Manager/Admin create and edit asset metadata with duplicate code/serial and date checks, input preservation, preview and explicit save. New records start in stock. Overposted holder and state are ignored. | pass | [Chromium](../evidence/FE-12.02/chromium.log) |
+| DEMO boundary | Synthetic fixture and scoped actor checks | In-memory workflow and scoped mock data | pass | [Implementation](https://github.com/congminh1705/IT-Operation-Hub/commit/09a29d771d39567aa8c728dbeb2a45d6ce0a0948) |
+| UI comparison | Matching wide and compact reference/application captures | Captures and differences documented | pass | [Comparison](../evidence/FE-12.02/comparison.md) |
+| PO review | Actual owner acceptance | Pending joint review | not-run | [Comparison](../evidence/FE-12.02/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | node node_modules/prettier/bin/prettier.cjs --check and node node_modules/eslint/bin/eslint.js on modified frontend paths | Formatting and lint pass | Exit 0 | pass |
+| src/frontend | node node_modules/vitest/vitest.mjs run | Existing unit tests pass | 104 tests passed | pass |
+| src/frontend | node node_modules/next/dist/bin/next build | Production build and TypeScript pass | Exit 0 | pass |
+| src/frontend | node node_modules/@playwright/test/cli.js test e2e/asset-metadata.spec.ts | Chromium interaction and comparison pass | See Chromium log | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent checks completed; Hoang Cong Minh functional and visual review pending.
+- Findings / resolution: Duplicate identifiers and invalid dates retain the draft. Captures show the responsive form. Required code and optional serial match the reference.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO acceptance pending for Parent closure.
+- Required resolution / owner: joint review by PO.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-12.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-12.02/comparison.md) · [Chromium](../evidence/FE-12.02/chromium.log).
+- Commit / build / environment: phase/a-frontend [implementation 09a29d771d39567aa8c728dbeb2a45d6ce0a0948](https://github.com/congminh1705/IT-Operation-Hub/commit/09a29d771d39567aa8c728dbeb2a45d6ce0a0948) pushed and verified; local production DEMO.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated.
+- Execution-board task row: review, Owner PO.
+- Current context: linked to attempt 01.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-12.03 can proceed under joint Parent review.
+- Eligibility / remaining prerequisite: verified dependent task checks or joint PO review before closure.
+
+<a id="task-fe-12-03-attempt-01"></a>
+
+### FE-12.03 — Attempt 01 — 2026-11-21T14:35:59.5945764+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-12.03/attempt-01
+- Task: [task card](../tasks/FE-12.03.md)
+- Parent / phase: FE-12 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-21T14:30:00+07:00
+- Ended at: 2026-11-21T14:35:59.5945764+07:00
+- State before / after: in-progress / review
+- Previous attempt / correction: initial implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Provide guarded issue, return, repair and retire dialogs with version conflicts and immutable history.
+- Delivered this attempt: Manager/Admin lifecycle dialog supports issue, return to stock/repair, repair state, stock recovery and retirement with eligible recipients, confirmation, version guard and append-only audit entries.
+- Incomplete scope / deviations: joint PO acceptance pending. See visual comparison for differences.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/assets/asset-lifecycle.tsx and asset-screen.tsx | Dialog and history | Preview and explicit confirmation |
+| src/frontend/src/lib/demo/assets.ts | Versioned lifecycle write and audit history | Single winner, active holder and state validation |
+| src/frontend/e2e/asset-lifecycle.spec.ts | Concurrent issue, guard, cancel, round trip and captures | Browser evidence |
+| docs/implementation/tasks/FE-12.03.md and workflow records | Handoff and status | Traceability |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scope and applicable Parent criteria | Provide guarded issue, return, repair and retire dialogs with version conflicts and immutable history. | Manager/Admin lifecycle dialog supports issue, return to stock/repair, repair state, stock recovery and retirement with eligible recipients, confirmation, version guard and append-only audit entries. | pass | [Chromium](../evidence/FE-12.03/chromium.log) |
+| DEMO boundary | Synthetic fixture and scoped actor checks | In-memory workflow and scoped mock data | pass | [Implementation](https://github.com/congminh1705/IT-Operation-Hub/commit/722a616ee26578a13234127badb4c4a0c13df040) |
+| UI comparison | Matching wide and compact reference/application captures | Captures and differences documented | pass | [Comparison](../evidence/FE-12.03/comparison.md) |
+| PO review | Actual owner acceptance | Pending joint review | not-run | [Comparison](../evidence/FE-12.03/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | node node_modules/prettier/bin/prettier.cjs --check and node node_modules/eslint/bin/eslint.js on modified frontend paths | Formatting and lint pass | Exit 0 | pass |
+| src/frontend | node node_modules/vitest/vitest.mjs run | Existing unit tests pass | 104 tests passed | pass |
+| src/frontend | node node_modules/next/dist/bin/next build | Production build and TypeScript pass | Exit 0 | pass |
+| src/frontend | node node_modules/@playwright/test/cli.js test e2e/asset-lifecycle.spec.ts | Chromium interaction and comparison pass | See Chromium log | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent checks completed; Hoang Cong Minh functional and visual review pending.
+- Findings / resolution: The same-version concurrent issue has one committed history row. Return repeats, repair/retired issue and retire before return are blocked. Dialog presentation differs from the full-page specimen.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO acceptance pending for Parent closure.
+- Required resolution / owner: joint review by PO.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-12.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-12.03/comparison.md) · [Chromium](../evidence/FE-12.03/chromium.log).
+- Commit / build / environment: phase/a-frontend [implementation 722a616ee26578a13234127badb4c4a0c13df040](https://github.com/congminh1705/IT-Operation-Hub/commit/722a616ee26578a13234127badb4c4a0c13df040) pushed and verified; local production DEMO.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated.
+- Execution-board task row: review, Owner PO.
+- Current context: linked to attempt 01.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-12.04 can proceed under joint Parent review.
+- Eligibility / remaining prerequisite: verified dependent task checks or joint PO review before closure.
+
+<a id="task-fe-12-04-attempt-01"></a>
+
+### FE-12.04 — Attempt 01 — 2026-11-21T14:38:16.2777138+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-12.04/attempt-01
+- Task: [task card](../tasks/FE-12.04.md)
+- Parent / phase: FE-12 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-21T14:33:40+07:00
+- Ended at: 2026-11-21T14:38:16.2777138+07:00
+- State before / after: in-progress / review
+- Previous attempt / correction: initial implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Connect only eligible assets to ticket drafts and preserve independent asset/ticket access.
+- Delivered this attempt: Ticket form uses the scoped asset inventory for selection and prefill. Confirmation rechecks active session, asset eligibility and version. Authorized asset and ticket detail links work both ways. Stale selection keeps the ticket draft.
+- Incomplete scope / deviations: joint PO acceptance pending. See visual comparison for differences.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/lib/demo/assets.ts, ticket-intake.ts and ticket-draft.ts | Shared eligible lookup and commit-time version guard | Scoped selection and confirmed association |
+| src/frontend/src/features/tickets/intake/ticket-form.tsx and ticket-detail.tsx | Picker, stale recovery, related asset | Preserve draft and independent access |
+| src/frontend/src/features/assets/asset-screen.tsx and assets.css | Asset-to-ticket entry point and catalog labels | Linked flow and readable inventory |
+| src/frontend/e2e/ticket-assets.spec.ts and src/frontend/src/lib/demo/ticket-asset.test.ts | Browser and mutation-race coverage | Four role scopes and stale write guard |
+| docs/implementation/tasks/FE-12.04.md and workflow records | Handoff and status | Traceability |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scope and applicable Parent criteria | Connect only eligible assets to ticket drafts and preserve independent asset/ticket access. | Ticket form uses the scoped asset inventory for selection and prefill. Confirmation rechecks active session, asset eligibility and version. Authorized asset and ticket detail links work both ways. Stale selection keeps the ticket draft. | pass | [Chromium](../evidence/FE-12.04/chromium.log) |
+| DEMO boundary | Synthetic fixture and scoped actor checks | In-memory workflow and scoped mock data | pass | [Implementation](https://github.com/congminh1705/IT-Operation-Hub/commit/d29727e3af4b26760ff452e9fc76ab3e049da7ad) |
+| UI comparison | Matching wide and compact reference/application captures | Captures and differences documented | pass | [Comparison](../evidence/FE-12.04/comparison.md) |
+| PO review | Actual owner acceptance | Pending joint review | not-run | [Comparison](../evidence/FE-12.04/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | node node_modules/prettier/bin/prettier.cjs --check and node node_modules/eslint/bin/eslint.js on modified frontend paths | Formatting and lint pass | Exit 0 | pass |
+| src/frontend | node node_modules/vitest/vitest.mjs run | Existing unit tests pass | 105 tests passed | pass |
+| src/frontend | node node_modules/next/dist/bin/next build | Production build and TypeScript pass | Exit 0 | pass |
+| src/frontend | node node_modules/@playwright/test/cli.js test e2e/ticket-assets.spec.ts e2e/assets.spec.ts e2e/asset-metadata.spec.ts e2e/asset-lifecycle.spec.ts e2e/ticket-intake.spec.ts --grep-invert 'compare assets|compare my-assets|compare asset|compare lifecycle|compare metadata|matched create and detail' | Chromium interaction and comparison pass | See Chromium log | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent checks completed; Hoang Cong Minh functional and visual review pending.
+- Findings / resolution: The asset-action reference has no ticket picker; compare the existing form against the additional create reference. Actual delayed submit rejected a returned asset without committing a ticket.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO acceptance pending for Parent closure.
+- Required resolution / owner: joint review by PO.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-12.04.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-12.04/comparison.md) · [Chromium](../evidence/FE-12.04/chromium.log).
+- Commit / build / environment: phase/a-frontend [implementation d29727e3af4b26760ff452e9fc76ab3e049da7ad](https://github.com/congminh1705/IT-Operation-Hub/commit/d29727e3af4b26760ff452e9fc76ab3e049da7ad) pushed and verified; local production DEMO.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated.
+- Execution-board task row: review, Owner PO.
+- Current context: linked to attempt 01.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint FE-12 PO review at http://127.0.0.1:3195/assets. FE-13.01 follows accepted closure, FE-12 PR merge and authorization.
+- Eligibility / remaining prerequisite: verified dependent task checks or joint PO review before closure.
+
+<a id="task-fe-12-01-attempt-02"></a>
+
+### FE-12.01 — Attempt 02 — 2026-11-21T14:40:13.9277852+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-12.01/attempt-02
+- Task: [task card](../tasks/FE-12.01.md)
+- Parent / phase: FE-12 / A
+- Executor: AI Agent
+- Started at: 2026-11-21T14:40:13.9277852+07:00
+- Ended at: 2026-11-21T14:40:13.9277852+07:00
+- State before / after: review / done
+- Previous attempt / correction: [implementation verification](#task-fe-12-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record joint acceptance and close FE-12.
+- Delivered this attempt: Hoang Cong Minh accepted all four tasks and requested closure and Parent PR.
+- Incomplete scope / deviations: Phase A DEMO scope. Parent merge remains a delivery gate.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-12.01.md, workflow records and README.md | Closure, evidence and registry state | Synchronize Parent acceptance |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Functional DEMO | Verified task scope | Agent checks passed in attempt 01 and PO accepted the Parent | pass | [Prior results](#task-fe-12-01-attempt-01) |
+| Visual acceptance | Application comparison and PO verdict | Desktop/mobile evidence captured and accepted in joint review | pass | [Comparison](../evidence/FE-12.01/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Compare task cards, history, board, context and registry | Consistent joint closure | Done, linked and verified in diff | pass |
+| src/frontend | Repeat application checks | Application verification | Documentation-only acceptance; retain attempt 01 results | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint PO functional and visual review by Hoang Cong Minh.
+- Findings / resolution: PO accepted and requested done and Parent PR.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-12 acceptance. Merge gates follow-on work.
+- Required resolution / owner: PO merges the Parent PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-12.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-12.01/comparison.md), [Chromium](../evidence/FE-12.01/chromium.log).
+- Commit / build / environment: verified implementation on phase/a-frontend in [attempt 01](#task-fe-12-01-attempt-01). FE-12 Parent [PR #14](https://github.com/congminh1705/IT-Operation-Hub/pull/14) is open into main. Acceptance commit 602c7d1 pushed.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-13.01.
+- Eligibility / remaining prerequisite: verified merge and implementation authorization.
+
+
+<a id="task-fe-12-02-attempt-02"></a>
+
+### FE-12.02 — Attempt 02 — 2026-11-21T14:40:13.9277852+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-12.02/attempt-02
+- Task: [task card](../tasks/FE-12.02.md)
+- Parent / phase: FE-12 / A
+- Executor: AI Agent
+- Started at: 2026-11-21T14:40:13.9277852+07:00
+- Ended at: 2026-11-21T14:40:13.9277852+07:00
+- State before / after: review / done
+- Previous attempt / correction: [implementation verification](#task-fe-12-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record joint acceptance and close FE-12.
+- Delivered this attempt: Hoang Cong Minh accepted all four tasks and requested closure and Parent PR.
+- Incomplete scope / deviations: Phase A DEMO scope. Parent merge remains a delivery gate.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-12.02.md, workflow records and README.md | Closure, evidence and registry state | Synchronize Parent acceptance |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Functional DEMO | Verified task scope | Agent checks passed in attempt 01 and PO accepted the Parent | pass | [Prior results](#task-fe-12-02-attempt-01) |
+| Visual acceptance | Application comparison and PO verdict | Desktop/mobile evidence captured and accepted in joint review | pass | [Comparison](../evidence/FE-12.02/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Compare task cards, history, board, context and registry | Consistent joint closure | Done, linked and verified in diff | pass |
+| src/frontend | Repeat application checks | Application verification | Documentation-only acceptance; retain attempt 01 results | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint PO functional and visual review by Hoang Cong Minh.
+- Findings / resolution: PO accepted and requested done and Parent PR.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-12 acceptance. Merge gates follow-on work.
+- Required resolution / owner: PO merges the Parent PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-12.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-12.02/comparison.md), [Chromium](../evidence/FE-12.02/chromium.log).
+- Commit / build / environment: verified implementation on phase/a-frontend in [attempt 01](#task-fe-12-02-attempt-01). FE-12 Parent [PR #14](https://github.com/congminh1705/IT-Operation-Hub/pull/14) is open into main. Acceptance commit 602c7d1 pushed.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-13.01.
+- Eligibility / remaining prerequisite: verified merge and implementation authorization.
+
+
+<a id="task-fe-12-03-attempt-02"></a>
+
+### FE-12.03 — Attempt 02 — 2026-11-21T14:40:13.9277852+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-12.03/attempt-02
+- Task: [task card](../tasks/FE-12.03.md)
+- Parent / phase: FE-12 / A
+- Executor: AI Agent
+- Started at: 2026-11-21T14:40:13.9277852+07:00
+- Ended at: 2026-11-21T14:40:13.9277852+07:00
+- State before / after: review / done
+- Previous attempt / correction: [implementation verification](#task-fe-12-03-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record joint acceptance and close FE-12.
+- Delivered this attempt: Hoang Cong Minh accepted all four tasks and requested closure and Parent PR.
+- Incomplete scope / deviations: Phase A DEMO scope. Parent merge remains a delivery gate.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-12.03.md, workflow records and README.md | Closure, evidence and registry state | Synchronize Parent acceptance |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Functional DEMO | Verified task scope | Agent checks passed in attempt 01 and PO accepted the Parent | pass | [Prior results](#task-fe-12-03-attempt-01) |
+| Visual acceptance | Application comparison and PO verdict | Desktop/mobile evidence captured and accepted in joint review | pass | [Comparison](../evidence/FE-12.03/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Compare task cards, history, board, context and registry | Consistent joint closure | Done, linked and verified in diff | pass |
+| src/frontend | Repeat application checks | Application verification | Documentation-only acceptance; retain attempt 01 results | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint PO functional and visual review by Hoang Cong Minh.
+- Findings / resolution: PO accepted and requested done and Parent PR.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-12 acceptance. Merge gates follow-on work.
+- Required resolution / owner: PO merges the Parent PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-12.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-12.03/comparison.md), [Chromium](../evidence/FE-12.03/chromium.log).
+- Commit / build / environment: verified implementation on phase/a-frontend in [attempt 01](#task-fe-12-03-attempt-01). FE-12 Parent [PR #14](https://github.com/congminh1705/IT-Operation-Hub/pull/14) is open into main. Acceptance commit 602c7d1 pushed.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-13.01.
+- Eligibility / remaining prerequisite: verified merge and implementation authorization.
+
+
+<a id="task-fe-12-04-attempt-02"></a>
+
+### FE-12.04 — Attempt 02 — 2026-11-21T14:40:13.9277852+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-12.04/attempt-02
+- Task: [task card](../tasks/FE-12.04.md)
+- Parent / phase: FE-12 / A
+- Executor: AI Agent
+- Started at: 2026-11-21T14:40:13.9277852+07:00
+- Ended at: 2026-11-21T14:40:13.9277852+07:00
+- State before / after: review / done
+- Previous attempt / correction: [implementation verification](#task-fe-12-04-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record joint acceptance and close FE-12.
+- Delivered this attempt: Hoang Cong Minh accepted all four tasks and requested closure and Parent PR.
+- Incomplete scope / deviations: Phase A DEMO scope. Parent merge remains a delivery gate.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-12.04.md, workflow records and README.md | Closure, evidence and registry state | Synchronize Parent acceptance |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Functional DEMO | Verified task scope | Agent checks passed in attempt 01 and PO accepted the Parent | pass | [Prior results](#task-fe-12-04-attempt-01) |
+| Visual acceptance | Application comparison and PO verdict | Desktop/mobile evidence captured and accepted in joint review | pass | [Comparison](../evidence/FE-12.04/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Compare task cards, history, board, context and registry | Consistent joint closure | Done, linked and verified in diff | pass |
+| src/frontend | Repeat application checks | Application verification | Documentation-only acceptance; retain attempt 01 results | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint PO functional and visual review by Hoang Cong Minh.
+- Findings / resolution: PO accepted and requested done and Parent PR.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-12 acceptance. Merge gates follow-on work.
+- Required resolution / owner: PO merges the Parent PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-12.04.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-12.04/comparison.md), [Chromium](../evidence/FE-12.04/chromium.log).
+- Commit / build / environment: verified implementation on phase/a-frontend in [attempt 01](#task-fe-12-04-attempt-01). FE-12 Parent [PR #14](https://github.com/congminh1705/IT-Operation-Hub/pull/14) is open into main. Acceptance commit 602c7d1 pushed.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-13.01.
+- Eligibility / remaining prerequisite: verified merge and implementation authorization.

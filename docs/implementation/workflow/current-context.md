@@ -36,4 +36,14 @@ authority: derived
 
 - PO accepted both FE-11 tasks. Registry: EPIC_DONE. Board: 41 done, 189 pending.
 - Preview: http://127.0.0.1:3184/approvals. Sign in as it_manager@demo.invalid using the standard DEMO password. Try missing evidence, approve/reject with a reason, and stale/revoked/infeasible scenarios. Approval waits for a separate explicit execution result. Refresh for a fresh fixture.
-- FE-11 Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open from phase/a-frontend into main. Acceptance commit da144d3 pushed and verified. FE-12.01 is authorized and follows the verified merge.
+- FE-11 Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) merged into main at 6ee1721 and the phase branch was fast-forwarded.
+
+## Parent FE-12 joint acceptance
+
+- PO accepted all four FE-12 tasks. Registry: EPIC_DONE. Board: 45 done, 185 pending.
+- [FE-12.01/attempt-02](task-history.md#task-fe-12-01-attempt-02), done. 103 unit, 6 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-12.01/comparison.md).
+- [FE-12.02/attempt-02](task-history.md#task-fe-12-02-attempt-02), done. 104 unit, 2 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-12.02/comparison.md).
+- [FE-12.03/attempt-02](task-history.md#task-fe-12-03-attempt-02), done. 104 unit, 6 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-12.03/comparison.md).
+- [FE-12.04/attempt-02](task-history.md#task-fe-12-04-attempt-02), done. 105 unit, 20 Chromium including assets and ticket submission regressions, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-12.04/comparison.md).
+
+- FE-12 Parent [PR #14](https://github.com/congminh1705/IT-Operation-Hub/pull/14) is open into main. Acceptance commit 602c7d1 pushed. FE-13.01 follows verified merge and authorization.

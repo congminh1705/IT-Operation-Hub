@@ -1,0 +1,11 @@
+
+Running 6 tests using 1 worker
+
+  ok 1 e2e\assets.spec.ts:11:1 › catalog counts, searches and filters (837ms)
+  ok 2 e2e\assets.spec.ts:22:1 › requester history omits internal entries and other tickets (772ms)
+  ok 3 e2e\assets.spec.ts:42:1 › technician own and support scopes are independent (486ms)
+  ok 4 e2e\assets.spec.ts:55:3 › compare assets (963ms)
+  ok 5 e2e\assets.spec.ts:55:3 › compare my-assets (921ms)
+  ok 6 e2e\assets.spec.ts:55:3 › compare asset (947ms)
+
+  6 passed (6.1s)

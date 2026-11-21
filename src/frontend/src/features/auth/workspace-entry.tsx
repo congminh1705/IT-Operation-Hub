@@ -1,4 +1,5 @@
 "use client";
+import { AssetScreen } from "@/features/assets/asset-screen";
 import { ApprovalProposal } from "@/features/automation/approval-proposal";
 import { AutomationActivity } from "@/features/automation/automation-activity";
 import { AutomationScreen } from "@/features/automation/automation-screen";
@@ -68,7 +69,12 @@ export function WorkspaceEntry({
           : `${persona.user.id}:${persona.user.version}`
       }
       content={
-        pathname === "/approvals" ? (
+        pathname === "/assets" ? (
+          <AssetScreen
+            scope={params.get("scope") ?? "work"}
+            id={params.get("id") ?? undefined}
+          />
+        ) : pathname === "/approvals" ? (
           <ApprovalProposal />
         ) : pathname === "/automation/activity" ? (
           <AutomationActivity />
