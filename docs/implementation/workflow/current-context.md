@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FE-11.02/attempt-01](task-history.md#task-fe-11-02-attempt-01), review. Decisions with reason, stale recovery and separate execution verified (103 unit, 11 Chromium). [Comparison](../evidence/FE-11.02/comparison.md). 6199c2a pushed and verified.
+
 - [FE-11.01/attempt-01](task-history.md#task-fe-11-01-attempt-01), review. Proposal diff and missing evidence verified (103 unit, 4 Chromium). [Comparison](../evidence/FE-11.01/comparison.md). dc4dcc7 pushed and verified.
 
 - [FE-10.01/attempt-02](task-history.md#task-fe-10-01-attempt-02), done. Workflow draft and immutable published history, with effort/DAG validation and reduced Technician projection. 103 unit and 3 Chromium passed. [Comparison](../evidence/FE-10.01/comparison.md). 8776dbc pushed and verified.
@@ -29,3 +31,9 @@ authority: derived
 - Criterion 1: workflow draft/versioning and explicit policy scope, limits and confirmation verified in FE-10.01/02.
 - Criteria 2/3: scoped activity, provenance, locks, retry, explicit approval vs execution and read-only entry verified in FE-10.03.
 - Preview: http://127.0.0.1:3175/automation/policies and http://127.0.0.1:3175/automation/activity. Parent [PR #12](https://github.com/congminh1705/IT-Operation-Hub/pull/12) merged into main at 19ac834.
+
+## Parent FE-11 joint review
+
+- FE-11.01 and FE-11.02 are in review. Registry: EPIC_IN_PROGRESS. Board: 39 done, 2 review, 189 pending.
+- Preview: http://127.0.0.1:3184/approvals. Sign in as it_manager@demo.invalid using the standard DEMO password. Try missing evidence, approve/reject with a reason, and stale/revoked/infeasible scenarios. Approval waits for a separate explicit execution result. Refresh for a fresh fixture.
+- PO functional and visual acceptance pending. Parent PR follows joint closure. FE-12.01 follows after the PR is merged and authorized.

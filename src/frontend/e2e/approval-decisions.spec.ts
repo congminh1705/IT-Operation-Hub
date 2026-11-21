@@ -131,6 +131,7 @@ for (const ref of ["ai-approval", "ai-states"]) {
         ["reference", design],
       ] as const) {
         await target.setViewportSize({ width, height: 1000 });
+        await target.evaluate(() => window.scrollTo(0, 0));
         await target.screenshot({
           path: path.join(dir, `${name}-${ref}-${width}.png`),
           fullPage: true,

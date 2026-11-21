@@ -5985,3 +5985,81 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-11.02 follows the successful checks under joint Parent review.
 - Eligibility / remaining prerequisite: joint PO approval and Parent PR delivery before the next Parent.
+
+<a id="task-fe-11-02-attempt-01"></a>
+
+### FE-11.02 — Attempt 01 — 2026-11-21T14:11:25.6009271+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-11.02/attempt-01
+- Task: [task specification](../tasks/FE-11.02.md)
+- Parent / phase: FE-11 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-21T14:06:00+07:00
+- Ended at: 2026-11-21T14:11:25.6009271+07:00
+- State before / after: pending / review
+- Previous attempt / correction: initial implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record reasoned mock decisions and show execution independently from approval.
+- Delivered this attempt: Manager/Admin DEMO approval or rejection with a reason, submission-time authority/policy/version/feasibility checks, preserved input on conflict and separate explicit pending/succeeded/failed execution fixtures.
+- Incomplete scope / deviations: PO acceptance pending. See comparison for reference differences.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/automation/approval-proposal.tsx and automation.css | Reason, decision actions, conflicts and results | Accessible interaction and state |
+| src/frontend/src/lib/demo/approval-decisions.ts and src/frontend/src/features/auth/session-store.ts | Version/policy/feasibility checks and execution fixtures | Session store mock transport |
+| src/frontend/e2e/approval-decisions.spec.ts | Browser decision flow and capture | Functional and visual evidence |
+| docs/implementation/tasks/FE-11.02.md and workflow records | Handoff and status | Traceability |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scope and Parent criteria | Record reasoned mock decisions and show execution independently from approval. | Manager/Admin DEMO approval or rejection with a reason, submission-time authority/policy/version/feasibility checks, preserved input on conflict and separate explicit pending/succeeded/failed execution fixtures. | pass | [Chromium](../evidence/FE-11.02/chromium.log) |
+| DEMO boundary | Synthetic transport and no false completion | Memory-only fixtures and explicit UI state | pass | [Implementation](https://github.com/congminh1705/IT-Operation-Hub/commit/6199c2a06551adeeffc9f454528335b1057a084d) |
+| UI comparison | Desktop and mobile reference and application captures | Captured at 1440 and 390, differences documented | pass | [Comparison](../evidence/FE-11.02/comparison.md) |
+| PO visual verdict | Owner confirms implementation | Pending joint review | not-run | [Comparison](../evidence/FE-11.02/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | node node_modules/vitest/vitest.mjs run | Unit regressions pass | 103 passed | pass |
+| src/frontend | node node_modules/eslint/bin/eslint.js (changed TS/TSX paths) | No lint violations | Exit 0 | pass |
+| src/frontend | node node_modules/next/dist/bin/next build | Production build and TypeScript pass | Exit 0 | pass |
+| src/frontend | node node_modules/@playwright/test/cli.js test e2e/approval-decisions.spec.ts e2e/approval-proposal.spec.ts --grep-invert 'compare proposal' with PLAYWRIGHT_USE_BUILD=1 | Flow and reference captures pass | See Chromium log | pass |
+| src/frontend | node node_modules/prettier/bin/prettier.cjs --check (changed paths) | Formatted task files | Exit 0 | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent checks and reference comparison. Owner review pending with Hoang Cong Minh.
+- Findings / resolution: Decision actions follow the approved form sequence. The generic AI state specimen does not provide a dedicated stale state. Application uses an inline alert and explicit reload. PO visual verdict pending.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: joint FE-11 scope and visual review remain pending PO for closure.
+- Required resolution / owner: PO.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FE-11.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Comparison and capture index](../evidence/FE-11.02/comparison.md), [Chromium log](../evidence/FE-11.02/chromium.log).
+- Commit / build / environment: phase/a-frontend, [implementation 6199c2a06551adeeffc9f454528335b1057a084d](https://github.com/congminh1705/IT-Operation-Hub/commit/6199c2a06551adeeffc9f454528335b1057a084d). 6199c2a pushed and verified. Local Chromium against production build, synthetic DEMO only.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: linked to attempt 01 and Git evidence.
+- Parent state: EPIC_IN_PROGRESS, joint PO review pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review at http://127.0.0.1:3184/approvals, then close and raise FE-11 PR; FE-12.01 follows after merge and authorization.
+- Eligibility / remaining prerequisite: joint PO approval and Parent PR delivery before the next Parent.
