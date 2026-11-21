@@ -3617,7 +3617,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-06.01.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-06.01/comparison.md), [Chromium](../evidence/FE-06.01/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-01-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-01-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -3688,7 +3688,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-06.02.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-06.02/comparison.md), [Chromium](../evidence/FE-06.02/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-02-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-02-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -3759,7 +3759,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-06.03.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-06.03/comparison.md), [Chromium](../evidence/FE-06.03/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-03-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-03-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -3830,7 +3830,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-06.04.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-06.04/comparison.md), [Chromium](../evidence/FE-06.04/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-04-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-04-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -3901,7 +3901,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-06.05.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-06.05/comparison.md), [Chromium](../evidence/FE-06.05/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-05-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-05-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -3972,7 +3972,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-06.06.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-06.06/comparison.md), [Chromium](../evidence/FE-06.06/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-06-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-06-06-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -4275,7 +4275,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-07.01.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-07.01/comparison.md), [Chromium](../evidence/FE-07.01/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-07-01-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-07-01-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -4346,7 +4346,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-07.02.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-07.02/comparison.md), [Chromium](../evidence/FE-07.02/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-07-02-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-07-02-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -4417,7 +4417,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-07.03.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-07.03/comparison.md), [Chromium](../evidence/FE-07.03/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-07-03-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-07-03-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -4794,7 +4794,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-08.01.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-08.01/comparison.md), [Chromium](../evidence/FE-08.01/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-08-01-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-08-01-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -4865,7 +4865,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-08.02.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-08.02/comparison.md), [Chromium](../evidence/FE-08.02/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-08-02-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-08-02-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -4936,7 +4936,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-08.03.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-08.03/comparison.md), [Chromium](../evidence/FE-08.03/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-08-03-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-08-03-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -5007,7 +5007,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-08.04.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-08.04/comparison.md), [Chromium](../evidence/FE-08.04/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-08-04-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-08-04-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -5155,7 +5155,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-09.01.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-09.01/comparison.md), [Chromium](../evidence/FE-09.01/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-09-01-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-09-01-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -5380,7 +5380,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-09.02.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-09.02/comparison.md), [Chromium](../evidence/FE-09.02/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-09-02-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-09-02-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -5451,7 +5451,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-09.03.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-09.03/comparison.md), [Chromium](../evidence/FE-09.03/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-09-03-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-09-03-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -5753,7 +5753,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-10.01.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-10.01/comparison.md), [Chromium](../evidence/FE-10.01/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-10-01-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-10-01-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -5824,7 +5824,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-10.02.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-10.02/comparison.md), [Chromium](../evidence/FE-10.02/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-10-02-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-10-02-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -5895,7 +5895,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/FE-10.03.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [comparison](../evidence/FE-10.03/comparison.md), [Chromium](../evidence/FE-10.03/chromium.log).
-- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-10-03-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: previous verified implementation commit and build in [attempt 01](#task-fe-10-03-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -6120,7 +6120,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [task card](../tasks/FE-11.01.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [comparison](../evidence/FE-11.01/comparison.md), [Chromium](../evidence/FE-11.01/chromium.log).
-- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-11-01-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-11-01-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 
@@ -6191,7 +6191,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [task card](../tasks/FE-11.02.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [comparison](../evidence/FE-11.02/comparison.md), [Chromium](../evidence/FE-11.02/chromium.log).
-- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-11-02-attempt-01). Parent PR status in [current context](current-context.md).
+- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-11-02-attempt-01). Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open. Acceptance commit da144d3 pushed and verified.
 
 #### 9. Execution record synchronization
 

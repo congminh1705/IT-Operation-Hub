@@ -36,4 +36,4 @@ authority: derived
 
 - PO accepted both FE-11 tasks. Registry: EPIC_DONE. Board: 41 done, 189 pending.
 - Preview: http://127.0.0.1:3184/approvals. Sign in as it_manager@demo.invalid using the standard DEMO password. Try missing evidence, approve/reject with a reason, and stale/revoked/infeasible scenarios. Approval waits for a separate explicit execution result. Refresh for a fresh fixture.
-- FE-11 Parent PR creation pending. FE-12.01 is authorized and follows the verified merge.
+- FE-11 Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) is open from phase/a-frontend into main. Acceptance commit da144d3 pushed and verified. FE-12.01 is authorized and follows the verified merge.
