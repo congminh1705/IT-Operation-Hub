@@ -1,4 +1,4 @@
-import type { DemoPersona } from "./fixtures";
+import { createDemoFixtures, type DemoPersona } from "./fixtures";
 
 export const knowledgeCategories = [
   "Mạng & kết nối",
@@ -18,11 +18,23 @@ export type KnowledgeVersion = {
   date: string;
   note: string;
 };
+export type KnowledgeDraft = Pick<
+  KnowledgeVersion,
+  "title" | "body" | "audience" | "note"
+>;
+type KnowledgeAction = "draft" | "publish" | "access";
+const { TECHNICIAN, IT_MANAGER } = createDemoFixtures().personas;
+const grants: Record<string, { author: string; publisher: string }> = {
+  "KB-014": { author: TECHNICIAN.user.id, publisher: IT_MANAGER.user.id },
+};
 type Article = {
   id: string;
   category: (typeof knowledgeCategories)[number];
   summary: string;
   versions: KnowledgeVersion[];
+  draft?: KnowledgeDraft;
+  audience?: Audience;
+  revision?: number;
 };
 function article(
   id: string,
@@ -88,6 +100,12 @@ export function createKnowledge() {
       "support",
     ),
   ];
+  articles[0].draft = {
+    title: "Kết nối VPN trên laptop Windows",
+    body: "Dùng thiết bị công ty và ứng dụng VPN do IT cung cấp. Khi có lỗi, ghi lại thông báo để IT hỗ trợ.",
+    audience: "employees",
+    note: "Cập nhật bước hỗ trợ DEMO",
+  };
   const allowed = (
     actor: DemoPersona,
     teams: readonly string[],
@@ -96,9 +114,95 @@ export function createKnowledge() {
     actor.user.active &&
     (audience === "employees" || teams.includes("support"));
   function visible(actor: DemoPersona, teams: readonly string[], row: Article) {
-    return allowed(actor, teams, row.versions.at(-1)!.audience);
+    return (
+      allowed(actor, teams, row.versions.at(-1)!.audience) &&
+      (!row.audience || allowed(actor, teams, row.audience))
+    );
+  }
+  function access(actor: DemoPersona, id: string) {
+    const grant = actor.user.active ? grants[id] : undefined;
+    return {
+      author: grant?.author === actor.user.id,
+      publisher: grant?.publisher === actor.user.id,
+    };
+  }
+  function validate(
+    actor: DemoPersona,
+    id: string,
+    expected: number,
+    action: KnowledgeAction,
+    draft: KnowledgeDraft,
+  ) {
+    const permissions = access(actor, id);
+    if (!(action === "draft" ? permissions.author : permissions.publisher))
+      return "Bạn chưa được cấp quyền cho thao tác này.";
+    const row = articles.find((item) => item.id === id);
+    if (!row || (row.revision ?? 1) !== expected)
+      return "Bài viết đã đổi. Đóng form và xem lại phiên bản.";
+    if (!Object.hasOwn(audienceNames, draft.audience))
+      return "Chọn phạm vi đọc hợp lệ.";
+    if (
+      action === "draft" &&
+      (draft.title.trim().length < 5 ||
+        draft.title.trim().length > 180 ||
+        draft.body.trim().length < 10 ||
+        draft.body.trim().length > 6000 ||
+        draft.note.trim().length > 500)
+    )
+      return "Nhập tiêu đề từ 5 đến 180 và nội dung từ 10 đến 6.000 ký tự.";
+    if (action === "publish" && !row.draft)
+      return "Chưa có bản nháp đã lưu để công bố.";
+    return null;
   }
   return {
+    access,
+    edit(actor: DemoPersona, id: string) {
+      const permissions = access(actor, id);
+      if (!permissions.author && !permissions.publisher) return null;
+      const row = articles.find((item) => item.id === id);
+      if (!row) return null;
+      const current = row.versions.at(-1)!;
+      return {
+        permissions,
+        revision: row.revision ?? 1,
+        version: current.version,
+        audience: row.audience ?? current.audience,
+        draft: row.draft ? { ...row.draft } : null,
+        current: { ...current },
+      };
+    },
+    preview: validate,
+    commit(
+      actor: DemoPersona,
+      id: string,
+      expected: number,
+      action: KnowledgeAction,
+      draft: KnowledgeDraft,
+    ) {
+      const error = validate(actor, id, expected, action, draft);
+      if (error) return error;
+      const row = articles.find((item) => item.id === id)!;
+      if (action === "draft") {
+        row.draft = {
+          title: draft.title.trim(),
+          body: draft.body.trim(),
+          audience: draft.audience,
+          note: draft.note.trim(),
+        };
+      } else if (action === "publish") {
+        const version = row.versions.at(-1)!.version + 1;
+        row.versions.push({
+          ...row.draft!,
+          version,
+          date: new Date().toISOString().slice(0, 10),
+        });
+        row.summary = row.draft!.body.split("\n")[0].slice(0, 160);
+        row.draft = undefined;
+        row.audience = undefined;
+      } else row.audience = draft.audience;
+      row.revision = expected + 1;
+      return null;
+    },
     list(actor: DemoPersona, teams: readonly string[]) {
       return articles
         .filter((row) => visible(actor, teams, row))
@@ -120,7 +224,7 @@ export function createKnowledge() {
       );
       const selected =
         version === undefined
-          ? row.versions.at(-1)
+          ? versions.find((item) => item === row.versions.at(-1))
           : versions.find((item) => item.version === version);
       return selected
         ? {
@@ -128,6 +232,7 @@ export function createKnowledge() {
             category: row.category,
             versions: versions.map(({ version, date }) => ({ version, date })),
             selected: { ...selected },
+            audience: row.audience ?? selected.audience,
           }
         : null;
     },

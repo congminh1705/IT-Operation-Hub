@@ -72,6 +72,7 @@ export function WorkspaceEntry({
       content={
         pathname === "/knowledge" ? (
           <KnowledgeScreen
+            edit={params.get("edit") === "1"}
             id={params.get("id") ?? undefined}
             version={
               params.has("version") ? Number(params.get("version")) : undefined

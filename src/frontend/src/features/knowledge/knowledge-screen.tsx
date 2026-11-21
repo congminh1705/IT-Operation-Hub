@@ -5,20 +5,35 @@ import { useSession } from "@/features/auth/session";
 import { Feedback } from "@/components/feedback/feedback";
 import { audienceNames, knowledgeCategories } from "@/lib/demo/knowledge";
 import { normalizeTicketText } from "@/lib/demo/ticket-list";
+import { KnowledgeEditor } from "./knowledge-editor";
+import { useRouter } from "next/navigation";
 import "../automation/automation.css";
 import "./knowledge.css";
 
 export function KnowledgeScreen({
   id,
   version,
+  edit,
 }: {
   id?: string;
   version?: number;
+  edit?: boolean;
 }) {
   const { persona, store } = useSession();
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("");
   if (!persona) return null;
+  if (id && edit)
+    return (
+      <div className="automation knowledge">
+        <KnowledgeEditor
+          key={id}
+          id={id}
+          onClose={() => router.push(`/knowledge?id=${id}`)}
+        />
+      </div>
+    );
   const teams = store.teams.ownTeamIds();
   const article = id ? store.knowledge.read(persona, teams, id, version) : null;
   if (id && !article)
@@ -42,7 +57,7 @@ export function KnowledgeScreen({
     <div className="automation knowledge">
       {article ? (
         <>
-          <div>
+          <div className="automation-actions">
             <Link
               href="/knowledge"
               className="ui-button"
@@ -50,6 +65,18 @@ export function KnowledgeScreen({
             >
               Về kho kiến thức
             </Link>
+            {id &&
+              Object.values(store.knowledge.access(persona, id)).some(
+                Boolean,
+              ) && (
+                <Link
+                  href={`/knowledge?id=${id}&edit=1`}
+                  className="ui-button"
+                  data-variant="secondary"
+                >
+                  Phiên bản &amp; quyền bài viết
+                </Link>
+              )}
           </div>
           <div className="knowledge-reader">
             <article className="automation-panel">
@@ -76,7 +103,7 @@ export function KnowledgeScreen({
               <h2>Nguồn &amp; phạm vi</h2>
               <dl>
                 <dt>Phạm vi đọc</dt>
-                <dd>{audienceNames[article.selected.audience]}</dd>
+                <dd>{audienceNames[article.audience]}</dd>
                 <dt>Phiên bản đang mở</dt>
                 <dd>v{article.selected.version}</dd>
               </dl>
