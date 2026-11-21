@@ -66,4 +66,4 @@ authority: derived
 - [FE-14.03/attempt-02](task-history.md#task-fe-14-03-attempt-02), done. 109 unit, 18 Chromium including 13 affected regression cases, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-14.03/comparison.md).
 
 - Joint PO review: http://127.0.0.1:3214/assistant and http://127.0.0.1:3214/admin/assistant. Chat lifecycle, scoped cards, manual handoff, availability and fallback passed agent checks. PO confirmed joint acceptance.
-- Verified implementation pushes on phase/a-frontend: bb3062a, cfa0c29, 0f15115. FE-14 Parent PR publication pending. FE-15.01 follows verified merge and authorization.
+- Verified implementation pushes on phase/a-frontend: bb3062a, cfa0c29, 0f15115. FE-14 Parent [PR #16](https://github.com/congminh1705/IT-Operation-Hub/pull/16) is open into main. Acceptance commit 0b6945a pushed. FE-15.01 follows verified merge and authorization.
