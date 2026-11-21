@@ -18,7 +18,7 @@ purpose: "Maintain the single status and owner registry for every refined execut
 
 ## 1. Scope and authority
 
-All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. **45 tasks are done** through FE-12.04. **Three tasks are in review and 182 remain pending.** [FE-12 is EPIC_DONE in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
+All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. **48 tasks are done** through FE-13.03. **182 remain pending.** [FE-13 is EPIC_DONE in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
 
 The [package registry](../README.md#4-task-tracker) holds epic state; this board alone holds task state and PO ownership. Use the [task workflow](task-workflow.md). [Parent coverage and closure](../package-task-coverage.md) maps every parent criterion to outputs and names any external integration evidence. Package readiness means defined scope; dependencies, affected decisions and future coding authorization still gate execution.
 
@@ -75,9 +75,9 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FE-12.02](../tasks/FE-12.02.md) | [FE-12](../06-frontend-first.md#fe-12) | Build asset metadata create-edit forms | [FE-12.01](../tasks/FE-12.01.md) | PO | done |
 | [FE-12.03](../tasks/FE-12.03.md) | [FE-12](../06-frontend-first.md#fe-12) | Build issue, return, repair and retire dialogs | [FE-12.02](../tasks/FE-12.02.md) | PO | done |
 | [FE-12.04](../tasks/FE-12.04.md) | [FE-12](../06-frontend-first.md#fe-12) | Connect permitted ticket asset picker | [FE-12.03](../tasks/FE-12.03.md) | PO | done |
-| [FE-13.01](../tasks/FE-13.01.md) | [FE-13](../06-frontend-first.md#fe-13) | Build published knowledge search and versioned reader | [FE-03.05](../tasks/FE-03.05.md) | PO | review |
-| [FE-13.02](../tasks/FE-13.02.md) | [FE-13](../06-frontend-first.md#fe-13) | Build author, publisher and ACL interactions | [FE-13.01](../tasks/FE-13.01.md) | PO | review |
-| [FE-13.03](../tasks/FE-13.03.md) | [FE-13](../06-frontend-first.md#fe-13) | Build indexing, retired and revoked source states | [FE-13.02](../tasks/FE-13.02.md) | PO | review |
+| [FE-13.01](../tasks/FE-13.01.md) | [FE-13](../06-frontend-first.md#fe-13) | Build published knowledge search and versioned reader | [FE-03.05](../tasks/FE-03.05.md) | PO | done |
+| [FE-13.02](../tasks/FE-13.02.md) | [FE-13](../06-frontend-first.md#fe-13) | Build author, publisher and ACL interactions | [FE-13.01](../tasks/FE-13.01.md) | PO | done |
+| [FE-13.03](../tasks/FE-13.03.md) | [FE-13](../06-frontend-first.md#fe-13) | Build indexing, retired and revoked source states | [FE-13.02](../tasks/FE-13.02.md) | PO | done |
 | [FE-14.01](../tasks/FE-14.01.md) | [FE-14](../06-frontend-first.md#fe-14) | Build owner-specific chat and conversation lifecycle | [FE-06.06](../tasks/FE-06.06.md), [FE-12.04](../tasks/FE-12.04.md), [FE-13.03](../tasks/FE-13.03.md) | PO | pending |
 | [FE-14.02](../tasks/FE-14.02.md) | [FE-14](../06-frontend-first.md#fe-14) | Build source, lookup, summary and draft cards | [FE-14.01](../tasks/FE-14.01.md) | PO | pending |
 | [FE-14.03](../tasks/FE-14.03.md) | [FE-14](../06-frontend-first.md#fe-14) | Build assistant availability and manual fallback | [FE-14.02](../tasks/FE-14.02.md) | PO | pending |
