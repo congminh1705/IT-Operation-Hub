@@ -6435,3 +6435,81 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-12.04 can proceed under joint Parent review.
 - Eligibility / remaining prerequisite: verified dependent task checks or joint PO review before closure.
+
+<a id="task-fe-12-04-attempt-01"></a>
+
+### FE-12.04 — Attempt 01 — 2026-11-21T14:38:16.2777138+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-12.04/attempt-01
+- Task: [task card](../tasks/FE-12.04.md)
+- Parent / phase: FE-12 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-21T14:33:40+07:00
+- Ended at: 2026-11-21T14:38:16.2777138+07:00
+- State before / after: in-progress / review
+- Previous attempt / correction: initial implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Connect only eligible assets to ticket drafts and preserve independent asset/ticket access.
+- Delivered this attempt: Ticket form uses the scoped asset inventory for selection and prefill. Confirmation rechecks active session, asset eligibility and version. Authorized asset and ticket detail links work both ways. Stale selection keeps the ticket draft.
+- Incomplete scope / deviations: joint PO acceptance pending. See visual comparison for differences.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/lib/demo/assets.ts, ticket-intake.ts and ticket-draft.ts | Shared eligible lookup and commit-time version guard | Scoped selection and confirmed association |
+| src/frontend/src/features/tickets/intake/ticket-form.tsx and ticket-detail.tsx | Picker, stale recovery, related asset | Preserve draft and independent access |
+| src/frontend/src/features/assets/asset-screen.tsx and assets.css | Asset-to-ticket entry point and catalog labels | Linked flow and readable inventory |
+| src/frontend/e2e/ticket-assets.spec.ts and src/frontend/src/lib/demo/ticket-asset.test.ts | Browser and mutation-race coverage | Four role scopes and stale write guard |
+| docs/implementation/tasks/FE-12.04.md and workflow records | Handoff and status | Traceability |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scope and applicable Parent criteria | Connect only eligible assets to ticket drafts and preserve independent asset/ticket access. | Ticket form uses the scoped asset inventory for selection and prefill. Confirmation rechecks active session, asset eligibility and version. Authorized asset and ticket detail links work both ways. Stale selection keeps the ticket draft. | pass | [Chromium](../evidence/FE-12.04/chromium.log) |
+| DEMO boundary | Synthetic fixture and scoped actor checks | In-memory workflow and scoped mock data | pass | [Implementation](https://github.com/congminh1705/IT-Operation-Hub/commit/d29727e3af4b26760ff452e9fc76ab3e049da7ad) |
+| UI comparison | Matching wide and compact reference/application captures | Captures and differences documented | pass | [Comparison](../evidence/FE-12.04/comparison.md) |
+| PO review | Actual owner acceptance | Pending joint review | not-run | [Comparison](../evidence/FE-12.04/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | node node_modules/prettier/bin/prettier.cjs --check and node node_modules/eslint/bin/eslint.js on modified frontend paths | Formatting and lint pass | Exit 0 | pass |
+| src/frontend | node node_modules/vitest/vitest.mjs run | Existing unit tests pass | 105 tests passed | pass |
+| src/frontend | node node_modules/next/dist/bin/next build | Production build and TypeScript pass | Exit 0 | pass |
+| src/frontend | node node_modules/@playwright/test/cli.js test e2e/ticket-assets.spec.ts e2e/assets.spec.ts e2e/asset-metadata.spec.ts e2e/asset-lifecycle.spec.ts e2e/ticket-intake.spec.ts --grep-invert 'compare assets|compare my-assets|compare asset|compare lifecycle|compare metadata|matched create and detail' | Chromium interaction and comparison pass | See Chromium log | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent checks completed; Hoang Cong Minh functional and visual review pending.
+- Findings / resolution: The asset-action reference has no ticket picker; compare the existing form against the additional create reference. Actual delayed submit rejected a returned asset without committing a ticket.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO acceptance pending for Parent closure.
+- Required resolution / owner: joint review by PO.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-12.04.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-12.04/comparison.md) · [Chromium](../evidence/FE-12.04/chromium.log).
+- Commit / build / environment: phase/a-frontend [implementation d29727e3af4b26760ff452e9fc76ab3e049da7ad](https://github.com/congminh1705/IT-Operation-Hub/commit/d29727e3af4b26760ff452e9fc76ab3e049da7ad) pushed and verified; local production DEMO.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated.
+- Execution-board task row: review, Owner PO.
+- Current context: linked to attempt 01.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint FE-12 PO review at http://127.0.0.1:3195/assets. FE-13.01 follows accepted closure, FE-12 PR merge and authorization.
+- Eligibility / remaining prerequisite: verified dependent task checks or joint PO review before closure.

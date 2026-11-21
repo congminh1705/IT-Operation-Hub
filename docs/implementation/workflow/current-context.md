@@ -40,7 +40,10 @@ authority: derived
 
 ## Parent FE-12
 
-- FE-12.01 in progress. Implement and verify FE-12.01 through FE-12.04 in dependency order, then submit for joint PO review.
+- All four FE-12 tasks are in review. Registry: EPIC_IN_PROGRESS. Board: 41 done, 4 review, 185 pending.
 - [FE-12.01/attempt-01](task-history.md#task-fe-12-01-attempt-01), review. 103 unit, 6 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-12.01/comparison.md). FE-12.02 can proceed under joint Parent review.
 - [FE-12.02/attempt-01](task-history.md#task-fe-12-02-attempt-01), review. 104 unit, 2 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-12.02/comparison.md). FE-12.03 can proceed under joint Parent review.
 - [FE-12.03/attempt-01](task-history.md#task-fe-12-03-attempt-01), review. 104 unit, 6 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-12.03/comparison.md). FE-12.04 can proceed under joint Parent review.
+- [FE-12.04/attempt-01](task-history.md#task-fe-12-04-attempt-01), review. 105 unit, 20 Chromium including assets and ticket submission regressions, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-12.04/comparison.md). Joint FE-12 PO review at http://127.0.0.1:3195/assets. FE-13.01 follows accepted closure, FE-12 PR merge and authorization.
+
+- Joint PO review: http://127.0.0.1:3195/assets and http://127.0.0.1:3195/tickets/new. Use synthetic Manager/Admin for metadata and lifecycle, Requester/Technician for personal asset and ticket flows. The PO functional and visual verdict is pending. A Parent PR follows joint acceptance.
