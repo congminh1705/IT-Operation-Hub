@@ -108,7 +108,10 @@ export const managesAssets = (actor: DemoPersona) =>
   actor.user.active &&
   (actor.user.role === "IT_MANAGER" || actor.user.role === "ADMIN");
 
-export function createAssets(ticketRows: () => TicketRow[]) {
+export function createAssets(
+  ticketRows: () => TicketRow[],
+  linkedTickets: (assetId: string) => string[] = () => [],
+) {
   const records = [
     seed("LT-001", "Laptop", "Dell Latitude 5440", requester, "assigned", [
       "TKT-000126",
@@ -126,6 +129,7 @@ export function createAssets(ticketRows: () => TicketRow[]) {
     ),
     seed("PR-008", "Máy in", "Máy in DEMO", null, "repair", []),
     seed("LT-009", "Laptop", "Laptop lưu hồ sơ", null, "retired", []),
+    seed("LT-014", "Laptop", "ThinkPad DEMO", technician, "assigned", []),
   ];
   let sequence = 1;
 
@@ -255,6 +259,10 @@ export function createAssets(ticketRows: () => TicketRow[]) {
       work.kind === "success" ? work.rows.map((row) => row.id) : [],
     );
     return records
+      .map((row) => ({
+        ...row,
+        ticketIds: [...new Set([...row.ticketIds, ...linkedTickets(row.id)])],
+      }))
       .filter(
         (row) =>
           row.holder === actor.user.id ||
@@ -300,6 +308,20 @@ export function createAssets(ticketRows: () => TicketRow[]) {
   }
   return {
     list,
+    ticketOptions(actor: DemoPersona) {
+      if (!actor.user.active) return [];
+      return records
+        .filter((row) =>
+          managesAssets(actor)
+            ? row.state === "stock" || row.state === "assigned"
+            : row.state === "assigned" && row.holder === actor.user.id,
+        )
+        .map(({ id, code, model, version }) => ({
+          id,
+          version,
+          label: model ? `${code} · ${model}` : code,
+        }));
+    },
     recipients(actor: DemoPersona) {
       if (!managesAssets(actor)) return [];
       return Object.values(people)
@@ -367,6 +389,14 @@ export function createAssets(ticketRows: () => TicketRow[]) {
           [],
         ),
         ...result.fields,
+        history: [
+          {
+            summary: "Nhập kho",
+            date: new Date().toISOString().slice(0, 10),
+            holder: null,
+            publicFor: null,
+          },
+        ],
       });
       return { id: newId } as const;
     },

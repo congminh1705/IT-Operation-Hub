@@ -10,11 +10,11 @@ async function open(page: Page, role: string, route = "/assets") {
 
 test("catalog counts, searches and filters", async ({ page }) => {
   await open(page, "it_manager");
-  await expect(page.getByText("6 / 6 thiết bị")).toBeVisible();
+  await expect(page.getByText("7 / 7 thiết bị")).toBeVisible();
   await page.getByLabel("Tìm trong danh sách").fill("thiet bi mang");
-  await expect(page.getByText("1 / 6 thiết bị")).toBeVisible();
+  await expect(page.getByText("1 / 7 thiết bị")).toBeVisible();
   await page.getByLabel("Lọc trạng thái").selectOption("stock");
-  await expect(page.getByText("0 / 6 thiết bị")).toBeVisible();
+  await expect(page.getByText("0 / 7 thiết bị")).toBeVisible();
   await page.getByLabel("Tìm trong danh sách").clear();
   await expect(page.getByRole("link", { name: /LT-018/ })).toBeVisible();
 });
@@ -41,7 +41,7 @@ test("requester history omits internal entries and other tickets", async ({
 
 test("technician own and support scopes are independent", async ({ page }) => {
   await open(page, "technician", "/assets?scope=mine");
-  await expect(page.getByText("1 / 1 thiết bị")).toBeVisible();
+  await expect(page.getByText("2 / 2 thiết bị")).toBeVisible();
   await page.getByRole("link", { name: "Thiết bị hỗ trợ" }).click();
   await expect(page.getByRole("link", { name: /LT-018/ })).toBeVisible();
   await expect(page.getByRole("link", { name: /PR-008/ })).toHaveCount(0);

@@ -23,7 +23,10 @@ import type { QueryClient } from "../../lib/api/query-client";
 /** Memory-only session. Epochs fence late auth responses as well as query results. */
 export class SessionStore {
   private persona: DemoPersona | null = null;
-  readonly assets = createAssets(() => this.tickets.rows());
+  readonly assets = createAssets(
+    () => this.tickets.rows(),
+    (id) => this.tickets.assetTicketIds(id),
+  );
   readonly automationPolicy = createAutomationPolicy();
   readonly approvalDecisions = createApprovalDecisions((team) =>
     this.automationPolicy.allowsTeam(team),
@@ -53,6 +56,7 @@ export class SessionStore {
     snapshot: () => this.sla.snapshotTable(),
     teams: () => this.teams.routingOptions().teams,
     people: () => this.teams.routingOptions().people,
+    assetOptions: (actor) => this.assets.ticketOptions(actor),
   });
   private epoch = 0;
   passwordChanged = false;

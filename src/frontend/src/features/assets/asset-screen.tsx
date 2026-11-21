@@ -36,6 +36,9 @@ export function AssetScreen({ scope, id }: { scope: string; id?: string }) {
 
   if (id && !asset) return <Feedback kind="forbidden" />;
   const canEdit = managesAssets(persona);
+  const canLink =
+    asset &&
+    store.assets.ticketOptions(persona).some((item) => item.id === asset.id);
   if (editing && canEdit)
     return (
       <div className="automation assets">
@@ -61,7 +64,7 @@ export function AssetScreen({ scope, id }: { scope: string; id?: string }) {
             </Link>
           </div>
           <section className="automation-panel" aria-label="Hồ sơ tài sản">
-            <h2>{asset.model}</h2>
+            <h2>{asset.model || asset.code}</h2>
             <p>
               {asset.code} · {asset.serial}
             </p>
@@ -83,6 +86,15 @@ export function AssetScreen({ scope, id }: { scope: string; id?: string }) {
               >
                 Cấp phát / thu hồi
               </button>
+            )}
+            {canLink && (
+              <Link
+                href={`/tickets/new?asset=${asset.id}`}
+                className="ui-button"
+                data-variant="secondary"
+              >
+                Yêu cầu hỗ trợ thiết bị
+              </Link>
             )}
             <dl className="automation-facts">
               <div>
@@ -203,6 +215,15 @@ export function AssetScreen({ scope, id }: { scope: string; id?: string }) {
           </p>
           {filtered.length ? (
             <ul className={own ? "asset-cards" : "asset-table"}>
+              {!own && (
+                <li className="asset-column-headings" aria-hidden="true">
+                  <span>Tài sản</span>
+                  <span>Loại / Serial</span>
+                  <span>Trạng thái</span>
+                  <span>Người giữ / Phòng ban</span>
+                  <span>Bảo hành</span>
+                </li>
+              )}
               {filtered.map((row) => (
                 <li key={row.id}>
                   <Link href={`${listUrl}&id=${row.id}`}>
@@ -211,14 +232,29 @@ export function AssetScreen({ scope, id }: { scope: string; id?: string }) {
                   </Link>
                   {!own && (
                     <span>
-                      {row.type} / {row.serial}
+                      <span className="asset-cell-label">Loại / Serial</span>
+                      {row.type} / {row.serial || "—"}
                     </span>
                   )}
                   <span data-asset-state={row.state}>
+                    <span className="asset-cell-label">Trạng thái</span>
                     {assetStates[row.state]}
                   </span>
-                  <span>{row.holderLabel ?? "—"}</span>
-                  {!own && <span>{row.warranty || "—"}</span>}
+                  <span>
+                    <span className="asset-cell-label">Người giữ</span>
+                    {row.holderLabel ?? "—"}
+                    {!own && row.holderDepartment && (
+                      <small className="asset-department">
+                        {row.holderDepartment}
+                      </small>
+                    )}
+                  </span>
+                  {!own && (
+                    <span>
+                      <span className="asset-cell-label">Bảo hành</span>
+                      {row.warranty || "—"}
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>

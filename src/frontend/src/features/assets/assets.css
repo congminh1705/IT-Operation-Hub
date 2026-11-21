@@ -48,6 +48,23 @@
 .asset-table li:hover {
   background: #f2f8f6;
 }
+.asset-table .asset-column-headings {
+  font-weight: 650;
+  background: #eff5f2;
+}
+.asset-cell-label,
+.asset-department {
+  display: block;
+  font-size: 0.8rem;
+  color: #52645d;
+}
+.asset-table .asset-cell-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
 .assets a span {
   display: block;
 }
@@ -68,6 +85,15 @@
   color: #52645d;
 }
 @media (max-width: 700px) {
+  .asset-table .asset-column-headings {
+    display: none;
+  }
+  .asset-table .asset-cell-label {
+    position: static;
+    width: auto;
+    height: auto;
+    clip-path: none;
+  }
   .asset-table li {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

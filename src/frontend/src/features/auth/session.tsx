@@ -65,7 +65,14 @@ export function safeReturnPath(value: string | null): string {
     params.set("demo", "unavailable");
   if (url.pathname === "/tickets/new") {
     const demo = url.searchParams.get("demo");
-    if (demo === "failure" || demo === "stale" || demo === "unknown")
+    const asset = url.searchParams.get("asset");
+    if (asset && /^[A-Z0-9-]{1,32}$/.test(asset)) params.set("asset", asset);
+    if (
+      demo === "failure" ||
+      demo === "stale" ||
+      demo === "unknown" ||
+      demo === "asset-stale"
+    )
       params.set("demo", demo);
   }
   if (

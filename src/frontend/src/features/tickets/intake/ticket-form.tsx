@@ -1,13 +1,12 @@
 "use client";
 import type { WorkspaceSearch } from "@/components/layout/workspace-page";
-import { submitFixtures } from "@/lib/demo/ticket-intake";
+import { submitFixtures, type SubmitFixture } from "@/lib/demo/ticket-intake";
 
 import { useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/features/auth/session";
 import {
-  allowedAssets,
   derivePriority,
   readTicketDraft,
   type TicketDraft,
@@ -32,9 +31,7 @@ export function TicketForm({ search }: { search: WorkspaceSearch }) {
   const [dirty, setDirty] = useState(false);
   const [error, setError] = useState<{ field: string; message: string }>();
   const [draft, setDraft] = useState<TicketDraft>();
-  const [submission, setSubmission] = useState<
-    "pending" | "failure" | "stale" | "unknown"
-  >();
+  const [submission, setSubmission] = useState<"pending" | SubmitFixture>();
   const [saved, setSaved] = useState<{
     target: AttachmentTarget;
     files: UploadedAttachment[];
@@ -91,6 +88,9 @@ export function TicketForm({ search }: { search: WorkspaceSearch }) {
       />
     );
   const categories = store.catalog.activeLabels("categories");
+  const assetOptions = store.assets.ticketOptions(persona);
+  const initialAsset =
+    assetOptions.find((item) => item.id === search.asset)?.id ?? "";
   const priority = derivePriority(impact, urgency);
   function validate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -98,7 +98,7 @@ export function TicketForm({ search }: { search: WorkspaceSearch }) {
     const data = new FormData(event.currentTarget);
     data.delete("files");
     for (const file of files) data.append("files", file);
-    const result = readTicketDraft(data, persona, categories);
+    const result = readTicketDraft(data, categories, assetOptions);
     if (!result.ok) {
       setError(result);
       const target = event.currentTarget.elements.namedItem(result.field);
@@ -229,10 +229,11 @@ export function TicketForm({ search }: { search: WorkspaceSearch }) {
             <select
               aria-label="Thiết bị liên quan"
               name="asset"
+              defaultValue={initialAsset}
               {...invalid("asset")}
             >
               <option value="">Không liên kết thiết bị</option>
-              {allowedAssets(persona).map((item) => (
+              {assetOptions.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.label}
                 </option>
@@ -331,6 +332,13 @@ export function TicketForm({ search }: { search: WorkspaceSearch }) {
               {draft.title} · {draft.priority}
             </p>
             <p>{draft.category}</p>
+            {draft.asset && (
+              <p>
+                Thiết bị liên quan ·{" "}
+                {assetOptions.find((item) => item.id === draft.asset)?.label ??
+                  "Lựa chọn cần kiểm tra lại"}
+              </p>
+            )}
             {!!draft.attachments.length && (
               <ul aria-label="Tệp trong bản xem trước">
                 {draft.attachments.map((file, index) => (
@@ -351,7 +359,9 @@ export function TicketForm({ search }: { search: WorkspaceSearch }) {
                     ? "Chưa gửi được yêu cầu. Bản nháp vẫn còn."
                     : submission === "stale"
                       ? "Ngữ cảnh đã thay đổi. Kiểm tra lại bản nháp trước khi gửi."
-                      : "Chưa xác nhận được kết quả. Kiểm tra trước khi gửi lại."}
+                      : submission === "asset-stale"
+                        ? "Thiết bị đã thay đổi hoặc không còn được phép liên kết. Quay lại để chọn lại thiết bị."
+                        : "Chưa xác nhận được kết quả. Kiểm tra trước khi gửi lại."}
               </p>
             )}
             {submission === "unknown" ? (
@@ -370,7 +380,11 @@ export function TicketForm({ search }: { search: WorkspaceSearch }) {
               </Button>
             ) : (
               <Button
-                disabled={submission === "pending" || submission === "stale"}
+                disabled={
+                  submission === "pending" ||
+                  submission === "stale" ||
+                  submission === "asset-stale"
+                }
                 onClick={() => void send()}
               >
                 Xác nhận gửi

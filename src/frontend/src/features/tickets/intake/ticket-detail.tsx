@@ -91,6 +91,11 @@ export function TicketDetail({
     assignable,
     claimable,
   } = result;
+  const linkedAsset = draft?.asset
+    ? store.assets
+        .list(persona, store.teams.ownTeamIds(), "work")
+        .find((asset) => asset.id === draft.asset)
+    : undefined;
   const visibleView = view === "internal" && !internal ? "public" : view;
   const shown = events.filter((event) =>
     visibleView === "history"
@@ -128,6 +133,16 @@ export function TicketDetail({
           </p>
           {draft && (
             <p style={{ whiteSpace: "pre-wrap" }}>{draft.description}</p>
+          )}
+          {linkedAsset && (
+            <div>
+              <dt>Thiết bị liên quan</dt>
+              <dd>
+                <Link href={`/assets?id=${linkedAsset.id}`}>
+                  {linkedAsset.code} · {linkedAsset.model}
+                </Link>
+              </dd>
+            </div>
           )}
           {draft?.onboarding && (
             <section aria-label="Thông tin onboarding">
