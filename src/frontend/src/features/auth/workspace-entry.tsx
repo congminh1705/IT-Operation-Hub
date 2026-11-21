@@ -91,6 +91,7 @@ export function WorkspaceEntry({
           <AssetScreen
             scope={params.get("scope") ?? "work"}
             id={params.get("id") ?? undefined}
+            initialLifecycle={params.get("lifecycle") === "1"}
           />
         ) : pathname === "/approvals" ? (
           <ApprovalProposal />
@@ -107,6 +108,7 @@ export function WorkspaceEntry({
           <WorkBoard
             scope={params.get("scope") ?? undefined}
             scenario={params.get("demo") ?? undefined}
+            initialTask={params.get("task") ?? undefined}
           />
         ) : pathname === "/tickets" ? (
           <TicketList search={search} />

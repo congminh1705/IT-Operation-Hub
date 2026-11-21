@@ -115,6 +115,11 @@ export function safeReturnPath(value: string | null): string {
     params.set("demo", downloadRevokedFixture);
   if (url.pathname === "/work" && url.searchParams.get("demo") === "work-stale")
     params.set("demo", "work-stale");
+  const task = url.searchParams.get("task");
+  if (url.pathname === "/work" && task && /^T\d{2}$/.test(task))
+    params.set("task", task);
+  if (url.pathname === "/assets" && url.searchParams.get("lifecycle") === "1")
+    params.set("lifecycle", "1");
   if (
     url.pathname === "/workforce" &&
     url.searchParams.get("demo") === "workforce-conflict"

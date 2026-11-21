@@ -35,7 +35,12 @@
   border-top: 1px solid #d4e2dc;
   padding-top: 12px;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 10px;
+}
+.assistant-cards select {
+  width: 100%;
+  min-width: 0;
 }
 @media (max-width: 1100px) {
   .assistant-workspace {

@@ -1,0 +1,11 @@
+
+Running 6 tests using 1 worker
+
+  ok 1 e2e\assistant-management.spec.ts:60:1 › technician reaches own task, invalid Done is blocked and progress confirms (1.2s)
+  ok 2 e2e\assistant-management.spec.ts:80:1 › non-requester acceptance and forged admin handoff are blocked (710ms)
+  ok 3 e2e\assistant-management.spec.ts:99:1 › manager reaches native assignment, approval and asset guards (973ms)
+  ok 4 e2e\assistant-management.spec.ts:122:1 › admin route keeps sensitive fields out of workspace (607ms)
+  ok 5 e2e\assistant-management.spec.ts:139:3 › compare management card ai-tech (3.2s)
+  ok 6 e2e\assistant-management.spec.ts:139:3 › compare management card ai-approval (1.4s)
+
+  6 passed (9.1s)

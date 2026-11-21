@@ -12,13 +12,15 @@ import { WorkPlan } from "./work-plan";
 export function WorkBoard({
   scope,
   scenario,
+  initialTask,
 }: {
   scope?: string;
   scenario?: string;
+  initialTask?: string;
 }) {
   const { store, persona } = useSession();
   const [showPlan, setShowPlan] = useState(false);
-  const [selected, setSelected] = useState<string>();
+  const [selected, setSelected] = useState(initialTask);
   const [, refresh] = useState(0);
   const [view, setView] = useState<"cards" | "table">("cards");
   const [filter, setFilter] = useState("");

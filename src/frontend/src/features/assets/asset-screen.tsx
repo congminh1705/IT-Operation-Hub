@@ -12,13 +12,21 @@ import { normalizeTicketText } from "@/lib/demo/ticket-list";
 import "../automation/automation.css";
 import "./assets.css";
 
-export function AssetScreen({ scope, id }: { scope: string; id?: string }) {
+export function AssetScreen({
+  scope,
+  id,
+  initialLifecycle = false,
+}: {
+  scope: string;
+  id?: string;
+  initialLifecycle?: boolean;
+}) {
   const { store, persona } = useSession();
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [state, setState] = useState<AssetState | "">("");
   const [editing, setEditing] = useState(false);
-  const [changing, setChanging] = useState(false);
+  const [changing, setChanging] = useState(initialLifecycle);
   const [, refresh] = useState(0);
   if (!persona) return null;
 

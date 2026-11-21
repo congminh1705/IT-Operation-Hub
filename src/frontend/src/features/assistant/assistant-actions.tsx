@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { readApprovalProposal } from "@/lib/demo/approval-proposal";
 import { useSession } from "@/features/auth/session";
 import {
   assistantIntent,
@@ -16,6 +17,10 @@ export function AssistantActions() {
   if (!persona) return null;
   const action = intent ? assistantIntent(intent, persona.user.role) : null;
   const teams = store.teams.ownTeamIds();
+  const proposal =
+    action?.kind === "allowed" && action.resource === "proposal"
+      ? readApprovalProposal(persona, false)
+      : null;
   const needsTarget = action?.kind === "allowed" && action.resource !== "none";
   const options =
     action?.kind !== "allowed"
@@ -27,9 +32,14 @@ export function AssistantActions() {
         : action.resource === "task"
           ? store.work
               .list(persona, teams, "work")
+              .filter(
+                (row) =>
+                  persona.user.role !== "TECHNICIAN" ||
+                  row.assigneeId === persona.user.id,
+              )
               .map(({ id, title }) => ({ id, label: id + " · " + title }))
-          : action.resource === "proposal"
-            ? [{ id: "PROP-DEMO-PROPOSED", label: "PROP-DEMO-PROPOSED" }]
+          : proposal
+            ? [{ id: proposal.id, label: proposal.id + " · " + proposal.task }]
             : [];
   const ticket =
     action?.kind === "allowed" &&
@@ -49,14 +59,25 @@ export function AssistantActions() {
       (ticketAction === "ticketState" &&
         ticket.internal &&
         ticket.actions.some((item) => item !== "close")));
+  const managementHref =
+    selected && ticketAction === "progress"
+      ? `/work?scope=team&task=${selected.id}`
+      : selected && ticketAction === "asset"
+        ? `/assets?scope=work&id=${selected.id}&lifecycle=1`
+        : selected && ticketAction === "approval"
+          ? "/approvals"
+          : ticket?.assignable && ticketAction === "assignment"
+            ? `/tickets/${ticket.row.id}#ticket-routing`
+            : ticketAction === "admin"
+              ? "/admin/users/new"
+              : undefined;
   const formHref =
     ticketAction === "create"
       ? "/tickets/new"
       : ticketAllowed
         ? `/tickets/${ticket.row.id}${ticketAction === "note" ? "?view=internal#ticket-reply" : ticketAction === "reply" ? "#ticket-reply" : "#ticket-actions"}`
-        : undefined;
-  const ticketFormUnavailable =
-    ticket && !ticketAllowed && ticketAction !== "assignment";
+        : managementHref;
+  const ticketFormUnavailable = ticket && !ticketAllowed && !managementHref;
   return (
     <section className="assistant-cards" aria-label="Thao tác được hỗ trợ">
       <h3>Thao tác được hỗ trợ</h3>
