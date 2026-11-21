@@ -7084,7 +7084,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [task card](../tasks/FE-13.01.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [comparison](../evidence/FE-13.01/comparison.md), [Chromium](../evidence/FE-13.01/chromium.log).
-- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-13-01-attempt-01). FE-13 PR delivery tracked in [current context](current-context.md).
+- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-13-01-attempt-01). FE-13 Parent [PR #15](https://github.com/congminh1705/IT-Operation-Hub/pull/15) is open into main. Acceptance commit c18c4f6 pushed.
 
 #### 9. Execution record synchronization
 
@@ -7155,7 +7155,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [task card](../tasks/FE-13.02.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [comparison](../evidence/FE-13.02/comparison.md), [Chromium](../evidence/FE-13.02/chromium.log).
-- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-13-02-attempt-01). FE-13 PR delivery tracked in [current context](current-context.md).
+- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-13-02-attempt-01). FE-13 Parent [PR #15](https://github.com/congminh1705/IT-Operation-Hub/pull/15) is open into main. Acceptance commit c18c4f6 pushed.
 
 #### 9. Execution record synchronization
 
@@ -7226,7 +7226,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [task card](../tasks/FE-13.03.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [comparison](../evidence/FE-13.03/comparison.md), [Chromium](../evidence/FE-13.03/chromium.log).
-- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-13-03-attempt-01). FE-13 PR delivery tracked in [current context](current-context.md).
+- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-13-03-attempt-01). FE-13 Parent [PR #15](https://github.com/congminh1705/IT-Operation-Hub/pull/15) is open into main. Acceptance commit c18c4f6 pushed.
 
 #### 9. Execution record synchronization
 
