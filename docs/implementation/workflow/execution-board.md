@@ -18,7 +18,7 @@ purpose: "Maintain the single status and owner registry for every refined execut
 
 ## 1. Scope and authority
 
-All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. **39 tasks are done** through FE-10.03, including all three FE-10 tasks. **191 remain pending.** [FE-10 is EPIC_DONE in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
+All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. **39 tasks are done** through FE-10.03, including all three FE-10 tasks. **One task is in review and 190 remain pending.** [FE-10 is EPIC_DONE in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
 
 The [package registry](../README.md#4-task-tracker) holds epic state; this board alone holds task state and PO ownership. Use the [task workflow](task-workflow.md). [Parent coverage and closure](../package-task-coverage.md) maps every parent criterion to outputs and names any external integration evidence. Package readiness means defined scope; dependencies, affected decisions and future coding authorization still gate execution.
 
@@ -69,7 +69,7 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FE-10.01](../tasks/FE-10.01.md) | [FE-10](../06-frontend-first.md#fe-10) | Build workflow version editor and publish preview | [FE-08.04](../tasks/FE-08.04.md) | PO | done |
 | [FE-10.02](../tasks/FE-10.02.md) | [FE-10](../06-frontend-first.md#fe-10) | Build policy scope and enable-disable confirmation | [FE-10.01](../tasks/FE-10.01.md) | PO | done |
 | [FE-10.03](../tasks/FE-10.03.md) | [FE-10](../06-frontend-first.md#fe-10) | Build coordination run timeline and recovery states | [FE-10.02](../tasks/FE-10.02.md) | PO | done |
-| [FE-11.01](../tasks/FE-11.01.md) | [FE-11](../06-frontend-first.md#fe-11) | Build proposal diff and impact detail | [FE-09.03](../tasks/FE-09.03.md), [FE-10.03](../tasks/FE-10.03.md) | PO | pending |
+| [FE-11.01](../tasks/FE-11.01.md) | [FE-11](../06-frontend-first.md#fe-11) | Build proposal diff and impact detail | [FE-09.03](../tasks/FE-09.03.md), [FE-10.03](../tasks/FE-10.03.md) | PO | review |
 | [FE-11.02](../tasks/FE-11.02.md) | [FE-11](../06-frontend-first.md#fe-11) | Build approve-reject and stale decision interaction | [FE-11.01](../tasks/FE-11.01.md) | PO | pending |
 | [FE-12.01](../tasks/FE-12.01.md) | [FE-12](../06-frontend-first.md#fe-12) | Build scoped asset list, detail and history | [FE-05.03](../tasks/FE-05.03.md) | PO | pending |
 | [FE-12.02](../tasks/FE-12.02.md) | [FE-12](../06-frontend-first.md#fe-12) | Build asset metadata create-edit forms | [FE-12.01](../tasks/FE-12.01.md) | PO | pending |
