@@ -56,4 +56,9 @@ authority: derived
 - [FE-13.03/attempt-02](task-history.md#task-fe-13-03-attempt-02), done. 107 unit, 12 Chromium including six knowledge/authoring regressions, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-13.03/comparison.md).
 
 - Joint PO review: http://127.0.0.1:3204/knowledge. Published reader, explicit KB-014 author/publisher grants and source lifecycle passed agent checks. PO confirmed joint acceptance.
-- Verified implementation pushes on phase/a-frontend: 1a67c21, bb3a807, b706fee. FE-13 Parent [PR #15](https://github.com/congminh1705/IT-Operation-Hub/pull/15) is open into main. Acceptance commit c18c4f6 pushed. FE-14.01 follows verified merge and authorization.
+- Verified implementation pushes on phase/a-frontend: 1a67c21, bb3a807, b706fee. FE-13 Parent [PR #15](https://github.com/congminh1705/IT-Operation-Hub/pull/15) merged into main at 65c1ffc. Phase branch fast-forwarded.
+
+## Parent FE-14
+
+- FE-14.01 in progress. Joint acceptance after sequential task verification.
+- [FE-14.01/attempt-01](task-history.md#task-fe-14-01-attempt-01), review. 108 unit, 5 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-14.01/comparison.md). FE-14.02 can proceed under joint Parent review.

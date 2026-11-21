@@ -38,6 +38,13 @@
 .assistant-workspace .assistant-check input {
   min-height: auto;
 }
+.assistant-cards {
+  margin-top: 16px;
+  border-top: 1px solid #d4e2dc;
+  padding-top: 12px;
+  display: grid;
+  gap: 10px;
+}
 @media (max-width: 1100px) {
   .assistant-workspace {
     grid-template-columns: minmax(0, 1fr) minmax(0, 2.5fr);

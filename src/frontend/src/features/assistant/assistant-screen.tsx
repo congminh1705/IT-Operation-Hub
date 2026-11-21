@@ -7,6 +7,7 @@ import { useSession } from "@/features/auth/session";
 import { canUseChatAudience, type ChatAudience } from "@/lib/demo/assistant";
 import "../automation/automation.css";
 import "./assistant.css";
+import { AssistantCards } from "./assistant-cards";
 
 const labels = { PUBLIC: "Công khai", INTERNAL: "Nội bộ" };
 
@@ -195,6 +196,12 @@ export function AssistantScreen({ id }: { id?: string }) {
               </div>
             </form>
           </>
+        )}
+        {(!id || chat) && (
+          <AssistantCards
+            key={chat?.audience ?? audience}
+            audience={chat?.audience ?? audience}
+          />
         )}
       </section>
       <aside

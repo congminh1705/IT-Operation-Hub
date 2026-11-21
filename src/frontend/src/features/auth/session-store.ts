@@ -29,6 +29,20 @@ export class SessionStore {
     () => this.persona,
     () => this.identity(),
   );
+  readonly replyDrafts = new Map<
+    string,
+    { public: string; internal: string }
+  >();
+  assistantDraft: {
+    id: string;
+    audience: "public" | "internal";
+    text: string;
+    scope: string;
+  } | null = null;
+  setAssistantDraft(draft: SessionStore["assistantDraft"]) {
+    if (!draft || draft.scope === this.identity()?.scope)
+      this.assistantDraft = draft;
+  }
   readonly knowledge = createKnowledge();
   readonly assets = createAssets(
     () => this.tickets.rows(),
@@ -85,6 +99,8 @@ export class SessionStore {
     this.listeners.forEach((listener) => listener());
   }
   invalidate = () => {
+    this.replyDrafts.clear();
+    this.assistantDraft = null;
     this.epoch++;
     this.read++;
     this.persona = null;

@@ -32,7 +32,16 @@ export function TicketReplyComposer({
   onRevoked: (draft: string) => void;
 }) {
   const { store } = useSession();
-  const [drafts, setDrafts] = useState({ public: "", internal: "" });
+  const [drafts, setDrafts] = useState(
+    () => store.replyDrafts.get(id) ?? { public: "", internal: "" },
+  );
+  const scopedIdentity = store.identity()?.scope;
+  function writeDraft(audience: Audience, text: string) {
+    if (store.identity()?.scope !== scopedIdentity) return;
+    const next = { ...(store.replyDrafts.get(id) ?? drafts), [audience]: text };
+    setDrafts(next);
+    store.replyDrafts.set(id, next);
+  }
   const [files, setFiles] = useState<Record<Audience, File[]>>({
     public: [],
     internal: [],
@@ -90,7 +99,7 @@ export function TicketReplyComposer({
       setFeedback("Chưa gửi được. Kiểm tra lại bản nháp và xem trước lần nữa.");
       return;
     }
-    setDrafts((current) => ({ ...current, [currentPreview.audience]: "" }));
+    writeDraft(currentPreview.audience, "");
     const selected = files[currentPreview.audience];
     if (selected.length) {
       const batch = crypto.randomUUID();
@@ -180,9 +189,51 @@ export function TicketReplyComposer({
             value={drafts[view]}
             onChange={(event) => {
               const text = event.target.value;
-              setDrafts((current) => ({ ...current, [view]: text }));
+              writeDraft(view, text);
             }}
           />
+          {store.assistantDraft?.id === id &&
+            store.assistantDraft.scope === scopedIdentity &&
+            store.assistantDraft.audience === view &&
+            (view !== "internal" || internal) && (
+              <button
+                type="button"
+                className="ui-button"
+                data-variant="secondary"
+                onClick={() => {
+                  const incoming = store.assistantDraft;
+                  if (
+                    !incoming ||
+                    incoming.id !== id ||
+                    incoming.audience !== view ||
+                    incoming.scope !== store.identity()?.scope
+                  )
+                    return;
+                  const actor = store.getSnapshot();
+                  const current =
+                    actor &&
+                    store.tickets.detail(actor, id, store.teams.ownTeamIds());
+                  if (
+                    !current?.canReply ||
+                    (view === "internal" && !current.internal)
+                  )
+                    return;
+                  const next = [drafts[view], incoming.text]
+                    .filter(Boolean)
+                    .join("\n\n");
+                  if (next.length > 4000) {
+                    setFeedback(
+                      "Bản nháp đang có không còn đủ chỗ để chèn nội dung.",
+                    );
+                    return;
+                  }
+                  writeDraft(view, next);
+                  store.setAssistantDraft(null);
+                }}
+              >
+                Chèn bản nháp DEMO
+              </button>
+            )}
           <TicketAttachmentPicker
             key={view}
             files={files[view]}
