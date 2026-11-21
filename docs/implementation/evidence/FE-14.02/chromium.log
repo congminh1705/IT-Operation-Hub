@@ -1,0 +1,11 @@
+
+Running 6 tests using 1 worker
+
+  ok 1 e2e\assistant-cards.spec.ts:53:1 › source and asset cards recheck current scope (1.2s)
+  ok 2 e2e\assistant-cards.spec.ts:71:1 › revoked source produces no citation on the existing session (603ms)
+  ok 3 e2e\assistant-cards.spec.ts:87:1 › editable handoff preserves existing native text and has no ticket effect (703ms)
+  ok 4 e2e\assistant-cards.spec.ts:113:1 › internal draft cannot hand off into a public reply (574ms)
+  ok 5 e2e\assistant-cards.spec.ts:137:3 › compare card ai-requester (2.2s)
+  ok 6 e2e\assistant-cards.spec.ts:137:3 › compare card ai-tech (2.3s)
+
+  6 passed (8.8s)
