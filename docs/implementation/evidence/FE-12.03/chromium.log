@@ -1,0 +1,11 @@
+
+Running 6 tests using 1 worker
+
+  ok 1 e2e\asset-lifecycle.spec.ts:26:1 › one concurrent issue wins and the losing confirmation reports stale (1.1s)
+  ok 2 e2e\asset-lifecycle.spec.ts:45:1 › return before retire, cancel, and repeated return guard (821ms)
+  ok 3 e2e\asset-lifecycle.spec.ts:81:1 › returns to repair and requires stock before a new issue (692ms)
+  ok 4 e2e\asset-lifecycle.spec.ts:106:3 › rejects issue of PR-008 (659ms)
+  ok 5 e2e\asset-lifecycle.spec.ts:106:3 › rejects issue of LT-009 (565ms)
+  ok 6 e2e\asset-lifecycle.spec.ts:115:1 › compare lifecycle detail and action reference (1.5s)
+
+  6 passed (6.6s)

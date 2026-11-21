@@ -6281,3 +6281,80 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-12.02 can proceed under joint Parent review.
 - Eligibility / remaining prerequisite: verified dependent task checks or joint PO review before closure.
+
+<a id="task-fe-12-02-attempt-01"></a>
+
+### FE-12.02 — Attempt 01 — 2026-11-21T14:33:01.0270508+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-12.02/attempt-01
+- Task: [task card](../tasks/FE-12.02.md)
+- Parent / phase: FE-12 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-21T14:27:00+07:00
+- Ended at: 2026-11-21T14:33:01.0270508+07:00
+- State before / after: in-progress / review
+- Previous attempt / correction: initial implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Validate asset metadata edits while preserving holder and lifecycle fields.
+- Delivered this attempt: Manager/Admin create and edit asset metadata with duplicate code/serial and date checks, input preservation, preview and explicit save. New records start in stock. Overposted holder and state are ignored.
+- Incomplete scope / deviations: joint PO acceptance pending. See visual comparison for differences.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/assets/asset-metadata.tsx and asset-screen.tsx | Create/edit form and preview | Manager and Admin interface |
+| src/frontend/src/lib/demo/assets.ts and assets.test.ts | Whitelisted, versioned write and forged-field test | Preserve lifecycle and holder |
+| src/frontend/e2e/asset-metadata.spec.ts | Duplicate/date checks and saved detail | Browser evidence |
+| docs/implementation/tasks/FE-12.02.md and workflow records | Handoff and status | Traceability |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scope and applicable Parent criteria | Validate asset metadata edits while preserving holder and lifecycle fields. | Manager/Admin create and edit asset metadata with duplicate code/serial and date checks, input preservation, preview and explicit save. New records start in stock. Overposted holder and state are ignored. | pass | [Chromium](../evidence/FE-12.02/chromium.log) |
+| DEMO boundary | Synthetic fixture and scoped actor checks | In-memory workflow and scoped mock data | pass | [Implementation](https://github.com/congminh1705/IT-Operation-Hub/commit/09a29d771d39567aa8c728dbeb2a45d6ce0a0948) |
+| UI comparison | Matching wide and compact reference/application captures | Captures and differences documented | pass | [Comparison](../evidence/FE-12.02/comparison.md) |
+| PO review | Actual owner acceptance | Pending joint review | not-run | [Comparison](../evidence/FE-12.02/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | node node_modules/prettier/bin/prettier.cjs --check and node node_modules/eslint/bin/eslint.js on modified frontend paths | Formatting and lint pass | Exit 0 | pass |
+| src/frontend | node node_modules/vitest/vitest.mjs run | Existing unit tests pass | 104 tests passed | pass |
+| src/frontend | node node_modules/next/dist/bin/next build | Production build and TypeScript pass | Exit 0 | pass |
+| src/frontend | node node_modules/@playwright/test/cli.js test e2e/asset-metadata.spec.ts | Chromium interaction and comparison pass | See Chromium log | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent checks completed; Hoang Cong Minh functional and visual review pending.
+- Findings / resolution: Duplicate identifiers and invalid dates retain the draft. Captures show the responsive form. Required code and optional serial match the reference.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO acceptance pending for Parent closure.
+- Required resolution / owner: joint review by PO.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-12.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-12.02/comparison.md) · [Chromium](../evidence/FE-12.02/chromium.log).
+- Commit / build / environment: phase/a-frontend [implementation 09a29d771d39567aa8c728dbeb2a45d6ce0a0948](https://github.com/congminh1705/IT-Operation-Hub/commit/09a29d771d39567aa8c728dbeb2a45d6ce0a0948) pushed and verified; local production DEMO.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated.
+- Execution-board task row: review, Owner PO.
+- Current context: linked to attempt 01.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-12.03 can proceed under joint Parent review.
+- Eligibility / remaining prerequisite: verified dependent task checks or joint PO review before closure.

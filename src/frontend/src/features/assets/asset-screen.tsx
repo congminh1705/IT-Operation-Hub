@@ -7,6 +7,7 @@ import { Feedback } from "@/components/feedback/feedback";
 import { useSession } from "@/features/auth/session";
 import { assetStates, managesAssets, type AssetState } from "@/lib/demo/assets";
 import { AssetMetadataForm } from "./asset-metadata";
+import { AssetLifecycle } from "./asset-lifecycle";
 import { normalizeTicketText } from "@/lib/demo/ticket-list";
 import "../automation/automation.css";
 import "./assets.css";
@@ -17,6 +18,7 @@ export function AssetScreen({ scope, id }: { scope: string; id?: string }) {
   const [query, setQuery] = useState("");
   const [state, setState] = useState<AssetState | "">("");
   const [editing, setEditing] = useState(false);
+  const [changing, setChanging] = useState(false);
   const [, refresh] = useState(0);
   if (!persona) return null;
 
@@ -73,6 +75,15 @@ export function AssetScreen({ scope, id }: { scope: string; id?: string }) {
                 Sửa thông tin
               </button>
             )}
+            {canEdit && (
+              <button
+                type="button"
+                className="ui-button"
+                onClick={() => setChanging(true)}
+              >
+                Cấp phát / thu hồi
+              </button>
+            )}
             <dl className="automation-facts">
               <div>
                 <dt>Loại</dt>
@@ -88,6 +99,12 @@ export function AssetScreen({ scope, id }: { scope: string; id?: string }) {
                 <dt>Người giữ</dt>
                 <dd>{asset.holderLabel ?? "—"}</dd>
               </div>
+              {asset.holderDepartment && (
+                <div>
+                  <dt>Phòng ban</dt>
+                  <dd>{asset.holderDepartment}</dd>
+                </div>
+              )}
               <div>
                 <dt>Bảo hành</dt>
                 <dd>{asset.warranty || "—"}</dd>
@@ -98,10 +115,12 @@ export function AssetScreen({ scope, id }: { scope: string; id?: string }) {
             <h2>Lịch sử thiết bị</h2>
             {asset.history.length ? (
               <ol>
-                {asset.history.map((entry) => (
-                  <li key={entry.date + entry.summary}>
+                {asset.history.map((entry, index) => (
+                  <li key={entry.date + entry.summary + index}>
                     <time dateTime={entry.date}>{entry.date}</time> ·{" "}
                     {entry.summary}
+                    {entry.holder ? ` · ${entry.holder}` : ""}
+                    {entry.detail && <p>{entry.detail}</p>}
                   </li>
                 ))}
               </ol>
@@ -109,6 +128,15 @@ export function AssetScreen({ scope, id }: { scope: string; id?: string }) {
               <p>Chưa có lịch sử trong phạm vi của bạn.</p>
             )}
           </section>
+          {changing && canEdit && (
+            <AssetLifecycle
+              asset={asset}
+              onClose={() => {
+                setChanging(false);
+                refresh((value) => value + 1);
+              }}
+            />
+          )}
           <section className="automation-panel" aria-label="Ticket liên quan">
             <h2>Ticket liên quan</h2>
             {asset.tickets.length ? (

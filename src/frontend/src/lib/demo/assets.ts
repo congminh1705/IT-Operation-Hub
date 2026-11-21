@@ -23,9 +23,30 @@ export type AssetMetadata = {
   warranty: string;
   notes: string;
 };
+export const assetActions = {
+  issue: "Cấp phát",
+  return: "Thu hồi",
+  repair: "Chuyển sửa chữa",
+  stock: "Đưa về kho",
+  retire: "Ngừng sử dụng",
+} as const;
+export type AssetAction = keyof typeof assetActions;
+export type AssetChange = {
+  action: AssetAction;
+  date: string;
+  reason: string;
+  recipient: string;
+  returnState: "stock" | "repair";
+};
 const people = createDemoFixtures().personas;
 const requester = people.REQUESTER.user.id;
 const technician = people.TECHNICIAN.user.id;
+const userById = (id: string | null) =>
+  Object.values(people).find((entry) => entry.user.id === id)?.user;
+const validDate = (value: string) =>
+  /^\d{4}-\d{2}-\d{2}$/.test(value) &&
+  Number.isFinite(Date.parse(value)) &&
+  new Date(value).toISOString().slice(0, 10) === value;
 type Asset = AssetMetadata & {
   id: string;
   version: number;
@@ -36,6 +57,7 @@ type Asset = AssetMetadata & {
     date: string;
     holder: string | null;
     publicFor: string | null;
+    detail?: string;
   }[];
   ticketIds: string[];
 };
@@ -139,14 +161,9 @@ export function createAssets(ticketRows: () => TicketRow[]) {
       fields.notes.length > 500
     )
       return { error: "Thông tin vượt giới hạn độ dài." } as const;
-    const validDate = (value: string) =>
-      !value ||
-      (/^\d{4}-\d{2}-\d{2}$/.test(value) &&
-        Number.isFinite(Date.parse(value)) &&
-        new Date(value).toISOString().slice(0, 10) === value);
     if (
-      !validDate(fields.purchased) ||
-      !validDate(fields.warranty) ||
+      (fields.purchased && !validDate(fields.purchased)) ||
+      (fields.warranty && !validDate(fields.warranty)) ||
       (fields.purchased &&
         fields.warranty &&
         fields.purchased > fields.warranty)
@@ -166,6 +183,62 @@ export function createAssets(ticketRows: () => TicketRow[]) {
     )
       return { error: "Serial đã tồn tại." } as const;
     return { fields, existing } as const;
+  }
+
+  function validateChange(
+    actor: DemoPersona,
+    id: string,
+    version: number,
+    input: AssetChange,
+  ) {
+    if (!managesAssets(actor))
+      return {
+        error: "Bạn không có quyền thay đổi vòng đời tài sản.",
+      } as const;
+    const row = records.find((asset) => asset.id === id);
+    if (!row || row.version !== version)
+      return {
+        error:
+          "Tài sản đã thay đổi. Đóng hộp thoại và kiểm tra trạng thái mới.",
+      } as const;
+    if (
+      !validDate(input.date) ||
+      !input.reason.trim() ||
+      input.reason.trim().length > 500
+    )
+      return { error: "Nhập ngày thực hiện hợp lệ và lý do." } as const;
+    if (row.state === "retired")
+      return { error: "Tài sản đã ngừng sử dụng." } as const;
+    switch (input.action) {
+      case "issue":
+        if (row.state !== "stock" || row.holder)
+          return {
+            error: "Chỉ cấp phát tài sản đang trong kho và chưa có người giữ.",
+          } as const;
+        if (!userById(input.recipient)?.active)
+          return { error: "Chọn người nhận đang hoạt động." } as const;
+        return { row, state: "assigned", holder: input.recipient } as const;
+      case "return":
+        if (row.state !== "assigned" || !row.holder)
+          return { error: "Tài sản không có lượt cấp phát hiệu lực." } as const;
+        if (input.returnState !== "stock" && input.returnState !== "repair")
+          return { error: "Chọn trạng thái hợp lệ sau thu hồi." } as const;
+        return { row, state: input.returnState, holder: null } as const;
+      case "retire":
+      case "repair":
+      case "stock": {
+        const state = input.action === "retire" ? "retired" : input.action;
+        if (row.holder)
+          return {
+            error: "Thu hồi tài sản trước khi thay đổi trạng thái.",
+          } as const;
+        if (row.state === state)
+          return { error: "Tài sản đã ở trạng thái này." } as const;
+        return { row, state, holder: null } as const;
+      }
+      default:
+        return { error: "Thao tác không hợp lệ." } as const;
+    }
   }
 
   function list(actor: DemoPersona, teams: string[], scope: string) {
@@ -191,18 +264,34 @@ export function createAssets(ticketRows: () => TicketRow[]) {
       )
       .map(({ history, ticketIds, ...row }) => ({
         ...row,
+        notes: managesAssets(actor) ? row.notes : "",
         holderLabel:
           row.holder === actor.user.id
             ? actor.user.display_name
-            : Object.values(people).find(
-                (entry) => entry.user.id === row.holder,
-              )?.user.display_name,
+            : userById(row.holder)?.display_name,
+        holderDepartment: row.holder
+          ? row.holder === requester
+            ? "Kế toán"
+            : "IT"
+          : null,
         history:
           actor.user.role === "REQUESTER"
             ? history
                 .filter((entry) => entry.publicFor === actor.user.id)
-                .map(({ summary, date }) => ({ summary, date }))
-            : history.map(({ summary, date }) => ({ summary, date })),
+                .map(({ summary, date }) => ({
+                  summary,
+                  date,
+                  detail: undefined,
+                  holder: undefined,
+                }))
+            : history.map(({ summary, date, detail, holder }) => ({
+                summary,
+                date,
+                detail: managesAssets(actor) ? detail : undefined,
+                holder: managesAssets(actor)
+                  ? userById(holder)?.display_name
+                  : undefined,
+              })),
         tickets: ticketIds.flatMap((id) => {
           const ticket = tickets.get(id);
           return ticket ? [{ id, title: ticket.title }] : [];
@@ -211,6 +300,44 @@ export function createAssets(ticketRows: () => TicketRow[]) {
   }
   return {
     list,
+    recipients(actor: DemoPersona) {
+      if (!managesAssets(actor)) return [];
+      return Object.values(people)
+        .filter(({ user }) => user.active)
+        .map(({ user }) => ({
+          id: user.id,
+          name: user.display_name,
+          department: user.role === "REQUESTER" ? "Kế toán" : "IT",
+        }));
+    },
+    previewChange: (
+      actor: DemoPersona,
+      id: string,
+      version: number,
+      input: AssetChange,
+    ) => validateChange(actor, id, version, input).error,
+    applyChange(
+      actor: DemoPersona,
+      id: string,
+      version: number,
+      input: AssetChange,
+    ) {
+      const result = validateChange(actor, id, version, input);
+      if (!result.row) return result.error;
+      const { row, state, holder } = result;
+      row.history.unshift({
+        summary:
+          input.action === "issue"
+            ? "Cấp phát thiết bị"
+            : assetActions[input.action],
+        date: input.date,
+        holder: holder ?? row.holder,
+        publicFor: input.action === "issue" ? holder : null,
+        detail: `${assetStates[row.state]} → ${assetStates[state]} · ${actor.user.display_name} · ${input.reason.trim()}`,
+      });
+      Object.assign(row, { state, holder, version: version + 1 });
+      return null;
+    },
     validateMetadata: (
       actor: DemoPersona,
       id: string | null,

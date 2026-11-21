@@ -6,6 +6,17 @@
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
   gap: 12px;
 }
+.asset-action-dialog {
+  width: min(42rem, calc(100vw - 24px));
+}
+.assets .asset-conflict {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.assets .asset-conflict input {
+  min-height: auto;
+}
 .asset-filters label {
   display: grid;
   gap: 4px;
