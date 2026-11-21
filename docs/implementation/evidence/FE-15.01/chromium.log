@@ -1,0 +1,9 @@
+
+Running 4 tests using 1 worker
+
+  ok 1 e2e\assistant-intents.spec.ts:51:1 › requester overreach and unsupported intent have a manual outcome (869ms)
+  ok 2 e2e\assistant-intents.spec.ts:65:1 › proposal and ticket need an explicit scoped selection (655ms)
+  ok 3 e2e\assistant-intents.spec.ts:92:3 › compare intent selector ai-requester (2.2s)
+  ok 4 e2e\assistant-intents.spec.ts:92:3 › compare intent selector ai-tech (2.6s)
+
+  4 passed (7.7s)

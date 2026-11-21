@@ -8,6 +8,7 @@ import { canUseChatAudience, type ChatAudience } from "@/lib/demo/assistant";
 import "../automation/automation.css";
 import "./assistant.css";
 import { AssistantCards } from "./assistant-cards";
+import { AssistantActions } from "./assistant-actions";
 import { AssistantSettings } from "./assistant-settings";
 import {
   assistantFailures,
@@ -255,6 +256,7 @@ export function AssistantScreen({ id }: { id?: string }) {
         aria-label="Ngữ cảnh và hỗ trợ"
       >
         <h2>Ngữ cảnh</h2>
+        <AssistantActions />
         <p>{labels[chat?.audience ?? audience]}</p>
         <Link href="/knowledge">Kho kiến thức</Link>
         <Link href="/tickets/new">Tạo yêu cầu hỗ trợ</Link>
