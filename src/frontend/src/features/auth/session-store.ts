@@ -1,5 +1,6 @@
 import { createAutomationActivity } from "../../lib/demo/automation-activity";
 import { createAssets } from "../../lib/demo/assets";
+import { createKnowledge } from "../../lib/demo/knowledge";
 import { createApprovalDecisions } from "../../lib/demo/approval-decisions";
 import { createAutomationPolicy } from "../../lib/demo/automation-policy";
 import { createWorkflowStore } from "../../lib/demo/automation-workflow";
@@ -23,6 +24,7 @@ import type { QueryClient } from "../../lib/api/query-client";
 /** Memory-only session. Epochs fence late auth responses as well as query results. */
 export class SessionStore {
   private persona: DemoPersona | null = null;
+  readonly knowledge = createKnowledge();
   readonly assets = createAssets(
     () => this.tickets.rows(),
     (id) => this.tickets.assetTicketIds(id),
