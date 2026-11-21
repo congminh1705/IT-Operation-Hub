@@ -1,13 +1,19 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Dialog } from "@/components/ui/dialog";
 import { useSession } from "@/features/auth/session";
 import { canUseChatAudience, type ChatAudience } from "@/lib/demo/assistant";
 import "../automation/automation.css";
 import "./assistant.css";
 import { AssistantCards } from "./assistant-cards";
+import { AssistantSettings } from "./assistant-settings";
+import {
+  assistantFailures,
+  assistantModes,
+  type AssistantFailure,
+} from "@/lib/demo/assistant-availability";
 
 const labels = { PUBLIC: "Công khai", INTERNAL: "Nội bộ" };
 
@@ -15,11 +21,22 @@ export function AssistantScreen({ id }: { id?: string }) {
   const { store, persona } = useSession();
   const router = useRouter();
   const [audience, setAudience] = useState<ChatAudience>("PUBLIC");
-  const [text, setText] = useState("");
+  const inputKey = id ?? audience;
+  const [text, setText] = useState(
+    () => store.assistantInputs.get(inputKey) ?? "",
+  );
   const [notice, setNotice] = useState("");
   const [pending, setPending] = useState(false);
-  const [simulate, setSimulate] = useState(false);
+  const [fixture, setFixture] = useState<AssistantFailure>("none");
   const [confirm, setConfirm] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const availability = store.assistantAvailability;
+  const settings = useSyncExternalStore(
+    availability.subscribe,
+    availability.getSnapshot,
+    availability.getSnapshot,
+  );
+  const enabled = settings.mode === "enabled";
   const sendRequest = useRef<AbortController | null>(null);
   useEffect(() => () => sendRequest.current?.abort(), []);
 
@@ -27,6 +44,11 @@ export function AssistantScreen({ id }: { id?: string }) {
   const assistant = store.assistant;
   const list = assistant.list();
   const chat = id ? assistant.read(id) : null;
+  function updateText(value: string) {
+    setText(value);
+    if (value) store.assistantInputs.set(inputKey, value);
+    else store.assistantInputs.delete(inputKey);
+  }
   function cancel() {
     sendRequest.current?.abort();
     sendRequest.current = null;
@@ -35,7 +57,8 @@ export function AssistantScreen({ id }: { id?: string }) {
   }
 
   async function send() {
-    if (!text.trim() || sendRequest.current || (id && !chat)) return;
+    if (!enabled || !text.trim() || sendRequest.current || (id && !chat))
+      return;
     const request = new AbortController();
     sendRequest.current = request;
     setPending(true);
@@ -45,17 +68,23 @@ export function AssistantScreen({ id }: { id?: string }) {
       chat?.audience ?? audience,
       text,
       request.signal,
-      simulate,
+      fixture,
     );
     if (sendRequest.current !== request || request.signal.aborted) return;
     sendRequest.current = null;
     setPending(false);
     if (outcome.kind === "success") {
-      setText("");
+      updateText("");
       setNotice("Đã nhận phản hồi DEMO.");
       if (!chat) router.push("/assistant?id=" + outcome.id);
     } else {
-      setNotice("Chưa gửi được tin nhắn. Nội dung đang soạn vẫn còn.");
+      setNotice(
+        "Chưa gửi được tin nhắn. " +
+          (outcome.kind in assistantFailures
+            ? assistantFailures[outcome.kind as AssistantFailure] + ". "
+            : "") +
+          "Nội dung đang soạn vẫn còn.",
+      );
     }
   }
 
@@ -89,6 +118,13 @@ export function AssistantScreen({ id }: { id?: string }) {
       >
         <h2>{chat?.title ?? "Trò chuyện với trợ lý"}</h2>
         <p>Trợ lý DEMO · Phản hồi mô phỏng</p>
+        <p>Usage DEMO · Không có dữ liệu token hoặc chi phí nhà cung cấp.</p>
+        {!enabled && (
+          <p role="status">
+            Trợ lý không khả dụng · {assistantModes[settings.mode]}. Nội dung
+            đang soạn và biểu mẫu thủ công vẫn dùng được.
+          </p>
+        )}
         {id && !chat ? (
           <p role="alert">Không tìm thấy hội thoại có thể mở.</p>
         ) : (
@@ -137,9 +173,11 @@ export function AssistantScreen({ id }: { id?: string }) {
                     <select
                       value={audience}
                       disabled={pending}
-                      onChange={(event) =>
-                        setAudience(event.target.value as ChatAudience)
-                      }
+                      onChange={(event) => {
+                        const next = event.target.value as ChatAudience;
+                        setAudience(next);
+                        setText(store.assistantInputs.get(next) ?? "");
+                      }}
                     >
                       <option value="PUBLIC">Công khai</option>
                       <option value="INTERNAL">Nội bộ</option>
@@ -154,17 +192,24 @@ export function AssistantScreen({ id }: { id?: string }) {
                   maxLength={1800}
                   value={text}
                   disabled={pending}
-                  onChange={(event) => setText(event.target.value)}
+                  onChange={(event) => updateText(event.target.value)}
                 />
               </label>
-              <label className="assistant-check">
-                <input
-                  type="checkbox"
-                  checked={simulate}
+              <label>
+                Tình huống phản hồi DEMO
+                <select
+                  value={fixture}
                   disabled={pending}
-                  onChange={(event) => setSimulate(event.target.checked)}
-                />
-                Mô phỏng lỗi gửi DEMO
+                  onChange={(event) =>
+                    setFixture(event.target.value as AssistantFailure)
+                  }
+                >
+                  {Object.entries(assistantFailures).map(([value, label]) => (
+                    <option key={value} value={value}>
+                      {label}
+                    </option>
+                  ))}
+                </select>
               </label>
               {pending ? (
                 <p role="status">Đang tạo phản hồi DEMO…</p>
@@ -179,7 +224,7 @@ export function AssistantScreen({ id }: { id?: string }) {
                 <button
                   type="submit"
                   className="ui-button"
-                  disabled={!text.trim() || pending}
+                  disabled={!enabled || !text.trim() || pending}
                 >
                   Gửi
                 </button>
@@ -201,6 +246,7 @@ export function AssistantScreen({ id }: { id?: string }) {
           <AssistantCards
             key={chat?.audience ?? audience}
             audience={chat?.audience ?? audience}
+            generationEnabled={enabled}
           />
         )}
       </section>
@@ -212,7 +258,27 @@ export function AssistantScreen({ id }: { id?: string }) {
         <p>{labels[chat?.audience ?? audience]}</p>
         <Link href="/knowledge">Kho kiến thức</Link>
         <Link href="/tickets/new">Tạo yêu cầu hỗ trợ</Link>
+        {persona.user.role === "ADMIN" && (
+          <button
+            type="button"
+            className="ui-button"
+            data-variant="secondary"
+            onClick={() => setSettingsOpen(true)}
+          >
+            Cấu hình nhanh DEMO
+          </button>
+        )}
       </aside>
+      {settingsOpen && (
+        <Dialog
+          open
+          title="Cấu hình nhanh DEMO"
+          description="Thiết lập khả dụng của trợ lý trong phiên DEMO."
+          onRequestClose={() => setSettingsOpen(false)}
+        >
+          <AssistantSettings onClose={() => setSettingsOpen(false)} />
+        </Dialog>
+      )}
       {confirm && chat && (
         <Dialog
           open
@@ -234,7 +300,10 @@ export function AssistantScreen({ id }: { id?: string }) {
               className="ui-button"
               onClick={() => {
                 cancel();
-                if (assistant.remove(chat.id)) router.push("/assistant");
+                if (assistant.remove(chat.id)) {
+                  store.assistantInputs.delete(chat.id);
+                  router.push("/assistant");
+                }
                 setConfirm(false);
               }}
             >

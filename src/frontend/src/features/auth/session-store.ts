@@ -1,6 +1,7 @@
 import { createAutomationActivity } from "../../lib/demo/automation-activity";
 import { createAssets } from "../../lib/demo/assets";
 import { createAssistant } from "../../lib/demo/assistant";
+import { createAssistantAvailability } from "../../lib/demo/assistant-availability";
 import { createKnowledge } from "../../lib/demo/knowledge";
 import { createApprovalDecisions } from "../../lib/demo/approval-decisions";
 import { createAutomationPolicy } from "../../lib/demo/automation-policy";
@@ -25,10 +26,15 @@ import type { QueryClient } from "../../lib/api/query-client";
 /** Memory-only session. Epochs fence late auth responses as well as query results. */
 export class SessionStore {
   private persona: DemoPersona | null = null;
+  readonly assistantAvailability = createAssistantAvailability(
+    () => this.persona,
+  );
   readonly assistant = createAssistant(
     () => this.persona,
     () => this.identity(),
+    this.assistantAvailability,
   );
+  readonly assistantInputs = new Map<string, string>();
   readonly replyDrafts = new Map<
     string,
     { public: string; internal: string }
@@ -100,6 +106,7 @@ export class SessionStore {
   }
   invalidate = () => {
     this.replyDrafts.clear();
+    this.assistantInputs.clear();
     this.assistantDraft = null;
     this.epoch++;
     this.read++;

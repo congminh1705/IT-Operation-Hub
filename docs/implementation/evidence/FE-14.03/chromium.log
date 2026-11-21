@@ -1,0 +1,23 @@
+
+Running 18 tests using 1 worker
+
+  ok  1 e2e\assistant-availability.spec.ts:56:1 › Admin validates configuration and non-Admin is denied (1.0s)
+  ok  2 e2e\assistant-availability.spec.ts:75:1 › disable with open draft keeps text, manual form and automation independent (925ms)
+  ok  3 e2e\assistant-availability.spec.ts:104:1 › quota, network and unavailable fixture retain unsent inputs (3.0s)
+  ok  4 e2e\assistant-availability.spec.ts:131:1 › compare assistant availability state (2.1s)
+  ok  5 e2e\assistant-availability.spec.ts:144:1 › compare admin configuration (1.0s)
+  ok  6 e2e\assistant-cards.spec.ts:53:1 › source and asset cards recheck current scope (630ms)
+  ok  7 e2e\assistant-cards.spec.ts:71:1 › revoked source produces no citation on the existing session (592ms)
+  ok  8 e2e\assistant-cards.spec.ts:87:1 › editable handoff preserves existing native text and has no ticket effect (738ms)
+  ok  9 e2e\assistant-cards.spec.ts:113:1 › internal draft cannot hand off into a public reply (578ms)
+  ok 10 e2e\assistant.spec.ts:48:1 › send, cancel and error preserve the draft until a success (2.2s)
+  ok 11 e2e\assistant.spec.ts:71:1 › internal context, owner deletion and forged IDs (1.6s)
+  ok 12 e2e\automation-activity.spec.ts:17:1 › page opening is read-only, queued and approved are not success, normal skips approval (629ms)
+  ok 13 e2e\automation-activity.spec.ts:44:1 › failed retry requires confirmation and queues without clearing manual lock (711ms)
+  ok 14 e2e\automation-activity.spec.ts:66:1 › disabled policy blocks retry from the linked activity view (606ms)
+  ok 15 e2e\automation-activity.spec.ts:82:1 › technician view excludes activity outside the team (444ms)
+  ok 16 e2e\ticket-reply.spec.ts:25:1 › separate drafts and first response from committed public IT reply only (2.4s)
+  ok 17 e2e\ticket-reply.spec.ts:58:1 › requester Pending reply resumes after confirmation (1.4s)
+  ok 18 e2e\ticket-reply.spec.ts:75:1 › rights revoked while confirming keeps own draft and hides detail (1.4s)
+
+  18 passed (23.6s)

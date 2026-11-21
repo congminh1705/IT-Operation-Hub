@@ -7316,3 +7316,80 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-14.02 can proceed under joint Parent review.
 - Eligibility / remaining prerequisite: verified dependent task checks or joint PO review before closure.
+
+<a id="task-fe-14-02-attempt-01"></a>
+
+### FE-14.02 — Attempt 01 — 2026-11-21T15:13:54.0381205+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-14.02/attempt-01
+- Task: [task card](../tasks/FE-14.02.md)
+- Parent / phase: FE-14 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-21T15:10:00+07:00
+- Ended at: 2026-11-21T15:13:54.0381205+07:00
+- State before / after: in-progress / review
+- Previous attempt / correction: initial implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Expose scoped read-only cards, summary and editable audience-safe handoff.
+- Delivered this attempt: Trusted source cards recheck knowledge ACL and index. Ticket/asset lookups use session projection. Public/internal summaries and editable handoff are scoped; insertion appends to the current native draft and sends nothing.
+- Incomplete scope / deviations: joint PO acceptance pending. See visual comparison for differences.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/assistant/assistant-cards.tsx and assistant-screen.tsx | Scoped results and editable draft | Deterministic DEMO cards |
+| src/frontend/src/features/auth/session-store.ts and src/frontend/src/features/tickets/intake/ticket-reply-composer.tsx | Session-scoped draft and explicit native insertion | Preserve existing input and confirm separately |
+| src/frontend/e2e/assistant-cards.spec.ts | Source revocation/absence and draft handoff checks | Browser and capture evidence |
+| docs/implementation/tasks/FE-14.02.md and workflow records | Handoff and status | Traceability |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scope and applicable Parent criteria | Expose scoped read-only cards, summary and editable audience-safe handoff. | Trusted source cards recheck knowledge ACL and index. Ticket/asset lookups use session projection. Public/internal summaries and editable handoff are scoped; insertion appends to the current native draft and sends nothing. | pass | [Chromium](../evidence/FE-14.02/chromium.log) |
+| DEMO boundary | Synthetic fixture and scoped actor checks | In-memory workflow and scoped mock data | pass | [Implementation](https://github.com/congminh1705/IT-Operation-Hub/commit/cfa0c290e2abde52db3e01eaf934646c01a3025d) |
+| UI comparison | Matching wide and compact reference/application captures | Captures and differences documented | pass | [Comparison](../evidence/FE-14.02/comparison.md) |
+| PO review | Actual owner acceptance | Pending joint review | not-run | [Comparison](../evidence/FE-14.02/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | node node_modules/prettier/bin/prettier.cjs --check and node node_modules/eslint/bin/eslint.js on modified frontend paths | Formatting and lint pass | Exit 0 | pass |
+| src/frontend | node node_modules/vitest/vitest.mjs run | Existing unit tests pass | 108 tests passed | pass |
+| src/frontend | node node_modules/next/dist/bin/next build | Production build and TypeScript pass | Exit 0 | pass |
+| src/frontend | node node_modules/@playwright/test/cli.js test e2e/assistant-cards.spec.ts | Chromium interaction and comparison pass | See Chromium log | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent checks completed; Hoang Cong Minh functional and visual review pending.
+- Findings / resolution: Source revocation is exercised using the existing knowledge interaction. Public-safe fields are displayed without internal details. Internal-to-public draft handoff is denied.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO acceptance pending for Parent closure.
+- Required resolution / owner: joint review by PO.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-14.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-14.02/comparison.md) · [Chromium](../evidence/FE-14.02/chromium.log).
+- Commit / build / environment: phase/a-frontend [implementation cfa0c290e2abde52db3e01eaf934646c01a3025d](https://github.com/congminh1705/IT-Operation-Hub/commit/cfa0c290e2abde52db3e01eaf934646c01a3025d) pushed and verified; local production DEMO.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated.
+- Execution-board task row: review, Owner PO.
+- Current context: linked to attempt 01.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FE-14.03 can proceed under joint Parent review.
+- Eligibility / remaining prerequisite: verified dependent task checks or joint PO review before closure.

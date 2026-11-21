@@ -55,11 +55,13 @@ test("send, cancel and error preserve the draft until a success", async ({
   await expect(chat(page).getByText("Đang tạo phản hồi DEMO…")).toBeVisible();
   await chat(page).getByRole("button", { name: "Hủy gửi" }).click();
   await expect(message).toHaveValue("Cần hỗ trợ DEMO");
-  await chat(page).getByLabel("Mô phỏng lỗi gửi DEMO").check();
+  await chat(page)
+    .getByLabel("Tình huống phản hồi DEMO")
+    .selectOption("network");
   await send(page).click();
   await expect(chat(page).getByRole("alert")).toContainText("Chưa gửi được");
   await expect(message).toHaveValue("Cần hỗ trợ DEMO");
-  await chat(page).getByLabel("Mô phỏng lỗi gửi DEMO").uncheck();
+  await chat(page).getByLabel("Tình huống phản hồi DEMO").selectOption("none");
   await send(page).click();
   await expect(
     chat(page).getByRole("list", { name: "Tin nhắn" }),

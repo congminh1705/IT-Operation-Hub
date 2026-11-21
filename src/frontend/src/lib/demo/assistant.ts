@@ -1,4 +1,8 @@
 import type { DemoPersona } from "./fixtures";
+import type {
+  AssistantFailure,
+  AssistantSettingsDraft,
+} from "./assistant-availability";
 
 export type ChatAudience = "PUBLIC" | "INTERNAL";
 export type ChatMessage = { id: number; prompt: string; answer: string | null };
@@ -21,6 +25,10 @@ export const canUseChatAudience = (
 export function createAssistant(
   getActor: () => DemoPersona | null,
   identity: () => Identity | null,
+  availability?: {
+    getSnapshot: () => AssistantSettingsDraft;
+    epoch: () => number;
+  },
 ) {
   const records = new Map<string, Conversation>();
   const seeded = new Set<string>();
@@ -90,10 +98,11 @@ export function createAssistant(
       audience: ChatAudience,
       text: string,
       signal: AbortSignal,
-      fail = false,
+      fixture: AssistantFailure = "none",
     ) {
       const actor = getActor();
       const start = identity();
+      const generation = availability?.epoch();
       const prompt = text.trim();
       if (
         !start ||
@@ -113,7 +122,13 @@ export function createAssistant(
         current.userId !== start.userId
       )
         return { kind: "invalid" } as const;
-      if (fail) return { kind: "error" } as const;
+      if (
+        availability &&
+        (availability.getSnapshot().mode !== "enabled" ||
+          availability.epoch() !== generation)
+      )
+        return { kind: "unavailable" } as const;
+      if (fixture !== "none") return { kind: fixture } as const;
       const target = id ?? this.create(audience);
       const row = target && actorRecord(target);
       if (!row) return { kind: "invalid" } as const;

@@ -1,5 +1,6 @@
 "use client";
 import { AssistantScreen } from "@/features/assistant/assistant-screen";
+import { AssistantSettings } from "@/features/assistant/assistant-settings";
 import { KnowledgeScreen } from "@/features/knowledge/knowledge-screen";
 import { AssetScreen } from "@/features/assets/asset-screen";
 import { ApprovalProposal } from "@/features/automation/approval-proposal";
@@ -71,7 +72,9 @@ export function WorkspaceEntry({
           : `${persona.user.id}:${persona.user.version}`
       }
       content={
-        pathname === "/assistant" ? (
+        pathname === "/admin/assistant" ? (
+          <AssistantSettings />
+        ) : pathname === "/assistant" ? (
           <AssistantScreen
             key={params.get("id") ?? "new-chat"}
             id={params.get("id") ?? undefined}

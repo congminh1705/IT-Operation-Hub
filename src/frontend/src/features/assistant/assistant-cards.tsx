@@ -5,7 +5,13 @@ import { useSession } from "@/features/auth/session";
 import type { ChatAudience } from "@/lib/demo/assistant";
 
 type Kind = "source" | "ticket" | "asset";
-export function AssistantCards({ audience }: { audience: ChatAudience }) {
+export function AssistantCards({
+  audience,
+  generationEnabled,
+}: {
+  audience: ChatAudience;
+  generationEnabled: boolean;
+}) {
   const { store, persona } = useSession();
   const [kind, setKind] = useState<Kind>("source");
   const [id, setId] = useState("");
@@ -155,7 +161,7 @@ export function AssistantCards({ audience }: { audience: ChatAudience }) {
               {audience === "INTERNAL" && (
                 <p>Nhóm tiếp nhận · {visibleTicket.row.team}</p>
               )}
-              {visibleTicket.canReply && (
+              {visibleTicket.canReply && generationEnabled && (
                 <button
                   type="button"
                   className="ui-button"
