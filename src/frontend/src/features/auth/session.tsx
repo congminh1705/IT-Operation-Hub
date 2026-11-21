@@ -51,6 +51,13 @@ export function safeReturnPath(value: string | null): string {
     const item = url.searchParams.get(name);
     if (item) params.set(name, item.slice(0, 180));
   }
+  const assetId = url.searchParams.get("id");
+  if (
+    url.pathname === "/assets" &&
+    assetId &&
+    /^[A-Z0-9-]{1,32}$/.test(assetId)
+  )
+    params.set("id", assetId);
   if (
     url.pathname === "/tickets" &&
     url.searchParams.get("demo") === "unavailable"
