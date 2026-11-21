@@ -60,6 +60,10 @@ authority: derived
 
 ## Parent FE-14
 
-- FE-14.01 in progress. Joint acceptance after sequential task verification.
+- All three FE-14 tasks are in review. Registry: EPIC_IN_PROGRESS. Board: 48 done, 3 review, 179 pending.
 - [FE-14.01/attempt-01](task-history.md#task-fe-14-01-attempt-01), review. 108 unit, 5 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-14.01/comparison.md). FE-14.02 can proceed under joint Parent review.
 - [FE-14.02/attempt-01](task-history.md#task-fe-14-02-attempt-01), review. 108 unit, 6 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-14.02/comparison.md). FE-14.03 can proceed under joint Parent review.
+- [FE-14.03/attempt-01](task-history.md#task-fe-14-03-attempt-01), review. 109 unit, 18 Chromium including 13 affected regression cases, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-14.03/comparison.md). Joint FE-14 PO review at http://127.0.0.1:3214/assistant. FE-15.01 follows closure, PR merge and authorization.
+
+- Joint PO review: http://127.0.0.1:3214/assistant and http://127.0.0.1:3214/admin/assistant. Chat lifecycle, scoped cards, manual handoff, availability and fallback passed agent checks. PO verdict pending.
+- Verified implementation pushes on phase/a-frontend: bb3062a, cfa0c29, 0f15115. Parent PR follows joint PO acceptance.

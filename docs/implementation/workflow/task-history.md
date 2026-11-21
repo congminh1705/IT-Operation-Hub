@@ -7393,3 +7393,80 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FE-14.03 can proceed under joint Parent review.
 - Eligibility / remaining prerequisite: verified dependent task checks or joint PO review before closure.
+
+<a id="task-fe-14-03-attempt-01"></a>
+
+### FE-14.03 — Attempt 01 — 2026-11-21T15:17:52.2527052+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-14.03/attempt-01
+- Task: [task card](../tasks/FE-14.03.md)
+- Parent / phase: FE-14 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-21T15:14:00+07:00
+- Ended at: 2026-11-21T15:17:52.2527052+07:00
+- State before / after: in-progress / review
+- Previous attempt / correction: initial implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Validate independent assistant availability and provide recoverable simulated failures with manual fallback.
+- Delivered this attempt: Admin-only mock availability settings validate and confirm. Unavailable/quota/network errors preserve session-scoped input and leave manual forms and independent automation available. In-flight responses are fenced on settings changes; usage and provider status explicitly identify DEMO.
+- Incomplete scope / deviations: joint PO acceptance pending. See visual comparison for differences.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/lib/demo/assistant-availability.ts and assistant.ts | Availability and request-generation fence | Mock access and no late delivery |
+| src/frontend/src/features/assistant/assistant-settings.tsx and assistant-screen.tsx | Admin settings, fallback and failure states | Preserved draft, explicit usage disclosure |
+| src/frontend/e2e/assistant-availability.spec.ts and src/frontend/src/lib/demo/assistant.test.ts | Invalid enable, disabled while open, recovery and race | Functional and visual evidence |
+| docs/implementation/tasks/FE-14.03.md and workflow records | Handoff and status | Traceability |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scope and applicable Parent criteria | Validate independent assistant availability and provide recoverable simulated failures with manual fallback. | Admin-only mock availability settings validate and confirm. Unavailable/quota/network errors preserve session-scoped input and leave manual forms and independent automation available. In-flight responses are fenced on settings changes; usage and provider status explicitly identify DEMO. | pass | [Chromium](../evidence/FE-14.03/chromium.log) |
+| DEMO boundary | Synthetic fixture and scoped actor checks | In-memory workflow and scoped mock data | pass | [Implementation](https://github.com/congminh1705/IT-Operation-Hub/commit/0f1511517394a658a5e4309362c1945f19548843) |
+| UI comparison | Matching wide and compact reference/application captures | Captures and differences documented | pass | [Comparison](../evidence/FE-14.03/comparison.md) |
+| PO review | Actual owner acceptance | Pending joint review | not-run | [Comparison](../evidence/FE-14.03/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | node node_modules/prettier/bin/prettier.cjs --check and node node_modules/eslint/bin/eslint.js on modified frontend paths | Formatting and lint pass | Exit 0 | pass |
+| src/frontend | node node_modules/vitest/vitest.mjs run | Existing unit tests pass | 109 tests passed | pass |
+| src/frontend | node node_modules/next/dist/bin/next build | Production build and TypeScript pass | Exit 0 | pass |
+| src/frontend | node node_modules/@playwright/test/cli.js test e2e/assistant-availability.spec.ts e2e/assistant.spec.ts e2e/assistant-cards.spec.ts e2e/ticket-reply.spec.ts e2e/automation-activity.spec.ts --grep-invert 'compare conversation|compare card|compare composer|compare activity' | Chromium interaction and comparison pass | See Chromium log | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent checks completed; Hoang Cong Minh functional and visual review pending.
+- Findings / resolution: Admin can disable while a draft is open. Draft survives a manual ticket form round trip. Browser verifies existing normal automation history and observed no external request in the error loop. Availability settings are seeded with placeholder labels; dedicated quota and network layout specimens are unavailable.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO acceptance pending for Parent closure.
+- Required resolution / owner: joint review by PO.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-14.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-14.03/comparison.md) · [Chromium](../evidence/FE-14.03/chromium.log).
+- Commit / build / environment: phase/a-frontend [implementation 0f1511517394a658a5e4309362c1945f19548843](https://github.com/congminh1705/IT-Operation-Hub/commit/0f1511517394a658a5e4309362c1945f19548843) pushed and verified; local production DEMO.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: updated.
+- Execution-board task row: review, Owner PO.
+- Current context: linked to attempt 01.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint FE-14 PO review at http://127.0.0.1:3214/assistant. FE-15.01 follows closure, PR merge and authorization.
+- Eligibility / remaining prerequisite: verified dependent task checks or joint PO review before closure.
