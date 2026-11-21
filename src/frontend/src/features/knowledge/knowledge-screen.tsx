@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { useSession } from "@/features/auth/session";
-import { Feedback } from "@/components/feedback/feedback";
 import { audienceNames, knowledgeCategories } from "@/lib/demo/knowledge";
 import { normalizeTicketText } from "@/lib/demo/ticket-list";
 import { KnowledgeEditor } from "./knowledge-editor";
+import { KnowledgeSource, KnowledgeUnavailable } from "./knowledge-source";
 import { useRouter } from "next/navigation";
 import "../automation/automation.css";
 import "./knowledge.css";
@@ -21,6 +21,11 @@ export function KnowledgeScreen({
 }) {
   const { persona, store } = useSession();
   const router = useRouter();
+  useSyncExternalStore(
+    store.knowledge.subscribe,
+    store.knowledge.getSnapshot,
+    store.knowledge.getSnapshot,
+  );
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("");
   if (!persona) return null;
@@ -38,10 +43,8 @@ export function KnowledgeScreen({
   const article = id ? store.knowledge.read(persona, teams, id, version) : null;
   if (id && !article)
     return (
-      <Feedback
-        kind="empty"
-        title="Không tìm thấy nguồn có thể đọc"
-        description="Kiểm tra lại liên kết hoặc quay về kho kiến thức."
+      <KnowledgeUnavailable
+        state={store.knowledge.sourceAvailability(persona, id)}
       />
     );
   const rows = store.knowledge
@@ -123,6 +126,12 @@ export function KnowledgeScreen({
                   </li>
                 ))}
               </ul>
+              <KnowledgeSource
+                key={`${article.id}:${article.selected.version}`}
+                id={article.id}
+                version={article.selected.version}
+                state={article.indexState}
+              />
             </aside>
           </div>
         </>

@@ -1,0 +1,17 @@
+
+Running 12 tests using 1 worker
+
+  ok  1 e2e\knowledge-editor.spec.ts:49:1 › author can validate, cancel and save a draft without publishing (1.1s)
+  ok  2 e2e\knowledge-editor.spec.ts:80:1 › publisher confirms access and publication without author capability (579ms)
+  ok  3 e2e\knowledge-editor.spec.ts:113:1 › ungranted Admin and Manager are denied without draft content (598ms)
+  ok  4 e2e\knowledge-source.spec.ts:50:1 › stale published source remains readable and retries locally (574ms)
+  ok  5 e2e\knowledge-source.spec.ts:85:3 › Thu hồi nguồn DEMO removes the open article, history and citation (753ms)
+  ok  6 e2e\knowledge-source.spec.ts:85:3 › Ngừng sử dụng bài viết removes the open article, history and citation (697ms)
+  ok  7 e2e\knowledge-source.spec.ts:128:1 › new publication starts with a pending index (532ms)
+  ok  8 e2e\knowledge-source.spec.ts:141:3 › compare source state with article (897ms)
+  ok  9 e2e\knowledge-source.spec.ts:141:3 › compare source state with ai-states (927ms)
+  ok 10 e2e\knowledge.spec.ts:45:1 › search and category filter only published accessible sources (467ms)
+  ok 11 e2e\knowledge.spec.ts:64:1 › version and source navigation plus unavailable source (677ms)
+  ok 12 e2e\knowledge.spec.ts:83:1 › internal denial applies to Admin as well as Requester (719ms)
+
+  12 passed (9.9s)

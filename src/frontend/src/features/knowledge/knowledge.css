@@ -36,6 +36,26 @@
   color: #52645d;
   font-size: 0.875rem;
 }
+.knowledge-source {
+  padding-top: 12px;
+  margin-top: 16px;
+  border-top: 1px solid #d4e2dc;
+}
+.knowledge-source .automation-actions {
+  margin-top: 10px;
+}
+.knowledge-source [data-index="stale"] {
+  color: #90283e;
+}
+.knowledge-source [data-index="indexing"] {
+  color: #285d9e;
+}
+.knowledge-source [data-index="pending"] {
+  color: #75470c;
+}
+.knowledge-source [data-index="ready"] {
+  color: #226347;
+}
 .knowledge a:focus-visible {
   outline: 2px solid #087f78;
   outline-offset: 3px;

@@ -23,6 +23,14 @@ export type KnowledgeDraft = Pick<
   "title" | "body" | "audience" | "note"
 >;
 type KnowledgeAction = "draft" | "publish" | "access";
+export const indexLabels = {
+  pending: "Chờ lập chỉ mục",
+  indexing: "Đang lập chỉ mục",
+  stale: "Chỉ mục đã cũ",
+  ready: "Chỉ mục sẵn sàng",
+} as const;
+type IndexState = keyof typeof indexLabels;
+export type SourceAvailability = "retired" | "revoked";
 const { TECHNICIAN, IT_MANAGER } = createDemoFixtures().personas;
 const grants: Record<string, { author: string; publisher: string }> = {
   "KB-014": { author: TECHNICIAN.user.id, publisher: IT_MANAGER.user.id },
@@ -35,6 +43,7 @@ type Article = {
   draft?: KnowledgeDraft;
   audience?: Audience;
   revision?: number;
+  unavailable?: SourceAvailability;
 };
 function article(
   id: string,
@@ -69,6 +78,13 @@ function article(
   };
 }
 export function createKnowledge() {
+  let snapshot = 0;
+  const listeners = new Set<() => void>();
+  const index = new Map<string, IndexState>([["KB-014:1", "stale"]]);
+  function notify() {
+    snapshot++;
+    listeners.forEach((listener) => listener());
+  }
   const articles = [
     article(
       "KB-014",
@@ -115,6 +131,7 @@ export function createKnowledge() {
     (audience === "employees" || teams.includes("support"));
   function visible(actor: DemoPersona, teams: readonly string[], row: Article) {
     return (
+      !row.unavailable &&
       allowed(actor, teams, row.versions.at(-1)!.audience) &&
       (!row.audience || allowed(actor, teams, row.audience))
     );
@@ -137,7 +154,7 @@ export function createKnowledge() {
     if (!(action === "draft" ? permissions.author : permissions.publisher))
       return "Bạn chưa được cấp quyền cho thao tác này.";
     const row = articles.find((item) => item.id === id);
-    if (!row || (row.revision ?? 1) !== expected)
+    if (!row || row.unavailable || (row.revision ?? 1) !== expected)
       return "Bài viết đã đổi. Đóng form và xem lại phiên bản.";
     if (!Object.hasOwn(audienceNames, draft.audience))
       return "Chọn phạm vi đọc hợp lệ.";
@@ -155,12 +172,19 @@ export function createKnowledge() {
     return null;
   }
   return {
+    subscribe(listener: () => void) {
+      listeners.add(listener);
+      return () => {
+        listeners.delete(listener);
+      };
+    },
+    getSnapshot: () => snapshot,
     access,
     edit(actor: DemoPersona, id: string) {
       const permissions = access(actor, id);
       if (!permissions.author && !permissions.publisher) return null;
       const row = articles.find((item) => item.id === id);
-      if (!row) return null;
+      if (!row || row.unavailable) return null;
       const current = row.versions.at(-1)!;
       return {
         permissions,
@@ -196,12 +220,36 @@ export function createKnowledge() {
           version,
           date: new Date().toISOString().slice(0, 10),
         });
+        index.set(`${id}:${version}`, "pending");
         row.summary = row.draft!.body.split("\n")[0].slice(0, 160);
         row.draft = undefined;
         row.audience = undefined;
       } else row.audience = draft.audience;
       row.revision = expected + 1;
+      notify();
       return null;
+    },
+    sourceAvailability(actor: DemoPersona, id: string) {
+      return access(actor, id).publisher
+        ? articles.find((item) => item.id === id)?.unavailable
+        : undefined;
+    },
+    makeUnavailable(
+      actor: DemoPersona,
+      id: string,
+      action: SourceAvailability,
+    ) {
+      if (
+        !access(actor, id).publisher ||
+        (action !== "retired" && action !== "revoked")
+      )
+        return false;
+      const row = articles.find((item) => item.id === id);
+      if (!row || row.unavailable) return false;
+      row.unavailable = action;
+      row.revision = (row.revision ?? 1) + 1;
+      notify();
+      return true;
     },
     list(actor: DemoPersona, teams: readonly string[]) {
       return articles
@@ -232,9 +280,45 @@ export function createKnowledge() {
             category: row.category,
             versions: versions.map(({ version, date }) => ({ version, date })),
             selected: { ...selected },
-            audience: row.audience ?? selected.audience,
+            audience: [
+              row.audience,
+              row.versions.at(-1)!.audience,
+              selected.audience,
+            ].includes("support")
+              ? ("support" as const)
+              : ("employees" as const),
+            indexState: index.get(`${id}:${selected.version}`) ?? "ready",
           }
         : null;
+    },
+    citation(
+      actor: DemoPersona,
+      teams: readonly string[],
+      id: string,
+      version: number,
+    ) {
+      const article = this.read(actor, teams, id, version);
+      if (article?.indexState !== "ready") return null;
+      return { id, version, title: article.selected.title };
+    },
+    advanceIndex(
+      actor: DemoPersona,
+      teams: readonly string[],
+      id: string,
+      version: number,
+      step: "retry" | "result",
+    ) {
+      if (!access(actor, id).publisher) return false;
+      const article = this.read(actor, teams, id, version);
+      if (!article) return false;
+      const current = article.indexState;
+      if (step === "retry" && (current === "stale" || current === "pending"))
+        index.set(`${id}:${version}`, "indexing");
+      else if (step === "result" && current === "indexing")
+        index.set(`${id}:${version}`, "ready");
+      else return false;
+      notify();
+      return true;
     },
   };
 }
