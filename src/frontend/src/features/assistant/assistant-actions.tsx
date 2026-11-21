@@ -79,7 +79,12 @@ export function AssistantActions() {
         : managementHref;
   const ticketFormUnavailable = ticket && !ticketAllowed && !managementHref;
   return (
-    <section className="assistant-cards" aria-label="Thao tác được hỗ trợ">
+    <section
+      className="assistant-cards"
+      id="assistant-action-selector"
+      aria-label="Thao tác được hỗ trợ"
+      tabIndex={-1}
+    >
       <h3>Thao tác được hỗ trợ</h3>
       <label>
         Thao tác

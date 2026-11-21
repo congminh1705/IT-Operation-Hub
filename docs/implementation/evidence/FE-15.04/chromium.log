@@ -1,0 +1,26 @@
+
+Running 21 tests using 1 worker
+
+  ok  1 e2e\assistant-intents.spec.ts:51:1 › requester overreach and unsupported intent have a manual outcome (792ms)
+  ok  2 e2e\assistant-intents.spec.ts:65:1 › proposal and ticket need an explicit scoped selection (631ms)
+  ok  3 e2e\assistant-management.spec.ts:60:1 › technician reaches own task, invalid Done is blocked and progress confirms (678ms)
+  ok  4 e2e\assistant-management.spec.ts:80:1 › non-requester acceptance and forged admin handoff are blocked (770ms)
+  ok  5 e2e\assistant-management.spec.ts:99:1 › manager reaches native assignment, approval and asset guards (1.0s)
+  ok  6 e2e\assistant-management.spec.ts:122:1 › admin route keeps sensitive fields out of workspace (672ms)
+  ok  7 e2e\assistant-ticket-actions.spec.ts:55:1 › native create confirms the edited exact content only once (1.6s)
+  ok  8 e2e\assistant-ticket-actions.spec.ts:105:3 › reply opens the correct native audience with revision preview (601ms)
+  ok  9 e2e\assistant-ticket-actions.spec.ts:105:3 › note opens the correct native audience with revision preview (626ms)
+  ok 10 e2e\assistant-workspace.spec.ts:18:1 › no run, normal, approved and disabled never show the pending proposal (523ms)
+  ok 11 e2e\assistant-workspace.spec.ts:40:1 › closing a chat preserves the run and compact controls switch panes (634ms)
+  ok 12 e2e\assistant-workspace.spec.ts:60:1 › requester sees suggestions and chat outside internal activity (469ms)
+  ok 13 e2e\assistant-workspace.spec.ts:71:1 › a disabled underlying policy does not offer a new exception approval (608ms)
+  ok 14 e2e\assistant-workspace.spec.ts:90:3 › compare shared workspace ai-normal (1.2s)
+  ok 15 e2e\assistant-workspace.spec.ts:90:3 › compare shared workspace ai-exception (3.3s)
+  ok 16 e2e\assistant.spec.ts:48:1 › send, cancel and error preserve the draft until a success (2.3s)
+  ok 17 e2e\assistant.spec.ts:71:1 › internal context, owner deletion and forged IDs (1.6s)
+  ok 18 e2e\automation-activity.spec.ts:17:1 › page opening is read-only, queued and approved are not success, normal skips approval (502ms)
+  ok 19 e2e\automation-activity.spec.ts:44:1 › failed retry requires confirmation and queues without clearing manual lock (541ms)
+  ok 20 e2e\automation-activity.spec.ts:66:1 › disabled policy blocks retry from the linked activity view (612ms)
+  ok 21 e2e\automation-activity.spec.ts:82:1 › technician view excludes activity outside the team (525ms)
+
+  21 passed (21.6s)

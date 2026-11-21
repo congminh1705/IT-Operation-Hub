@@ -73,3 +73,4 @@ authority: derived
 - FE-15.01 in progress. Joint acceptance after sequential task verification.
 - [FE-15.01/attempt-01](task-history.md#task-fe-15-01-attempt-01), review. 109 unit, 4 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-15.01/comparison.md). FE-15.02 can proceed under joint Parent review.
 - [FE-15.02/attempt-01](task-history.md#task-fe-15-02-attempt-01), review. 109 unit, 12 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-15.02/comparison.md). FE-15.03 can proceed under joint Parent review.
+- [FE-15.03/attempt-01](task-history.md#task-fe-15-03-attempt-01), review. 109 unit, 6 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-15.03/comparison.md). FE-15.04 can proceed under joint Parent review.

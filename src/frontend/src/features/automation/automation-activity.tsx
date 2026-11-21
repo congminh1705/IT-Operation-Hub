@@ -6,9 +6,16 @@ import { useSession } from "@/features/auth/session";
 import { runLabels, type RunCase } from "@/lib/demo/automation-activity";
 import "./automation.css";
 
-export function AutomationActivity() {
+export function AutomationActivity({
+  selectedScenario,
+  onScenarioChange,
+}: {
+  selectedScenario?: RunCase;
+  onScenarioChange?: (scenario: RunCase) => void;
+} = {}) {
   const { store, persona } = useSession();
-  const [scenario, setScenario] = useState<RunCase>("none");
+  const [localScenario, setScenario] = useState<RunCase>("none");
+  const scenario = selectedScenario ?? localScenario;
   const [preview, setPreview] = useState(false);
   const [error, setError] = useState("");
   const [, refresh] = useState(0);
@@ -77,7 +84,7 @@ export function AutomationActivity() {
             aria-label="Kịch bản hoạt động DEMO"
             value={scenario}
             onChange={(event) => {
-              setScenario(event.target.value as RunCase);
+              (onScenarioChange ?? setScenario)(event.target.value as RunCase);
               setPreview(false);
               setError("");
             }}
