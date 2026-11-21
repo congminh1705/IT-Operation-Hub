@@ -38,12 +38,12 @@ authority: derived
 - Preview: http://127.0.0.1:3184/approvals. Sign in as it_manager@demo.invalid using the standard DEMO password. Try missing evidence, approve/reject with a reason, and stale/revoked/infeasible scenarios. Approval waits for a separate explicit execution result. Refresh for a fresh fixture.
 - FE-11 Parent [PR #13](https://github.com/congminh1705/IT-Operation-Hub/pull/13) merged into main at 6ee1721 and the phase branch was fast-forwarded.
 
-## Parent FE-12
+## Parent FE-12 joint acceptance
 
-- All four FE-12 tasks are in review. Registry: EPIC_IN_PROGRESS. Board: 41 done, 4 review, 185 pending.
-- [FE-12.01/attempt-01](task-history.md#task-fe-12-01-attempt-01), review. 103 unit, 6 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-12.01/comparison.md). FE-12.02 can proceed under joint Parent review.
-- [FE-12.02/attempt-01](task-history.md#task-fe-12-02-attempt-01), review. 104 unit, 2 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-12.02/comparison.md). FE-12.03 can proceed under joint Parent review.
-- [FE-12.03/attempt-01](task-history.md#task-fe-12-03-attempt-01), review. 104 unit, 6 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-12.03/comparison.md). FE-12.04 can proceed under joint Parent review.
-- [FE-12.04/attempt-01](task-history.md#task-fe-12-04-attempt-01), review. 105 unit, 20 Chromium including assets and ticket submission regressions, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-12.04/comparison.md). Joint FE-12 PO review at http://127.0.0.1:3195/assets. FE-13.01 follows accepted closure, FE-12 PR merge and authorization.
+- PO accepted all four FE-12 tasks. Registry: EPIC_DONE. Board: 45 done, 185 pending.
+- [FE-12.01/attempt-02](task-history.md#task-fe-12-01-attempt-02), done. 103 unit, 6 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-12.01/comparison.md).
+- [FE-12.02/attempt-02](task-history.md#task-fe-12-02-attempt-02), done. 104 unit, 2 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-12.02/comparison.md).
+- [FE-12.03/attempt-02](task-history.md#task-fe-12-03-attempt-02), done. 104 unit, 6 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-12.03/comparison.md).
+- [FE-12.04/attempt-02](task-history.md#task-fe-12-04-attempt-02), done. 105 unit, 20 Chromium including assets and ticket submission regressions, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-12.04/comparison.md).
 
-- Joint PO review: http://127.0.0.1:3195/assets and http://127.0.0.1:3195/tickets/new. Use synthetic Manager/Admin for metadata and lifecycle, Requester/Technician for personal asset and ticket flows. The PO functional and visual verdict is pending. A Parent PR follows joint acceptance.
+- FE-12 Parent PR publication pending. FE-13.01 follows verified merge and authorization.
