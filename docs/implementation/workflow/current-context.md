@@ -58,12 +58,12 @@ authority: derived
 - Joint PO review: http://127.0.0.1:3204/knowledge. Published reader, explicit KB-014 author/publisher grants and source lifecycle passed agent checks. PO confirmed joint acceptance.
 - Verified implementation pushes on phase/a-frontend: 1a67c21, bb3a807, b706fee. FE-13 Parent [PR #15](https://github.com/congminh1705/IT-Operation-Hub/pull/15) merged into main at 65c1ffc. Phase branch fast-forwarded.
 
-## Parent FE-14
+## Parent FE-14 joint acceptance
 
-- All three FE-14 tasks are in review. Registry: EPIC_IN_PROGRESS. Board: 48 done, 3 review, 179 pending.
-- [FE-14.01/attempt-01](task-history.md#task-fe-14-01-attempt-01), review. 108 unit, 5 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-14.01/comparison.md). FE-14.02 can proceed under joint Parent review.
-- [FE-14.02/attempt-01](task-history.md#task-fe-14-02-attempt-01), review. 108 unit, 6 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-14.02/comparison.md). FE-14.03 can proceed under joint Parent review.
-- [FE-14.03/attempt-01](task-history.md#task-fe-14-03-attempt-01), review. 109 unit, 18 Chromium including 13 affected regression cases, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-14.03/comparison.md). Joint FE-14 PO review at http://127.0.0.1:3214/assistant. FE-15.01 follows closure, PR merge and authorization.
+- PO accepted all three FE-14 tasks. Registry: EPIC_DONE. Board: 51 done, 179 pending.
+- [FE-14.01/attempt-02](task-history.md#task-fe-14-01-attempt-02), done. 108 unit, 5 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-14.01/comparison.md).
+- [FE-14.02/attempt-02](task-history.md#task-fe-14-02-attempt-02), done. 108 unit, 6 Chromium, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-14.02/comparison.md).
+- [FE-14.03/attempt-02](task-history.md#task-fe-14-03-attempt-02), done. 109 unit, 18 Chromium including 13 affected regression cases, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-14.03/comparison.md).
 
-- Joint PO review: http://127.0.0.1:3214/assistant and http://127.0.0.1:3214/admin/assistant. Chat lifecycle, scoped cards, manual handoff, availability and fallback passed agent checks. PO verdict pending.
-- Verified implementation pushes on phase/a-frontend: bb3062a, cfa0c29, 0f15115. Parent PR follows joint PO acceptance.
+- Joint PO review: http://127.0.0.1:3214/assistant and http://127.0.0.1:3214/admin/assistant. Chat lifecycle, scoped cards, manual handoff, availability and fallback passed agent checks. PO confirmed joint acceptance.
+- Verified implementation pushes on phase/a-frontend: bb3062a, cfa0c29, 0f15115. FE-14 Parent PR publication pending. FE-15.01 follows verified merge and authorization.
