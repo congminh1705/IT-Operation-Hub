@@ -81,13 +81,27 @@ export class QueryClient {
     isEmpty: (data: T) => boolean = (data) =>
       data === null || (Array.isArray(data) && data.length === 0),
   ): Promise<void> {
+    return this.read(key, read, isEmpty);
+  }
+
+  private read<T>(
+    key: QueryKey,
+    read: (signal: AbortSignal) => Promise<ApiOutcome<T>>,
+    isEmpty: (data: T) => boolean,
+    background = false,
+  ): Promise<void> {
     if (!this.owns(key)) return Promise.resolve();
     const id = JSON.stringify(key);
     const previous = this.entries.get(id);
     if (previous?.promise) return previous.promise;
     const entry: Entry = {
       key: [...key],
-      state: { status: "pending" },
+      state:
+        background &&
+        (previous?.state.status === "success" ||
+          previous?.state.status === "empty")
+          ? previous.state
+          : { status: "pending" },
       controller: new AbortController(),
     };
     this.entries.set(id, entry);
@@ -134,10 +148,11 @@ export class QueryClient {
   poll<T>(
     key: QueryKey,
     read: (signal: AbortSignal) => Promise<ApiOutcome<T>>,
-    isEmpty?: (data: T) => boolean,
+    isEmpty: (data: T) => boolean = (data) =>
+      data === null || (Array.isArray(data) && data.length === 0),
   ) {
     const run = () => {
-      void this.fetch(key, read, isEmpty);
+      void this.read(key, read, isEmpty, true);
     };
     this.polls.add(run);
     return () => {

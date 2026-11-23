@@ -141,4 +141,33 @@ describe("private query lifecycle", () => {
     windowEvents.dispatchEvent(new Event("focus"));
     expect(vi.getTimerCount()).toBe(0);
   });
+
+  it("keeps the current list visible while polling and drops a response after scope changes", async () => {
+    vi.useFakeTimers();
+    const client = setup();
+    await client.fetch(key, async () => success(["current"]));
+    let finish!: (outcome: ApiOutcome<string[]>) => void;
+    const stop = client.poll<string[]>(
+      key,
+      () =>
+        new Promise((resolve) => {
+          finish = resolve;
+        }),
+    );
+    client.setActive(true);
+    try {
+      await vi.advanceTimersByTimeAsync(30_000);
+      expect(client.getState(key)).toEqual({
+        status: "success",
+        data: ["current"],
+      });
+      client.setIdentity({ ...identity, scope: "team" });
+      finish(success(["old scope"]));
+      await vi.advanceTimersByTimeAsync(0);
+      expect(client.getState(key).status).toBe("idle");
+    } finally {
+      stop();
+      client.setActive(false);
+    }
+  });
 });

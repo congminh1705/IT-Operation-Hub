@@ -257,7 +257,10 @@ test("approved reference states and login captured at the same desktop/mobile wi
     !process.env.DESIGN_REFERENCE_URL,
     "Set DESIGN_REFERENCE_URL to the local approved design server for reference captures.",
   );
-  const reference = process.env.DESIGN_REFERENCE_URL;
+  const reference = process.env.DESIGN_REFERENCE_URL!;
+  await page.route(new URL("/favicon.ico", reference).href, (route) =>
+    route.fulfill({ status: 204 }),
+  );
   for (const width of [1440, 390]) {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto(`${reference}/final/08-admin-states.html?capture=1#states`);

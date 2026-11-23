@@ -109,7 +109,10 @@ for (const [role, route, ref] of [
           () => document.documentElement.scrollWidth <= innerWidth,
         ),
       ).toBe(true);
-      await page.locator(".ticket-attachment-picker").scrollIntoViewIfNeeded();
+      await page
+        .locator(".ticket-attachment-picker")
+        .filter({ has: page.locator('input[type="file"]') })
+        .scrollIntoViewIfNeeded();
       await page.screenshot({
         path: path.join(folder, `actual-${ref}-${width}.png`),
         fullPage: true,

@@ -94,5 +94,13 @@ authority: derived
 - [FE-17.01/attempt-02](task-history.md#task-fe-17-01-attempt-02) covers the unread counter, scoped notices, first-read timestamp and safe resolution. [Comparison](../evidence/FE-17.01/comparison.md).
 - [FE-17.02/attempt-02](task-history.md#task-fe-17-02-attempt-02) covers the business and administration audit scopes, filtering, pagination and returning from event detail. [Comparison](../evidence/FE-17.02/comparison.md).
 - Verification: 113 unit tests, 5 final Chrome flows and 34 affected regression cases passed. Three adjacent reference cases were skipped on the regression run. Scoped lint/format, TypeScript and production build passed. PO confirmed joint review and requested closure.
-- Local review: http://127.0.0.1:3243/notifications and http://127.0.0.1:3243/audit. Implementation commit `a4d4ae6` on `phase/a-frontend`. FE-17 Parent [PR #19](https://github.com/congminh1705/IT-Operation-Hub/pull/19) is open into main. Acceptance commit `a9a54cd` was pushed.
-- FE-18.01 remains pending, gated on FE-17 Parent PR merge and implementation authorization.
+- Local review: http://127.0.0.1:3243/notifications and http://127.0.0.1:3243/audit. Implementation commit `a4d4ae6` on `phase/a-frontend`. FE-17 Parent [PR #19](https://github.com/congminh1705/IT-Operation-Hub/pull/19) merged into main at `4c71825`. The phase branch was fast-forwarded.
+- PO authorized FE-18 after verified FE-17 merge.
+
+## Parent FE-18 joint PO acceptance
+
+- PO accepted all three FE-18 tasks and requested closure. Registry: EPIC_DONE. Board: 63 done and 167 pending.
+- [FE-18.01/attempt-02](task-history.md#task-fe-18-01-attempt-02), done. 36 IA patterns and 51 approved specimens inventoried. Four roles completed 50 sidebar visits. [Coverage](../evidence/FE-18.01/coverage.md). Implementation a476cb2 pushed and verified.
+- [FE-18.02/attempt-02](task-history.md#task-fe-18-02-attempt-02), done. 114 unit tests and 310 unique Chrome cases verified across the full run and serial rerun. TypeScript, lint, scoped format and clean build passed. [Comparison](../evidence/FE-18.02/comparison.md). Implementation 64e1434 pushed and verified.
+- [FE-18.03/attempt-02](task-history.md#task-fe-18-03-attempt-02), done. [Phase A contract handoff](../evidence/FE-18.03/contract-map.md) maps 96 operations. Handoff commit 59e5329 pushed and verified.
+- The FE-18 Parent [PR #20](https://github.com/congminh1705/IT-Operation-Hub/pull/20) is open into main. Acceptance commit eb329b4 was pushed and verified. Phase A exit awaits verified merge and exit recording. PRE-01.01 remains pending until that exit and separate PO authorization.

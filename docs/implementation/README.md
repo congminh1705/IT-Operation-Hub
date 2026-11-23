@@ -18,9 +18,9 @@ purpose: "Provide one task tracker and a bounded-context workflow for implementi
 
 **Approved frontend scope:** [v1.3 / D-51](../design/approval.md), including the final interactive login. Use the [63-task design map](../design/implementation-scope.md#task-map). Existing IDs, dependencies, business acceptance and lifecycle remain authoritative; visual approval does not start implementation.
 
-This backlog maps **67 stories to 88 work packages and 230 executable tasks** across frontend, real services, integration and acceptance. Every package is fully decomposed; packages remain epic-level scope records rather than coding sessions. D-43 confirms the [task method](workflow/task-workflow.md), and D-44 requests complete decomposition. **Frontend DEMO is Phase A and must be delivered before backend implementation.** The [execution board](workflow/execution-board.md) contains all task states; [parent coverage/closure](package-task-coverage.md) assigns all 264 numbered package criteria. The execution board records 39 completed tasks through FE-10.03. PO has accepted FE-10 and all three of its child tasks. System acceptance is pending.
+This backlog maps **67 stories to 88 work packages and 230 executable tasks** across frontend, real services, integration and acceptance. Every package is fully decomposed; packages remain epic-level scope records rather than coding sessions. D-43 confirms the [task method](workflow/task-workflow.md), and D-44 requests complete decomposition. **Frontend DEMO is Phase A and must be delivered before backend implementation.** The [execution board](workflow/execution-board.md) contains all task states; [parent coverage/closure](package-task-coverage.md) assigns all 264 numbered package criteria. PO has accepted FE-01 through FE-17. PO has also accepted FE-18. Phase A exit awaits the FE-18 Parent merge. System acceptance remains pending.
 
-FE-02.01/.02/.03 are complete. **[FE-02.04](tasks/FE-02.04.md)** is approved and done. Its file contains the required context, output scope and checks. [Current context](workflow/current-context.md) records the resume pointer. The [execution board](workflow/execution-board.md) owns task status; the package registry below owns epic status.
+The [current context](workflow/current-context.md) indexes the latest results and PO review. The [execution board](workflow/execution-board.md) owns task status; the package registry below owns epic status.
 
 The `workflow/` folder contains current context, execution board, execution prompt, task record template, task workflow and the consolidated [task report history](workflow/task-history.md). Group summaries remain in 00–07; individual task records remain in `tasks/`.
 
@@ -39,7 +39,7 @@ This is a derived execution plan. [Stories](../08-invest-requirements.md), [AC](
 | C — Real integration | [INT-01–06](07-integration.md) | Replace mock adapters by module; verify UI with actual scoped services and outcomes |
 | D — M5 acceptance | [QA-01–05](05-acceptance.md) | Whole-system AC/security/UX/live-model evidence and isolated recovery |
 
-FE-02.04 is done; close FE-02 acceptance and its remaining GitHub delivery before FE-03.01; then follow the existing leaf dependencies across A1–A4. All frontend batches are already decomposed. **FE-18.03** is the Phase A exit and an ancestor of all Phase B/C/D work. PRE-02 decisions precede workforce/concurrency consumers, PRE-03 precedes AI/knowledge consumers and PRE-04 precedes recovery; unresolved choices do not become approved merely because task records exist.
+**[FE-18.03](tasks/FE-18.03.md)** owns the [Phase A frontend handoff](evidence/FE-18.03/contract-map.md) and is an ancestor of all Phase B/C/D work. PRE-02 decisions precede workforce/concurrency consumers, PRE-03 precedes AI/knowledge consumers and PRE-04 precedes recovery; unresolved choices do not become approved merely because task records exist.
 
 M1–M5 still describe system capabilities/acceptance, while phases A–D describe the requested implementation order. A frontend DEMO is not a completed M1–M4 capability. Within B, preserve the original service dependencies: AI-01/02 supply minimum sources before M3; full KB/RAG remains OPS-06/07. Phase C can integrate each module as its B dependencies become ready. Phase D starts after all six INT tasks. Batches are not timeboxed sprints and carry no duration commitment.
 
@@ -105,7 +105,7 @@ This **work-package/epic registry** retains all 88 stable scope IDs. The registr
 | [FE-15](06-frontend-first.md#fe-15) | Trusted action cards and shared AI Workspace | FE-08 FE-11 FE-14 | EPIC_DONE |
 | [FE-16](06-frontend-first.md#fe-16) | Role dashboards and reporting interactions | FE-09 FE-10 FE-12 FE-14 | EPIC_DONE |
 | [FE-17](06-frontend-first.md#fe-17) | Notifications and scoped audit screens | FE-04 FE-06 FE-10 | EPIC_DONE |
-| [FE-18](06-frontend-first.md#fe-18) | Frontend DEMO acceptance and API handoff | FE-07 FE-15 FE-16 FE-17 | EPIC_READY |
+| [FE-18](06-frontend-first.md#fe-18) | Frontend DEMO acceptance and API handoff | FE-07 FE-15 FE-16 FE-17 | EPIC_DONE |
 | [INT-01](07-integration.md#int-01) | Connect identity, administration and shared transport | FE-18 FND-03 FND-04 FND-07 FND-08 FND-17 | EPIC_READY |
 | [INT-02](07-integration.md#int-02) | Connect ticket lifecycle, attachments, SLA and notifications | INT-01 FND-13 OPS-03 OPS-04 OPS-05 | EPIC_READY |
 | [INT-03](07-integration.md#int-03) | Connect workforce, plans, policy, approvals and runs | INT-01 FND-15 FND-16 WF-10 AI-08 | EPIC_READY |

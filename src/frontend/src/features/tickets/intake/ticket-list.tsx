@@ -8,7 +8,16 @@ import {
 } from "@/lib/demo/organization-metrics";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, type FormEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type FormEvent,
+} from "react";
+import { useQueryClient, useQueryState } from "@/app/providers";
+import { queryKey } from "@/lib/api/query-keys";
+import type { ApiOutcome } from "@/lib/api/types";
 import { Button } from "@/components/ui/button";
 import { Feedback } from "@/components/feedback/feedback";
 import type { WorkspaceSearch } from "@/components/layout/workspace-page";
@@ -18,10 +27,12 @@ import {
   scopedTicketRows,
   ticketPriorities,
   ticketStates,
+  type TicketRow,
 } from "@/lib/demo/ticket-list";
 import "./ticket-list.css";
 
 const scopes = ["mine", "work"] as const;
+const noTicketIdentity = { userId: "", scope: "" };
 const fields = [
   "state",
   "priority",
@@ -48,29 +59,97 @@ function href(params: URLSearchParams) {
 export function TicketList({ search }: { search: WorkspaceSearch }) {
   const router = useRouter();
   const { persona, store } = useSession();
+  const client = useQueryClient();
   const [now] = useState(Date.now);
-  if (!persona) return null;
-  const workAllowed = persona.scope.tickets !== "mine";
+  const workAllowed = Boolean(persona && persona.scope.tickets !== "mine");
   const requested = first(search.scope);
   const scope: (typeof scopes)[number] =
     workAllowed && requested !== "mine" ? "work" : "mine";
-  const base = new URLSearchParams({ scope });
-  const result = scopedTicketRows(
-    persona,
-    scope,
-    store.teams.ownTeamIds(),
-    first(search.demo) === "unavailable",
-    store.tickets.rows(),
+  const unavailable = first(search.demo) === "unavailable";
+  const identity = store.identity();
+  const userId = identity?.userId;
+  const permissionScope = identity?.scope;
+  const key = useMemo(
+    () =>
+      queryKey(
+        userId && permissionScope
+          ? { userId, scope: permissionScope }
+          : noTicketIdentity,
+        "tickets",
+        { scope, unavailable: String(unavailable) },
+      ),
+    [userId, permissionScope, scope, unavailable],
   );
-  if (result.kind !== "success")
+  const state = useQueryState<TicketRow[]>(key);
+  const read = useCallback(async (): Promise<ApiOutcome<TicketRow[]>> => {
+    const current = store.getSnapshot();
+    if (!current)
+      return {
+        kind: "unauthenticated",
+        status: 401,
+        error: {
+          code: "SESSION_REQUIRED",
+          message: "Phiên không khả dụng.",
+          request_id: "demo-ticket-list",
+        },
+      };
+    const result = scopedTicketRows(
+      current,
+      scope,
+      store.teams.ownTeamIds(),
+      unavailable,
+      store.tickets.rows(),
+    );
+    if (result.kind === "success")
+      return { kind: "success", status: 200, data: result.rows };
+    if (result.kind === "forbidden")
+      return {
+        kind: "forbidden",
+        status: 403,
+        error: {
+          code: "FORBIDDEN",
+          message: "Không có quyền xem yêu cầu.",
+          request_id: "demo-ticket-list",
+        },
+      };
+    return {
+      kind: "unavailable",
+      status: 503,
+      error: {
+        code: "UNAVAILABLE",
+        message: "Chưa tải được yêu cầu DEMO.",
+        request_id: "demo-ticket-list",
+      },
+    };
+  }, [scope, store, unavailable]);
+  useEffect(() => {
+    if (!userId) return;
+    void client.fetch(key, read);
+    if (!unavailable) return client.poll(key, read);
+  }, [client, key, read, unavailable, userId]);
+  if (!persona) return null;
+  const base = new URLSearchParams({ scope });
+  if (state.status === "idle" || state.status === "pending")
+    return <Feedback kind="loading" />;
+  if (state.status === "error") {
+    const error = state.error;
+    const forbidden =
+      !!error &&
+      typeof error === "object" &&
+      "kind" in error &&
+      error.kind === "forbidden";
     return (
       <Feedback
-        kind={result.kind === "error" ? "error" : "forbidden"}
+        kind={forbidden ? "forbidden" : "error"}
         action={
-          result.kind === "error"
+          !forbidden
             ? {
                 label: "Thử lại",
                 onClick: () => {
+                  if (!unavailable) {
+                    void client.fetch(key, read);
+                    return;
+                  }
                   const clean = new URLSearchParams();
                   for (const key of [
                     "scope",
@@ -91,6 +170,9 @@ export function TicketList({ search }: { search: WorkspaceSearch }) {
         }
       />
     );
+  }
+  if (state.status !== "success" && state.status !== "empty") return null;
+  const ticketRows = state.data;
   const metric = first(search.metric);
   const personalMetric =
     (metric === "MET11" &&
@@ -104,7 +186,7 @@ export function TicketList({ search }: { search: WorkspaceSearch }) {
     scope === "work" && canReadOrganizationMetrics(persona)
       ? orgTicketMetrics.find((id) => id === metric)
       : undefined;
-  let orgRows: typeof result.rows | undefined;
+  let orgRows: typeof ticketRows | undefined;
   if (orgMetric) {
     const filters = reportFilters(
       {
@@ -130,10 +212,10 @@ export function TicketList({ search }: { search: WorkspaceSearch }) {
     ? personalTicketMetric(
         persona,
         store.teams.ownTeamIds(),
-        result.rows,
+        ticketRows,
         metric,
       )
-    : (orgRows ?? result.rows);
+    : (orgRows ?? ticketRows);
   const options = {
     state: ticketStates,
     priority: ticketPriorities,
