@@ -8707,3 +8707,151 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task: FE-17.01.
 - Remaining prerequisite: verified Parent PR merge and implementation authorization.
+
+<a id="task-fe-17-01-attempt-01"></a>
+
+### FE-17.01 — Attempt 01 — 2026-11-24T00:44:51+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-17.01/attempt-01
+- Task: [task card](../tasks/FE-17.01.md)
+- Parent / phase: FE-17 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-24
+- Ended at: 2026-11-24T00:44:51+07:00
+- State before / after: pending / review
+- Previous attempt: none.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Build own notification list and read interaction.
+- Delivered this attempt: Unread badge and filters, account-scoped first read timestamp, authorized ticket link and generic revoked notice.
+- Incomplete scope: PO joint and visual acceptance pending. Phase A uses synthetic fixtures.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/monitoring/ | Monitoring screen and shared styles | Scoped UI aligned to monitoring reference |
+| src/frontend/src/lib/demo/ and src/frontend/src/features/auth/ | notifications-screen.tsx, notification-bell.tsx, notifications.ts, session-store.ts, notifications.spec.ts | Role/record-scoped views and authenticated routing |
+| src/frontend/e2e/ | e2e/notifications.spec.ts | Running-application and responsive evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Own unread count, idempotent read, safe target resolution and account isolation | Task-specific capability only | Requester 2 unread → 1 → 0; Manager 3. Authorized ticket opened; revoked ID and internal preview absent. Unit verified first timestamp, live scope change and owner isolation. | pass | [Playwright](../evidence/FE-17.01/playwright.log) |
+| Approved layout and visual acceptance | Actual/reference evidence and PO verdict | Agent compared 1440 and 390 captures. PO verdict pending. | not-run (PO verdict) | [Comparison](../evidence/FE-17.01/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | `node node_modules/@playwright/test/cli.js test e2e/notifications.spec.ts` against the production build with the HTML reference server | Business flow and screenshots | 1 passed before FE-17.02. Repeated on the final Parent build. | pass |
+| src/frontend | `node node_modules/vitest/vitest.mjs run` | Unit regressions | 113/113 across 21 files | pass |
+| src/frontend | `node node_modules/next/dist/bin/next typegen`, `node node_modules/typescript/bin/tsc --noEmit`, `node node_modules/next/dist/bin/next build` | Typecheck and production build | Passed | pass |
+| src/frontend | `node node_modules/eslint/bin/eslint.js` and `node node_modules/prettier/bin/prettier.cjs --check` on affected frontend source/specs | Lint and formatting | Passed | pass |
+
+#### 6. Review
+
+- Type / reviewer: AI Agent functional and appearance comparison. Joint PO review by Hoang Cong Minh pending.
+- Findings / resolution: The initial browser assertion selected the sidebar link. Targeted the toolbar bell and reran successfully.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: owner visual verdict and joint acceptance pending.
+- Required resolution / owner: PO checks the production DEMO and approved HTML comparison.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-17.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-17.01/comparison.md), [browser log](../evidence/FE-17.01/playwright.log).
+- Commit / build / environment: `a4d4ae6`, `phase/a-frontend`, local production DEMO via Chrome.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 01.
+- Execution-board row: review, Owner PO.
+- Current context: Parent joint review recorded.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- FE-17.02 was implemented after FE-17.01 checks passed under the joint-review workflow.
+
+
+<a id="task-fe-17-02-attempt-01"></a>
+
+### FE-17.02 — Attempt 01 — 2026-11-24T00:44:51+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-17.02/attempt-01
+- Task: [task card](../tasks/FE-17.02.md)
+- Parent / phase: FE-17 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-24
+- Ended at: 2026-11-24T00:44:51+07:00
+- State before / after: pending / review
+- Previous attempt: none.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Build scoped audit search and history.
+- Delivered this attempt: Read-only Manager business and Admin identity/SLA audit scopes with search, action/result filters, stable pages and scoped details.
+- Incomplete scope: PO joint and visual acceptance pending. Phase A uses synthetic fixtures.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/monitoring/ | Monitoring screen and shared styles | Scoped UI aligned to monitoring reference |
+| src/frontend/src/lib/demo/ and src/frontend/src/features/auth/ | audit-screen.tsx, audit.ts, session.tsx, workspace-entry.tsx, audit.spec.ts | Role/record-scoped views and authenticated routing |
+| src/frontend/e2e/ | e2e/audit.spec.ts e2e/notifications.spec.ts | Running-application and responsive evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scoped history, denied nonmanager entry, stable filters/pagination/back and safe event projections | Task-specific capability only | Manager 6 business and Admin 4 administration events. Admin switches to business. Requester and Technician received access denied. Scoped detail and safe return through sign-in passed. Detail has actor, local time, before/after and reason. | pass | [Playwright](../evidence/FE-17.02/playwright.log) |
+| Approved layout and visual acceptance | Actual/reference evidence and PO verdict | Agent compared 1440 and 390 captures. PO verdict pending. | not-run (PO verdict) | [Comparison](../evidence/FE-17.02/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | `node node_modules/@playwright/test/cli.js test e2e/audit.spec.ts e2e/notifications.spec.ts` against the production build with the HTML reference server | Business flow and screenshots | 5 passed, including the final notification regression. Additional regression run: 34 passed and 3 visual-only cases skipped outside FE-17. | pass |
+| src/frontend | `node node_modules/vitest/vitest.mjs run` | Unit regressions | 113/113 across 21 files | pass |
+| src/frontend | `node node_modules/next/dist/bin/next typegen`, `node node_modules/typescript/bin/tsc --noEmit`, `node node_modules/next/dist/bin/next build` | Typecheck and production build | Passed | pass |
+| src/frontend | `node node_modules/eslint/bin/eslint.js` and `node node_modules/prettier/bin/prettier.cjs --check` on affected frontend source/specs | Lint and formatting | Passed | pass |
+| src/frontend | `node node_modules/@playwright/test/cli.js test access-review.spec.ts workspace.spec.ts` | Affected role and workspace regressions | 34 passed. Three other-module reference cases skipped by the harness without the reference variables. | pass for executed tests; not-run for 3 visual cases |
+
+#### 6. Review
+
+- Type / reviewer: AI Agent functional and appearance comparison. Joint PO review by Hoang Cong Minh pending.
+- Findings / resolution: Direct event links initially lost audit parameters through authentication. Added bounded audit return parameters and reran the four role flows.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: owner visual verdict and joint acceptance pending.
+- Required resolution / owner: PO checks the production DEMO and approved HTML comparison.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-17.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-17.02/comparison.md), [browser log](../evidence/FE-17.02/playwright.log), [regressions](../evidence/FE-17.02/regressions.log).
+- Commit / build / environment: `a4d4ae6`, `phase/a-frontend`, local production DEMO via Chrome.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 01.
+- Execution-board row: review, Owner PO.
+- Current context: Parent joint review recorded.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- FE-18.01 after joint PO acceptance, FE-17 Parent PR merge and implementation authorization.
