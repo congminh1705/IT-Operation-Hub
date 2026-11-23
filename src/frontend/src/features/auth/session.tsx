@@ -36,6 +36,10 @@ export function safeReturnPath(value: string | null): string {
       ? [
           "scope",
           "metric",
+          "metricTeam",
+          "at",
+          "from",
+          "to",
           "q",
           "state",
           "priority",
@@ -47,7 +51,11 @@ export function safeReturnPath(value: string | null): string {
           "size",
           "page",
         ]
-      : ["scope", "q"];
+      : url.pathname === "/reports" || url.pathname === "/dashboard"
+        ? ["from", "to", "at", "team", "tab"]
+        : url.pathname === "/assets"
+          ? ["scope", "q", "warranty", "at"]
+          : ["scope", "q"];
   for (const name of names) {
     const item = url.searchParams.get(name);
     if (item) params.set(name, item.slice(0, 180));

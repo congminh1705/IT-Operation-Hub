@@ -77,4 +77,7 @@ authority: derived
 - [FE-15.04/attempt-02](task-history.md#task-fe-15-04-attempt-02), done. 109 unit, 21 Chromium including 15 affected regressions, scoped lint/format, TypeScript and production build passed. [Comparison](../evidence/FE-15.04/comparison.md).
 
 - Joint PO review: http://127.0.0.1:3225/assistant. Scope, native confirmation, independent activity and responsive exception view passed agent checks. PO confirmed joint acceptance.
-- Verified implementation pushes on phase/a-frontend: de53b2f, 7854825, 24f1ddd, 6e01c24. FE-15 Parent [PR #17](https://github.com/congminh1705/IT-Operation-Hub/pull/17) is open into main. Acceptance commit 2c1660b pushed. FE-16.01 follows verified merge and authorization.
+- Verified implementation pushes on phase/a-frontend: de53b2f, 7854825, 24f1ddd, 6e01c24. FE-15 Parent [PR #17](https://github.com/congminh1705/IT-Operation-Hub/pull/17) merged into main at ebea4c7. Phase branch fast-forwarded.
+
+## Parent FE-16
+- [FE-16.01/attempt-01](task-history.md#task-fe-16-01-attempt-01), review. 110 unit and 5 Chromium passed. [Comparison](../evidence/FE-16.01/comparison.md). Pushed and verified b2e756f. FE-16.02 can proceed under joint Parent review.

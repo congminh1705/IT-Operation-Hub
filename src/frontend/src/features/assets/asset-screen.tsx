@@ -8,6 +8,10 @@ import { useSession } from "@/features/auth/session";
 import { assetStates, managesAssets, type AssetState } from "@/lib/demo/assets";
 import { AssetMetadataForm } from "./asset-metadata";
 import { AssetLifecycle } from "./asset-lifecycle";
+import {
+  reportFilters,
+  warrantyPopulation,
+} from "@/lib/demo/organization-metrics";
 import { normalizeTicketText } from "@/lib/demo/ticket-list";
 import "../automation/automation.css";
 import "./assets.css";
@@ -16,10 +20,14 @@ export function AssetScreen({
   scope,
   id,
   initialLifecycle = false,
+  warranty,
+  snapshot,
 }: {
   scope: string;
   id?: string;
   initialLifecycle?: boolean;
+  warranty?: string;
+  snapshot?: string;
 }) {
   const { store, persona } = useSession();
   const router = useRouter();
@@ -27,12 +35,26 @@ export function AssetScreen({
   const [state, setState] = useState<AssetState | "">("");
   const [editing, setEditing] = useState(false);
   const [changing, setChanging] = useState(initialLifecycle);
+  const [now] = useState(Date.now);
   const [, refresh] = useState(0);
   if (!persona) return null;
 
   const own = scope === "mine" || persona.user.role === "REQUESTER";
   const listUrl = own ? "/assets?scope=mine" : "/assets?scope=work";
-  const rows = store.assets.list(persona, store.teams.ownTeamIds(), scope);
+  const allRows = store.assets.list(persona, store.teams.ownTeamIds(), scope);
+  const warrantyFilter =
+    managesAssets(persona) &&
+    !own &&
+    (warranty === "expiring" ||
+      warranty === "expired" ||
+      warranty === "unknown")
+      ? warranty
+      : null;
+  const rows = warrantyFilter
+    ? warrantyPopulation(allRows, reportFilters({ at: snapshot }, now).at)[
+        warrantyFilter
+      ]
+    : allRows;
   const asset = rows.find((row) => row.id === id);
   const filtered = rows.filter(
     (row) =>
@@ -183,6 +205,16 @@ export function AssetScreen({
                 ? "Thiết bị hỗ trợ"
                 : "Danh mục tài sản"}
           </h2>
+          {warrantyFilter && (
+            <p>
+              MET10 ·{" "}
+              {warrantyFilter === "expiring"
+                ? "Sắp hết hạn"
+                : warrantyFilter === "expired"
+                  ? "Đã hết hạn"
+                  : "Chưa có ngày bảo hành"}
+            </p>
+          )}
           {canEdit && !own && (
             <button
               type="button"

@@ -85,7 +85,7 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FE-15.02](../tasks/FE-15.02.md) | [FE-15](../06-frontend-first.md#fe-15) | Build confirmed ticket creation and reply cards | [FE-15.01](../tasks/FE-15.01.md) | PO | done |
 | [FE-15.03](../tasks/FE-15.03.md) | [FE-15](../06-frontend-first.md#fe-15) | Build task and management action cards | [FE-15.02](../tasks/FE-15.02.md) | PO | done |
 | [FE-15.04](../tasks/FE-15.04.md) | [FE-15](../06-frontend-first.md#fe-15) | Compose normal and exception AI Workspace | [FE-15.03](../tasks/FE-15.03.md) | PO | done |
-| [FE-16.01](../tasks/FE-16.01.md) | [FE-16](../06-frontend-first.md#fe-16) | Build personal and Technician dashboard actions | [FE-09.03](../tasks/FE-09.03.md), [FE-10.03](../tasks/FE-10.03.md), [FE-14.03](../tasks/FE-14.03.md) | PO | pending |
+| [FE-16.01](../tasks/FE-16.01.md) | [FE-16](../06-frontend-first.md#fe-16) | Build personal and Technician dashboard actions | [FE-09.03](../tasks/FE-09.03.md), [FE-10.03](../tasks/FE-10.03.md), [FE-14.03](../tasks/FE-14.03.md) | PO | review |
 | [FE-16.02](../tasks/FE-16.02.md) | [FE-16](../06-frontend-first.md#fe-16) | Build management ticket, SLA and warranty reports | [FE-16.01](../tasks/FE-16.01.md) | PO | pending |
 | [FE-16.03](../tasks/FE-16.03.md) | [FE-16](../06-frontend-first.md#fe-16) | Build work, usage and assistant fact parity | [FE-16.02](../tasks/FE-16.02.md) | PO | pending |
 | [FE-17.01](../tasks/FE-17.01.md) | [FE-17](../06-frontend-first.md#fe-17) | Build own notification list and read interaction | [FE-04.05](../tasks/FE-04.05.md), [FE-10.03](../tasks/FE-10.03.md) | PO | pending |

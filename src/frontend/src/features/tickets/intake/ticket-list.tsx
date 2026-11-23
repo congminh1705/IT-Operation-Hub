@@ -1,8 +1,14 @@
 "use client";
 import { personalTicketMetric } from "@/lib/demo/dashboard-metrics";
+import {
+  canReadOrganizationMetrics,
+  orgTicketMetrics,
+  readOrganizationReport,
+  reportFilters,
+} from "@/lib/demo/organization-metrics";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import type { FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Feedback } from "@/components/feedback/feedback";
 import type { WorkspaceSearch } from "@/components/layout/workspace-page";
@@ -42,13 +48,13 @@ function href(params: URLSearchParams) {
 export function TicketList({ search }: { search: WorkspaceSearch }) {
   const router = useRouter();
   const { persona, store } = useSession();
+  const [now] = useState(Date.now);
   if (!persona) return null;
   const workAllowed = persona.scope.tickets !== "mine";
   const requested = first(search.scope);
   const scope: (typeof scopes)[number] =
     workAllowed && requested !== "mine" ? "work" : "mine";
   const base = new URLSearchParams({ scope });
-  const baseHref = href(base);
   const result = scopedTicketRows(
     persona,
     scope,
@@ -94,6 +100,32 @@ export function TicketList({ search }: { search: WorkspaceSearch }) {
       scope === "work" &&
       persona.user.role === "TECHNICIAN");
   if (personalMetric) base.set("metric", metric);
+  const orgMetric =
+    scope === "work" && canReadOrganizationMetrics(persona)
+      ? orgTicketMetrics.find((id) => id === metric)
+      : undefined;
+  let orgRows: typeof result.rows | undefined;
+  if (orgMetric) {
+    const filters = reportFilters(
+      {
+        from: first(search.from) || undefined,
+        to: first(search.to) || undefined,
+        at: first(search.at),
+        team: first(search.metricTeam),
+      },
+      now,
+    );
+    orgRows =
+      readOrganizationReport(store, persona, filters)?.population[
+        orgMetric
+      ].map(({ row }) => row) ?? [];
+    base.set("metric", orgMetric);
+    base.set("from", filters.from);
+    base.set("to", filters.to);
+    base.set("at", String(filters.at));
+    if (filters.team) base.set("metricTeam", filters.team);
+  }
+  const baseHref = href(base);
   const source = personalMetric
     ? personalTicketMetric(
         persona,
@@ -101,7 +133,7 @@ export function TicketList({ search }: { search: WorkspaceSearch }) {
         result.rows,
         metric,
       )
-    : result.rows;
+    : (orgRows ?? result.rows);
   const options = {
     state: ticketStates,
     priority: ticketPriorities,

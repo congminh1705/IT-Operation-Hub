@@ -1,5 +1,6 @@
 "use client";
 import { PersonalDashboard } from "@/features/reports/personal-dashboard";
+import { OrganizationReports } from "@/features/reports/organization-reports";
 import { AssistantWorkspace } from "@/features/assistant/assistant-workspace";
 import { AssistantSettings } from "@/features/assistant/assistant-settings";
 import { KnowledgeScreen } from "@/features/knowledge/knowledge-screen";
@@ -77,6 +78,11 @@ export function WorkspaceEntry({
         (persona.user.role === "REQUESTER" ||
           persona.user.role === "TECHNICIAN") ? (
           <PersonalDashboard />
+        ) : pathname === "/dashboard" || pathname === "/reports" ? (
+          <OrganizationReports
+            search={search}
+            dashboard={pathname === "/dashboard"}
+          />
         ) : pathname === "/admin/assistant" ? (
           <AssistantSettings />
         ) : pathname === "/assistant" ? (
@@ -94,6 +100,8 @@ export function WorkspaceEntry({
             scope={params.get("scope") ?? "work"}
             id={params.get("id") ?? undefined}
             initialLifecycle={params.get("lifecycle") === "1"}
+            warranty={params.get("warranty") ?? undefined}
+            snapshot={params.get("at") ?? undefined}
           />
         ) : pathname === "/approvals" ? (
           <ApprovalProposal />
