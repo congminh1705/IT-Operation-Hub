@@ -3,6 +3,7 @@ import type { DemoPersona } from "./fixtures";
 import { unfinishedTicket } from "./dashboard-metrics";
 import { scopedTicketRows } from "./ticket-list";
 import type { AssetState } from "./assets";
+import { operationalMetrics } from "./operational-metrics";
 
 export const canReadOrganizationMetrics = (actor: DemoPersona) =>
   actor.user.active &&
@@ -204,8 +205,10 @@ export function readOrganizationReport(
     const detail = store.tickets.detail(actor, id, [], filters.at);
     return detail && detail.createdAt <= filters.at ? [detail] : [];
   });
+  const ticketMetrics = deriveTicketMetrics(details, filters);
   return {
-    ...deriveTicketMetrics(details, filters),
+    ...ticketMetrics,
+    operations: operationalMetrics(store, actor, filters, ticketMetrics.range),
     teams: [
       ...new Map(details.map(({ row }) => [row.teamId, row.team])).entries(),
     ],
@@ -215,6 +218,16 @@ export function readOrganizationReport(
     ),
   };
 }
+export function reportSnapshotLabel(at: number) {
+  return new Intl.DateTimeFormat("vi-VN", {
+    dateStyle: "short",
+    timeStyle: "short",
+    timeZone: "Asia/Ho_Chi_Minh",
+  }).format(at);
+}
+export type OrganizationReport = NonNullable<
+  ReturnType<typeof readOrganizationReport>
+>;
 export function reportQuery(filters: ReportFilters) {
   const query = new URLSearchParams({
     from: filters.from,

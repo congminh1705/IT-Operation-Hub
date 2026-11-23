@@ -18,7 +18,7 @@ purpose: "Maintain the single status and owner registry for every refined execut
 
 ## 1. Scope and authority
 
-All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. **55 tasks are done** through FE-15.04. **175 remain pending.** [FE-15 is EPIC_DONE in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
+All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. **55 tasks are done** through FE-15.04. **Two tasks are in review and 173 remain pending.** [FE-15 is EPIC_DONE in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
 
 The [package registry](../README.md#4-task-tracker) holds epic state; this board alone holds task state and PO ownership. Use the [task workflow](task-workflow.md). [Parent coverage and closure](../package-task-coverage.md) maps every parent criterion to outputs and names any external integration evidence. Package readiness means defined scope; dependencies, affected decisions and future coding authorization still gate execution.
 
@@ -86,7 +86,7 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FE-15.03](../tasks/FE-15.03.md) | [FE-15](../06-frontend-first.md#fe-15) | Build task and management action cards | [FE-15.02](../tasks/FE-15.02.md) | PO | done |
 | [FE-15.04](../tasks/FE-15.04.md) | [FE-15](../06-frontend-first.md#fe-15) | Compose normal and exception AI Workspace | [FE-15.03](../tasks/FE-15.03.md) | PO | done |
 | [FE-16.01](../tasks/FE-16.01.md) | [FE-16](../06-frontend-first.md#fe-16) | Build personal and Technician dashboard actions | [FE-09.03](../tasks/FE-09.03.md), [FE-10.03](../tasks/FE-10.03.md), [FE-14.03](../tasks/FE-14.03.md) | PO | review |
-| [FE-16.02](../tasks/FE-16.02.md) | [FE-16](../06-frontend-first.md#fe-16) | Build management ticket, SLA and warranty reports | [FE-16.01](../tasks/FE-16.01.md) | PO | pending |
+| [FE-16.02](../tasks/FE-16.02.md) | [FE-16](../06-frontend-first.md#fe-16) | Build management ticket, SLA and warranty reports | [FE-16.01](../tasks/FE-16.01.md) | PO | review |
 | [FE-16.03](../tasks/FE-16.03.md) | [FE-16](../06-frontend-first.md#fe-16) | Build work, usage and assistant fact parity | [FE-16.02](../tasks/FE-16.02.md) | PO | pending |
 | [FE-17.01](../tasks/FE-17.01.md) | [FE-17](../06-frontend-first.md#fe-17) | Build own notification list and read interaction | [FE-04.05](../tasks/FE-04.05.md), [FE-10.03](../tasks/FE-10.03.md) | PO | pending |
 | [FE-17.02](../tasks/FE-17.02.md) | [FE-17](../06-frontend-first.md#fe-17) | Build scoped audit search and history | [FE-17.01](../tasks/FE-17.01.md) | PO | pending |

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { OperationalReportDetail } from "./operational-facts";
 import { Feedback } from "@/components/feedback/feedback";
 import { useSession } from "@/features/auth/session";
 import type { WorkspaceSearch } from "@/components/layout/workspace-page";
@@ -10,6 +11,7 @@ import {
   readOrganizationReport,
   reportFilters,
   reportQuery,
+  reportSnapshotLabel,
   type OrganizationTicketMetric,
 } from "@/lib/demo/organization-metrics";
 import "../automation/automation.css";
@@ -46,12 +48,20 @@ export function OrganizationReports({
   if (!report) return <Feedback kind="forbidden" />;
   const tab =
     search.tab === "sla" || search.tab === "workload" ? search.tab : "ticket";
-  const snapshot = new Intl.DateTimeFormat("vi-VN", {
-    dateStyle: "short",
-    timeStyle: "short",
-    timeZone: "Asia/Ho_Chi_Minh",
-  }).format(filters.at);
+  const snapshot = reportSnapshotLabel(filters.at);
   const query = reportQuery(filters);
+  if (search.demo === "report-error") {
+    return (
+      <Feedback
+        kind="error"
+        title="Chưa tải được báo cáo DEMO"
+        action={{
+          label: "Thử lại",
+          onClick: () => router.replace("/reports?" + query + "&tab=" + tab),
+        }}
+      />
+    );
+  }
   const kpis = (items: readonly OrganizationTicketMetric[]) => (
     <div className="report-kpis">
       {items.map((id) => (
@@ -98,7 +108,7 @@ export function OrganizationReports({
     </section>
   );
   return (
-    <div className="automation reports-view">
+    <div className="automation reports-view" data-report-at={filters.at}>
       <section className="report-hero">
         <h2>
           {dashboard
@@ -393,6 +403,18 @@ export function OrganizationReports({
                 <p>Không có ticket đang mở trong phạm vi này.</p>
               )}
             </section>
+          )}
+          {tab === "workload" && report.range && (
+            <>
+              <OperationalReportDetail report={report} />
+              <Link
+                className="ui-button"
+                data-variant="secondary"
+                href={"/assistant?report=1&" + query}
+              >
+                Giải thích số liệu trong AI Workspace
+              </Link>
+            </>
           )}
           {warranty}
         </>

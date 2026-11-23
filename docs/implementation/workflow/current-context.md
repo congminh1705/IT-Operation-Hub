@@ -81,3 +81,4 @@ authority: derived
 
 ## Parent FE-16
 - [FE-16.01/attempt-01](task-history.md#task-fe-16-01-attempt-01), review. 110 unit and 5 Chromium passed. [Comparison](../evidence/FE-16.01/comparison.md). Pushed and verified b2e756f. FE-16.02 can proceed under joint Parent review.
+- [FE-16.02/attempt-01](task-history.md#task-fe-16-02-attempt-01), review. 112 unit and 5 Chromium passed. [Comparison](../evidence/FE-16.02/comparison.md). Pushed and verified cfbe77e. FE-16.03 can proceed under joint Parent review.

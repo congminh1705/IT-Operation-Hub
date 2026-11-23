@@ -86,7 +86,10 @@ export function WorkspaceEntry({
         ) : pathname === "/admin/assistant" ? (
           <AssistantSettings />
         ) : pathname === "/assistant" ? (
-          <AssistantWorkspace id={params.get("id") ?? undefined} />
+          <AssistantWorkspace
+            id={params.get("id") ?? undefined}
+            report={params.get("report") === "1" ? search : undefined}
+          />
         ) : pathname === "/knowledge" ? (
           <KnowledgeScreen
             edit={params.get("edit") === "1"}

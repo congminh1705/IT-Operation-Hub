@@ -62,6 +62,18 @@ export function safeReturnPath(value: string | null): string {
   }
   const assetId = url.searchParams.get("id");
   if (
+    url.pathname === "/reports" &&
+    url.searchParams.get("demo") === "report-error"
+  )
+    params.set("demo", "report-error");
+  if (url.pathname === "/assistant" && url.searchParams.get("report") === "1") {
+    params.set("report", "1");
+    for (const key of ["from", "to", "team", "at"]) {
+      const value = url.searchParams.get(key);
+      if (value) params.set(key, value.slice(0, 40));
+    }
+  }
+  if (
     url.pathname === "/assistant" &&
     assetId &&
     /^CHAT-\d{1,9}$/.test(assetId)
