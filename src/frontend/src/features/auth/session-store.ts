@@ -1,5 +1,6 @@
 import { createAutomationActivity } from "../../lib/demo/automation-activity";
 import { createAssets } from "../../lib/demo/assets";
+import { createNotifications } from "../../lib/demo/notifications";
 import { createAssistant } from "../../lib/demo/assistant";
 import { createAssistantAvailability } from "../../lib/demo/assistant-availability";
 import { createKnowledge } from "../../lib/demo/knowledge";
@@ -26,6 +27,13 @@ import type { QueryClient } from "../../lib/api/query-client";
 /** Memory-only session. Epochs fence late auth responses as well as query results. */
 export class SessionStore {
   private persona: DemoPersona | null = null;
+  readonly notifications = createNotifications(
+    () => this.persona,
+    (actor, id, internal) => {
+      const ticket = this.tickets.detail(actor, id, this.teams.ownTeamIds());
+      return !!ticket && (!internal || ticket.internal);
+    },
+  );
   readonly assistantAvailability = createAssistantAvailability(
     () => this.persona,
   );

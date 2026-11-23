@@ -1,0 +1,3 @@
+Running 1 test using 1 worker
+  ok 1 e2e\notifications.spec.ts:4:1 › notification badge, unread filter, revoked target and own ticket (2.0s)
+  1 passed (3.1s)

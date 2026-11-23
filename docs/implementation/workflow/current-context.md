@@ -86,4 +86,13 @@ authority: derived
 - [FE-16.02/attempt-02](task-history.md#task-fe-16-02-attempt-02), done. 112 unit and 5 Chromium passed. [Comparison](../evidence/FE-16.02/comparison.md). Pushed and verified cfbe77e.
 - [FE-16.03/attempt-02](task-history.md#task-fe-16-03-attempt-02), done. 112 unit and 13 Chromium passed. [Comparison](../evidence/FE-16.03/comparison.md). Pushed and verified 22ca639.
 
-- Joint PO review: http://127.0.0.1:3234/dashboard and http://127.0.0.1:3234/reports. Manager/Admin Workload includes the link to AI explanation. PO confirmed joint acceptance. FE-16 Parent [PR #18](https://github.com/congminh1705/IT-Operation-Hub/pull/18) is open into main. Acceptance commit b1168a2 pushed. FE-17.01 follows verified merge and authorization.
+- Joint PO review: http://127.0.0.1:3234/dashboard and http://127.0.0.1:3234/reports. Manager/Admin Workload includes the link to AI explanation. PO confirmed joint acceptance. FE-16 Parent [PR #18](https://github.com/congminh1705/IT-Operation-Hub/pull/18) merged into main at `a63917f`. Acceptance commit `b1168a2` was pushed and the phase branch was fast-forwarded to the merge.
+
+## Parent FE-17 joint PO acceptance
+
+- PO accepted FE-17.01 and FE-17.02. Board has 60 done and 170 pending. Registry is EPIC_DONE.
+- [FE-17.01/attempt-02](task-history.md#task-fe-17-01-attempt-02) covers the unread counter, scoped notices, first-read timestamp and safe resolution. [Comparison](../evidence/FE-17.01/comparison.md).
+- [FE-17.02/attempt-02](task-history.md#task-fe-17-02-attempt-02) covers the business and administration audit scopes, filtering, pagination and returning from event detail. [Comparison](../evidence/FE-17.02/comparison.md).
+- Verification: 113 unit tests, 5 final Chrome flows and 34 affected regression cases passed. Three adjacent reference cases were skipped on the regression run. Scoped lint/format, TypeScript and production build passed. PO confirmed joint review and requested closure.
+- Local review: http://127.0.0.1:3243/notifications and http://127.0.0.1:3243/audit. Implementation commit `a4d4ae6` on `phase/a-frontend`. FE-17 Parent [PR #19](https://github.com/congminh1705/IT-Operation-Hub/pull/19) is open into main. Acceptance commit `a9a54cd` was pushed.
+- FE-18.01 remains pending, gated on FE-17 Parent PR merge and implementation authorization.

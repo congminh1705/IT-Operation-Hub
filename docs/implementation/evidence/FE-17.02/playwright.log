@@ -1,0 +1,7 @@
+Running 5 tests using 1 worker
+  ok 1 e2e\audit.spec.ts:6:1 › Manager searches, pages and returns to the same list (1.8s)
+  ok 2 e2e\audit.spec.ts:54:1 › Admin can inspect identity and SLA events and choose business scope (1.1s)
+  ok 3 e2e\audit.spec.ts:78:3 › requester cannot open the audit route or event (410ms)
+  ok 4 e2e\audit.spec.ts:78:3 › technician cannot open the audit route or event (393ms)
+  ok 5 e2e\notifications.spec.ts:4:1 › notification badge, unread filter, revoked target and own ticket (1.3s)
+  5 passed (6.2s)

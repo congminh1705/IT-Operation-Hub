@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { NotificationBell } from "@/features/monitoring/notification-bell";
 import { useRouter } from "next/navigation";
 import type { DemoPersona } from "@/lib/demo/fixtures";
 import { ticketSearchHref } from "@/lib/navigation";
@@ -70,13 +70,7 @@ export function Topbar({
         </button>
       </form>
       <div className="shell-top-actions">
-        <Link
-          className="shell-icon-button"
-          href={`${prefix}/notifications`}
-          aria-label="Thông báo"
-        >
-          <Icon name="bell" />
-        </Link>
+        <NotificationBell prefix={prefix} />
         <AccountMenu persona={persona} prefix={prefix} />
       </div>
     </header>
