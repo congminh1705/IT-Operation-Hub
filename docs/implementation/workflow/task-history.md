@@ -8047,7 +8047,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [task card](../tasks/FE-15.01.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [comparison](../evidence/FE-15.01/comparison.md), [Chromium](../evidence/FE-15.01/chromium.log).
-- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-15-01-attempt-01). FE-15 PR delivery tracked in [current context](current-context.md).
+- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-15-01-attempt-01). FE-15 Parent [PR #17](https://github.com/congminh1705/IT-Operation-Hub/pull/17) is open into main. Acceptance commit 2c1660b pushed.
 
 #### 9. Execution record synchronization
 
@@ -8118,7 +8118,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [task card](../tasks/FE-15.02.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [comparison](../evidence/FE-15.02/comparison.md), [Chromium](../evidence/FE-15.02/chromium.log).
-- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-15-02-attempt-01). FE-15 PR delivery tracked in [current context](current-context.md).
+- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-15-02-attempt-01). FE-15 Parent [PR #17](https://github.com/congminh1705/IT-Operation-Hub/pull/17) is open into main. Acceptance commit 2c1660b pushed.
 
 #### 9. Execution record synchronization
 
@@ -8189,7 +8189,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [task card](../tasks/FE-15.03.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [comparison](../evidence/FE-15.03/comparison.md), [Chromium](../evidence/FE-15.03/chromium.log).
-- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-15-03-attempt-01). FE-15 PR delivery tracked in [current context](current-context.md).
+- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-15-03-attempt-01). FE-15 Parent [PR #17](https://github.com/congminh1705/IT-Operation-Hub/pull/17) is open into main. Acceptance commit 2c1660b pushed.
 
 #### 9. Execution record synchronization
 
@@ -8260,7 +8260,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [task card](../tasks/FE-15.04.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [comparison](../evidence/FE-15.04/comparison.md), [Chromium](../evidence/FE-15.04/chromium.log).
-- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-15-04-attempt-01). FE-15 PR delivery tracked in [current context](current-context.md).
+- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-15-04-attempt-01). FE-15 Parent [PR #17](https://github.com/congminh1705/IT-Operation-Hub/pull/17) is open into main. Acceptance commit 2c1660b pushed.
 
 #### 9. Execution record synchronization
 
