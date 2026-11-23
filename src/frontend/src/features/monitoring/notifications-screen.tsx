@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/features/auth/session";
 import "../automation/automation.css";
@@ -17,6 +17,7 @@ export function NotificationsScreen() {
   const router = useRouter();
   const [onlyUnread, setOnlyUnread] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
+  const unreadFilter = useRef<HTMLButtonElement>(null);
   const notices = store.notifications;
   useSyncExternalStore(
     notices.subscribe,
@@ -24,6 +25,17 @@ export function NotificationsScreen() {
     notices.getSnapshot,
   );
   const rows = notices.list().filter((row) => !onlyUnread || !row.readAt);
+  function filter(unread: boolean) {
+    setOnlyUnread(unread);
+    setUnavailable(false);
+  }
+  function moveFocus(control: HTMLButtonElement) {
+    const item = control.closest("li");
+    const destination = onlyUnread
+      ? (item?.nextElementSibling ?? item?.previousElementSibling)
+      : item;
+    (destination?.querySelector("button") ?? unreadFilter.current)?.focus();
+  }
   return (
     <section
       className="automation automation-panel monitoring"
@@ -36,16 +48,17 @@ export function NotificationsScreen() {
           type="button"
           data-variant={onlyUnread ? "secondary" : undefined}
           aria-pressed={!onlyUnread}
-          onClick={() => setOnlyUnread(false)}
+          onClick={() => filter(false)}
         >
           Tất cả
         </button>
         <button
+          ref={unreadFilter}
           className="ui-button"
           type="button"
           data-variant={onlyUnread ? undefined : "secondary"}
           aria-pressed={onlyUnread}
-          onClick={() => setOnlyUnread(true)}
+          onClick={() => filter(true)}
         >
           Chưa đọc
         </button>
@@ -73,10 +86,11 @@ export function NotificationsScreen() {
                   type="button"
                   className="ui-button"
                   data-variant="secondary"
-                  onClick={() => {
+                  onClick={(event) => {
                     const href = notices.open(row.id);
+                    setUnavailable(!href);
                     if (href) router.push(href);
-                    else setUnavailable(true);
+                    else if (onlyUnread) moveFocus(event.currentTarget);
                   }}
                 >
                   {row.target ? "Mở yêu cầu" : "Mở thông báo"}
@@ -86,7 +100,10 @@ export function NotificationsScreen() {
                     type="button"
                     className="ui-button"
                     data-variant="secondary"
-                    onClick={() => notices.markRead(row.id)}
+                    onClick={(event) => {
+                      moveFocus(event.currentTarget);
+                      notices.markRead(row.id);
+                    }}
                   >
                     Đánh dấu đã đọc
                   </button>

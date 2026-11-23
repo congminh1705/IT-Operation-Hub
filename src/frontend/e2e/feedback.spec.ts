@@ -109,14 +109,17 @@ test("submission blocks repeats, keeps dimensions and preserves draft on error/c
   const send = dialog.getByRole("button", { name: "Gửi minh họa" });
   const draft = "Nội dung minh họa cần được giữ nguyên sau khi lỗi";
   await field.fill(draft);
-  const before = await send.boundingBox();
+  const dimensions = () =>
+    send.evaluate((button) => {
+      const style = getComputedStyle(button);
+      return [style.width, style.height];
+    });
+  const before = await dimensions();
   await send.click();
   await expect(send).toBeDisabled();
   await expect(send).toHaveAttribute("aria-busy", "true");
   await expect(field).toHaveAttribute("readonly", "");
-  const during = await send.boundingBox();
-  expect(during?.width).toBe(before?.width);
-  expect(during?.height).toBe(before?.height);
+  expect(await dimensions()).toEqual(before);
   await expect(dialog.getByRole("alert")).toContainText(
     "Chưa tải được dữ liệu",
   );

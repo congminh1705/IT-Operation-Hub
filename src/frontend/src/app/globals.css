@@ -22,6 +22,11 @@
   --space-4: 16px;
   --space-5: 20px;
   --space-6: 28px;
+  --ease-ui-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-ui-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --duration-press: 160ms;
+  --duration-popover: 150ms;
+  --duration-dialog: 220ms;
   --kpi-amber: #a16b08;
   --kpi-orange: #b65519;
   --kpi-blue: #286bb8;
@@ -50,14 +55,10 @@
   cursor: pointer;
   transition: background-color 160ms ease;
 }
-.ui-button:hover:not(:disabled) {
-  background: var(--primary-hover);
-}
-.ui-button:disabled {
-  background: #e5ebe8;
-  color: #5b6b65;
-  border-color: #ccd9d3;
-  cursor: not-allowed;
+@media (hover: hover) {
+  .ui-button:hover:not(:disabled) {
+    background: var(--primary-hover);
+  }
 }
 :focus-visible {
   outline: 3px solid var(--primary);
@@ -178,6 +179,16 @@
     transition: none;
   }
 }
+@media (prefers-reduced-motion: no-preference) {
+  .ui-button {
+    transition:
+      background-color var(--duration-press) ease,
+      transform var(--duration-press) var(--ease-ui-out);
+  }
+  [data-input-modality="pointer"] .ui-button:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+}
 
 /* Foundation only; shared visual tokens belong to FE-02.01. */
 html {
@@ -205,12 +216,25 @@ h1 {
   color: var(--ink);
   border-color: #ccd9d3;
 }
-.ui-button[data-variant="secondary"]:hover:not(:disabled) {
-  background: #eff3f1;
+@media (hover: hover) {
+  .ui-button[data-variant="secondary"]:hover:not(:disabled) {
+    background: #eff3f1;
+  }
 }
 .ui-button[data-variant="danger"] {
   background: #a12946;
   border-color: #a12946;
+}
+@media (hover: hover) {
+  .ui-button[data-variant="danger"]:hover:not(:disabled) {
+    background: #861e38;
+  }
+}
+.ui-button:disabled {
+  background: #e5ebe8;
+  color: #5b6b65;
+  border-color: #ccd9d3;
+  cursor: not-allowed;
 }
 .ui-button svg {
   width: 18px;
@@ -246,6 +270,25 @@ h1 {
 .ui-dialog::backdrop {
   background: #19262188;
   backdrop-filter: blur(6px);
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-input-modality="pointer"] .ui-dialog[open]:not(.shell-drawer) {
+    transition:
+      opacity var(--duration-dialog) var(--ease-ui-out),
+      transform var(--duration-dialog) var(--ease-ui-out);
+  }
+  [data-input-modality="pointer"] .ui-dialog[open]::backdrop {
+    transition: opacity var(--duration-dialog) var(--ease-ui-out);
+  }
+  @starting-style {
+    [data-input-modality="pointer"] .ui-dialog[open]:not(.shell-drawer) {
+      opacity: 0.65;
+      transform: scale(0.97);
+    }
+    [data-input-modality="pointer"] .ui-dialog[open]::backdrop {
+      opacity: 0;
+    }
+  }
 }
 .ui-dialog-header {
   display: flex;

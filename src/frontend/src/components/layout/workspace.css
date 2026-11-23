@@ -280,6 +280,20 @@
   flex: 1;
   padding: 28px 32px;
 }
+@media (prefers-reduced-motion: no-preference) {
+  .shell-account-popover[data-pointer-open]:not([hidden]) {
+    transform-origin: top right;
+    transition:
+      opacity var(--duration-popover) var(--ease-ui-out),
+      transform var(--duration-popover) var(--ease-ui-out);
+  }
+  @starting-style {
+    .shell-account-popover[data-pointer-open]:not([hidden]) {
+      opacity: 0.7;
+      transform: scale(0.97);
+    }
+  }
+}
 .workspace-breadcrumb {
   display: flex;
   flex-wrap: wrap;
@@ -406,6 +420,16 @@
   }
   .shell-menu-trigger {
     display: inline-flex;
+@media (prefers-reduced-motion: no-preference) {
+  [data-input-modality="pointer"] .shell-drawer[open] {
+    transition: transform var(--duration-dialog) var(--ease-ui-drawer);
+  }
+  @starting-style {
+    [data-input-modality="pointer"] .shell-drawer[open] {
+      transform: translateX(-8%);
+    }
+  }
+}
   }
   .workspace-topbar {
     padding: 12px 16px;

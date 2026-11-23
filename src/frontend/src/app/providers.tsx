@@ -16,6 +16,24 @@ const QueryContext = createContext<QueryClient | null>(null);
 export function Providers({ children }: { children: ReactNode }) {
   const [client] = useState(() => new QueryClient());
   useEffect(() => bindQueryActivity(client, document, window), [client]);
+  useEffect(() => {
+    const root = document.documentElement;
+    const pointer = () => {
+      if (root.dataset.inputModality !== "pointer")
+        root.dataset.inputModality = "pointer";
+    };
+    const keyboard = () => {
+      if (root.dataset.inputModality !== "keyboard")
+        root.dataset.inputModality = "keyboard";
+    };
+    document.addEventListener("pointerdown", pointer, true);
+    document.addEventListener("keydown", keyboard, true);
+    return () => {
+      document.removeEventListener("pointerdown", pointer, true);
+      document.removeEventListener("keydown", keyboard, true);
+      delete root.dataset.inputModality;
+    };
+  }, []);
   return (
     <QueryContext.Provider value={client}>
       <SessionProvider client={client}>{children}</SessionProvider>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, type ReactNode } from "react";
+import { useEffect, useId, useState, type ReactNode } from "react";
 import type { DemoPersona } from "@/lib/demo/fixtures";
 import { SidebarContent } from "./sidebar";
 import { Topbar } from "./topbar";
@@ -26,6 +26,14 @@ export function WorkspaceShell({
 }: WorkspaceShellProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const drawerId = useId();
+  useEffect(() => {
+    const mobile = window.matchMedia("(max-width: 720px)");
+    const closeOnDesktop = () => {
+      if (!mobile.matches) setDrawerOpen(false);
+    };
+    mobile.addEventListener("change", closeOnDesktop);
+    return () => mobile.removeEventListener("change", closeOnDesktop);
+  }, []);
   return (
     <div className="workspace-shell">
       <a
