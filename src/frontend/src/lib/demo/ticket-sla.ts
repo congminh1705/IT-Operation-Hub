@@ -82,7 +82,14 @@ export function projectTicketSla({
   }
 
   const previousBreaches = { response: false, resolution: false };
+  let historicalBreach = false;
   for (const event of normalized) {
+    if (event.state && terminal(event.state)) {
+      const atTransition = elapsed(event.timestamp);
+      historicalBreach ||=
+        atTransition.response >= budgets[priority].response * minute ||
+        atTransition.resolution >= budgets[priority].resolution * minute;
+    }
     if (!event.priorPriority) continue;
     const used = elapsed(event.timestamp);
     const previous = budgets[event.priorPriority];
@@ -118,6 +125,18 @@ export function projectTicketSla({
   }
 
   return {
+    historicalBreach:
+      historicalBreach ||
+      previousBreaches.response ||
+      previousBreaches.resolution,
+    latestResolution: (() => {
+      const latest = transitions.findLast(
+        (entry) => entry.state === "Đã giải quyết" && entry.at <= now,
+      );
+      return latest
+        ? { at: latest.at, activeMs: elapsed(latest.at).resolution }
+        : null;
+    })(),
     response: clock(
       "response",
       used.responseComplete || terminal(used.state) ? "stopped" : "running",

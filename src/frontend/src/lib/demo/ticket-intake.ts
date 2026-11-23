@@ -166,6 +166,7 @@ export function createTicketIntake(config: {
       );
       return {
         row,
+        createdAt: seed.createdAt,
         draft: stored ? structuredClone(stored.draft) : null,
         budget: stored
           ? {

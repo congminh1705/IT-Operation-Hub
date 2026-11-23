@@ -1,0 +1,18 @@
+
+Running 13 tests using 1 worker
+
+  ok  1 e2e\assistant-workspace.spec.ts:18:1 › no run, normal, approved and disabled never show the pending proposal (818ms)
+  ok  2 e2e\assistant-workspace.spec.ts:40:1 › closing a chat preserves the run and compact controls switch panes (647ms)
+  ok  3 e2e\assistant-workspace.spec.ts:60:1 › requester sees suggestions and chat outside internal activity (437ms)
+  ok  4 e2e\assistant-workspace.spec.ts:71:1 › a disabled underlying policy does not offer a new exception approval (534ms)
+  ok  5 e2e\organization-reports.spec.ts:48:1 › current backlog survives a date change and opens the exact set (647ms)
+  ok  6 e2e\organization-reports.spec.ts:75:1 › warranty drill-down matches and organization routes deny requester and technician (830ms)
+  ok  7 e2e\personal-dashboard.spec.ts:54:3 › requester metric counts equal native drill-down results (613ms)
+  ok  8 e2e\personal-dashboard.spec.ts:54:3 › technician metric counts equal native drill-down results (635ms)
+  ok  9 e2e\personal-dashboard.spec.ts:89:1 › account switch does not restore the prior dashboard populations (562ms)
+  ok 10 e2e\report-parity.spec.ts:54:1 › report and assistant share filter, timestamp and operational facts (570ms)
+  ok 11 e2e\report-parity.spec.ts:104:1 › report error preserves selected period on retry and forged assistant context is denied (606ms)
+  ok 12 e2e\report-parity.spec.ts:125:3 › compare report parity operations (2.6s)
+  ok 13 e2e\report-parity.spec.ts:125:3 › compare report parity explanation (1.3s)
+
+  13 passed (12.1s)

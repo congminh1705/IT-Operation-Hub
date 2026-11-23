@@ -103,7 +103,7 @@ This **work-package/epic registry** retains all 88 stable scope IDs. The registr
 | [FE-13](06-frontend-first.md#fe-13) | Knowledge browsing, authoring and source states | FE-03 | EPIC_DONE |
 | [FE-14](06-frontend-first.md#fe-14) | Assistant conversation, sources and availability | FE-06 FE-12 FE-13 | EPIC_DONE |
 | [FE-15](06-frontend-first.md#fe-15) | Trusted action cards and shared AI Workspace | FE-08 FE-11 FE-14 | EPIC_DONE |
-| [FE-16](06-frontend-first.md#fe-16) | Role dashboards and reporting interactions | FE-09 FE-10 FE-12 FE-14 | EPIC_READY |
+| [FE-16](06-frontend-first.md#fe-16) | Role dashboards and reporting interactions | FE-09 FE-10 FE-12 FE-14 | EPIC_DONE |
 | [FE-17](06-frontend-first.md#fe-17) | Notifications and scoped audit screens | FE-04 FE-06 FE-10 | EPIC_READY |
 | [FE-18](06-frontend-first.md#fe-18) | Frontend DEMO acceptance and API handoff | FE-07 FE-15 FE-16 FE-17 | EPIC_READY |
 | [INT-01](07-integration.md#int-01) | Connect identity, administration and shared transport | FE-18 FND-03 FND-04 FND-07 FND-08 FND-17 | EPIC_READY |

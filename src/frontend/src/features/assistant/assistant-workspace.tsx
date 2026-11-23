@@ -7,8 +7,16 @@ import { ApprovalProposal } from "@/features/automation/approval-proposal";
 import { readApprovalProposal } from "@/lib/demo/approval-proposal";
 import type { RunCase } from "@/lib/demo/automation-activity";
 import { AssistantScreen } from "./assistant-screen";
+import { ReportExplanation } from "@/features/reports/report-explanation";
+import type { WorkspaceSearch } from "@/components/layout/workspace-page";
 
-export function AssistantWorkspace({ id }: { id?: string }) {
+export function AssistantWorkspace({
+  id,
+  report,
+}: {
+  id?: string;
+  report?: WorkspaceSearch;
+}) {
   const { persona, store } = useSession();
   const [scenario, setScenario] = useState<RunCase>("none");
   const [tab, setTab] = useState<"chat" | "activity">("chat");
@@ -66,6 +74,7 @@ export function AssistantWorkspace({ id }: { id?: string }) {
       )}
       <div className="assistant-composition-grid">
         <div id="assistant-chat-pane" className="assistant-chat-pane">
+          {report && <ReportExplanation search={report} />}
           <AssistantScreen key={id ?? "new-chat"} id={id} />
         </div>
         {hasActivity && (

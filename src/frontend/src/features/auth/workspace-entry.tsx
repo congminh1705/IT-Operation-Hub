@@ -1,4 +1,6 @@
 "use client";
+import { PersonalDashboard } from "@/features/reports/personal-dashboard";
+import { OrganizationReports } from "@/features/reports/organization-reports";
 import { AssistantWorkspace } from "@/features/assistant/assistant-workspace";
 import { AssistantSettings } from "@/features/assistant/assistant-settings";
 import { KnowledgeScreen } from "@/features/knowledge/knowledge-screen";
@@ -72,10 +74,22 @@ export function WorkspaceEntry({
           : `${persona.user.id}:${persona.user.version}`
       }
       content={
-        pathname === "/admin/assistant" ? (
+        pathname === "/dashboard" &&
+        (persona.user.role === "REQUESTER" ||
+          persona.user.role === "TECHNICIAN") ? (
+          <PersonalDashboard />
+        ) : pathname === "/dashboard" || pathname === "/reports" ? (
+          <OrganizationReports
+            search={search}
+            dashboard={pathname === "/dashboard"}
+          />
+        ) : pathname === "/admin/assistant" ? (
           <AssistantSettings />
         ) : pathname === "/assistant" ? (
-          <AssistantWorkspace id={params.get("id") ?? undefined} />
+          <AssistantWorkspace
+            id={params.get("id") ?? undefined}
+            report={params.get("report") === "1" ? search : undefined}
+          />
         ) : pathname === "/knowledge" ? (
           <KnowledgeScreen
             edit={params.get("edit") === "1"}
@@ -89,6 +103,8 @@ export function WorkspaceEntry({
             scope={params.get("scope") ?? "work"}
             id={params.get("id") ?? undefined}
             initialLifecycle={params.get("lifecycle") === "1"}
+            warranty={params.get("warranty") ?? undefined}
+            snapshot={params.get("at") ?? undefined}
           />
         ) : pathname === "/approvals" ? (
           <ApprovalProposal />

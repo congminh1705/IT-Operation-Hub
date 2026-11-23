@@ -1,0 +1,10 @@
+
+Running 5 tests using 1 worker
+
+  ok 1 e2e\organization-reports.spec.ts:48:1 › current backlog survives a date change and opens the exact set (1.2s)
+  ok 2 e2e\organization-reports.spec.ts:75:1 › warranty drill-down matches and organization routes deny requester and technician (916ms)
+  ok 3 e2e\organization-reports.spec.ts:107:3 › compare organization report manager (1.7s)
+  ok 4 e2e\organization-reports.spec.ts:107:3 › compare organization report admin (1.4s)
+  ok 5 e2e\organization-reports.spec.ts:107:3 › compare organization report reports (2.5s)
+
+  5 passed (9.5s)

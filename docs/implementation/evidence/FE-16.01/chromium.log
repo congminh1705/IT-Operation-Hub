@@ -1,0 +1,10 @@
+
+Running 5 tests using 1 worker
+
+  ok 1 e2e\personal-dashboard.spec.ts:54:3 › requester metric counts equal native drill-down results (1.3s)
+  ok 2 e2e\personal-dashboard.spec.ts:76:3 › compare personal dashboard requester (1.8s)
+  ok 3 e2e\personal-dashboard.spec.ts:54:3 › technician metric counts equal native drill-down results (1.1s)
+  ok 4 e2e\personal-dashboard.spec.ts:76:3 › compare personal dashboard technician (1.3s)
+  ok 5 e2e\personal-dashboard.spec.ts:89:1 › account switch does not restore the prior dashboard populations (772ms)
+
+  5 passed (7.7s)

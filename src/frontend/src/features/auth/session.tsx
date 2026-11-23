@@ -35,6 +35,11 @@ export function safeReturnPath(value: string | null): string {
     url.pathname === "/tickets"
       ? [
           "scope",
+          "metric",
+          "metricTeam",
+          "at",
+          "from",
+          "to",
           "q",
           "state",
           "priority",
@@ -46,12 +51,28 @@ export function safeReturnPath(value: string | null): string {
           "size",
           "page",
         ]
-      : ["scope", "q"];
+      : url.pathname === "/reports" || url.pathname === "/dashboard"
+        ? ["from", "to", "at", "team", "tab"]
+        : url.pathname === "/assets"
+          ? ["scope", "q", "warranty", "at"]
+          : ["scope", "q"];
   for (const name of names) {
     const item = url.searchParams.get(name);
     if (item) params.set(name, item.slice(0, 180));
   }
   const assetId = url.searchParams.get("id");
+  if (
+    url.pathname === "/reports" &&
+    url.searchParams.get("demo") === "report-error"
+  )
+    params.set("demo", "report-error");
+  if (url.pathname === "/assistant" && url.searchParams.get("report") === "1") {
+    params.set("report", "1");
+    for (const key of ["from", "to", "team", "at"]) {
+      const value = url.searchParams.get(key);
+      if (value) params.set(key, value.slice(0, 40));
+    }
+  }
   if (
     url.pathname === "/assistant" &&
     assetId &&
