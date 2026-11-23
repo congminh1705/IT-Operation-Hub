@@ -30,7 +30,11 @@ test("required constraints, computed priority and permitted assets", async ({
   await expect(page.getByTestId("ticket-priority")).toHaveText("P4");
   await expect(
     page.getByLabel("Thiết bị liên quan").getByRole("option"),
-  ).toHaveCount(2);
+  ).toHaveText([
+    "Không liên kết thiết bị",
+    "LT-001 · Dell Latitude 5440",
+    "MN-003 · Dell P2425H",
+  ]);
   await expect(page.getByLabel("Danh sách nhân sự")).toHaveCount(0);
   await page.getByRole("button", { name: "Xem trước yêu cầu" }).click();
   await expect(

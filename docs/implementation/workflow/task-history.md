@@ -8991,3 +8991,72 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 #### 10. Next step
 
 - Next eligible task: FE-18.01 after Parent PR merge and implementation authorization.
+
+<a id="task-fe-18-01-attempt-01"></a>
+
+### FE-18.01 — Attempt 01 — 2026-11-24T00:58:38+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-18.01/attempt-01
+- Task: [task card](../tasks/FE-18.01.md)
+- Parent / phase: FE-18 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-24T00:49:00+07:00
+- Ended at: 2026-11-24T00:58:38+07:00
+- State before / after: in-progress / review
+- Previous attempt: none.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Inventory agreed screens, native interactions and executable four-role journeys.
+- Delivered this attempt: Mapped all 51 approved specimens to their FE owners and product surfaces. Verified 50 role-specific sidebar entries, checked domain actions with the existing browser suites, and corrected two outdated test assertions.
+- Incomplete scope: Visual differences for PO review; no unresolved functional failure in executed cases. Build includes existing workspace search edits, which are excluded from delivery.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/e2e/phase-a-coverage.spec.ts, ticket-form.spec.ts, ticket-attachment-picker.spec.ts; docs/implementation/evidence/FE-18.01/ | Verify complete frontend screen and state coverage | Parent FE-18 acceptance evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Every agreed surface and enabled primary workflow has an owner and usable native path | Verified behavior and explicit boundaries | Four roles completed 50 sidebar visits, with no pending screen or empty action href. 306/307 reference-enabled Chrome cases passed initially; the remaining attachment screenshot case passed after narrowing its locator. Targeted rerun passed 14/14. | pass | [coverage](../evidence/FE-18.01/coverage.md), [comparison](../evidence/FE-18.01/comparison.md), [full Chrome run](../evidence/FE-18.01/full-browser.log), [14-case rerun](../evidence/FE-18.01/targeted.log) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | `node node_modules/@playwright/test/cli.js test --workers=3 --output test-results/FE-18.01` with local design server on 8010/8126 | All runtime and reference cases | 306 passed, 1 failed on obsolete screenshot selector; covered by targeted rerun | fail then recovered |
+| src/frontend | `node node_modules/@playwright/test/cli.js test --workers=3 e2e/ticket-attachment-picker.spec.ts e2e/ticket-form.spec.ts e2e/ticket-assets.spec.ts` | Exact allowed fixture, attachment UI and reference | 14/14 | pass |
+| src/frontend | `node node_modules/@playwright/test/cli.js test e2e/phase-a-coverage.spec.ts` with PHASE_A_DESIGN_URL | Every role navigation and representative evidence | 4/4 at 1440 and 390 | pass |
+| src/frontend | `node node_modules/next/dist/bin/next build`; `node node_modules/vitest/vitest.mjs run`; scoped `eslint` and `prettier --check` | Production typecheck and build; test and code checks | Build, 113 unit tests, scoped lint and formatting passed | pass |
+
+#### 6. Review
+
+- Reviewer and findings: Agent reviewed actual/reference dashboard pairs. Night City and capacity remain on the design dashboard reference, while application has separate related routes; KPI color/layout differences documented. PO joint verdict pending.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Visual differences for PO review; no unresolved functional failure in executed cases. Build includes existing workspace search edits, which are excluded from delivery.
+- Required resolution / owner: PO joint Parent acceptance. Real service decisions stay with later phase owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-18.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [coverage](../evidence/FE-18.01/coverage.md), [comparison](../evidence/FE-18.01/comparison.md), [full Chrome run](../evidence/FE-18.01/full-browser.log), [14-case rerun](../evidence/FE-18.01/targeted.log).
+- Commit / build / environment: scoped commit containing this report, phase/a-frontend. Previous Parent PR #19 merged at 4c71825.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 01.
+- Execution-board row: review, Owner PO.
+- Current context: updated with the current FE-18 result.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- FE-18.02 follows verified functional results under joint Parent review; both tasks await PO acceptance.

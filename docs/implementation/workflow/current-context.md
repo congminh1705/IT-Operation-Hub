@@ -94,5 +94,9 @@ authority: derived
 - [FE-17.01/attempt-02](task-history.md#task-fe-17-01-attempt-02) covers the unread counter, scoped notices, first-read timestamp and safe resolution. [Comparison](../evidence/FE-17.01/comparison.md).
 - [FE-17.02/attempt-02](task-history.md#task-fe-17-02-attempt-02) covers the business and administration audit scopes, filtering, pagination and returning from event detail. [Comparison](../evidence/FE-17.02/comparison.md).
 - Verification: 113 unit tests, 5 final Chrome flows and 34 affected regression cases passed. Three adjacent reference cases were skipped on the regression run. Scoped lint/format, TypeScript and production build passed. PO confirmed joint review and requested closure.
-- Local review: http://127.0.0.1:3243/notifications and http://127.0.0.1:3243/audit. Implementation commit `a4d4ae6` on `phase/a-frontend`. FE-17 Parent [PR #19](https://github.com/congminh1705/IT-Operation-Hub/pull/19) is open into main. Acceptance commit `a9a54cd` was pushed.
-- FE-18.01 remains pending, gated on FE-17 Parent PR merge and implementation authorization.
+- Local review: http://127.0.0.1:3243/notifications and http://127.0.0.1:3243/audit. Implementation commit `a4d4ae6` on `phase/a-frontend`. FE-17 Parent [PR #19](https://github.com/congminh1705/IT-Operation-Hub/pull/19) merged into main at `4c71825`. The phase branch was fast-forwarded.
+- PO authorized FE-18 after verified FE-17 merge.
+
+## Parent FE-18 — Frontend DEMO acceptance and API handoff
+
+- [FE-18.01/attempt-01](task-history.md#task-fe-18-01-attempt-01), review. Four roles completed 50 sidebar visits, with no pending screen or empty action href. 306/307 reference-enabled Chrome cases passed initially; the remaining attachment screenshot case passed after narrowing its locator. Targeted rerun passed 14/14. FE-18.02 follows verified functional results under joint Parent review; both tasks await PO acceptance.

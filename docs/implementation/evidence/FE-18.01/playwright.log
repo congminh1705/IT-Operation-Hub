@@ -1,0 +1,6 @@
+Running 4 tests using 1 worker
+  ok 1 e2e\phase-a-coverage.spec.ts:49:3 › requester opens every native sidebar destination without pending screen (2.3s)
+  ok 2 e2e\phase-a-coverage.spec.ts:49:3 › technician opens every native sidebar destination without pending screen (1.8s)
+  ok 3 e2e\phase-a-coverage.spec.ts:49:3 › it_manager opens every native sidebar destination without pending screen (2.5s)
+  ok 4 e2e\phase-a-coverage.spec.ts:49:3 › admin opens every native sidebar destination without pending screen (3.0s)
+  4 passed (10.9s)
