@@ -9048,7 +9048,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [task card](../tasks/FE-18.01.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [coverage](../evidence/FE-18.01/coverage.md), [comparison](../evidence/FE-18.01/comparison.md), [full Chrome run](../evidence/FE-18.01/full-browser.log), [14-case rerun](../evidence/FE-18.01/targeted.log).
-- Commit / build / environment: scoped commit containing this report, phase/a-frontend. Previous Parent PR #19 merged at 4c71825.
+- Commit / build / environment: `a476cb2` pushed to and verified on `phase/a-frontend`. Previous Parent PR #19 merged at `4c71825`.
 
 #### 9. Execution record synchronization
 
@@ -9118,7 +9118,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [task card](../tasks/FE-18.02.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [comparison](../evidence/FE-18.02/comparison.md), [full suite](../evidence/FE-18.02/full-browser.log), [serial rerun](../evidence/FE-18.02/final-rerun.log).
-- Commit / build / environment: scoped commit containing this report, phase/a-frontend. Previous Parent PR #19 merged at 4c71825.
+- Commit / build / environment: `64e1434` pushed to and verified on `phase/a-frontend`. Previous Parent PR #19 merged at `4c71825`.
 
 #### 9. Execution record synchronization
 
@@ -9188,7 +9188,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [task card](../tasks/FE-18.03.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [contract map](../evidence/FE-18.03/contract-map.md), [validation](../evidence/FE-18.03/validation.log), [FE-18.01](#task-fe-18-01-attempt-01), [FE-18.02](#task-fe-18-02-attempt-01).
-- Commit / build / environment: scoped commit containing this report, phase/a-frontend. Previous Parent PR #19 merged at 4c71825.
+- Commit / build / environment: `59e5329` pushed to and verified on `phase/a-frontend`. Previous Parent PR #19 merged at `4c71825`.
 
 #### 9. Execution record synchronization
 
