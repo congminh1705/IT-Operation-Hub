@@ -6,7 +6,7 @@ The Phase A deliverable is a Next.js frontend DEMO for Requester, Technician, IT
 
 - [FE-18.01 coverage and app/reference pairs](../FE-18.01/coverage.md) maps 51 reference specimens to native routes/interactions. Four roles visited 50 combined sidebar entries. [Coverage comparison](../FE-18.01/comparison.md) records inherited dashboard and KPI differences. The original story-to-task crosswalk remains in [implementation coverage](../../coverage.md).
 - [FE-18.02 runtime checks](../FE-18.02/full-browser.log) and [serial rerun](../FE-18.02/final-rerun.log) cover 310 unique Chrome cases. The full run passed 308; two reference timeouts passed on rerun. 114 unit tests, TypeScript, production build, an isolated-source build and scoped formatting passed. [Login and states comparison](../FE-18.02/comparison.md).
-- FE-18.03 is a contract and handoff task. The [catalog](../../../design/final/index.html) was opened in Chrome as the reference index. Visual evidence is the existing actual/reference pairs for the affected FE-18 surfaces. PO joint acceptance and FE-18 merge are pending.
+- FE-18.03 is a contract and handoff task. The [catalog](../../../design/final/index.html) was opened in Chrome as the reference index. Visual evidence is the existing actual/reference pairs for the affected FE-18 surfaces. PO confirmed joint FE-18 acceptance. The FE-18 Parent merge is pending.
 
 ## Adapter and outcome rules
 

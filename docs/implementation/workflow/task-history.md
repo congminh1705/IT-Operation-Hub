@@ -9200,3 +9200,207 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 #### 10. Next step
 
 - PRE-01.01 only after PO joint FE-18 acceptance, FE-18 Parent PR merge, recorded Phase A exit and new authorization.
+
+<a id="task-fe-18-01-attempt-02"></a>
+
+### FE-18.01 — Attempt 02 — 2026-11-24T01:31:32+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-18.01/attempt-02
+- Task: [task card](../tasks/FE-18.01.md)
+- Parent / phase: FE-18 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-24T01:31:32+07:00
+- Ended at: 2026-11-24T01:31:32+07:00
+- State before / after: review / done
+- Previous attempt: [implementation and verification](#task-fe-18-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record PO joint acceptance and close FE-18.
+- Delivered this attempt: PO confirmed review and requested closure. 36 IA patterns and 51 specimens mapped; four-role Chrome journeys verified.
+- Incomplete scope: FE-18 merge and final Phase A exit recording remain pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-18.01.md, workflow files, README.md | PO acceptance and status | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Frontend DEMO acceptance | Agent checks and PO joint verdict | Prior checks verified; PO accepted FE-18 | pass | [Attempt 01](#task-fe-18-01-attempt-01), [evidence](../evidence/FE-18.01/coverage.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Compare cards, board, context, history and package registry; run staged diff whitespace check | Synchronized closure | Three tasks done; Parent EPIC_DONE | pass |
+| src/frontend | Repeat application verification | Preserve implementation evidence | Documentation-only closure; retained attempt 01 results | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint PO acceptance by Hoang Cong Minh.
+- Findings / resolution: PO confirmed review and requested closure. Prior findings and comparisons remain in attempt 01.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent PR merge gates Phase A exit.
+- Required resolution / owner: PO merges the Parent PR; verify merge and record the exit before separately authorized Phase B work.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-18.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [retained evidence](../evidence/FE-18.01/coverage.md).
+- Commit / build / environment: verified implementation commits in [attempt 01](#task-fe-18-01-attempt-01); closure delivered on phase/a-frontend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- PRE-01.01 after FE-18 Parent PR merge, verified Phase A exit and separate implementation authorization.
+
+<a id="task-fe-18-02-attempt-02"></a>
+
+### FE-18.02 — Attempt 02 — 2026-11-24T01:31:32+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-18.02/attempt-02
+- Task: [task card](../tasks/FE-18.02.md)
+- Parent / phase: FE-18 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-24T01:31:32+07:00
+- Ended at: 2026-11-24T01:31:32+07:00
+- State before / after: review / done
+- Previous attempt: [implementation and verification](#task-fe-18-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record PO joint acceptance and close FE-18.
+- Delivered this attempt: PO confirmed review and requested closure. 114 unit tests and 310 unique Chrome cases verified; build and scoped checks passed.
+- Incomplete scope: FE-18 merge and final Phase A exit recording remain pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-18.02.md, workflow files, README.md | PO acceptance and status | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Frontend DEMO acceptance | Agent checks and PO joint verdict | Prior checks verified; PO accepted FE-18 | pass | [Attempt 01](#task-fe-18-02-attempt-01), [evidence](../evidence/FE-18.02/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Compare cards, board, context, history and package registry; run staged diff whitespace check | Synchronized closure | Three tasks done; Parent EPIC_DONE | pass |
+| src/frontend | Repeat application verification | Preserve implementation evidence | Documentation-only closure; retained attempt 01 results | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint PO acceptance by Hoang Cong Minh.
+- Findings / resolution: PO confirmed review and requested closure. Prior findings and comparisons remain in attempt 01.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent PR merge gates Phase A exit.
+- Required resolution / owner: PO merges the Parent PR; verify merge and record the exit before separately authorized Phase B work.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-18.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [retained evidence](../evidence/FE-18.02/comparison.md).
+- Commit / build / environment: verified implementation commits in [attempt 01](#task-fe-18-02-attempt-01); closure delivered on phase/a-frontend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- PRE-01.01 after FE-18 Parent PR merge, verified Phase A exit and separate implementation authorization.
+
+<a id="task-fe-18-03-attempt-02"></a>
+
+### FE-18.03 — Attempt 02 — 2026-11-24T01:31:32+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-18.03/attempt-02
+- Task: [task card](../tasks/FE-18.03.md)
+- Parent / phase: FE-18 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-24T01:31:32+07:00
+- Ended at: 2026-11-24T01:31:32+07:00
+- State before / after: review / done
+- Previous attempt: [implementation and verification](#task-fe-18-03-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record PO joint acceptance and close FE-18.
+- Delivered this attempt: PO confirmed review and requested closure. 96 OpenAPI operations mapped; preceding Parent merges verified and service decisions recorded.
+- Incomplete scope: FE-18 merge and final Phase A exit recording remain pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-18.03.md, workflow files, README.md | PO acceptance and status | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Frontend DEMO acceptance | Agent checks and PO joint verdict | Prior checks verified; PO accepted FE-18 | pass | [Attempt 01](#task-fe-18-03-attempt-01), [evidence](../evidence/FE-18.03/contract-map.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Compare cards, board, context, history and package registry; run staged diff whitespace check | Synchronized closure | Three tasks done; Parent EPIC_DONE | pass |
+| src/frontend | Repeat application verification | Preserve implementation evidence | Documentation-only closure; retained attempt 01 results | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint PO acceptance by Hoang Cong Minh.
+- Findings / resolution: PO confirmed review and requested closure. Prior findings and comparisons remain in attempt 01.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent PR merge gates Phase A exit.
+- Required resolution / owner: PO merges the Parent PR; verify merge and record the exit before separately authorized Phase B work.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-18.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [retained evidence](../evidence/FE-18.03/contract-map.md).
+- Commit / build / environment: verified implementation commits in [attempt 01](#task-fe-18-03-attempt-01); closure delivered on phase/a-frontend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- PRE-01.01 after FE-18 Parent PR merge, verified Phase A exit and separate implementation authorization.

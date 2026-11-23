@@ -18,7 +18,7 @@ purpose: "Provide one task tracker and a bounded-context workflow for implementi
 
 **Approved frontend scope:** [v1.3 / D-51](../design/approval.md), including the final interactive login. Use the [63-task design map](../design/implementation-scope.md#task-map). Existing IDs, dependencies, business acceptance and lifecycle remain authoritative; visual approval does not start implementation.
 
-This backlog maps **67 stories to 88 work packages and 230 executable tasks** across frontend, real services, integration and acceptance. Every package is fully decomposed; packages remain epic-level scope records rather than coding sessions. D-43 confirms the [task method](workflow/task-workflow.md), and D-44 requests complete decomposition. **Frontend DEMO is Phase A and must be delivered before backend implementation.** The [execution board](workflow/execution-board.md) contains all task states; [parent coverage/closure](package-task-coverage.md) assigns all 264 numbered package criteria. PO has accepted FE-01 through FE-17. The three FE-18 tasks are in joint review. System acceptance remains pending.
+This backlog maps **67 stories to 88 work packages and 230 executable tasks** across frontend, real services, integration and acceptance. Every package is fully decomposed; packages remain epic-level scope records rather than coding sessions. D-43 confirms the [task method](workflow/task-workflow.md), and D-44 requests complete decomposition. **Frontend DEMO is Phase A and must be delivered before backend implementation.** The [execution board](workflow/execution-board.md) contains all task states; [parent coverage/closure](package-task-coverage.md) assigns all 264 numbered package criteria. PO has accepted FE-01 through FE-17. PO has also accepted FE-18. Phase A exit awaits the FE-18 Parent merge. System acceptance remains pending.
 
 The [current context](workflow/current-context.md) indexes the latest results and PO review. The [execution board](workflow/execution-board.md) owns task status; the package registry below owns epic status.
 
@@ -105,7 +105,7 @@ This **work-package/epic registry** retains all 88 stable scope IDs. The registr
 | [FE-15](06-frontend-first.md#fe-15) | Trusted action cards and shared AI Workspace | FE-08 FE-11 FE-14 | EPIC_DONE |
 | [FE-16](06-frontend-first.md#fe-16) | Role dashboards and reporting interactions | FE-09 FE-10 FE-12 FE-14 | EPIC_DONE |
 | [FE-17](06-frontend-first.md#fe-17) | Notifications and scoped audit screens | FE-04 FE-06 FE-10 | EPIC_DONE |
-| [FE-18](06-frontend-first.md#fe-18) | Frontend DEMO acceptance and API handoff | FE-07 FE-15 FE-16 FE-17 | EPIC_IN_PROGRESS |
+| [FE-18](06-frontend-first.md#fe-18) | Frontend DEMO acceptance and API handoff | FE-07 FE-15 FE-16 FE-17 | EPIC_DONE |
 | [INT-01](07-integration.md#int-01) | Connect identity, administration and shared transport | FE-18 FND-03 FND-04 FND-07 FND-08 FND-17 | EPIC_READY |
 | [INT-02](07-integration.md#int-02) | Connect ticket lifecycle, attachments, SLA and notifications | INT-01 FND-13 OPS-03 OPS-04 OPS-05 | EPIC_READY |
 | [INT-03](07-integration.md#int-03) | Connect workforce, plans, policy, approvals and runs | INT-01 FND-15 FND-16 WF-10 AI-08 | EPIC_READY |

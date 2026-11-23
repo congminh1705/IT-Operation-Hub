@@ -97,13 +97,10 @@ authority: derived
 - Local review: http://127.0.0.1:3243/notifications and http://127.0.0.1:3243/audit. Implementation commit `a4d4ae6` on `phase/a-frontend`. FE-17 Parent [PR #19](https://github.com/congminh1705/IT-Operation-Hub/pull/19) merged into main at `4c71825`. The phase branch was fast-forwarded.
 - PO authorized FE-18 after verified FE-17 merge.
 
-## Parent FE-18 — Frontend DEMO acceptance and API handoff
+## Parent FE-18 joint PO acceptance
 
-- [FE-18.01/attempt-01](task-history.md#task-fe-18-01-attempt-01), review. Four roles completed 50 sidebar visits, with no pending screen or empty action href. 306/307 reference-enabled Chrome cases passed initially; the remaining attachment screenshot case passed after narrowing its locator. Targeted rerun passed 14/14. FE-18.02 follows verified functional results under joint Parent review; both tasks await PO acceptance. Commit `a476cb2` pushed and verified on `phase/a-frontend`.
-
-- [FE-18.02/attempt-01](task-history.md#task-fe-18-02-attempt-01), review. 114 unit tests passed. Chrome exercised 310 unique cases across full run and serial recovery. Full run had 308 passes and two reference render timeouts; both passed in the 3/3 serial rerun. TypeScript, lint, scoped format and production builds passed. FE-18.03 follows verified functional checks under joint Parent review. Commit `64e1434` pushed and verified on `phase/a-frontend`.
-
-- [FE-18.03/attempt-01](task-history.md#task-fe-18-03-attempt-01), review. 96 operation IDs matched, 1,000 OpenAPI references resolved, and 36 IA patterns/51 approved specimens were checked. Local source/evidence links resolved. FE-18.01 and FE-18.02 verification is linked. PO acceptance and FE-18 merge remain pending. PRE-01.01 only after PO joint FE-18 acceptance, FE-18 Parent PR merge, recorded Phase A exit and new authorization. Commit `59e5329` pushed and verified on `phase/a-frontend`.
-
-- Joint PO review uses http://127.0.0.1:3259/login. Evidence covers native application routes, representative HTML comparison and verified mock isolation. Dashboard visual differences remain for PO review.
-- Board: 60 done, 3 review and 167 pending. FE-18 remains EPIC_IN_PROGRESS. All previous Parent PRs are merged; FE-18 waits for joint review before PR. Phase A exit remains open.
+- PO accepted all three FE-18 tasks and requested closure. Registry: EPIC_DONE. Board: 63 done and 167 pending.
+- [FE-18.01/attempt-02](task-history.md#task-fe-18-01-attempt-02), done. 36 IA patterns and 51 approved specimens inventoried. Four roles completed 50 sidebar visits. [Coverage](../evidence/FE-18.01/coverage.md). Implementation a476cb2 pushed and verified.
+- [FE-18.02/attempt-02](task-history.md#task-fe-18-02-attempt-02), done. 114 unit tests and 310 unique Chrome cases verified across the full run and serial rerun. TypeScript, lint, scoped format and clean build passed. [Comparison](../evidence/FE-18.02/comparison.md). Implementation 64e1434 pushed and verified.
+- [FE-18.03/attempt-02](task-history.md#task-fe-18-03-attempt-02), done. [Phase A contract handoff](../evidence/FE-18.03/contract-map.md) maps 96 operations. Handoff commit 59e5329 pushed and verified.
+- The FE-18 Parent PR targets main. Phase A exit awaits verified merge and exit recording. PRE-01.01 remains pending until that exit and separate PO authorization.
