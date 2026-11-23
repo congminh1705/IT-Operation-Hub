@@ -31,6 +31,17 @@ export function safeReturnPath(value: string | null): string {
   )
     return "/dashboard";
   const params = new URLSearchParams();
+  if (url.pathname === "/audit") {
+    const entry = url.searchParams.get("entry");
+    const page = url.searchParams.get("page");
+    const outcome = url.searchParams.get("outcome");
+    const action = url.searchParams.get("action");
+    if (entry && /^AUD-\d{3}$/.test(entry)) params.set("entry", entry);
+    if (page && /^\d{1,4}$/.test(page)) params.set("page", page);
+    if (outcome === "success" || outcome === "blocked")
+      params.set("outcome", outcome);
+    if (action) params.set("action", action.slice(0, 100));
+  }
   const names =
     url.pathname === "/tickets"
       ? [
@@ -171,8 +182,11 @@ export function SessionProvider({
   }, [store]);
   return <Context.Provider value={store}>{children}</Context.Provider>;
 }
+export function useOptionalSessionStore() {
+  return useContext(Context);
+}
 export function useSession() {
-  const store = useContext(Context);
+  const store = useOptionalSessionStore();
   if (!store) throw new Error("SessionProvider missing");
   const persona = useSyncExternalStore(
     store.subscribe,

@@ -1,4 +1,6 @@
 "use client";
+import { NotificationsScreen } from "@/features/monitoring/notifications-screen";
+import { AuditScreen } from "@/features/monitoring/audit-screen";
 import { PersonalDashboard } from "@/features/reports/personal-dashboard";
 import { OrganizationReports } from "@/features/reports/organization-reports";
 import { AssistantWorkspace } from "@/features/assistant/assistant-workspace";
@@ -74,9 +76,13 @@ export function WorkspaceEntry({
           : `${persona.user.id}:${persona.user.version}`
       }
       content={
-        pathname === "/dashboard" &&
-        (persona.user.role === "REQUESTER" ||
-          persona.user.role === "TECHNICIAN") ? (
+        pathname === "/audit" ? (
+          <AuditScreen search={search} />
+        ) : pathname === "/notifications" ? (
+          <NotificationsScreen />
+        ) : pathname === "/dashboard" &&
+          (persona.user.role === "REQUESTER" ||
+            persona.user.role === "TECHNICIAN") ? (
           <PersonalDashboard />
         ) : pathname === "/dashboard" || pathname === "/reports" ? (
           <OrganizationReports
