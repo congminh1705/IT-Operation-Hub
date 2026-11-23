@@ -35,6 +35,7 @@ export function safeReturnPath(value: string | null): string {
     url.pathname === "/tickets"
       ? [
           "scope",
+          "metric",
           "q",
           "state",
           "priority",

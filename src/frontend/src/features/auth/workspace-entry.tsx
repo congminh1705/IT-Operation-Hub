@@ -1,4 +1,5 @@
 "use client";
+import { PersonalDashboard } from "@/features/reports/personal-dashboard";
 import { AssistantWorkspace } from "@/features/assistant/assistant-workspace";
 import { AssistantSettings } from "@/features/assistant/assistant-settings";
 import { KnowledgeScreen } from "@/features/knowledge/knowledge-screen";
@@ -72,7 +73,11 @@ export function WorkspaceEntry({
           : `${persona.user.id}:${persona.user.version}`
       }
       content={
-        pathname === "/admin/assistant" ? (
+        pathname === "/dashboard" &&
+        (persona.user.role === "REQUESTER" ||
+          persona.user.role === "TECHNICIAN") ? (
+          <PersonalDashboard />
+        ) : pathname === "/admin/assistant" ? (
           <AssistantSettings />
         ) : pathname === "/assistant" ? (
           <AssistantWorkspace id={params.get("id") ?? undefined} />

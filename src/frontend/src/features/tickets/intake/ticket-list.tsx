@@ -1,4 +1,5 @@
 "use client";
+import { personalTicketMetric } from "@/lib/demo/dashboard-metrics";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { FormEvent } from "react";
@@ -84,7 +85,23 @@ export function TicketList({ search }: { search: WorkspaceSearch }) {
         }
       />
     );
-  const source = result.rows;
+  const metric = first(search.metric);
+  const personalMetric =
+    (metric === "MET11" &&
+      scope === "mine" &&
+      persona.user.role === "REQUESTER") ||
+    (["MET13", "MET14"].includes(metric) &&
+      scope === "work" &&
+      persona.user.role === "TECHNICIAN");
+  if (personalMetric) base.set("metric", metric);
+  const source = personalMetric
+    ? personalTicketMetric(
+        persona,
+        store.teams.ownTeamIds(),
+        result.rows,
+        metric,
+      )
+    : result.rows;
   const options = {
     state: ticketStates,
     priority: ticketPriorities,
