@@ -139,6 +139,7 @@ test("mobile drawer wraps focus, closes after navigation and restores the menu t
   await trigger.focus();
   await page.keyboard.press("Enter");
   const drawer = page.getByRole("dialog", { name: "Điều hướng", exact: true });
+  await expect(drawer).toHaveCSS("transition-duration", "0s");
   const close = drawer.getByRole("button", { name: "Đóng hộp thoại" });
   await expect(close).toBeFocused();
   await page.keyboard.press("Shift+Tab");
@@ -156,6 +157,13 @@ test("mobile drawer wraps focus, closes after navigation and restores the menu t
   ).toHaveAttribute("aria-current", "page");
   await page.keyboard.press("Escape");
   await expect(trigger).toBeFocused();
+  await trigger.click();
+  await expect(drawer).toBeVisible();
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await expect(drawer).not.toBeVisible();
+  await expect
+    .poll(() => page.evaluate(() => document.body.style.overflow))
+    .toBe("");
 });
 
 test("account disclosure supports keyboard links, Escape and honest logout placeholder", async ({
@@ -182,6 +190,24 @@ test("account disclosure supports keyboard links, Escape and honest logout place
   await menu.getByRole("link", { name: "Đăng xuất", exact: true }).click();
   await expect(page).toHaveURL(/\/logout$/);
   await expect(page.getByText(/Chưa thực hiện đăng xuất/)).toBeVisible();
+});
+
+test("account disclosure preserves instant keyboard and reduced-motion openings", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/preview/workspace/manager/dashboard");
+  const button = page.getByRole("button", { name: /^Tài khoản:/ });
+  const menu = page.getByRole("navigation", { name: "Tài khoản", exact: true });
+  await button.press("Enter");
+  await expect(menu).toHaveCSS("transition-duration", "0s");
+  await page.keyboard.press("Escape");
+  await button.click();
+  await expect(menu).toHaveCSS("transition-duration", "0.15s, 0.15s");
+  await page.keyboard.press("Escape");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await button.click();
+  await expect(menu).toHaveCSS("transition-duration", "0s");
 });
 
 test("scoped ticket search navigates safely and personal/work active states are distinct", async ({

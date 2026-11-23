@@ -31,3 +31,26 @@ test("notification badge, unread filter, revoked target and own ticket", async (
   await expect(list).toContainText("3 thông báo chưa đọc");
   await expect(list).toContainText("cập nhật nội bộ");
 });
+
+test("read actions preserve keyboard focus and filter changes clear the unavailable notice", async ({
+  page,
+}) => {
+  await loginMonitoring(page, "requester", "/notifications");
+  const list = page.getByRole("region", { name: "Thông báo của bạn" });
+  const unread = list.getByRole("button", { name: "Chưa đọc", exact: true });
+  await unread.press("Enter");
+  await list
+    .getByRole("button", { name: "Đánh dấu đã đọc" })
+    .first()
+    .press("Enter");
+  await expect(
+    list.getByRole("button", { name: "Mở thông báo" }),
+  ).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(unread).toBeFocused();
+  await expect(list.getByRole("alert")).toBeVisible();
+  await list
+    .getByRole("button", { name: "Tất cả", exact: true })
+    .press("Enter");
+  await expect(list.getByRole("alert")).toHaveCount(0);
+});

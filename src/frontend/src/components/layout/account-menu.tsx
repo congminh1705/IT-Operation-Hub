@@ -43,6 +43,7 @@ export function AccountMenu({
   prefix?: string;
 }) {
   const [open, setOpen] = useState(false);
+  const [pointerOpen, setPointerOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const button = useRef<HTMLButtonElement>(null);
   const first = useRef<HTMLAnchorElement>(null);
@@ -79,7 +80,10 @@ export function AccountMenu({
         aria-label={`Tài khoản: ${persona.user.display_name}`}
         aria-expanded={open}
         aria-controls={id}
-        onClick={() => setOpen((value) => !value)}
+        onClick={(event) => {
+          setPointerOpen(event.detail > 0);
+          setOpen((value) => !value);
+        }}
       >
         <Image src="/avatar-default.svg" width={32} height={32} alt="" />
       </button>
@@ -87,6 +91,7 @@ export function AccountMenu({
         id={id}
         aria-label="Tài khoản"
         hidden={!open}
+        data-pointer-open={pointerOpen || undefined}
         className="shell-account-popover"
       >
         <strong>{persona.user.display_name}</strong>

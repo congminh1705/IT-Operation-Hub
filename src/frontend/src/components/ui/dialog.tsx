@@ -24,26 +24,23 @@ export function Dialog({
   className = "",
 }: DialogProps) {
   const dialog = useRef<HTMLDialogElement>(null);
-  const opener = useRef<HTMLElement | null>(null);
   const id = useId();
 
   useEffect(() => {
     const node = dialog.current;
-    if (!node) return;
-    if (open && !node.open) {
-      opener.current =
-        document.activeElement instanceof HTMLElement
-          ? document.activeElement
-          : null;
-      node.showModal();
-    }
+    if (!open || !node) return;
+    const opener =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    if (!node.open) node.showModal();
     const overflow = document.body.style.overflow;
-    if (open) document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
     return () => {
       if (node.open) node.close();
       document.body.style.overflow = overflow;
-      if (opener.current?.isConnected)
-        opener.current.focus({ preventScroll: true });
+      if (opener?.isConnected && opener.getClientRects().length)
+        opener.focus({ preventScroll: true });
     };
   }, [open]);
 
