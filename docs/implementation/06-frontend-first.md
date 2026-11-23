@@ -20,7 +20,7 @@ purpose: "Summarize group scope, completion criteria, child tasks and handoff."
 
 Phase A delivers the 63 interactive frontend DEMO tasks first, using the agreed Next.js stack, Vietnamese UI and existing designs. Synthetic outcomes establish frontend behavior only; they do not prove server security, transactions, live AI or production readiness.
 
-These are group/epic summaries. Each heading names the group goal. Implementation context, file boundaries, detailed checks and handoff evidence live in the linked task files. The [task workflow](workflow/task-workflow.md) defines the shared completion rule: every child and group criterion must pass, including any external integration closure. [Execution board](workflow/execution-board.md) owns task status/owner; [package registry](README.md#4-task-tracker) owns epic state. Application evidence remains **NOT RUN**.
+These are group/epic summaries. Each heading names the group goal. Implementation context, file boundaries, detailed checks and handoff evidence live in the linked task files. The [task workflow](workflow/task-workflow.md) defines the shared completion rule: every child and group criterion must pass, including any external integration closure. [Execution board](workflow/execution-board.md) owns task status/owner; [package registry](README.md#4-task-tracker) owns epic state. Application evidence is linked from the task cards. FE-18 records the frontend checks and [Phase A contract handoff](evidence/FE-18.03/contract-map.md).
 
 ## Working boundary and source context
 
