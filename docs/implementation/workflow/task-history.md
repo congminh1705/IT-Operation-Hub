@@ -8855,3 +8855,139 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 #### 10. Next step
 
 - FE-18.01 after joint PO acceptance, FE-17 Parent PR merge and implementation authorization.
+
+<a id="task-fe-17-01-attempt-02"></a>
+
+### FE-17.01 — Attempt 02 — 2026-11-24T00:47:53+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-17.01/attempt-02
+- Task: [task card](../tasks/FE-17.01.md)
+- Parent / phase: FE-17 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-24T00:47:53+07:00
+- Ended at: 2026-11-24T00:47:53+07:00
+- State before / after: review / done
+- Previous attempt: [implementation and verification](#task-fe-17-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record joint PO acceptance and close FE-17.
+- Delivered this attempt: PO confirmed review and requested both child tasks be marked done.
+- Incomplete scope: Parent merge pending. Phase A evidence covers frontend DEMO.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-17.01.md, workflow records and README.md | Acceptance and status | Synchronize child and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Functional and visual DEMO | Agent verification and PO joint acceptance | Agent checks passed in attempt 01; PO confirmed review and closure | pass | [Previous verification](#task-fe-17-01-attempt-01), [comparison](../evidence/FE-17.01/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Compare card, board, history, context and registry; run git diff --check | Consistent closure | Both tasks done and Parent EPIC_DONE | pass |
+| src/frontend | Repeat application checks | Application verification | Documentation-only closure; application evidence retained from attempt 01 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint PO acceptance by Hoang Cong Minh.
+- Findings / resolution: PO confirmed review and requested closure. No new defect reported.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-17 DEMO acceptance. Parent PR merge gates FE-18.
+- Required resolution / owner: PO merges the Parent PR and authorizes follow-on implementation.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-17.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-17.01/comparison.md), [browser log](../evidence/FE-17.01/playwright.log).
+- Commit / build / environment: implementation `a4d4ae6` and review evidence on `phase/a-frontend`.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- Next eligible task: FE-18.01 after Parent PR merge and implementation authorization.
+
+<a id="task-fe-17-02-attempt-02"></a>
+
+### FE-17.02 — Attempt 02 — 2026-11-24T00:47:53+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-17.02/attempt-02
+- Task: [task card](../tasks/FE-17.02.md)
+- Parent / phase: FE-17 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-24T00:47:53+07:00
+- Ended at: 2026-11-24T00:47:53+07:00
+- State before / after: review / done
+- Previous attempt: [implementation and verification](#task-fe-17-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record joint PO acceptance and close FE-17.
+- Delivered this attempt: PO confirmed review and requested both child tasks be marked done.
+- Incomplete scope: Parent merge pending. Phase A evidence covers frontend DEMO.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-17.02.md, workflow records and README.md | Acceptance and status | Synchronize child and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Functional and visual DEMO | Agent verification and PO joint acceptance | Agent checks passed in attempt 01; PO confirmed review and closure | pass | [Previous verification](#task-fe-17-02-attempt-01), [comparison](../evidence/FE-17.02/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Compare card, board, history, context and registry; run git diff --check | Consistent closure | Both tasks done and Parent EPIC_DONE | pass |
+| src/frontend | Repeat application checks | Application verification | Documentation-only closure; application evidence retained from attempt 01 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint PO acceptance by Hoang Cong Minh.
+- Findings / resolution: PO confirmed review and requested closure. No new defect reported.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-17 DEMO acceptance. Parent PR merge gates FE-18.
+- Required resolution / owner: PO merges the Parent PR and authorizes follow-on implementation.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-17.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-17.02/comparison.md), [browser log](../evidence/FE-17.02/playwright.log).
+- Commit / build / environment: implementation `a4d4ae6` and review evidence on `phase/a-frontend`.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- Next eligible task: FE-18.01 after Parent PR merge and implementation authorization.
