@@ -133,6 +133,9 @@ export function TicketReplyComposer({
               ? "Xem trước ghi chú nội bộ"
               : "Xem trước phản hồi công khai"}
           </h3>
+          <p>
+            {id} · Phiên bản {currentPreview.version}
+          </p>
           <p className="ticket-reply-preview">{currentPreview.text}</p>
           {!!files[view].length && (
             <ul aria-label="Tệp trong bản xem trước">

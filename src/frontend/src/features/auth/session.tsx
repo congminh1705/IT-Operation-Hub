@@ -58,6 +58,11 @@ export function safeReturnPath(value: string | null): string {
     /^CHAT-\d{1,9}$/.test(assetId)
   )
     params.set("id", assetId);
+  if (
+    isTicketDetail(url.pathname) &&
+    url.searchParams.get("view") === "internal"
+  )
+    params.set("view", "internal");
   if (url.pathname === "/knowledge") {
     const id = url.searchParams.get("id");
     const version = url.searchParams.get("version");
@@ -110,6 +115,11 @@ export function safeReturnPath(value: string | null): string {
     params.set("demo", downloadRevokedFixture);
   if (url.pathname === "/work" && url.searchParams.get("demo") === "work-stale")
     params.set("demo", "work-stale");
+  const task = url.searchParams.get("task");
+  if (url.pathname === "/work" && task && /^T\d{2}$/.test(task))
+    params.set("task", task);
+  if (url.pathname === "/assets" && url.searchParams.get("lifecycle") === "1")
+    params.set("lifecycle", "1");
   if (
     url.pathname === "/workforce" &&
     url.searchParams.get("demo") === "workforce-conflict"

@@ -332,6 +332,18 @@ export function TicketForm({ search }: { search: WorkspaceSearch }) {
               {draft.title} · {draft.priority}
             </p>
             <p>{draft.category}</p>
+            <p>
+              {draft.type === "incident" ? "Sự cố" : "Yêu cầu dịch vụ"} · Mức
+              ảnh hưởng {draft.impact} · Khẩn cấp {draft.urgency}
+            </p>
+            <p className="ticket-draft-description">{draft.description}</p>
+            {draft.onboarding && (
+              <p>
+                {draft.onboarding.employees} · {draft.onboarding.configuration}{" "}
+                · Số lượng {draft.onboarding.quantity} · Hạn bàn giao{" "}
+                {draft.onboarding.deadline}
+              </p>
+            )}
             {draft.asset && (
               <p>
                 Thiết bị liên quan ·{" "}

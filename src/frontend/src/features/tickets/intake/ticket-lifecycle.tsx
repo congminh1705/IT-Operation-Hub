@@ -83,7 +83,7 @@ export function TicketLifecycle({
   return (
     <>
       {(actions.length > 0 || notice) && (
-        <section className="ticket-lifecycle">
+        <section className="ticket-lifecycle" id="ticket-actions">
           <h3>Thao tác</h3>
           {notice && <p role="status">{notice}</p>}
           <div className="ticket-history-controls">
@@ -109,7 +109,7 @@ export function TicketLifecycle({
       <Dialog
         open={!!action}
         title={action?.label ?? "Cập nhật trạng thái"}
-        description={`${row.id} · ${row.state} → ${action?.state ?? row.state}`}
+        description={`${row.id} · ${row.state} → ${action?.state ?? row.state}${selection ? " · Phiên bản " + selection.version : ""}`}
         onRequestClose={() => {
           if (!lock.current) setSelection(null);
         }}

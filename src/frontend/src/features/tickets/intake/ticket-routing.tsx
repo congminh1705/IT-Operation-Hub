@@ -91,7 +91,7 @@ export function TicketRouting({
 
   return (
     <>
-      <div className="ticket-history-controls">
+      <div className="ticket-history-controls" id="ticket-routing">
         {assignable && (
           <button
             className="ui-button"

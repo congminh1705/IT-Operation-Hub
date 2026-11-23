@@ -82,7 +82,12 @@ export function AssistantCards({
   }
 
   return (
-    <section className="assistant-cards" aria-label="Tra cứu và bản nháp">
+    <section
+      className="assistant-cards"
+      id="assistant-lookup"
+      aria-label="Tra cứu và bản nháp"
+      tabIndex={-1}
+    >
       <h3>Tra cứu và bản nháp</h3>
       <form
         className="automation-form"

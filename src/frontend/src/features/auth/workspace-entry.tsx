@@ -1,5 +1,5 @@
 "use client";
-import { AssistantScreen } from "@/features/assistant/assistant-screen";
+import { AssistantWorkspace } from "@/features/assistant/assistant-workspace";
 import { AssistantSettings } from "@/features/assistant/assistant-settings";
 import { KnowledgeScreen } from "@/features/knowledge/knowledge-screen";
 import { AssetScreen } from "@/features/assets/asset-screen";
@@ -75,10 +75,7 @@ export function WorkspaceEntry({
         pathname === "/admin/assistant" ? (
           <AssistantSettings />
         ) : pathname === "/assistant" ? (
-          <AssistantScreen
-            key={params.get("id") ?? "new-chat"}
-            id={params.get("id") ?? undefined}
-          />
+          <AssistantWorkspace id={params.get("id") ?? undefined} />
         ) : pathname === "/knowledge" ? (
           <KnowledgeScreen
             edit={params.get("edit") === "1"}
@@ -91,6 +88,7 @@ export function WorkspaceEntry({
           <AssetScreen
             scope={params.get("scope") ?? "work"}
             id={params.get("id") ?? undefined}
+            initialLifecycle={params.get("lifecycle") === "1"}
           />
         ) : pathname === "/approvals" ? (
           <ApprovalProposal />
@@ -107,6 +105,7 @@ export function WorkspaceEntry({
           <WorkBoard
             scope={params.get("scope") ?? undefined}
             scenario={params.get("demo") ?? undefined}
+            initialTask={params.get("task") ?? undefined}
           />
         ) : pathname === "/tickets" ? (
           <TicketList search={search} />
@@ -116,6 +115,7 @@ export function WorkspaceEntry({
           <TicketDetail
             key={pathname}
             id={pathname.split("/").at(-1)!}
+            initialInternal={search.view === "internal"}
             unavailable={search.demo === "detail-error"}
             simulateDownloadTransfer={search.demo === downloadRevokedFixture}
             uploadFixture={uploadFixtures.find(

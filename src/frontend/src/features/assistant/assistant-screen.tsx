@@ -8,6 +8,7 @@ import { canUseChatAudience, type ChatAudience } from "@/lib/demo/assistant";
 import "../automation/automation.css";
 import "./assistant.css";
 import { AssistantCards } from "./assistant-cards";
+import { AssistantActions } from "./assistant-actions";
 import { AssistantSettings } from "./assistant-settings";
 import {
   assistantFailures,
@@ -116,9 +117,42 @@ export function AssistantScreen({ id }: { id?: string }) {
         className="automation-panel assistant-chat"
         aria-label="Trò chuyện"
       >
-        <h2>{chat?.title ?? "Trò chuyện với trợ lý"}</h2>
-        <p>Trợ lý DEMO · Phản hồi mô phỏng</p>
-        <p>Usage DEMO · Không có dữ liệu token hoặc chi phí nhà cung cấp.</p>
+        <header className="assistant-identity">
+          <h2>{chat?.title ?? "Trò chuyện với trợ lý"}</h2>
+          <p>
+            Trợ lý DEMO · {persona.user.display_name} ·{" "}
+            {labels[chat?.audience ?? audience]}
+          </p>
+          <p>Usage DEMO · Không có dữ liệu token hoặc chi phí nhà cung cấp.</p>
+          <nav
+            className="automation-actions"
+            aria-label="Gợi ý trong hội thoại"
+          >
+            <a
+              href="#assistant-lookup"
+              className="ui-button"
+              data-variant="secondary"
+            >
+              Tra cứu hồ sơ
+            </a>
+            <a
+              href="#assistant-action-selector"
+              className="ui-button"
+              data-variant="secondary"
+            >
+              Chọn thao tác
+            </a>
+            {chat && (
+              <Link
+                href="/assistant"
+                className="ui-button"
+                data-variant="secondary"
+              >
+                Đóng hội thoại
+              </Link>
+            )}
+          </nav>
+        </header>
         {!enabled && (
           <p role="status">
             Trợ lý không khả dụng · {assistantModes[settings.mode]}. Nội dung
@@ -255,6 +289,7 @@ export function AssistantScreen({ id }: { id?: string }) {
         aria-label="Ngữ cảnh và hỗ trợ"
       >
         <h2>Ngữ cảnh</h2>
+        <AssistantActions />
         <p>{labels[chat?.audience ?? audience]}</p>
         <Link href="/knowledge">Kho kiến thức</Link>
         <Link href="/tickets/new">Tạo yêu cầu hỗ trợ</Link>

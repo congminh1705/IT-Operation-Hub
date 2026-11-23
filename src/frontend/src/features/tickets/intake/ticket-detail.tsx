@@ -20,6 +20,7 @@ export function TicketDetail({
   simulateDownloadTransfer,
   simulateRevocation,
   simulateTransitionConflict,
+  initialInternal = false,
 }: {
   id: string;
   unavailable: boolean;
@@ -27,10 +28,13 @@ export function TicketDetail({
   simulateDownloadTransfer: boolean;
   simulateRevocation: boolean;
   simulateTransitionConflict: boolean;
+  initialInternal?: boolean;
 }) {
   const router = useRouter();
   const { store, persona } = useSession();
-  const [view, setView] = useState<"public" | "internal" | "history">("public");
+  const [view, setView] = useState<"public" | "internal" | "history">(
+    initialInternal ? "internal" : "public",
+  );
   const [, setRevision] = useState(0);
   useEffect(() => {
     const timer = window.setInterval(
