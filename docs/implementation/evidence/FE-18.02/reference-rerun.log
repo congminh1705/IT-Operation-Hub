@@ -1,0 +1,25 @@
+Running 19 tests using 1 worker
+  ok  1 e2e\a1-handoff.spec.ts:39:3 › A1 four-role switching and keyboard journeys at 1440px (4.6s)
+  ok  2 e2e\a1-handoff.spec.ts:39:3 › A1 four-role switching and keyboard journeys at 390px (3.7s)
+  ok  3 e2e\access-review.spec.ts:20:1 › last Admin and self-lock are blocked; closing returns focus (810ms)
+  ok  4 e2e\access-review.spec.ts:55:1 › handover and revocation show the correct fixture and never mutate rows (1.1s)
+  ok  5 e2e\access-review.spec.ts:93:1 › non-Admin cannot review access (782ms)
+  ok  6 e2e\access-review.spec.ts:102:1 › matching desktop and mobile evidence for directory and review (2.6s)
+  ok  7 e2e\feedback.spec.ts:22:1 › modal contains keyboard focus, blocks background and restores trigger on Escape/cancel (813ms)
+  ok  8 e2e\feedback.spec.ts:68:1 › field errors are named, linked, focusable and preserve their existing helper description (739ms)
+  ok  9 e2e\feedback.spec.ts:99:1 › submission blocks repeats, keeps dimensions and preserves draft on error/conflict (2.5s)
+  ok 10 e2e\feedback.spec.ts:134:1 › read failures stay distinct from empty results, with working recovery feedback (572ms)
+  ok 11 e2e\feedback.spec.ts:168:3 › long errors reflow and modal controls stay reachable at 320px (685ms)
+  ok 12 e2e\feedback.spec.ts:168:3 › long errors reflow and modal controls stay reachable at 390px (628ms)
+  ok 13 e2e\feedback.spec.ts:168:3 › long errors reflow and modal controls stay reachable at 768px (462ms)
+  ok 14 e2e\feedback.spec.ts:168:3 › long errors reflow and modal controls stay reachable at 1440px (474ms)
+  ok 15 e2e\feedback.spec.ts:213:1 › 200% layout reflows and error text stays legible (607ms)
+  ok 16 e2e\feedback.spec.ts:253:1 › approved reference states and login captured at the same desktop/mobile widths (2.3s)
+  ok 17 e2e\phase-a-resilience.spec.ts:8:1 › login retains keyboard access while pausing or reducing effects (622ms)
+  ok 18 e2e\phase-a-resilience.spec.ts:46:1 › two real app tabs isolate mock sessions and mutations without service calls (5.0s)
+  x  19 e2e\phase-a-resilience.spec.ts:84:1 › record matching login and shared feedback evidence (9.1s)
+  1) e2e\phase-a-resilience.spec.ts:84:1 › record matching login and shared feedback evidence ──────
+    Error: expect(locator).toBeVisible() failed
+    Error: element(s) not found
+  1 failed
+  18 passed (40.4s)

@@ -1,0 +1,5 @@
+Running 3 tests using 1 worker
+  ok 1 e2e\a1-handoff.spec.ts:39:3 › A1 four-role switching and keyboard journeys at 1440px (2.9s)
+  ok 2 e2e\access-review.spec.ts:102:1 › matching desktop and mobile evidence for directory and review (1.7s)
+  ok 3 e2e\phase-a-resilience.spec.ts:84:1 › record matching login and shared feedback evidence (3.9s)
+  3 passed (9.7s)

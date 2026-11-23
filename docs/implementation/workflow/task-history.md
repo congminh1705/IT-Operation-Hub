@@ -9060,3 +9060,73 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 #### 10. Next step
 
 - FE-18.02 follows verified functional results under joint Parent review; both tasks await PO acceptance.
+
+<a id="task-fe-18-02-attempt-01"></a>
+
+### FE-18.02 — Attempt 01 — 2026-11-24T01:07:07+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-18.02/attempt-01
+- Task: [task card](../tasks/FE-18.02.md)
+- Parent / phase: FE-18 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-24T00:59:00+07:00
+- Ended at: 2026-11-24T01:07:07+07:00
+- State before / after: in-progress / review
+- Previous attempt: none.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Exercise keyboard/focus/zoom, recoverable form outcomes, session changes, active-tab polling and explicit DEMO isolation.
+- Delivered this attempt: Connected the native ticket list to typed, session-scoped active-tab polling. Refresh keeps the current rows on screen and the cache ignores obsolete results. Added browser coverage of login motion/keyboard and isolated DEMO tabs; compared login and shared states at two widths.
+- Incomplete scope: No unresolved check failure after serial reruns. Runtime poll registration covers ticket lists; other DEMO screens retain their feature-owned read behavior. Native device and assistive technology coverage beyond Chrome was not run.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/tickets/intake/ticket-list.tsx, src/frontend/src/lib/api/query-client.ts and query-client.test.ts, src/frontend/e2e/phase-a-resilience.spec.ts and feedback.spec.ts | Verify frontend accessibility and resilient state handling | Parent FE-18 acceptance evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Responsive keyboard, recoverable outcomes, scope switching, active polling and mock isolation | Verified behavior and explicit boundaries | 114 unit tests passed. Chrome exercised 310 unique cases across full run and serial recovery. Full run had 308 passes and two reference render timeouts; both passed in the 3/3 serial rerun. TypeScript, lint, scoped format and production builds passed. | pass | [comparison](../evidence/FE-18.02/comparison.md), [full suite](../evidence/FE-18.02/full-browser.log), [serial rerun](../evidence/FE-18.02/final-rerun.log) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | `node node_modules/@playwright/test/cli.js test --workers=3 --output test-results/FE-18.02` with both approved reference servers | Whole frontend suite including 320/390/768/1440, CSS 200% zoom, errors and session changes | 308 passed; 2 static HTML rendering timeouts recovered in serial run | fail then recovered |
+| src/frontend | `node node_modules/@playwright/test/cli.js test --workers=1 e2e/a1-handoff.spec.ts e2e/access-review.spec.ts e2e/phase-a-resilience.spec.ts --grep '1440px|matching desktop and mobile evidence|record matching'` | Both reference timeouts and own application evidence are repeatable | 3/3 passed, including both matching reference timeouts | pass |
+| src/frontend | `node node_modules/vitest/vitest.mjs run`; `node node_modules/next/dist/bin/next typegen`; `node node_modules/typescript/bin/tsc --noEmit` | Deterministic foreground polling, scoped response protection, mock gateway, typed build inputs | 114/114 tests; TypeScript clean | pass |
+| src/frontend | `node node_modules/eslint/bin/eslint.js .`; scoped `node node_modules/prettier/bin/prettier.cjs --check`; `node node_modules/next/dist/bin/next build` | Checks and runtime bundle | Passed | pass |
+| fresh isolated frontend archive on D drive | `node node_modules/next/dist/bin/next build --webpack`; `node node_modules/typescript/bin/tsc --noEmit` | No pre-existing build output or unrelated workspace CSS | Passed from tracked source plus FE-18.02 edits. Initial cross-drive junction failed to resolve Next paths, corrected by same-drive build. | pass |
+
+#### 6. Review
+
+- Reviewer and findings: Agent compared login and shared states at 1440/390. CSS 200% zoom, keyboard, pause/reduced motion and functional error states checked. PO verdict pending.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: No unresolved check failure after serial reruns. Runtime poll registration covers ticket lists; other DEMO screens retain their feature-owned read behavior. Native device and assistive technology coverage beyond Chrome was not run.
+- Required resolution / owner: PO joint Parent acceptance. Real service decisions stay with later phase owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-18.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-18.02/comparison.md), [full suite](../evidence/FE-18.02/full-browser.log), [serial rerun](../evidence/FE-18.02/final-rerun.log).
+- Commit / build / environment: scoped commit containing this report, phase/a-frontend. Previous Parent PR #19 merged at 4c71825.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 01.
+- Execution-board row: review, Owner PO.
+- Current context: updated with the current FE-18 result.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- FE-18.03 follows verified functional checks under joint Parent review.
