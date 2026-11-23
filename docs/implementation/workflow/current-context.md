@@ -86,4 +86,4 @@ authority: derived
 - [FE-16.02/attempt-02](task-history.md#task-fe-16-02-attempt-02), done. 112 unit and 5 Chromium passed. [Comparison](../evidence/FE-16.02/comparison.md). Pushed and verified cfbe77e.
 - [FE-16.03/attempt-02](task-history.md#task-fe-16-03-attempt-02), done. 112 unit and 13 Chromium passed. [Comparison](../evidence/FE-16.03/comparison.md). Pushed and verified 22ca639.
 
-- Joint PO review: http://127.0.0.1:3234/dashboard and http://127.0.0.1:3234/reports. Manager/Admin Workload includes the link to AI explanation. PO confirmed joint acceptance. FE-16 Parent PR publication pending.
+- Joint PO review: http://127.0.0.1:3234/dashboard and http://127.0.0.1:3234/reports. Manager/Admin Workload includes the link to AI explanation. PO confirmed joint acceptance. FE-16 Parent [PR #18](https://github.com/congminh1705/IT-Operation-Hub/pull/18) is open into main. Acceptance commit b1168a2 pushed. FE-17.01 follows verified merge and authorization.
