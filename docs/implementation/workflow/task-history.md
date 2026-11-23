@@ -7990,3 +7990,286 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Joint FE-15 PO review at http://127.0.0.1:3225/assistant. FE-16.01 follows acceptance, PR merge and implementation authorization.
 - Eligibility / remaining prerequisite: verified dependent task checks or joint PO review before closure.
+
+<a id="task-fe-15-01-attempt-02"></a>
+
+### FE-15.01 — Attempt 02 — 2026-11-23T23:44:48.4324157+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-15.01/attempt-02
+- Task: [task card](../tasks/FE-15.01.md)
+- Parent / phase: FE-15 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-23T23:44:48.4324157+07:00
+- Ended at: 2026-11-23T23:44:48.4324157+07:00
+- State before / after: review / done
+- Previous attempt: [implementation and verification](#task-fe-15-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record joint PO acceptance and close FE-15.
+- Delivered this attempt: PO accepted all four FE-15 tasks and requested the Parent PR.
+- Incomplete scope: Phase A synthetic DEMO. Parent merge gates follow-on work.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-15.01.md, workflow records and README.md | Acceptance records | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Functional DEMO | Task scope verified | Agent checks passed in attempt 01; PO accepted FE-15 | pass | [Prior results](#task-fe-15-01-attempt-01) |
+| Visual acceptance | Comparison and PO verdict | Desktop/mobile evidence retained; PO confirmed joint review | pass | [Comparison](../evidence/FE-15.01/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Compare task cards, board, history, context and registry | Consistent closure | Done and linked | pass |
+| src/frontend | Repeat application checks | Application verification | Documentation-only closure; retain attempt 01 evidence | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint PO review by Hoang Cong Minh.
+- Findings / resolution: PO confirmed review and requested done and Parent PR.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-15 acceptance. PR merge gates FE-16.
+- Required resolution / owner: PO merges the Parent PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-15.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-15.01/comparison.md), [Chromium](../evidence/FE-15.01/chromium.log).
+- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-15-01-attempt-01). FE-15 PR delivery tracked in [current context](current-context.md).
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- Next eligible task: FE-16.01.
+- Remaining prerequisite: verified Parent PR merge and implementation authorization.
+
+
+<a id="task-fe-15-02-attempt-02"></a>
+
+### FE-15.02 — Attempt 02 — 2026-11-23T23:44:48.4324157+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-15.02/attempt-02
+- Task: [task card](../tasks/FE-15.02.md)
+- Parent / phase: FE-15 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-23T23:44:48.4324157+07:00
+- Ended at: 2026-11-23T23:44:48.4324157+07:00
+- State before / after: review / done
+- Previous attempt: [implementation and verification](#task-fe-15-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record joint PO acceptance and close FE-15.
+- Delivered this attempt: PO accepted all four FE-15 tasks and requested the Parent PR.
+- Incomplete scope: Phase A synthetic DEMO. Parent merge gates follow-on work.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-15.02.md, workflow records and README.md | Acceptance records | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Functional DEMO | Task scope verified | Agent checks passed in attempt 01; PO accepted FE-15 | pass | [Prior results](#task-fe-15-02-attempt-01) |
+| Visual acceptance | Comparison and PO verdict | Desktop/mobile evidence retained; PO confirmed joint review | pass | [Comparison](../evidence/FE-15.02/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Compare task cards, board, history, context and registry | Consistent closure | Done and linked | pass |
+| src/frontend | Repeat application checks | Application verification | Documentation-only closure; retain attempt 01 evidence | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint PO review by Hoang Cong Minh.
+- Findings / resolution: PO confirmed review and requested done and Parent PR.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-15 acceptance. PR merge gates FE-16.
+- Required resolution / owner: PO merges the Parent PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-15.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-15.02/comparison.md), [Chromium](../evidence/FE-15.02/chromium.log).
+- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-15-02-attempt-01). FE-15 PR delivery tracked in [current context](current-context.md).
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- Next eligible task: FE-16.01.
+- Remaining prerequisite: verified Parent PR merge and implementation authorization.
+
+
+<a id="task-fe-15-03-attempt-02"></a>
+
+### FE-15.03 — Attempt 02 — 2026-11-23T23:44:48.4324157+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-15.03/attempt-02
+- Task: [task card](../tasks/FE-15.03.md)
+- Parent / phase: FE-15 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-23T23:44:48.4324157+07:00
+- Ended at: 2026-11-23T23:44:48.4324157+07:00
+- State before / after: review / done
+- Previous attempt: [implementation and verification](#task-fe-15-03-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record joint PO acceptance and close FE-15.
+- Delivered this attempt: PO accepted all four FE-15 tasks and requested the Parent PR.
+- Incomplete scope: Phase A synthetic DEMO. Parent merge gates follow-on work.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-15.03.md, workflow records and README.md | Acceptance records | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Functional DEMO | Task scope verified | Agent checks passed in attempt 01; PO accepted FE-15 | pass | [Prior results](#task-fe-15-03-attempt-01) |
+| Visual acceptance | Comparison and PO verdict | Desktop/mobile evidence retained; PO confirmed joint review | pass | [Comparison](../evidence/FE-15.03/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Compare task cards, board, history, context and registry | Consistent closure | Done and linked | pass |
+| src/frontend | Repeat application checks | Application verification | Documentation-only closure; retain attempt 01 evidence | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint PO review by Hoang Cong Minh.
+- Findings / resolution: PO confirmed review and requested done and Parent PR.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-15 acceptance. PR merge gates FE-16.
+- Required resolution / owner: PO merges the Parent PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-15.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-15.03/comparison.md), [Chromium](../evidence/FE-15.03/chromium.log).
+- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-15-03-attempt-01). FE-15 PR delivery tracked in [current context](current-context.md).
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- Next eligible task: FE-16.01.
+- Remaining prerequisite: verified Parent PR merge and implementation authorization.
+
+
+<a id="task-fe-15-04-attempt-02"></a>
+
+### FE-15.04 — Attempt 02 — 2026-11-23T23:44:48.4324157+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FE-15.04/attempt-02
+- Task: [task card](../tasks/FE-15.04.md)
+- Parent / phase: FE-15 / Phase A
+- Executor: AI Agent
+- Started at: 2026-11-23T23:44:48.4324157+07:00
+- Ended at: 2026-11-23T23:44:48.4324157+07:00
+- State before / after: review / done
+- Previous attempt: [implementation and verification](#task-fe-15-04-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record joint PO acceptance and close FE-15.
+- Delivered this attempt: PO accepted all four FE-15 tasks and requested the Parent PR.
+- Incomplete scope: Phase A synthetic DEMO. Parent merge gates follow-on work.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FE-15.04.md, workflow records and README.md | Acceptance records | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Functional DEMO | Task scope verified | Agent checks passed in attempt 01; PO accepted FE-15 | pass | [Prior results](#task-fe-15-04-attempt-01) |
+| Visual acceptance | Comparison and PO verdict | Desktop/mobile evidence retained; PO confirmed joint review | pass | [Comparison](../evidence/FE-15.04/comparison.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repo | Compare task cards, board, history, context and registry | Consistent closure | Done and linked | pass |
+| src/frontend | Repeat application checks | Application verification | Documentation-only closure; retain attempt 01 evidence | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint PO review by Hoang Cong Minh.
+- Findings / resolution: PO confirmed review and requested done and Parent PR.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: none for FE-15 acceptance. PR merge gates FE-16.
+- Required resolution / owner: PO merges the Parent PR.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FE-15.04.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [comparison](../evidence/FE-15.04/comparison.md), [Chromium](../evidence/FE-15.04/chromium.log).
+- Commit / build / environment: verified phase/a-frontend implementation in [attempt 01](#task-fe-15-04-attempt-01). FE-15 PR delivery tracked in [current context](current-context.md).
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- Next eligible task: FE-16.01.
+- Remaining prerequisite: verified Parent PR merge and implementation authorization.
