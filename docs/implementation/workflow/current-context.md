@@ -109,4 +109,4 @@ authority: derived
 
 - PO accepted PRE-01.01 and PRE-01.02. Parent is EPIC_DONE. Board has 65 done and 165 pending.
 - [PRE-01.01 acceptance](task-history.md#task-pre-01-01-attempt-02) and [PRE-01.02 acceptance](task-history.md#task-pre-01-02-attempt-02) retain the original source verification. Pending operational values and the emergency no-replacement procedure remain assigned to their consuming tasks.
-- The PRE-01 Parent merge and separate PO implementation authorization gate FND-01.01.
+- PRE-01 [PR #22](https://github.com/congminh1705/IT-Operation-Hub/pull/22) is open into main. Acceptance commit ef35d32 was pushed and verified. The Parent merge and separate PO implementation authorization gate FND-01.01.
