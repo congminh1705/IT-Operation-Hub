@@ -10174,3 +10174,212 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Joint PO review of FND-02.01, FND-02.02 and FND-02.03 before Parent closure.
 - Eligibility / remaining prerequisite: joint review precedes Parent closure.
+
+<a id="task-fnd-02-01-attempt-02"></a>
+
+### FND-02.01 — Attempt 02 — 2026-11-25T00:18:28+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-02.01/attempt-02
+- Task: [task specification](../tasks/FND-02.01.md)
+- Parent / phase: FND-02 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-25T00:18:28+07:00
+- Ended at: 2026-11-25T00:18:28+07:00
+- State before / after: review / done
+- Previous attempt / correction: [agent verification](#task-fnd-02-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record joint PO acceptance and close FND-02.
+- Delivered this attempt: Accepted the existing implementation covering migrations, isolated sessions, injectable UTC clock and persistence across PostgreSQL restart.
+- Incomplete scope / deviations: Parent delivery awaits merge. Existing consumer tasks own API/worker integration.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-02.01.md and workflow records | PO approval and done state | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Parent criterion 1 | Verified task output and PO acceptance | PO approved all three tasks after the agent's recorded PostgreSQL checks | pass | [Attempt 01](#task-fnd-02-01-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Check all FND-02 board rows, Parent registry, evidence anchors and staged diff whitespace | Synchronized closure | All three rows done, Parent EPIC_DONE, linked evidence retained | pass |
+| src/backend | Repeat application checks | Documentation-only closure | Prior runtime results retained in attempt 01 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Joint PO acceptance.
+- Findings / resolution: PO explicitly approved and requested done.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: None for FND-02 closure. Verified Parent merge gates the next Parent delivery.
+- Required resolution / owner: PO merges the FND-02 PR and separately authorizes FND-03.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FND-02.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-02-01-attempt-01).
+- Commit / build / environment: Implementation d98caed pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-03.01.
+- Eligibility / remaining prerequisite: Verified FND-02 Parent merge and separate authorization.
+
+
+<a id="task-fnd-02-02-attempt-02"></a>
+
+### FND-02.02 — Attempt 02 — 2026-11-25T00:18:28+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-02.02/attempt-02
+- Task: [task specification](../tasks/FND-02.02.md)
+- Parent / phase: FND-02 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-25T00:18:28+07:00
+- Ended at: 2026-11-25T00:18:28+07:00
+- State before / after: review / done
+- Previous attempt / correction: [agent verification](#task-fnd-02-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record joint PO acceptance and close FND-02.
+- Delivered this attempt: Accepted the existing implementation covering atomic domain, redacted audit and outbox writes, including rollback after flush.
+- Incomplete scope / deviations: Parent delivery awaits merge. Existing consumer tasks own API/worker integration.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-02.02.md and workflow records | PO approval and done state | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Parent criterion 2 | Verified task output and PO acceptance | PO approved all three tasks after the agent's recorded PostgreSQL checks | pass | [Attempt 01](#task-fnd-02-02-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Check all FND-02 board rows, Parent registry, evidence anchors and staged diff whitespace | Synchronized closure | All three rows done, Parent EPIC_DONE, linked evidence retained | pass |
+| src/backend | Repeat application checks | Documentation-only closure | Prior runtime results retained in attempt 01 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Joint PO acceptance.
+- Findings / resolution: PO explicitly approved and requested done.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: None for FND-02 closure. Verified Parent merge gates the next Parent delivery.
+- Required resolution / owner: PO merges the FND-02 PR and separately authorizes FND-03.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FND-02.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-02-02-attempt-01).
+- Commit / build / environment: Implementation 7e42f11 pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-03.01.
+- Eligibility / remaining prerequisite: Verified FND-02 Parent merge and separate authorization.
+
+
+<a id="task-fnd-02-03-attempt-02"></a>
+
+### FND-02.03 — Attempt 02 — 2026-11-25T00:18:28+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-02.03/attempt-02
+- Task: [task specification](../tasks/FND-02.03.md)
+- Parent / phase: FND-02 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-25T00:18:28+07:00
+- Ended at: 2026-11-25T00:18:28+07:00
+- State before / after: review / done
+- Previous attempt / correction: [agent verification](#task-fnd-02-03-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record joint PO acceptance and close FND-02.
+- Delivered this attempt: Accepted the existing implementation covering expected-version conflicts, concurrent idempotent replay, changed-input conflicts and revoked replay authorization.
+- Incomplete scope / deviations: Parent delivery awaits merge. Existing consumer tasks own API/worker integration.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-02.03.md and workflow records | PO approval and done state | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Parent criterion 3 | Verified task output and PO acceptance | PO approved all three tasks after the agent's recorded PostgreSQL checks | pass | [Attempt 01](#task-fnd-02-03-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Check all FND-02 board rows, Parent registry, evidence anchors and staged diff whitespace | Synchronized closure | All three rows done, Parent EPIC_DONE, linked evidence retained | pass |
+| src/backend | Repeat application checks | Documentation-only closure | Prior runtime results retained in attempt 01 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Joint PO acceptance.
+- Findings / resolution: PO explicitly approved and requested done.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: None for FND-02 closure. Verified Parent merge gates the next Parent delivery.
+- Required resolution / owner: PO merges the FND-02 PR and separately authorizes FND-03.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FND-02.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-02-03-attempt-01).
+- Commit / build / environment: Implementation f721e04 pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-03.01.
+- Eligibility / remaining prerequisite: Verified FND-02 Parent merge and separate authorization.

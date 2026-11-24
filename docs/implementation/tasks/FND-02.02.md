@@ -71,11 +71,11 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-02.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-02-02-attempt-01).
+- Latest Report ID: FND-02.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-02-02-attempt-02).
 - Delivered result: Added write_audit and enqueue_event on the caller-owned Session. Typed SafeFacts limits JSON metadata; one event can stage one delivery per handler without a broker call.
 - Actual changed paths: src/backend/app/infrastructure/events.py and src/backend/tests/test_uow.py
 - Verification: Ruff, strict mypy and six pytest cases passed. Two PostgreSQL UoW cases verified invisibility before commit, atomic rollback on an injected post-flush failure, redaction and consistent event/delivery correlation.
-- Review: agent verification complete. Joint PO acceptance pending.
+- Review: Agent verification is recorded in attempt 01. PO jointly accepted all three FND-02 tasks and requested done.
 - Commit/build: 7e42f11 on phase/b-backend. Push verified on origin.
-- Next step: FND-02.03 follows verified atomic writes under joint Parent review.
+- Next step: Deliver the FND-02 Parent PR. FND-03.01 follows the verified merge and separate PO authorization.
