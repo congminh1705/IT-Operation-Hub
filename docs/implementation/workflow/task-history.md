@@ -9687,3 +9687,74 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-01.01.
 - Eligibility / remaining prerequisite: verified PRE-01 Parent merge and separate authorization.
+
+<a id="task-fnd-01-01-attempt-01"></a>
+
+### FND-01.01 — Attempt 01 — 2026-11-24T23:52:08+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-01.01/attempt-01
+- Task: [task specification](../tasks/FND-01.01.md)
+- Parent / phase: FND-01 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-24T23:36:00+07:00
+- Ended at: 2026-11-24T23:52:08+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, initial delivery.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Create reproducible FastAPI and PostgreSQL local development setup while reusing the frontend.
+- Delivered this attempt: Added Python 3.13.15, uv lock, FastAPI entry point and PostgreSQL 18.7 Compose pinned by digest. Existing frontend remains the frontend entry point.
+- Incomplete scope / deviations: No business APIs or runtime integration. Health and backend check scripts belong to FND-01.02.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/pyproject.toml, uv.lock, .python-version, app/, compose.yaml and README.md | Backend foundation | Deliver task scope |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| FND-01.01 card section 5 | Create reproducible FastAPI and PostgreSQL local development setup while reusing the frontend. | Frozen backend install in a new environment, HTTP OpenAPI smoke, PostgreSQL 18.7 readiness and a Windows Psycopg SELECT 1 passed. Frozen frontend install and Next production build passed in the detached clean checkout. | pass | [Backend setup](../../../src/backend/README.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | uv lock --check; uv sync --frozen --python 3.13.15 with new UV_PROJECT_ENVIRONMENT | Locked install | FastAPI 0.165.0, Psycopg 3.3.9, Uvicorn 0.54.0 installed | pass |
+| src/backend | uvicorn app.main:app on 127.0.0.1:8000; GET /openapi.json | Local API starts | 200 | pass |
+| src/backend | WSL Docker Compose up -d --wait postgres; psql SHOW server_version; workspace Psycopg SELECT 1 | Pinned local DB reachable | Healthy; 18.7; returned 1 | pass |
+| clean frontend worktree | pnpm.cmd install --frozen-lockfile; pnpm.cmd build | Reuse audited frontend | Both passed | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent verification. PO joint review pending.
+- Findings / resolution: A fresh temporary Python environment installed successfully but its separate loopback probe timed out. The workspace environment connected successfully before and after pinning the image digest.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: joint PO review.
+- Required resolution / owner: PO reviews FND-01 before Parent closure and merge.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FND-01.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: commands and results in section 5. [Local setup](../../../src/backend/README.md).
+- Commit / build / environment: phase/b-backend, task commit contains this report.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: task outcome and next step recorded.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-01.02 follows verified setup under joint Parent review.
+- Eligibility / remaining prerequisite: joint review precedes Parent closure.

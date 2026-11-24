@@ -110,3 +110,7 @@ authority: derived
 - PO accepted PRE-01.01 and PRE-01.02. Parent is EPIC_DONE. Board has 65 done and 165 pending.
 - [PRE-01.01 acceptance](task-history.md#task-pre-01-01-attempt-02) and [PRE-01.02 acceptance](task-history.md#task-pre-01-02-attempt-02) retain the original source verification. Pending operational values and the emergency no-replacement procedure remain assigned to their consuming tasks.
 - PRE-01 [PR #22](https://github.com/congminh1705/IT-Operation-Hub/pull/22) merged into main at bf92c22. The phase branch was fast-forwarded to the verified merge. Acceptance commit ef35d32 was pushed and verified. The Parent merge and separate PO implementation authorization gate FND-01.01.
+
+## Phase B — FND-01 runtime foundation
+
+- [FND-01.01/attempt-01](task-history.md#task-fnd-01-01-attempt-01), review. Added Python 3.13.15, uv lock, FastAPI entry point and PostgreSQL 18.7 Compose pinned by digest. Existing frontend remains the frontend entry point. Frozen backend install in a new environment, HTTP OpenAPI smoke, PostgreSQL 18.7 readiness and a Windows Psycopg SELECT 1 passed. Frozen frontend install and Next production build passed in the detached clean checkout. FND-01.02 follows verified setup under joint Parent review.
