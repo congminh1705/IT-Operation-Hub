@@ -35,6 +35,10 @@ Future Celery workers and the single Beat scheduler run on Linux. Windows develo
 
 With the local database running and `ITOH_DATABASE_DSN` set to a PostgreSQL URL, run `uv run --frozen alembic upgrade head` from this directory. Inspect the active revision with `uv run --frozen alembic current`. The first revision creates audit, event and delivery tables. Account and ticket schemas belong to their domain tasks.
 
+The second revision adds the confirmed-command ledger. Use `run_idempotent` as the top-level command transaction, passing normalized, validated input without passwords or other secrets. Supply authorization for the requested command and its exact result on replay. Only the request digest and result reference are retained. Same actor, operation, key and input replay the confirmed reference. A different input raises `IdempotencyConflict`. Exact wire headers and ledger retention remain with the corresponding service contracts.
+
+`bump_expected_version` uses a conditional update on the authorized row inside the caller transaction. Treat `VersionConflict` as a stale-write conflict, roll back the command and ask the caller to review current data. API status mapping belongs to the consuming route.
+
 Create one `Database` from an application-owned engine. Use `database.session()` for an isolated request or job that only reads, and `database.transaction()` at the top-level write boundary. Each call opens and closes its own synchronous Session. Downstream writes take that Session and leave commit/rollback to the caller. Inject a timezone-aware clock where deterministic timestamps are needed.
 
 For database tests, set `ITOH_TEST_DATABASE_URL` to a disposable PostgreSQL database whose user can create schemas, then run `uv run --frozen python -m pytest`. Tests create and remove isolated schemas. Without that variable the PostgreSQL tests are reported as skipped.

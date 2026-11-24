@@ -10104,3 +10104,73 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-02.03 follows verified atomic writes under joint Parent review.
 - Eligibility / remaining prerequisite: joint review precedes Parent closure.
+
+<a id="task-fnd-02-03-attempt-01"></a>
+
+### FND-02.03 — Attempt 01 — 2026-11-25T00:10:10+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-02.03/attempt-01
+- Task: [task specification](../tasks/FND-02.03.md)
+- Parent / phase: FND-02 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-25
+- Ended at: 2026-11-25T00:10:10+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, initial delivery.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Provide atomic expected-version checks and retry-safe idempotent commands with durable, safe result references.
+- Delivered this attempt: Added conditional version update, revision 0002_confirmed_command, and a PostgreSQL command ledger keyed by actor, operation and key. Same input replays the result after current authorization. Different input conflicts. An interrupted command rolls back its ledger reservation and all writes.
+- Incomplete scope / deviations: Consumer routes own HTTP conflict mapping, domain authorization and idempotency header policy. Ledger retention, worker dispatch and production integration remain open for later tasks.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/infrastructure/commands.py and models.py, migrations/versions/0002_confirmed_command.py, tests/test_commands.py and README.md | Backend foundation | Deliver task scope |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| FND-02.03 card section 5 | Provide atomic expected-version checks and retry-safe idempotent commands with durable, safe result references. | Ruff, strict mypy, nine pytest cases on PostgreSQL, Alembic offline SQL and wheel/sdist build passed. Both blank migration and upgrade from 0001 preserved expected data. Two competing version writes produced one success and one conflict; concurrent same-key requests created one effect. | pass | [Backend setup](../../../src/backend/README.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | uv lock --check; uv run --frozen ruff check app migrations tests; uv run --frozen mypy app migrations tests | Locked toolchain and checks | Passed; 17 typed files | pass |
+| src/backend | uv run --frozen python -m pytest -q with ITOH_TEST_DATABASE_URL | Real PostgreSQL migrations, rollback, concurrency and replay | 9 passed, zero skipped | pass |
+| src/backend | uv run --frozen alembic upgrade head --sql; uv build --no-build-isolation --out-dir <temp> | Offline migration SQL and distributable packages | SQL generated; sdist and wheel built | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent verification. PO joint review pending.
+- Findings / resolution: Replay rejects revoked scope. Changed payload under the same key yields a typed conflict; no additional resource is written. PostgreSQL restart persistence was verified in FND-02.01.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: joint PO review.
+- Required resolution / owner: PO reviews FND-02 before Parent closure and merge.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FND-02.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: commands and results in section 5. [Local setup](../../../src/backend/README.md).
+- Commit / build / environment: phase/b-backend, task commit contains this report.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: task outcome and next step recorded.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review of FND-02.01, FND-02.02 and FND-02.03 before Parent closure.
+- Eligibility / remaining prerequisite: joint review precedes Parent closure.

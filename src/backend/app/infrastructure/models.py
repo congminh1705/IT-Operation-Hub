@@ -70,3 +70,22 @@ class OutboxDelivery(Base):
     available_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     lease_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     delivered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class ConfirmedCommand(Base):
+    __tablename__ = "confirmed_command"
+    __table_args__ = (
+        CheckConstraint(
+            "(result_id IS NULL AND result_version IS NULL) OR "
+            "(result_id IS NOT NULL AND result_version IS NOT NULL AND result_version > 0)",
+            name="ck_confirmed_command_result",
+        ),
+    )
+
+    actor_id: Mapped[UUID] = mapped_column(primary_key=True)
+    operation: Mapped[str] = mapped_column(String(80), primary_key=True)
+    key: Mapped[str] = mapped_column("idempotency_key", String(128), primary_key=True)
+    request_digest: Mapped[str] = mapped_column(String(64))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    result_id: Mapped[UUID | None]
+    result_version: Mapped[int | None]
