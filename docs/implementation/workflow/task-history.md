@@ -9967,3 +9967,72 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-02.01.
 - Eligibility / remaining prerequisite: verified FND-01 Parent merge and separate authorization.
+
+<a id="task-fnd-02-01-attempt-01"></a>
+
+### FND-02.01 — Attempt 01 — 2026-11-25T00:06:38+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-02.01/attempt-01
+- Task: [task specification](../tasks/FND-02.01.md)
+- Parent / phase: FND-02 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-25
+- Ended at: 2026-11-25T00:06:38+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, initial delivery.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Migrate the shared PostgreSQL base and provide isolated synchronous sessions and an injectable UTC clock.
+- Delivered this attempt: Added SQLAlchemy 2.1.9 and Alembic 1.20.1, revision 0001_foundation, shared audit/event/outbox persistence, session factory and a UTC clock seam.
+- Incomplete scope / deviations: Domain account/ticket schemas and worker dispatch remain with their owning tasks.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/infrastructure/, src/backend/migrations/, src/backend/alembic.ini, dependencies and database tests | Backend foundation | Deliver task scope |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| FND-02.01 card section 5 | Migrate the shared PostgreSQL base and provide isolated synchronous sessions and an injectable UTC clock. | Ruff, strict mypy and four pytest cases passed. PostgreSQL empty-schema migration, simultaneous isolated sessions and committed-row persistence across Compose restart passed. | pass | [Backend setup](../../../src/backend/README.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | ruff check app migrations tests; python -m mypy app migrations tests; python -m pytest -q with ITOH_TEST_DATABASE_URL | Lint, types, isolated migration and UTC clock | 4 passed on PostgreSQL 18.7; lint/types clean | pass |
+| src/backend | apply alembic upgrade head in dedicated schema, insert and commit audit probe; WSL Docker Compose restart postgres and up -d --wait; reconnect and SELECT probe | Committed row survives PostgreSQL restart | Exactly 1 row, then removed isolated schema | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent verification. PO joint review pending.
+- Findings / resolution: PR #23 was verified merged at 4e53ef9. PostgreSQL tests used generated isolated schemas and cleaned them up.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: joint PO review.
+- Required resolution / owner: PO reviews FND-02 before Parent closure and merge.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FND-02.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: commands and results in section 5. [Local setup](../../../src/backend/README.md).
+- Commit / build / environment: phase/b-backend, task commit contains this report.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: task outcome and next step recorded.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-02.02 follows verified migration baseline under joint Parent review.
+- Eligibility / remaining prerequisite: joint review precedes Parent closure.

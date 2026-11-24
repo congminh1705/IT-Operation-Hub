@@ -116,4 +116,8 @@ authority: derived
 - PO accepted FND-01.01 and FND-01.02. Parent is EPIC_DONE. Board has 67 done and 163 pending.
 - [FND-01.01 acceptance](task-history.md#task-fnd-01-01-attempt-02) retains frozen installs, Next production build, FastAPI smoke and PostgreSQL 18.7 verification from commit 572cac5.
 - [FND-01.02 acceptance](task-history.md#task-fnd-01-02-attempt-02) retains Ruff, mypy, pytest, package build and HTTP readiness verification from commit 2f5070e.
-- FND-01 [PR #23](https://github.com/congminh1705/IT-Operation-Hub/pull/23) is open into main. Acceptance commit a7e6ff5 was pushed and verified. Parent merge and separate PO authorization gate FND-02.01.
+- FND-01 [PR #23](https://github.com/congminh1705/IT-Operation-Hub/pull/23) merged into main at 4e53ef9. Acceptance commit a7e6ff5 was pushed and verified. Parent merge and separate PO authorization gate FND-02.01.
+
+## Phase B — FND-02 database foundation
+
+- [FND-02.01/attempt-01](task-history.md#task-fnd-02-01-attempt-01), review. Added SQLAlchemy 2.1.9 and Alembic 1.20.1, revision 0001_foundation, shared audit/event/outbox persistence, session factory and a UTC clock seam. Ruff, strict mypy and four pytest cases passed. PostgreSQL empty-schema migration, simultaneous isolated sessions and committed-row persistence across Compose restart passed. FND-02.02 follows verified migration baseline under joint Parent review.

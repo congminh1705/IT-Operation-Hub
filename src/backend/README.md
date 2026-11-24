@@ -31,4 +31,12 @@ uv build --no-build-isolation
 
 Future Celery workers and the single Beat scheduler run on Linux. Windows development can use WSL2 or Linux containers. This scaffold starts PostgreSQL and the API. Worker and broker setup belongs to its owning task.
 
+## Foundation migrations
+
+With the local database running and `ITOH_DATABASE_DSN` set to a PostgreSQL URL, run `uv run --frozen alembic upgrade head` from this directory. Inspect the active revision with `uv run --frozen alembic current`. The first revision creates audit, event and delivery tables. Account and ticket schemas belong to their domain tasks.
+
+Create one `Database` from an application-owned engine. Use `database.session()` for an isolated request or job that only reads, and `database.transaction()` at the top-level write boundary. Each call opens and closes its own synchronous Session. Downstream writes take that Session and leave commit/rollback to the caller. Inject a timezone-aware clock where deterministic timestamps are needed.
+
+For database tests, set `ITOH_TEST_DATABASE_URL` to a disposable PostgreSQL database whose user can create schemas, then run `uv run --frozen python -m pytest`. Tests create and remove isolated schemas. Without that variable the PostgreSQL tests are reported as skipped.
+
 The existing frontend lives in `../frontend`. Run `pnpm install --frozen-lockfile` there, then `pnpm dev` in a separate terminal. It still uses its Phase A DEMO transport until the integration tasks connect it to FastAPI.
