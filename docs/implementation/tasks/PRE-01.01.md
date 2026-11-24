@@ -77,5 +77,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Delivered result: [D-40 identity and access review](../../decisions/design-decisions.md#d-40-identity-and-access--pre-0101-review) maps seven topics to exact consumer tasks and walks through four cases.
 - Acceptance and check summary: source and scenario review passed for documenting confirmed and proposed inputs. Emergency no-replacement procedure and operational proposals await PO approval. Application checks are not applicable to this documentation task.
 - Review type: agent source review. PO verdict pending.
-- Commit/build: Phase B delivery commit contains this handoff. No application build.
+- Commit/build: `a5843be` pushed and verified on `phase/b-backend`. No application build.
 - Next eligible task: PRE-01.02 after PO accepts PRE-01.01.

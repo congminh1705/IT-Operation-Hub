@@ -9464,7 +9464,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Evidence and handoff](../tasks/PRE-01.01.md#6-evidence-and-handoff)
 - Logs / screenshots / reports: [Decision matrix and walkthrough](../../decisions/design-decisions.md#d-40-identity-and-access--pre-0101-review).
-- Commit / build / environment: scoped documentation commit on phase/b-backend, based on main `268c8e7`. No build.
+- Commit / build / environment: `a5843be` pushed and verified on `phase/b-backend`, based on main `268c8e7`. No build.
 
 #### 9. Execution record synchronization
 
