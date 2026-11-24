@@ -71,11 +71,11 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-01.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-01-01-attempt-01).
+- Latest Report ID: FND-01.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-01-01-attempt-02).
 - Delivered result: Added Python 3.13.15, uv lock, FastAPI entry point and PostgreSQL 18.7 Compose pinned by digest. Existing frontend remains the frontend entry point.
 - Actual changed paths: src/backend/pyproject.toml, uv.lock, .python-version, app/, compose.yaml and README.md
 - Verification: Frozen backend install in a new environment, HTTP OpenAPI smoke, PostgreSQL 18.7 readiness and a Windows Psycopg SELECT 1 passed. Frozen frontend install and Next production build passed in the detached clean checkout.
-- Review: agent verification complete. Joint PO acceptance pending.
-- Commit/build: scoped task commit on phase/b-backend.
-- Next step: FND-01.02 follows verified setup under joint Parent review.
+- Review: PO confirmed joint acceptance. Original agent checks remain in attempt 01.
+- Commit/build: `572cac5` pushed and verified on `phase/b-backend`.
+- Next step: FND-02.01 after confirmed Parent merge and separate authorization.

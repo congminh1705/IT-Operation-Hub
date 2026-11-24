@@ -71,11 +71,11 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-01.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-01-02-attempt-01).
+- Latest Report ID: FND-01.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-01-02-attempt-02).
 - Delivered result: Implemented /api/v1/health/live and /api/v1/health/ready. The DB probe is read-only; HTTP 503 reports an unavailable database with no connection details. Added health tests, Ruff, strict mypy and wheel/sdist build. Documented Linux worker support.
 - Actual changed paths: src/backend/app/health.py, app/main.py, tests/test_health.py, pyproject.toml, uv.lock and README.md
 - Verification: Ruff, strict mypy, two pytest cases and wheel/sdist build passed. Live Uvicorn HTTP checks returned readiness 200 with PostgreSQL and 503 with an unavailable port, while liveness returned 200 in both cases.
-- Review: agent verification complete. Joint PO acceptance pending.
-- Commit/build: scoped task commit on phase/b-backend.
-- Next step: Joint PO review of FND-01.01 and FND-01.02 before Parent closure.
+- Review: PO confirmed joint acceptance. Original agent checks remain in attempt 01.
+- Commit/build: `2f5070e` pushed and verified on `phase/b-backend`.
+- Next step: FND-02.01 after confirmed Parent merge and separate authorization.

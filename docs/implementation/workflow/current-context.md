@@ -111,7 +111,9 @@ authority: derived
 - [PRE-01.01 acceptance](task-history.md#task-pre-01-01-attempt-02) and [PRE-01.02 acceptance](task-history.md#task-pre-01-02-attempt-02) retain the original source verification. Pending operational values and the emergency no-replacement procedure remain assigned to their consuming tasks.
 - PRE-01 [PR #22](https://github.com/congminh1705/IT-Operation-Hub/pull/22) merged into main at bf92c22. The phase branch was fast-forwarded to the verified merge. Acceptance commit ef35d32 was pushed and verified. The Parent merge and separate PO implementation authorization gate FND-01.01.
 
-## Phase B — FND-01 runtime foundation
+## Phase B — FND-01 joint PO acceptance
 
-- [FND-01.01/attempt-01](task-history.md#task-fnd-01-01-attempt-01), review. Added Python 3.13.15, uv lock, FastAPI entry point and PostgreSQL 18.7 Compose pinned by digest. Existing frontend remains the frontend entry point. Frozen backend install in a new environment, HTTP OpenAPI smoke, PostgreSQL 18.7 readiness and a Windows Psycopg SELECT 1 passed. Frozen frontend install and Next production build passed in the detached clean checkout. FND-01.02 follows verified setup under joint Parent review.
-- [FND-01.02/attempt-01](task-history.md#task-fnd-01-02-attempt-01), review. Implemented /api/v1/health/live and /api/v1/health/ready. The DB probe is read-only; HTTP 503 reports an unavailable database with no connection details. Added health tests, Ruff, strict mypy and wheel/sdist build. Documented Linux worker support. Ruff, strict mypy, two pytest cases and wheel/sdist build passed. Live Uvicorn HTTP checks returned readiness 200 with PostgreSQL and 503 with an unavailable port, while liveness returned 200 in both cases. Joint PO review of FND-01.01 and FND-01.02 before Parent closure.
+- PO accepted FND-01.01 and FND-01.02. Parent is EPIC_DONE. Board has 67 done and 163 pending.
+- [FND-01.01 acceptance](task-history.md#task-fnd-01-01-attempt-02) retains frozen installs, Next production build, FastAPI smoke and PostgreSQL 18.7 verification from commit 572cac5.
+- [FND-01.02 acceptance](task-history.md#task-fnd-01-02-attempt-02) retains Ruff, mypy, pytest, package build and HTTP readiness verification from commit 2f5070e.
+- The FND-01 Parent merge and separate PO authorization gate FND-02.01.
