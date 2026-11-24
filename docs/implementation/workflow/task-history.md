@@ -9404,3 +9404,76 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 #### 10. Next step
 
 - PRE-01.01 after FE-18 Parent PR merge, verified Phase A exit and separate implementation authorization.
+
+<a id="task-pre-01-01-attempt-01"></a>
+
+### PRE-01.01 — Attempt 01 — 2026-11-24T23:22:05+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: PRE-01.01/attempt-01
+- Task: [task specification](../tasks/PRE-01.01.md)
+- Parent / phase: PRE-01 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-24T23:20:00+07:00
+- Ended at: 2026-11-24T23:22:05+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, initial decision review.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: resolve the identity decision handoff and document confirmed/proposed values and consumers.
+- Delivered this attempt: documented bootstrap, password/reset, session, cookies/CSRF, limits, regular access loss and the emergency gap. Verified FE-18 and frontend polish merges and recorded Phase A exit.
+- Incomplete scope / deviations: PO policy decisions remain open. PRE-01.02 awaits its prerequisite.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/decisions/design-decisions.md | D-40 identity and access review | Decision matrix, consumer links and scenario walkthrough |
+| docs/implementation/tasks/PRE-01.01.md and workflow records, README.md | Handoff and registry | Record Phase A exit and PRE-01.01 review |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Seven decision topics and four cases, approved versus proposed | Matrix and walkthrough complete; emergency outcome explicitly open | pass | [D-40](../../decisions/design-decisions.md#d-40-identity-and-access--pre-0101-review) |
+| 2 | Parent criteria 1 and 3 coverage | Confirmed/proposed values and exact consumer IDs recorded | pass | [Parent](../00-decisions.md#pre-01) |
+| 3 | Source consistency and phase boundaries | Agent reviewed repo sources and external guidance. No application code | pass | [Task](../tasks/PRE-01.01.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Read D-29–32/D-40, NFR01/03/14/15, account provisioning, shared API rules and conceptual session model. Walk through first Admin, access loss, last Admin and no replacement | Preserve confirmed constraints and identify unapproved choices | All four cases reviewed. No replacement remains explicitly unresolved | pass |
+| repository | Check referenced consumer task cards, review status, phase exit and `git diff --check` using CR-at-EOL configuration | Valid consumers, clean scoped documentation | Verified | pass |
+| frontend/backend | Build or application tests | Not applicable | Documentation only | not-run |
+
+#### 6. Review
+
+- Type / reviewer: agent source consistency review. PO review pending.
+- Findings / resolution: candidate policy values remain proposals and the login 401 discrepancy is routed to PRE-01.02.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: operational policy signoff, especially emergency revocation without replacement.
+- Required resolution / owner: PO identifies accepted candidates and supplies the remaining emergency procedure with operations.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/PRE-01.01.md#6-evidence-and-handoff)
+- Logs / screenshots / reports: [Decision matrix and walkthrough](../../decisions/design-decisions.md#d-40-identity-and-access--pre-0101-review).
+- Commit / build / environment: scoped documentation commit on phase/b-backend, based on main `268c8e7`. No build.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to this report.
+- Execution-board task row: review, Owner PO.
+- Current context: Phase A exit and PRE-01.01 review recorded.
+- Parent state: EPIC_IN_PROGRESS, PRE-01.02 pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PRE-01.02.
+- Eligibility / remaining prerequisite: PO accepts PRE-01.01 before downstream contract reconciliation.

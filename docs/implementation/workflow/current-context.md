@@ -103,4 +103,10 @@ authority: derived
 - [FE-18.01/attempt-02](task-history.md#task-fe-18-01-attempt-02), done. 36 IA patterns and 51 approved specimens inventoried. Four roles completed 50 sidebar visits. [Coverage](../evidence/FE-18.01/coverage.md). Implementation a476cb2 pushed and verified.
 - [FE-18.02/attempt-02](task-history.md#task-fe-18-02-attempt-02), done. 114 unit tests and 310 unique Chrome cases verified across the full run and serial rerun. TypeScript, lint, scoped format and clean build passed. [Comparison](../evidence/FE-18.02/comparison.md). Implementation 64e1434 pushed and verified.
 - [FE-18.03/attempt-02](task-history.md#task-fe-18-03-attempt-02), done. [Phase A contract handoff](../evidence/FE-18.03/contract-map.md) maps 96 operations. Handoff commit 59e5329 pushed and verified.
-- The FE-18 Parent [PR #20](https://github.com/congminh1705/IT-Operation-Hub/pull/20) is open into main. Acceptance commit eb329b4 was pushed and verified. Phase A exit awaits verified merge and exit recording. PRE-01.01 remains pending until that exit and separate PO authorization.
+- The FE-18 Parent [PR #20](https://github.com/congminh1705/IT-Operation-Hub/pull/20) merged into main at `6030b50`. Acceptance commit `eb329b4` was pushed and verified. The separate UX [PR #21](https://github.com/congminh1705/IT-Operation-Hub/pull/21) merged at `268c8e7`. Phase A exit is verified and recorded.
+
+## Phase B — PRE-01 identity decisions
+
+- PO authorized PRE-01. The clean Phase B worktree starts at main merge `268c8e7` on `phase/b-backend`.
+- [PRE-01.01/attempt-01](task-history.md#task-pre-01-01-attempt-01) is in review. [D-40 identity review](../../decisions/design-decisions.md#d-40-identity-and-access--pre-0101-review) distinguishes confirmed requirements from candidate values and records all four access scenarios. PO decisions remain open.
+- PRE-01.02 remains pending until PRE-01.01 is accepted. FND-01.01 remains gated on PRE-01.02.

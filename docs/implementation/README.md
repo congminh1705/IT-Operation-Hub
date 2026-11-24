@@ -18,7 +18,7 @@ purpose: "Provide one task tracker and a bounded-context workflow for implementi
 
 **Approved frontend scope:** [v1.3 / D-51](../design/approval.md), including the final interactive login. Use the [63-task design map](../design/implementation-scope.md#task-map). Existing IDs, dependencies, business acceptance and lifecycle remain authoritative; visual approval does not start implementation.
 
-This backlog maps **67 stories to 88 work packages and 230 executable tasks** across frontend, real services, integration and acceptance. Every package is fully decomposed; packages remain epic-level scope records rather than coding sessions. D-43 confirms the [task method](workflow/task-workflow.md), and D-44 requests complete decomposition. **Frontend DEMO is Phase A and must be delivered before backend implementation.** The [execution board](workflow/execution-board.md) contains all task states; [parent coverage/closure](package-task-coverage.md) assigns all 264 numbered package criteria. PO has accepted FE-01 through FE-17. PO has also accepted FE-18. Phase A exit awaits the FE-18 Parent merge. System acceptance remains pending.
+This backlog maps **67 stories to 88 work packages and 230 executable tasks** across frontend, real services, integration and acceptance. Every package is fully decomposed; packages remain epic-level scope records rather than coding sessions. D-43 confirms the [task method](workflow/task-workflow.md), and D-44 requests complete decomposition. **Frontend DEMO is Phase A and must be delivered before backend implementation.** The [execution board](workflow/execution-board.md) contains all task states; [parent coverage/closure](package-task-coverage.md) assigns all 264 numbered package criteria. PO has accepted FE-01 through FE-17. PO has also accepted FE-18. Phase A closed after verified FE-18 merge. Phase B begins with PRE-01 decision review. System acceptance remains pending.
 
 The [current context](workflow/current-context.md) indexes the latest results and PO review. The [execution board](workflow/execution-board.md) owns task status; the package registry below owns epic status.
 
@@ -112,7 +112,7 @@ This **work-package/epic registry** retains all 88 stable scope IDs. The registr
 | [INT-04](07-integration.md#int-04) | Connect asset inventory and ticket references | INT-02 OPS-02 | EPIC_READY |
 | [INT-05](07-integration.md#int-05) | Connect knowledge, assistant and confirmed action forms | INT-02 INT-03 INT-04 OPS-15 OPS-19 | EPIC_READY |
 | [INT-06](07-integration.md#int-06) | Connect dashboards, report facts, notifications and audit | INT-02 INT-03 INT-04 INT-05 FND-18 OPS-16 OPS-18 | EPIC_READY |
-| [PRE-01](00-decisions.md#pre-01) | Review foundation contracts and identity decisions | — | EPIC_READY |
+| [PRE-01](00-decisions.md#pre-01) | Review foundation contracts and identity decisions | — | EPIC_IN_PROGRESS |
 | [PRE-02](00-decisions.md#pre-02) | Define workforce and workflow concurrency contracts | — | EPIC_READY |
 | [PRE-03](00-decisions.md#pre-03) | Define minimum AI, knowledge and inventory data contracts | — | EPIC_READY |
 | [PRE-04](00-decisions.md#pre-04) | Define deployment and recovery targets | — | EPIC_READY |
