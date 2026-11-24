@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:18.7-trixie@sha256:c699303802144847d238196173655dbbecf7a96aeca1565f2b02eb671a1f0b6b
+    environment:
+      POSTGRES_DB: itoh
+      POSTGRES_USER: itoh
+      POSTGRES_PASSWORD: local-development-only
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "itoh", "-d", "itoh"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+volumes:
+  postgres-data:

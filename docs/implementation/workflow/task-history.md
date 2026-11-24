@@ -9687,3 +9687,283 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-01.01.
 - Eligibility / remaining prerequisite: verified PRE-01 Parent merge and separate authorization.
+
+<a id="task-fnd-01-01-attempt-01"></a>
+
+### FND-01.01 — Attempt 01 — 2026-11-24T23:52:08+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-01.01/attempt-01
+- Task: [task specification](../tasks/FND-01.01.md)
+- Parent / phase: FND-01 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-24T23:36:00+07:00
+- Ended at: 2026-11-24T23:52:08+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, initial delivery.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Create reproducible FastAPI and PostgreSQL local development setup while reusing the frontend.
+- Delivered this attempt: Added Python 3.13.15, uv lock, FastAPI entry point and PostgreSQL 18.7 Compose pinned by digest. Existing frontend remains the frontend entry point.
+- Incomplete scope / deviations: No business APIs or runtime integration. Health and backend check scripts belong to FND-01.02.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/pyproject.toml, uv.lock, .python-version, app/, compose.yaml and README.md | Backend foundation | Deliver task scope |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| FND-01.01 card section 5 | Create reproducible FastAPI and PostgreSQL local development setup while reusing the frontend. | Frozen backend install in a new environment, HTTP OpenAPI smoke, PostgreSQL 18.7 readiness and a Windows Psycopg SELECT 1 passed. Frozen frontend install and Next production build passed in the detached clean checkout. | pass | [Backend setup](../../../src/backend/README.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | uv lock --check; uv sync --frozen --python 3.13.15 with new UV_PROJECT_ENVIRONMENT | Locked install | FastAPI 0.165.0, Psycopg 3.3.9, Uvicorn 0.54.0 installed | pass |
+| src/backend | uvicorn app.main:app on 127.0.0.1:8000; GET /openapi.json | Local API starts | 200 | pass |
+| src/backend | WSL Docker Compose up -d --wait postgres; psql SHOW server_version; workspace Psycopg SELECT 1 | Pinned local DB reachable | Healthy; 18.7; returned 1 | pass |
+| clean frontend worktree | pnpm.cmd install --frozen-lockfile; pnpm.cmd build | Reuse audited frontend | Both passed | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent verification. PO joint review pending.
+- Findings / resolution: A fresh temporary Python environment installed successfully but its separate loopback probe timed out. The workspace environment connected successfully before and after pinning the image digest.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: joint PO review.
+- Required resolution / owner: PO reviews FND-01 before Parent closure and merge.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FND-01.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: commands and results in section 5. [Local setup](../../../src/backend/README.md).
+- Commit / build / environment: phase/b-backend, task commit contains this report.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: task outcome and next step recorded.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-01.02 follows verified setup under joint Parent review.
+- Eligibility / remaining prerequisite: joint review precedes Parent closure.
+
+<a id="task-fnd-01-02-attempt-01"></a>
+
+### FND-01.02 — Attempt 01 — 2026-11-24T23:55:09+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-01.02/attempt-01
+- Task: [task specification](../tasks/FND-01.02.md)
+- Parent / phase: FND-01 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-24T23:39:00+07:00
+- Ended at: 2026-11-24T23:55:09+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, initial delivery.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Expose safe liveness/readiness and establish locked backend lint, typing, test and build checks.
+- Delivered this attempt: Implemented /api/v1/health/live and /api/v1/health/ready. The DB probe is read-only; HTTP 503 reports an unavailable database with no connection details. Added health tests, Ruff, strict mypy and wheel/sdist build. Documented Linux worker support.
+- Incomplete scope / deviations: No worker/business jobs or production deployment. PO review pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/health.py, app/main.py, tests/test_health.py, pyproject.toml, uv.lock and README.md | Backend foundation | Deliver task scope |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| FND-01.02 card section 5 | Expose safe liveness/readiness and establish locked backend lint, typing, test and build checks. | Ruff, strict mypy, two pytest cases and wheel/sdist build passed. Live Uvicorn HTTP checks returned readiness 200 with PostgreSQL and 503 with an unavailable port, while liveness returned 200 in both cases. | pass | [Backend setup](../../../src/backend/README.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | uv lock --check; uv run --frozen ruff check .; uv run --frozen mypy app tests | Locked/lint/type verification | All passed | pass |
+| src/backend | uv run --frozen python -m pytest | No config/liveness separation and redacted failure | 2 passed | pass |
+| src/backend | uv build --no-build-isolation --out-dir <temp> | Wheel and sdist | Both built | pass |
+| src/backend | Launch Uvicorn on localhost ports 8200 and 8201 with Compose DB at 55432 and unavailable port 55433, respectively. curl live and ready. | 200/200 and 200/503 with exact status-only payloads | Both matched | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent verification. PO joint review pending.
+- Findings / resolution: Initial readiness startup returned 503 when WSL stopped. Retested with Docker/WSL alive, confirmed both healthy and unavailable cases. Replaced deprecated TestClient adapter with HTTPX ASGI transport and reran checks.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: joint PO review.
+- Required resolution / owner: PO reviews FND-01 before Parent closure and merge.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FND-01.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: commands and results in section 5. [Local setup](../../../src/backend/README.md).
+- Commit / build / environment: phase/b-backend, task commit contains this report.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: task outcome and next step recorded.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review of FND-01.01 and FND-01.02 before Parent closure.
+- Eligibility / remaining prerequisite: joint review precedes Parent closure.
+
+<a id="task-fnd-01-01-attempt-02"></a>
+
+### FND-01.01 — Attempt 02 — 2026-11-25T00:00:02+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-01.01/attempt-02
+- Task: [task specification](../tasks/FND-01.01.md)
+- Parent / phase: FND-01 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-25T00:00:02+07:00
+- Ended at: 2026-11-25T00:00:02+07:00
+- State before / after: review / done
+- Previous attempt / correction: [agent verification](#task-fnd-01-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record PO joint acceptance and close FND-01.
+- Delivered this attempt: PO accepted both runtime foundation tasks and requested a Parent PR.
+- Incomplete scope / deviations: Parent merge pending. Later tasks own migrations and integration.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-01.01.md and workflow records | PO acceptance | Synchronize closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| FND-01 task handoff | Agent evidence and PO signoff | Original checks retained and PO confirmed closure | pass | [Attempt 01](#task-fnd-01-01-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Check board, registry, task handoffs, context anchors and staged diff whitespace | Synchronized closure | Both leaves done; Parent EPIC_DONE | pass |
+| src/backend and src/frontend | Repeat application checks | Documentation-only closure | Original application evidence retained | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint PO acceptance by Hoang Cong Minh.
+- Findings / resolution: PO explicitly requested done and a Parent PR.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent merge gates FND-02.01.
+- Required resolution / owner: PO reviews and merges the Parent PR and separately authorizes FND-02.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FND-01.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [original verification](#task-fnd-01-01-attempt-01).
+- Commit / build / environment: implementation 572cac5 pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-02.01.
+- Eligibility / remaining prerequisite: verified FND-01 Parent merge and separate authorization.
+
+<a id="task-fnd-01-02-attempt-02"></a>
+
+### FND-01.02 — Attempt 02 — 2026-11-25T00:00:02+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-01.02/attempt-02
+- Task: [task specification](../tasks/FND-01.02.md)
+- Parent / phase: FND-01 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-25T00:00:02+07:00
+- Ended at: 2026-11-25T00:00:02+07:00
+- State before / after: review / done
+- Previous attempt / correction: [agent verification](#task-fnd-01-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: record PO joint acceptance and close FND-01.
+- Delivered this attempt: PO accepted both runtime foundation tasks and requested a Parent PR.
+- Incomplete scope / deviations: Parent merge pending. Later tasks own migrations and integration.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-01.02.md and workflow records | PO acceptance | Synchronize closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| FND-01 task handoff | Agent evidence and PO signoff | Original checks retained and PO confirmed closure | pass | [Attempt 01](#task-fnd-01-02-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Check board, registry, task handoffs, context anchors and staged diff whitespace | Synchronized closure | Both leaves done; Parent EPIC_DONE | pass |
+| src/backend and src/frontend | Repeat application checks | Documentation-only closure | Original application evidence retained | not-run |
+
+#### 6. Review
+
+- Type / reviewer: joint PO acceptance by Hoang Cong Minh.
+- Findings / resolution: PO explicitly requested done and a Parent PR.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent merge gates FND-02.01.
+- Required resolution / owner: PO reviews and merges the Parent PR and separately authorizes FND-02.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FND-01.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [original verification](#task-fnd-01-02-attempt-01).
+- Commit / build / environment: implementation 2f5070e pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-02.01.
+- Eligibility / remaining prerequisite: verified FND-01 Parent merge and separate authorization.
