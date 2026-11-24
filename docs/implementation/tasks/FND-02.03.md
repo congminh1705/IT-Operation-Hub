@@ -77,5 +77,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Actual changed paths: src/backend/app/infrastructure/commands.py and models.py, migrations/versions/0002_confirmed_command.py, tests/test_commands.py and README.md
 - Verification: Ruff, strict mypy, nine pytest cases on PostgreSQL, Alembic offline SQL and wheel/sdist build passed. Both blank migration and upgrade from 0001 preserved expected data. Two competing version writes produced one success and one conflict; concurrent same-key requests created one effect.
 - Review: agent verification complete. Joint PO acceptance pending.
-- Commit/build: scoped task commit on phase/b-backend.
+- Commit/build: f721e04 on phase/b-backend. Push verified on origin.
 - Next step: Joint PO review of FND-02.01, FND-02.02 and FND-02.03 before Parent closure.

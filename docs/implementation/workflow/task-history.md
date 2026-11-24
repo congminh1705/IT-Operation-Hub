@@ -10023,7 +10023,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [task card](../tasks/FND-02.01.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: commands and results in section 5. [Local setup](../../../src/backend/README.md).
-- Commit / build / environment: phase/b-backend, task commit contains this report.
+- Commit / build / environment: d98caed on phase/b-backend. Push verified on origin.
 
 #### 9. Execution record synchronization
 
@@ -10091,7 +10091,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [task card](../tasks/FND-02.02.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: commands and results in section 5. [Local setup](../../../src/backend/README.md).
-- Commit / build / environment: phase/b-backend, task commit contains this report.
+- Commit / build / environment: 7e42f11 on phase/b-backend. Push verified on origin.
 
 #### 9. Execution record synchronization
 
@@ -10161,7 +10161,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [task card](../tasks/FND-02.03.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: commands and results in section 5. [Local setup](../../../src/backend/README.md).
-- Commit / build / environment: phase/b-backend, task commit contains this report.
+- Commit / build / environment: f721e04 on phase/b-backend. Push verified on origin.
 
 #### 9. Execution record synchronization
 

@@ -77,5 +77,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Actual changed paths: src/backend/app/infrastructure/, src/backend/migrations/, src/backend/alembic.ini, dependencies and database tests
 - Verification: Ruff, strict mypy and four pytest cases passed. PostgreSQL empty-schema migration, simultaneous isolated sessions and committed-row persistence across Compose restart passed.
 - Review: agent verification complete. Joint PO acceptance pending.
-- Commit/build: scoped task commit on phase/b-backend.
+- Commit/build: d98caed on phase/b-backend. Push verified on origin.
 - Next step: FND-02.02 follows verified migration baseline under joint Parent review.
