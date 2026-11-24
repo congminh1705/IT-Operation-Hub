@@ -78,4 +78,4 @@ A future request authorizes the selected implementation (or this decision-refine
 - Verification: Ruff, strict mypy and four pytest cases passed. PostgreSQL empty-schema migration, simultaneous isolated sessions and committed-row persistence across Compose restart passed.
 - Review: Agent verification is recorded in attempt 01. PO jointly accepted all three FND-02 tasks and requested done.
 - Commit/build: d98caed on phase/b-backend. Push verified on origin.
-- Next step: Deliver the FND-02 Parent PR. FND-03.01 follows the verified merge and separate PO authorization.
+- Next step: FND-02 Parent [PR #24](https://github.com/congminh1705/IT-Operation-Hub/pull/24) is open into main. PO merge pending. FND-03.01 follows the verified merge and separate PO authorization.

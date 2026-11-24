@@ -126,3 +126,4 @@ authority: derived
 - [FND-02.03/attempt-02](task-history.md#task-fnd-02-03-attempt-02) records acceptance of expected-version conflicts, concurrent idempotent replay, changed-input conflicts and revoked replay authorization. Implementation f721e04 was pushed and verified.
 - Final agent verification recorded nine PostgreSQL 18.7 tests passing with zero skipped, plus Ruff, strict mypy, frozen lockfile, Alembic offline SQL and wheel/sdist build. PO approved the Parent.
 - FND-03.01 remains pending until verified FND-02 Parent merge and separate authorization.
+- FND-02 Parent [PR #24](https://github.com/congminh1705/IT-Operation-Hub/pull/24) is open from phase/b-backend into main. Acceptance commit 526a63c was pushed and verified. PO merge pending.

@@ -78,4 +78,4 @@ A future request authorizes the selected implementation (or this decision-refine
 - Verification: Ruff, strict mypy, nine pytest cases on PostgreSQL, Alembic offline SQL and wheel/sdist build passed. Both blank migration and upgrade from 0001 preserved expected data. Two competing version writes produced one success and one conflict; concurrent same-key requests created one effect.
 - Review: Agent verification is recorded in attempt 01. PO jointly accepted all three FND-02 tasks and requested done.
 - Commit/build: f721e04 on phase/b-backend. Push verified on origin.
-- Next step: Deliver the FND-02 Parent PR. FND-03.01 follows the verified merge and separate PO authorization.
+- Next step: FND-02 Parent [PR #24](https://github.com/congminh1705/IT-Operation-Hub/pull/24) is open into main. PO merge pending. FND-03.01 follows the verified merge and separate PO authorization.

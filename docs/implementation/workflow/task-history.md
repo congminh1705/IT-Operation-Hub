@@ -10237,7 +10237,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 - Task Evidence and handoff: linked to attempt 02.
 - Execution-board task row: done, Owner PO.
 - Current context: joint acceptance recorded.
-- Parent state: EPIC_DONE.
+- Parent state: EPIC_DONE. Parent [PR #24](https://github.com/congminh1705/IT-Operation-Hub/pull/24) is open into main. PO merge pending.
 
 #### 10. Next step
 
@@ -10307,7 +10307,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 - Task Evidence and handoff: linked to attempt 02.
 - Execution-board task row: done, Owner PO.
 - Current context: joint acceptance recorded.
-- Parent state: EPIC_DONE.
+- Parent state: EPIC_DONE. Parent [PR #24](https://github.com/congminh1705/IT-Operation-Hub/pull/24) is open into main. PO merge pending.
 
 #### 10. Next step
 
@@ -10377,7 +10377,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 - Task Evidence and handoff: linked to attempt 02.
 - Execution-board task row: done, Owner PO.
 - Current context: joint acceptance recorded.
-- Parent state: EPIC_DONE.
+- Parent state: EPIC_DONE. Parent [PR #24](https://github.com/congminh1705/IT-Operation-Hub/pull/24) is open into main. PO merge pending.
 
 #### 10. Next step
 
