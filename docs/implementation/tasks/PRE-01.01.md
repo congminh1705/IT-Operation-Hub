@@ -72,10 +72,10 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: PRE-01.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-01-01-attempt-01).
+- Latest Report ID: PRE-01.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-01-01-attempt-02).
 - Delivered result: [D-40 identity and access review](../../decisions/design-decisions.md#d-40-identity-and-access--pre-0101-review) maps seven topics to exact consumer tasks and walks through four cases.
 - Acceptance and check summary: source and scenario review passed for documenting confirmed and proposed inputs. Emergency no-replacement procedure and operational proposals await PO approval. Application checks are not applicable to this documentation task.
-- Review type: agent source review. PO verdict pending.
+- Review type: PO confirmed joint acceptance. Original agent checks remain in attempt 01.
 - Commit/build: `a5843be` pushed and verified on `phase/b-backend`. No application build.
-- Next eligible task: PRE-01.02 after PO accepts PRE-01.01.
+- Next eligible step: FND-01.01 after verified Parent merge and separate authorization. Operational policy candidates remain open for their consumers.

@@ -105,10 +105,8 @@ authority: derived
 - [FE-18.03/attempt-02](task-history.md#task-fe-18-03-attempt-02), done. [Phase A contract handoff](../evidence/FE-18.03/contract-map.md) maps 96 operations. Handoff commit 59e5329 pushed and verified.
 - The FE-18 Parent [PR #20](https://github.com/congminh1705/IT-Operation-Hub/pull/20) merged into main at `6030b50`. Acceptance commit `eb329b4` was pushed and verified. The separate UX [PR #21](https://github.com/congminh1705/IT-Operation-Hub/pull/21) merged at `268c8e7`. Phase A exit is verified and recorded.
 
-## Phase B — PRE-01 identity decisions
+## Phase B — PRE-01 joint PO acceptance
 
-- PO authorized PRE-01. The clean Phase B worktree starts at main merge `268c8e7` on `phase/b-backend`.
-- [PRE-01.01/attempt-01](task-history.md#task-pre-01-01-attempt-01) is in review. [D-40 identity review](../../decisions/design-decisions.md#d-40-identity-and-access--pre-0101-review) distinguishes confirmed requirements from candidate values and records all four access scenarios. PO decisions remain open. Commit `a5843be` pushed and verified.
-- PO assigned the entire Parent. PRE-01.02 proceeded from verified PRE-01.01 documentation for joint review without marking PRE-01.01 done.
-- [PRE-01.02/attempt-01](task-history.md#task-pre-01-02-attempt-01) is in review. [Foundation contract reconciliation](../../technical/api-design.md#pre-0102-foundation-contract-reconciliation) maps six contract boundaries and five failure scenarios.
-- Both tasks await joint PO review. FND-01.01 remains gated on Parent acceptance and merge.
+- PO accepted PRE-01.01 and PRE-01.02. Parent is EPIC_DONE. Board has 65 done and 165 pending.
+- [PRE-01.01 acceptance](task-history.md#task-pre-01-01-attempt-02) and [PRE-01.02 acceptance](task-history.md#task-pre-01-02-attempt-02) retain the original source verification. Pending operational values and the emergency no-replacement procedure remain assigned to their consuming tasks.
+- The PRE-01 Parent merge and separate PO implementation authorization gate FND-01.01.

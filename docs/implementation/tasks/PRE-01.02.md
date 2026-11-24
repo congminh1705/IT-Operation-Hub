@@ -72,10 +72,10 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: PRE-01.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-01-02-attempt-01).
+- Latest Report ID: PRE-01.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-01-02-attempt-02).
 - Delivered result: [foundation contract reconciliation](../../technical/api-design.md#pre-0102-foundation-contract-reconciliation) compares OpenAPI, conceptual rules and DBML, with consumers and explicit unresolved policy.
 - Acceptance and check summary: source consistency and five failure walkthroughs passed for the documentation scope. Service/build tests were not run.
-- Review type: agent source review. Joint PO verdict pending.
+- Review type: PO confirmed joint acceptance. Original agent checks remain in attempt 01.
 - Commit/build: scoped documentation delivery on phase/b-backend. No application build.
-- Next eligible step: PO reviews both PRE-01 tasks before Parent closure.
+- Next eligible step: FND-01.01 after verified Parent merge and separate authorization. Operational policy candidates remain open for their consumers.
