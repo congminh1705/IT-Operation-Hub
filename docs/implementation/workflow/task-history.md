@@ -9758,3 +9758,74 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-01.02 follows verified setup under joint Parent review.
 - Eligibility / remaining prerequisite: joint review precedes Parent closure.
+
+<a id="task-fnd-01-02-attempt-01"></a>
+
+### FND-01.02 — Attempt 01 — 2026-11-24T23:55:09+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-01.02/attempt-01
+- Task: [task specification](../tasks/FND-01.02.md)
+- Parent / phase: FND-01 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-24T23:39:00+07:00
+- Ended at: 2026-11-24T23:55:09+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, initial delivery.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Expose safe liveness/readiness and establish locked backend lint, typing, test and build checks.
+- Delivered this attempt: Implemented /api/v1/health/live and /api/v1/health/ready. The DB probe is read-only; HTTP 503 reports an unavailable database with no connection details. Added health tests, Ruff, strict mypy and wheel/sdist build. Documented Linux worker support.
+- Incomplete scope / deviations: No worker/business jobs or production deployment. PO review pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/health.py, app/main.py, tests/test_health.py, pyproject.toml, uv.lock and README.md | Backend foundation | Deliver task scope |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| FND-01.02 card section 5 | Expose safe liveness/readiness and establish locked backend lint, typing, test and build checks. | Ruff, strict mypy, two pytest cases and wheel/sdist build passed. Live Uvicorn HTTP checks returned readiness 200 with PostgreSQL and 503 with an unavailable port, while liveness returned 200 in both cases. | pass | [Backend setup](../../../src/backend/README.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | uv lock --check; uv run --frozen ruff check .; uv run --frozen mypy app tests | Locked/lint/type verification | All passed | pass |
+| src/backend | uv run --frozen python -m pytest | No config/liveness separation and redacted failure | 2 passed | pass |
+| src/backend | uv build --no-build-isolation --out-dir <temp> | Wheel and sdist | Both built | pass |
+| src/backend | Launch Uvicorn on localhost ports 8200 and 8201 with Compose DB at 55432 and unavailable port 55433, respectively. curl live and ready. | 200/200 and 200/503 with exact status-only payloads | Both matched | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent verification. PO joint review pending.
+- Findings / resolution: Initial readiness startup returned 503 when WSL stopped. Retested with Docker/WSL alive, confirmed both healthy and unavailable cases. Replaced deprecated TestClient adapter with HTTPX ASGI transport and reran checks.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: joint PO review.
+- Required resolution / owner: PO reviews FND-01 before Parent closure and merge.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FND-01.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: commands and results in section 5. [Local setup](../../../src/backend/README.md).
+- Commit / build / environment: phase/b-backend, task commit contains this report.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: task outcome and next step recorded.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review of FND-01.01 and FND-01.02 before Parent closure.
+- Eligibility / remaining prerequisite: joint review precedes Parent closure.
