@@ -116,4 +116,4 @@ authority: derived
 - PO accepted FND-01.01 and FND-01.02. Parent is EPIC_DONE. Board has 67 done and 163 pending.
 - [FND-01.01 acceptance](task-history.md#task-fnd-01-01-attempt-02) retains frozen installs, Next production build, FastAPI smoke and PostgreSQL 18.7 verification from commit 572cac5.
 - [FND-01.02 acceptance](task-history.md#task-fnd-01-02-attempt-02) retains Ruff, mypy, pytest, package build and HTTP readiness verification from commit 2f5070e.
-- The FND-01 Parent merge and separate PO authorization gate FND-02.01.
+- FND-01 [PR #23](https://github.com/congminh1705/IT-Operation-Hub/pull/23) is open into main. Acceptance commit a7e6ff5 was pushed and verified. Parent merge and separate PO authorization gate FND-02.01.
