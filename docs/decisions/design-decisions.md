@@ -136,6 +136,8 @@ This section records confirmed requirements and candidates for PO review. Candid
 
 Reference guidance for candidates: [NIST SP 800-63B-4](https://pages.nist.gov/800-63-4/sp800-63b.html) for password length, blocklist and throttling. [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) for server-side expiry, cookie settings and renewal on authentication changes. These references do not set this project's timeouts or quotas.
 
+The companion [PRE-01.02 foundation contract reconciliation](../technical/api-design.md#pre-0102-foundation-contract-reconciliation) records the API/DBML differences and downstream review gates.
+
 #### Scenario walkthrough
 
 | Scenario | Required result | Review finding |

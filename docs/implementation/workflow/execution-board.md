@@ -18,7 +18,7 @@ purpose: "Maintain the single status and owner registry for every refined execut
 
 ## 1. Scope and authority
 
-All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. Execution states are **63 done**, **1 review**, **166 pending**. [PRE-01 is EPIC_IN_PROGRESS in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
+All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. Execution states are **63 done**, **2 review**, **165 pending**. [PRE-01 is EPIC_IN_PROGRESS in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
 
 The [package registry](../README.md#4-task-tracker) holds epic state; this board alone holds task state and PO ownership. Use the [task workflow](task-workflow.md). [Parent coverage and closure](../package-task-coverage.md) maps every parent criterion to outputs and names any external integration evidence. Package readiness means defined scope; dependencies, affected decisions and future coding authorization still gate execution.
 
@@ -99,7 +99,7 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | Task | Parent | Deliverable | Depends on | Owner | Status |
 | --- | --- | --- | --- | --- | --- |
 | [PRE-01.01](../tasks/PRE-01.01.md) | [PRE-01](../00-decisions.md#pre-01) | Resolve bootstrap and identity lifecycle decisions | [FE-18.03](../tasks/FE-18.03.md) | PO | review |
-| [PRE-01.02](../tasks/PRE-01.02.md) | [PRE-01](../00-decisions.md#pre-01) | Review foundation DTO and physical schema contracts | [PRE-01.01](../tasks/PRE-01.01.md) | PO | pending |
+| [PRE-01.02](../tasks/PRE-01.02.md) | [PRE-01](../00-decisions.md#pre-01) | Review foundation DTO and physical schema contracts | [PRE-01.01](../tasks/PRE-01.01.md) | PO | review |
 | [PRE-02.01](../tasks/PRE-02.01.md) | [PRE-02](../00-decisions.md#pre-02) | Resolve workforce periods and verified effort inputs | [FE-18.03](../tasks/FE-18.03.md) | PO | pending |
 | [PRE-02.02](../tasks/PRE-02.02.md) | [PRE-02](../00-decisions.md#pre-02) | Resolve concurrency, event and approval contracts | [PRE-02.01](../tasks/PRE-02.01.md) | PO | pending |
 | [PRE-02.03](../tasks/PRE-02.03.md) | [PRE-02](../00-decisions.md#pre-02) | Resolve bounded automation policy configuration | [PRE-02.02](../tasks/PRE-02.02.md) | PO | pending |

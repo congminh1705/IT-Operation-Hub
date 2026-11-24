@@ -109,4 +109,6 @@ authority: derived
 
 - PO authorized PRE-01. The clean Phase B worktree starts at main merge `268c8e7` on `phase/b-backend`.
 - [PRE-01.01/attempt-01](task-history.md#task-pre-01-01-attempt-01) is in review. [D-40 identity review](../../decisions/design-decisions.md#d-40-identity-and-access--pre-0101-review) distinguishes confirmed requirements from candidate values and records all four access scenarios. PO decisions remain open. Commit `a5843be` pushed and verified.
-- PRE-01.02 remains pending until PRE-01.01 is accepted. FND-01.01 remains gated on PRE-01.02.
+- PO assigned the entire Parent. PRE-01.02 proceeded from verified PRE-01.01 documentation for joint review without marking PRE-01.01 done.
+- [PRE-01.02/attempt-01](task-history.md#task-pre-01-02-attempt-01) is in review. [Foundation contract reconciliation](../../technical/api-design.md#pre-0102-foundation-contract-reconciliation) maps six contract boundaries and five failure scenarios.
+- Both tasks await joint PO review. FND-01.01 remains gated on Parent acceptance and merge.
