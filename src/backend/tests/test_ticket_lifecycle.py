@@ -1,16 +1,22 @@
 from datetime import UTC, datetime, timedelta
 from uuid import UUID, uuid4
 
+import pytest
 from fastapi.testclient import TestClient
+from sqlalchemy import select, update
+from sqlalchemy.exc import SQLAlchemyError
 from test_organization import ORIGIN, SETTINGS, actor
 from test_ticket_intake import prepare_catalog
 from test_ticket_reads import TICKETS, create_ticket
 
 from app.infrastructure.database import Database
+from app.infrastructure.models import DomainEvent
 from app.main import create_app
+from app.modules.auth.models import AuthSession
 from app.modules.auth.service import AuthService
 from app.modules.organization.models import TeamMember
-from app.modules.tickets.models import Ticket
+from app.modules.tickets import lifecycle
+from app.modules.tickets.models import Ticket, TicketTransitionReason
 
 
 def command(client, url, headers, payload):
@@ -80,7 +86,9 @@ def test_comment_audience_and_first_response(database: Database) -> None:
         assert owner.get(url).json()["total"] == 3
 
 
-def test_pending_question_and_requester_reply_are_atomic(database: Database) -> None:
+def test_pending_question_and_requester_reply_are_atomic(
+    database: Database, monkeypatch: pytest.MonkeyPatch
+) -> None:
     category, team = prepare_catalog(database)
     now = datetime.now(UTC)
     app = create_app(AuthService(database, clock=lambda: now), SETTINGS)
@@ -118,6 +126,19 @@ def test_pending_question_and_requester_reply_are_atomic(database: Database) -> 
     )
     assert owner.get(comments).json()["total"] == 0
     assert owner.get(detail).json()["status"] == "In Progress"
+
+    def fail_publish(db, **kwargs):
+        db.flush()
+        raise SQLAlchemyError("Synthetic outbox failure")
+
+    with monkeypatch.context() as patch:
+        patch.setattr(lifecycle, "enqueue_event", fail_publish)
+        failed = change(
+            "Pending", 1, reason="Need clarification", public_message="Which location?"
+        )
+        assert failed.status_code == 503
+    assert owner.get(comments).json()["total"] == 0
+    assert owner.get(detail).json()["version"] == 1
     pending = change(
         "Pending", 1, reason="Need clarification", public_message="Which location?"
     )
@@ -222,3 +243,261 @@ def test_resolve_needs_public_solution_and_only_owner_closes(
     assert result.json()["status"] == "Closed" and result.json()["sla"] == sla
     assert "internal_context" not in result.json()
     assert owner.get(comments).json()["total"] == 2
+
+
+def test_reopen_preserves_usage_and_cancel_is_terminal(database: Database) -> None:
+    category, team = prepare_catalog(database)
+    now = datetime.now(UTC)
+    app = create_app(AuthService(database, clock=lambda: now), SETTINGS)
+    owner, admin, technician = (TestClient(app, base_url=ORIGIN) for _ in range(3))
+    _, owner_headers = actor(database, owner, "REQUESTER")
+    admin_id, admin_headers = actor(database, admin, "ADMIN")
+    tech_id, tech_headers = actor(database, technician, "TECHNICIAN")
+    ticket = create_ticket(owner, owner_headers, category, "Reopen matrix")
+    ticket_id = UUID(ticket["id"])
+    detail = f"{TICKETS}/{ticket_id}"
+    with database.transaction() as db:
+        db.execute(
+            update(AuthSession).values(
+                idle_until=now + timedelta(days=2), expires_at=now + timedelta(days=2)
+            )
+        )
+        db.add_all(
+            TeamMember(team_id=UUID(team), account_id=user, active=True)
+            for user in (admin_id, tech_id)
+        )
+        row = db.get(Ticket, ticket_id)
+        assert row is not None
+        row.status = "In Progress"
+        row.assignee_id = admin_id
+        row.resolution_used_seconds = 7 * 3600
+        snapshot = row.sla_snapshot
+
+    def transition(client, headers, target, version, **data):
+        return command(
+            client,
+            detail + "/transitions",
+            headers,
+            {
+                "target_status": target,
+                "expectedVersion": version,
+                **data,
+            },
+        )
+
+    now += timedelta(hours=1)
+    pending = transition(
+        admin,
+        admin_headers,
+        "Pending",
+        1,
+        reason="Need detail",
+        public_message="Can you confirm?",
+    )
+    assert pending.status_code == 200, pending.text
+    now += timedelta(hours=2)
+    assert (
+        command(
+            owner,
+            detail + "/comments",
+            owner_headers,
+            {"visibility": "PUBLIC", "content": "Confirmed"},
+        ).status_code
+        == 201
+    )
+    now += timedelta(hours=1)
+    resolved = transition(admin, admin_headers, "Resolved", 3, public_message="Fixed")
+    assert resolved.status_code == 200, resolved.text
+    assert resolved.json()["sla"]["resolution_used_seconds"] == 9 * 3600
+    assert (
+        transition(
+            admin, admin_headers, "Cancelled", 4, reason="After resolution"
+        ).status_code
+        == 409
+    )
+    assert (
+        transition(
+            technician, tech_headers, "In Progress", 4, reason="Not my request"
+        ).status_code
+        == 403
+    )
+    assert transition(owner, owner_headers, "In Progress", 4).status_code == 422
+    assert (
+        transition(
+            owner, owner_headers, "In Progress", 4, reason="Still fails"
+        ).status_code
+        == 200
+    )
+    assert (
+        transition(
+            admin, admin_headers, "Resolved", 5, public_message="Fixed again"
+        ).status_code
+        == 200
+    )
+    now += timedelta(hours=1)
+    assert transition(owner, owner_headers, "Closed", 6).status_code == 200
+    assert (
+        transition(
+            owner,
+            owner_headers,
+            "In Progress",
+            7,
+            reason="Requester cannot reopen Closed",
+        ).status_code
+        == 403
+    )
+    with database.transaction() as db:
+        member = db.get(TeamMember, (UUID(team), admin_id))
+        assert member is not None
+        member.active = False
+    now += timedelta(hours=2)
+    assert (
+        transition(
+            admin, admin_headers, "In Progress", 7, reason="Reopened by management"
+        ).json()["code"]
+        == "INELIGIBLE_ASSIGNEE"
+    )
+    reassigned = command(
+        admin,
+        detail + "/assignment",
+        admin_headers,
+        {
+            "team_id": team,
+            "assignee_id": str(tech_id),
+            "reason": "Replace unavailable assignee",
+            "expectedVersion": 7,
+        },
+    )
+    assert reassigned.status_code == 200, reassigned.text
+    reopened = transition(
+        admin, admin_headers, "In Progress", 8, reason="Reopened by management"
+    )
+    assert reopened.status_code == 200, reopened.text
+    assert reopened.json()["sla"]["resolution_used_seconds"] == 9 * 3600
+    now += timedelta(hours=1)
+    assert transition(owner, owner_headers, "Cancelled", 9).status_code == 403
+    assert transition(admin, admin_headers, "Cancelled", 9).status_code == 422
+    cancelled = transition(
+        admin, admin_headers, "Cancelled", 9, reason="No longer required"
+    )
+    assert cancelled.status_code == 200
+    assert cancelled.json()["sla"]["resolution_used_seconds"] == 10 * 3600
+    assert (
+        transition(
+            admin, admin_headers, "In Progress", 10, reason="Terminal"
+        ).status_code
+        == 409
+    )
+    assert (
+        command(
+            admin,
+            detail + "/assignment",
+            admin_headers,
+            {
+                "team_id": team,
+                "assignee_id": str(tech_id),
+                "reason": "Terminal assignment",
+                "expectedVersion": 10,
+            },
+        ).status_code
+        == 409
+    )
+    with database.session() as db:
+        row = db.get(Ticket, ticket_id)
+        assert row is not None and row.sla_snapshot == snapshot
+        assert (
+            row.resolution_used_seconds > snapshot[row.priority]["resolution_seconds"]
+        )
+        reason = db.get(TicketTransitionReason, (ticket_id, 9))
+        assert reason is not None and reason.reason == "Reopened by management"
+        events = list(
+            db.scalars(select(DomainEvent).where(DomainEvent.aggregate_id == ticket_id))
+        )
+        assert "Reopened by management" not in str([event.payload for event in events])
+
+
+def test_self_handled_ticket_keeps_no_first_response(database: Database) -> None:
+    category, team = prepare_catalog(database)
+    now = datetime.now(UTC)
+    app = create_app(AuthService(database, clock=lambda: now), SETTINGS)
+    manager, requester = (TestClient(app, base_url=ORIGIN) for _ in range(2))
+    manager_id, headers = actor(database, manager, "IT_MANAGER")
+    _, requester_headers = actor(database, requester, "REQUESTER")
+    disposable = create_ticket(requester, requester_headers, category, "Cancel own New")
+    assert (
+        command(
+            requester,
+            f"{TICKETS}/{disposable['id']}/transitions",
+            requester_headers,
+            {
+                "target_status": "Cancelled",
+                "expectedVersion": 1,
+            },
+        ).status_code
+        == 200
+    )
+    ticket = create_ticket(manager, headers, category, "Self handled")
+    url = f"{TICKETS}/{ticket['id']}/transitions"
+    with database.transaction() as db:
+        db.add(TeamMember(team_id=UUID(team), account_id=manager_id, active=True))
+        row = db.get(Ticket, UUID(ticket["id"]))
+        assert row is not None
+        row.status = "In Progress"
+        row.assignee_id = manager_id
+    now += timedelta(seconds=60)
+    pending = command(
+        manager,
+        url,
+        headers,
+        {
+            "target_status": "Pending",
+            "expectedVersion": 1,
+            "reason": "Self clarification",
+            "public_message": "Checking details",
+        },
+    )
+    assert pending.status_code == 200, pending.text
+    assert pending.json()["sla"]["first_response_at"] is None
+    now += timedelta(seconds=80)
+    assert (
+        command(
+            manager,
+            url,
+            headers,
+            {
+                "target_status": "In Progress",
+                "expectedVersion": 2,
+                "reason": "Resuming investigation",
+            },
+        ).status_code
+        == 200
+    )
+    resolved = command(
+        manager,
+        url,
+        headers,
+        {
+            "target_status": "Resolved",
+            "expectedVersion": 3,
+            "public_message": "Self handled solution",
+        },
+    )
+    assert resolved.status_code == 200
+    closed = command(
+        manager, url, headers, {"target_status": "Closed", "expectedVersion": 4}
+    )
+    assert closed.status_code == 200
+    reopened = command(
+        manager,
+        url,
+        headers,
+        {
+            "target_status": "In Progress",
+            "expectedVersion": 5,
+            "reason": "Further investigation",
+        },
+    )
+    assert reopened.status_code == 200, reopened.text
+    assert reopened.json()["sla"]["first_response_at"] is None
+    assert reopened.json()["sla"]["response_used_seconds"] == 0
+    assert reopened.json()["sla"]["resolution_used_seconds"] == 60

@@ -73,18 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-**Planning state:** no implementation attempt/report, application test, review, commit or build evidence exists for this task. Application checks are **NOT RUN**. Replace this planning statement with actual evidence when work occurs.
-
-**Report contract:** after every actual attempt or session handoff, append a report to [task history](../workflow/task-history.md#reports) using [Format version 1](../workflow/task-history.md#entry-format), preserving its ten subsections and tables. Apply the [report validation checklist](../workflow/task-history.md#report-validation-before-handoff), then update this section with the latest report and current summary. A report may end in blocked/review/in-progress; it does not imply DONE.
-
-- Latest Report ID: none; no implementation attempt yet.
-- Latest history entry: none; add the exact existing report anchor after actual work.
-- Delivered result / incomplete scope:
-- Actual changed paths / key symbols:
-- Acceptance and check summary: pass/fail/not-run; link full expected/actual results and exact commands in the report.
-- Review type / findings / resolution:
-- Remaining blockers / decisions / defects:
-- Commit/build if available:
-- Next eligible task / resume step:
-
-Keep sections 1-5 unchanged unless a justified authorized refinement is recorded. Update this handoff after every attempt, including unfinished/blocked work; retain earlier attempt reports in history. Synchronize the execution-board state/owner and current-context latest summary/history link. Do not duplicate report bodies in the board, invent evidence or mark unrelated parent/system gates passed.
+- Latest Report ID: FND-12.04/attempt-01.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-12-04-attempt-01).
+- Delivered: Implemented reasoned reopen and role-specific cancellation. Closed permits only management reopening and the narrow eligible replacement needed before reopen. Cancelled remains terminal. Reopening retains consumed time and the original SLA budget snapshot; an exhausted budget remains exhausted.
+- Changed paths: `tickets/lifecycle.py`, `tickets/assignment.py`, `tickets/models.py`, `organization/http.py`, migration 0014, `tests/test_ticket_lifecycle.py`
+- Checks: 42 backend tests on PostgreSQL and Ruff/mypy passed.
+- Review: Agent verified. Joint PO review pending.
+- Remaining: Browser, real notification delivery and live SLA alert/breach projections remain unverified and belong to INT-02 and OPS-03/04. Runtime OpenAPI drift from FND-10 was not rerun. The live task-Done flow is not implemented in this Parent.
+- Commit/build: FND-12.04 push receipt pending.
+- Next: Joint review of the four FND-12 leaves after sequential verification.

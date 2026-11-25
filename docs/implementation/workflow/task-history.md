@@ -14268,3 +14268,72 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Joint PO review after both FND-12 leaves pass.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-fnd-12-04-attempt-01"></a>
+
+### FND-12.04 - Attempt 01 - 2026-11-25T17:53:33+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-12.04/attempt-01
+- Task: [Task card](../tasks/FND-12.04.md)
+- Parent / phase: FND-12 / B
+- Executor: Codex
+- Started at: 2026-11-25T17:53:33+07:00
+- Ended at: 2026-11-25T17:53:33+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implement the selected FND-12 leaf in dependency order.
+- Delivered: Implemented reasoned reopen and role-specific cancellation. Closed permits only management reopening and the narrow eligible replacement needed before reopen. Cancelled remains terminal. Reopening retains consumed time and the original SLA budget snapshot; an exhausted budget remains exhausted.
+- Incomplete scope / deviations: Browser, real notification delivery and live SLA alert/breach projections remain unverified and belong to INT-02 and OPS-03/04. Runtime OpenAPI drift from FND-10 was not rerun. The live task-Done flow is not implemented in this Parent.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| `tickets/lifecycle.py`, `tickets/assignment.py`, `tickets/models.py`, `organization/http.py`, migration 0014, `tests/test_ticket_lifecycle.py` | FND-12 implementation and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Direct transition and fixed-clock SLA cases | Correct reopen/cancel roles, reasons and assignee; preserve elapsed budget and no fake first response | Verified owner/management reopen, terminal cancel, frozen active-time accumulation, expired budget facts and self-handled cases. Forced an outbox write failure and verified rollback. | pass | `test_reopen_preserves_usage_and_cancel_is_terminal`, `test_self_handled_ticket_keeps_no_first_response`, `test_pending_question_and_requester_reply_are_atomic` |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | `src/backend: .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider --tb=short` (local PostgreSQL, 42 passed); `.venv/Scripts/ruff.exe check app tests migrations`; `.venv/Scripts/ruff.exe format --check app tests migrations`; `.venv/Scripts/mypy.exe app`; `python docs/api/generate_frontend_contract.py --check`; `python -B -m unittest discover -s docs/api -p test_frontend_contract.py` (5 passed) | Consistent documented result | Verified | pass |
+| integration | Browser, production workers and downstream domain checks | Full Parent evidence | INT-02 owns real integrated flows | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. Joint PO review pending.
+- Findings / resolution: Agent verified the scoped API with synthetic records on real PostgreSQL. PO approval is pending.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Browser, real notification delivery and live SLA alert/breach projections remain unverified and belong to INT-02 and OPS-03/04. Runtime OpenAPI drift from FND-10 was not rerun. The live task-Done flow is not implemented in this Parent.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-12.04.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Ticket lifecycle tests](../../../src/backend/tests/test_ticket_lifecycle.py).
+- Commit / build / environment: FND-12.04 push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review after both FND-12 leaves pass.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.

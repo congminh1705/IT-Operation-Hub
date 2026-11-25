@@ -25,6 +25,7 @@ class TicketStatus(StrEnum):
     PENDING = "Pending"
     RESOLVED = "Resolved"
     CLOSED = "Closed"
+    CANCELLED = "Cancelled"
 
 
 class SLAView(BaseModel):

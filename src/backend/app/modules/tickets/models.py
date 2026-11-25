@@ -51,3 +51,11 @@ class TicketComment(Base):
     visibility: Mapped[str] = mapped_column(String(8))
     content: Mapped[str] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+
+
+class TicketTransitionReason(Base):
+    __tablename__ = "ticket_transition_reason"
+
+    ticket_id: Mapped[UUID] = mapped_column(ForeignKey("ticket.id"), primary_key=True)
+    version: Mapped[int] = mapped_column(primary_key=True)
+    reason: Mapped[str] = mapped_column(Text)

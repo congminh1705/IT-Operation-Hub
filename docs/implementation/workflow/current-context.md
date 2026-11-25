@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-12.04/attempt-01](task-history.md#task-fnd-12-04-attempt-01), review. Implemented reasoned reopen and role-specific cancellation. Closed permits only management reopening and the narrow eligible replacement needed before reopen. Cancelled remains terminal. Reopening retains consumed time and the original SLA budget snapshot; an exhausted budget remains exhausted. 42 backend tests on PostgreSQL passed. Board: 96 done, 4 review, 130 pending. Joint PO review pending; full Parent closure depends on INT-02. FND-12.04 push receipt pending.
+
 - [FND-12.03/attempt-01](task-history.md#task-fnd-12-03-attempt-01), review. Resolved commits a public solution with the state and stops resolution consumption. Only the original requester may close; public discussion does not close it automatically. 40 backend tests on PostgreSQL passed. Joint PO review pending. FND-12.03 push receipt pending.
 
 - [FND-12.02/attempt-01](task-history.md#task-fnd-12-02-attempt-01), review. Pending now stores a public clarification and pauses resolution atomically. A substantive requester reply or authorized reasoned IT action resumes the clock. 39 backend tests on PostgreSQL passed. Joint PO review pending. FND-12.02 push receipt pending.

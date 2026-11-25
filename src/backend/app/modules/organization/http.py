@@ -584,7 +584,8 @@ def organization_router(
                 request,
                 db,
                 result,
-                internal_only=body.target_status != TicketStatus.CLOSED,
+                internal_only=body.target_status
+                in (TicketStatus.OPEN, TicketStatus.PENDING, TicketStatus.RESOLVED),
             ),
             status=200,
             admin=False,
