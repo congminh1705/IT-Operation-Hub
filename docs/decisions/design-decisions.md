@@ -277,6 +277,54 @@ PO approved this contract and its numeric synthetic-pilot settings on 2026-11-25
 | Proposal expires before issue confirmation | No release job or stock change, because no inventory was reserved. |
 | Two authorized issue commands race for a single asset | First valid transaction writes one active assignment; second re-reads committed state and conflicts. Same-key replay cannot duplicate an issue. |
 
+<a id="d-40-deployment-recovery-pre-0401"></a>
+
+### D-40 deployment ownership and measurable targets (PRE-04.01)
+
+PO approved the PRE-04.01 pilot plan on 2026-11-25, including RPO <= 24 h, RTO <= 4 h, 14 daily recovery points and a monthly rehearsal. The settings are pilot targets. Production SLA, hosting, spend, named owners and deployment authorization remain separate.
+
+| Boundary | Pilot proposal and measurement contract | Unresolved / owner |
+| --- | --- | --- |
+| Environments | Keep local DEMO and an isolated Linux staging/recovery environment with synthetic fixtures. Production target follows the existing single-node Linux/Nginx/FastAPI/Celery/Beat/PostgreSQL/Redis/private object-storage architecture. Keep separate secrets, buckets, DBs and credentials by environment. Production host, region, capacity, data handling and spend need separate approval. | PO appoints platform owner and confirms hosting before procurement. |
+| Ownership and alerts | Proposed routing: operations primary owns host/readiness, backup, broker/outbox and SLA scan alerts; a named backup operator receives escalation; service maintainer handles application faults; PO approves traffic switch or a business-impacting failover. Test the route with a staging alert, record acknowledged timestamp and owner. If roles, channel or coverage hours are unset, readiness is incomplete. | Names, channel, coverage hours and escalation windows to be confirmed by PO/operations. |
+| Load and response | Start with the NFR11 fixture: 20 accounts, 60 tickets and 30 assets. Pilot traffic uses 10 simultaneous authenticated sessions for 15 minutes after 2 minutes warm-up, with a documented read/write mix. Candidate p95 thresholds: list reads <= 2 s; writes <= 3 s; record success/error counts separately so failed calls cannot improve the result. Record instance profile, fixture sizes, browser/API boundary and observation window. | Operations validates the profile and targets. No production SLO is asserted. |
+| Outage and lag | Healthy SLA scheduler scan target stays at <= 60 s. Report last successful scan age, oldest eligible outbox age, failures and queue depth. Pilot candidates: alert after two consecutive failed 30 s readiness probes; alert on oldest eligible outbox item > 120 s or SLA scan age > 120 s across two 30 s observations. Measure alerts from validated probe/timestamp through delivery and acknowledgement. Provider failure degrades the AI path only; broker outage has explicit catch-up evidence and no scan guarantee. | Operations confirms thresholds, alert channel and actual incident response. |
+| Backups and access | Daily encrypted PostgreSQL backup plus private object/version manifest copied to a separately controlled store. Only named backup/recovery operators have scoped rights; routine write access does not grant restore rights. Record a coherent recovery point, object versions/checksums, restore key custody and audit. Pilot proposal: retain 14 daily recovery points and run an isolated restore rehearsal monthly. A missing, unreadable or unmatched backup is a failed backup, not a recovery point. | PO/operations confirm key custody, retention and authorized operators. |
+| RPO and RTO | Candidate targets for a complete host-loss test: RPO <= 24 h and RTO <= 4 h. Calculate RPO from incident time to the newest verified coherent DB/object recovery point. Calculate RTO from recorded incident declaration until validated service readiness after data, ACL, clocks/outbox and integration checks. Include detection-to-declaration separately. A backup schedule alone does not prove either. | QA-05 measures from isolated exercises. PRE-04.02 defines the release/recovery sequence. |
+
+**Review fixtures**
+
+| Scenario | Expected |
+| --- | --- |
+| Incident at 10:00 and newest coherent recovery point at 02:00 | Measured RPO is 8 h. Declaration 10:05 and validated readiness 13:05 give RTO 3 h. Compare with candidate targets, not production evidence. |
+| Daily DB file exists but its private object manifest cannot be resolved | That timestamp does not qualify as a coherent recovery point. Alert operations and select the newest demonstrably restorable pair. |
+| Outbox age exceeds the pilot threshold while DB remains healthy and broker is unavailable | Show backlog and notify operations. Core writes retain durable outbox state; recovery uses the recorded intent and measures catch-up. |
+| No approved operator or no escalation acknowledgement | Mark deployment readiness incomplete and record the missing assignment or alert route. |
+
+<a id="d-40-release-isolated-recovery-pre-0402"></a>
+
+### D-40 controlled release and isolated recovery (PRE-04.02)
+
+PO approved this release and recovery contract on 2026-11-25. Use the approved PRE-04.01 pilot targets when evaluating rehearsal results. Production deployment, failover and external egress each require their own authorization.
+
+| Gate | Required sequence and evidence |
+| --- | --- |
+| 1. Release preparation | Pin the image or artifact digest, expected schema revision, compatible previous release, migration plan and identity of the single migration runner. Verify change approval, environment-specific secrets and a readable, coherent DB/object recovery point. Stage the upgrade and compatibility checks for API plus worker. Record release ID and affected data. Block traffic switch while prerequisites are missing. |
+| 2. Single upgrade | Pause incompatible traffic and consumers, and stop Beat when the migration plan requires a maintenance window. Exactly one authorized migration runner acquires an environment-level database lock before checking the starting revision and migrating. Replica startup never migrates. Save before/after schema revision, timestamps and commit status. |
+| 3. Failed migration | Keep new traffic and incompatible workers stopped. Check whether the transaction rolled back and whether any nontransactional or external step applied. If cleanly rolled back, verify the old schema, artifacts and worker compatibility before returning to the old deployment. If state is partial or schema is incompatible, quarantine and follow the approved forward-fix or coherent restoration path. No blind downgrade or repeated upgrade against unknown state. |
+| 4. Isolated recovery | Use separate staging/recovery DB, storage, broker and credentials. Deny provider, email and other external effect egress before restore and verify those blocks. Keep workers and Beat stopped and avoid importing live queue messages. Select a verified coherent database point plus object-version manifest and restore privately. Record backup identity, event watermarks and incident/declaration times. |
+| 5. Validation and effect reconciliation | Check schema, DB/object linkage, checksums, ACL/session projections, ticket clocks and preserved snapshots, durable outbox, confirmed command ledger and redacted audit. Compare pre-loss effect identifiers from independent records with restored state. If an external effect may have succeeded after the restore point or a result is unknown, quarantine it and reconcile with operators/provider before any replay. Do not assume a restored missing ledger row proves the effect did not happen. |
+| 6. Controlled resume | Keep production side effects blocked during rehearsal. Bring up read-only readiness first, then explicitly release a scoped worker and one Beat only after ACLs, leases, verified outbox intent identity and backlog are reviewed. Reconcile before retry. Observe lag, errors, duplicate effects and SLA catch-up. Authorized production release separately decides egress and traffic switch after checks pass. If a gate regresses, stop progression and retain logs/evidence. |
+
+**QA-05 handoff evidence:** artifact and migration runner identity, source and target revisions, clean vs partial failure outcome, backup/manifest checks, proof egress remained blocked, worker/Beat status, reconciliation sample, before/after ACL and clock evidence, actual RPO/RTO and approver for any production resume.
+
+| Synthetic walkthrough | Expected |
+| --- | --- |
+| Migration fails before commit and previous revision remains intact. | Do not switch to new traffic. Only return to the previous version after compatibility and readiness pass. |
+| Migration fails after a nontransactional change or schema state is unknown. | Quarantine new deployment. Require an explicit forward-fix or coherent restore plan before resume. |
+| Recovery manifest is incomplete or an effect is unconfirmed after the recovery point. | Keep workers and external traffic blocked. Resolve missing objects or reconcile the original effect before actions can resume. |
+| Isolated restore validates identity, clocks and outbox. | Record measured rehearsal results. Start authorized scoped rehearsal workers with egress blocked. Production switch is a separate decision. |
+
 Reference guidance for candidates: [NIST SP 800-63B-4](https://pages.nist.gov/800-63-4/sp800-63b.html) for password length, blocklist and throttling. [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) for server-side expiry, cookie settings and renewal on authentication changes. These references do not set this project's timeouts or quotas.
 
 The companion [PRE-01.02 foundation contract reconciliation](../technical/api-design.md#pre-0102-foundation-contract-reconciliation) records the API/DBML differences and downstream review gates.
