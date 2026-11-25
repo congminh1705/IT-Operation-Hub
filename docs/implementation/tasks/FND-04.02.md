@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 16 backend PostgreSQL tests, 130 frontend tests, five OpenAPI drift tests, mypy, Ruff, TypeScript and scoped ESLint/Prettier passed.
 - Review: Agent verified. PO review pending.
 - Remaining: FND-05 owns team membership storage and authorization. INT-01 owns live UI/session integration and full Parent closure.
-- Commit/build: Implementation push receipt pending.
+- Commit/build: Implementation 3b8912b pushed and verified on origin/phase/b-backend.
 - Next: PO reviews FND-04.02. No subsequent work started.
