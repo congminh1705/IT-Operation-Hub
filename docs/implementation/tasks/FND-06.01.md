@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-06.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-06-01-attempt-01).
+- Latest Report ID: FND-06.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-06-01-attempt-02).
 - Delivered: Admin-only account creation with normalized unique email, active department, default Requester, mandatory trusted one-use evidence and separate elevated approval guard. Uses an Argon2id temporary verifier and redacted audit.
 - Changed paths: src/backend/app/modules/users/provisioning.py, app/modules/organization/http.py, migrations/versions/0009_provisioning_verification.py, tests/test_organization.py and docs/api/openapi.json.
 - Checks: 28 PostgreSQL-backed tests plus Ruff, strict mypy, Alembic offline SQL and five OpenAPI drift tests passed.
-- Review: Agent verified the backend with synthetic evidence. PO review pending.
+- Review: PO accepted the backend leaf. Original verification used synthetic evidence.
 - Remaining: No live producer for trusted verification. Confirm IT role approver and credential handover channel before live use. Full result contract is FND-06.02.
 - Commit/build: Implementation 8d55172 pushed and verified on origin/phase/b-backend.
-- Next: PO reviews FND-06.01. FND-06.02 pending.
+- Next: FND-06.02 authorized after PO acceptance.
