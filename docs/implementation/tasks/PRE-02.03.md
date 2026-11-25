@@ -72,12 +72,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: PRE-02.03/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-02-03-attempt-01).
+- Latest Report ID: PRE-02.03/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-02-03-attempt-02).
 - Delivered: [D-40 bounded automation contract](../../decisions/design-decisions.md#d-40-bounded-automation-pre-0203) describes explicit scope and grantor, default-deny boundaries, adjustment/reminder limits, and manager intervention.
 - Changed paths: docs/decisions/design-decisions.md, technical/architecture.md, and workflow records.
 - Checks: Five scenario walkthroughs and referenced consumer IDs verified. Runtime tests and build not applicable to documentation scope.
-- Review: Agent verified the decision handoff. PO approval pending.
+- Review: PO accepted the bounded automation design. Agent evidence remains in attempt 01.
 - Remaining: Live grants and proposed pilot caps require authorized review before enabling actions.
 - Commit/build: Implementation b5af881 pushed and verified on origin/phase/b-backend.
-- Next: PO reviews PRE-02.03. After approval, verify PRE-02 Parent closure and PR delivery.
+- Next: PRE-02 is EPIC_DONE. Parent PR awaits scope-safe delivery because phase/b-backend contains other unmerged Parents.

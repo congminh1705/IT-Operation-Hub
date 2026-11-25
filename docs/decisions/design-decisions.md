@@ -186,7 +186,7 @@ PostgreSQL reference: [Row-level locks](https://www.postgresql.org/docs/18/expli
 
 ### D-40 bounded automation policy (PRE-02.03)
 
-The confirmed baseline is BR-17, BR-18 and D-38. Specific live grants and pilot values remain unconfigured until an authorized manager supplies and approves them.
+PO accepted the bounded automation design for PRE-02 closure on 2026-11-25. BR-17, BR-18 and D-38 remain the baseline. Live grants and numerical pilot caps must be explicitly configured and approved before automation uses them.
 
 | Boundary | Confirmed or proposed contract | Consumer |
 | --- | --- | --- |
