@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-14.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-14-02-attempt-01).
+- Latest Report ID: FND-14.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-14-02-attempt-02).
 - Delivered: Committed verification, redacted audit, changed skill IDs and the skills.changed v1 outbox record in one transaction. Downstream consumers use the committed workforce version to re-read eligibility.
 - Changed paths: `workforce/skills.py`, `workforce/models.py`, migration 0018, `tests/test_workforce_skills.py`, event and API contract docs
 - Checks: 49 backend tests on PostgreSQL and Ruff/mypy passed.
-- Review: Agent verified. Joint PO review pending.
+- Review: PO accepted both backend leaves. Agent checks remain in attempt 01.
 - Remaining: Real browser and actual affected-work evaluation are later gates. No personnel data, evidence reference or reason text is emitted in the event payload.
 - Commit/build: FND-14.02 implementation `dfc1533` pushed to origin/phase/b-backend.
-- Next: Joint review of the two FND-14 leaves after sequential verification.
+- Next: FND-15 authorized. Full Parent closure awaits INT-03.

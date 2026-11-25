@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-14.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-14-01-attempt-01).
+- Latest Report ID: FND-14.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-14-01-attempt-02).
 - Delivered: Added scoped skill catalog and versioned workforce verification with reviewer, effective department, timestamp, evidence reference/version and optional explicit expiry. Stored required skills through the trusted task service boundary and exposed an eligibility check.
 - Changed paths: `workforce/models.py`, `workforce/skills.py`, `organization/http.py`, migration 0017, OpenAPI, `tests/test_workforce_skills.py`
 - Checks: 48 backend tests on PostgreSQL and Ruff/mypy passed.
-- Review: Agent verified. Joint PO review pending.
+- Review: PO accepted both backend leaves. Agent checks remain in attempt 01.
 - Remaining: No production catalog seeded. Required-skill persistence has no public task mutation until the task aggregate is implemented at FND-16. Scoped Technician teammate lookup is tied to an authorized current ticket team. Browser wiring belongs to INT-03.
 - Commit/build: FND-14.01 implementation `d1aea79` pushed to origin/phase/b-backend.
-- Next: Joint review of the two FND-14 leaves after sequential verification.
+- Next: FND-15 authorized. Full Parent closure awaits INT-03.

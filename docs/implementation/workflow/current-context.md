@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- PO accepted [FND-14.01](task-history.md#task-fnd-14-01-attempt-02) and [FND-14.02](task-history.md#task-fnd-14-02-attempt-02). Both leaves are done. Parent closure awaits INT-03. FND-15 authorized.
+
 - [FND-14.02/attempt-01](task-history.md#task-fnd-14-02-attempt-01), review. Committed verification, redacted audit, changed skill IDs and the skills.changed v1 outbox record in one transaction. Downstream consumers use the committed workforce version to re-read eligibility. 49 backend tests on PostgreSQL passed. Five workforce operations match FastAPI OpenAPI. Board: 102 done, 2 review, 126 pending. Joint PO review pending; INT-03 owns full Parent closure. FND-14.02 implementation `dfc1533` pushed to origin/phase/b-backend.
 
 - [FND-14.01/attempt-01](task-history.md#task-fnd-14-01-attempt-01), review. Added scoped skill catalog and versioned workforce verification with reviewer, effective department, timestamp, evidence reference/version and optional explicit expiry. Stored required skills through the trusted task service boundary and exposed an eligibility check. 48 backend tests on PostgreSQL passed. Joint PO review pending. FND-14.01 implementation `d1aea79` pushed to origin/phase/b-backend.
