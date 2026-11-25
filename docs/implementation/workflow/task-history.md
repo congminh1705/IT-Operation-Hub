@@ -12242,7 +12242,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 - Task Evidence and handoff: Linked to attempt 02.
 - Execution-board task row: done, Owner PO.
 - Current context: Updated.
-- Parent state: EPIC_DONE. PR pending a scope-safe delivery route.
+- Parent state: EPIC_DONE. Parent [PR #25](https://github.com/congminh1705/IT-Operation-Hub/pull/25) merged into main at 5e20a37.
 
 #### 10. Next step
 

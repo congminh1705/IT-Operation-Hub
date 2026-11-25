@@ -14,7 +14,7 @@ authority: derived
 
 ## Latest task report
 
-- [PRE-02.03/attempt-02](task-history.md#task-pre-02-03-attempt-02), done. PO accepted all three PRE-02 leaves and closed the Parent (EPIC_DONE). Board totals: 83 done, 147 pending. A Parent-only PR is pending because the shared phase/b-backend diff against main includes unmerged FND Parents. No next task started.
+- [PRE-02.03/attempt-02](task-history.md#task-pre-02-03-attempt-02), done. PO accepted all three PRE-02 leaves and closed the Parent (EPIC_DONE). Board totals: 83 done, 147 pending. Parent [PR #25](https://github.com/congminh1705/IT-Operation-Hub/pull/25) merged into main at 5e20a37. Main was merged into the shared Phase B branch with FND records preserved. No next task started.
 
 - [PRE-02.03/attempt-01](task-history.md#task-pre-02-03-attempt-01), review. Bounded grantor and workflow/team/priority/action policies, revocation, adjustment/reminder caps and manager intervention documented. Five scenario walkthroughs and consumer IDs checked. PO review pending. Implementation b5af881 pushed and verified on origin/phase/b-backend.
 
