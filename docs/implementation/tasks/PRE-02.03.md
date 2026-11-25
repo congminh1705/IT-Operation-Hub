@@ -79,5 +79,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: Five scenario walkthroughs and referenced consumer IDs verified. Runtime tests and build not applicable to documentation scope.
 - Review: Agent verified the decision handoff. PO approval pending.
 - Remaining: Live grants and proposed pilot caps require authorized review before enabling actions.
-- Commit/build: Implementation push receipt pending.
+- Commit/build: Implementation b5af881 pushed and verified on origin/phase/b-backend.
 - Next: PO reviews PRE-02.03. After approval, verify PRE-02 Parent closure and PR delivery.
