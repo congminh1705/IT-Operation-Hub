@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 19 PostgreSQL-backed tests, Ruff and strict mypy passed. Two competing intake selections left exactly one active intake. Invalid members and non-Admin mutations were rejected. Active removal and deactivation return HANDOVER_REQUIRED and preserve stored membership.
 - Review: Agent verified. Joint PO review pending.
 - Remaining: Actual open-work handover belongs to FND-17. FND-08.01 supplies ticket categories. INT-01 owns real browser and full Parent acceptance.
-- Commit/build: FND-05.02 implementation push receipt pending.
+- Commit/build: FND-05.02 implementation 8fad3f2 pushed and verified on origin/phase/b-backend.
 - Next: Joint PO review after both FND-05 leaves pass their checks. Parent closure requires INT-01.

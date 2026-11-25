@@ -11025,7 +11025,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/FND-05.01.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [API tests](../../../src/backend/tests/test_organization.py). Backend-only verification.
-- Commit / build / environment: FND-05.01 implementation push receipt pending.
+- Commit / build / environment: FND-05.01 implementation a5c56e5 pushed and verified on origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 
@@ -11099,7 +11099,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/FND-05.02.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [API tests](../../../src/backend/tests/test_organization.py). Backend-only verification.
-- Commit / build / environment: FND-05.02 implementation push receipt pending.
+- Commit / build / environment: FND-05.02 implementation 8fad3f2 pushed and verified on origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 

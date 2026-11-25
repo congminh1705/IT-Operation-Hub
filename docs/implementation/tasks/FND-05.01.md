@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 17 PostgreSQL-backed tests, Ruff and strict mypy passed. Normalized duplicates and stale writes return 409. Non-Admin writes and directory access are denied. Inactive departments are excluded from active choices without removing account references.
 - Review: Agent verified. Joint PO review pending.
 - Remaining: Ticket-category lookups belong to FND-08.01. Intake lookup is next in FND-05.02. INT-01 owns browser closure.
-- Commit/build: FND-05.01 implementation push receipt pending.
+- Commit/build: FND-05.01 implementation a5c56e5 pushed and verified on origin/phase/b-backend.
 - Next: Joint PO review after both FND-05 leaves pass their checks. Parent closure requires INT-01.
