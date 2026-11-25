@@ -79,5 +79,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: Overlap/multi-period arithmetic and unknown-input walkthroughs passed. Runtime not applicable to this documentation task.
 - Review: Agent checked the contract; PO review pending.
 - Remaining: Approve day/slot proposal and supply real schedules, budget/calendar and verification sources before their production consumers.
-- Commit/build: Implementation push receipt pending.
+- Commit/build: Implementation 3e0e671 pushed and verified on origin/phase/b-backend.
 - Next: PRE-02.02 awaits PO acceptance of this leaf.
