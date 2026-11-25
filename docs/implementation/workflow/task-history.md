@@ -16049,7 +16049,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/FND-17.01.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: Test commands above.
-- Commit / build / environment: FND-17.01 delivery on phase/b-backend.
+- Commit / build / environment: FND-17.01 implementation `1e948af` pushed to origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 
@@ -16118,7 +16118,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/FND-17.02.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: Test commands above.
-- Commit / build / environment: FND-17.02 delivery on phase/b-backend.
+- Commit / build / environment: FND-17.02 implementation `9de8cfa` pushed to origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 
@@ -16187,7 +16187,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/FND-17.03.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: Test commands above.
-- Commit / build / environment: FND-17.03 delivery on phase/b-backend.
+- Commit / build / environment: FND-17.03 implementation `0acfa10` pushed to origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 

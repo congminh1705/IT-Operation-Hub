@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 59 backend tests passed on PostgreSQL 18.7. Verified protected task handover rollback, emergency session revocation, hidden scope, blocked operations, rejection of ownerless Pending work, successful repair and preservation of SLA/lock.
 - Review: Agent verified. Joint PO acceptance pending.
 - Remaining: Real browser and affected-work delivery await integration. The emergency policy is recorded in D-40; team retirement is FND-17.03.
-- Commit/build: FND-17.02 push receipt pending.
+- Commit/build: FND-17.02 implementation `9de8cfa` pushed to origin/phase/b-backend.
 - Next: Joint review of all three FND-17 leaves. Full Parent closure depends on INT-01 and INT-03.

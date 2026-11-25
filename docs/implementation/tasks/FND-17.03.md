@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 60 backend tests passed on PostgreSQL 18.7. Verified complete versus partial handover, stale competing membership/deactivation changes, old cookie revocation, destination intake plus active task/ticket routing, historical assignee retention and outbox. Six live OpenAPI operations and five contract checks passed.
 - Review: Agent verified. Joint PO acceptance pending.
 - Remaining: Service evidence is ready for PO review. Real browser, affected-work processing and full Parent closure await INT-01 and INT-03.
-- Commit/build: FND-17.03 push receipt pending.
+- Commit/build: FND-17.03 implementation `0acfa10` pushed to origin/phase/b-backend.
 - Next: Joint review of all three FND-17 leaves. Full Parent closure depends on INT-01 and INT-03.

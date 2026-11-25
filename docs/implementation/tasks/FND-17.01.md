@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 58 passed on PostgreSQL 18.7. Old cookies and prior team URLs were denied, unlock did not revive revoked cookies, and concurrent Admin locks preserved one active Admin.
 - Review: Agent verified. PO acceptance pending.
 - Remaining: Handover for assigned active work is FND-17.02. Team retirement is FND-17.03. Real browser acceptance remains with INT-01.
-- Commit/build: FND-17.01 push receipt pending.
+- Commit/build: FND-17.01 implementation `1e948af` pushed to origin/phase/b-backend.
 - Next: Joint PO review of FND-17.01 through FND-17.03.
