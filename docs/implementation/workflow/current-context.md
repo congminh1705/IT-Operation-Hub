@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-04.02/attempt-01](task-history.md#task-fnd-04-02-attempt-01), review. Added current account and server-side session enforcement, session-bound CSRF and logout revocation. 16 PostgreSQL tests, 130 frontend tests and five drift tests passed; lint and types passed. Membership storage is FND-05, real frontend cutover is INT-01. Implementation push receipt pending.
+
 - [FND-04.01/attempt-02](task-history.md#task-fnd-04-01-attempt-02), done. PO accepted the implementation. Original evidence retains 14 PostgreSQL-backed tests, Ruff, mypy and offline Alembic SQL. FND-04.02 remains pending. Board totals: 73 done and 157 pending.
 
 - [FND-04.01/attempt-01](task-history.md#task-fnd-04-01-attempt-01), review. PO approved the D-40 policy. Added account bootstrap, Argon2id, pre-session/CSRF, rotation and database throttling. All 14 PostgreSQL-backed backend tests pass, plus Ruff, mypy and offline Alembic SQL. PO review pending. Implementation 01541c5 pushed and verified on origin/phase/b-backend.

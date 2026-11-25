@@ -52,12 +52,21 @@ HTTPS origins and ITOH_DATABASE_DSN to the intended PostgreSQL URL. To test loca
 HTTP, bind Uvicorn to loopback and set ITOH_AUTH_INSECURE_DEV=1 with the local
 HTTP origin. With auth unconfigured, its endpoints return 503.
 
-GET /api/v1/auth/csrf issues a ten-minute pre-session. Send its response token as
-X-CSRF-Token with the same-origin POST /api/v1/auth/login request and preserve
-browser cookies. The server rotates the pre-session on login. Temporary
-credentials yield PASSWORD_CHANGE_REQUIRED with a restricted session cookie.
-The password change route, authenticated CSRF handling and current principal,
-logout and session renewal belong to the subsequent auth/profile tasks.
+GET /api/v1/auth/csrf?purpose=login issues a ten-minute pre-session even if
+a previous session cookie is present. Send its response token as X-CSRF-Token
+with the same-origin POST /api/v1/auth/login request and preserve browser cookies.
+The server rotates the pre-session on login. Temporary credentials yield
+PASSWORD_CHANGE_REQUIRED with a restricted session cookie.
+
+GET /api/v1/auth/me reads the active account and current role from PostgreSQL.
+With a live session cookie, GET /api/v1/auth/csrf returns its session-bound token.
+Send that token and an allowed Origin to POST /api/v1/auth/logout. The API
+revokes the server session and expires the cookie before returning 204. Role
+and membership assertions from the client grant no access. Call
+revoke_account_sessions inside the same transaction as password or access
+changes. The scope-bearing membership schema and team policies belong to
+FND-05. Read-only session requests do not renew the idle timeout. The account
+password-change route remains with its owning task.
 
 The one-time first Admin command is python -m app.modules.auth.bootstrap with
 --authorization, --email, --display-name and --blocklist. Run from an authorized

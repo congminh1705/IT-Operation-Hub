@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Literal
 from urllib.parse import urlsplit
 from uuid import UUID, uuid4
 
@@ -7,6 +8,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 from sqlalchemy.exc import SQLAlchemyError
 
+from app.modules.auth.models import Account
 from app.modules.auth.service import ABSOLUTE, PRE_LIFETIME, AuthService, LoginRejected
 
 
@@ -54,6 +56,17 @@ class UserView(BaseModel):
     version: int
 
 
+def user_view(account: Account) -> UserView:
+    return UserView(
+        id=account.id,
+        email=account.email,
+        display_name=account.display_name,
+        role=account.role,
+        active=account.active,
+        version=account.version,
+    )
+
+
 class Csrf(BaseModel):
     csrf_token: str
 
@@ -73,8 +86,12 @@ ERRORS = {
 }
 
 
-def failure(status: int, retry_after: int | None = None) -> JSONResponse:
+def failure(
+    status: int, retry_after: int | None = None, *, session_error: bool = False
+) -> JSONResponse:
     code, message = ERRORS[status]
+    if session_error and status == 401:
+        code, message = "SESSION_INVALID", "Phien dang nhap khong hop le."
     headers = {"Cache-Control": "no-store"}
     if retry_after is not None:
         headers["Retry-After"] = str(retry_after)
@@ -88,16 +105,84 @@ def failure(status: int, retry_after: int | None = None) -> JSONResponse:
 def auth_router(service: AuthService | None, settings: AuthSettings) -> APIRouter:
     router = APIRouter(prefix="/auth", tags=["Authentication"])
 
+    def expired_cookie() -> Response:
+        response = failure(401, session_error=True)
+        clear_session_cookie(response)
+        return response
+
+    def clear_session_cookie(response: Response) -> None:
+        response.delete_cookie(
+            settings.session_cookie,
+            secure=settings.secure_cookies,
+            httponly=True,
+            samesite="lax",
+        )
+
+    @router.get(
+        "/me",
+        operation_id="getCurrentUser",
+        response_model=UserView,
+        responses={401: {"model": Error}, 503: {"model": Error}},
+    )
+    def me(request: Request, response: Response) -> UserView | Response:
+        if service is None:
+            return failure(503)
+        token = request.cookies.get(settings.session_cookie)
+        try:
+            account = service.current_account(token) if token else None
+        except SQLAlchemyError:
+            return failure(503)
+        if account is None:
+            # A restricted password-change session may still use authenticated CSRF.
+            return failure(401, session_error=True)
+        response.headers["Cache-Control"] = "no-store"
+        return user_view(account)
+
+    @router.post(
+        "/logout",
+        operation_id="logout",
+        status_code=204,
+        responses={status: {"model": Error} for status in (401, 403, 503)},
+    )
+    def logout(request: Request) -> Response:
+        if service is None:
+            return failure(503)
+        origins = request.headers.getlist("origin")
+        csrf = request.headers.getlist("x-csrf-token")
+        if len(origins) != 1 or origins[0] not in settings.origins or len(csrf) != 1:
+            return failure(403)
+        token = request.cookies.get(settings.session_cookie)
+        try:
+            status = service.logout(token, csrf[0]) if token else 401
+        except SQLAlchemyError:
+            return failure(503)
+        if status == 401:
+            return expired_cookie()
+        if status == 403:
+            return failure(403)
+        response = Response(status_code=204, headers={"Cache-Control": "no-store"})
+        clear_session_cookie(response)
+        return response
+
     @router.get(
         "/csrf",
         operation_id="getCsrf",
         response_model=Csrf,
-        responses={503: {"model": Error}},
+        responses={401: {"model": Error}, 503: {"model": Error}},
     )
-    def csrf(request: Request, response: Response) -> Csrf | Response:
+    def csrf(
+        request: Request, response: Response, purpose: Literal["login"] | None = None
+    ) -> Csrf | Response:
         if service is None:
             return failure(503)
+        current = request.cookies.get(settings.session_cookie)
         try:
+            if current and purpose is None:
+                value = service.authenticated_csrf(current)
+                if value is None:
+                    return expired_cookie()
+                response.headers["Cache-Control"] = "no-store"
+                return Csrf(csrf_token=value)
             token, value = service.issue_pre_session(
                 request.cookies.get(settings.pre_cookie)
             )
@@ -192,14 +277,7 @@ def auth_router(service: AuthService | None, settings: AuthSettings) -> APIRoute
                 headers={"Cache-Control": "no-store"},
             )
         else:
-            view = UserView(
-                id=account.id,
-                email=account.email,
-                display_name=account.display_name,
-                role=account.role,
-                active=account.active,
-                version=account.version,
-            )
+            view = user_view(account)
             response = JSONResponse(
                 view.model_dump(mode="json"), headers={"Cache-Control": "no-store"}
             )

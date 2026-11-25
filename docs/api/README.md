@@ -86,7 +86,7 @@ Review generated diffs and run the drift check before committing contract change
 
 The [account HTTP adapter](../../src/frontend/src/lib/api/http-account.ts) uses same-origin browser cookies, fetches the session-bound CSRF token before each mutation and forwards the draft idempotency header only where specified. It never automatically retries a mutation. Keep a caller-provided key with the confirmed intent for any later reconciliation. The browser supplies Origin and manages cookie values. Scoped account reads reuse the existing QueryClient identity key, abort signal and unauthorized handler. The app continues using its explicit DEMO transport until INT-01.
 
-The draft still omits a login 401 and includes a proposed contact phone. The frontend maps a generic 401 if returned and only sends display name plus expectedVersion on a profile update. This compatibility handling leaves D-40 cookie names, password rules, contact fields and TTLs with their decision owners.
+Login returns a generic 401 for invalid credentials. Use GET /auth/csrf?purpose=login to request a pre-session token. Authenticated mutations request GET /auth/csrf with the current cookie. The proposed contact phone remains in the draft. The frontend sends display name plus expectedVersion on a profile update.
 
 After the server implements the selected slice, export the FastAPI application's OpenAPI JSON to a local file and run:
 

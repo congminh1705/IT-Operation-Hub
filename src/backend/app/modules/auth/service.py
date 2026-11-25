@@ -1,7 +1,8 @@
 from dataclasses import dataclass
-from datetime import timedelta
+from datetime import datetime, timedelta
 from hashlib import sha256
 from hmac import compare_digest
+from hmac import digest as hmac_digest
 from math import ceil
 from secrets import token_urlsafe
 from unicodedata import normalize
@@ -11,6 +12,7 @@ from argon2 import PasswordHasher
 from argon2.exceptions import InvalidHashError, VerificationError
 from sqlalchemy import delete, select, text, update
 from sqlalchemy.dialects.postgresql import insert
+from sqlalchemy.orm import Session
 
 from app.infrastructure.clock import Clock, read_utc, utc_now
 from app.infrastructure.database import Database
@@ -26,6 +28,19 @@ TEMPORARY_LIFETIME = timedelta(hours=24)
 
 def digest(value: str) -> str:
     return sha256(value.encode()).hexdigest()
+
+
+def session_csrf(token: str) -> str:
+    return hmac_digest(token.encode(), b"itoh.auth.session.csrf.v1", "sha256").hex()
+
+
+def revoke_account_sessions(session: Session, account_id: UUID, now: datetime) -> None:
+    """Call in the same transaction as a password or effective-access change."""
+    session.execute(
+        update(AuthSession)
+        .where(AuthSession.account_id == account_id, AuthSession.revoked_at.is_(None))
+        .values(revoked_at=now)
+    )
 
 
 def normalize_identity(email: str) -> str:
@@ -51,6 +66,47 @@ class AuthService:
         self.clock = clock
         self.hasher = PasswordHasher(memory_cost=19456, time_cost=2, parallelism=1)
         self.dummy_hash = self.hasher.hash(token_urlsafe(32))
+
+    def _live_session(
+        self, session: Session, token: str
+    ) -> tuple[AuthSession, Account] | None:
+        record = session.get(AuthSession, digest(token), with_for_update=True)
+        if record is None or record.revoked_at is not None:
+            return None
+        now = read_utc(self.clock)
+        account = session.get(Account, record.account_id)
+        if (
+            record.idle_until <= now
+            or record.expires_at <= now
+            or account is None
+            or not account.active
+        ):
+            record.revoked_at = now
+            return None
+        return record, account
+
+    def current_account(self, token: str) -> Account | None:
+        with self.database.transaction() as session:
+            current = self._live_session(session, token)
+            if current is None or current[0].password_change_only:
+                return None
+            return current[1]
+
+    def authenticated_csrf(self, token: str) -> str | None:
+        with self.database.transaction() as session:
+            if self._live_session(session, token) is None:
+                return None
+            return session_csrf(token)
+
+    def logout(self, token: str, csrf: str) -> int:
+        with self.database.transaction() as session:
+            current = self._live_session(session, token)
+            if current is None:
+                return 401
+            if not compare_digest(session_csrf(token).encode(), csrf.encode()):
+                return 403
+            current[0].revoked_at = read_utc(self.clock)
+            return 204
 
     def issue_pre_session(self, previous: str | None) -> tuple[str, str]:
         token, csrf = token_urlsafe(32), token_urlsafe(32)

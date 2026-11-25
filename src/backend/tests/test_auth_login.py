@@ -35,7 +35,7 @@ def seed(service: AuthService, *, active: bool = True) -> None:
 
 
 def preflight(client: TestClient) -> str:
-    response = client.get(f"{BASE}/csrf")
+    response = client.get(f"{BASE}/csrf?purpose=login")
     assert response.status_code == 200
     assert response.headers["cache-control"] == "no-store"
     cookie = response.headers["set-cookie"]
@@ -218,3 +218,118 @@ def test_validation_hides_submitted_values_and_dev_cookie_names(
         )
         assert result.status_code == 422
         assert PASSWORD not in result.text
+
+
+def test_current_role_logout_and_replayed_session(database: Database) -> None:
+    service = AuthService(database)
+    seed(service)
+    settings = AuthSettings(frozenset({ORIGIN}))
+    application = create_app(service, settings)
+    with TestClient(application, base_url=ORIGIN) as client:
+        login_csrf = preflight(client)
+        assert login(client, login_csrf).status_code == 200
+        old = client.cookies[settings.session_cookie]
+        me = client.get(
+            f"{BASE}/me", headers={"X-Role": "ADMIN"}, params={"role": "ADMIN"}
+        )
+        assert me.status_code == 200 and me.json()["role"] == "REQUESTER"
+        assert me.headers["cache-control"] == "no-store"
+        with database.transaction() as db:
+            account = db.scalar(select(Account).where(Account.email == EMAIL))
+            assert account is not None
+            account.role = "TECHNICIAN"
+            account.version += 1
+        assert client.get(f"{BASE}/me").json()["role"] == "TECHNICIAN"
+
+        csrf_response = client.get(f"{BASE}/csrf")
+        csrf = str(csrf_response.json()["csrf_token"])
+        assert csrf_response.headers["cache-control"] == "no-store"
+        assert csrf != login_csrf
+        assert (
+            client.post(
+                f"{BASE}/logout",
+                headers={
+                    "Origin": "https://other.example.invalid",
+                    "X-CSRF-Token": csrf,
+                },
+            ).status_code
+            == 403
+        )
+        assert (
+            client.post(
+                f"{BASE}/logout",
+                headers={
+                    "Origin": ORIGIN,
+                    "X-CSRF-Token": login_csrf,
+                },
+            ).status_code
+            == 403
+        )
+        result = client.post(
+            f"{BASE}/logout", headers={"Origin": ORIGIN, "X-CSRF-Token": csrf}
+        )
+        assert result.status_code == 204 and not result.content
+        assert "Max-Age=0" in result.headers["set-cookie"]
+        assert settings.session_cookie not in client.cookies
+        client.cookies.set(settings.session_cookie, old)
+        assert client.get(f"{BASE}/me").status_code == 401
+        assert client.get(f"{BASE}/csrf").status_code == 401
+    with database.session() as db:
+        record = db.get(AuthSession, digest(old))
+        assert record is not None and record.revoked_at is not None
+    with TestClient(application, base_url=ORIGIN) as anonymous:
+        result = anonymous.get(f"{BASE}/me", headers={"X-Role": "ADMIN"})
+        assert result.status_code == 401 and "display_name" not in result.json()
+
+
+def test_idle_and_absolute_expiry_and_account_revocation(database: Database) -> None:
+    from app.modules.auth.service import revoke_account_sessions
+
+    now = datetime(2026, 11, 25, tzinfo=UTC)
+
+    def clock() -> datetime:
+        return now
+
+    service = AuthService(database, clock)
+    seed(service)
+    settings = AuthSettings(frozenset({ORIGIN}))
+    with TestClient(create_app(service, settings), base_url=ORIGIN) as client:
+        assert login(client, preflight(client)).status_code == 200
+        idle_token = client.cookies[settings.session_cookie]
+        now += timedelta(minutes=29)
+        assert client.get(f"{BASE}/me").status_code == 200
+        now += timedelta(minutes=1)
+        assert client.get(f"{BASE}/me").status_code == 401
+
+        assert login(client, preflight(client)).status_code == 200
+        absolute_token = client.cookies[settings.session_cookie]
+        with database.transaction() as db:
+            record = db.get(AuthSession, digest(absolute_token))
+            assert record is not None
+            record.idle_until = now + timedelta(hours=13)
+        now += timedelta(hours=12)
+        assert client.get(f"{BASE}/me").status_code == 401
+
+        assert login(client, preflight(client)).status_code == 200
+        with database.transaction() as db:
+            account = db.scalar(select(Account).where(Account.email == EMAIL))
+            assert account is not None
+            revoke_account_sessions(db, account.id, now)
+        assert client.get(f"{BASE}/me").status_code == 401
+
+        assert login(client, preflight(client)).status_code == 200
+        with database.transaction() as db:
+            account = db.scalar(select(Account).where(Account.email == EMAIL))
+            assert account is not None
+            account.active = False
+        assert client.get(f"{BASE}/me").status_code == 401
+        with database.transaction() as db:
+            account = db.scalar(select(Account).where(Account.email == EMAIL))
+            assert account is not None
+            account.active = True
+        assert client.get(f"{BASE}/me").status_code == 401
+
+    with database.session() as db:
+        for token in (idle_token, absolute_token):
+            record = db.get(AuthSession, digest(token))
+            assert record is not None and record.revoked_at is not None

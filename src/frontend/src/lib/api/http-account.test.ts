@@ -43,7 +43,7 @@ describe("account HTTP contract", () => {
     expect(
       fetcher.mock.calls.map(([url, init]) => [url, init?.method]),
     ).toEqual([
-      ["/api/v1/auth/csrf", "GET"],
+      ["/api/v1/auth/csrf?purpose=login", "GET"],
       ["/api/v1/auth/login", "POST"],
     ]);
     for (const [, init] of fetcher.mock.calls)
