@@ -15635,7 +15635,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/FND-16.01.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: Test commands above.
-- Commit / build / environment: FND-16.01 delivery on phase/b-backend.
+- Commit / build / environment: FND-16.01 implementation `f1c4798` pushed to origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 
