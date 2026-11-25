@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-05.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-05-01-attempt-01).
+- Latest Report ID: FND-05.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-05-01-attempt-02).
 - Delivered: Admin department lifecycle, preserved historical account references, and own-department lookup.
 - Changed paths: src/backend/app/modules/organization, app/modules/auth, app/main.py, migrations/versions/0004_departments.py, tests/test_organization.py.
 - Checks: 17 PostgreSQL-backed tests, Ruff and strict mypy passed. Normalized duplicates and stale writes return 409. Non-Admin writes and directory access are denied. Inactive departments are excluded from active choices without removing account references.
-- Review: Agent verified. Joint PO review pending.
+- Review: PO accepted both FND-05 leaves. Agent evidence remains in attempt 01.
 - Remaining: Ticket-category lookups belong to FND-08.01. Intake lookup is next in FND-05.02. INT-01 owns browser closure.
 - Commit/build: FND-05.01 implementation a5c56e5 pushed and verified on origin/phase/b-backend.
-- Next: Joint PO review after both FND-05 leaves pass their checks. Parent closure requires INT-01.
+- Next: FND-06 is authorized. Outstanding D-40 provisioning decisions gate FND-06.01. Parent closure requires INT-01.

@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-05.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-05-02-attempt-01).
+- Latest Report ID: FND-05.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-05-02-attempt-02).
 - Delivered: Admin team creation and edits, explicit single active intake, eligible team memberships and a minimal intake lookup.
 - Changed paths: src/backend/app/modules/organization, migrations/versions/0005_teams.py, tests/test_organization.py, docs/api/openapi.json and src/backend/README.md.
 - Checks: 19 PostgreSQL-backed tests, Ruff and strict mypy passed. Two competing intake selections left exactly one active intake. Invalid members and non-Admin mutations were rejected. Active removal and deactivation return HANDOVER_REQUIRED and preserve stored membership.
-- Review: Agent verified. Joint PO review pending.
+- Review: PO accepted both FND-05 leaves. Agent evidence remains in attempt 01.
 - Remaining: Actual open-work handover belongs to FND-17. FND-08.01 supplies ticket categories. INT-01 owns real browser and full Parent acceptance.
 - Commit/build: FND-05.02 implementation 8fad3f2 pushed and verified on origin/phase/b-backend.
-- Next: Joint PO review after both FND-05 leaves pass their checks. Parent closure requires INT-01.
+- Next: FND-06 is authorized. Outstanding D-40 provisioning decisions gate FND-06.01. Parent closure requires INT-01.
