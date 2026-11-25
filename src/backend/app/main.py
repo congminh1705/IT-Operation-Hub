@@ -81,6 +81,9 @@ def create_app(
             "listPlanVersions",
             "listTasks",
             "getTask",
+            "assignTask",
+            "lockTaskAssignment",
+            "updateTaskProgress",
         }:
             return error_response(422, "INVALID_INPUT")
         if operation == "getCsrf":

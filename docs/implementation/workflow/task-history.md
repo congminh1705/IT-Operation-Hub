@@ -15648,3 +15648,72 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-16.02 after PO accepts FND-16.01.
 - Eligibility / remaining prerequisite: Follow task dependencies and PO review.
+
+<a id="task-fnd-16-02-attempt-01"></a>
+
+### FND-16.02 - Attempt 01 - 2026-11-25T23:09:10+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-16.02/attempt-01
+- Task: [Task card](../tasks/FND-16.02.md)
+- Parent / phase: FND-16 / B
+- Executor: Codex
+- Started at: 2026-11-25T23:09:10+07:00
+- Ended at: 2026-11-25T23:09:10+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implemented scoped manual assignment with explicit per-day UTC reservations, assignment locks, and progress changes that revalidate increased remaining effort.
+- Delivered: Implemented scoped manual assignment with explicit per-day UTC reservations, assignment locks, and progress changes that revalidate increased remaining effort.
+- Incomplete scope / deviations: Real browser and affected-work consumers await INT-03. Manual task lifecycle is delivered in FND-16.03.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| `work_management/allocation.py`, `work_management/service.py`, `organization/http.py`, migration 0022, OpenAPI and `tests/test_manual_allocation.py` | FND-16.02 | Service delivery and evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scoped acceptance | Task card criteria | 55 passed. Concurrent reservations yielded 200/409, and Blocked work retained its capacity. Scope, skills, stale calendar, explicit minutes, locked assignment and reservation history verified. Three scoped runtime OpenAPI operations and five contract tests passed. | pass | [Task card](../tasks/FND-16.02.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | `$env:ITOH_TEST_DATABASE_URL=<repo Compose PostgreSQL>; .venv/Scripts/python.exe -m pytest -qx -p no:cacheprovider --tb=short`; Ruff check/format; mypy app; frontend contract --check, five contract unit tests and scoped live OpenAPI comparison | Task evidence | 55 passed. Concurrent reservations yielded 200/409, and Blocked work retained its capacity. Scope, skills, stale calendar, explicit minutes, locked assignment and reservation history verified. Three scoped runtime OpenAPI operations and five contract tests passed. | pass |
+| integration | Real browser and affected-work evaluation | Full Parent evidence | Remaining at INT-03 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO acceptance pending.
+- Findings / resolution: 55 passed. Concurrent reservations yielded 200/409, and Blocked work retained its capacity. Scope, skills, stale calendar, explicit minutes, locked assignment and reservation history verified. Three scoped runtime OpenAPI operations and five contract tests passed.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Real browser and affected-work consumers await INT-03. Manual task lifecycle is delivered in FND-16.03.
+- Required resolution / owner: INT-03 and operations.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-16.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: Test commands above.
+- Commit / build / environment: FND-16.02 delivery on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review of FND-16.01 through FND-16.03.
+- Eligibility / remaining prerequisite: Follow task dependencies and PO review.

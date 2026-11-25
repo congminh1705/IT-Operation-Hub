@@ -21,7 +21,12 @@ from app.modules.tickets.assignment import (
 )
 from app.modules.tickets.models import Ticket
 from app.modules.tickets.read import ListScope
-from app.modules.work_management.models import PlanVersion, WorkPlan, WorkTask
+from app.modules.work_management.models import (
+    PlanVersion,
+    TaskAllocation,
+    WorkPlan,
+    WorkTask,
+)
 from app.modules.workforce.calendar import Interval
 from app.modules.workforce.models import Skill, TaskSkillRequirement
 from app.modules.workforce.skills import catalog_scope, set_task_skill_requirements
@@ -85,6 +90,7 @@ class TaskView(BaseModel):
     ends_at: datetime
     required_skill_ids: list[UUID]
     predecessor_ids: list[UUID]
+    allocations: list[Interval]
     assignment_locked: bool
     result: str | None
 
@@ -146,6 +152,18 @@ def task_views(db: Session, tasks: list[WorkTask]) -> list[TaskView]:
         .order_by(TaskSkillRequirement.skill_id)
     ):
         skills[task_id].append(skill_id)
+    allocations: dict[UUID, list[Interval]] = {task.id: [] for task in tasks}
+    for row in db.scalars(
+        select(TaskAllocation)
+        .where(
+            TaskAllocation.task_id.in_(allocations),
+            TaskAllocation.released_at.is_(None),
+        )
+        .order_by(TaskAllocation.starts_at, TaskAllocation.id)
+    ):
+        allocations[row.task_id].append(
+            Interval(starts_at=row.starts_at, ends_at=row.ends_at)
+        )
     return [
         TaskView(
             id=task.id,
@@ -161,6 +179,7 @@ def task_views(db: Session, tasks: list[WorkTask]) -> list[TaskView]:
             ends_at=task.ends_at,
             required_skill_ids=skills[task.id],
             predecessor_ids=[],
+            allocations=allocations[task.id],
             assignment_locked=task.assignment_locked,
             result=task.result,
         )
