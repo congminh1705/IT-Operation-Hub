@@ -24,6 +24,7 @@ from app.modules.tickets.read import ListScope
 from app.modules.work_management.models import (
     PlanVersion,
     TaskAllocation,
+    TaskDependency,
     WorkPlan,
     WorkTask,
 )
@@ -164,6 +165,13 @@ def task_views(db: Session, tasks: list[WorkTask]) -> list[TaskView]:
         allocations[row.task_id].append(
             Interval(starts_at=row.starts_at, ends_at=row.ends_at)
         )
+    predecessors: dict[UUID, list[UUID]] = {task.id: [] for task in tasks}
+    for edge in db.scalars(
+        select(TaskDependency)
+        .where(TaskDependency.task_id.in_(predecessors))
+        .order_by(TaskDependency.predecessor_id)
+    ):
+        predecessors[edge.task_id].append(edge.predecessor_id)
     return [
         TaskView(
             id=task.id,
@@ -178,7 +186,7 @@ def task_views(db: Session, tasks: list[WorkTask]) -> list[TaskView]:
             starts_at=task.starts_at,
             ends_at=task.ends_at,
             required_skill_ids=skills[task.id],
-            predecessor_ids=[],
+            predecessor_ids=predecessors[task.id],
             allocations=allocations[task.id],
             assignment_locked=task.assignment_locked,
             result=task.result,

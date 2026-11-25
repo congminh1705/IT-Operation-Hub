@@ -1,5 +1,6 @@
 from collections import defaultdict
 from datetime import date, datetime, timedelta
+from enum import StrEnum
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -245,11 +246,15 @@ def record_task_effect(
     action: str,
     *,
     reason: bool = False,
-    publish: bool = True,
+    status: StrEnum | None = None,
 ) -> None:
     source, target = Actor("user", actor.id), Target("work_task", task.id)
     after = SafeFacts(
-        version=task.version, assignee_id=task.assignee_id, reason_provided=reason
+        version=task.version,
+        assignee_id=task.assignee_id,
+        reason_provided=reason,
+        status=status,
+        previous_status=before.status,
     )
     write_audit(
         db,
@@ -260,19 +265,18 @@ def record_task_effect(
         after=after,
         clock=lambda: now,
     )
-    if publish:
-        enqueue_event(
-            db,
-            actor=source,
-            target=target,
-            event_type=action,
-            schema_version=1,
-            aggregate_version=task.version,
-            correlation_id=task.id,
-            handlers=("work_management.affected_work",),
-            facts=after,
-            clock=lambda: now,
-        )
+    enqueue_event(
+        db,
+        actor=source,
+        target=target,
+        event_type=action,
+        schema_version=1,
+        aggregate_version=task.version,
+        correlation_id=task.id,
+        handlers=("work_management.affected_work",),
+        facts=after,
+        clock=lambda: now,
+    )
 
 
 def assign_task(
