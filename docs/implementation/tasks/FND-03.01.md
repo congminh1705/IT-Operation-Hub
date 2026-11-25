@@ -79,5 +79,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Acceptance and check summary: Pass for draft drift check, all five comparison tests, TypeScript, lint, scoped formatting, all 128 frontend tests (14 new), and the production build. FastAPI runtime OpenAPI comparison and real browser/server integration were not run because the selected service routes are not implemented.
 - Review type / findings / resolution: Agent verified the selected contract. PO review pending. Login accepts the proposed 401 if returned. Profile sends only display_name and expectedVersion while contact_phone remains a draft field.
 - Remaining blockers / decisions / defects: Runtime account/ticket routes, the final D-40 wire decisions and INT-01 real session and scope verification remain with their respective owners.
-- Commit/build: Production build passed. Implementation push receipt pending.
+- Commit/build: Production build passed. Implementation 265c85a pushed to phase/b-backend and verified on origin.
 - Next eligible task / resume step: PO reviews FND-03.01. FND-03.02 remains pending until prerequisite completion and separate authorization.
