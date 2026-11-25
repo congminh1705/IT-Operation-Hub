@@ -73,18 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-**Planning state:** no implementation attempt/report, application test, review, commit or build evidence exists for this task. Application checks are **NOT RUN**. Replace this planning statement with actual evidence when work occurs.
-
-**Report contract:** after every actual attempt or session handoff, append a report to [task history](../workflow/task-history.md#reports) using [Format version 1](../workflow/task-history.md#entry-format), preserving its ten subsections and tables. Apply the [report validation checklist](../workflow/task-history.md#report-validation-before-handoff), then update this section with the latest report and current summary. A report may end in blocked/review/in-progress; it does not imply DONE.
-
-- Latest Report ID: none; no implementation attempt yet.
-- Latest history entry: none; add the exact existing report anchor after actual work.
-- Delivered result / incomplete scope:
-- Actual changed paths / key symbols:
-- Acceptance and check summary: pass/fail/not-run; link full expected/actual results and exact commands in the report.
-- Review type / findings / resolution:
-- Remaining blockers / decisions / defects:
-- Commit/build if available:
-- Next eligible task / resume step:
-
-Keep sections 1-5 unchanged unless a justified authorized refinement is recorded. Update this handoff after every attempt, including unfinished/blocked work; retain earlier attempt reports in history. Synchronize the execution-board state/owner and current-context latest summary/history link. Do not duplicate report bodies in the board, invent evidence or mark unrelated parent/system gates passed.
+- Latest Report ID: FND-16.01/attempt-01.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-16-01-attempt-01).
+- Delivered: Added manual Draft plan creation and initial unassigned tasks with ticket-derived team, positive effort, UTC window, explicit evidence reference/version and current manager reviewer. Plan/task APIs filter by current team before paging.
+- Changed files: `work_management/service.py`, `work_management/models.py`, `organization/http.py`, migration 0021, reviewed OpenAPI and `tests/test_manual_work.py`
+- Checks: 54 passed on PostgreSQL 18.7. No requester reads; current scope, transfer, missing evidence, idempotent replay and audit rollback verified. Ruff, mypy, five contract tests and five FND-16.01 runtime OpenAPI comparisons passed.
+- Review: Agent verified. PO acceptance pending.
+- Remaining: Manual allocation and progress are owned by FND-16.02/03. DAG activation is later workflow scope. The evidence reference is supplied by the authorized reviewer; no external evidence system is validated here. Browser and real integration await INT-03.
+- Commit/build: FND-16.01 push receipt pending.
+- Next: FND-16.02 after PO acceptance and authorization.

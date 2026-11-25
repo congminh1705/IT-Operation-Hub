@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-16.01](task-history.md#task-fnd-16-01-attempt-01), review. Added manual Draft plan creation and initial unassigned tasks with ticket-derived team, positive effort, UTC window, explicit evidence reference/version and current manager reviewer. Plan/task APIs filter by current team before paging. 54 passed on PostgreSQL 18.7. No requester reads; current scope, transfer, missing evidence, idempotent replay and audit rollback verified. Ruff, mypy, five contract tests and five FND-16.01 runtime OpenAPI comparisons passed. Board: 106 done, 1 review, 123 pending. FND-16.01 push receipt pending.
+
 - PO accepted [FND-15.01](task-history.md#task-fnd-15-01-attempt-02) and [FND-15.02](task-history.md#task-fnd-15-02-attempt-02). Both leaves are done. Parent closure awaits INT-03. FND-16.01 authorized.
 
 - [FND-15.02](task-history.md#task-fnd-15-02-attempt-01), review. Added scoped calendar writes, absence recording and daily availability reads. Workforce and person/day locks serialize writes; version, redacted audit and availability.changed outbox commit together. 52 backend tests passed. Board: 104 done, 2 review, 124 pending. Joint PO acceptance pending. FND-15.02 implementation `1df29d1` pushed to origin/phase/b-backend.

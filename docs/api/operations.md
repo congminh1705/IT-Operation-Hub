@@ -56,6 +56,7 @@ purpose: "Trace operationId, routes, principals, and business rules."
 | API04 | POST | `/tickets/{id}/attachments` | `uploadTicketAttachment` | REQUESTER, TECHNICIAN, IT_MANAGER, ADMIN | Parent/comment audience verified; max 10 MB/file; one file per operation, up to 5 accepted in one user action. |
 | API04 | GET | `/attachments/{id}/download` | `downloadAttachment` | REQUESTER, TECHNICIAN, IT_MANAGER, ADMIN | Current parent content scope, no public object URL; safe Content-Disposition, nosniff. |
 | API05 | GET | `/tickets/{id}/plans` | `listTicketPlans` | TECHNICIAN, IT_MANAGER, ADMIN | T current ticket team; M/A scope; requester excluded. |
+| API05 | POST | `/tickets/{id}/plans` | `createManualTicketPlan` | IT_MANAGER, ADMIN | Creates one Draft plan version and initial unassigned tasks with explicit effort evidence and a parent-derived team. |
 | API05 | GET | `/plans/{id}/versions` | `listPlanVersions` | TECHNICIAN, IT_MANAGER, ADMIN | Same scoped IT plan permission. |
 | API05 | POST | `/tickets/{id}/plan-proposals` | `proposePlan` | IT_MANAGER, ADMIN | MA requests proposal; model runs outside DB transaction; no assignment implied. |
 | API05 | POST | `/plans/{id}/activate` | `activatePlan` | IT_MANAGER, ADMIN | One Effective version; semantic/DAG/source checks. Policy automation uses internal services, not public service login. |

@@ -15579,3 +15579,72 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Proceed to FND-16.01.
 - Eligibility / remaining prerequisite: Follow task dependencies and PO review.
+
+<a id="task-fnd-16-01-attempt-01"></a>
+
+### FND-16.01 - Attempt 01 - 2026-11-25T22:52:32+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-16.01/attempt-01
+- Task: [Task card](../tasks/FND-16.01.md)
+- Parent / phase: FND-16 / B
+- Executor: Codex
+- Started at: 2026-11-25T22:52:32+07:00
+- Ended at: 2026-11-25T22:52:32+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Added manual Draft plan creation and initial unassigned tasks with ticket-derived team, positive effort, UTC window, explicit evidence reference/version and current manager reviewer. Plan/task APIs filter by current team before paging.
+- Delivered: Added manual Draft plan creation and initial unassigned tasks with ticket-derived team, positive effort, UTC window, explicit evidence reference/version and current manager reviewer. Plan/task APIs filter by current team before paging.
+- Incomplete scope / deviations: Manual allocation and progress are owned by FND-16.02/03. DAG activation is later workflow scope. The evidence reference is supplied by the authorized reviewer; no external evidence system is validated here. Browser and real integration await INT-03.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| `work_management/service.py`, `work_management/models.py`, `organization/http.py`, migration 0021, reviewed OpenAPI and `tests/test_manual_work.py` | FND-16.01 | Service delivery and evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scoped acceptance | Task card criteria | 54 passed on PostgreSQL 18.7. No requester reads; current scope, transfer, missing evidence, idempotent replay and audit rollback verified. Ruff, mypy, five contract tests and five FND-16.01 runtime OpenAPI comparisons passed. | pass | [Task card](../tasks/FND-16.01.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | `$env:ITOH_TEST_DATABASE_URL=<repo Compose PostgreSQL>; .venv/Scripts/python.exe -m pytest -qx -p no:cacheprovider --tb=short`; Ruff check and format check; mypy app; `python docs/api/generate_frontend_contract.py --check`; `python -B -m unittest discover -s docs/api -p test_frontend_contract.py`; compare FastAPI and draft projections using `contract()` for FND-16.01 | Task evidence | 54 passed on PostgreSQL 18.7. No requester reads; current scope, transfer, missing evidence, idempotent replay and audit rollback verified. Ruff, mypy, five contract tests and five FND-16.01 runtime OpenAPI comparisons passed. | pass |
+| integration | Real browser and affected-work evaluation | Full Parent evidence | Remaining at INT-03 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO acceptance pending.
+- Findings / resolution: 54 passed on PostgreSQL 18.7. No requester reads; current scope, transfer, missing evidence, idempotent replay and audit rollback verified. Ruff, mypy, five contract tests and five FND-16.01 runtime OpenAPI comparisons passed.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Manual allocation and progress are owned by FND-16.02/03. DAG activation is later workflow scope. The evidence reference is supplied by the authorized reviewer; no external evidence system is validated here. Browser and real integration await INT-03.
+- Required resolution / owner: INT-03 and operations.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-16.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: Test commands above.
+- Commit / build / environment: FND-16.01 delivery on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-16.02 after PO accepts FND-16.01.
+- Eligibility / remaining prerequisite: Follow task dependencies and PO review.
