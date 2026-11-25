@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 14 tests pass on PostgreSQL, including five new FastAPI TestClient cases. Ruff, mypy and Alembic offline SQL pass.
 - Review: PO approved policy. Agent verified implementation. PO implementation review pending.
 - Remaining: Live Nginx configuration, real authorized operator bootstrap and downstream current-principal/password-change integration.
-- Commit/build: Implementation push receipt pending.
+- Commit/build: Implementation 01541c5 pushed and verified on origin/phase/b-backend.
 - Next: PO reviews this leaf. FND-04.02 remains pending.
