@@ -10676,3 +10676,78 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Await separate authorization for subsequent work.
 - Eligibility / remaining prerequisite: INT-01 evidence for closing FND-03.
+
+<a id="task-fnd-04-01-attempt-01"></a>
+
+### FND-04.01 - Attempt 01 - 2026-11-25T14:47:14+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-04.01/attempt-01
+- Task: [Task card](../tasks/FND-04.01.md)
+- Parent / phase: FND-04 / B
+- Executor: Codex
+- Started at: 2026-11-25 (exact time not captured)
+- Ended at: 2026-11-25T14:47:14+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None. D-40 policy approved before implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implement first-Admin bootstrap and login under the approved authentication policy.
+- Delivered: Argon2id verification, opaque hashed sessions, one-time pre-session on login, protected cookie rotation, explicit Origin and CSRF checks, atomic Postgres per-identity throttling and safe errors.
+- Incomplete scope / deviations: Deployment edge settings documented. No real operator bootstrap, browser integration, authenticated CSRF, current-principal or password change delivery in this leaf.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/auth and src/backend/app/main.py | AuthService, auth_router, AuthSettings and bootstrap CLI | Account login and session creation |
+| src/backend/migrations/versions/0003_auth_login.py and tests/test_auth_login.py | Four persistence tables and five integration cases | Verify real database behavior |
+| docs/decisions/design-decisions.md and src/backend/README.md | PO policy and operational handoff | Record values and deployment boundary |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Login, bootstrap and secure cookies | Valid login, safe invalid/locked outcome, pre-session checks and rotated cookies | Real PostgreSQL and FastAPI TestClient verified rotation, expiry fields, one-time bootstrap and restricted temporary credentials | pass | [Tests](../../../src/backend/tests/test_auth_login.py) |
+| Selected failure semantics | Forged requests denied, throttling enforced, failure safe | 403 on invalid Origin/CSRF, 429 with Retry-After, 503 when budget storage is unavailable, sensitive fields omitted | pass | [Tests](../../../src/backend/tests/test_auth_login.py) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | .venv/Scripts/ruff.exe check app migrations tests | Lint passes | Exit 0 | pass |
+| src/backend | .venv/Scripts/mypy.exe app migrations tests | Strict typing passes | 25 source files pass | pass |
+| src/backend | .venv/Scripts/python.exe -m pytest -q with local Compose ITOH_TEST_DATABASE_URL | Login and regressions pass with real DB | 14 passed, zero skipped. Upstream TestClient deprecation warning. | pass |
+| src/backend | .venv/Scripts/alembic.exe upgrade head --sql | Offline migration SQL compiles | Exit 0 | pass |
+| deployment | Run live proxy, browser and first-Admin operator rollout | Confirm operational configuration | No deployment. Operator handover and consuming tasks remain pending. | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO policy approval. Agent implementation verification.
+- Findings / resolution: PO implementation review remains pending.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Deployment IP limits are documented. Real operator selection and handover are required before real bootstrap.
+- Required resolution / owner: PO and deployment owners confirm the deployment and integration steps.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-04.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Backend integration tests](../../../src/backend/tests/test_auth_login.py), [operator setup](../../../src/backend/README.md).
+- Commit / build / environment: Implementation push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FND-04.01.
+- Eligibility / remaining prerequisite: Ch?t done and separate task authorization before FND-04.02.

@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-04.01/attempt-01](task-history.md#task-fnd-04-01-attempt-01), review. PO approved the D-40 policy. Added account bootstrap, Argon2id, pre-session/CSRF, rotation and database throttling. All 14 PostgreSQL-backed backend tests pass, plus Ruff, mypy and offline Alembic SQL. PO review pending. Implementation push receipt pending.
+
 - PO jointly accepted FND-03.01 and FND-03.02. Both are done. [FND-03.01 acceptance](task-history.md#task-fnd-03-01-attempt-02), [FND-03.02 acceptance](task-history.md#task-fnd-03-02-attempt-02). Board totals: 72 done and 158 pending. Parent remains EPIC_IN_PROGRESS pending INT-01 real-flow evidence.
 
 - [FND-03.02/attempt-01](task-history.md#task-fnd-03-02-attempt-01), review. Real mode requires explicit same-origin configuration. Paged read and poll use the shared identity-scoped QueryClient. All 130 frontend tests, TypeScript and scoped lint/format passed. Joint PO review pending for both leaves. INT-01 still gates full Parent closure. Implementation 021db02 pushed and verified on origin/phase/b-backend.
