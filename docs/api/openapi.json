@@ -12777,13 +12777,14 @@
           },
           "reason": {
             "type": "string",
-            "minLength": 10
+            "minLength": 10,
+            "maxLength": 10000,
+            "description": "Required for IT Manager and Admin assignment or transfer. Optional for Technician self-claim."
           }
         },
         "required": [
           "expectedVersion",
-          "team_id",
-          "reason"
+          "team_id"
         ],
         "additionalProperties": false
       },

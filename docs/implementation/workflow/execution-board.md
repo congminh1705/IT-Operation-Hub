@@ -18,7 +18,7 @@ purpose: "Maintain the single status and owner registry for every refined execut
 
 ## 1. Scope and authority
 
-All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. Execution states are **94 done**, **1 review**, **135 pending**. PRE-02, PRE-03 and PRE-04 are EPIC_DONE. [FND-03, FND-04, FND-05, FND-06, FND-07, FND-08, FND-09, FND-10 and FND-11 are EPIC_IN_PROGRESS in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
+All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. Execution states are **94 done**, **2 review**, **134 pending**. PRE-02, PRE-03 and PRE-04 are EPIC_DONE. [FND-03, FND-04, FND-05, FND-06, FND-07, FND-08, FND-09, FND-10 and FND-11 are EPIC_IN_PROGRESS in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
 
 The [package registry](../README.md#4-task-tracker) holds epic state; this board alone holds task state and PO ownership. Use the [task workflow](task-workflow.md). [Parent coverage and closure](../package-task-coverage.md) maps every parent criterion to outputs and names any external integration evidence. Package readiness means defined scope; dependencies, affected decisions and future coding authorization still gate execution.
 
@@ -130,7 +130,7 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FND-10.01](../tasks/FND-10.01.md) | [FND-10](../01-foundation.md#fnd-10) | Implement scoped ticket search and count query | [FND-09.02](../tasks/FND-09.02.md) | PO | done |
 | [FND-10.02](../tasks/FND-10.02.md) | [FND-10](../01-foundation.md#fnd-10) | Implement authorized ticket detail projections | [FND-10.01](../tasks/FND-10.01.md) | PO | done |
 | [FND-11.01](../tasks/FND-11.01.md) | [FND-11](../01-foundation.md#fnd-11) | Implement eligible assignment and team transfer | [FND-10.02](../tasks/FND-10.02.md) | PO | review |
-| [FND-11.02](../tasks/FND-11.02.md) | [FND-11](../01-foundation.md#fnd-11) | Implement concurrent self-claim and accept-start commands | [FND-11.01](../tasks/FND-11.01.md) | PO | pending |
+| [FND-11.02](../tasks/FND-11.02.md) | [FND-11](../01-foundation.md#fnd-11) | Implement concurrent self-claim and accept-start commands | [FND-11.01](../tasks/FND-11.01.md) | PO | review |
 | [FND-12.01](../tasks/FND-12.01.md) | [FND-12](../01-foundation.md#fnd-12) | Implement audience-separated comment and note commands | [FND-11.02](../tasks/FND-11.02.md) | PO | pending |
 | [FND-12.02](../tasks/FND-12.02.md) | [FND-12](../01-foundation.md#fnd-12) | Implement atomic Pending question and requester resume | [FND-12.01](../tasks/FND-12.01.md) | PO | pending |
 | [FND-12.03](../tasks/FND-12.03.md) | [FND-12](../01-foundation.md#fnd-12) | Implement resolution and requester closure | [FND-12.02](../tasks/FND-12.02.md) | PO | pending |
