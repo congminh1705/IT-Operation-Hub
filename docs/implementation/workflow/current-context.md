@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-07.01/attempt-01](task-history.md#task-fnd-07-01-attempt-01), review. Session-owned display-name update with strict fields, versioning, audit and idempotency. Verified rollback and denial cases on PostgreSQL. 24 backend tests, 130 frontend tests, five contract tests and static checks passed. Implementation push receipt pending.
+
 - [FND-08.02/attempt-02](task-history.md#task-fnd-08-02-attempt-02), done. PO accepted all FND-08 leaves. Board totals: 78 done and 152 pending. Parent remains EPIC_IN_PROGRESS until INT-01. FND-07.01 is technically eligible. FND-09.01 still requires FND-06.02.
 
 - [FND-08.02/attempt-01](task-history.md#task-fnd-08-02-attempt-01), review. Admin SLA publication with BR-09 initial defaults, immutable revisions and snapshot lookup. 22 PostgreSQL tests, Ruff, mypy and Alembic offline SQL passed. FND-08.01 is done. Implementation d29aa10 pushed and verified on origin/phase/b-backend. Parent closure awaits live integration.

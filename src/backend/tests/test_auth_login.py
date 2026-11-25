@@ -333,3 +333,133 @@ def test_idle_and_absolute_expiry_and_account_revocation(database: Database) -> 
         for token in (idle_token, absolute_token):
             record = db.get(AuthSession, digest(token))
             assert record is not None and record.revoked_at is not None
+
+
+def test_own_profile_rejects_forged_fields_and_preserves_session(
+    database: Database,
+) -> None:
+    from app.infrastructure.models import AuditLog
+
+    service = AuthService(database)
+    seed(service)
+    other_id = uuid4()
+    with database.transaction() as db:
+        db.add(
+            Account(
+                id=other_id,
+                email="other@example.invalid",
+                display_name="Other",
+                role="ADMIN",
+                active=True,
+                version=1,
+            )
+        )
+
+    with TestClient(
+        create_app(service, AuthSettings(frozenset({ORIGIN}))), base_url=ORIGIN
+    ) as client:
+        path = f"{BASE}/profile"
+        draft = {"display_name": "  T?n m?i  ", "expectedVersion": 1}
+        assert client.patch(path, json=draft).status_code == 401
+        assert login(client, preflight(client)).status_code == 200
+        csrf = str(client.get(f"{BASE}/csrf").json()["csrf_token"])
+        headers = {
+            "Origin": ORIGIN,
+            "X-CSRF-Token": csrf,
+            "Idempotency-Key": "profile-1",
+        }
+        assert (
+            client.patch(
+                path, json=draft, headers={**headers, "X-CSRF-Token": "invalid"}
+            ).status_code
+            == 403
+        )
+        for key, value in {
+            "userId": str(other_id),
+            "email": "other@example.invalid",
+            "role": "ADMIN",
+            "contact_phone": "secret-phone",
+        }.items():
+            rejected = client.patch(path, json={**draft, key: value}, headers=headers)
+            assert rejected.status_code == 422
+            assert value not in rejected.text
+        blank = client.patch(
+            path, json={**draft, "display_name": "   "}, headers=headers
+        )
+        assert (
+            blank.status_code == 422 and "display_name" in blank.json()["field_errors"]
+        )
+        invalid = client.patch(
+            path, json={**draft, "display_name": None}, headers=headers
+        )
+        assert (
+            invalid.status_code == 422
+            and "display_name" in invalid.json()["field_errors"]
+        )
+
+        result = client.patch(path, json=draft, headers=headers)
+        assert result.status_code == 200
+        view = result.json()
+        assert view["display_name"] == "T?n m?i" and view["version"] == 2
+        assert view["role"] == "REQUESTER" and view["email"] == EMAIL
+        assert client.get(f"{BASE}/me").json() == view
+        assert client.patch(path, json=draft, headers=headers).json() == view
+        stale = client.patch(
+            path, json=draft, headers={**headers, "Idempotency-Key": "stale"}
+        )
+        assert stale.status_code == 409 and stale.json()["code"] == "PROFILE_CONFLICT"
+        different = client.patch(
+            path, json={**draft, "display_name": "other"}, headers=headers
+        )
+        assert different.status_code == 409
+
+    with database.session() as db:
+        other = db.get(Account, other_id)
+        assert (
+            other is not None and other.display_name == "Other" and other.version == 1
+        )
+        audit = db.scalars(
+            select(AuditLog).where(AuditLog.action == "auth.profile_update")
+        ).all()
+        assert len(audit) == 1
+        assert audit[0].target_id != other_id
+        assert "T?n m?i" not in str(audit[0].before_after_redacted)
+
+
+def test_profile_failure_rolls_back_version_and_idempotency_key(
+    database: Database,
+) -> None:
+    from typing import Any
+
+    import pytest
+    from sqlalchemy.exc import SQLAlchemyError
+    from sqlalchemy.orm import Session
+
+    from app.modules.auth import http
+
+    service = AuthService(database)
+    seed(service)
+    with TestClient(
+        create_app(service, AuthSettings(frozenset({ORIGIN}))), base_url=ORIGIN
+    ) as client:
+        assert login(client, preflight(client)).status_code == 200
+        csrf = str(client.get(f"{BASE}/csrf").json()["csrf_token"])
+        headers = {
+            "Origin": ORIGIN,
+            "X-CSRF-Token": csrf,
+            "Idempotency-Key": "profile-retry",
+        }
+        body = {"display_name": "New display name", "expectedVersion": 1}
+
+        def fail_after_flush(session: Session, **_: Any) -> None:
+            session.flush()
+            raise SQLAlchemyError("synthetic transaction failure")
+
+        with pytest.MonkeyPatch.context() as patch:
+            patch.setattr(http, "write_audit", fail_after_flush)
+            failed = client.patch(f"{BASE}/profile", json=body, headers=headers)
+            assert failed.status_code == 503 and "synthetic" not in failed.text
+        old = client.get(f"{BASE}/me").json()
+        assert old["display_name"] == "Synthetic" and old["version"] == 1
+        retried = client.patch(f"{BASE}/profile", json=body, headers=headers)
+        assert retried.status_code == 200 and retried.json()["version"] == 2

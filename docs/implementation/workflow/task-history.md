@@ -11537,3 +11537,79 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-07.01, own-profile update.
 - Eligibility / remaining prerequisite: FND-04.02 done; separate implementation authorization.
+
+<a id="task-fnd-07-01-attempt-01"></a>
+
+### FND-07.01 - Attempt 01 - 2026-11-25T15:46:43+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-07.01/attempt-01
+- Task: [Task card](../tasks/FND-07.01.md)
+- Parent / phase: FND-07 / B
+- Executor: Codex
+- Started at: 2026-11-25 (exact time not captured)
+- Ended at: 2026-11-25T15:46:43+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None. FND-04.02 already done.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implement restricted own-profile display-name edit.
+- Delivered: The server derives identity from the live session, checks Origin and session CSRF, validates the two-field DTO, and writes the name, version, audit and idempotency ledger atomically.
+- Incomplete scope / deviations: Contact phone remains an open policy proposal and is excluded from the DTO. Password rotation and browser cutover belong to subsequent tasks.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/auth/http.py | ProfileUpdate and updateOwnProfile route | Validate and write scoped profile changes |
+| src/backend/tests/test_auth_login.py | Profile scope and rollback cases | Verify effects on PostgreSQL |
+| docs/api/openapi.json, docs/api/README.md, src/frontend/src/lib/api/contract.generated.ts | Closed profile schema | Keep existing transport contract aligned |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Own profile only | Valid session updates own name; forged ID, email and role rejected | Own name changes and other account stays unchanged. Unauthenticated, bad CSRF and extra DTO fields denied. | pass | [API tests](../../../src/backend/tests/test_auth_login.py) |
+| Safe failure and retry | Field errors and 409 preserve scope; failed write rolls back | Invalid names get display_name errors. Stale version and changed payload conflict. Injected post-flush error rolls back data and key; same-key retry succeeds. | pass | [API tests](../../../src/backend/tests/test_auth_login.py) |
+| Browser acceptance | Check actual focus and form state on live API | Existing UI unchanged. INT-01 owns cutover. | not-run | [Parent coverage](../package-task-coverage.md#fnd-07) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | .venv/Scripts/python.exe -m pytest -q with ITOH_TEST_DATABASE_URL set to local Compose PostgreSQL | API and DB checks pass | 24 passed, zero skipped. Upstream TestClient warning. | pass |
+| src/backend | .venv/Scripts/ruff.exe check app migrations tests and .venv/Scripts/mypy.exe app migrations tests | Lint and types pass | Exit 0 | pass |
+| src/frontend | pnpm.cmd typecheck and pnpm.cmd test | Types and frontend regressions pass | 130 tests passed | pass |
+| repository | python docs/api/generate_frontend_contract.py --check and python -B -m unittest discover -s docs/api -p test_frontend_contract.py | Generated types and drift fixtures pass | 8 operation slice current, 5 tests passed | pass |
+| deployment | Live browser cutover and production build | Verify integrated runtime | Out of leaf scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO review pending.
+- Findings / resolution: Trimmed display-name update leaves existing scopes and sessions intact. Audit stores version changes without the submitted name.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: None for leaf review. FND-07.02 and INT-01 remain for Parent.
+- Required resolution / owner: PO reviews this leaf. Integration owners verify live browser behavior.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-07.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [API tests](../../../src/backend/tests/test_auth_login.py). No visual changes.
+- Commit / build / environment: Implementation push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FND-07.01.
+- Eligibility / remaining prerequisite: FND-07.02 requires this leaf done and separate authorization.
