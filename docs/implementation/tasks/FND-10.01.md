@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-10.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-10-01-attempt-01).
+- Latest Report ID: FND-10.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-10-01-attempt-02).
 - Delivered: Implemented GET /api/v1/tickets with current own/team/organization scope before search, count and paging. Added status, priority, literal code/title search and deterministic ordering.
 - Changed paths: `read.py`, `organization/http.py`, `test_ticket_reads.py`, OpenAPI and generated contract metadata
 - Checks: 34 backend tests on PostgreSQL and Ruff/mypy passed.
-- Review: Agent verified. Joint PO review pending.
+- Review: PO accepted the service leaves. Agent verification remains in attempt 01.
 - Remaining: Integrated browser and session/cache acceptance remains INT-02.
 - Commit/build: FND-10.01 implementation `525a68e` pushed to origin/phase/b-backend.
-- Next: Joint review of the two FND-10 leaves after sequential verification.
+- Next: FND-11.01 is authorized. FND-10 Parent closure remains with INT-02.
