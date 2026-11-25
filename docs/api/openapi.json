@@ -3118,6 +3118,41 @@
                 "Cancelled"
               ]
             }
+          },
+          {
+            "name": "priority",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "P1",
+                "P2",
+                "P3",
+                "P4"
+              ]
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 180
+            },
+            "description": "Case-insensitive literal substring of ticket code or title."
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "recent",
+                "oldest",
+                "priority"
+              ],
+              "default": "recent"
+            }
           }
         ],
         "responses": {
