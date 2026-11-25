@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-07.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-07-01-attempt-01).
+- Latest Report ID: FND-07.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-07-01-attempt-02).
 - Delivered: PATCH /api/v1/auth/profile updates display_name for the authenticated principal. Origin and CSRF enforced, safe field errors, version conflict, audit and idempotency recorded.
 - Changed paths: src/backend/app/modules/auth/http.py, src/backend/tests/test_auth_login.py, docs/api and generated frontend DTO.
 - Checks: 24 PostgreSQL backend tests, 130 frontend tests and five OpenAPI drift tests pass. Ruff, mypy and TypeScript pass.
-- Review: Agent verified. PO review pending.
+- Review: PO accepted implementation. Agent verification remains in attempt 01.
 - Remaining: Password rotation belongs to FND-07.02. INT-01 owns live frontend behavior.
 - Commit/build: Implementation 0d36eab pushed and verified on origin/phase/b-backend.
-- Next: PO reviews FND-07.01. FND-07.02 remains pending.
+- Next: FND-07.02 authorized after PO acceptance.
