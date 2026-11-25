@@ -72,12 +72,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: PRE-03.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-03-01-attempt-01).
+- Latest Report ID: PRE-03.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-03-01-attempt-02).
 - Delivered: [D-40 knowledge contract](../../decisions/design-decisions.md#d-40-knowledge-access-index-pre-0301) records scoped author/publisher rights, immutable versions, live ACL checks, proposed embedding/chunk profile and freshness.
 - Changed paths: docs/decisions/design-decisions.md, technical/api-design.md and workflow records.
 - Checks: Synthetic Draft, revoked ACL, source-version mismatch, incompatible dimensions and eligible published case passed; verified published provider documentation. Runtime, build and provider calls not run.
-- Review: Agent checked the contract. PO approval pending.
+- Review: PO approved the contract. Agent verification remains in attempt 01.
 - Remaining: Named grants, model/dimension and index pilot values, real account eligibility and provider tests.
 - Commit/build: Implementation 570b398 pushed and verified on origin/phase/b-backend.
-- Next: PRE-03.02 awaits PO acceptance of this leaf.
+- Next: Continue PRE-03.02 and PRE-03.03 in dependency order under joint review.

@@ -210,7 +210,7 @@ PO accepted the bounded automation design for PRE-02 closure on 2026-11-25. BR-1
 
 ### D-40 knowledge publication, ACL and indexing (PRE-03.01)
 
-D-37, BR-21 and D-48 are confirmed. The reviewer designations and index settings below are proposals. No provider model, production data or spend is authorized by this entry.
+PO approved this contract on 2026-11-25. D-37, BR-21 and D-48 remain binding. Named production grants and verified account/model eligibility must be supplied separately. Listed index settings are pilot candidates.
 
 | Boundary | Confirmed rule and review proposal | Consumer |
 | --- | --- | --- |
