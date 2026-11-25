@@ -11038,3 +11038,77 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Joint review of FND-05 leaves after sequential checks.
 - Eligibility / remaining prerequisite: PO review for done. External acceptance for Parent PR.
+
+<a id="task-fnd-05-02-attempt-01"></a>
+
+### FND-05.02 - Attempt 01 - 2026-11-25T15:07:22+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-05.02/attempt-01
+- Task: [Task card](../tasks/FND-05.02.md)
+- Parent / phase: FND-05 / B
+- Executor: Codex
+- Started at: 2026-11-25 (exact time not captured)
+- Ended at: 2026-11-25T15:07:22+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None. PO requested the whole Parent; joint review follows sequential verification.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Complete FND-05.02 within FND-05.
+- Delivered: Admin team creation and edits, explicit single active intake, eligible team memberships and a minimal intake lookup.
+- Incomplete scope / deviations: Actual open-work handover belongs to FND-17. FND-08.01 supplies ticket categories. INT-01 owns real browser and full Parent acceptance.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/organization, migrations/versions/0005_teams.py, tests/test_organization.py, docs/api/openapi.json and src/backend/README.md. | Organization domain, Alembic and API checks | Deliver the selected leaf |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Leaf service checks | Bounded real PostgreSQL and API behavior | Admin team creation and edits, explicit single active intake, eligible team memberships and a minimal intake lookup. | pass | [Organization API tests](../../../src/backend/tests/test_organization.py) |
+| Scoped failures and selected Parent criteria | Role and record checks preserve allowed access and avoid unsafe partial changes | Two competing intake selections left exactly one active intake. Invalid members and non-Admin mutations were rejected. Active removal and deactivation return HANDOVER_REQUIRED and preserve stored membership. | pass | [Organization API tests](../../../src/backend/tests/test_organization.py) |
+| Full Parent real-flow closure | Actual integrated frontend and production services | Deferred to INT-01 | not-run | [Closure mapping](../package-task-coverage.md#fnd-05) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | .venv/Scripts/python.exe -m pytest -q with ITOH_TEST_DATABASE_URL set to local Compose PostgreSQL | Backend API and database checks pass | 19 passed, zero skipped; upstream TestClient warning | pass |
+| src/backend | .venv/Scripts/ruff.exe check app migrations tests and .venv/Scripts/mypy.exe app migrations tests | Lint and strict typing pass | Exit 0 for both | pass |
+| repository | python docs/api/generate_frontend_contract.py --check and python -B -m unittest discover -s docs/api -p test_frontend_contract.py | Contract fixture checks | 8 selected operations current, 5 tests passed | pass |
+| src/backend | .venv/Scripts/alembic.exe upgrade head --sql | Offline migration SQL | Exit 0 | pass |
+| deployment | Real browser cutover and production deployment | Verify integrated flows | Owned by INT-01 and deployment tasks | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. Joint PO review pending.
+- Findings / resolution: Two competing intake selections left exactly one active intake. Invalid members and non-Admin mutations were rejected. Active removal and deactivation return HANDOVER_REQUIRED and preserve stored membership.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent closure awaits INT-01. Actual open-work handover belongs to FND-17. FND-08.01 supplies ticket categories. INT-01 owns real browser and full Parent acceptance.
+- Required resolution / owner: PO reviews the leaves. INT-01 owning tasks establish live-flow evidence.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-05.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [API tests](../../../src/backend/tests/test_organization.py). Backend-only verification.
+- Commit / build / environment: FND-05.02 implementation push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR before external closure.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint review of FND-05 leaves after sequential checks.
+- Eligibility / remaining prerequisite: PO review for done. External acceptance for Parent PR.

@@ -1260,6 +1260,15 @@
           },
           {
             "$ref": "#/components/parameters/PageSize"
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Filter active departments for new account references. Omit to include retained historical records."
           }
         ],
         "responses": {
@@ -1748,7 +1757,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/NamedViewPage"
+                  "$ref": "#/components/schemas/TeamViewPage"
                 }
               }
             }
@@ -1859,7 +1868,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/NamedView"
+                  "$ref": "#/components/schemas/TeamView"
                 }
               }
             }
@@ -1985,7 +1994,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/NamedView"
+                  "$ref": "#/components/schemas/TeamView"
                 }
               }
             }
@@ -2105,7 +2114,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/NamedView"
+                  "$ref": "#/components/schemas/TeamView"
                 }
               }
             }
@@ -2192,7 +2201,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NamedUpdate"
+                "$ref": "#/components/schemas/TeamUpdate"
               }
             }
           }
@@ -15312,6 +15321,96 @@
           "confirmation_required"
         ],
         "description": "D-42 design declaration, never execution success. Server-owned allowlist prepares a trusted native form. Explicit user submission dispatches the existing domain API with session/CSRF/state/version/idempotency. ticket.create retains its draft/confirm API. Security forms do not send secrets through assistant content, prefill, model or history. Unknown or unsupported form_key is rejected; same workspace does not grant extra permissions."
+      },
+      "TeamUpdate": {
+        "type": "object",
+        "properties": {
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 10
+          },
+          "intake": {
+            "type": "boolean",
+            "description": "Set true to atomically replace the active intake. Clearing the last intake is rejected."
+          }
+        },
+        "required": [
+          "expectedVersion",
+          "reason"
+        ],
+        "additionalProperties": false,
+        "minProperties": 3
+      },
+      "TeamView": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "intake": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "active",
+          "version",
+          "intake"
+        ],
+        "additionalProperties": false
+      },
+      "TeamViewPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeamView"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "page_size": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "items",
+          "page",
+          "page_size",
+          "total"
+        ],
+        "additionalProperties": false
       }
     }
   },

@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-05.02/attempt-01](task-history.md#task-fnd-05-02-attempt-01), review. Admin team creation and edits, explicit single active intake, eligible team memberships and a minimal intake lookup. 19 PostgreSQL-backed tests, Ruff and mypy passed. Actual open-work handover belongs to FND-17. FND-08.01 supplies ticket categories. INT-01 owns real browser and full Parent acceptance. FND-05.02 implementation push receipt pending.
+
 - [FND-05.01/attempt-01](task-history.md#task-fnd-05-01-attempt-01), review. Admin department lifecycle, preserved historical account references, and own-department lookup. 17 PostgreSQL-backed tests, Ruff and mypy passed. Ticket-category lookups belong to FND-08.01. Intake lookup is next in FND-05.02. INT-01 owns browser closure. FND-05.01 implementation push receipt pending.
 
 - [FND-04.02/attempt-02](task-history.md#task-fnd-04-02-attempt-02), done. PO accepted the implementation. Both FND-04 leaves are done. Parent remains EPIC_IN_PROGRESS pending INT-01 live-flow evidence. No Parent PR. Board totals: 74 done and 156 pending.

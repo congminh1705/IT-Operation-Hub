@@ -18,7 +18,7 @@ purpose: "Maintain the single status and owner registry for every refined execut
 
 ## 1. Scope and authority
 
-All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. Execution states are **74 done**, **1 review**, **155 pending**. [FND-03, FND-04 and FND-05 are EPIC_IN_PROGRESS in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
+All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. Execution states are **74 done**, **2 review**, **154 pending**. [FND-03, FND-04 and FND-05 are EPIC_IN_PROGRESS in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
 
 The [package registry](../README.md#4-task-tracker) holds epic state; this board alone holds task state and PO ownership. Use the [task workflow](task-workflow.md). [Parent coverage and closure](../package-task-coverage.md) maps every parent criterion to outputs and names any external integration evidence. Package readiness means defined scope; dependencies, affected decisions and future coding authorization still gate execution.
 
@@ -118,7 +118,7 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FND-04.01](../tasks/FND-04.01.md) | [FND-04](../01-foundation.md#fnd-04) | Implement credential verification and server session creation | [FND-02.03](../tasks/FND-02.03.md), [FND-03.02](../tasks/FND-03.02.md) | PO | done |
 | [FND-04.02](../tasks/FND-04.02.md) | [FND-04](../01-foundation.md#fnd-04) | Implement current-principal, logout and session revocation | [FND-04.01](../tasks/FND-04.01.md) | PO | done |
 | [FND-05.01](../tasks/FND-05.01.md) | [FND-05](../01-foundation.md#fnd-05) | Implement department and category-safe reference ownership | [FND-04.02](../tasks/FND-04.02.md) | PO | review |
-| [FND-05.02](../tasks/FND-05.02.md) | [FND-05](../01-foundation.md#fnd-05) | Implement teams, memberships and single intake configuration | [FND-05.01](../tasks/FND-05.01.md) | PO | pending |
+| [FND-05.02](../tasks/FND-05.02.md) | [FND-05](../01-foundation.md#fnd-05) | Implement teams, memberships and single intake configuration | [FND-05.01](../tasks/FND-05.01.md) | PO | review |
 | [FND-06.01](../tasks/FND-06.01.md) | [FND-06](../01-foundation.md#fnd-06) | Implement verified account provisioning command | [FND-05.02](../tasks/FND-05.02.md) | PO | pending |
 | [FND-06.02](../tasks/FND-06.02.md) | [FND-06](../01-foundation.md#fnd-06) | Implement secure provisioning result and audit contract | [FND-06.01](../tasks/FND-06.01.md) | PO | pending |
 | [FND-07.01](../tasks/FND-07.01.md) | [FND-07](../01-foundation.md#fnd-07) | Implement restricted own-profile update | [FND-04.02](../tasks/FND-04.02.md) | PO | pending |

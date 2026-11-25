@@ -7,7 +7,7 @@ from uuid import UUID, uuid4
 from fastapi import APIRouter, Query, Request, Response
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field
-from sqlalchemy import func, select
+from sqlalchemy import func, select, text
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
 
@@ -18,10 +18,10 @@ from app.infrastructure.commands import (
     run_idempotent,
 )
 from app.infrastructure.events import Actor, SafeFacts, Target, write_audit
-from app.modules.auth.http import AuthSettings
+from app.modules.auth.http import AuthSettings, UserView, user_view
 from app.modules.auth.models import Account
 from app.modules.auth.service import AuthService, session_csrf
-from app.modules.organization.models import Department
+from app.modules.organization.models import Department, Team, TeamMember
 
 
 class Rejected(Exception):
@@ -57,6 +57,42 @@ class NamedPage(BaseModel):
     page: int
     page_size: int
     total: int
+
+
+class TeamUpdate(NamedUpdate):
+    intake: bool | None = None
+
+
+class TeamView(NamedView):
+    intake: bool
+
+
+class TeamPage(BaseModel):
+    items: list[TeamView]
+    page: int
+    page_size: int
+    total: int
+
+
+class MemberCommand(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    user_id: UUID
+    expectedVersion: int = Field(ge=1, strict=True)
+    active: bool = Field(strict=True)
+    reason: str = Field(min_length=10, max_length=1000)
+
+
+class MemberPage(BaseModel):
+    items: list[UserView]
+    page: int
+    page_size: int
+    total: int
+
+
+class TeamReference(BaseModel):
+    id: UUID
+    version: int
+    request_id: str
 
 
 def normalized_name(value: str) -> tuple[str, str]:
@@ -317,6 +353,232 @@ def organization_router(
             status=200,
         )
 
+    def team(db: Session, record_id: UUID) -> Team:
+        row = db.get(Team, record_id)
+        if row is None:
+            raise Rejected(404, "NOT_FOUND")
+        return row
+
+    def team_lock(db: Session) -> None:
+        # Serialize intake switches, membership changes and team writes.
+        db.execute(text("SELECT pg_advisory_xact_lock(505002)"))
+
+    def team_result(db: Session, result: CommandResult) -> TeamView:
+        row = team(db, result.id)
+        if row.version != result.version:
+            raise Rejected(409, "REPLAY_STALE")
+        return TeamView.model_validate(row)
+
+    def audit_team(
+        db: Session, actor: Account, action: str, row: Team, before: SafeFacts
+    ) -> None:
+        write_audit(
+            db,
+            actor=Actor("user", actor.id),
+            action=action,
+            target=Target("team", row.id),
+            before=before,
+            after=SafeFacts(active=row.active, version=row.version),
+        )
+
+    @router.get("/teams", operation_id="listTeams", response_model=TeamPage)
+    def teams(
+        request: Request,
+        page: Annotated[int, Query(ge=1, le=1_000_000)] = 1,
+        page_size: Annotated[int, Query(ge=1, le=100)] = 20,
+    ) -> Response:
+        def read(db: Session, _: Account) -> TeamPage:
+            total = db.scalar(select(func.count()).select_from(Team)) or 0
+            items = db.scalars(
+                select(Team)
+                .order_by(Team.name_key, Team.id)
+                .offset((page - 1) * page_size)
+                .limit(page_size)
+            )
+            return TeamPage(
+                items=[TeamView.model_validate(row) for row in items],
+                page=page,
+                page_size=page_size,
+                total=total,
+            )
+
+        return query(request, read)
+
+    @router.get("/teams/{id}", operation_id="getTeam", response_model=TeamView)
+    def get_team(id: UUID, request: Request) -> Response:
+        return query(request, lambda db, _: TeamView.model_validate(team(db, id)))
+
+    @router.post(
+        "/teams", operation_id="createTeam", response_model=TeamView, status_code=201
+    )
+    def create_team(request: Request, body: NamedCreate) -> Response:
+        def execute(db: Session, actor: Account) -> CommandResult:
+            team_lock(db)
+            name, key = normalized_name(body.name)
+            row = Team(
+                id=uuid4(),
+                name=name,
+                name_key=key,
+                active=body.active,
+                intake=False,
+                version=1,
+            )
+            db.add(row)
+            audit_team(db, actor, "team.create", row, SafeFacts())
+            return CommandResult(row.id, row.version)
+
+        return change(
+            request, "team.create", body.model_dump(), execute, team_result, status=201
+        )
+
+    @router.patch("/teams/{id}", operation_id="updateTeam", response_model=TeamView)
+    def update_team(id: UUID, request: Request, body: TeamUpdate) -> Response:
+        def execute(db: Session, actor: Account) -> CommandResult:
+            team_lock(db)
+            row = team(db, id)
+            if row.version != body.expectedVersion:
+                raise Rejected(409, "STALE_VERSION")
+            if len(body.reason.strip()) < 10 or all(
+                v is None for v in (body.name, body.active, body.intake)
+            ):
+                raise Rejected(422, "INVALID_CHANGE")
+            if body.intake is False and row.intake:
+                raise Rejected(409, "INTAKE_REPLACEMENT_REQUIRED")
+            if body.active is False and row.active:
+                raise Rejected(409, "HANDOVER_REQUIRED")
+
+            before = SafeFacts(active=row.active, version=row.version)
+            if body.name is not None:
+                row.name, row.name_key = normalized_name(body.name)
+            if body.active is not None:
+                row.active = body.active
+            if body.intake is True:
+                if not row.active:
+                    raise Rejected(409, "INACTIVE_INTAKE")
+                previous = db.scalar(
+                    select(Team).where(Team.intake.is_(True), Team.id != id)
+                )
+                if previous is not None:
+                    previous_before = SafeFacts(
+                        active=previous.active, version=previous.version
+                    )
+                    previous.intake = False
+                    previous.version += 1
+                    audit_team(
+                        db, actor, "team.intake_unset", previous, previous_before
+                    )
+                    db.flush()
+                row.intake = True
+            row.version += 1
+            audit_team(
+                db,
+                actor,
+                "team.intake_set" if body.intake is True else "team.update",
+                row,
+                before,
+            )
+            return CommandResult(row.id, row.version)
+
+        payload: dict[str, Any] = body.model_dump(exclude_unset=True)
+        return change(
+            request,
+            "team.update",
+            {"id": str(id), **payload},
+            execute,
+            team_result,
+            status=200,
+        )
+
+    @router.get(
+        "/teams/{id}/members", operation_id="listTeamMembers", response_model=MemberPage
+    )
+    def list_members(
+        id: UUID,
+        request: Request,
+        page: Annotated[int, Query(ge=1, le=1_000_000)] = 1,
+        page_size: Annotated[int, Query(ge=1, le=100)] = 20,
+    ) -> Response:
+        def read(db: Session, _: Account) -> MemberPage:
+            team(db, id)
+            rows = (
+                select(Account)
+                .join(TeamMember, TeamMember.account_id == Account.id)
+                .where(TeamMember.team_id == id, TeamMember.active.is_(True))
+            )
+            total = db.scalar(select(func.count()).select_from(rows.subquery())) or 0
+            items = db.scalars(
+                rows.order_by(Account.display_name, Account.id)
+                .offset((page - 1) * page_size)
+                .limit(page_size)
+            )
+            return MemberPage(
+                items=[user_view(row) for row in items],
+                page=page,
+                page_size=page_size,
+                total=total,
+            )
+
+        return query(request, read)
+
+    @router.post(
+        "/teams/{id}/members",
+        operation_id="setTeamMembership",
+        response_model=TeamReference,
+    )
+    def set_member(id: UUID, request: Request, body: MemberCommand) -> Response:
+        def execute(db: Session, actor: Account) -> CommandResult:
+            team_lock(db)
+            row = team(db, id)
+            if row.version != body.expectedVersion:
+                raise Rejected(409, "STALE_VERSION")
+            if not body.active:
+                raise Rejected(409, "HANDOVER_REQUIRED")
+            if len(body.reason.strip()) < 10:
+                raise Rejected(422, "INVALID_CHANGE")
+            candidate = db.get(Account, body.user_id, with_for_update=True)
+            if (
+                not row.active
+                or candidate is None
+                or not candidate.active
+                or candidate.role not in ("TECHNICIAN", "IT_MANAGER", "ADMIN")
+            ):
+                raise Rejected(409, "INELIGIBLE_MEMBER")
+            membership = db.get(TeamMember, (id, candidate.id))
+            if membership is None:
+                db.add(TeamMember(team_id=id, account_id=candidate.id, active=True))
+            elif membership.active:
+                raise Rejected(409, "MEMBER_EXISTS")
+            else:
+                membership.active = True
+            before = SafeFacts(active=row.active, version=row.version)
+            row.version += 1
+            write_audit(
+                db,
+                actor=Actor("user", actor.id),
+                action="team.member_add",
+                target=Target("team", id),
+                before=before,
+                after=SafeFacts(
+                    active=row.active, version=row.version, assignee_id=candidate.id
+                ),
+            )
+            return CommandResult(id, row.version)
+
+        def reference(_: Session, result: CommandResult) -> TeamReference:
+            return TeamReference(
+                id=result.id, version=result.version, request_id=str(uuid4())
+            )
+
+        payload: dict[str, Any] = body.model_dump(mode="json")
+        return change(
+            request,
+            "team.member.set",
+            {"id": str(id), **payload},
+            execute,
+            reference,
+            status=200,
+        )
+
     @router.get("/lookups", operation_id="listAllowedLookups", response_model=NamedPage)
     def lookups(
         request: Request,
@@ -325,6 +587,18 @@ def organization_router(
         page_size: Annotated[int, Query(ge=1, le=100)] = 20,
     ) -> Response:
         def read(db: Session, account: Account) -> NamedPage:
+            if kind == "intake_teams":
+                intake = db.scalar(
+                    select(Team).where(Team.intake.is_(True), Team.active.is_(True))
+                )
+                return NamedPage(
+                    items=[NamedView.model_validate(intake)]
+                    if intake is not None and page == 1
+                    else [],
+                    page=page,
+                    page_size=page_size,
+                    total=int(intake is not None),
+                )
             if kind != "own_department":
                 raise Rejected(503, "LOOKUP_UNAVAILABLE")
             row = (
