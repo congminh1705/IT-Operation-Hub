@@ -305,7 +305,7 @@ PO approved the PRE-04.01 pilot plan on 2026-11-25, including RPO <= 24 h, RTO <
 
 ### D-40 controlled release and isolated recovery (PRE-04.02)
 
-This procedure is proposed for PO review. Use the approved PRE-04.01 pilot targets when evaluating rehearsal results. Production deployment, failover and external egress each require their own authorization.
+PO approved this release and recovery contract on 2026-11-25. Use the approved PRE-04.01 pilot targets when evaluating rehearsal results. Production deployment, failover and external egress each require their own authorization.
 
 | Gate | Required sequence and evidence |
 | --- | --- |

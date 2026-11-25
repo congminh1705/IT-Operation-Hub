@@ -71,12 +71,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: PRE-04.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-04-02-attempt-01).
+- Latest Report ID: PRE-04.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-04-02-attempt-02).
 - Delivered: Single migration runner and release gates, explicit rollback/forward conditions, isolated restore and controlled resume with replay reconciliation. [D-40 release and recovery walkthroughs](../../decisions/design-decisions.md#d-40-release-isolated-recovery-pre-0402)
 - Changed paths: docs/decisions/design-decisions.md, docs/technical/architecture.md and workflow records.
 - Checks: Synthetic clean/partial migration failure and isolated recovery/resume walkthroughs passed. No deployment or recovery execution.
-- Review: Agent reviewed the proposed contract. PO approval pending.
+- Review: PO approved the release and recovery contract. Agent evidence remains in attempt 01.
 - Remaining: Named operator, deployment authorization and actual QA-05 evidence.
 - Commit/build: Implementation 8293801 pushed and verified on origin/phase/b-backend.
-- Next: PO reviews PRE-04.02. Parent can close after approval and scope-safe delivery.
+- Next: PRE-04 is EPIC_DONE. Parent PR awaits scope-safe delivery.
