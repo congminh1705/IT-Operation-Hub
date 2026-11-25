@@ -14,7 +14,7 @@ authority: derived
 
 ## Latest task report
 
-- [PRE-04.02/attempt-02](task-history.md#task-pre-04-02-attempt-02), done. PO accepted both PRE-04 leaves and closed the Parent (EPIC_DONE). Board: 88 done, 142 pending. Runtime rehearsal belongs to QA-05. A Parent-only PR remains pending because Phase B still includes unmerged FND work.
+- [PRE-04.02/attempt-02](task-history.md#task-pre-04-02-attempt-02), done. PO accepted both PRE-04 leaves and closed the Parent (EPIC_DONE). Board: 88 done, 142 pending. Runtime rehearsal belongs to QA-05. Parent [PR #27](https://github.com/congminh1705/IT-Operation-Hub/pull/27) merged into main at 1baec70. Phase B was reconciled with main and preserves FND records.
 
 - [PRE-04.02/attempt-01](task-history.md#task-pre-04-02-attempt-01), review. Documented single migration runner, rollback/forward split, isolated restore/egress blocks and evidence gates for controlled resume. Synthetic walkthroughs passed; no real deployment. Implementation 8293801 pushed and verified on origin/phase/b-backend.
 

@@ -79,4 +79,4 @@ A future request authorizes the selected implementation (or this decision-refine
 - Review: PO approved the release and recovery contract. Agent evidence remains in attempt 01.
 - Remaining: Named operator, deployment authorization and actual QA-05 evidence.
 - Commit/build: Implementation 8293801 pushed and verified on origin/phase/b-backend.
-- Next: PRE-04 is EPIC_DONE. Parent PR awaits scope-safe delivery.
+- Next: PRE-04 is EPIC_DONE. Parent [PR #27](https://github.com/congminh1705/IT-Operation-Hub/pull/27) merged into main at 1baec70.
