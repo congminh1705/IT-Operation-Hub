@@ -10805,3 +10805,423 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Resolve Parent-only PR delivery; subsequent work needs authorization.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-pre-03-01-attempt-01"></a>
+
+### PRE-03.01 - Attempt 01 - 2026-11-25T16:24:42+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: PRE-03.01/attempt-01
+- Task: [Task card](../tasks/PRE-03.01.md)
+- Parent / phase: PRE-03 / B
+- Executor: Codex
+- Started at: 2026-11-25T16:24:42+07:00
+- Ended at: 2026-11-25T16:24:42+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Refine knowledge publication, ACL and index contracts.
+- Delivered: Recorded explicit scoped roles, immutable source versions, authorization before retrieval/provider/output/history and model/freshness candidates.
+- Incomplete scope / deviations: PO approval and live grants, actual project quota and provider verification remain outstanding.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/decisions/design-decisions.md, docs/technical/api-design.md and PRE-03.01 records | PRE-03 decisions and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Draft/internal/revoked | No context or citation leakage under stale index | Confirmed current ACL and source-state gates before ranking, provider and output/history | pass | [D-40 knowledge walkthroughs](../../decisions/design-decisions.md#d-40-knowledge-access-index-pre-0301) |
+| Freshness and compatibility | Reject stale/mismatched generations | Synthetic old version and wrong dimension denied | pass | [D-40 knowledge walkthroughs](../../decisions/design-decisions.md#d-40-knowledge-access-index-pre-0301) |
+| Exact provider availability | Verify account and quota before effect | Google public docs reviewed; did not call a project | not-run | [D-40 knowledge walkthroughs](../../decisions/design-decisions.md#d-40-knowledge-access-index-pre-0301) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Run Python boolean assertions for Draft, revoked ACL, stale source version, 3072 versus candidate 768 and matching allowed source. Read BR-21/D-37/D-48; check git diff whitespace | Consistent documented result | Verified | pass |
+| application | Run application tests and build | Runtime verification for later consumers | Documentation-only scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent contract review. PO approval pending.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO approval and live grants, actual project quota and provider verification remain outstanding.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/PRE-03.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [D-40 knowledge walkthroughs](../../decisions/design-decisions.md#d-40-knowledge-access-index-pre-0301).
+- Commit / build / environment: Implementation 570b398 pushed and verified on origin/phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PRE-03.02 after PO acceptance.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-pre-03-01-attempt-02"></a>
+
+### PRE-03.01 - Attempt 02 - 2026-11-25T16:27:38+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: PRE-03.01/attempt-02
+- Task: [Task card](../tasks/PRE-03.01.md)
+- Parent / phase: PRE-03 / B
+- Executor: Codex
+- Started at: 2026-11-25T16:27:38+07:00
+- Ended at: 2026-11-25T16:27:38+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Agent verification](#task-pre-03-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO approval and continue Parent.
+- Delivered: Knowledge contract accepted. Remaining leaves authorized in dependency order.
+- Incomplete scope / deviations: Named grants, provider validation and operational values remain for their owners.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/decisions/design-decisions.md and PRE-03.01 workflow records | PRE-03 decisions and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Leaf acceptance | Agent review and PO approval | PO accepted | pass | [Original verification](#task-pre-03-01-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Review D-40, board and card alignment; git diff --check | Consistent documented result | Verified | pass |
+| application | Run application tests and build | Runtime verification for later consumers | Documentation-only scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Named grants, provider validation and operational values remain for their owners.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/PRE-03.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-pre-03-01-attempt-01).
+- Commit / build / environment: Implementation 570b398 pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PRE-03.02, then PRE-03.03 after checks.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-pre-03-02-attempt-01"></a>
+
+### PRE-03.02 - Attempt 01 - 2026-11-25T16:28:26+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: PRE-03.02/attempt-01
+- Task: [Task card](../tasks/PRE-03.02.md)
+- Parent / phase: PRE-03 / B
+- Executor: Codex
+- Started at: 2026-11-25T16:28:26+07:00
+- Ended at: 2026-11-25T16:28:26+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Complete the selected PRE-03 decision leaf and prepare joint review.
+- Delivered: Defined the trusted form registry, server-bound confirmation, separate chat/run retention, redaction and the shared budget reservation model.
+- Incomplete scope / deviations: PO review, production retention and real quota settings remain. Numeric examples are synthetic pilot candidates.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/decisions/design-decisions.md, docs/10-ai-assistant.md and PRE-03.02 records | PRE-03 decisions and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Exact confirmation | Edit/expiry/cancel prevent new effect; same-key replay reconciles | Scenario checked | pass | [D-40 assistant scenarios](../../decisions/design-decisions.md#d-40-assistant-confirmation-budget-pre-0302) |
+| Shared allowance | Unknown result stays held; mode totals never expand global quota | Scenario checked | pass | [D-40 assistant scenarios](../../decisions/design-decisions.md#d-40-assistant-confirmation-budget-pre-0302) |
+| Scoped data and audit | Separate chat retention and redacted operational records | Source and scenario checked | pass | [D-40 assistant scenarios](../../decisions/design-decisions.md#d-40-assistant-confirmation-budget-pre-0302) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Python assertions over digest equality, expiry and shared mode reservation arithmetic, plus BR-20/D-42/D-48 consistency and git diff --check | Consistent documented result | Verified | pass |
+| application | Run application tests and build | Runtime verification for later consumers | Documentation-only scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent contract review. Joint PO review pending.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO review, production retention and real quota settings remain. Numeric examples are synthetic pilot candidates.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/PRE-03.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [D-40 assistant scenarios](../../decisions/design-decisions.md#d-40-assistant-confirmation-budget-pre-0302).
+- Commit / build / environment: PRE-03.02 implementation dec02ca pushed and verified on origin/phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review before Parent closure.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-pre-03-03-attempt-01"></a>
+
+### PRE-03.03 - Attempt 01 - 2026-11-25T16:29:55+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: PRE-03.03/attempt-01
+- Task: [Task card](../tasks/PRE-03.03.md)
+- Parent / phase: PRE-03 / B
+- Executor: Codex
+- Started at: 2026-11-25T16:29:55+07:00
+- Ended at: 2026-11-25T16:29:55+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Decide minimum inventory sources and a bounded reservation proposal.
+- Delivered: Proposed no durable reservations and documented availability, shortage, actual issue and D-48 separation.
+- Incomplete scope / deviations: PO approval pending. Runtime, account eligibility and production rollout unverified.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/decisions/design-decisions.md, docs/technical/api-design.md and PRE-03.03 workflow records | PRE-03 decisions and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Reservation policy | No hidden ownership, expiry or release | Competing holds unsupported; expired preview writes nothing | pass | [D-40 inventory scenarios](../../decisions/design-decisions.md#d-40-inventory-source-pre-0303) |
+| Shortage and issue | Surface insufficient stock and serialize real issue | Synthetic shortage and one-success/one-conflict checks passed | pass | [D-40 inventory scenarios](../../decisions/design-decisions.md#d-40-inventory-source-pre-0303) |
+| Minimum sources and provider | Access-filter evidence and preserve D-48 | Source review passed; no provider calls | pass | [D-40 inventory scenarios](../../decisions/design-decisions.md#d-40-inventory-source-pre-0303) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Python assertions for shortage (2,1), two non-mutating planning previews, expiry and one-success/one-conflict issue model; BR-11 and D-48 source review; git diff --check | Consistent documented result | Verified | pass |
+| application | Run application tests and build | Runtime verification for later consumers | Documentation-only scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent contract review. Joint PO review pending.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO approval pending. Runtime, account eligibility and production rollout unverified.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/PRE-03.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [D-40 inventory scenarios](../../decisions/design-decisions.md#d-40-inventory-source-pre-0303).
+- Commit / build / environment: PRE-03.03 implementation a1dbff2 pushed and verified on origin/phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews PRE-03.02 and PRE-03.03.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-pre-03-02-attempt-02"></a>
+
+### PRE-03.02 - Attempt 02 - 2026-11-25T16:32:32+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: PRE-03.02/attempt-02
+- Task: [Task card](../tasks/PRE-03.02.md)
+- Parent / phase: PRE-03 / B
+- Executor: Codex
+- Started at: 2026-11-25T16:32:32+07:00
+- Ended at: 2026-11-25T16:32:32+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Agent verification](#task-pre-03-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record joint PO approval and close PRE-03.
+- Delivered: All three leaves are done and the Parent criteria pass at decision level. No INT gate applies.
+- Incomplete scope / deviations: No runtime or provider readiness implied. The shared phase diff includes unmerged FND changes; the Parent PR awaits a scope-safe delivery route.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/PRE-03.02.md, D-40 and workflow records | PRE-03 decisions and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Leaf and Parent closure | Verified contract and PO approval | All PRE-03 leaves accepted | pass | [Prior verification](#task-pre-03-02-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Check board, registry, D-40, report links and git diff --check | Consistent documented result | Verified | pass |
+| application | Run application tests and build | Runtime verification for later consumers | Documentation-only scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Joint PO acceptance.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: No runtime or provider readiness implied. The shared phase diff includes unmerged FND changes; the Parent PR awaits a scope-safe delivery route.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/PRE-03.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-pre-03-02-attempt-01).
+- Commit / build / environment: Implementation dec02ca pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_DONE. Scoped Parent PR pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Resolve scoped Parent PR delivery; no next Parent authorized.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-pre-03-03-attempt-02"></a>
+
+### PRE-03.03 - Attempt 02 - 2026-11-25T16:32:32+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: PRE-03.03/attempt-02
+- Task: [Task card](../tasks/PRE-03.03.md)
+- Parent / phase: PRE-03 / B
+- Executor: Codex
+- Started at: 2026-11-25T16:32:32+07:00
+- Ended at: 2026-11-25T16:32:32+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Agent verification](#task-pre-03-03-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record joint PO approval and close PRE-03.
+- Delivered: All three leaves are done and the Parent criteria pass at decision level. No INT gate applies.
+- Incomplete scope / deviations: No runtime or provider readiness implied. The shared phase diff includes unmerged FND changes; the Parent PR awaits a scope-safe delivery route.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/PRE-03.03.md, D-40 and workflow records | PRE-03 decisions and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Leaf and Parent closure | Verified contract and PO approval | All PRE-03 leaves accepted | pass | [Prior verification](#task-pre-03-03-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Check board, registry, D-40, report links and git diff --check | Consistent documented result | Verified | pass |
+| application | Run application tests and build | Runtime verification for later consumers | Documentation-only scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Joint PO acceptance.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: No runtime or provider readiness implied. The shared phase diff includes unmerged FND changes; the Parent PR awaits a scope-safe delivery route.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/PRE-03.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-pre-03-03-attempt-01).
+- Commit / build / environment: Implementation a1dbff2 pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_DONE. Scoped Parent PR pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Resolve scoped Parent PR delivery; no next Parent authorized.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.

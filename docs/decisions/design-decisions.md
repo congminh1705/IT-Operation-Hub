@@ -206,6 +206,77 @@ PO accepted the bounded automation design for PRE-02 closure on 2026-11-25. BR-1
 | Manager intervenes on in-progress or locked work | Show current record and affected allocations; require confirmation and applicable approval. Any stale version or overbooking blocks the write. |
 | Reminder limit has been reached or recipient lost scope | Suppress the reminder. Current recipient authorization is checked before delivery and repeated intents do not consume the budget twice. |
 
+<a id="d-40-knowledge-access-index-pre-0301"></a>
+
+### D-40 knowledge publication, ACL and indexing (PRE-03.01)
+
+PO approved this contract on 2026-11-25. D-37, BR-21 and D-48 remain binding. Named production grants and verified account/model eligibility must be supplied separately. Listed index settings are pilot candidates.
+
+| Boundary | Confirmed rule and review proposal | Consumer |
+| --- | --- | --- |
+| Author, publisher and ACL authority | Default deny. Propose separately granted author, publisher and ACL-management capabilities scoped to a collection or article. An author can edit permitted Draft content. Eligible IT Manager/Admin staff still need the relevant explicit scoped grant to publish or alter ACLs. Holding a role or publishing a document adds no implicit read access. Record grantor, scope, version and expiry. Named role assignments and separation-of-duty requirements await PO. | AI-01, OPS-06, INT-05 |
+| Immutable source version | Publish with reviewed version, audience and current permission. Published content and provenance remain immutable; edit by creating a new Draft. Track the current Published version explicitly. Superseded/Retired versions are excluded from current retrieval; historical citations resolve only under current ACL, valid version policy and intended audience. A missing or hidden citation uses unavailable state and exposes no title, excerpt or metadata. | AI-01, OPS-06, INT-05 |
+| Revocation and output | Current DB scope/ACL governs candidate filtering before ranking/token budgeting, source loading before provider context, and revalidation before output, citation or history display. Caches include identity/current policy/version; invalidation events accelerate cleanup. If authority changes during a model call, discard the affected output and refuse stale citations. If a historical answer includes content from an unreadable source, hide that source-derived answer or excerpt with a generic unavailable state. Index state never authorizes reads. | OPS-07, OPS-09, INT-05 |
+| Chunks and embeddings | Preserve article/version, chunk order, source offsets/heading, normalized content digest, and parser/config/model/dimension/index revisions. Candidate synthetic pilot: heading-aware text, up to 512 tokens per chunk with up to 64 tokens of overlap, split on paragraphs when possible, 768 dimensions with Gemini Embedding 2 in text mode. Verify per-account model/region/quota compatibility with D-48 before any call. Query vectors and indexed vectors must match the approved model, dimension and preprocessing profile; mismatches require a new generation, never a mixed index. Numerical values and model are candidates pending PO and test evidence. | OPS-07, AI-03, PRE-03.02 |
+| Freshness and fallback | Background reindex tasks are idempotent per source version and index profile. Activate a ready generation only after all expected chunks match manifest digests and that version is still current and readable. A new publication with failed/pending indexing cannot use a superseded version as current evidence. A stale or mismatched generation returns a typed unavailable/insufficient-evidence result. Proposal for pilot alert: current approved source pending more than 15 minutes; the alert does not change authorization or imply successful indexing. | OPS-07, WF-05, INT-05 |
+
+Google documents [embedding dimensionality](https://ai.google.dev/gemini-api/docs/embeddings), [public pricing](https://ai.google.dev/gemini-api/docs/pricing/) and [unpaid data-use terms](https://ai.google.dev/gemini-api/terms#unpaid-services). Treat free-tier availability as account-dependent and use synthetic data only under D-48. This review did not call Google or validate a real account.
+
+**Scenario review**
+
+| Scenario | Expected |
+| --- | --- |
+| Draft or internal-only version appears in an old index for a Requester | Current version and ACL remove it before ranking or provider context. Citation lookup does not disclose a title or excerpt. |
+| Access revoked after prompt assembly or answer stored in history | Recheck before output and history display. Hide unauthorized evidence even if the old vector, cache or citation is still present. |
+| New publication replaces a source before asynchronous indexing completes | Previous version does not become current evidence. Return unavailable/insufficient evidence until a matching generation is ready. |
+| Mixed embedding dimensions or configuration | Reject candidate vectors and rebuild a separate generation. Input never crosses D-48 data-use boundaries. |
+
+<a id="d-40-assistant-confirmation-budget-pre-0302"></a>
+
+### D-40 assistant confirmation, retention and shared budget (PRE-03.02)
+
+PO approved this contract and its numeric synthetic-pilot settings on 2026-11-25. D-25, D-42, BR-20 and D-48 remain binding. Production values and provider execution require separate verification and authorization.
+
+| Boundary | Contract |
+| --- | --- |
+| Registry and actor | A trusted server registry maps a versioned, allowlisted intent/form key to the existing published domain action and closed input projection. Cards contain only safe form key and prefill. User confirms through the existing service with their current identity and CSRF. The service supplies actor and authorization; model output cannot supply endpoint, privilege or credentials. Automated policy effects stay under AI_COORDINATOR and current grantor authority. |
+| Preview and confirmation | Bind draft ID/version, registry revision, actor, target and canonical validated fields to a server-generated digest and expiration. Propose 15 minutes for synthetic pilot, shortened by any relevant source/grant expiry. Recheck the digest, version and current rights in the effect transaction. Changed fields or expired drafts require a new preview and confirmation; cancellation before commit cannot create an effect. Approved repeat with same key/digest returns the safe prior result after current scope check. Different digest conflicts. Lost response after commit reconciles the existing effect instead of issuing another one. |
+| Chat and run retention | Keep conversation ownership and current source ACL checks through output, history and citations. Proposal: synthetic pilot chat messages expire 30 days after creation and redacted run summaries after 90 days. User chat deletion hides chat immediately and queues purge. Chat deletion does not delete confirmed domain data, runs, audit or durable command outcomes. Define operational purge windows, incident access and retention independently before production. Admin has no implicit access to others' conversations. |
+| Redaction | Logs and audit keep actor, scope, version, correlation, model/config ID, safe outcome and measured usage when present. Exclude raw prompts, answers, credential values and private source excerpts by default. Redacted run history is separately scoped. Content needed for authorized chat history is stored separately and revalidated at read; provider dispatch is restricted to the approved data policy. |
+| Shared budget and sublimits | One atomic ledger per provider account/model/quota window constrains both modes, including embeddings and retries where they share a provider quota. Reserve request/token units against both global ceiling and mode sublimit before dispatch. Use a unique call intent and bounded attempts. Proposed synthetic split for remaining shared quota: up to 60 percent assistant and 40 percent background, with no borrowing in the pilot. Respect registered provider quota dimensions and use actual verified quota snapshots rather than fixed vendor assumptions. D-48 authorizes USD 0 paid spend: deny paid, unknown-billing and unverified configurations. |
+| Cancellation and reconciliation | Release reservation only if dispatch did not occur or provider confirms no usage. In-flight cancellation, timeout or missing usage keeps reservation held pending authenticated reconciliation or expiry of its quota window. Record unknown usage/cost as unknown. Exhaustion returns typed unavailable/limited and leaves authorized manual flows usable. |
+
+**Synthetic scenario review**
+
+| Scenario | Expected |
+| --- | --- |
+| Edit, expire or cancel a draft before confirmation | No write. Edit or expiry requires a new preview. Cancellation after commit reconciles the actual saved result. |
+| Repeat same confirmation or send different digest with same key | Existing authorized result is returned for the same digest. Changed digest conflicts. |
+| Assistant and background both request shared allowance | A single atomic ledger checks total and mode ceilings. Their reservations cannot create additional global quota. |
+| Cancelled request after dispatch or unknown provider cost | Hold reservation and mark unknown until reconciliation. Do not refund early, silently count zero, retry blindly or activate billing. |
+
+<a id="d-40-inventory-source-pre-0303"></a>
+
+### D-40 inventory planning and minimum sources (PRE-03.03)
+
+**PO decision on 2026-11-25: exclude durable inventory reservations in MVP.** Asset reads and plan previews show current availability and source version. They never hold an asset, give a plan ownership, decrement stock or promise fulfillment. There is no hold TTL, owner, release endpoint or expiry job in the approved MVP scope. A future reservation feature requires a separate approved decision covering these rules.
+
+| Boundary | Contract | Consumer |
+| --- | --- | --- |
+| Planning and shortage | Distinguish eligible In Stock, shortage and unknown inventory. Record demand, quantity, current availability timestamp and source/version as preview evidence. Availability shown to two plans is informational and must not be summed as guaranteed supply. For unknown, stale or insufficient inventory, show the risk and route to human clarification, with no invented device or stock. | AI-02, AI-05 |
+| Confirmed asset issue | Use only the existing authorized issue action with explicit confirmation. Lock and re-read the exact asset, eligibility, active recipient, state and expected version in the transaction. Issue creates the durable active assignment/history under BR-11. Different plans racing for the same asset yield one issue and one conflict. Same command replay reconciles its existing result; previews and proposal expiry never return or revoke an issued asset. | OPS-02, INT-04 |
+| Minimum approved sources | Domain services supply access-filtered asset availability and source time/version, published and readable knowledge, and verified skill/calendar/template inputs when needed. Emit the minimum necessary projection; ordinary Requester never sees other holders or internal workforce/source details. Missing or revoked evidence yields clarification/unavailable. Raw ticket, prompt and personnel data remain outside unapproved provider dispatch. | AI-01, AI-02, AI-03, OPS-07 |
+| Provider and spend | D-48 authorizes future validated Gemini free-tier calls on synthetic DEMO/test data only and USD 0 paid spend. Keep provider/account/region/quotas and production data/retention/budget as separately confirmed choices. No paid fallback, production calls or actual account verification in this decision leaf. | AI-03, PRE-04 |
+
+**Synthetic scenario review**
+
+| Scenario | Expected |
+| --- | --- |
+| Two assets requested, one eligible In Stock | Report shortage of one; no effect is committed by plan preview. |
+| Two plans preview the same asset and both attempt a hold | Both previews may report current availability. Hold is unsupported; neither receives priority or exclusivity. |
+| Proposal expires before issue confirmation | No release job or stock change, because no inventory was reserved. |
+| Two authorized issue commands race for a single asset | First valid transaction writes one active assignment; second re-reads committed state and conflicts. Same-key replay cannot duplicate an issue. |
+
 Reference guidance for candidates: [NIST SP 800-63B-4](https://pages.nist.gov/800-63-4/sp800-63b.html) for password length, blocklist and throttling. [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) for server-side expiry, cookie settings and renewal on authentication changes. These references do not set this project's timeouts or quotas.
 
 The companion [PRE-01.02 foundation contract reconciliation](../technical/api-design.md#pre-0102-foundation-contract-reconciliation) records the API/DBML differences and downstream review gates.
