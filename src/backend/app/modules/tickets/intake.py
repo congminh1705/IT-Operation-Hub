@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import UTC, datetime
-from typing import Literal
+from typing import Any, Literal
 from uuid import UUID
 
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, field_validator
@@ -16,7 +16,7 @@ type Severity = Literal["HIGH", "MEDIUM", "LOW"]
 
 
 class IntakeContext(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
 
     workflow_type: str | None = Field(
         default=None, min_length=1, max_length=120, strict=True
@@ -24,6 +24,13 @@ class IntakeContext(BaseModel):
     goal: str | None = Field(default=None, min_length=1, max_length=2000, strict=True)
     deadline: AwareDatetime | None = None
     machine_count: int | None = Field(default=None, ge=1, strict=True)
+
+    @field_validator("workflow_type", "goal")
+    @classmethod
+    def context_has_no_nul(cls, value: str | None) -> str | None:
+        if value is not None and chr(0) in value:
+            raise ValueError("Invalid context")
+        return value
 
     @field_validator("deadline")
     @classmethod
@@ -54,6 +61,13 @@ class IntakeRejected(Exception):
     def __init__(self, status: int, code: str) -> None:
         self.status = status
         self.code = code
+
+
+def ticket_create_schema() -> dict[str, Any]:
+    schema = TicketCreate.model_json_schema()
+    context = schema.pop("$defs")["IntakeContext"]
+    schema["properties"]["workflow_context"]["anyOf"][0] = context
+    return schema
 
 
 @dataclass(frozen=True)

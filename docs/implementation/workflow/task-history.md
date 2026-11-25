@@ -13298,3 +13298,74 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Joint PO review after both FND-09 leaves pass.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-fnd-09-02-attempt-01"></a>
+
+### FND-09.02 - Attempt 01 - 2026-11-25T17:20:07+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-09.02/attempt-01
+- Task: [Task card](../tasks/FND-09.02.md)
+- Parent / phase: FND-09 / B
+- Executor: Codex
+- Started at: 2026-11-25T17:20:07+07:00
+- Ended at: 2026-11-25T17:20:07+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implement the selected FND-09 leaf in dependency order.
+- Delivered: POST /api/v1/tickets persists New ticket, immutable full SLA snapshot, clock facts, audit, event, outbox and idempotent result in one transaction.
+- Incomplete scope / deviations: Asset and file intake remain deferred; no worker or browser integration. INT-02 gates Parent closure.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/tickets service/model/intake, organization/http.py, Alembic 0011, tests/test_ticket_intake.py, backend README and workflow records | FND-09 implementation and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Atomic persisted creation | One New ticket, audit, event, two intended deliveries and command result | PostgreSQL verified all rows and the immutable SLA snapshot. Injected outbox failure rolls back all writes. | pass | [PostgreSQL API tests](../../../src/backend/tests/test_ticket_intake.py) |
+| Replay and conflict | Same key and input returns the saved ticket; changed input 409 | Verified by API tests plus restart replay | pass | [PostgreSQL API tests](../../../src/backend/tests/test_ticket_intake.py) |
+| Restart persistence | Ticket and command outcomes durable across Compose PostgreSQL restart | Isolated schema probe observed ticket=1, audit=1, event=1, delivery=2, command=1 and identical replay after restart | pass | [PostgreSQL API tests](../../../src/backend/tests/test_ticket_intake.py) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | .venv/Scripts/python.exe -m pytest -q with local PostgreSQL: 33 passed, zero skipped. Ruff and mypy pass. Alembic upgrade head --sql passed. Manual API probe: create in disposable migration schema, docker compose restart postgres in Ubuntu-24.04, verify committed row counts and same-key replay, drop probe schema. Runtime OpenAPI request context schema inspected for inline date-time contract. | Consistent documented result | Verified | pass |
+| integration | Browser, production workers and downstream domain checks | Full Parent evidence | INT-02 owns real integrated flows | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. Joint PO review pending.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Asset and file intake remain deferred; no worker or browser integration. INT-02 gates Parent closure.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-09.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Ticket intake tests](../../../src/backend/tests/test_ticket_intake.py).
+- Commit / build / environment: FND-09.02 push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review after both FND-09 leaves pass.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
