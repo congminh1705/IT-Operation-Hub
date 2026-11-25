@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 36 backend tests on PostgreSQL and Ruff/mypy passed.
 - Review: Agent verified. Joint PO review pending.
 - Remaining: Browser and notification delivery belong to INT-02. Audit/event record structured changes and reason presence; free-text reason is not stored in the event.
-- Commit/build: FND-11.01 push receipt pending.
+- Commit/build: FND-11.01 implementation `d199767` pushed to origin/phase/b-backend.
 - Next: Joint review of the two FND-11 leaves after sequential verification.

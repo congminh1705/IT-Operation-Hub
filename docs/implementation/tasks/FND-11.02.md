@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 37 backend tests on PostgreSQL and Ruff/mypy passed.
 - Review: Agent verified. Joint PO review pending.
 - Remaining: INT-02 owns real browser flow and outbox delivery. Other transitions are assigned to later leaves. Runtime/draft OpenAPI reconciliation remains open from FND-10 and was not rerun in this task.
-- Commit/build: FND-11.02 push receipt pending.
+- Commit/build: FND-11.02 implementation `ccc61ba` pushed to origin/phase/b-backend.
 - Next: Joint review of the two FND-11 leaves after sequential verification.
