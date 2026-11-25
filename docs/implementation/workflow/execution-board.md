@@ -18,7 +18,7 @@ purpose: "Maintain the single status and owner registry for every refined execut
 
 ## 1. Scope and authority
 
-All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. Execution states are **70 done**, **2 review**, **158 pending**. [FND-03 is EPIC_IN_PROGRESS in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
+All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. Execution states are **72 done**, **158 pending**. [FND-03 is EPIC_IN_PROGRESS in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
 
 The [package registry](../README.md#4-task-tracker) holds epic state; this board alone holds task state and PO ownership. Use the [task workflow](task-workflow.md). [Parent coverage and closure](../package-task-coverage.md) maps every parent criterion to outputs and names any external integration evidence. Package readiness means defined scope; dependencies, affected decisions and future coding authorization still gate execution.
 
@@ -113,8 +113,8 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FND-02.01](../tasks/FND-02.01.md) | [FND-02](../01-foundation.md#fnd-02) | Create SQLAlchemy session and migration foundation | [FND-01.02](../tasks/FND-01.02.md) | PO | done |
 | [FND-02.02](../tasks/FND-02.02.md) | [FND-02](../01-foundation.md#fnd-02) | Implement atomic unit of work, audit and outbox writers | [FND-02.01](../tasks/FND-02.01.md) | PO | done |
 | [FND-02.03](../tasks/FND-02.03.md) | [FND-02](../01-foundation.md#fnd-02) | Implement expected-version and command idempotency primitives | [FND-02.02](../tasks/FND-02.02.md) | PO | done |
-| [FND-03.01](../tasks/FND-03.01.md) | [FND-03](../01-foundation.md#fnd-03) | Review real API projections against frontend transport | [FND-01.02](../tasks/FND-01.02.md) | PO | review |
-| [FND-03.02](../tasks/FND-03.02.md) | [FND-03](../01-foundation.md#fnd-03) | Prepare production API/query infrastructure boundary | [FND-03.01](../tasks/FND-03.01.md) | PO | review |
+| [FND-03.01](../tasks/FND-03.01.md) | [FND-03](../01-foundation.md#fnd-03) | Review real API projections against frontend transport | [FND-01.02](../tasks/FND-01.02.md) | PO | done |
+| [FND-03.02](../tasks/FND-03.02.md) | [FND-03](../01-foundation.md#fnd-03) | Prepare production API/query infrastructure boundary | [FND-03.01](../tasks/FND-03.01.md) | PO | done |
 | [FND-04.01](../tasks/FND-04.01.md) | [FND-04](../01-foundation.md#fnd-04) | Implement credential verification and server session creation | [FND-02.03](../tasks/FND-02.03.md), [FND-03.02](../tasks/FND-03.02.md) | PO | pending |
 | [FND-04.02](../tasks/FND-04.02.md) | [FND-04](../01-foundation.md#fnd-04) | Implement current-principal, logout and session revocation | [FND-04.01](../tasks/FND-04.01.md) | PO | pending |
 | [FND-05.01](../tasks/FND-05.01.md) | [FND-05](../01-foundation.md#fnd-05) | Implement department and category-safe reference ownership | [FND-04.02](../tasks/FND-04.02.md) | PO | pending |

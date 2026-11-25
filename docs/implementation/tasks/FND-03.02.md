@@ -72,8 +72,8 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-03.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-03-02-attempt-01).
+- Latest Report ID: FND-03.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-03-02-attempt-02).
 - Delivered: Explicit same-origin real adapter configuration plus an identity-scoped paged read/poll helper. Workspace composition still uses DEMO.
 - Files: gateway.ts, paged-query.ts and production-boundary.test.ts under src/frontend/src/lib/api.
 - Checks: 130 frontend tests, TypeScript, scoped ESLint and Prettier passed.
@@ -81,3 +81,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Remaining: INT-01 live browser and service closure; no screen changes here.
 - Commit/build: Implementation 021db02 pushed and verified on origin/phase/b-backend. Production build not rerun in this attempt.
 - Next: Joint PO review of FND-03.01 and FND-03.02. Parent closure still requires INT-01 evidence.
+
+- Closure update: PO accepted this task. Board state is done. Parent closure awaits INT-01 evidence.

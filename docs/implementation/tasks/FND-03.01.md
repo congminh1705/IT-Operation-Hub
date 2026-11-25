@@ -72,8 +72,8 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-03.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-03-01-attempt-01).
+- Latest Report ID: FND-03.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-03-01-attempt-02).
 - Delivered result: Generated eight OpenAPI operations' frontend DTO boundary, isolated account HTTP adapter and scoped read integration. Includes cookie/CSRF, error and version semantics and public/internal ticket type separation.
 - Actual changed paths / key symbols: `docs/api/generate_frontend_contract.py`, `docs/api/test_frontend_contract.py`, `docs/api/README.md` and `src/frontend/src/lib/api` (`contract.generated.ts`, `http-account.ts`, `http-account.test.ts`, `projections.ts`, `types.ts`, `gateway.ts`).
 - Acceptance and check summary: Pass for draft drift check, all five comparison tests, TypeScript, lint, scoped formatting, all 128 frontend tests (14 new), and the production build. FastAPI runtime OpenAPI comparison and real browser/server integration were not run because the selected service routes are not implemented.
@@ -81,3 +81,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Remaining blockers / decisions / defects: Runtime account/ticket routes, the final D-40 wire decisions and INT-01 real session and scope verification remain with their respective owners.
 - Commit/build: Production build passed. Implementation 265c85a pushed to phase/b-backend and verified on origin.
 - Next eligible task / resume step: PO reviews FND-03.01. FND-03.02 remains pending until prerequisite completion and separate authorization.
+
+- Closure update: PO accepted this task. Board state is done. Parent closure awaits INT-01 evidence.
