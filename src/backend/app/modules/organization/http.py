@@ -91,6 +91,14 @@ from app.modules.users.provisioning import (
     ProvisioningVerification,
     UserCreate,
 )
+from app.modules.work_management.allocation import (
+    LockCommand,
+    TaskAssignment,
+    TaskProgress,
+    assign_task,
+    set_assignment_lock,
+    update_task_progress,
+)
 from app.modules.work_management.service import (
     ManualPlanCreate,
     PlanPage,
@@ -625,6 +633,91 @@ def organization_router(
     )
     def work_task(id: UUID, request: Request) -> Response:
         return query(request, lambda db, actor: get_task(db, actor, id), admin=False)
+
+    def task_change(
+        request: Request,
+        task_id: UUID,
+        operation: str,
+        body: BaseModel,
+        perform: Callable[[Session, Account], CommandResult],
+    ) -> Response:
+        return change(
+            request,
+            operation,
+            {"id": str(task_id), **body.model_dump(mode="json")},
+            perform,
+            lambda db, result: get_task(
+                db, authorize(db, request, write=True), result.id
+            ),
+            status=200,
+            admin=False,
+        )
+
+    @router.post(
+        "/tasks/{id}/assignment",
+        operation_id="assignTask",
+        tags=["Tasks"],
+        response_model=TaskView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
+    )
+    def work_task_assignment(
+        id: UUID, request: Request, body: TaskAssignment
+    ) -> Response:
+        return task_change(
+            request,
+            id,
+            "task.assigned",
+            body,
+            lambda db, actor: assign_task(db, actor, id, body, configured().clock),
+        )
+
+    @router.post(
+        "/tasks/{id}/assignment-lock",
+        operation_id="lockTaskAssignment",
+        tags=["Tasks"],
+        response_model=TaskView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
+    )
+    def work_task_lock(id: UUID, request: Request, body: LockCommand) -> Response:
+        return task_change(
+            request,
+            id,
+            "task.assignment_lock_changed",
+            body,
+            lambda db, actor: set_assignment_lock(
+                db, actor, id, body, configured().clock
+            ),
+        )
+
+    @router.post(
+        "/tasks/{id}/progress",
+        operation_id="updateTaskProgress",
+        tags=["Tasks"],
+        response_model=TaskView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
+    )
+    def work_task_progress(id: UUID, request: Request, body: TaskProgress) -> Response:
+        return task_change(
+            request,
+            id,
+            "task.progressed",
+            body,
+            lambda db, actor: update_task_progress(
+                db, actor, id, body, configured().clock
+            ),
+        )
 
     @router.post(
         "/users",

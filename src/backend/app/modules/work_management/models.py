@@ -1,7 +1,16 @@
-from datetime import datetime
+from datetime import date, datetime
 from uuid import UUID
 
-from sqlalchemy import DateTime, ForeignKey, Index, String, Text, UniqueConstraint, text
+from sqlalchemy import (
+    Date,
+    DateTime,
+    ForeignKey,
+    Index,
+    String,
+    Text,
+    UniqueConstraint,
+    text,
+)
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.infrastructure.models import Base
@@ -57,3 +66,18 @@ class WorkTask(Base):
     assignee_id: Mapped[UUID | None] = mapped_column(ForeignKey("auth_account.id"))
     assignment_locked: Mapped[bool]
     result: Mapped[str | None] = mapped_column(Text)
+
+
+class TaskAllocation(Base):
+    __tablename__ = "work_task_allocation"
+
+    id: Mapped[UUID] = mapped_column(primary_key=True)
+    task_id: Mapped[UUID] = mapped_column(ForeignKey("work_task.id"), index=True)
+    account_id: Mapped[UUID] = mapped_column(
+        ForeignKey("workforce_skills.account_id"), index=True
+    )
+    local_date: Mapped[date] = mapped_column(Date)
+    starts_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    ends_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    task_version: Mapped[int]
+    released_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
