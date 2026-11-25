@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 28 PostgreSQL-backed tests plus Ruff, strict mypy, Alembic offline SQL and five OpenAPI drift tests passed.
 - Review: Agent verified the backend with synthetic evidence. PO review pending.
 - Remaining: No live producer for trusted verification. Confirm IT role approver and credential handover channel before live use. Full result contract is FND-06.02.
-- Commit/build: Implementation push receipt pending.
+- Commit/build: Implementation 8d55172 pushed and verified on origin/phase/b-backend.
 - Next: PO reviews FND-06.01. FND-06.02 pending.
