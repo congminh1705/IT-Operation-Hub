@@ -72,12 +72,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: PRE-03.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-03-02-attempt-01).
+- Latest Report ID: PRE-03.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-03-02-attempt-02).
 - Delivered: Defined the trusted form registry, server-bound confirmation, separate chat/run retention, redaction and the shared budget reservation model. [D-40 assistant scenarios](../../decisions/design-decisions.md#d-40-assistant-confirmation-budget-pre-0302)
 - Changed paths: docs/decisions/design-decisions.md, docs/10-ai-assistant.md and PRE-03.02 records
 - Checks: Synthetic edited/repeated/expired and held-budget cases verified. No runtime or provider calls.
-- Review: Agent checked the contract. Joint PO review pending.
-- Remaining: PO review, production retention and real quota settings remain. Numeric examples are synthetic pilot candidates.
+- Review: PO approved the contract. Agent verification remains in attempt 01.
+- Remaining: Production retention and real quota settings remain to be verified. Numeric settings are approved for synthetic pilot only.
 - Commit/build: PRE-03.02 implementation dec02ca pushed and verified on origin/phase/b-backend.
-- Next: Joint PO review after PRE-03.02 and PRE-03.03 verification.
+- Next: PRE-03 is EPIC_DONE. Scope-safe Parent PR delivery is pending.

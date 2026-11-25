@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- PO approved PRE-03.02 and PRE-03.03. All PRE-03 leaves are done and Parent is EPIC_DONE. [Confirmation and budget approval](task-history.md#task-pre-03-02-attempt-02), [inventory decision approval](task-history.md#task-pre-03-03-attempt-02). Board: 86 done and 144 pending. Parent PR pending scope-safe delivery; phase/b-backend includes unmerged FND changes.
+
 - [PRE-03.03/attempt-01](task-history.md#task-pre-03-03-attempt-01), review. Proposed excluding durable asset holds from MVP. Preview is informational, issue remains a confirmed transaction. Shortage/competing plans/expiry/issue fixtures verified. Joint PO review pending. PRE-03.03 implementation a1dbff2 pushed and verified on origin/phase/b-backend.
 
 - [PRE-03.02/attempt-01](task-history.md#task-pre-03-02-attempt-01), review. Defined the trusted form registry, server-bound confirmation, separate chat/run retention, redaction and the shared budget reservation model. Synthetic edited/repeated/expired and held-budget cases verified. No runtime or provider calls. Joint PO review pending. PRE-03.02 implementation dec02ca pushed and verified on origin/phase/b-backend.

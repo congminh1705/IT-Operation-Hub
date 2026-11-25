@@ -114,7 +114,7 @@ This **work-package/epic registry** retains all 88 stable scope IDs. The registr
 | [INT-06](07-integration.md#int-06) | Connect dashboards, report facts, notifications and audit | INT-02 INT-03 INT-04 INT-05 FND-18 OPS-16 OPS-18 | EPIC_READY |
 | [PRE-01](00-decisions.md#pre-01) | Review foundation contracts and identity decisions | — | EPIC_DONE |
 | [PRE-02](00-decisions.md#pre-02) | Define workforce and workflow concurrency contracts | — | EPIC_DONE |
-| [PRE-03](00-decisions.md#pre-03) | Define minimum AI, knowledge and inventory data contracts | — | EPIC_IN_PROGRESS |
+| [PRE-03](00-decisions.md#pre-03) | Define minimum AI, knowledge and inventory data contracts | — | EPIC_DONE |
 | [PRE-04](00-decisions.md#pre-04) | Define deployment and recovery targets | — | EPIC_READY |
 | [FND-01](01-foundation.md#fnd-01) | Create reproducible development scaffold | [PRE-01](00-decisions.md#pre-01) | EPIC_DONE |
 | [FND-02](01-foundation.md#fnd-02) | Create database, transaction, audit and outbox primitives | [PRE-01](00-decisions.md#pre-01) | EPIC_DONE |

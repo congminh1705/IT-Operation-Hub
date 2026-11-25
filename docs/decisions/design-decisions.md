@@ -235,7 +235,7 @@ Google documents [embedding dimensionality](https://ai.google.dev/gemini-api/doc
 
 ### D-40 assistant confirmation, retention and shared budget (PRE-03.02)
 
-D-25, D-42, BR-20 and D-48 remain binding. The following contract and numeric test settings are proposed for PO review.
+PO approved this contract and its numeric synthetic-pilot settings on 2026-11-25. D-25, D-42, BR-20 and D-48 remain binding. Production values and provider execution require separate verification and authorization.
 
 | Boundary | Contract |
 | --- | --- |
@@ -259,7 +259,7 @@ D-25, D-42, BR-20 and D-48 remain binding. The following contract and numeric te
 
 ### D-40 inventory planning and minimum sources (PRE-03.03)
 
-**Proposed MVP decision for PO review: exclude durable inventory reservations.** Asset reads and plan previews show current availability and source version. They never hold an asset, give a plan ownership, decrement stock or promise fulfillment. There is no hold TTL, owner, release endpoint or expiry job in this proposal. A future reservation feature requires a separate approved decision covering these rules.
+**PO decision on 2026-11-25: exclude durable inventory reservations in MVP.** Asset reads and plan previews show current availability and source version. They never hold an asset, give a plan ownership, decrement stock or promise fulfillment. There is no hold TTL, owner, release endpoint or expiry job in the approved MVP scope. A future reservation feature requires a separate approved decision covering these rules.
 
 | Boundary | Contract | Consumer |
 | --- | --- | --- |

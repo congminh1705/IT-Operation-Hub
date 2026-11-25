@@ -72,12 +72,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: PRE-03.03/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-03-03-attempt-01).
+- Latest Report ID: PRE-03.03/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-03-03-attempt-02).
 - Delivered: Proposed no durable reservations in MVP; preview shortage and source scope, authorized atomic asset issue and D-48 boundaries documented. [D-40 inventory scenarios](../../decisions/design-decisions.md#d-40-inventory-source-pre-0303)
 - Changed paths: docs/decisions/design-decisions.md, docs/technical/api-design.md and workflow records.
 - Checks: Synthetic shortage, competing preview/hold, expiry and concurrent issue cases reviewed; no runtime or provider calls.
-- Review: Agent checked the contract. Joint PO review pending.
-- Remaining: PO approval for the proposed reservation exclusion and later live-provider and production data decisions.
+- Review: PO approved the contract. Agent verification remains in attempt 01.
+- Remaining: PO approved excluding durable reservations in MVP. Live-provider and production data decisions remain separate.
 - Commit/build: PRE-03.03 implementation a1dbff2 pushed and verified on origin/phase/b-backend.
-- Next: Joint PO review with PRE-03.02. Parent closure after accepted criteria.
+- Next: PRE-03 is EPIC_DONE. Scope-safe Parent PR delivery is pending.
