@@ -34,7 +34,20 @@ import {
   type WorkspaceSearch,
 } from "@/components/layout/workspace-page";
 import { useSession, safeReturnPath } from "./session";
-export function WorkspaceEntry({
+import { useOptionalRealSession } from "./real-session";
+import { RealWorkspaceEntry } from "./real-workspace-entry";
+type EntryProps = { pathname: string; search: WorkspaceSearch };
+
+export function WorkspaceEntry(props: EntryProps) {
+  const real = useOptionalRealSession();
+  return real ? (
+    <RealWorkspaceEntry store={real} {...props} />
+  ) : (
+    <DemoWorkspaceEntry {...props} />
+  );
+}
+
+function DemoWorkspaceEntry({
   pathname,
   search,
 }: {

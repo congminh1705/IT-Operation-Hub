@@ -85,3 +85,25 @@ disclosure, skip link, active queries, search encoding and 320/390/768/1440 layo
 Set `SHELL_EVIDENCE_DIR` explicitly to save a shell handoff; default captures remain
 under ignored `test-results`. Optional reference captures still require
 `DESIGN_REFERENCE_URL`. No new runtime or test package was added for this task.
+
+## Real cookie-session integration (INT-01.01)
+
+Set `ITOH_AUTH_MODE=real` and `ITOH_BACKEND_ORIGIN` to the FastAPI origin
+in the Next process. The browser uses the frontend origin for `/api/v1/auth/*`.
+Configure `ITOH_AUTH_ORIGINS` on FastAPI to allow that exact browser origin.
+For local loopback HTTP, use `ITOH_AUTH_INSECURE_DEV=1` on the backend only.
+Use the same settings at Next build and runtime. Without `ITOH_AUTH_MODE`
+the existing DEMO is served.
+
+Real mode renders the authenticated workspace shell with the account returned
+by FastAPI. Business routes display their pending state until their real
+adapters are connected. Profile edits and temporary-password rotation are
+verified separately in INT-01.02.
+
+With `ITOH_TEST_DATABASE_URL` set to a disposable PostgreSQL database, run
+`.venv/Scripts/python.exe tests/real_auth_browser.py` from `src/backend`.
+The harness starts FastAPI at `http://127.0.0.1:8101` and Next at
+`http://127.0.0.1:3101`, creates synthetic accounts in an isolated schema and
+removes the schema afterwards. It generates a per-run password in memory.
+Use the Playwright-installed Chromium or set
+`PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to a local Chrome/Chromium binary.

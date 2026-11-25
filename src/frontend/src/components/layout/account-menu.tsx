@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
-import type { DemoPersona } from "@/lib/demo/fixtures";
+import type { WorkspaceIdentity } from "@/lib/workspace-identity";
 import { getAccountLinks, roleLabels } from "@/lib/navigation";
 
 export function AccountSummary({
@@ -11,7 +11,7 @@ export function AccountSummary({
   prefix = "",
   onNavigate,
 }: {
-  persona: DemoPersona;
+  persona: WorkspaceIdentity;
   prefix?: string;
   onNavigate?: () => void;
 }) {
@@ -39,7 +39,7 @@ export function AccountMenu({
   persona,
   prefix = "",
 }: {
-  persona: DemoPersona;
+  persona: WorkspaceIdentity;
   prefix?: string;
 }) {
   const [open, setOpen] = useState(false);

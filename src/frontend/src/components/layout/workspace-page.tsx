@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import type { DemoPersona } from "@/lib/demo/fixtures";
+import type { WorkspaceIdentity } from "@/lib/workspace-identity";
 import {
   activeNavigation,
   canOpenDestination,
@@ -24,7 +24,7 @@ export function WorkspacePage({
   prefix = "",
   content,
 }: {
-  persona: DemoPersona;
+  persona: WorkspaceIdentity;
   pathname: string;
   search?: WorkspaceSearch;
   prefix?: string;

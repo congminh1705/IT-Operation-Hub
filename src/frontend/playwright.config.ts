@@ -20,7 +20,7 @@ export default defineConfig({
   },
   webServer: {
     command: `pnpm exec next ${command} --hostname 127.0.0.1 --port ${port}`,
-    url: `${baseURL}/preview/feedback`,
+    url: `${baseURL}${process.env.ITOH_AUTH_MODE === "real" ? "/login" : "/preview/feedback"}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
   },

@@ -1,14 +1,16 @@
 "use client";
 
 import { useEffect, useId, useState, type ReactNode } from "react";
-import type { DemoPersona } from "@/lib/demo/fixtures";
+import type { WorkspaceIdentity } from "@/lib/workspace-identity";
 import { SidebarContent } from "./sidebar";
 import { Topbar } from "./topbar";
+import { AccountMenu } from "./account-menu";
+import { Icon } from "./icon";
 import { Dialog } from "../ui/dialog";
 import "./workspace.css";
 
 export type WorkspaceShellProps = {
-  persona: DemoPersona;
+  persona: WorkspaceIdentity;
   pathname: string;
   scope?: string;
   query?: string;
@@ -52,20 +54,39 @@ export function WorkspaceShell({
         />
       </aside>
       <div className="workspace-column">
-        <Topbar
-          persona={persona}
-          prefix={prefix}
-          query={query}
-          drawerId={drawerId}
-          drawerOpen={drawerOpen}
-          onOpenDrawer={() => setDrawerOpen(true)}
-        />
+        {persona.demo ? (
+          <Topbar
+            persona={{ ...persona, demo: true }}
+            prefix={prefix}
+            query={query}
+            drawerId={drawerId}
+            drawerOpen={drawerOpen}
+            onOpenDrawer={() => setDrawerOpen(true)}
+          />
+        ) : (
+          <header className="workspace-topbar">
+            <button
+              className="shell-icon-button shell-menu-trigger"
+              type="button"
+              aria-label="Mở điều hướng"
+              aria-expanded={drawerOpen}
+              aria-controls={drawerId}
+              onClick={() => setDrawerOpen(true)}
+            >
+              <Icon name="menu" />
+            </button>
+            <div className="shell-top-actions">
+              <AccountMenu persona={persona} prefix={prefix} />
+            </div>
+          </header>
+        )}
         <main id="workspace-main" tabIndex={-1} className="workspace-main">
           {children}
         </main>
         <footer className="workspace-footer">
-          IT Operations Hub · DEMO — dữ liệu tổng hợp, không phải phân quyền
-          thật
+          {persona.demo
+            ? "IT Operations Hub · DEMO — dữ liệu tổng hợp, không phải phân quyền\n          thật"
+            : "IT Operations Hub"}
         </footer>
       </div>
       <Dialog

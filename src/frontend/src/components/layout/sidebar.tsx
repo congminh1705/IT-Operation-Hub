@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { DemoPersona } from "@/lib/demo/fixtures";
+import type { WorkspaceIdentity } from "@/lib/workspace-identity";
 import { getNavigation, activeNavigation } from "@/lib/navigation";
 import { Icon } from "./icon";
 import { AccountSummary } from "./account-menu";
@@ -13,7 +13,7 @@ export function SidebarContent({
   prefix = "",
   onNavigate,
 }: {
-  persona: DemoPersona;
+  persona: WorkspaceIdentity;
   pathname: string;
   scope?: string;
   prefix?: string;
@@ -40,7 +40,7 @@ export function SidebarContent({
         <Icon name="building" />
         <div>
           <strong>IT Operations Hub</strong>
-          <small>Tổ chức DEMO</small>
+          {persona.demo && <small>Tổ chức DEMO</small>}
         </div>
       </div>
       <nav className="shell-navigation" aria-label="Điều hướng chính">
