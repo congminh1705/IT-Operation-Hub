@@ -463,3 +463,127 @@ def test_profile_failure_rolls_back_version_and_idempotency_key(
         assert old["display_name"] == "Synthetic" and old["version"] == 1
         retried = client.patch(f"{BASE}/profile", json=body, headers=headers)
         assert retried.status_code == 200 and retried.json()["version"] == 2
+
+
+def test_password_change_verifies_policy_and_revokes_all_sessions(
+    database: Database,
+) -> None:
+    from app.infrastructure.models import AuditLog, ConfirmedCommand
+
+    service = AuthService(database)
+    seed(service)
+    blocked = "blocked synthetic phrase"
+    new_password = "M?t kh?u m?i cho ki?m th?"
+    settings = AuthSettings(frozenset({ORIGIN}), blocked_passwords=frozenset({blocked}))
+    application = create_app(service, settings)
+    with (
+        TestClient(application, base_url=ORIGIN) as current,
+        TestClient(application, base_url=ORIGIN) as other,
+    ):
+        assert login(current, preflight(current)).status_code == 200
+        assert login(other, preflight(other)).status_code == 200
+        original_token = current.cookies[settings.session_cookie]
+        csrf = str(current.get(f"{BASE}/csrf").json()["csrf_token"])
+        headers = {
+            "Origin": ORIGIN,
+            "X-CSRF-Token": csrf,
+            "Idempotency-Key": "change-password",
+        }
+        path = f"{BASE}/password"
+        invalid = current.post(
+            path,
+            headers=headers,
+            json={
+                "current_password": "incorrect secret",
+                "new_password": new_password,
+            },
+        )
+        assert (
+            invalid.status_code == 422
+            and "current_password" in invalid.json()["field_errors"]
+        )
+        assert (
+            "incorrect secret" not in invalid.text and new_password not in invalid.text
+        )
+        for candidate in ("too short", blocked, PASSWORD):
+            invalid = current.post(
+                path,
+                headers=headers,
+                json={
+                    "current_password": PASSWORD,
+                    "new_password": candidate,
+                },
+            )
+            assert (
+                invalid.status_code == 422
+                and "new_password" in invalid.json()["field_errors"]
+            )
+        assert other.get(f"{BASE}/me").status_code == 200
+        body = {"current_password": PASSWORD, "new_password": new_password}
+        assert (
+            current.post(
+                path,
+                headers={**headers, "Origin": "https://elsewhere.invalid"},
+                json=body,
+            ).status_code
+            == 403
+        )
+        result = current.post(path, headers=headers, json=body)
+        assert result.status_code == 204 and not result.content
+        assert "Max-Age=0" in result.headers["set-cookie"]
+        assert other.get(f"{BASE}/me").status_code == 401
+        current.cookies.set(settings.session_cookie, original_token)
+        assert current.post(path, headers=headers, json=body).status_code == 401
+        assert login(current, preflight(current), PASSWORD).status_code == 401
+        assert login(current, preflight(current), new_password).status_code == 200
+    with database.session() as db:
+        rows = db.scalars(
+            select(AuditLog).where(AuditLog.action == "auth.password_change")
+        ).all()
+        assert len(rows) == 1
+        stored = str(rows[0].before_after_redacted)
+        assert new_password not in stored and PASSWORD not in stored
+        assert (
+            db.scalar(
+                select(ConfirmedCommand).where(
+                    ConfirmedCommand.operation == "auth.password_change"
+                )
+            )
+            is None
+        )
+
+
+def test_temporary_password_can_only_be_rotated_after_first_use(
+    database: Database,
+) -> None:
+    service = AuthService(database)
+    service.bootstrap_admin(uuid4(), EMAIL, "Test Admin", PASSWORD, set())
+    settings = AuthSettings(
+        frozenset({ORIGIN}), blocked_passwords=frozenset({"blocked synthetic phrase"})
+    )
+    with TestClient(create_app(service, settings), base_url=ORIGIN) as client:
+        assert (
+            login(client, preflight(client)).json()["code"]
+            == "PASSWORD_CHANGE_REQUIRED"
+        )
+        token = client.cookies[settings.session_cookie]
+        assert client.get(f"{BASE}/me").status_code == 401
+        assert login(client, preflight(client)).status_code == 401
+        csrf = str(client.get(f"{BASE}/csrf").json()["csrf_token"])
+        new_password = "Permanent synthetic phrase"
+        result = client.post(
+            f"{BASE}/password",
+            headers={
+                "Origin": ORIGIN,
+                "X-CSRF-Token": csrf,
+                "Idempotency-Key": "temporary",
+            },
+            json={"current_password": PASSWORD, "new_password": new_password},
+        )
+        assert result.status_code == 204
+        assert login(client, preflight(client), new_password).status_code == 200
+        assert client.get(f"{BASE}/me").json()["role"] == "ADMIN"
+    with database.session() as db:
+        restricted = db.get(AuthSession, digest(token))
+        assert restricted is not None and restricted.revoked_at is not None
+        assert restricted.temporary_verifier is None

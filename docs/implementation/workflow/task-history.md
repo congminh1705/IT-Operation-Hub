@@ -11682,3 +11682,78 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-07.02.
 - Eligibility / remaining prerequisite: Prerequisite accepted; continuation authorized.
+
+<a id="task-fnd-07-02-attempt-01"></a>
+
+### FND-07.02 - Attempt 01 - 2026-11-25T15:55:22+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-07.02/attempt-01
+- Task: [Task card](../tasks/FND-07.02.md)
+- Parent / phase: FND-07 / B
+- Executor: Codex
+- Started at: 2026-11-25 (exact time not captured)
+- Ended at: 2026-11-25T15:55:22+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None. FND-07.01 accepted before implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Verify current password and rotate the credential under the approved D-40 policy.
+- Delivered: Closed credential DTO, session Origin/CSRF, policy validation, Argon2id update, redacted audit and atomic revocation of all sessions. Restricted temporary sessions can prove the consumed initial credential and set a permanent one.
+- Incomplete scope / deviations: INT-01 owns browser wiring. Deployment must supply a blocklist. Previously issued restricted sessions lack the old verifier and need authorized credential replacement.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/auth/http.py, service.py, models.py and app/main.py | changeOwnPassword, AuthService.change_password, explicit blocklist | Verify and rotate credentials |
+| src/backend/migrations/versions/0008_password_rotation.py | Restricted session temporary verifier | Verify the initial secret without permitting another login |
+| src/backend/tests/test_auth_login.py | Password rotation and bootstrap transition tests | Verify real PostgreSQL behavior |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Current password and policy | Wrong current password, noncompliant new input and old password denied | 422 on wrong, short, blocklisted and identical passwords. New login succeeds, old login fails. | pass | [Backend tests](../../../src/backend/tests/test_auth_login.py) |
+| Session and audit | Old sessions cannot replay and outputs omit password data | Current and other sessions revoked. Replayed cookie returns 401. Audit contains version only and no password ledger row is created. | pass | [Backend tests](../../../src/backend/tests/test_auth_login.py) |
+| Live UI and browser | Verify safe form behavior with real identity adapter | INT-01 owns browser cutover | not-run | [Parent coverage](../package-task-coverage.md#fnd-07) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | .venv/Scripts/python.exe -m pytest -q with local PostgreSQL ITOH_TEST_DATABASE_URL | DB-backed API tests pass | 26 passed, zero skipped; upstream TestClient warning | pass |
+| src/backend | .venv/Scripts/ruff.exe check app migrations tests and .venv/Scripts/mypy.exe app migrations tests | Static checks pass | Exit 0 | pass |
+| src/backend | .venv/Scripts/alembic.exe upgrade head --sql | Offline migrations render | Exit 0 | pass |
+| integration | Live browser and production rollout | Verify integrated behavior | Not run in this backend leaf | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO implementation review pending.
+- Findings / resolution: Successful rotation requires re-login. Temporary verifier is cleared upon session revocation.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: INT-01 evidence gates Parent closure; blocklist configuration is required to enable password changes.
+- Required resolution / owner: Deployment and integration owners configure and verify their respective flows.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-07.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Backend tests](../../../src/backend/tests/test_auth_login.py). No UI changes or screenshots.
+- Commit / build / environment: Implementation push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FND-07.02.
+- Eligibility / remaining prerequisite: Parent closure awaits INT-01. Subsequent tasks need separate authorization.

@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-07.02/attempt-01](task-history.md#task-fnd-07-02-attempt-01), review. Password policy and revocation verified, including restricted temporary credentials. 26 PostgreSQL tests, Ruff, mypy and offline Alembic SQL passed. INT-01 owns real browser evidence. Implementation push receipt pending.
+
 - [FND-07.01/attempt-02](task-history.md#task-fnd-07-01-attempt-02), done. PO accepted and authorized FND-07.02. Prior technical evidence retained.
 
 - [FND-07.01/attempt-01](task-history.md#task-fnd-07-01-attempt-01), review. Session-owned display-name update with strict fields, versioning, audit and idempotency. Verified rollback and denial cases on PostgreSQL. 24 backend tests, 130 frontend tests, five contract tests and static checks passed. Implementation 0d36eab pushed and verified on origin/phase/b-backend.

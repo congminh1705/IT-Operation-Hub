@@ -31,6 +31,7 @@ from app.modules.auth.service import (
 class AuthSettings:
     origins: frozenset[str]
     secure_cookies: bool = True
+    blocked_passwords: frozenset[str] = frozenset()
 
     def __post_init__(self) -> None:
         schemes = {"https"} if self.secure_cookies else {"http", "https"}
@@ -60,6 +61,13 @@ class LoginInput(BaseModel):
     model_config = ConfigDict(extra="forbid")
     email: str = Field(min_length=1, max_length=254)
     password: str = Field(min_length=1, max_length=128, repr=False)
+
+
+class PasswordChange(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+
+    current_password: str = Field(min_length=1, max_length=128, repr=False)
+    new_password: str = Field(min_length=1, max_length=128, repr=False)
 
 
 class ProfileUpdate(BaseModel):
@@ -316,6 +324,88 @@ def auth_router(service: AuthService | None, settings: AuthSettings) -> APIRoute
         return JSONResponse(
             result.model_dump(mode="json"), headers={"Cache-Control": "no-store"}
         )
+
+    @router.post(
+        "/password",
+        operation_id="changeOwnPassword",
+        status_code=204,
+        responses={status: {"model": Error} for status in (401, 403, 422, 503)},
+        openapi_extra={
+            "requestBody": {
+                "required": True,
+                "content": {
+                    "application/json": {"schema": PasswordChange.model_json_schema()},
+                },
+            },
+            "parameters": [
+                {
+                    "in": "header",
+                    "name": header,
+                    "required": True,
+                    "schema": {"type": "string"},
+                }
+                for header in ("X-CSRF-Token", "Idempotency-Key")
+            ],
+        },
+    )
+    async def change_password(request: Request) -> Response:
+        if service is None or not settings.blocked_passwords:
+            return failure(503)
+        token = request.cookies.get(settings.session_cookie)
+        if not token:
+            return failure(401, session_error=True)
+        origins = request.headers.getlist("origin")
+        csrf = request.headers.getlist("x-csrf-token")
+        if (
+            len(origins) != 1
+            or origins[0] not in settings.origins
+            or len(csrf) != 1
+            or not compare_digest(session_csrf(token).encode(), csrf[0].encode())
+        ):
+            return failure(403)
+        keys = request.headers.getlist("idempotency-key")
+        if len(keys) != 1 or not keys[0].strip() or len(keys[0]) > 128:
+            return failure(422)
+        if (
+            request.headers.get("content-type", "").split(";", 1)[0].strip().lower()
+            != "application/json"
+        ):
+            return failure(422)
+        payload = bytearray()
+        async for chunk in request.stream():
+            if len(payload) + len(chunk) > 4096:
+                return failure(422)
+            payload.extend(chunk)
+        try:
+            body = PasswordChange.model_validate_json(bytes(payload))
+        except ValidationError:
+            return failure(422)
+        try:
+            outcome = await run_in_threadpool(
+                service.change_password,
+                token,
+                body.current_password,
+                body.new_password,
+                settings.blocked_passwords,
+            )
+        except SQLAlchemyError:
+            return failure(503)
+        if outcome == "session":
+            return expired_cookie()
+        if outcome == "current_password":
+            return failure(
+                422, field_errors={outcome: ["M?t kh?u hi?n t?i kh?ng ??ng."]}
+            )
+        if outcome == "new_password":
+            return failure(
+                422,
+                field_errors={
+                    outcome: ["Ch?n m?t kh?u m?i h?p l? v? kh?c m?t kh?u hi?n t?i."]
+                },
+            )
+        response = Response(status_code=204, headers={"Cache-Control": "no-store"})
+        clear_session_cookie(response)
+        return response
 
     @router.post(
         "/logout",

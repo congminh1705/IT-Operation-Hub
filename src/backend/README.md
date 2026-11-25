@@ -65,8 +65,7 @@ revokes the server session and expires the cookie before returning 204. Role
 and membership assertions from the client grant no access. Call
 revoke_account_sessions inside the same transaction as password or access
 changes. The scope-bearing membership schema and team policies belong to
-FND-05. Read-only session requests do not renew the idle timeout. The account
-password-change route remains with its owning task.
+FND-05. Read-only session requests do not renew the idle timeout. Password changes use the authenticated session and the same Origin/CSRF checks.
 
 The one-time first Admin command is python -m app.modules.auth.bootstrap with
 --authorization, --email, --display-name and --blocklist. Run from an authorized
@@ -114,3 +113,17 @@ Idempotency-Key. PostgreSQL rejects updates and deletes to prior revisions.
 Ticket creation should call snapshot_policy in its own transaction and
 persist the captured version and all four budgets. Changing defaults
 does not modify a previously captured snapshot.
+
+## Password rotation (FND-07.02)
+
+Enable POST /api/v1/auth/password with ITOH_PASSWORD_BLOCKLIST pointing to a
+nonempty UTF-8 file of disallowed passwords, one per line. Missing or empty
+configuration leaves password changes unavailable. Use the existing session
+CSRF token, allowed Origin and Idempotency-Key. Successful rotation returns
+204, revokes all sessions and clears the current cookie. A retry with a
+revoked cookie returns 401. Passwords and request digests for this command
+are kept out of the idempotency ledger and audit.
+
+Restricted temporary sessions issued before revision 0008 lack the consumed
+verifier. An authorized operator must replace the temporary credential through
+the approved recovery process before that user can complete rotation.

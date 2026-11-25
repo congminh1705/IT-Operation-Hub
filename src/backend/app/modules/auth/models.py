@@ -39,6 +39,7 @@ class AuthSession(Base):
     idle_until: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
     password_change_only: Mapped[bool]
+    temporary_verifier: Mapped[str | None] = mapped_column(Text)
     revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 

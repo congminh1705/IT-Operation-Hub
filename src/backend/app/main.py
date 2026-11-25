@@ -1,6 +1,8 @@
 import os
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from pathlib import Path
+from unicodedata import normalize
 
 from fastapi import FastAPI
 
@@ -15,6 +17,18 @@ def create_app(
     service: AuthService | None = None, settings: AuthSettings | None = None
 ) -> FastAPI:
     if settings is None:
+        blocklist_path = os.getenv("ITOH_PASSWORD_BLOCKLIST")
+        blocked = (
+            frozenset(
+                normalize("NFC", line).casefold()
+                for line in Path(blocklist_path)
+                .read_text(encoding="utf-8")
+                .splitlines()
+                if line
+            )
+            if blocklist_path
+            else frozenset()
+        )
         settings = AuthSettings(
             frozenset(
                 value.strip()
@@ -22,6 +36,7 @@ def create_app(
                 if value.strip()
             ),
             secure_cookies=os.getenv("ITOH_AUTH_INSECURE_DEV") != "1",
+            blocked_passwords=blocked,
         )
     dsn = os.getenv("ITOH_DATABASE_DSN")
     engine = (
