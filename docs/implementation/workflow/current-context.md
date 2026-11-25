@@ -14,13 +14,13 @@ authority: derived
 
 ## Latest task report
 
-- [FND-12.04/attempt-01](task-history.md#task-fnd-12-04-attempt-01), review. Implemented reasoned reopen and role-specific cancellation. Closed permits only management reopening and the narrow eligible replacement needed before reopen. Cancelled remains terminal. Reopening retains consumed time and the original SLA budget snapshot; an exhausted budget remains exhausted. 42 backend tests on PostgreSQL passed. Board: 96 done, 4 review, 130 pending. Joint PO review pending; full Parent closure depends on INT-02. FND-12.04 push receipt pending.
+- [FND-12.04/attempt-01](task-history.md#task-fnd-12-04-attempt-01), review. Implemented reasoned reopen and role-specific cancellation. Closed permits only management reopening and the narrow eligible replacement needed before reopen. Cancelled remains terminal. Reopening retains consumed time and the original SLA budget snapshot; an exhausted budget remains exhausted. 42 backend tests on PostgreSQL passed. Board: 96 done, 4 review, 130 pending. Joint PO review pending; full Parent closure depends on INT-02. FND-12.04 implementation `c06c4ca` pushed to origin/phase/b-backend.
 
-- [FND-12.03/attempt-01](task-history.md#task-fnd-12-03-attempt-01), review. Resolved commits a public solution with the state and stops resolution consumption. Only the original requester may close; public discussion does not close it automatically. 40 backend tests on PostgreSQL passed. Joint PO review pending. FND-12.03 push receipt pending.
+- [FND-12.03/attempt-01](task-history.md#task-fnd-12-03-attempt-01), review. Resolved commits a public solution with the state and stops resolution consumption. Only the original requester may close; public discussion does not close it automatically. 40 backend tests on PostgreSQL passed. Joint PO review pending. FND-12.03 implementation `9369cfa` pushed to origin/phase/b-backend.
 
-- [FND-12.02/attempt-01](task-history.md#task-fnd-12-02-attempt-01), review. Pending now stores a public clarification and pauses resolution atomically. A substantive requester reply or authorized reasoned IT action resumes the clock. 39 backend tests on PostgreSQL passed. Joint PO review pending. FND-12.02 push receipt pending.
+- [FND-12.02/attempt-01](task-history.md#task-fnd-12-02-attempt-01), review. Pending now stores a public clarification and pauses resolution atomically. A substantive requester reply or authorized reasoned IT action resumes the clock. 39 backend tests on PostgreSQL passed. Joint PO review pending. FND-12.02 implementation `b82fe72` pushed to origin/phase/b-backend.
 
-- [FND-12.01/attempt-01](task-history.md#task-fnd-12-01-attempt-01), review. Added audience-scoped comments/notes and one-time eligible first response. 38 backend tests on PostgreSQL passed. Joint PO review pending. FND-12.01 push receipt pending.
+- [FND-12.01/attempt-01](task-history.md#task-fnd-12-01-attempt-01), review. Added audience-scoped comments/notes and one-time eligible first response. 38 backend tests on PostgreSQL passed. Joint PO review pending. FND-12.01 implementation `c112973` pushed to origin/phase/b-backend.
 
 - PO accepted [FND-11.01](task-history.md#task-fnd-11-01-attempt-02) and [FND-11.02](task-history.md#task-fnd-11-02-attempt-02). Both leaves are done. Parent closure awaits INT-02. FND-12 authorized.
 

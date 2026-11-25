@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 42 backend tests on PostgreSQL and Ruff/mypy passed.
 - Review: Agent verified. Joint PO review pending.
 - Remaining: Browser, real notification delivery and live SLA alert/breach projections remain unverified and belong to INT-02 and OPS-03/04. Runtime OpenAPI drift from FND-10 was not rerun. The live task-Done flow is not implemented in this Parent.
-- Commit/build: FND-12.04 push receipt pending.
+- Commit/build: FND-12.04 implementation `c06c4ca` pushed to origin/phase/b-backend.
 - Next: Joint review of the four FND-12 leaves after sequential verification.

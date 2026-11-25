@@ -14117,7 +14117,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/FND-12.01.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [Ticket lifecycle tests](../../../src/backend/tests/test_ticket_lifecycle.py).
-- Commit / build / environment: FND-12.01 push receipt pending.
+- Commit / build / environment: FND-12.01 implementation `c112973` pushed to origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 
@@ -14186,7 +14186,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/FND-12.02.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [Ticket lifecycle tests](../../../src/backend/tests/test_ticket_lifecycle.py).
-- Commit / build / environment: FND-12.02 push receipt pending.
+- Commit / build / environment: FND-12.02 implementation `b82fe72` pushed to origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 
@@ -14255,7 +14255,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/FND-12.03.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [Ticket lifecycle tests](../../../src/backend/tests/test_ticket_lifecycle.py).
-- Commit / build / environment: FND-12.03 push receipt pending.
+- Commit / build / environment: FND-12.03 implementation `9369cfa` pushed to origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 
@@ -14324,7 +14324,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/FND-12.04.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [Ticket lifecycle tests](../../../src/backend/tests/test_ticket_lifecycle.py).
-- Commit / build / environment: FND-12.04 push receipt pending.
+- Commit / build / environment: FND-12.04 implementation `c06c4ca` pushed to origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 

@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 40 backend tests on PostgreSQL and Ruff/mypy passed.
 - Review: Agent verified. Joint PO review pending.
 - Remaining: Real browser and notification delivery remain with INT-02. Runtime OpenAPI drift from FND-10 was not retested.
-- Commit/build: FND-12.03 push receipt pending.
+- Commit/build: FND-12.03 implementation `9369cfa` pushed to origin/phase/b-backend.
 - Next: Joint review of the four FND-12 leaves after sequential verification.
