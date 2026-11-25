@@ -74,6 +74,8 @@ def create_app(
             "listWorkforce",
             "getWorkforce",
             "updateWorkforce",
+            "getWorkforceAvailability",
+            "recordAbsence",
         }:
             return error_response(422, "INVALID_INPUT")
         if operation == "getCsrf":
