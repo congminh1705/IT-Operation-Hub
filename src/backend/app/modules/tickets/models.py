@@ -17,6 +17,7 @@ class Ticket(Base):
         ForeignKey("auth_account.id"), index=True
     )
     team_id: Mapped[UUID] = mapped_column(ForeignKey("org_team.id"))
+    assignee_id: Mapped[UUID | None] = mapped_column(ForeignKey("auth_account.id"))
     category_id: Mapped[UUID] = mapped_column(ForeignKey("ticket_category.id"))
     title: Mapped[str] = mapped_column(String(180))
     description: Mapped[str] = mapped_column(Text)

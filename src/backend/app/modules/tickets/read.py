@@ -58,6 +58,7 @@ class TicketAccess:
 
 class TicketInternal(TicketPublic):
     internal_context: str
+    assignee_id: UUID | None
 
 
 def get_ticket(
@@ -70,6 +71,7 @@ def get_ticket(
     if access.can_view_internal(row):
         return TicketInternal(
             **projected.model_dump(),
+            assignee_id=row.assignee_id,
             internal_context=f"Impact: {row.impact}; Urgency: {row.urgency}",
         )
     return projected
