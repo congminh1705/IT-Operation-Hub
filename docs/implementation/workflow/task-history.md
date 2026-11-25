@@ -10463,3 +10463,78 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: PO reviews FND-03.01, then FND-03.02.
 - Eligibility / remaining prerequisite: FND-03.01 done and a separate implementation request for FND-03.02.
+
+<a id="task-fnd-03-02-attempt-01"></a>
+
+### FND-03.02 — Attempt 01 — 2026-11-25T14:33:37+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-03.02/attempt-01
+- Task: [task specification](../tasks/FND-03.02.md)
+- Parent / phase: FND-03 / B
+- Executor: Codex
+- Started at: 2026-11-25T14:32+07:00 (observed execution interval)
+- Ended at: 2026-11-25T14:33:37+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None. FND-03.01 verification passed and was delivered before this continuation. PO requested completion of the Parent; both leaves await joint review.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Complete remaining FND-03 implementation.
+- Delivered: Configured same-origin real adapter selection and reusable scoped page reads/poll registration.
+- Incomplete scope / deviations: Live UI and service integration require INT-01. Existing navigation, Vietnam time formatting and 30-second polling policy are reused.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/lib/api/gateway.ts, paged-query.ts, production-boundary.test.ts | createAccountGateway, createPagedQuery and tests | Isolate real mode and bound paged read behavior |
+| docs/implementation/tasks/FND-03.02.md and workflow records | Report and review status | Record delivery |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Adapter and error behavior | Explicit real mode, no DEMO fallback | Same-origin configuration required and real request failure remains unconfirmed | pass | [Tests](../../../src/frontend/src/lib/api/production-boundary.test.ts) |
+| Parent criteria 2 and 3 within leaf scope | Existing shell, timezone and active-tab polling reused with bounded pages and isolated scope | QueryClient reused. Page size is bounded from 1 to 100 and denied reads remain errors. Workspace wiring remains for INT-01. | pass | [Paged queries](../../../src/frontend/src/lib/api/paged-query.ts) |
+| Live service/browser acceptance | Real scope and rendering evidence | INT-01 has not run | not-run | [Parent closure](../package-task-coverage.md#fnd-03) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd test | Unit and contract tests pass | 130 tests passed | pass |
+| src/frontend | pnpm.cmd typecheck | Next route types and TypeScript pass | Exit 0 | pass |
+| src/frontend | pnpm.cmd exec eslint src/lib/api/gateway.ts src/lib/api/paged-query.ts src/lib/api/production-boundary.test.ts | Changed files pass | Exit 0 | pass |
+| src/frontend | pnpm.cmd exec prettier --check src/lib/api/gateway.ts src/lib/api/paged-query.ts src/lib/api/production-boundary.test.ts | Changed files pass | Exit 0 | pass |
+| src/frontend | Production build and live browser runs | Integrated app checked | Build was verified in FND-03.01. Browser cutover and real server evidence are deferred to INT-01. | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO joint review pending.
+- Findings / resolution: Real mode never substitutes a fixture on failure. Only successful empty pages produce an empty result.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: INT-01.01, INT-01.02 and INT-01.03 gate full Parent closure.
+- Required resolution / owner: PO reviews the Phase B leaves and integration owners provide real-flow evidence in INT-01.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task evidence](../tasks/FND-03.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Contract tests](../../../src/frontend/src/lib/api/production-boundary.test.ts). No screenshots for this nonvisual slice.
+- Commit / build / environment: Implementation push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated with joint review handoff.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR yet.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO joint review of both FND-03 leaves.
+- Eligibility / remaining prerequisite: INT-01 evidence is required for Parent closure. No subsequent Parent work started.
