@@ -4,13 +4,16 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 from unicodedata import normalize
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.exception_handlers import request_validation_exception_handler
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 
 from app.health import router as health_router
 from app.infrastructure.database import Database, create_database_engine
-from app.modules.auth.http import AuthSettings, auth_router
+from app.modules.auth.http import AuthSettings, auth_router, failure
 from app.modules.auth.service import AuthService
-from app.modules.organization.http import organization_router
+from app.modules.organization.http import error_response, organization_router
 
 
 def create_app(
@@ -56,6 +59,18 @@ def create_app(
                 engine.dispose()
 
     application = FastAPI(title="IT Operation Hub", lifespan=lifespan)
+
+    @application.exception_handler(RequestValidationError)
+    async def validation_error(
+        request: Request, exc: RequestValidationError
+    ) -> JSONResponse:
+        operation = getattr(request.scope.get("route"), "operation_id", None)
+        if operation in {"getTicket", "listTickets"}:
+            return error_response(422, "INVALID_INPUT")
+        if operation == "getCsrf":
+            return failure(422)
+        return await request_validation_exception_handler(request, exc)
+
     application.include_router(health_router, prefix="/api/v1")
     application.include_router(auth_router(service, settings), prefix="/api/v1")
     application.include_router(organization_router(service, settings), prefix="/api/v1")

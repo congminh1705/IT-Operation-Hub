@@ -14337,3 +14337,141 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Joint PO review after both FND-12 leaves pass.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-fnd-10-01-attempt-03"></a>
+
+### FND-10.01 - Attempt 03 - 2026-11-25T18:04:20+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-10.01/attempt-03
+- Task: [Task card](../tasks/FND-10.01.md)
+- Parent / phase: FND-10 / B
+- Executor: Codex
+- Started at: 2026-11-25T18:04:20+07:00
+- Ended at: 2026-11-25T18:04:20+07:00
+- State before / after: done / done
+- Previous attempt / correction: [Previous attempt](#task-fnd-10-01-attempt-02).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Align scoped ticket search parameters, public list schema, errors and session-cookie documentation with FastAPI.
+- Delivered: Aligned the FastAPI export, reviewed OpenAPI and generated client declarations for six account routes and two ticket reads. Public ticket lists exclude internal fields; detail retains scoped internal projection. Login documents its actual CSRF, cookie and throttling behavior.
+- Incomplete scope / deviations: Real browser flow remains with INT-02.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| `docs/api/openapi.json`, FastAPI auth and ticket routes/models, `src/frontend/src/lib/api`, `src/backend/tests/test_runtime_openapi.py` | FND-10 implementation and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Runtime contract integrity | Real export matches selected draft operations; public validation hides submitted text | 8 operations match and new regression checks pass | pass | `test_runtime_openapi.py` |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | `src/backend: .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider --tb=short` (45 passed with PostgreSQL); Ruff check/format, mypy; `python docs/api/generate_frontend_contract.py --check`; `python -B -m unittest discover -s docs/api -p test_frontend_contract.py` (5 passed); `src/frontend: pnpm typecheck`, `pnpm test` (130 passed), `pnpm lint`, scoped Prettier and `pnpm build` | Consistent documented result | Verified | pass |
+| integration | Real browser wiring against the ticket service | Browser and session/cache acceptance | INT-02 owns real integrated flows | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification of the contract correction; prior PO service acceptance remains recorded.
+- Findings / resolution: Agent verified the real FastAPI export and the backend/frontend suites. Previously recorded PO service acceptance is preserved.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Real browser flow remains with INT-02.
+- Required resolution / owner: INT-02 integration owner.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-10.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Live OpenAPI regression test](../../../src/backend/tests/test_runtime_openapi.py).
+- Commit / build / environment: Contract correction on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 03.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Continue existing execution-board path; INT-02 owns real ticket UI and cache verification.
+- Eligibility / remaining prerequisite: FND-12 service review and INT-02 integration remain tracked in the execution board.
+
+<a id="task-fnd-10-02-attempt-03"></a>
+
+### FND-10.02 - Attempt 03 - 2026-11-25T18:04:20+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-10.02/attempt-03
+- Task: [Task card](../tasks/FND-10.02.md)
+- Parent / phase: FND-10 / B
+- Executor: Codex
+- Started at: 2026-11-25T18:04:20+07:00
+- Ended at: 2026-11-25T18:04:20+07:00
+- State before / after: done / done
+- Previous attempt / correction: [Previous attempt](#task-fnd-10-02-attempt-02).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Resolve real OpenAPI comparison failures for the ticket detail and shared account transport contract.
+- Delivered: Aligned the FastAPI export, reviewed OpenAPI and generated client declarations for six account routes and two ticket reads. Public ticket lists exclude internal fields; detail retains scoped internal projection. Login documents its actual CSRF, cookie and throttling behavior.
+- Incomplete scope / deviations: Real browser flow remains with INT-02.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| `docs/api/openapi.json`, FastAPI auth and ticket routes/models, `src/frontend/src/lib/api`, `src/backend/tests/test_runtime_openapi.py` | FND-10 implementation and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Runtime contract integrity | Real export matches selected draft operations; public validation hides submitted text | 8 operations match and new regression checks pass | pass | `test_runtime_openapi.py` |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | `src/backend: .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider --tb=short` (45 passed with PostgreSQL); Ruff check/format, mypy; `python docs/api/generate_frontend_contract.py --check`; `python -B -m unittest discover -s docs/api -p test_frontend_contract.py` (5 passed); `src/frontend: pnpm typecheck`, `pnpm test` (130 passed), `pnpm lint`, scoped Prettier and `pnpm build` | Consistent documented result | Verified | pass |
+| integration | Real browser wiring against the ticket service | Browser and session/cache acceptance | INT-02 owns real integrated flows | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification of the contract correction; prior PO service acceptance remains recorded.
+- Findings / resolution: Agent verified the real FastAPI export and the backend/frontend suites. Previously recorded PO service acceptance is preserved.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Real browser flow remains with INT-02.
+- Required resolution / owner: INT-02 integration owner.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-10.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Live OpenAPI regression test](../../../src/backend/tests/test_runtime_openapi.py).
+- Commit / build / environment: Contract correction on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 03.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Continue existing execution-board path; INT-02 owns real ticket UI and cache verification.
+- Eligibility / remaining prerequisite: FND-12 service review and INT-02 integration remain tracked in the execution board.

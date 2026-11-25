@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-10.02/attempt-02.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-10-02-attempt-02).
+- Latest Report ID: FND-10.02/attempt-03.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-10-02-attempt-03).
 - Delivered: Implemented GET /api/v1/tickets/{id}. Current scope determines access and public/internal projection. Inaccessible and missing IDs return the same NOT_FOUND error. Internal projection exposes only impact and urgency in addition to public fields.
 - Changed paths: `tickets/read.py`, `tickets/service.py`, `organization/http.py`, `test_ticket_reads.py`
-- Checks: 35 backend tests on PostgreSQL and Ruff/mypy passed.
-- Review: PO accepted the service leaves. Agent verification remains in attempt 01.
-- Remaining: The runtime OpenAPI comparison reported drift in ticket list parameters, list/detail responses and security, and in existing auth operations. Runtime contract reconciliation and the browser/session/cache flow still need verification before FND-10 Parent closure at INT-02.
-- Commit/build: FND-10.02 implementation `6ac3db4` pushed to origin/phase/b-backend.
-- Next: FND-11.01 is authorized. FND-10 Parent closure remains with INT-02.
+- Checks: Real FastAPI OpenAPI matches all 8 reviewed operations. 45 backend tests on PostgreSQL, 130 frontend tests, 5 contract tests, type/lint/format checks and frontend build passed.
+- Review: PO previously accepted the service leaves. Agent verified this contract correction.
+- Remaining: Real browser and session/cache acceptance remains with INT-02.
+- Commit/build: FND-10.02 implementation `6ac3db4` pushed to origin/phase/b-backend. Runtime contract correction is included in branch delivery.
+- Next: Parent integration closure at INT-02.

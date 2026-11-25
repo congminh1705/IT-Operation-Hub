@@ -70,7 +70,7 @@ function parseUser(value: unknown): UserView | undefined {
     typeof value.id !== "string" ||
     !/^[\da-f]{8}(?:-[\da-f]{4}){3}-[\da-f]{12}$/i.test(value.id) ||
     typeof value.display_name !== "string" ||
-    (Object.hasOwn(value, "email") && typeof value.email !== "string") ||
+    typeof value.email !== "string" ||
     typeof value.role !== "string" ||
     !Object.hasOwn(roles, value.role) ||
     typeof value.active !== "boolean" ||
@@ -83,7 +83,7 @@ function parseUser(value: unknown): UserView | undefined {
   return {
     id: value.id,
     display_name: value.display_name,
-    ...(typeof value.email === "string" ? { email: value.email } : {}),
+    email: value.email,
     role: value.role as Role,
     active: value.active,
     version: value.version,
@@ -257,10 +257,9 @@ export function createHttpAccountGateway(
   }
 
   return {
-    login: ({ email, password }, command) =>
+    login: ({ email, password }) =>
       readUser("login", {
         body: { email, password },
-        key: command?.idempotencyKey,
       }),
     currentUser: (signal) => readUser("getCurrentUser", { signal }),
     logout: () => noContent("logout"),

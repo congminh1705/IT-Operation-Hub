@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import Literal
 from uuid import UUID
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import false, func, or_, select, true
 from sqlalchemy.orm import Session
 from sqlalchemy.sql.elements import ColumnElement
@@ -78,10 +78,12 @@ def get_ticket(
 
 
 class TicketPage(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     items: list[TicketPublic]
-    page: int
-    page_size: int
-    total: int
+    page: int = Field(ge=1, le=1_000_000)
+    page_size: int = Field(ge=1, le=100)
+    total: int = Field(ge=0)
 
 
 def search_tickets(

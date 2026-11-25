@@ -1,8 +1,9 @@
 from datetime import datetime
 from enum import StrEnum
+from typing import cast
 from uuid import UUID, uuid4
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy.orm import Session
 
 from app.infrastructure.clock import Clock, read_utc
@@ -14,6 +15,7 @@ from app.infrastructure.events import (
     enqueue_event,
     write_audit,
 )
+from app.modules.sla.policy import Priority
 from app.modules.tickets.intake import TicketCreate, derive_intake, next_ticket_code
 from app.modules.tickets.models import Ticket
 
@@ -29,11 +31,13 @@ class TicketStatus(StrEnum):
 
 
 class SLAView(BaseModel):
-    response_used_seconds: int
-    resolution_used_seconds: int
+    model_config = ConfigDict(extra="forbid")
+
+    response_used_seconds: int = Field(ge=0)
+    resolution_used_seconds: int = Field(ge=0)
     resolution_paused: bool
     first_response_at: datetime | None
-    adjustment_revision: int
+    adjustment_revision: int = Field(ge=0)
 
 
 class TicketPublic(BaseModel):
@@ -43,11 +47,11 @@ class TicketPublic(BaseModel):
     code: str
     title: str
     description: str
-    status: str
-    priority: str
+    status: TicketStatus
+    priority: Priority
     requester_id: UUID
     team_id: UUID
-    version: int
+    version: int = Field(ge=1)
     sla: SLAView
 
 
@@ -57,8 +61,8 @@ def public_ticket(ticket: Ticket) -> TicketPublic:
         code=ticket.code,
         title=ticket.title,
         description=ticket.description,
-        status=ticket.status,
-        priority=ticket.priority,
+        status=TicketStatus(ticket.status),
+        priority=cast(Priority, ticket.priority),
         requester_id=ticket.requester_id,
         team_id=ticket.team_id,
         version=ticket.version,

@@ -1,7 +1,7 @@
 import type {
   TicketInternal,
   TicketPublic as DraftTicketPublic,
-  TicketViewPage,
+  TicketListPage,
 } from "./contract.generated";
 
 export type { TicketInternal };
@@ -12,6 +12,6 @@ export type TicketPublic = DraftTicketPublic & {
 };
 
 export type TicketPage<T extends TicketPublic | TicketInternal> = Omit<
-  TicketViewPage,
+  TicketListPage,
   "items"
 > & { items: T[] };
