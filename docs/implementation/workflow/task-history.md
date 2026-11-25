@@ -12459,3 +12459,74 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Joint PO review before Parent closure.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-pre-03-03-attempt-01"></a>
+
+### PRE-03.03 - Attempt 01 - 2026-11-25T16:29:55+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: PRE-03.03/attempt-01
+- Task: [Task card](../tasks/PRE-03.03.md)
+- Parent / phase: PRE-03 / B
+- Executor: Codex
+- Started at: 2026-11-25T16:29:55+07:00
+- Ended at: 2026-11-25T16:29:55+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Decide minimum inventory sources and a bounded reservation proposal.
+- Delivered: Proposed no durable reservations and documented availability, shortage, actual issue and D-48 separation.
+- Incomplete scope / deviations: PO approval pending. Runtime, account eligibility and production rollout unverified.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/decisions/design-decisions.md, docs/technical/api-design.md and PRE-03.03 workflow records | PRE-03 decisions and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Reservation policy | No hidden ownership, expiry or release | Competing holds unsupported; expired preview writes nothing | pass | [D-40 inventory scenarios](../../decisions/design-decisions.md#d-40-inventory-source-pre-0303) |
+| Shortage and issue | Surface insufficient stock and serialize real issue | Synthetic shortage and one-success/one-conflict checks passed | pass | [D-40 inventory scenarios](../../decisions/design-decisions.md#d-40-inventory-source-pre-0303) |
+| Minimum sources and provider | Access-filter evidence and preserve D-48 | Source review passed; no provider calls | pass | [D-40 inventory scenarios](../../decisions/design-decisions.md#d-40-inventory-source-pre-0303) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Python assertions for shortage (2,1), two non-mutating planning previews, expiry and one-success/one-conflict issue model; BR-11 and D-48 source review; git diff --check | Consistent documented result | Verified | pass |
+| application | Run application tests and build | Runtime verification for later consumers | Documentation-only scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent contract review. Joint PO review pending.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO approval pending. Runtime, account eligibility and production rollout unverified.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/PRE-03.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [D-40 inventory scenarios](../../decisions/design-decisions.md#d-40-inventory-source-pre-0303).
+- Commit / build / environment: PRE-03.03 push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews PRE-03.02 and PRE-03.03.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.

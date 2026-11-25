@@ -255,6 +255,28 @@ D-25, D-42, BR-20 and D-48 remain binding. The following contract and numeric te
 | Assistant and background both request shared allowance | A single atomic ledger checks total and mode ceilings. Their reservations cannot create additional global quota. |
 | Cancelled request after dispatch or unknown provider cost | Hold reservation and mark unknown until reconciliation. Do not refund early, silently count zero, retry blindly or activate billing. |
 
+<a id="d-40-inventory-source-pre-0303"></a>
+
+### D-40 inventory planning and minimum sources (PRE-03.03)
+
+**Proposed MVP decision for PO review: exclude durable inventory reservations.** Asset reads and plan previews show current availability and source version. They never hold an asset, give a plan ownership, decrement stock or promise fulfillment. There is no hold TTL, owner, release endpoint or expiry job in this proposal. A future reservation feature requires a separate approved decision covering these rules.
+
+| Boundary | Contract | Consumer |
+| --- | --- | --- |
+| Planning and shortage | Distinguish eligible In Stock, shortage and unknown inventory. Record demand, quantity, current availability timestamp and source/version as preview evidence. Availability shown to two plans is informational and must not be summed as guaranteed supply. For unknown, stale or insufficient inventory, show the risk and route to human clarification, with no invented device or stock. | AI-02, AI-05 |
+| Confirmed asset issue | Use only the existing authorized issue action with explicit confirmation. Lock and re-read the exact asset, eligibility, active recipient, state and expected version in the transaction. Issue creates the durable active assignment/history under BR-11. Different plans racing for the same asset yield one issue and one conflict. Same command replay reconciles its existing result; previews and proposal expiry never return or revoke an issued asset. | OPS-02, INT-04 |
+| Minimum approved sources | Domain services supply access-filtered asset availability and source time/version, published and readable knowledge, and verified skill/calendar/template inputs when needed. Emit the minimum necessary projection; ordinary Requester never sees other holders or internal workforce/source details. Missing or revoked evidence yields clarification/unavailable. Raw ticket, prompt and personnel data remain outside unapproved provider dispatch. | AI-01, AI-02, AI-03, OPS-07 |
+| Provider and spend | D-48 authorizes future validated Gemini free-tier calls on synthetic DEMO/test data only and USD 0 paid spend. Keep provider/account/region/quotas and production data/retention/budget as separately confirmed choices. No paid fallback, production calls or actual account verification in this decision leaf. | AI-03, PRE-04 |
+
+**Synthetic scenario review**
+
+| Scenario | Expected |
+| --- | --- |
+| Two assets requested, one eligible In Stock | Report shortage of one; no effect is committed by plan preview. |
+| Two plans preview the same asset and both attempt a hold | Both previews may report current availability. Hold is unsupported; neither receives priority or exclusivity. |
+| Proposal expires before issue confirmation | No release job or stock change, because no inventory was reserved. |
+| Two authorized issue commands race for a single asset | First valid transaction writes one active assignment; second re-reads committed state and conflicts. Same-key replay cannot duplicate an issue. |
+
 ### D-40 login policy approved for FND-04.01
 
 PO approved the internal-app login policy on 2026-11-25. This supersedes the proposed values above for this scope.

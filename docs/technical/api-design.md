@@ -45,6 +45,7 @@ Methods/paths are review contracts, not execution commands.
 | Ticket confirmation | POST /assistant/ticket-drafts; POST /assistant/ticket-drafts/{id}/confirm | Exact user-confirmed digest/version/TTL/idempotency, same Ticket service |
 | KB | GET /knowledge, /knowledge/{id}/versions/{version}; POST /knowledge, /knowledge/{id}/versions; POST /knowledge/{id}/publish, /access | Read accessible Published only; author/publish/ACL under separate policy/audit. See [PRE-03.01](../decisions/design-decisions.md#d-40-knowledge-access-index-pre-0301) for the scoped grant and index lifecycle proposal |
 | Assets | GET/POST /assets; GET/PATCH /assets/{id}; POST /assets/{id}/assignments, /returns, /transitions | R/T scoped reads, M/A writes, atomic single assignment; no autonomous AI issue |
+| Inventory planning | Availability preview only | [PRE-03.03 proposal](../decisions/design-decisions.md#d-40-inventory-source-pre-0303) excludes durable holds; confirmed issue remains a distinct authorized mutation. |
 | Operations | GET /notifications; POST /notifications/{id}/read; GET /reports, /audit | Recipient/M/A metric/audit scope, no internal R payloads |
 | AI settings | GET/PATCH /admin/assistant | Admin availability, no secrets/others' chats; Manager policies separate |
 | Health | GET /health/live; GET /health/ready | Minimal status, no secrets/internal hosts; provider failure does not block core |
