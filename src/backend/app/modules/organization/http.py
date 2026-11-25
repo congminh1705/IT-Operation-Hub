@@ -22,6 +22,13 @@ from app.modules.auth.http import AuthSettings, UserView, user_view
 from app.modules.auth.models import Account
 from app.modules.auth.service import AuthService, session_csrf
 from app.modules.organization.models import Department, Team, TeamMember
+from app.modules.sla.policy import (
+    PolicyRevision,
+    PolicyUpdate,
+    PolicyView,
+    policy_revision,
+    snapshot_policy,
+)
 from app.modules.tickets.categories import TicketCategory
 
 
@@ -597,6 +604,62 @@ def organization_router(
             {"id": str(id), **payload},
             execute,
             reference,
+            status=200,
+        )
+
+    @router.get("/sla/policy", operation_id="getSLAPolicy", response_model=PolicyView)
+    def get_sla_policy(request: Request) -> Response:
+        def read(db: Session, _: Account) -> PolicyView:
+            snapshot = snapshot_policy(db)
+            if snapshot is None:
+                raise Rejected(503, "SLA_POLICY_UNAVAILABLE")
+            return snapshot
+
+        return query(request, read)
+
+    @router.patch(
+        "/sla/policy", operation_id="updateSLAPolicy", response_model=PolicyView
+    )
+    def publish_sla_policy(request: Request, body: PolicyUpdate) -> Response:
+        def execute(db: Session, actor: Account) -> CommandResult:
+            db.execute(text("SELECT pg_advisory_xact_lock(508002)"))
+            latest = policy_revision(db)
+            if latest is None:
+                raise Rejected(503, "SLA_POLICY_UNAVAILABLE")
+            if latest.version != body.expectedVersion:
+                raise Rejected(409, "STALE_VERSION")
+            reason = body.reason.strip()
+            if len(reason) < 10:
+                raise Rejected(422, "INVALID_CHANGE")
+            row = PolicyRevision(
+                id=uuid4(),
+                version=latest.version + 1,
+                priority_budgets=body.priority_budgets.model_dump(),
+                reason=reason,
+            )
+            db.add(row)
+            write_audit(
+                db,
+                actor=Actor("user", actor.id),
+                action="sla.policy_publish",
+                target=Target("sla_policy_revision", row.id),
+                before=SafeFacts(version=latest.version),
+                after=SafeFacts(version=row.version),
+            )
+            return CommandResult(row.id, row.version)
+
+        def read_result(db: Session, result: CommandResult) -> PolicyView:
+            row = db.get(PolicyRevision, result.id)
+            if row is None or row.version != result.version:
+                raise Rejected(503, "SLA_POLICY_UNAVAILABLE")
+            return row.snapshot()
+
+        return change(
+            request,
+            "sla.policy.publish",
+            body.model_dump(),
+            execute,
+            read_result,
             status=200,
         )
 

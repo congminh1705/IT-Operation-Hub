@@ -11393,3 +11393,78 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-08.02.
 - Eligibility / remaining prerequisite: Direct dependency accepted; continuation authorized.
+
+<a id="task-fnd-08-02-attempt-01"></a>
+
+### FND-08.02 - Attempt 01 - 2026-11-25T15:40:20+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-08.02/attempt-01
+- Task: [Task card](../tasks/FND-08.02.md)
+- Parent / phase: FND-08 / B
+- Executor: Codex
+- Started at: 2026-11-25 (exact time not captured)
+- Ended at: 2026-11-25T15:40:20+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None. FND-08.01 accepted before implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Publish positive P1-P4 SLA budgets as immutable revisions with audited rollback-safe changes.
+- Delivered: Admin-only SLA policy read and publish routes. BR-09 defaults are migration seeded. A frozen full-budgets snapshot can be captured or looked up by version. Concurrent stale publishes are rejected, and successful prior commands can be replayed safely.
+- Incomplete scope / deviations: Ticket persistence and actual snapshot attachment belong to FND-09. Real UI acceptance belongs to INT-01.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/sla/policy.py | Budget, PolicyRevision, snapshot_policy | Validate and resolve immutable full-table policies |
+| src/backend/app/modules/organization/http.py | Admin GET/PATCH SLA policy | Enforce scope, audit, expected version and idempotency |
+| src/backend/migrations/versions/0007_sla_policy.py and src/backend/tests/test_organization.py | Default seed, append-only trigger and API tests | Verify real PostgreSQL behavior |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Validated audited publication | Positive complete table, Admin only, one success per expected version | Missing priority and nonpositive budget rejected. Requester denied. Concurrent publication yields one 200, one 409 and one audit entry. | pass | [API tests](../../../src/backend/tests/test_organization.py) |
+| Historic snapshot | Prior P3 budget remains stable after a default change | Old P3 remains 24h while new policies publish 12h and 15h. Direct rewrite is rejected by PostgreSQL. | pass | [API tests](../../../src/backend/tests/test_organization.py) |
+| Existing tickets and browser | Verify real persistent ticket snapshots and UI behavior | Snapshot consumer boundary tested. Actual ticket integration awaits FND-09 and INT-01. | not-run | [Parent coverage](../package-task-coverage.md#fnd-08) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | .venv/Scripts/python.exe -m pytest -q with local PostgreSQL ITOH_TEST_DATABASE_URL | API and DB tests pass | 22 passed, zero skipped; upstream TestClient warning | pass |
+| src/backend | .venv/Scripts/ruff.exe check app migrations tests and .venv/Scripts/mypy.exe app migrations tests | Lint and typing pass | Exit 0 for both | pass |
+| src/backend | .venv/Scripts/alembic.exe upgrade head --sql | Offline migration renders | Exit 0 | pass |
+| deployment | Browser cutover, production rollout and real ticket snapshot | Verify downstream customer flow | Owned by later tasks | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO review pending.
+- Findings / resolution: BR-09 seed matches the baseline. Old policy and audit lineage stay intact after publication.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent closure awaits INT-01. Real ticket writes await FND-09.
+- Required resolution / owner: PO reviews the leaf. Ticket and integration owners verify real consumers.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-08.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [API tests](../../../src/backend/tests/test_organization.py). No visual change.
+- Commit / build / environment: Implementation push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FND-08.02.
+- Eligibility / remaining prerequisite: FND-09.01 also depends on FND-06.02; no subsequent task is authorized in this handoff.
