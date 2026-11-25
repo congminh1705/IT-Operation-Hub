@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-04.01/attempt-02](task-history.md#task-fnd-04-01-attempt-02), done. PO accepted the implementation. Original evidence retains 14 PostgreSQL-backed tests, Ruff, mypy and offline Alembic SQL. FND-04.02 remains pending. Board totals: 73 done and 157 pending.
+
 - [FND-04.01/attempt-01](task-history.md#task-fnd-04-01-attempt-01), review. PO approved the D-40 policy. Added account bootstrap, Argon2id, pre-session/CSRF, rotation and database throttling. All 14 PostgreSQL-backed backend tests pass, plus Ruff, mypy and offline Alembic SQL. PO review pending. Implementation 01541c5 pushed and verified on origin/phase/b-backend.
 
 - PO jointly accepted FND-03.01 and FND-03.02. Both are done. [FND-03.01 acceptance](task-history.md#task-fnd-03-01-attempt-02), [FND-03.02 acceptance](task-history.md#task-fnd-03-02-attempt-02). Board totals: 72 done and 158 pending. Parent remains EPIC_IN_PROGRESS pending INT-01 real-flow evidence.

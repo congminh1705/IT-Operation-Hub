@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-04.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-04-01-attempt-01).
+- Latest Report ID: FND-04.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-04-01-attempt-02).
 - Delivered: First-Admin bootstrap command, Argon2id verification, same-origin pre-session CSRF, PostgreSQL login budgets and token rotation.
 - Files: src/backend/app/modules/auth, app/main.py, migrations/versions/0003_auth_login.py and tests/test_auth_login.py.
 - Checks: 14 tests pass on PostgreSQL, including five new FastAPI TestClient cases. Ruff, mypy and Alembic offline SQL pass.
-- Review: PO approved policy. Agent verified implementation. PO implementation review pending.
+- Review: PO approved the policy and accepted implementation. Agent verification is retained in attempt 01.
 - Remaining: Live Nginx configuration, real authorized operator bootstrap and downstream current-principal/password-change integration.
 - Commit/build: Implementation 01541c5 pushed and verified on origin/phase/b-backend.
-- Next: PO reviews this leaf. FND-04.02 remains pending.
+- Next: FND-04.02 remains pending until separately authorized.
