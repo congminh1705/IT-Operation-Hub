@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-11.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-11-02-attempt-01).
+- Latest Report ID: FND-11.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-11-02-attempt-02).
 - Delivered: Implemented Technician self-claim and the New to Open and Open to In Progress transitions. PostgreSQL serializes concurrent claims. Commands recheck current team, assignee, state and version and preserve initial SLA facts.
 - Changed paths: `tickets/assignment.py`, `tickets/lifecycle.py`, `organization/http.py`, `tickets/service.py`, `docs/api/openapi.json`, `tests/test_ticket_assignment.py`
 - Checks: 37 backend tests on PostgreSQL and Ruff/mypy passed.
-- Review: Agent verified. Joint PO review pending.
+- Review: PO accepted both service leaves. See attempt 01 for agent checks.
 - Remaining: INT-02 owns real browser flow and outbox delivery. Other transitions are assigned to later leaves. Runtime/draft OpenAPI reconciliation remains open from FND-10 and was not rerun in this task.
 - Commit/build: FND-11.02 implementation `ccc61ba` pushed to origin/phase/b-backend.
-- Next: Joint review of the two FND-11 leaves after sequential verification.
+- Next: FND-12 authorized. Full Parent closure depends on INT-02.

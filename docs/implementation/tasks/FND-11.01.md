@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-11.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-11-01-attempt-01).
+- Latest Report ID: FND-11.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-11-01-attempt-02).
 - Delivered: Implemented reasoned management assignment and transfer. PostgreSQL guards against ownerless In Progress/Pending tickets. Commands validate active team, eligible membership and version; SLA facts stay intact.
 - Changed paths: `tickets/assignment.py`, `organization/http.py`, `tickets/models.py`, `tickets/read.py`, `infrastructure/events.py`, migration `0012_ticket_assignment`, `tests/test_ticket_assignment.py`
 - Checks: 36 backend tests on PostgreSQL and Ruff/mypy passed.
-- Review: Agent verified. Joint PO review pending.
+- Review: PO accepted both service leaves. See attempt 01 for agent checks.
 - Remaining: Browser and notification delivery belong to INT-02. Audit/event record structured changes and reason presence; free-text reason is not stored in the event.
 - Commit/build: FND-11.01 implementation `d199767` pushed to origin/phase/b-backend.
-- Next: Joint review of the two FND-11 leaves after sequential verification.
+- Next: FND-12 authorized. Full Parent closure depends on INT-02.
