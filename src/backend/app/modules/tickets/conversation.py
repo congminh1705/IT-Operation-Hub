@@ -8,10 +8,20 @@ from sqlalchemy.orm import Session
 
 from app.infrastructure.clock import Clock, read_utc
 from app.infrastructure.commands import CommandResult
+from app.infrastructure.events import (
+    Actor,
+    SafeFacts,
+    Target,
+    enqueue_event,
+    write_audit,
+)
 from app.modules.auth.models import Account
+from app.modules.organization.team_scope import effective_team_ids
 from app.modules.tickets.assignment import TicketCommandRejected, lock_ticket
 from app.modules.tickets.models import Ticket, TicketComment
 from app.modules.tickets.read import TicketAccess
+from app.modules.tickets.resolution import resume_resolution
+from app.modules.tickets.service import TicketStatus
 
 type Visibility = Literal["PUBLIC", "INTERNAL"]
 
@@ -110,7 +120,6 @@ def append_comment(
     ):
         row.first_response_at = now
         row.response_used_seconds = max(0, int((now - row.created_at).total_seconds()))
-        row.version += 1
     return comment
 
 
@@ -123,7 +132,48 @@ def create_comment(
         raise TicketCommandRejected(403, "FORBIDDEN")
     if row.status in ("Closed", "Cancelled"):
         raise TicketCommandRejected(409, "TICKET_READ_ONLY")
-    comment = append_comment(db, actor, row, body, read_utc(clock), internal=internal)
+    now = read_utc(clock)
+    previous_response = row.first_response_at
+    comment = append_comment(db, actor, row, body, now, internal=internal)
+    if (
+        row.status == TicketStatus.PENDING
+        and actor.id == row.requester_id
+        and body.visibility == "PUBLIC"
+    ):
+        if row.assignee_id is None or row.team_id not in effective_team_ids(
+            db, row.assignee_id
+        ):
+            raise TicketCommandRejected(409, "INELIGIBLE_ASSIGNEE")
+        row.status = TicketStatus.IN_PROGRESS
+        resume_resolution(row, now)
+        before = SafeFacts(status=TicketStatus.PENDING, version=row.version)
+        row.version += 1
+        after = SafeFacts(status=TicketStatus.IN_PROGRESS, version=row.version)
+        event_actor = Actor("user", actor.id)
+        target = Target("ticket", row.id)
+        write_audit(
+            db,
+            actor=event_actor,
+            action="ticket.resume",
+            target=target,
+            before=before,
+            after=after,
+            clock=lambda: now,
+        )
+        enqueue_event(
+            db,
+            actor=event_actor,
+            target=target,
+            event_type="ticket.resumed",
+            schema_version=1,
+            aggregate_version=row.version,
+            correlation_id=row.id,
+            handlers=("ticket.state_notification",),
+            facts=after,
+            clock=lambda: now,
+        )
+    elif row.first_response_at != previous_response:
+        row.version += 1
     return CommandResult(comment.id, 1)
 
 
