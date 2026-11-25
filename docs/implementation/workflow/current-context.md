@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-11.01/attempt-01](task-history.md#task-fnd-11-01-attempt-01), review. Implemented reasoned management assignment and transfer. PostgreSQL guards against ownerless In Progress/Pending tickets. Commands validate active team, eligible membership and version; SLA facts stay intact. 36 backend tests on PostgreSQL passed. Joint PO review pending. FND-11.01 push receipt pending.
+
 - PO accepted [FND-10.01](task-history.md#task-fnd-10-01-attempt-02) and [FND-10.02](task-history.md#task-fnd-10-02-attempt-02). Both leaves are done. OpenAPI drift and real UI acceptance remain open; FND-10 Parent closure awaits INT-02. FND-11.01 authorized.
 
 - [FND-10.02/attempt-01](task-history.md#task-fnd-10-02-attempt-01), review. Implemented GET /api/v1/tickets/{id}. Current scope determines access and public/internal projection. Inaccessible and missing IDs return the same NOT_FOUND error. Internal projection exposes only impact and urgency in addition to public fields. 35 backend tests on PostgreSQL passed. Runtime OpenAPI comparison failed; ticket contract reconciliation and real browser verification remain for INT-02. Board: 92 done, 2 review, 136 pending. Joint PO review pending. FND-10.02 implementation `6ac3db4` pushed to origin/phase/b-backend.

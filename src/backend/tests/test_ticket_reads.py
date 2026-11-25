@@ -141,7 +141,8 @@ def test_detail_uses_current_role_and_team_membership(database: Database) -> Non
         assert response.headers["Cache-Control"] == "no-store"
         body = response.json()
         assert set(body) == (
-            set(team_ticket) | ({"internal_context"} if internal else set())
+            set(team_ticket)
+            | ({"internal_context", "assignee_id"} if internal else set())
         )
         if internal:
             assert body["internal_context"] == "Impact: HIGH; Urgency: MEDIUM"
