@@ -12948,3 +12948,74 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Resolve scoped Parent PR delivery. No subsequent work started.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-fnd-06-01-attempt-01"></a>
+
+### FND-06.01 - Attempt 01 - 2026-11-25T17:04:31+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-06.01/attempt-01
+- Task: [Task card](../tasks/FND-06.01.md)
+- Parent / phase: FND-06 / B
+- Executor: Codex
+- Started at: 2026-11-25T17:04:31+07:00
+- Ended at: 2026-11-25T17:04:31+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implement the verified provisioning backend while keeping unconfigured routes default-deny.
+- Delivered: Implemented Admin session checks, active department, normalized identity, Requester default, one-use trusted evidence and elevated-approval guard. Used synthetic fixture evidence to exercise the command.
+- Incomplete scope / deviations: Real ticket/approval verification producer is not wired. Named role approver and secure handover policy remain unresolved. FND-06.02 and INT-01 remain pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/users/provisioning.py, organization/http.py, Alembic 0009, tests/test_organization.py, docs/api/openapi.json and workflow records | FND-06 implementation and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Verified account creation | Admin, unique normalized email, active department and trusted proof | Authorization, default Requester and synthetic proof required | pass | [PostgreSQL API tests](../../../src/backend/tests/test_organization.py) |
+| Concurrent and scoped failures | One account for same normalized email; false or incomplete role authorization rejected | Competing requests produce 201/409; stale used proof and missing role authorization rejected | pass | [PostgreSQL API tests](../../../src/backend/tests/test_organization.py) |
+| Live ticket verification | Ticket creation cannot grant an account | No public verification writer or side effects on proof seeding. Live ticket/approval producer not integrated | not-run | [PostgreSQL API tests](../../../src/backend/tests/test_organization.py) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | .venv/Scripts/python.exe -m pytest -q with local PostgreSQL: 28 passed, zero skipped. Ruff and mypy passed. Alembic upgrade head --sql, OpenAPI generation check and five drift unit tests passed | Consistent documented result | Verified | pass |
+| deployment | Live enterprise approval, handover and browser checks | Verify end-to-end integration | Real evidence producer and operational decisions are pending | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent implementation verification. PO review pending.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Real ticket/approval verification producer is not wired. Named role approver and secure handover policy remain unresolved. FND-06.02 and INT-01 remain pending.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-06.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [PostgreSQL API tests](../../../src/backend/tests/test_organization.py).
+- Commit / build / environment: Implementation push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FND-06.01 before FND-06.02.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.

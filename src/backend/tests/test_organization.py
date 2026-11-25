@@ -596,3 +596,246 @@ def test_sla_concurrent_publish_only_accepts_one_expected_version(
             )
             == 1
         )
+
+
+def test_provisioning_requires_trusted_evidence_and_protects_initial_password(
+    database: Database,
+) -> None:
+    from sqlalchemy import select
+
+    from app.infrastructure.models import AuditLog, ConfirmedCommand
+    from app.modules.organization.models import Department
+    from app.modules.users.provisioning import ProvisioningVerification
+
+    password = "Initial synthetic credential"
+    settings = AuthSettings(
+        frozenset({ORIGIN}), blocked_passwords=frozenset({"blocked synthetic phrase"})
+    )
+    app = create_app(AuthService(database), settings)
+    with (
+        TestClient(app, base_url=ORIGIN) as admin,
+        TestClient(app, base_url=ORIGIN) as requester,
+    ):
+        admin_id, headers = actor(database, admin, "ADMIN")
+        _, requester_headers = actor(database, requester, "REQUESTER")
+        department, proof_id, elevated_proof = uuid4(), uuid4(), uuid4()
+        with database.transaction() as db:
+            db.add(
+                Department(
+                    id=department,
+                    code=department.hex,
+                    name="IT",
+                    name_key="it",
+                    active=True,
+                    version=1,
+                )
+            )
+            db.flush()
+            for proof, role in (
+                (proof_id, "REQUESTER"),
+                (elevated_proof, "TECHNICIAN"),
+            ):
+                db.add(
+                    ProvisioningVerification(
+                        id=proof,
+                        source_kind="D29_REQUEST",
+                        source_id=uuid4(),
+                        email="new@example.invalid",
+                        department_id=department,
+                        role=role,
+                        verified_by=admin_id,
+                        active=True,
+                    )
+                )
+        path = "/api/v1/users"
+        draft = {
+            "email": "NEW@EXAMPLE.INVALID",
+            "display_name": "Synthetic New",
+            "department_id": str(department),
+            "initial_password": password,
+            "verification_id": str(proof_id),
+        }
+        denied = requester.post(
+            path, json=draft, headers={**requester_headers, "Idempotency-Key": "deny"}
+        )
+        assert denied.status_code == 403 and password not in denied.text
+        missing = admin.post(
+            path,
+            json={**draft, "verification_id": str(uuid4())},
+            headers={**headers, "Idempotency-Key": "missing"},
+        )
+        assert missing.status_code == 403
+        forged = admin.post(
+            path,
+            json={**draft, "role": "ADMIN"},
+            headers={**headers, "Idempotency-Key": "forged"},
+        )
+        assert forged.status_code == 403
+        approval = admin.post(
+            path,
+            json={
+                **draft,
+                "role": "TECHNICIAN",
+                "verification_id": str(elevated_proof),
+            },
+            headers={**headers, "Idempotency-Key": "approval"},
+        )
+        assert (
+            approval.status_code == 403
+            and approval.json()["code"] == "ROLE_APPROVAL_REQUIRED"
+        )
+        with database.session() as db:
+            assert (
+                db.scalar(select(Account).where(Account.email == "new@example.invalid"))
+                is None
+            )
+        created = admin.post(
+            path, json=draft, headers={**headers, "Idempotency-Key": "verified"}
+        )
+        assert created.status_code == 201
+        assert password not in created.text and created.json()["role"] == "REQUESTER"
+        assert set(created.json()) == {
+            "id",
+            "email",
+            "display_name",
+            "role",
+            "active",
+            "version",
+        }
+        assert (
+            admin.post(
+                path, json=draft, headers={**headers, "Idempotency-Key": "verified"}
+            ).json()
+            == created.json()
+        )
+        assert (
+            admin.post(
+                path,
+                json={**draft, "initial_password": "Different synthetic credential"},
+                headers={**headers, "Idempotency-Key": "verified"},
+            ).status_code
+            == 409
+        )
+        assert (
+            admin.post(
+                path, json=draft, headers={**headers, "Idempotency-Key": "used"}
+            ).status_code
+            == 409
+        )
+        with database.session() as db:
+            row = db.get(Account, UUID(created.json()["id"]))
+            assert (
+                row is not None
+                and row.password_hash
+                and row.password_hash != password
+                and row.temporary_until
+            )
+            audit = db.scalars(
+                select(AuditLog).where(AuditLog.action == "user.provision")
+            ).all()
+            assert len(audit) == 1 and password not in str(
+                audit[0].before_after_redacted
+            )
+            assert (
+                len(
+                    db.scalars(
+                        select(ConfirmedCommand).where(
+                            ConfirmedCommand.operation == "user.provision"
+                        )
+                    ).all()
+                )
+                == 1
+            )
+
+
+def test_concurrent_provisioning_keeps_unique_normalized_email(
+    database: Database,
+) -> None:
+    from concurrent.futures import ThreadPoolExecutor
+    from threading import Barrier
+
+    from sqlalchemy import func, select
+
+    from app.modules.organization.models import Department
+    from app.modules.users.provisioning import ProvisioningVerification
+
+    settings = AuthSettings(
+        frozenset({ORIGIN}), blocked_passwords=frozenset({"blocked synthetic phrase"})
+    )
+    app = create_app(AuthService(database), settings)
+    email = "employee@example.invalid"
+    with (
+        TestClient(app, base_url=ORIGIN) as first,
+        TestClient(app, base_url=ORIGIN) as second,
+    ):
+        admin1, h1 = actor(database, first, "ADMIN")
+        admin2, h2 = actor(database, second, "ADMIN")
+        department = uuid4()
+        proofs = [uuid4(), uuid4()]
+        with database.transaction() as db:
+            db.add(
+                Department(
+                    id=department,
+                    code=department.hex,
+                    name="IT Ops",
+                    name_key="it ops",
+                    active=True,
+                    version=1,
+                )
+            )
+            db.flush()
+            for verification, verifier in zip(proofs, (admin1, admin2), strict=True):
+                db.add(
+                    ProvisioningVerification(
+                        id=verification,
+                        source_kind="D29_REQUEST",
+                        source_id=uuid4(),
+                        email=email,
+                        department_id=department,
+                        role="REQUESTER",
+                        verified_by=verifier,
+                        active=True,
+                    )
+                )
+        barrier = Barrier(2)
+
+        def create(client: TestClient, headers: dict[str, str], index: int) -> int:
+            barrier.wait(timeout=5)
+            return int(
+                client.post(
+                    "/api/v1/users",
+                    headers={
+                        **headers,
+                        "Idempotency-Key": "new-account",
+                    },
+                    json={
+                        "email": email.upper() if index else email,
+                        "display_name": "Synthetic Employee",
+                        "department_id": str(department),
+                        "initial_password": "Initial synthetic credential",
+                        "verification_id": str(proofs[index]),
+                    },
+                ).status_code
+            )
+
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            candidates = [
+                pool.submit(create, first, h1, 0),
+                pool.submit(create, second, h2, 1),
+            ]
+            assert sorted(x.result(timeout=10) for x in candidates) == [201, 409]
+    with database.session() as db:
+        assert (
+            db.scalar(
+                select(func.count()).select_from(Account).where(Account.email == email)
+            )
+            == 1
+        )
+        assert (
+            db.scalar(
+                select(func.count())
+                .select_from(ProvisioningVerification)
+                .where(ProvisioningVerification.consumed_account_id.is_not(None))
+            )
+            == 1
+        )

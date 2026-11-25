@@ -1,3 +1,4 @@
+import re
 from collections.abc import Callable
 from hmac import compare_digest
 from typing import Annotated, Any, Literal, cast
@@ -6,11 +7,13 @@ from uuid import UUID, uuid4
 
 from fastapi import APIRouter, Query, Request, Response
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, ValidationError
 from sqlalchemy import func, select, text
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
+from starlette.concurrency import run_in_threadpool
 
+from app.infrastructure.clock import read_utc
 from app.infrastructure.commands import (
     CommandResult,
     IdempotencyConflict,
@@ -20,7 +23,12 @@ from app.infrastructure.commands import (
 from app.infrastructure.events import Actor, SafeFacts, Target, write_audit
 from app.modules.auth.http import AuthSettings, UserView, user_view
 from app.modules.auth.models import Account
-from app.modules.auth.service import AuthService, session_csrf
+from app.modules.auth.service import (
+    TEMPORARY_LIFETIME,
+    AuthService,
+    normalize_identity,
+    session_csrf,
+)
 from app.modules.organization.models import Department, Team, TeamMember
 from app.modules.sla.policy import (
     PolicyRevision,
@@ -30,6 +38,7 @@ from app.modules.sla.policy import (
     snapshot_policy,
 )
 from app.modules.tickets.categories import TicketCategory
+from app.modules.users.provisioning import ProvisioningVerification, UserCreate
 
 
 class Rejected(Exception):
@@ -238,6 +247,139 @@ def organization_router(
             return error_response(409, "CONFLICT")
         except SQLAlchemyError:
             return error_response(503, "UNAVAILABLE")
+
+    @router.post(
+        "/users",
+        operation_id="createUser",
+        response_model=UserView,
+        status_code=201,
+        openapi_extra={
+            "requestBody": {
+                "required": True,
+                "content": {
+                    "application/json": {"schema": UserCreate.model_json_schema()},
+                },
+            }
+        },
+    )
+    async def create_user(request: Request) -> Response:
+        # Parse manually to keep validation errors from echoing credential input.
+        if (
+            request.headers.get("content-type", "").split(";", 1)[0].strip().lower()
+            != "application/json"
+        ):
+            return error_response(422, "INVALID_INPUT")
+        payload = bytearray()
+        async for chunk in request.stream():
+            if len(payload) + len(chunk) > 4096:
+                return error_response(422, "INVALID_INPUT")
+            payload.extend(chunk)
+        try:
+            body = UserCreate.model_validate_json(bytes(payload))
+        except ValidationError:
+            return error_response(422, "INVALID_INPUT")
+        name = body.display_name.strip()
+        email = normalize_identity(body.email)
+        secret = normalize("NFC", body.initial_password)
+        if (
+            not name
+            or chr(0) in name
+            or len(email) > 254
+            or not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", email)
+        ):
+            return error_response(422, "INVALID_INPUT")
+
+        def verification(db: Session) -> ProvisioningVerification:
+            proof = db.get(
+                ProvisioningVerification, body.verification_id, with_for_update=True
+            )
+            if (
+                proof is None
+                or not proof.active
+                or proof.email != email
+                or proof.department_id != body.department_id
+                or proof.role != body.role
+            ):
+                raise Rejected(403, "VERIFICATION_REQUIRED")
+            verifier = db.get(Account, proof.verified_by)
+            if verifier is None or not verifier.active or verifier.role != "ADMIN":
+                raise Rejected(403, "VERIFICATION_REQUIRED")
+            if body.role != "REQUESTER" and proof.elevated_approval_id is None:
+                raise Rejected(403, "ROLE_APPROVAL_REQUIRED")
+            return proof
+
+        def execute(db: Session, actor: Account) -> CommandResult:
+            service = configured()
+            if not settings.blocked_passwords:
+                raise Rejected(503, "PASSWORD_POLICY_UNAVAILABLE")
+            if (
+                not 15 <= len(secret) <= 128
+                or secret.casefold() in settings.blocked_passwords
+            ):
+                raise Rejected(422, "INVALID_INITIAL_PASSWORD")
+            proof = verification(db)
+            if proof.consumed_account_id is not None:
+                raise Rejected(409, "VERIFICATION_USED")
+            department = db.get(Department, body.department_id, with_for_update=True)
+            if department is None or not department.active:
+                raise Rejected(422, "DEPARTMENT_UNAVAILABLE")
+            identifier = uuid4()
+            row = Account(
+                id=identifier,
+                email=email,
+                display_name=name,
+                role=body.role,
+                department_id=department.id,
+                active=True,
+                version=1,
+                password_hash=service.hasher.hash(secret),
+                temporary_until=read_utc(service.clock) + TEMPORARY_LIFETIME,
+            )
+            db.add(row)
+            db.flush()
+            proof.consumed_account_id = identifier
+            write_audit(
+                db,
+                actor=Actor("user", actor.id),
+                action="user.provision",
+                target=Target("account", identifier),
+                before=SafeFacts(),
+                after=SafeFacts(active=True, version=1),
+                clock=service.clock,
+            )
+            return CommandResult(identifier, 1)
+
+        def project(db: Session, result: CommandResult) -> UserView:
+            proof = verification(db)
+            row = db.get(Account, result.id)
+            if (
+                proof.consumed_account_id != result.id
+                or row is None
+                or not row.active
+                or row.version != result.version
+                or row.password_hash is None
+                or row.temporary_until is None
+                or row.temporary_until <= read_utc(configured().clock)
+                or not configured().verify(row.password_hash, secret)
+            ):
+                raise Rejected(409, "REPLAY_STALE")
+            return user_view(row)
+
+        return await run_in_threadpool(
+            change,
+            request,
+            "user.provision",
+            {
+                "verification_id": str(body.verification_id),
+                "email": email,
+                "display_name": name,
+                "department_id": str(body.department_id),
+                "role": body.role,
+            },
+            execute,
+            project,
+            status=201,
+        )
 
     def register_named_lifecycle(
         model: type[Department] | type[TicketCategory],
