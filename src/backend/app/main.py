@@ -76,6 +76,11 @@ def create_app(
             "updateWorkforce",
             "getWorkforceAvailability",
             "recordAbsence",
+            "createManualTicketPlan",
+            "listTicketPlans",
+            "listPlanVersions",
+            "listTasks",
+            "getTask",
         }:
             return error_response(422, "INVALID_INPUT")
         if operation == "getCsrf":
