@@ -33,7 +33,7 @@ Providers generate schema-constrained output/tool proposals; the backend decides
 - Ticket/asset search and summaries follow API scope; report facts come from metric allowlists. No generated SQL.
 - Ticket creation: collect fields → preview → user confirms that exact content/version → service creates with user permissions/idempotency → return persisted ID/result. No confirmation or changed content means no write. SCR21 editing is optional, not a mandatory chat exit.
 - Reply drafts: separate PUBLIC/INTERNAL; no internal-to-public handoff. IT reviews/edits and sends through the original composer or a card composer in the AI Workspace using the same service. Chat/drafts are not public comments, first responses, or technical completion.
-- Personal sessions/history recheck source access; Admin cannot automatically read others' chats. Retention: Decision required, D-40.
+- Personal sessions/history recheck source access; Admin cannot automatically read others' chats. See the [PRE-03.02 retention and confirmation proposal](decisions/design-decisions.md#d-40-assistant-confirmation-budget-pre-0302). Production retention still requires approval.
 
 ## Event- and policy-driven coordination
 
