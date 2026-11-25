@@ -9,6 +9,7 @@ from app.modules.auth import models as auth_models  # noqa: F401
 from app.modules.organization import models as organization_models  # noqa: F401
 from app.modules.sla import policy as sla_policy  # noqa: F401
 from app.modules.tickets import categories as ticket_categories  # noqa: F401
+from app.modules.tickets import models as ticket_models  # noqa: F401
 from app.modules.users import provisioning  # noqa: F401
 
 

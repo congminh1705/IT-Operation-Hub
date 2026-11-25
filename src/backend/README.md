@@ -156,3 +156,17 @@ logging. Staff hand over
 initial credentials through the separately approved enterprise channel;
 ticket comments, notifications and automated email do not perform
 credential handover. INT-01 will wire the existing secure Admin form.
+
+## Text ticket intake (FND-09)
+
+POST /api/v1/tickets requires a live session, approved Origin, session CSRF
+and Idempotency-Key. Send title, description, type, category_id, impact,
+urgency and optional validated workflow_context. The server derives requester,
+active intake team, BR-03 priority and sequence code. Asset and file inputs
+are deferred to their later service tasks, as are DEMO employee references.
+
+The transaction persists the ticket, immutable full SLA snapshot and policy
+version, zero initial usage and clock facts, redacted audit, ticket.created
+event and durable routing/notification intent alongside the retry result.
+No broker call runs in the request transaction. An authorized replay with
+the same request returns the existing ticket; changed content conflicts.
