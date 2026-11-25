@@ -158,3 +158,67 @@ def test_pending_question_and_requester_reply_are_atomic(database: Database) -> 
     assert again.status_code == 200
     assert again.json()["sla"]["resolution_used_seconds"] == 120
     assert change("In Progress", 4, reason="Clarification received").status_code == 200
+
+
+def test_resolve_needs_public_solution_and_only_owner_closes(
+    database: Database,
+) -> None:
+    category, team = prepare_catalog(database)
+    now = datetime.now(UTC)
+    app = create_app(AuthService(database, clock=lambda: now), SETTINGS)
+    owner, admin, unrelated = (TestClient(app, base_url=ORIGIN) for _ in range(3))
+    _, owner_headers = actor(database, owner, "REQUESTER")
+    admin_id, admin_headers = actor(database, admin, "ADMIN")
+    _, unrelated_headers = actor(database, unrelated, "REQUESTER")
+    ticket = create_ticket(owner, owner_headers, category, "Resolution")
+    detail = f"{TICKETS}/{ticket['id']}"
+    transitions = detail + "/transitions"
+    comments = detail + "/comments"
+    with database.transaction() as db:
+        db.add(TeamMember(team_id=UUID(team), account_id=admin_id, active=True))
+        row = db.get(Ticket, UUID(ticket["id"]))
+        assert row is not None
+        row.status = "In Progress"
+        row.assignee_id = admin_id
+    invalid = {"expectedVersion": 1, "target_status": "Resolved", "public_message": " "}
+    now += timedelta(minutes=15)
+    assert command(admin, transitions, admin_headers, invalid).status_code == 422
+    assert owner.get(comments).json()["total"] == 0
+    assert owner.get(detail).json()["status"] == "In Progress"
+    assert (
+        command(
+            admin, transitions, admin_headers, {**invalid, "target_status": "Done"}
+        ).status_code
+        == 422
+    )
+    result = command(
+        admin,
+        transitions,
+        admin_headers,
+        {**invalid, "public_message": "Service restored"},
+    )
+    assert result.status_code == 200, result.text
+    assert result.json()["version"] == 2
+    sla = result.json()["sla"]
+    assert sla["resolution_used_seconds"] == sla["response_used_seconds"] == 900
+    assert sla["resolution_paused"]
+    assert owner.get(comments).json()["items"][0]["content"] == "Service restored"
+    close = {"expectedVersion": 2, "target_status": "Closed"}
+    now += timedelta(minutes=1)
+    assert command(admin, transitions, admin_headers, close).status_code == 403
+    assert command(unrelated, transitions, unrelated_headers, close).status_code == 404
+    assert (
+        command(
+            owner,
+            comments,
+            owner_headers,
+            {"visibility": "PUBLIC", "content": "I am checking"},
+        ).status_code
+        == 201
+    )
+    assert owner.get(detail).json()["status"] == "Resolved"
+    result = command(owner, transitions, owner_headers, close)
+    assert result.status_code == 200, result.text
+    assert result.json()["status"] == "Closed" and result.json()["sla"] == sla
+    assert "internal_context" not in result.json()
+    assert owner.get(comments).json()["total"] == 2

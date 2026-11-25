@@ -22,6 +22,7 @@ from app.modules.tickets.assignment import (
     lock_ticket,
 )
 from app.modules.tickets.conversation import CommentCreate, append_comment
+from app.modules.tickets.read import TicketAccess
 from app.modules.tickets.resolution import resume_resolution, stop_resolution
 from app.modules.tickets.service import TicketStatus
 
@@ -31,7 +32,11 @@ class TicketTransition(BaseModel):
 
     expectedVersion: int = Field(ge=1, strict=True)
     target_status: Literal[
-        TicketStatus.OPEN, TicketStatus.IN_PROGRESS, TicketStatus.PENDING
+        TicketStatus.OPEN,
+        TicketStatus.IN_PROGRESS,
+        TicketStatus.PENDING,
+        TicketStatus.RESOLVED,
+        TicketStatus.CLOSED,
     ]
     reason: str | None = Field(default=None, max_length=10000)
     public_message: str | None = Field(default=None, max_length=10000)
@@ -44,15 +49,18 @@ def transition_ticket(
     body: TicketTransition,
     clock: Clock,
 ) -> CommandResult:
-    if actor.role not in (*MANAGEMENT, "TECHNICIAN"):
+    target = body.target_status
+    if target != TicketStatus.CLOSED and actor.role not in (*MANAGEMENT, "TECHNICIAN"):
         raise TicketCommandRejected(403, "FORBIDDEN")
     row = lock_ticket(db, ticket_id)
-    if actor.role == "TECHNICIAN" and row.team_id not in effective_team_ids(
-        db, actor.id
-    ):
+    access = TicketAccess.resolve(db, actor)
+    internal = access.can_view_internal(row)
+    own = actor.id == row.requester_id
+    if not internal and not (target == TicketStatus.CLOSED and own):
         raise TicketCommandRejected(404, "NOT_FOUND")
+    if target == TicketStatus.CLOSED and not own:
+        raise TicketCommandRejected(403, "FORBIDDEN")
     check_version(row, body.expectedVersion)
-    target = body.target_status
     expected = (
         TicketStatus(row.status)
         if row.status
@@ -61,6 +69,7 @@ def transition_ticket(
             TicketStatus.OPEN,
             TicketStatus.IN_PROGRESS,
             TicketStatus.PENDING,
+            TicketStatus.RESOLVED,
         )
         else None
     )
@@ -69,9 +78,11 @@ def transition_ticket(
         (TicketStatus.OPEN, TicketStatus.IN_PROGRESS),
         (TicketStatus.IN_PROGRESS, TicketStatus.PENDING),
         (TicketStatus.PENDING, TicketStatus.IN_PROGRESS),
+        (TicketStatus.IN_PROGRESS, TicketStatus.RESOLVED),
+        (TicketStatus.RESOLVED, TicketStatus.CLOSED),
     }:
         raise TicketCommandRejected(409, "INVALID_TRANSITION")
-    if target != TicketStatus.OPEN:
+    if target not in (TicketStatus.OPEN, TicketStatus.CLOSED):
         if row.assignee_id is None or row.team_id not in effective_team_ids(
             db, row.assignee_id
         ):
@@ -83,15 +94,20 @@ def transition_ticket(
         status=expected, version=row.version, assignee_id=row.assignee_id
     )
     now = read_utc(clock)
-    if target == TicketStatus.PENDING:
-        if not body.reason:
+    if target in (TicketStatus.PENDING, TicketStatus.RESOLVED):
+        if target == TicketStatus.PENDING and not body.reason:
             raise TicketCommandRejected(422, "REASON_REQUIRED")
         try:
             question = CommentCreate(
                 content=body.public_message or "", visibility="PUBLIC"
             )
         except ValidationError:
-            raise TicketCommandRejected(422, "QUESTION_REQUIRED") from None
+            error = (
+                "QUESTION_REQUIRED"
+                if target == TicketStatus.PENDING
+                else "SOLUTION_REQUIRED"
+            )
+            raise TicketCommandRejected(422, error) from None
         append_comment(db, actor, row, question, now, internal=True)
         stop_resolution(row, now)
     elif expected == TicketStatus.PENDING:
@@ -120,6 +136,8 @@ def transition_ticket(
             (TicketStatus.OPEN, TicketStatus.IN_PROGRESS): "ticket.started",
             (TicketStatus.IN_PROGRESS, TicketStatus.PENDING): "ticket.pending",
             (TicketStatus.PENDING, TicketStatus.IN_PROGRESS): "ticket.resumed",
+            (TicketStatus.IN_PROGRESS, TicketStatus.RESOLVED): "ticket.resolved",
+            (TicketStatus.RESOLVED, TicketStatus.CLOSED): "ticket.closed",
         }[expected, target],
         schema_version=1,
         aggregate_version=row.version,
