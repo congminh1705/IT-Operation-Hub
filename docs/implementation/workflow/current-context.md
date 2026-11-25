@@ -14,7 +14,7 @@ authority: derived
 
 ## Latest task report
 
-- [FND-03.02/attempt-01](task-history.md#task-fnd-03-02-attempt-01), review. Real mode requires explicit same-origin configuration. Paged read and poll use the shared identity-scoped QueryClient. All 130 frontend tests, TypeScript and scoped lint/format passed. Joint PO review pending for both leaves. INT-01 still gates full Parent closure. Implementation push receipt pending.
+- [FND-03.02/attempt-01](task-history.md#task-fnd-03-02-attempt-01), review. Real mode requires explicit same-origin configuration. Paged read and poll use the shared identity-scoped QueryClient. All 130 frontend tests, TypeScript and scoped lint/format passed. Joint PO review pending for both leaves. INT-01 still gates full Parent closure. Implementation 021db02 pushed and verified on origin/phase/b-backend.
 
 - [FND-03.01/attempt-01](task-history.md#task-fnd-03-01-attempt-01), review. Generated DTOs for eight draft OpenAPI operations, added same-origin account HTTP transport and scoped current-account queries, and separated public/internal ticket projections. Five drift tests, 128 frontend tests, TypeScript, lint, scoped formatting and production build passed. Runtime FastAPI/browser verification remains with service and INT-01 tasks. Implementation 265c85a pushed to phase/b-backend and verified on origin. [Task handoff](../tasks/FND-03.01.md#6-evidence-and-handoff). FND-03.02 remains pending until acceptance and separate authorization.
 
