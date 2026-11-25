@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 46 backend tests on PostgreSQL and Ruff/mypy passed.
 - Review: Agent verified. Joint PO review pending.
 - Remaining: Browser wiring and notification delivery remain for INT-02. Continuous SLA monitoring is outside this service leaf.
-- Commit/build: FND-13.01 push receipt pending.
+- Commit/build: FND-13.01 implementation `daf37c1` pushed to origin/phase/b-backend.
 - Next: Joint review of the two FND-13 leaves after sequential verification.

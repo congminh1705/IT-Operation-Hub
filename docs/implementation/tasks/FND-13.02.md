@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 47 backend tests on PostgreSQL and Ruff/mypy passed.
 - Review: Agent verified. Joint PO review pending.
 - Remaining: Real browser and notifications remain for INT-02. Historical assignment reasons that were never stored are absent. Continuous monitoring and alert delivery belong to OPS-03/04.
-- Commit/build: FND-13.02 push receipt pending.
+- Commit/build: FND-13.02 implementation `b2c5390` pushed to origin/phase/b-backend.
 - Next: Joint review of the two FND-13 leaves after sequential verification.
