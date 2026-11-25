@@ -14,7 +14,7 @@ authority: derived
 
 ## Latest task report
 
-- [PRE-04.02/attempt-01](task-history.md#task-pre-04-02-attempt-01), review. Documented single migration runner, rollback/forward split, isolated restore/egress blocks and evidence gates for controlled resume. Synthetic walkthroughs passed; no real deployment. Implementation push receipt pending.
+- [PRE-04.02/attempt-01](task-history.md#task-pre-04-02-attempt-01), review. Documented single migration runner, rollback/forward split, isolated restore/egress blocks and evidence gates for controlled resume. Synthetic walkthroughs passed; no real deployment. Implementation 8293801 pushed and verified on origin/phase/b-backend.
 
 - [PRE-04.01/attempt-02](task-history.md#task-pre-04-01-attempt-02), done. PO accepted pilot targets and authorized PRE-04.02. Production and deployment remain separate.
 

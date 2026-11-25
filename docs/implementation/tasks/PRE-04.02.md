@@ -78,5 +78,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: Synthetic clean/partial migration failure and isolated recovery/resume walkthroughs passed. No deployment or recovery execution.
 - Review: Agent reviewed the proposed contract. PO approval pending.
 - Remaining: Named operator, deployment authorization and actual QA-05 evidence.
-- Commit/build: Implementation push receipt pending.
+- Commit/build: Implementation 8293801 pushed and verified on origin/phase/b-backend.
 - Next: PO reviews PRE-04.02. Parent can close after approval and scope-safe delivery.
