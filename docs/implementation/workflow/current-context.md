@@ -14,7 +14,7 @@ authority: derived
 
 ## Latest task report
 
-- PRE-04 is EPIC_DONE following PO approval of both decision leaves. [Operations targets](task-history.md#task-pre-04-01-attempt-02) and [Release and recovery](task-history.md#task-pre-04-02-attempt-02). This main-based branch delivers PRE-04 only. QA-05 owns live rehearsal evidence.
+- PRE-04 is EPIC_DONE following PO approval of both decision leaves. [Operations targets](task-history.md#task-pre-04-01-attempt-02) and [Release and recovery](task-history.md#task-pre-04-02-attempt-02). Parent [PR #27](https://github.com/congminh1705/IT-Operation-Hub/pull/27) is open from delivery/pre-04 into main. PO merge pending. QA-05 owns live rehearsal evidence.
 
 - PRE-03 is EPIC_DONE following PO approval of all three leaves. [Knowledge](task-history.md#task-pre-03-01-attempt-02), [confirmation and quota](task-history.md#task-pre-03-02-attempt-02), [inventory](task-history.md#task-pre-03-03-attempt-02). Parent [PR #26](https://github.com/congminh1705/IT-Operation-Hub/pull/26) is open into main from delivery/pre-03. PO merge pending. Live provider eligibility, configured limits and operational data remain with their consumer tasks.
 

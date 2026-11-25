@@ -11499,7 +11499,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 - Task Evidence and handoff: Linked to attempt 02.
 - Execution-board task row: done, Owner PO.
 - Current context: Updated.
-- Parent state: EPIC_DONE. Scoped Parent PR pending.
+- Parent state: EPIC_DONE. Parent [PR #27](https://github.com/congminh1705/IT-Operation-Hub/pull/27) is open into main. GitHub diff verified as PRE-04 documentation only.
 
 #### 10. Next step
 
