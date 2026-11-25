@@ -128,7 +128,7 @@ This **work-package/epic registry** retains all 88 stable scope IDs. The registr
 | [FND-10](01-foundation.md#fnd-10) | Implement scoped ticket search and details | [FND-09](01-foundation.md#fnd-09) | EPIC_IN_PROGRESS |
 | [FND-11](01-foundation.md#fnd-11) | Assign, transfer, claim and start tickets | [FND-10](01-foundation.md#fnd-10) | EPIC_IN_PROGRESS |
 | [FND-12](01-foundation.md#fnd-12) | Implement public comments, notes and ticket lifecycle | [FND-11](01-foundation.md#fnd-11) | EPIC_IN_PROGRESS |
-| [FND-13](01-foundation.md#fnd-13) | Implement priority changes and authorized timeline | [FND-12](01-foundation.md#fnd-12) | EPIC_READY |
+| [FND-13](01-foundation.md#fnd-13) | Implement priority changes and authorized timeline | [FND-12](01-foundation.md#fnd-12) | EPIC_IN_PROGRESS |
 | [FND-14](01-foundation.md#fnd-14) | Manage verified workforce skills | [FND-05](01-foundation.md#fnd-05), [PRE-02](00-decisions.md#pre-02) | EPIC_READY |
 | [FND-15](01-foundation.md#fnd-15) | Manage calendars, budgets and absences | [FND-14](01-foundation.md#fnd-14), [PRE-02](00-decisions.md#pre-02) | EPIC_READY |
 | [FND-16](01-foundation.md#fnd-16) | Create and execute manual tasks with remaining effort | [FND-11](01-foundation.md#fnd-11), [FND-15](01-foundation.md#fnd-15), [PRE-02](00-decisions.md#pre-02) | EPIC_READY |

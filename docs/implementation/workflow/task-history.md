@@ -14751,3 +14751,72 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-13.01 eligible on request. INT-02 owns Parent integration.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-fnd-13-01-attempt-01"></a>
+
+### FND-13.01 - Attempt 01 - 2026-11-25T18:11:39+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-13.01/attempt-01
+- Task: [Task card](../tasks/FND-13.01.md)
+- Parent / phase: FND-13 / B
+- Executor: Codex
+- Started at: 2026-11-25T18:11:39+07:00
+- Ended at: 2026-11-25T18:11:39+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implement the selected FND-13 leaf in dependency order.
+- Delivered: Added versioned management priority changes using the original ticket SLA snapshot. Elapsed usage and first response are unchanged, and previous and newly observed breaches are preserved by clock and adjustment revision.
+- Incomplete scope / deviations: Browser wiring and notification delivery remain for INT-02. Continuous SLA monitoring is outside this service leaf.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| `tickets/priority.py`, `tickets/models.py`, `organization/http.py`, `infrastructure/events.py`, migration 0015, `tests/test_ticket_priority.py` | FND-13 implementation and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| SLA history and management access | TC-SLA04/05/08/12 and denials for T/R | Cases passed at fixed times with real PostgreSQL, including P1 breach retention and old/new snapshot separation | pass | `test_priority_adjustments_keep_original_budget_and_breaches` |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | `src/backend: .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider --tb=short` (46 passed with PostgreSQL); `.venv/Scripts/ruff.exe check app tests migrations`; `.venv/Scripts/ruff.exe format --check app tests migrations`; `.venv/Scripts/mypy.exe app` | Consistent documented result | Verified | pass |
+| integration | Browser, production workers and downstream domain checks | Full Parent evidence | INT-02 owns real integrated flows | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. Joint PO review pending.
+- Findings / resolution: Agent verified the scoped API with synthetic records on real PostgreSQL. PO approval is pending.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Browser wiring and notification delivery remain for INT-02. Continuous SLA monitoring is outside this service leaf.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-13.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Ticket priority tests](../../../src/backend/tests/test_ticket_priority.py).
+- Commit / build / environment: FND-13.01 push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review after both FND-13 leaves pass.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.

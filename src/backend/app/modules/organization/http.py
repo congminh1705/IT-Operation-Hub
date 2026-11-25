@@ -66,6 +66,7 @@ from app.modules.tickets.intake import (
 )
 from app.modules.tickets.lifecycle import TicketTransition, transition_ticket
 from app.modules.tickets.models import Ticket
+from app.modules.tickets.priority import PriorityCommand, change_priority
 from app.modules.tickets.read import (
     ListScope,
     Status,
@@ -550,6 +551,31 @@ def organization_router(
                 db, authorize(db, request, write=True), id, result
             ),
             status=201,
+            admin=False,
+        )
+
+    @router.post(
+        "/tickets/{id}/priority",
+        operation_id="changeTicketPriority",
+        response_model=TicketInternal,
+        tags=["Tickets"],
+    )
+    def ticket_priority(id: UUID, request: Request, body: PriorityCommand) -> Response:
+        def project(db: Session, result: CommandResult) -> TicketInternal:
+            actor = authorize(db, request, write=True)
+            if actor.role not in ("ADMIN", "IT_MANAGER"):
+                raise Rejected(403, "FORBIDDEN")
+            projection = project_ticket_command(request, db, result)
+            assert isinstance(projection, TicketInternal)
+            return projection
+
+        return change(
+            request,
+            "ticket.priority_change",
+            {"id": str(id), **body.model_dump(mode="json")},
+            lambda db, actor: change_priority(db, actor, id, body, configured().clock),
+            project,
+            status=200,
             admin=False,
         )
 
