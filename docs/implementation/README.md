@@ -132,7 +132,7 @@ This **work-package/epic registry** retains all 88 stable scope IDs. The registr
 | [FND-14](01-foundation.md#fnd-14) | Manage verified workforce skills | [FND-05](01-foundation.md#fnd-05), [PRE-02](00-decisions.md#pre-02) | EPIC_IN_PROGRESS |
 | [FND-15](01-foundation.md#fnd-15) | Manage calendars, budgets and absences | [FND-14](01-foundation.md#fnd-14), [PRE-02](00-decisions.md#pre-02) | EPIC_IN_PROGRESS |
 | [FND-16](01-foundation.md#fnd-16) | Create and execute manual tasks with remaining effort | [FND-11](01-foundation.md#fnd-11), [FND-15](01-foundation.md#fnd-15), [PRE-02](00-decisions.md#pre-02) | EPIC_IN_PROGRESS |
-| [FND-17](01-foundation.md#fnd-17) | Complete access revocation and assignment handover | [FND-06](01-foundation.md#fnd-06), [FND-16](01-foundation.md#fnd-16) | EPIC_READY |
+| [FND-17](01-foundation.md#fnd-17) | Complete access revocation and assignment handover | [FND-06](01-foundation.md#fnd-06), [FND-16](01-foundation.md#fnd-16) | EPIC_IN_PROGRESS |
 | [FND-18](01-foundation.md#fnd-18) | Expose scoped audit search | [FND-13](01-foundation.md#fnd-13), [FND-17](01-foundation.md#fnd-17) | EPIC_READY |
 | [WF-01](02-workflows.md#wf-01) | Validate and activate versioned plan DAGs | [FND-16](01-foundation.md#fnd-16) | EPIC_READY |
 | [WF-02](02-workflows.md#wf-02) | Publish verified workflow templates | [WF-01](02-workflows.md#wf-01), [PRE-02](00-decisions.md#pre-02) | EPIC_READY |

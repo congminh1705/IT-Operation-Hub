@@ -35,7 +35,13 @@ from app.modules.auth.service import (
     TEMPORARY_LIFETIME,
     AuthService,
     normalize_identity,
+    revoke_account_sessions,
     session_csrf,
+)
+from app.modules.organization.access import (
+    UserUpdate,
+    require_no_open_assignments,
+    update_account,
 )
 from app.modules.organization.models import Department, Team, TeamMember
 from app.modules.organization.team_scope import lock_team_configuration
@@ -315,6 +321,7 @@ def organization_router(
 
             def authorization(db: Session, replay: CommandResult | None) -> None:
                 nonlocal response_body
+                lock_team_configuration(db)
                 if authorize(db, request, admin=admin, write=True).id != actor_id:
                     raise Rejected(403, "FORBIDDEN")
                 if replay is not None:
@@ -740,6 +747,33 @@ def organization_router(
             "task.transition",
             body,
             lambda db, actor: transition_task(db, actor, id, body, configured().clock),
+        )
+
+    @router.patch(
+        "/users/{id}",
+        operation_id="updateUser",
+        tags=["Administration"],
+        response_model=UserView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
+    )
+    def update_user(id: UUID, request: Request, body: UserUpdate) -> Response:
+        def project(db: Session, result: CommandResult) -> UserView:
+            account = db.get(Account, result.id)
+            if account is None:
+                raise Rejected(404, "NOT_FOUND")
+            return user_view(account)
+
+        return change(
+            request,
+            "account.access_change",
+            {"id": str(id), **body.model_dump(mode="json", exclude_unset=True)},
+            lambda db, actor: update_account(db, actor, id, body, configured().clock),
+            project,
+            status=200,
         )
 
     @router.post(
@@ -1468,6 +1502,11 @@ def organization_router(
     @router.post(
         "/teams/{id}/members",
         operation_id="setTeamMembership",
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
         response_model=TeamReference,
     )
     def set_member(id: UUID, request: Request, body: MemberCommand) -> Response:
@@ -1476,31 +1515,40 @@ def organization_router(
             row = team(db, id)
             if row.version != body.expectedVersion:
                 raise Rejected(409, "STALE_VERSION")
-            if not body.active:
-                raise Rejected(409, "HANDOVER_REQUIRED")
-            if len(body.reason.strip()) < 10:
+            if len(body.reason.strip()) < 10 or chr(0) in body.reason:
                 raise Rejected(422, "INVALID_CHANGE")
             candidate = db.get(Account, body.user_id, with_for_update=True)
             if (
                 not row.active
                 or candidate is None
-                or not candidate.active
-                or candidate.role not in ("TECHNICIAN", "IT_MANAGER", "ADMIN")
+                or (
+                    body.active
+                    and (
+                        not candidate.active
+                        or candidate.role not in ("TECHNICIAN", "IT_MANAGER", "ADMIN")
+                    )
+                )
             ):
                 raise Rejected(409, "INELIGIBLE_MEMBER")
             membership = db.get(TeamMember, (id, candidate.id))
-            if membership is None:
+            if not body.active:
+                if membership is None or not membership.active:
+                    raise Rejected(404, "NOT_FOUND")
+                require_no_open_assignments(db, candidate.id, id)
+                membership.active = False
+            elif membership is None:
                 db.add(TeamMember(team_id=id, account_id=candidate.id, active=True))
             elif membership.active:
                 raise Rejected(409, "MEMBER_EXISTS")
             else:
                 membership.active = True
+            revoke_account_sessions(db, candidate.id, read_utc(configured().clock))
             before = SafeFacts(active=row.active, version=row.version)
             row.version += 1
             write_audit(
                 db,
                 actor=Actor("user", actor.id),
-                action="team.member_add",
+                action="team.member_add" if body.active else "team.member_remove",
                 target=Target("team", id),
                 before=before,
                 after=SafeFacts(

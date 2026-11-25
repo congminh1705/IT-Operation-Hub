@@ -15993,3 +15993,72 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Proceed to FND-17.01.
 - Eligibility / remaining prerequisite: Follow task dependencies and PO review.
+
+<a id="task-fnd-17-01-attempt-01"></a>
+
+### FND-17.01 - Attempt 01 - 2026-11-25T23:18:56+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-17.01/attempt-01
+- Task: [Task card](../tasks/FND-17.01.md)
+- Parent / phase: FND-17 / B
+- Executor: Codex
+- Started at: 2026-11-25T23:18:56+07:00
+- Ended at: 2026-11-25T23:18:56+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Added versioned Admin role, department and lock changes and membership removal with session revocation and last-active-Admin protection.
+- Delivered: Added versioned Admin role, department and lock changes and membership removal with session revocation and last-active-Admin protection.
+- Incomplete scope / deviations: Handover for assigned active work is FND-17.02. Team retirement is FND-17.03. Real browser acceptance remains with INT-01.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| `organization/access.py`, `organization/http.py`, OpenAPI and `tests/test_access_lifecycle.py` | FND-17.01 | Service delivery and evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scoped acceptance | Task card criteria | 58 passed on PostgreSQL 18.7. Old cookies and prior team URLs were denied, unlock did not revive revoked cookies, and concurrent Admin locks preserved one active Admin. | pass | [Task card](../tasks/FND-17.01.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | `$env:ITOH_TEST_DATABASE_URL=<repo Compose PostgreSQL>; .venv/Scripts/python.exe -m pytest -qx -p no:cacheprovider --tb=short`; Ruff; mypy; scoped two-operation OpenAPI comparison | Task evidence | 58 passed on PostgreSQL 18.7. Old cookies and prior team URLs were denied, unlock did not revive revoked cookies, and concurrent Admin locks preserved one active Admin. | pass |
+| integration | Real browser and affected-work evaluation | Full Parent evidence | Remaining at INT-03 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO acceptance pending.
+- Findings / resolution: 58 passed on PostgreSQL 18.7. Old cookies and prior team URLs were denied, unlock did not revive revoked cookies, and concurrent Admin locks preserved one active Admin.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Handover for assigned active work is FND-17.02. Team retirement is FND-17.03. Real browser acceptance remains with INT-01.
+- Required resolution / owner: INT-03 and operations.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-17.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: Test commands above.
+- Commit / build / environment: FND-17.01 delivery on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Implement the approved regular FND-17.02 handover.
+- Eligibility / remaining prerequisite: Follow task dependencies and PO review.
