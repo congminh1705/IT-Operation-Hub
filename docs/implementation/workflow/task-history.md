@@ -15372,3 +15372,72 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Joint review of both FND-15 leaves.
 - Eligibility / remaining prerequisite: Follow task dependencies and PO review.
+
+<a id="task-fnd-15-02-attempt-01"></a>
+
+### FND-15.02 - Attempt 01 - 2026-11-25T22:37:01+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-15.02/attempt-01
+- Task: [Task card](../tasks/FND-15.02.md)
+- Parent / phase: FND-15 / B
+- Executor: Codex
+- Started at: 2026-11-25T22:37:01+07:00
+- Ended at: 2026-11-25T22:37:01+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Added scoped calendar writes, absence recording and daily availability reads. Workforce and person/day locks serialize writes; version, redacted audit and availability.changed outbox commit together.
+- Delivered: Added scoped calendar writes, absence recording and daily availability reads. Workforce and person/day locks serialize writes; version, redacted audit and availability.changed outbox commit together.
+- Incomplete scope / deviations: Real browser and actual affected-work evaluation remain for INT-03 and downstream consumers. Production calendars, holidays and budgets require operational inputs.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| `workforce/availability.py`, `workforce/skills.py`, `organization/http.py`, migration 0020, OpenAPI and `tests/test_workforce_calendar.py` | FND-15.02 | Service delivery and evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scoped acceptance | Task card criteria | 52 passed. Two same-version writes returned 200/409; forced outbox error rolled back the absence; retry and replay created one final effect. Scope, distinct day states and unchanged ticket SLA verified. Three runtime OpenAPI operations match and five contract tests passed. | pass | [Task card](../tasks/FND-15.02.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | `$env:ITOH_TEST_DATABASE_URL=<local PostgreSQL>; .venv/Scripts/python.exe -m pytest -qx -p no:cacheprovider --tb=short`; Ruff check and format check; mypy app | Task evidence | 52 passed. Two same-version writes returned 200/409; forced outbox error rolled back the absence; retry and replay created one final effect. Scope, distinct day states and unchanged ticket SLA verified. Three runtime OpenAPI operations match and five contract tests passed. | pass |
+| integration | Real browser and affected-work evaluation | Full Parent evidence | Remaining at INT-03 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO acceptance pending.
+- Findings / resolution: 52 passed. Two same-version writes returned 200/409; forced outbox error rolled back the absence; retry and replay created one final effect. Scope, distinct day states and unchanged ticket SLA verified. Three runtime OpenAPI operations match and five contract tests passed.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Real browser and actual affected-work evaluation remain for INT-03 and downstream consumers. Production calendars, holidays and budgets require operational inputs.
+- Required resolution / owner: INT-03 and operations.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-15.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: Test commands above.
+- Commit / build / environment: FND-15.02 delivery on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint review of both FND-15 leaves.
+- Eligibility / remaining prerequisite: Follow task dependencies and PO review.

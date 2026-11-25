@@ -96,3 +96,12 @@ class WorkforceAbsence(Base):
     workforce_version: Mapped[int]
     starts_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     ends_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+
+
+class CapacityPeriodLock(Base):
+    __tablename__ = "workforce_capacity_period"
+
+    account_id: Mapped[UUID] = mapped_column(
+        ForeignKey("workforce_skills.account_id"), primary_key=True
+    )
+    local_date: Mapped[date] = mapped_column(Date, primary_key=True)

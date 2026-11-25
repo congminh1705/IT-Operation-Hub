@@ -73,18 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-**Planning state:** no implementation attempt/report, application test, review, commit or build evidence exists for this task. Application checks are **NOT RUN**. Replace this planning statement with actual evidence when work occurs.
-
-**Report contract:** after every actual attempt or session handoff, append a report to [task history](../workflow/task-history.md#reports) using [Format version 1](../workflow/task-history.md#entry-format), preserving its ten subsections and tables. Apply the [report validation checklist](../workflow/task-history.md#report-validation-before-handoff), then update this section with the latest report and current summary. A report may end in blocked/review/in-progress; it does not imply DONE.
-
-- Latest Report ID: none; no implementation attempt yet.
-- Latest history entry: none; add the exact existing report anchor after actual work.
-- Delivered result / incomplete scope:
-- Actual changed paths / key symbols:
-- Acceptance and check summary: pass/fail/not-run; link full expected/actual results and exact commands in the report.
-- Review type / findings / resolution:
-- Remaining blockers / decisions / defects:
-- Commit/build if available:
-- Next eligible task / resume step:
-
-Keep sections 1-5 unchanged unless a justified authorized refinement is recorded. Update this handoff after every attempt, including unfinished/blocked work; retain earlier attempt reports in history. Synchronize the execution-board state/owner and current-context latest summary/history link. Do not duplicate report bodies in the board, invent evidence or mark unrelated parent/system gates passed.
+- Latest Report ID: FND-15.02/attempt-01.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-15-02-attempt-01).
+- Delivered: Added scoped calendar writes, absence recording and daily availability reads. Workforce and person/day locks serialize writes; version, redacted audit and availability.changed outbox commit together.
+- Changed files: `workforce/availability.py`, `workforce/skills.py`, `organization/http.py`, migration 0020, OpenAPI and `tests/test_workforce_calendar.py`
+- Checks: 52 backend tests passed on PostgreSQL. Two same-version writes returned 200/409; forced outbox error rolled back the absence; retry and replay created one final effect. Scope, distinct day states and unchanged ticket SLA verified. Three runtime OpenAPI operations match and five contract tests passed.
+- Review: Agent verified. Joint PO acceptance pending.
+- Remaining: Real browser and actual affected-work evaluation remain for INT-03 and downstream consumers. Production calendars, holidays and budgets require operational inputs.
+- Commit/build: FND-15.02 push receipt pending.
+- Next: Joint review of FND-15.01 and FND-15.02.

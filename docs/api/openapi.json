@@ -5871,7 +5871,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/WorkforceUpdate"
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/WorkforceUpdate"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CalendarUpdate"
+                  }
+                ]
               }
             }
           }
@@ -5948,17 +5955,17 @@
             "description": "Service Unavailable"
           }
         },
-        "description": "IT Manager or Admin verifies or revokes skill evidence in current scope. Self-verification is denied. Calendar configuration is a separate capability."
+        "description": "Management may verify skills or replace named local-day calendars. Use the current workforce version. Holidays must have no intervals and zero budget."
       }
     },
     "/workforce/{id}/absences": {
       "post": {
-        "operationId": "recordAbsence",
-        "summary": "Record absence",
         "tags": [
+          "Administration",
           "Workforce"
         ],
-        "description": "Validated interval; version/event triggers reevaluation, not automatic override of working/locked task. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "summary": "Workforce Absence",
+        "operationId": "recordAbsence",
         "security": [
           {
             "SessionCookie": []
@@ -5975,101 +5982,24 @@
             }
           },
           {
-            "$ref": "#/components/parameters/Csrf"
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
-            "$ref": "#/components/parameters/Idempotency"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Committed successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Reference"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Missing/expired/revoked session.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Function or CSRF/Origin denied.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found or outside scope; identical safe response.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Field/business validation failed; no partial effects.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "Dependency unavailable; no fabricated success.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
             }
           }
-        },
-        "x-contract-id": "API07",
-        "x-required-roles": [
-          "IT_MANAGER",
-          "ADMIN"
         ],
-        "x-data-scope": "Validated interval; version/event triggers reevaluation, not automatic override of working/locked task.",
-        "x-implementation-status": "not-started",
         "requestBody": {
           "required": true,
           "content": {
@@ -6080,8 +6010,79 @@
             }
           }
         },
-        "x-source-use-cases": "UC-OPS01",
-        "x-business-rules": "BR-16; no assumed availability"
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbsenceReference"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "description": "Management records a minute-aligned absence spanning up to 366 local days. The write records an affected-work event."
       }
     },
     "/workflows": {
@@ -11968,6 +11969,113 @@
         ],
         "description": "IT Manager adds skills in their active department. Admin may add shared or department-scoped skills."
       }
+    },
+    "/workforce/{id}/availability": {
+      "get": {
+        "tags": [
+          "Administration",
+          "Workforce"
+        ],
+        "summary": "Workforce Availability",
+        "operationId": "getWorkforceAvailability",
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AvailabilityView"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "description": "Inclusive range of up to 366 local days. Slots are UTC. Missing calendar or budget returns unknown and has no assignable capacity."
+      }
     }
   },
   "components": {
@@ -13276,34 +13384,33 @@
         ]
       },
       "AbsenceCreate": {
-        "type": "object",
         "properties": {
-          "expectedVersion": {
-            "type": "integer",
-            "minimum": 1
-          },
           "starts_at": {
             "type": "string",
-            "description": "ISO8601 UTC, offset required.",
             "format": "date-time"
           },
           "ends_at": {
             "type": "string",
-            "description": "ISO8601 UTC, offset required.",
             "format": "date-time"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1.0
           },
           "reason": {
             "type": "string",
+            "maxLength": 10000,
             "minLength": 10
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
-          "expectedVersion",
           "starts_at",
           "ends_at",
+          "expectedVersion",
           "reason"
-        ],
-        "additionalProperties": false
+        ]
       },
       "WorkflowCreate": {
         "type": "object",
@@ -15963,6 +16070,175 @@
           "version",
           "verified_skill_ids",
           "skills"
+        ]
+      },
+      "AbsenceReference": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "version"
+        ]
+      },
+      "AvailabilityView": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "calendar_timezone": {
+            "type": "string",
+            "default": "Asia/Ho_Chi_Minh"
+          },
+          "days": {
+            "items": {
+              "$ref": "#/components/schemas/DayAvailability"
+            },
+            "type": "array"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "version",
+          "days"
+        ]
+      },
+      "CalendarUpdate": {
+        "properties": {
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1.0
+          },
+          "days": {
+            "items": {
+              "$ref": "#/components/schemas/DayInput"
+            },
+            "type": "array",
+            "maxItems": 366,
+            "minItems": 1
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 10000,
+            "minLength": 10
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expectedVersion",
+          "days",
+          "reason"
+        ]
+      },
+      "DayInput": {
+        "properties": {
+          "local_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "holiday": {
+            "type": "boolean"
+          },
+          "budget_minutes": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 1440.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "working_intervals": {
+            "items": {
+              "$ref": "#/components/schemas/Interval"
+            },
+            "type": "array",
+            "maxItems": 96
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "local_date",
+          "holiday",
+          "budget_minutes",
+          "working_intervals"
+        ]
+      },
+      "DayAvailability": {
+        "properties": {
+          "local_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "unknown",
+              "off",
+              "absent",
+              "available"
+            ]
+          },
+          "capacity_minutes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "slots": {
+            "items": {
+              "$ref": "#/components/schemas/Interval"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "required": [
+          "local_date",
+          "status",
+          "capacity_minutes",
+          "slots"
+        ]
+      },
+      "Interval": {
+        "properties": {
+          "starts_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ends_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "starts_at",
+          "ends_at"
         ]
       }
     }
