@@ -79,5 +79,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: Synthetic capacity, stale approval, replay and lease assertions passed. No application tests or build for this documentation task.
 - Review: Agent checked the proposal. PO approval pending.
 - Remaining: Candidate lease, retry and expiry durations need approval before use. Production implementations remain with their owners.
-- Commit/build: Implementation push receipt pending.
+- Commit/build: Implementation de9bc28 pushed and verified on origin/phase/b-backend.
 - Next: PRE-02.03 awaits PO acceptance.
