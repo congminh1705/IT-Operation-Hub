@@ -14061,3 +14061,72 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Proceed to FND-12.01.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-fnd-12-01-attempt-01"></a>
+
+### FND-12.01 - Attempt 01 - 2026-11-25T17:46:39+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-12.01/attempt-01
+- Task: [Task card](../tasks/FND-12.01.md)
+- Parent / phase: FND-12 / B
+- Executor: Codex
+- Started at: 2026-11-25T17:46:39+07:00
+- Ended at: 2026-11-25T17:46:39+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implement the selected FND-12 leaf in dependency order.
+- Delivered: Added audience-scoped comments/notes and one-time eligible first response.
+- Incomplete scope / deviations: Real browser and notification delivery remain with INT-02. Runtime OpenAPI drift from FND-10 was not retested.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| `tickets/conversation.py`, `tickets/models.py`, `organization/http.py`, migration 0013, `tests/test_ticket_lifecycle.py` | FND-12 implementation and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Service behavior | Public-only view and count for requester, forbidden internal writes and terminal edits, first response only from eligible substantive non-self IT | All cases verified with scoped clients and simulated clock | pass | `test_comment_audience_and_first_response` |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | `src/backend: .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider --tb=short` (local PostgreSQL, 38 passed); `.venv/Scripts/ruff.exe check --fix app tests migrations`; `.venv/Scripts/mypy.exe app` | Consistent documented result | Verified | pass |
+| integration | Browser, production workers and downstream domain checks | Full Parent evidence | INT-02 owns real integrated flows | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. Joint PO review pending.
+- Findings / resolution: Agent verified the scoped API with synthetic records on real PostgreSQL. PO approval is pending.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Real browser and notification delivery remain with INT-02. Runtime OpenAPI drift from FND-10 was not retested.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-12.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Ticket lifecycle tests](../../../src/backend/tests/test_ticket_lifecycle.py).
+- Commit / build / environment: FND-12.01 push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review after both FND-12 leaves pass.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.

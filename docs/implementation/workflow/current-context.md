@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-12.01/attempt-01](task-history.md#task-fnd-12-01-attempt-01), review. Added audience-scoped comments/notes and one-time eligible first response. 38 backend tests on PostgreSQL passed. Joint PO review pending. FND-12.01 push receipt pending.
+
 - PO accepted [FND-11.01](task-history.md#task-fnd-11-01-attempt-02) and [FND-11.02](task-history.md#task-fnd-11-02-attempt-02). Both leaves are done. Parent closure awaits INT-02. FND-12 authorized.
 
 - [FND-11.02/attempt-01](task-history.md#task-fnd-11-02-attempt-01), review. Implemented Technician self-claim and the New to Open and Open to In Progress transitions. PostgreSQL serializes concurrent claims. Commands recheck current team, assignee, state and version and preserve initial SLA facts. 37 backend tests on PostgreSQL passed. Board: 94 done, 2 review, 134 pending. Joint PO review pending; INT-02 remains the Parent closure gate. FND-11.02 implementation `ccc61ba` pushed to origin/phase/b-backend.

@@ -45,6 +45,14 @@ from app.modules.tickets.assignment import (
     assign_ticket,
 )
 from app.modules.tickets.categories import TicketCategory
+from app.modules.tickets.conversation import (
+    CommentCreate,
+    CommentPage,
+    CommentView,
+    comment_result,
+    create_comment,
+    list_comments,
+)
 from app.modules.tickets.intake import (
     IntakeRejected,
     TicketCreate,
@@ -217,7 +225,7 @@ def organization_router(
                     result.model_dump(mode="json"),
                     headers={"Cache-Control": "no-store"},
                 )
-        except Rejected as exc:
+        except (Rejected, TicketCommandRejected) as exc:
             return error_response(exc.status, exc.code)
         except SQLAlchemyError:
             return error_response(503, "UNAVAILABLE")
@@ -485,6 +493,44 @@ def organization_router(
         if not isinstance(projection, TicketInternal):
             raise Rejected(404, "NOT_FOUND")
         return projection
+
+    @router.get(
+        "/tickets/{id}/comments",
+        operation_id="listTicketComments",
+        response_model=CommentPage,
+        tags=["Ticket content"],
+    )
+    def ticket_comments(
+        id: UUID,
+        request: Request,
+        page: Annotated[int, Query(ge=1, le=1_000_000)] = 1,
+        page_size: Annotated[int, Query(ge=1, le=100)] = 20,
+    ) -> Response:
+        return query(
+            request,
+            lambda db, actor: list_comments(db, actor, id, page, page_size),
+            admin=False,
+        )
+
+    @router.post(
+        "/tickets/{id}/comments",
+        operation_id="createTicketComment",
+        response_model=CommentView,
+        status_code=201,
+        tags=["Ticket content"],
+    )
+    def ticket_comment(id: UUID, request: Request, body: CommentCreate) -> Response:
+        return change(
+            request,
+            "ticket.comment",
+            {"id": str(id), **body.model_dump(mode="json")},
+            lambda db, actor: create_comment(db, actor, id, body, configured().clock),
+            lambda db, result: comment_result(
+                db, authorize(db, request, write=True), id, result
+            ),
+            status=201,
+            admin=False,
+        )
 
     @router.post(
         "/tickets/{id}/assignment",
