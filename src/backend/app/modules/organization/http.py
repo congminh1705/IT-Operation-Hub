@@ -99,6 +99,7 @@ from app.modules.work_management.allocation import (
     set_assignment_lock,
     update_task_progress,
 )
+from app.modules.work_management.lifecycle import TaskTransition, transition_task
 from app.modules.work_management.service import (
     ManualPlanCreate,
     PlanPage,
@@ -717,6 +718,28 @@ def organization_router(
             lambda db, actor: update_task_progress(
                 db, actor, id, body, configured().clock
             ),
+        )
+
+    @router.post(
+        "/tasks/{id}/transitions",
+        operation_id="transitionTask",
+        tags=["Tasks"],
+        response_model=TaskView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
+    )
+    def work_task_transition(
+        id: UUID, request: Request, body: TaskTransition
+    ) -> Response:
+        return task_change(
+            request,
+            id,
+            "task.transition",
+            body,
+            lambda db, actor: transition_task(db, actor, id, body, configured().clock),
         )
 
     @router.post(

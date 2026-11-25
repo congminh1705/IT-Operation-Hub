@@ -84,6 +84,7 @@ def create_app(
             "assignTask",
             "lockTaskAssignment",
             "updateTaskProgress",
+            "transitionTask",
         }:
             return error_response(422, "INVALID_INPUT")
         if operation == "getCsrf":

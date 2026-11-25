@@ -2,9 +2,11 @@ from datetime import date, datetime
 from uuid import UUID
 
 from sqlalchemy import (
+    CheckConstraint,
     Date,
     DateTime,
     ForeignKey,
+    ForeignKeyConstraint,
     Index,
     String,
     Text,
@@ -46,6 +48,9 @@ class PlanVersion(Base):
 
 class WorkTask(Base):
     __tablename__ = "work_task"
+    __table_args__ = (
+        UniqueConstraint("plan_version_id", "id", name="uq_work_task_plan_and_id"),
+    )
 
     id: Mapped[UUID] = mapped_column(primary_key=True)
     plan_version_id: Mapped[UUID] = mapped_column(
@@ -81,3 +86,33 @@ class TaskAllocation(Base):
     ends_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     task_version: Mapped[int]
     released_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class TaskDependency(Base):
+    __tablename__ = "work_task_dependency"
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ("plan_version_id", "task_id"),
+            ("work_task.plan_version_id", "work_task.id"),
+        ),
+        ForeignKeyConstraint(
+            ("plan_version_id", "predecessor_id"),
+            ("work_task.plan_version_id", "work_task.id"),
+        ),
+        CheckConstraint("task_id <> predecessor_id"),
+        Index("ix_work_task_dependency_predecessor", "predecessor_id"),
+    )
+
+    task_id: Mapped[UUID] = mapped_column(primary_key=True)
+    predecessor_id: Mapped[UUID] = mapped_column(primary_key=True)
+    plan_version_id: Mapped[UUID]
+
+
+class TaskTransitionRecord(Base):
+    __tablename__ = "work_task_transition"
+
+    task_id: Mapped[UUID] = mapped_column(ForeignKey("work_task.id"), primary_key=True)
+    version: Mapped[int] = mapped_column(primary_key=True)
+    previous_status: Mapped[str] = mapped_column(String(20))
+    status: Mapped[str] = mapped_column(String(20))
+    reason: Mapped[str | None] = mapped_column(Text)

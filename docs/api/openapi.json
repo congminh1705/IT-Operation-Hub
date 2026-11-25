@@ -5126,12 +5126,12 @@
     },
     "/tasks/{id}/transitions": {
       "post": {
-        "operationId": "transitionTask",
-        "summary": "Task transitions",
         "tags": [
+          "Administration",
           "Tasks"
         ],
-        "description": "Assignee or authorized M/A; dependency/state/version; Done requires human result and remaining=0. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "summary": "Work Task Transition",
+        "operationId": "transitionTask",
         "security": [
           {
             "SessionCookie": []
@@ -5148,102 +5148,24 @@
             }
           },
           {
-            "$ref": "#/components/parameters/Csrf"
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
-            "$ref": "#/components/parameters/Idempotency"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Committed successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskView"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Missing/expired/revoked session.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Function or CSRF/Origin denied.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found or outside scope; identical safe response.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Field/business validation failed; no partial effects.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "Dependency unavailable; no fabricated success.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
             }
           }
-        },
-        "x-contract-id": "API06",
-        "x-required-roles": [
-          "TECHNICIAN",
-          "IT_MANAGER",
-          "ADMIN"
         ],
-        "x-data-scope": "Assignee or authorized M/A; dependency/state/version; Done requires human result and remaining=0.",
-        "x-implementation-status": "not-started",
         "requestBody": {
           "required": true,
           "content": {
@@ -5254,8 +5176,79 @@
             }
           }
         },
-        "x-source-use-cases": "UC-OPS05–07",
-        "x-business-rules": "BR-15–18; manual lock/version/capacity"
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskView"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "description": "Applies allowed human task transitions. Readiness and start require completed predecessors and a currently feasible allocation. Done requires a substantive result and zero remaining minutes. Cancellation is management-only and active downstream impact requires review."
       }
     },
     "/tasks/{id}/progress": {
@@ -13321,39 +13314,55 @@
         "additionalProperties": false
       },
       "TaskTransition": {
-        "type": "object",
         "properties": {
           "expectedVersion": {
             "type": "integer",
-            "minimum": 1
+            "minimum": 1.0
           },
           "target_status": {
-            "type": "string",
-            "enum": [
-              "To Do",
-              "Ready",
-              "In Progress",
-              "Blocked",
-              "Done",
-              "Cancelled"
-            ]
+            "$ref": "#/components/schemas/TaskState"
           },
           "remaining_minutes": {
-            "type": "integer",
-            "minimum": 0
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2147483647.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "result": {
-            "type": "string"
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 10000
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "reason": {
-            "type": "string"
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 10000
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "expectedVersion",
           "target_status"
-        ],
-        "additionalProperties": false
+        ]
       },
       "TaskAssignment": {
         "properties": {
@@ -16439,6 +16448,17 @@
         "required": [
           "expectedVersion",
           "remaining_minutes"
+        ]
+      },
+      "TaskState": {
+        "type": "string",
+        "enum": [
+          "To Do",
+          "Ready",
+          "In Progress",
+          "Blocked",
+          "Done",
+          "Cancelled"
         ]
       }
     }

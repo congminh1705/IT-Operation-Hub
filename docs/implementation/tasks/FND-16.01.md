@@ -81,4 +81,4 @@ A future request authorizes the selected implementation (or this decision-refine
 - Review: Agent verified. PO acceptance pending.
 - Remaining: Manual allocation and progress are owned by FND-16.02/03. DAG activation is later workflow scope. The evidence reference is supplied by the authorized reviewer; no external evidence system is validated here. Browser and real integration await INT-03.
 - Commit/build: FND-16.01 implementation `f1c4798` pushed to origin/phase/b-backend.
-- Next: FND-16.02 after PO acceptance and authorization.
+- Next: Joint PO review of FND-16.01 through FND-16.03. Full Parent closure depends on INT-03.
