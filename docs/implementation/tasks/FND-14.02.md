@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 49 backend tests on PostgreSQL and Ruff/mypy passed.
 - Review: Agent verified. Joint PO review pending.
 - Remaining: Real browser and actual affected-work evaluation are later gates. No personnel data, evidence reference or reason text is emitted in the event payload.
-- Commit/build: FND-14.02 push receipt pending.
+- Commit/build: FND-14.02 implementation `dfc1533` pushed to origin/phase/b-backend.
 - Next: Joint review of the two FND-14 leaves after sequential verification.

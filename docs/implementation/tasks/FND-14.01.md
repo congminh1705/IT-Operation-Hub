@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 48 backend tests on PostgreSQL and Ruff/mypy passed.
 - Review: Agent verified. Joint PO review pending.
 - Remaining: No production catalog seeded. Required-skill persistence has no public task mutation until the task aggregate is implemented at FND-16. Scoped Technician teammate lookup is tied to an authorized current ticket team. Browser wiring belongs to INT-03.
-- Commit/build: FND-14.01 push receipt pending.
+- Commit/build: FND-14.01 implementation `d1aea79` pushed to origin/phase/b-backend.
 - Next: Joint review of the two FND-14 leaves after sequential verification.

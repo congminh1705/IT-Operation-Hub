@@ -15083,7 +15083,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/FND-14.01.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [Workforce skill tests](../../../src/backend/tests/test_workforce_skills.py).
-- Commit / build / environment: FND-14.01 push receipt pending.
+- Commit / build / environment: FND-14.01 implementation `d1aea79` pushed to origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 
@@ -15152,7 +15152,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/FND-14.02.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [Workforce skill tests](../../../src/backend/tests/test_workforce_skills.py).
-- Commit / build / environment: FND-14.02 push receipt pending.
+- Commit / build / environment: FND-14.02 implementation `dfc1533` pushed to origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 
