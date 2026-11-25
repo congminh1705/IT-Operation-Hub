@@ -1,7 +1,8 @@
-from datetime import datetime
+from datetime import date, datetime
 from uuid import UUID
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, String, UniqueConstraint
+from sqlalchemy import Boolean, Date, DateTime, ForeignKey, String, UniqueConstraint
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.infrastructure.models import Base
@@ -70,3 +71,28 @@ class WorkforceSkillChange(Base):
     skill_id: Mapped[UUID] = mapped_column(
         ForeignKey("workforce_skill.id"), primary_key=True
     )
+
+
+class CalendarDay(Base):
+    __tablename__ = "workforce_calendar_day"
+
+    account_id: Mapped[UUID] = mapped_column(
+        ForeignKey("workforce_skills.account_id"), primary_key=True
+    )
+    local_date: Mapped[date] = mapped_column(Date, primary_key=True)
+    workforce_version: Mapped[int] = mapped_column(primary_key=True)
+    holiday: Mapped[bool]
+    budget_minutes: Mapped[int | None]
+    intervals: Mapped[list[dict[str, str]]] = mapped_column(JSONB)
+
+
+class WorkforceAbsence(Base):
+    __tablename__ = "workforce_absence"
+
+    id: Mapped[UUID] = mapped_column(primary_key=True)
+    account_id: Mapped[UUID] = mapped_column(
+        ForeignKey("workforce_skills.account_id"), index=True
+    )
+    workforce_version: Mapped[int]
+    starts_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    ends_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
