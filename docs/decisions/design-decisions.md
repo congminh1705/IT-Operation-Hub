@@ -134,6 +134,29 @@ This section records confirmed requirements and candidates for PO review. Candid
 | Access loss and regular handover | D-17/NFR01 require immediate access loss and protect the last active Admin. History is retained. Reassignment must preserve ticket/task eligibility and lock invariants. | Review replacement eligibility, reason and affected versions before a regular change. At confirmation serialize the last-Admin check, recheck eligibility/versions and apply handover and access changes consistently. Reject normal deactivation when no eligible replacement exists and escalate to an authorized owner. | FND-17.01, FND-17.02, FND-17.03 |
 | Emergency without replacement | D-40 leaves this branch open. Immediate access loss and assignment invariants are still binding. | First preference is an already eligible designated on-call replacement. When none exists, temporary authorization suspension, active-work containment and repair need an explicit approved contract, including authority, allowable state transitions, SLA and lock semantics. Do not auto-assign the last Admin, reactivate a revoked principal, silently clear a lock or report handover as complete. | FND-17.01, FND-17.02, FND-17.03 |
 
+<a id="d-40-workforce-periods-pre-0201"></a>
+
+### D-40 workforce periods and verified inputs (PRE-02.01)
+
+This contract review distinguishes BR-16 requirements from proposed operating settings. PO approval is pending for the proposed settings and real calendar sources.
+
+| Topic | Confirmed behavior | Proposed setting or pending operational input | Consumer |
+| --- | --- | --- | --- |
+| Periods and boundaries | UTC storage and Asia/Ho_Chi_Minh business display. Measure capacity and allocations in integer minutes. | Use local calendar days as budget periods and explicitly bounded schedule intersections as slots. Represent every interval as [start, end), split at local midnight and convert to UTC before intersecting. Use minute precision and no blanket minimum slot duration until operations supplies one. | FND-15.01, WF-04 |
+| Working calendar and budget | Only configured working intervals count. Per-day capacity is the lesser of the configured budget and scheduled minutes remaining after absences. SLA clocks follow BR-08 through BR-10 independently of staff schedules. | Operations supplies the work schedules, holiday calendar and per-person daily budget. A configured day off has zero capacity. Missing schedule, holiday coverage or budget is unknown and blocks automatic allocation. No implicit weekday schedule, eight-hour budget or holiday feed. | FND-15, WF-04 |
+| Overlaps and multi-day work | Union overlapping schedule and absence intervals before calculating availability. Sum allocated remaining minutes for unfinished work, including Blocked. Every slot and period must fit. | Clip absences to scheduled intervals and allocation windows to approved slots. Allocate a multi-day task explicitly by period, totaling remaining effort exactly. If allocation is incomplete, show unallocated work as a risk and request clarification. | FND-15, FND-16, WF-04 |
+| Skill evidence | IT Manager and Admin configure and verify skills within their current authorized scope. Technician self records and model output are not verification. | Persist verifier identity, effective scope, verification time and evidence reference/version. Missing, expired or superseded evidence cannot satisfy a required skill. The real skill taxonomy and any validity policy need PO/operations approval. | FND-14, WF-02, WF-04 |
+| Effort source | Published template versions are immutable. Automation needs verified effort; undocumented work is not zero minutes. | IT Manager verifies a scoped estimate or template effort against traceable evidence such as a prior completed run or reviewed technical estimate. Record the source, version, verifier and positive minutes per step. AI suggestions may be reviewed as drafts. Without verified input, keep manual planning/clarification available and leave automation unable to assign. | WF-02, FND-16, WF-04 |
+
+**Scenario review using synthetic minutes**
+
+| Scenario | Inputs | Expected |
+| --- | --- | --- |
+| Overlapping absences | Schedule 09:00-12:00, daily budget 150, absences 09:30-10:30 and 10:00-11:00 | Union is 90 minutes. Scheduled remainder and effective capacity are 90 minutes. |
+| Multi-period fit | Remaining effort 150. Free capacity 120 on day 1 and 30 on day 2. | Explicit allocation 120 + 30 fits if both slots fit. Allocation 100 + 50 fails on day 2 even though the aggregate is 150. Repeating 150 into each day is invalid. |
+| Unknown evidence | Missing calendar or required skill verification, with positive verified effort | Automatic assignments are denied. The existing manual clarification path remains available with the missing field identified. |
+| Unknown effort | Verified skill and calendar, but an AI-only effort estimate | Keep it as a draft. It cannot authorize automated assignment or count as zero load. |
+
 ### D-40 login policy approved for FND-04.01
 
 PO approved the internal-app login policy on 2026-11-25. This supersedes the proposed values above for this scope.

@@ -112,7 +112,7 @@ Transient failures use bounded timeouts/retries/jittered backoff. Authorization/
 
 BR-16 defines minute-based formulas/concrete windows. Multi-period allocations follow schedule/period intersections and total remaining effort, not full effort repeated per period. Absence overlaps use interval union; missing data is not availability. Unallocated work is visible risk, not omitted reporting.
 
-Check load, skills/team schedules, predecessors, deadlines, commitments/SLA. Aggregate capacity does not prove schedulability. Period length/daily budget/calendar timezone/slot granularity remain D-40; DEMO schedules are not enterprise policy.
+Check load, skills/team schedules, predecessors, deadlines, commitments/SLA. Aggregate capacity does not prove schedulability. See the [PRE-02.01 period and verification proposal](../decisions/design-decisions.md#d-40-workforce-periods-pre-0201). Production calendars and budget values await the PO and operations; DEMO schedules are illustrative.
 
 ## 7. Approval and intervention
 

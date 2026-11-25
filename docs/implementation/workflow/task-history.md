@@ -11826,3 +11826,76 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: PRE-02.01, workforce contract.
 - Eligibility / remaining prerequisite: FE-18.03 done; continuation authorized.
+
+<a id="task-pre-02-01-attempt-01"></a>
+
+### PRE-02.01 - Attempt 01 - 2026-11-25T16:00:44+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: PRE-02.01/attempt-01
+- Task: [Task card](../tasks/PRE-02.01.md)
+- Parent / phase: PRE-02 / B
+- Executor: Codex
+- Started at: 2026-11-25 (exact time not captured)
+- Ended at: 2026-11-25T16:00:44+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None; selected next eligible decision leaf after FND-07.02 closure.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Refine workforce periods and verified effort and skill inputs.
+- Delivered: Restated BR-16 constraints; proposed local-day budgets and explicit schedule slots; mapped calendar, verification, effort sources and unknown handling to consumers.
+- Incomplete scope / deviations: Proposed settings and production data await PO; no unapproved values were adopted.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/decisions/design-decisions.md and docs/technical/architecture.md | PRE-02.01 contract and architecture link | Capture proposal and synthetic examples |
+| docs/implementation task and workflow records | Review status and evidence | Preserve handoff |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Periods, budgets and absence overlap | Assess configured local days and slots; avoid double subtraction | 180 scheduled minutes minus 90-minute union yields capacity 90. Daily and slot ceilings retained. | pass | [D-40 proposal](../../decisions/design-decisions.md#d-40-workforce-periods-pre-0201) |
+| Multi-period demand | Explicit allocation fitting every slot and period | 120+30 fits; 100+50 fails on day 2 despite matching the total. | pass | [D-40 fixtures](../../decisions/design-decisions.md#d-40-workforce-periods-pre-0201) |
+| Input and role boundaries | Unknown data blocks automatic assignment; validated effort and skills have provenance | Walkthroughs cover unknown calendar, unverified skills and AI-only effort. Operational decisions are marked pending. | pass | [D-40 proposal](../../decisions/design-decisions.md#d-40-workforce-periods-pre-0201) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | python assertions for min(150, 180-90), and pairwise fits of (120,30) and (100,50) against (120,30) | Union and fit outcomes match scenario | All assertions passed | pass |
+| repository | Compare BR-16, architecture and D-40 unknown-input walkthroughs; git diff --check | Contract preserves missing-data and verification semantics | Missing inputs route to clarification; no assignment permitted | pass |
+| application | Run application tests/build | Runtime after implementation | Documentation-only scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent contract review. PO acceptance pending.
+- Findings / resolution: A configured day off and unknown schedule are distinct; real work calendars have no implicit defaults.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Proposed operating inputs await PO and operations approval before consumers.
+- Required resolution / owner: Approve day boundaries and slot handling; supply calendars, daily budgets, skill evidence/validity rules and effort sources.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/PRE-02.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Worked scenarios](../../decisions/design-decisions.md#d-40-workforce-periods-pre-0201).
+- Commit / build / environment: Implementation push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. PRE-02.02 and PRE-02.03 remain pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews PRE-02.01.
+- Eligibility / remaining prerequisite: PRE-02.02 requires PRE-02.01 done and separate authorization.
