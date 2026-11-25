@@ -80,4 +80,4 @@ A future request authorizes the selected implementation (or this decision-refine
 - Review: PO accepted the bounded automation design. Agent evidence remains in attempt 01.
 - Remaining: Live grants and proposed pilot caps require authorized review before enabling actions.
 - Commit/build: Implementation b5af881 pushed and verified on origin/phase/b-backend.
-- Next: PRE-02 is EPIC_DONE. Parent delivery uses the main-based delivery/pre-02 branch approved by the PO.
+- Next: PRE-02 is EPIC_DONE. Parent [PR #25](https://github.com/congminh1705/IT-Operation-Hub/pull/25) is open from delivery/pre-02 into main. PO merge pending.
