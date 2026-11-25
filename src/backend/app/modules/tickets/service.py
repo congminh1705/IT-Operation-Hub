@@ -23,6 +23,8 @@ class TicketStatus(StrEnum):
     OPEN = "Open"
     IN_PROGRESS = "In Progress"
     PENDING = "Pending"
+    RESOLVED = "Resolved"
+    CLOSED = "Closed"
 
 
 class SLAView(BaseModel):

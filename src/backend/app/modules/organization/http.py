@@ -70,7 +70,12 @@ from app.modules.tickets.read import (
     get_ticket,
     search_tickets,
 )
-from app.modules.tickets.service import TicketPublic, create_text_ticket, public_ticket
+from app.modules.tickets.service import (
+    TicketPublic,
+    TicketStatus,
+    create_text_ticket,
+    public_ticket,
+)
 from app.modules.users.provisioning import (
     ProvisionedAccountView,
     ProvisioningVerification,
@@ -484,13 +489,19 @@ def organization_router(
         return query(request, read, admin=False)
 
     def project_ticket_command(
-        request: Request, db: Session, result: CommandResult
+        request: Request,
+        db: Session,
+        result: CommandResult,
+        *,
+        internal_only: bool = True,
     ) -> TicketPublic | TicketInternal:
         current = authorize(db, request, write=True)
-        if current.role not in ("IT_MANAGER", "ADMIN", "TECHNICIAN"):
+        if internal_only and current.role not in ("IT_MANAGER", "ADMIN", "TECHNICIAN"):
             raise Rejected(403, "FORBIDDEN")
         projection = get_ticket(db, TicketAccess.resolve(db, current), result.id)
-        if not isinstance(projection, TicketInternal):
+        if projection is None or (
+            internal_only and not isinstance(projection, TicketInternal)
+        ):
             raise Rejected(404, "NOT_FOUND")
         return projection
 
@@ -569,7 +580,12 @@ def organization_router(
             lambda db, account: transition_ticket(
                 db, account, id, body, configured().clock
             ),
-            lambda db, result: project_ticket_command(request, db, result),
+            lambda db, result: project_ticket_command(
+                request,
+                db,
+                result,
+                internal_only=body.target_status != TicketStatus.CLOSED,
+            ),
             status=200,
             admin=False,
         )
