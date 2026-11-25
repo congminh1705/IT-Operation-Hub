@@ -15441,3 +15441,141 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Joint review of both FND-15 leaves.
 - Eligibility / remaining prerequisite: Follow task dependencies and PO review.
+
+<a id="task-fnd-15-01-attempt-02"></a>
+
+### FND-15.01 - Attempt 02 - 2026-11-25T22:48:21+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-15.01/attempt-02
+- Task: [Task card](../tasks/FND-15.01.md)
+- Parent / phase: FND-15 / B
+- Executor: Codex
+- Started at: 2026-11-25T22:48:21+07:00
+- Ended at: 2026-11-25T22:48:21+07:00
+- State before / after: review / done
+- Previous attempt / correction: Attempt 01.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO acceptance of FND-15 backend.
+- Delivered: Record PO acceptance of FND-15 backend.
+- Incomplete scope / deviations: Full integration waits for INT-03.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| Task card, board, context and history | FND-15.01 | Service delivery and evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scoped acceptance | Task card criteria | PO confirmed acceptance | pass | [Task card](../tasks/FND-15.01.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | No new technical verification during status change | Task evidence | PO confirmed acceptance | not-run |
+| integration | Real browser and affected-work evaluation | Full Parent evidence | Remaining at INT-03 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance recorded.
+- Findings / resolution: PO confirmed acceptance
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Full integration waits for INT-03.
+- Required resolution / owner: INT-03 and downstream owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-15.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: Test commands above.
+- Commit / build / environment: FND-15.01 delivery on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Proceed to FND-16.01.
+- Eligibility / remaining prerequisite: Follow task dependencies and PO review.
+
+<a id="task-fnd-15-02-attempt-02"></a>
+
+### FND-15.02 - Attempt 02 - 2026-11-25T22:48:21+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-15.02/attempt-02
+- Task: [Task card](../tasks/FND-15.02.md)
+- Parent / phase: FND-15 / B
+- Executor: Codex
+- Started at: 2026-11-25T22:48:21+07:00
+- Ended at: 2026-11-25T22:48:21+07:00
+- State before / after: review / done
+- Previous attempt / correction: Attempt 01.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO acceptance of FND-15 backend.
+- Delivered: Record PO acceptance of FND-15 backend.
+- Incomplete scope / deviations: Full integration waits for INT-03.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| Task card, board, context and history | FND-15.02 | Service delivery and evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scoped acceptance | Task card criteria | PO confirmed acceptance | pass | [Task card](../tasks/FND-15.02.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | No new technical verification during status change | Task evidence | PO confirmed acceptance | not-run |
+| integration | Real browser and affected-work evaluation | Full Parent evidence | Remaining at INT-03 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance recorded.
+- Findings / resolution: PO confirmed acceptance
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Full integration waits for INT-03.
+- Required resolution / owner: INT-03 and downstream owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-15.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: Test commands above.
+- Commit / build / environment: FND-15.02 delivery on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Proceed to FND-16.01.
+- Eligibility / remaining prerequisite: Follow task dependencies and PO review.

@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-15.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-15-01-attempt-01).
+- Latest Report ID: FND-15.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-15-01-attempt-02).
 - Delivered: Persisted versioned local days and UTC absences. Capacity clips to configured slots, subtracts the union of absences and applies the daily budget. Unknown schedule or budget remains unknown.
 - Changed files: `workforce/calendar.py`, `workforce/models.py`, migration 0019, `tests/test_workforce_calendar.py`
 - Checks: 51 backend tests passed on PostgreSQL. Verified overlapping schedules and absences, local midnight, holiday, missing inputs, historical revision and the approved 90-minute case.
-- Review: Agent verified. Joint PO acceptance pending.
+- Review: PO accepted both backend leaves. Agent checks remain in attempt 01.
 - Remaining: Operations calendars and holidays are not seeded; real browser wiring belongs to INT-03.
 - Commit/build: FND-15.01 implementation `6182059` pushed to origin/phase/b-backend.
-- Next: Joint review of FND-15.01 and FND-15.02.
+- Next: FND-16.01 authorized. Full Parent closure awaits INT-03.

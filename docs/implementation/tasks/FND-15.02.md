@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-15.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-15-02-attempt-01).
+- Latest Report ID: FND-15.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-15-02-attempt-02).
 - Delivered: Added scoped calendar writes, absence recording and daily availability reads. Workforce and person/day locks serialize writes; version, redacted audit and availability.changed outbox commit together.
 - Changed files: `workforce/availability.py`, `workforce/skills.py`, `organization/http.py`, migration 0020, OpenAPI and `tests/test_workforce_calendar.py`
 - Checks: 52 backend tests passed on PostgreSQL. Two same-version writes returned 200/409; forced outbox error rolled back the absence; retry and replay created one final effect. Scope, distinct day states and unchanged ticket SLA verified. Three runtime OpenAPI operations match and five contract tests passed.
-- Review: Agent verified. Joint PO acceptance pending.
+- Review: PO accepted both backend leaves. Agent checks remain in attempt 01.
 - Remaining: Real browser and actual affected-work evaluation remain for INT-03 and downstream consumers. Production calendars, holidays and budgets require operational inputs.
 - Commit/build: FND-15.02 implementation `1df29d1` pushed to origin/phase/b-backend.
-- Next: Joint review of FND-15.01 and FND-15.02.
+- Next: FND-16.01 authorized. Full Parent closure awaits INT-03.

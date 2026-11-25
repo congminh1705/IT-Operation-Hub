@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- PO accepted [FND-15.01](task-history.md#task-fnd-15-01-attempt-02) and [FND-15.02](task-history.md#task-fnd-15-02-attempt-02). Both leaves are done. Parent closure awaits INT-03. FND-16.01 authorized.
+
 - [FND-15.02](task-history.md#task-fnd-15-02-attempt-01), review. Added scoped calendar writes, absence recording and daily availability reads. Workforce and person/day locks serialize writes; version, redacted audit and availability.changed outbox commit together. 52 backend tests passed. Board: 104 done, 2 review, 124 pending. Joint PO acceptance pending. FND-15.02 implementation `1df29d1` pushed to origin/phase/b-backend.
 
 - [FND-15.01](task-history.md#task-fnd-15-01-attempt-01), review. Persisted versioned local days and UTC absences. Capacity clips to configured slots, subtracts the union of absences and applies the daily budget. Unknown schedule or budget remains unknown. 51 backend tests passed. Joint PO acceptance pending. FND-15.01 implementation `6182059` pushed to origin/phase/b-backend.
