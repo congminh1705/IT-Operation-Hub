@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-07.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-07-02-attempt-01).
+- Latest Report ID: FND-07.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-07-02-attempt-02).
 - Delivered: Current-password verification, approved new-password rules, session revocation, redacted audit and temporary-to-permanent password rotation.
 - Changed paths: backend auth service/routes and tests, app/main.py, migration 0008_password_rotation.py and backend README.
 - Checks: 26 tests on PostgreSQL, zero skipped. Ruff, mypy and offline Alembic SQL passed.
-- Review: Agent verified. PO review pending.
+- Review: PO accepted the implementation. Agent verification remains in attempt 01.
 - Remaining: Browser cutover under INT-01 and deployment blocklist setup. Previously issued restricted sessions without verifiers require an authorized replacement credential.
 - Commit/build: Implementation f1213a6 pushed and verified on origin/phase/b-backend.
-- Next: PO reviews FND-07.02. Parent closure awaits INT-01.
+- Next: Parent closure awaits INT-01. PRE-02.01 is the next ready decision task.

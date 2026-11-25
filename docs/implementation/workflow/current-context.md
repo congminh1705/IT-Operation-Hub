@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-07.02/attempt-02](task-history.md#task-fnd-07-02-attempt-02), done. PO accepted the password rotation leaf. Both FND-07 leaves done; Parent awaits INT-01. PRE-02.01 is next ready while provisioning policy awaits PO.
+
 - [FND-07.02/attempt-01](task-history.md#task-fnd-07-02-attempt-01), review. Password policy and revocation verified, including restricted temporary credentials. 26 PostgreSQL tests, Ruff, mypy and offline Alembic SQL passed. INT-01 owns real browser evidence. Implementation f1213a6 pushed and verified on origin/phase/b-backend.
 
 - [FND-07.01/attempt-02](task-history.md#task-fnd-07-01-attempt-02), done. PO accepted and authorized FND-07.02. Prior technical evidence retained.
