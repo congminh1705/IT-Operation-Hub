@@ -138,7 +138,7 @@ This section records confirmed requirements and candidates for PO review. Candid
 
 ### D-40 workforce periods and verified inputs (PRE-02.01)
 
-This contract review distinguishes BR-16 requirements from proposed operating settings. PO approval is pending for the proposed settings and real calendar sources.
+PO approved local-day periods, explicit schedule slots and the missing-input behavior on 2026-11-25. Production calendars, daily budgets and verification sources remain inputs to supply before operational use.
 
 | Topic | Confirmed behavior | Proposed setting or pending operational input | Consumer |
 | --- | --- | --- | --- |

@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [PRE-02.01/attempt-02](task-history.md#task-pre-02-01-attempt-02), done. PO approved local-day periods, configured slots and missing-input behavior. Production calendars and verified sources remain operational inputs. PRE-02.02 authorized.
+
 - [PRE-02.01/attempt-01](task-history.md#task-pre-02-01-attempt-01), review. Proposed concrete local-day periods and evidence-backed estimates; unknown data blocks automatic assignment. Synthetic overlap and per-period fit checks passed. PO decision pending. Implementation 3e0e671 pushed and verified on origin/phase/b-backend.
 
 - [FND-07.02/attempt-02](task-history.md#task-fnd-07-02-attempt-02), done. PO accepted the password rotation leaf. Both FND-07 leaves done; Parent awaits INT-01. PRE-02.01 is next ready while provisioning policy awaits PO.

@@ -72,12 +72,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: PRE-02.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-02-01-attempt-01).
+- Latest Report ID: PRE-02.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-02-01-attempt-02).
 - Delivered: [D-40 workforce proposal](../../decisions/design-decisions.md#d-40-workforce-periods-pre-0201) records working periods, calendar and budgets, verification and effort evidence, and fail-closed inputs.
 - Changed paths: docs/decisions/design-decisions.md, docs/technical/architecture.md and workflow records.
 - Checks: Overlap/multi-period arithmetic and unknown-input walkthroughs passed. Runtime not applicable to this documentation task.
-- Review: Agent checked the contract; PO review pending.
-- Remaining: Approve day/slot proposal and supply real schedules, budget/calendar and verification sources before their production consumers.
+- Review: PO accepted the period/slot proposal. Agent verification remains in attempt 01.
+- Remaining: Real schedules, budget/calendar and verification sources are still needed before production use.
 - Commit/build: Implementation 3e0e671 pushed and verified on origin/phase/b-backend.
-- Next: PRE-02.02 awaits PO acceptance of this leaf.
+- Next: PRE-02.02 authorized after PO acceptance.
