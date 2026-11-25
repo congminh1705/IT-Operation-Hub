@@ -13228,3 +13228,73 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-09.01 is eligible upon separate authorization.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-fnd-09-01-attempt-01"></a>
+
+### FND-09.01 - Attempt 01 - 2026-11-25T17:15:08+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-09.01/attempt-01
+- Task: [Task card](../tasks/FND-09.01.md)
+- Parent / phase: FND-09 / B
+- Executor: Codex
+- Started at: 2026-11-25T17:15:08+07:00
+- Ended at: 2026-11-25T17:15:08+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implement the selected FND-09 leaf in dependency order.
+- Delivered: Validated text ticket input and server-owned requester, active intake, category, BR-03 priority and SLA policy; generated sequence-based ticket codes.
+- Incomplete scope / deviations: Persistence and HTTP entry point follow FND-09.02. Asset/files and live browser belong to later tasks.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/tickets/intake.py, organization team lock, Alembic 0010, tests/test_ticket_intake.py and workflow records | FND-09 implementation and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Validation and server facts | Reject forged fields; resolve actual category, intake, priority and SLA | Missing/invalid configuration and arbitrary fields rejected; P2 resolved | pass | [Ticket intake tests](../../../src/backend/tests/test_ticket_intake.py) |
+| Unique codes | Sequence concurrent allocations without collisions | 16 concurrent allocations unique | pass | [Ticket intake tests](../../../src/backend/tests/test_ticket_intake.py) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | .venv/Scripts/python.exe -m pytest -q with local PostgreSQL: 31 passed, zero skipped. .venv/Scripts/ruff.exe check app migrations tests and mypy passed. | Consistent documented result | Verified | pass |
+| integration | Browser, production workers and downstream domain checks | Full Parent evidence | INT-02 owns real integrated flows | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. Joint PO review pending.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Persistence and HTTP entry point follow FND-09.02. Asset/files and live browser belong to later tasks.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-09.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Ticket intake tests](../../../src/backend/tests/test_ticket_intake.py).
+- Commit / build / environment: FND-09.01 push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review after both FND-09 leaves pass.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
