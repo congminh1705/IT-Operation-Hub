@@ -1115,7 +1115,7 @@
             "description": "Service Unavailable"
           }
         },
-        "description": "Admin changes access with a reviewed handover, or explicitly suspends access with a pending handover. Prior sessions are revoked. The last active Admin is protected."
+        "description": "Admin changes access with reviewed handover or suspends access pending handover. Prior sessions are revoked and the last active Admin is protected."
       }
     },
     "/departments": {
@@ -1957,12 +1957,12 @@
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "patch": {
-        "operationId": "updateTeam",
-        "summary": "Update team",
         "tags": [
+          "Administration",
           "Administration"
         ],
-        "description": "Admin only; current versions; atomic handover/revoke if rights affected. Emergency no replacement remains D-40. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "summary": "Update Team",
+        "operationId": "updateTeam",
         "security": [
           {
             "SessionCookie": []
@@ -1979,100 +1979,24 @@
             }
           },
           {
-            "$ref": "#/components/parameters/Csrf"
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
-            "$ref": "#/components/parameters/Idempotency"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Committed successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TeamView"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Missing/expired/revoked session.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Function or CSRF/Origin denied.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found or outside scope; identical safe response.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Field/business validation failed; no partial effects.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "Dependency unavailable; no fabricated success.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
             }
           }
-        },
-        "x-contract-id": "API02",
-        "x-required-roles": [
-          "ADMIN"
         ],
-        "x-data-scope": "Admin only; current versions; atomic handover/revoke if rights affected. Emergency no replacement remains D-40.",
-        "x-implementation-status": "not-started",
         "requestBody": {
           "required": true,
           "content": {
@@ -2083,8 +2007,79 @@
             }
           }
         },
-        "x-source-use-cases": "UC05â€“08",
-        "x-business-rules": "BR-01/02/05; Admin-only mutations"
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamView"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "description": "Admin edits or retires a team. Retirement transfers all open work atomically, preserves history and requires an active versioned destination for intake transfer."
       }
     },
     "/categories": {
@@ -2810,7 +2805,7 @@
             "description": "Service Unavailable"
           }
         },
-        "description": "Admin updates membership and revokes sessions. Removing a member with active work requires one versioned decision per affected record."
+        "description": "Admin updates membership and revokes prior sessions. Removing a member with open assignments requires a complete versioned handover."
       }
     },
     "/lookups": {
@@ -12208,7 +12203,7 @@
             "description": "Service Unavailable"
           }
         },
-        "description": "Admin previews active work versions and whether a suspended account still has work held for handover."
+        "description": "Admin previews active work versions and suspension holds."
       },
       "post": {
         "tags": [
@@ -12333,7 +12328,96 @@
             "description": "Service Unavailable"
           }
         },
-        "description": "Admin resolves work holds after rechecking versions, current eligibility and capacity. This action leaves the affected account suspended."
+        "description": "Admin resolves work holds and rechecks versions, eligibility and capacity. The account stays suspended."
+      }
+    },
+    "/teams/{id}/handover": {
+      "get": {
+        "tags": [
+          "Administration",
+          "Administration"
+        ],
+        "summary": "Preview Team Handover",
+        "operationId": "previewTeamHandover",
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamHandoverView"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "description": "Admin previews all open work and versions that must be reviewed before team retirement."
       }
     }
   },
@@ -12700,8 +12784,7 @@
             "items": {
               "$ref": "#/components/schemas/HandoverItem"
             },
-            "type": "array",
-            "maxItems": 100
+            "type": "array"
           },
           "suspend_without_replacement": {
             "type": "boolean",
@@ -12805,8 +12888,7 @@
             "items": {
               "$ref": "#/components/schemas/HandoverItem"
             },
-            "type": "array",
-            "maxItems": 100
+            "type": "array"
           }
         },
         "additionalProperties": false,
@@ -15817,37 +15899,85 @@
         "description": "D-42 design declaration, never execution success. Server-owned allowlist prepares a trusted native form. Explicit user submission dispatches the existing domain API with session/CSRF/state/version/idempotency. ticket.create retains its draft/confirm API. Security forms do not send secrets through assistant content, prefill, model or history. Unknown or unsupported form_key is rejected; same workspace does not grant extra permissions."
       },
       "TeamUpdate": {
-        "type": "object",
         "properties": {
           "expectedVersion": {
             "type": "integer",
-            "minimum": 1
+            "minimum": 1.0
           },
           "name": {
-            "type": "string",
-            "minLength": 1
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "active": {
-            "type": "boolean"
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "reason": {
             "type": "string",
+            "maxLength": 1000,
             "minLength": 10
           },
           "intake": {
-            "type": "boolean",
-            "description": "Set true to atomically replace the active intake. Clearing the last intake is rejected."
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "handover_team_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "handover_team_expectedVersion": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "handover": {
+            "items": {
+              "$ref": "#/components/schemas/HandoverItem"
+            },
+            "type": "array"
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "expectedVersion",
           "reason"
-        ],
-        "additionalProperties": false,
-        "minProperties": 3
+        ]
       },
       "TeamView": {
-        "type": "object",
         "properties": {
           "id": {
             "type": "string",
@@ -15860,21 +15990,20 @@
             "type": "boolean"
           },
           "version": {
-            "type": "integer",
-            "minimum": 1
+            "type": "integer"
           },
           "intake": {
             "type": "boolean"
           }
         },
+        "type": "object",
         "required": [
           "id",
           "name",
           "active",
           "version",
           "intake"
-        ],
-        "additionalProperties": false
+        ]
       },
       "TeamViewPage": {
         "type": "object",
@@ -16917,7 +17046,6 @@
               "$ref": "#/components/schemas/HandoverItem"
             },
             "type": "array",
-            "maxItems": 100,
             "minItems": 1
           }
         },
@@ -16927,6 +17055,29 @@
           "expectedVersion",
           "reason",
           "handover"
+        ]
+      },
+      "TeamHandoverView": {
+        "properties": {
+          "team_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/HandoverWork"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "required": [
+          "team_id",
+          "version",
+          "items"
         ]
       }
     }
