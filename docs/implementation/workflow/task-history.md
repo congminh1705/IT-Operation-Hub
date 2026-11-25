@@ -9967,3 +9967,419 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-02.01.
 - Eligibility / remaining prerequisite: verified FND-01 Parent merge and separate authorization.
+
+<a id="task-fnd-02-01-attempt-01"></a>
+
+### FND-02.01 — Attempt 01 — 2026-11-25T00:06:38+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-02.01/attempt-01
+- Task: [task specification](../tasks/FND-02.01.md)
+- Parent / phase: FND-02 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-25
+- Ended at: 2026-11-25T00:06:38+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, initial delivery.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Migrate the shared PostgreSQL base and provide isolated synchronous sessions and an injectable UTC clock.
+- Delivered this attempt: Added SQLAlchemy 2.1.9 and Alembic 1.20.1, revision 0001_foundation, shared audit/event/outbox persistence, session factory and a UTC clock seam.
+- Incomplete scope / deviations: Domain account/ticket schemas and worker dispatch remain with their owning tasks.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/infrastructure/, src/backend/migrations/, src/backend/alembic.ini, dependencies and database tests | Backend foundation | Deliver task scope |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| FND-02.01 card section 5 | Migrate the shared PostgreSQL base and provide isolated synchronous sessions and an injectable UTC clock. | Ruff, strict mypy and four pytest cases passed. PostgreSQL empty-schema migration, simultaneous isolated sessions and committed-row persistence across Compose restart passed. | pass | [Backend setup](../../../src/backend/README.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | ruff check app migrations tests; python -m mypy app migrations tests; python -m pytest -q with ITOH_TEST_DATABASE_URL | Lint, types, isolated migration and UTC clock | 4 passed on PostgreSQL 18.7; lint/types clean | pass |
+| src/backend | apply alembic upgrade head in dedicated schema, insert and commit audit probe; WSL Docker Compose restart postgres and up -d --wait; reconnect and SELECT probe | Committed row survives PostgreSQL restart | Exactly 1 row, then removed isolated schema | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent verification. PO joint review pending.
+- Findings / resolution: PR #23 was verified merged at 4e53ef9. PostgreSQL tests used generated isolated schemas and cleaned them up.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: joint PO review.
+- Required resolution / owner: PO reviews FND-02 before Parent closure and merge.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FND-02.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: commands and results in section 5. [Local setup](../../../src/backend/README.md).
+- Commit / build / environment: d98caed on phase/b-backend. Push verified on origin.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: task outcome and next step recorded.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-02.02 follows verified migration baseline under joint Parent review.
+- Eligibility / remaining prerequisite: joint review precedes Parent closure.
+
+<a id="task-fnd-02-02-attempt-01"></a>
+
+### FND-02.02 — Attempt 01 — 2026-11-25T00:07:59+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-02.02/attempt-01
+- Task: [task specification](../tasks/FND-02.02.md)
+- Parent / phase: FND-02 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-25
+- Ended at: 2026-11-25T00:07:59+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, initial delivery.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Commit domain, redacted audit and durable outbox in the same PostgreSQL transaction.
+- Delivered this attempt: Added write_audit and enqueue_event on the caller-owned Session. Typed SafeFacts limits JSON metadata; one event can stage one delivery per handler without a broker call.
+- Incomplete scope / deviations: Broker dispatch, delivery retry and consumption are later workflow tasks.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/infrastructure/events.py and src/backend/tests/test_uow.py | Backend foundation | Deliver task scope |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| FND-02.02 card section 5 | Commit domain, redacted audit and durable outbox in the same PostgreSQL transaction. | Ruff, strict mypy and six pytest cases passed. Two PostgreSQL UoW cases verified invisibility before commit, atomic rollback on an injected post-flush failure, redaction and consistent event/delivery correlation. | pass | [Backend setup](../../../src/backend/README.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | ruff check app migrations tests; python -m mypy app migrations tests; python -m pytest -q with ITOH_TEST_DATABASE_URL | Lint/types, commit and rollback on PostgreSQL 18.7 | 6 passed; lint and typing passed | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent verification. PO joint review pending.
+- Findings / resolution: Audit and outbox are committed only by the outer transaction. Test fixture private note appears only in the fixture domain table.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: joint PO review.
+- Required resolution / owner: PO reviews FND-02 before Parent closure and merge.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FND-02.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: commands and results in section 5. [Local setup](../../../src/backend/README.md).
+- Commit / build / environment: 7e42f11 on phase/b-backend. Push verified on origin.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: task outcome and next step recorded.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-02.03 follows verified atomic writes under joint Parent review.
+- Eligibility / remaining prerequisite: joint review precedes Parent closure.
+
+<a id="task-fnd-02-03-attempt-01"></a>
+
+### FND-02.03 — Attempt 01 — 2026-11-25T00:10:10+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-02.03/attempt-01
+- Task: [task specification](../tasks/FND-02.03.md)
+- Parent / phase: FND-02 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-25
+- Ended at: 2026-11-25T00:10:10+07:00
+- State before / after: pending / review
+- Previous attempt / correction: none, initial delivery.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Provide atomic expected-version checks and retry-safe idempotent commands with durable, safe result references.
+- Delivered this attempt: Added conditional version update, revision 0002_confirmed_command, and a PostgreSQL command ledger keyed by actor, operation and key. Same input replays the result after current authorization. Different input conflicts. An interrupted command rolls back its ledger reservation and all writes.
+- Incomplete scope / deviations: Consumer routes own HTTP conflict mapping, domain authorization and idempotency header policy. Ledger retention, worker dispatch and production integration remain open for later tasks.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/infrastructure/commands.py and models.py, migrations/versions/0002_confirmed_command.py, tests/test_commands.py and README.md | Backend foundation | Deliver task scope |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| FND-02.03 card section 5 | Provide atomic expected-version checks and retry-safe idempotent commands with durable, safe result references. | Ruff, strict mypy, nine pytest cases on PostgreSQL, Alembic offline SQL and wheel/sdist build passed. Both blank migration and upgrade from 0001 preserved expected data. Two competing version writes produced one success and one conflict; concurrent same-key requests created one effect. | pass | [Backend setup](../../../src/backend/README.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | uv lock --check; uv run --frozen ruff check app migrations tests; uv run --frozen mypy app migrations tests | Locked toolchain and checks | Passed; 17 typed files | pass |
+| src/backend | uv run --frozen python -m pytest -q with ITOH_TEST_DATABASE_URL | Real PostgreSQL migrations, rollback, concurrency and replay | 9 passed, zero skipped | pass |
+| src/backend | uv run --frozen alembic upgrade head --sql; uv build --no-build-isolation --out-dir <temp> | Offline migration SQL and distributable packages | SQL generated; sdist and wheel built | pass |
+
+#### 6. Review
+
+- Type / reviewer: agent verification. PO joint review pending.
+- Findings / resolution: Replay rejects revoked scope. Changed payload under the same key yields a typed conflict; no additional resource is written. PostgreSQL restart persistence was verified in FND-02.01.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: joint PO review.
+- Required resolution / owner: PO reviews FND-02 before Parent closure and merge.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [task card](../tasks/FND-02.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: commands and results in section 5. [Local setup](../../../src/backend/README.md).
+- Commit / build / environment: f721e04 on phase/b-backend. Push verified on origin.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: task outcome and next step recorded.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review of FND-02.01, FND-02.02 and FND-02.03 before Parent closure.
+- Eligibility / remaining prerequisite: joint review precedes Parent closure.
+
+<a id="task-fnd-02-01-attempt-02"></a>
+
+### FND-02.01 — Attempt 02 — 2026-11-25T00:18:28+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-02.01/attempt-02
+- Task: [task specification](../tasks/FND-02.01.md)
+- Parent / phase: FND-02 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-25T00:18:28+07:00
+- Ended at: 2026-11-25T00:18:28+07:00
+- State before / after: review / done
+- Previous attempt / correction: [agent verification](#task-fnd-02-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record joint PO acceptance and close FND-02.
+- Delivered this attempt: Accepted the existing implementation covering migrations, isolated sessions, injectable UTC clock and persistence across PostgreSQL restart.
+- Incomplete scope / deviations: Parent delivery awaits merge. Existing consumer tasks own API/worker integration.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-02.01.md and workflow records | PO approval and done state | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Parent criterion 1 | Verified task output and PO acceptance | PO approved all three tasks after the agent's recorded PostgreSQL checks | pass | [Attempt 01](#task-fnd-02-01-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Check all FND-02 board rows, Parent registry, evidence anchors and staged diff whitespace | Synchronized closure | All three rows done, Parent EPIC_DONE, linked evidence retained | pass |
+| src/backend | Repeat application checks | Documentation-only closure | Prior runtime results retained in attempt 01 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Joint PO acceptance.
+- Findings / resolution: PO explicitly approved and requested done.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: None for FND-02 closure. Verified Parent merge gates the next Parent delivery.
+- Required resolution / owner: PO merges the FND-02 PR and separately authorizes FND-03.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FND-02.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-02-01-attempt-01).
+- Commit / build / environment: Implementation d98caed pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE. Parent [PR #24](https://github.com/congminh1705/IT-Operation-Hub/pull/24) is open into main. PO merge pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-03.01.
+- Eligibility / remaining prerequisite: Verified FND-02 Parent merge and separate authorization.
+
+
+<a id="task-fnd-02-02-attempt-02"></a>
+
+### FND-02.02 — Attempt 02 — 2026-11-25T00:18:28+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-02.02/attempt-02
+- Task: [task specification](../tasks/FND-02.02.md)
+- Parent / phase: FND-02 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-25T00:18:28+07:00
+- Ended at: 2026-11-25T00:18:28+07:00
+- State before / after: review / done
+- Previous attempt / correction: [agent verification](#task-fnd-02-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record joint PO acceptance and close FND-02.
+- Delivered this attempt: Accepted the existing implementation covering atomic domain, redacted audit and outbox writes, including rollback after flush.
+- Incomplete scope / deviations: Parent delivery awaits merge. Existing consumer tasks own API/worker integration.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-02.02.md and workflow records | PO approval and done state | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Parent criterion 2 | Verified task output and PO acceptance | PO approved all three tasks after the agent's recorded PostgreSQL checks | pass | [Attempt 01](#task-fnd-02-02-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Check all FND-02 board rows, Parent registry, evidence anchors and staged diff whitespace | Synchronized closure | All three rows done, Parent EPIC_DONE, linked evidence retained | pass |
+| src/backend | Repeat application checks | Documentation-only closure | Prior runtime results retained in attempt 01 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Joint PO acceptance.
+- Findings / resolution: PO explicitly approved and requested done.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: None for FND-02 closure. Verified Parent merge gates the next Parent delivery.
+- Required resolution / owner: PO merges the FND-02 PR and separately authorizes FND-03.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FND-02.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-02-02-attempt-01).
+- Commit / build / environment: Implementation 7e42f11 pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE. Parent [PR #24](https://github.com/congminh1705/IT-Operation-Hub/pull/24) is open into main. PO merge pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-03.01.
+- Eligibility / remaining prerequisite: Verified FND-02 Parent merge and separate authorization.
+
+
+<a id="task-fnd-02-03-attempt-02"></a>
+
+### FND-02.03 — Attempt 02 — 2026-11-25T00:18:28+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-02.03/attempt-02
+- Task: [task specification](../tasks/FND-02.03.md)
+- Parent / phase: FND-02 / Phase B
+- Executor: AI Agent
+- Started at: 2026-11-25T00:18:28+07:00
+- Ended at: 2026-11-25T00:18:28+07:00
+- State before / after: review / done
+- Previous attempt / correction: [agent verification](#task-fnd-02-03-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record joint PO acceptance and close FND-02.
+- Delivered this attempt: Accepted the existing implementation covering expected-version conflicts, concurrent idempotent replay, changed-input conflicts and revoked replay authorization.
+- Incomplete scope / deviations: Parent delivery awaits merge. Existing consumer tasks own API/worker integration.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-02.03.md and workflow records | PO approval and done state | Synchronize task and Parent closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Parent criterion 3 | Verified task output and PO acceptance | PO approved all three tasks after the agent's recorded PostgreSQL checks | pass | [Attempt 01](#task-fnd-02-03-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Check all FND-02 board rows, Parent registry, evidence anchors and staged diff whitespace | Synchronized closure | All three rows done, Parent EPIC_DONE, linked evidence retained | pass |
+| src/backend | Repeat application checks | Documentation-only closure | Prior runtime results retained in attempt 01 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Joint PO acceptance.
+- Findings / resolution: PO explicitly approved and requested done.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: None for FND-02 closure. Verified Parent merge gates the next Parent delivery.
+- Required resolution / owner: PO merges the FND-02 PR and separately authorizes FND-03.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/FND-02.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-02-03-attempt-01).
+- Commit / build / environment: Implementation f721e04 pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: joint acceptance recorded.
+- Parent state: EPIC_DONE. Parent [PR #24](https://github.com/congminh1705/IT-Operation-Hub/pull/24) is open into main. PO merge pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-03.01.
+- Eligibility / remaining prerequisite: Verified FND-02 Parent merge and separate authorization.

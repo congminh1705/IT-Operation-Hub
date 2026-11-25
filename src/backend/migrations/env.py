@@ -1,0 +1,32 @@
+import os
+
+from alembic import context
+from sqlalchemy.engine import Connection
+
+from app.infrastructure.database import create_database_engine
+from app.infrastructure.models import Base
+
+
+def migrate(connection: Connection) -> None:
+    context.configure(connection=connection, target_metadata=Base.metadata)
+    with context.begin_transaction():
+        context.run_migrations()
+
+
+if context.is_offline_mode():
+    context.configure(
+        dialect_name="postgresql", target_metadata=Base.metadata, literal_binds=True
+    )
+    with context.begin_transaction():
+        context.run_migrations()
+else:
+    existing = context.config.attributes.get("connection")
+    if isinstance(existing, Connection):
+        migrate(existing)
+    else:
+        engine = create_database_engine(os.environ["ITOH_DATABASE_DSN"])
+        try:
+            with engine.connect() as connection:
+                migrate(connection)
+        finally:
+            engine.dispose()

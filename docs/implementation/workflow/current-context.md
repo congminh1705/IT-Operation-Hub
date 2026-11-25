@@ -116,4 +116,14 @@ authority: derived
 - PO accepted FND-01.01 and FND-01.02. Parent is EPIC_DONE. Board has 67 done and 163 pending.
 - [FND-01.01 acceptance](task-history.md#task-fnd-01-01-attempt-02) retains frozen installs, Next production build, FastAPI smoke and PostgreSQL 18.7 verification from commit 572cac5.
 - [FND-01.02 acceptance](task-history.md#task-fnd-01-02-attempt-02) retains Ruff, mypy, pytest, package build and HTTP readiness verification from commit 2f5070e.
-- FND-01 [PR #23](https://github.com/congminh1705/IT-Operation-Hub/pull/23) is open into main. Acceptance commit a7e6ff5 was pushed and verified. Parent merge and separate PO authorization gate FND-02.01.
+- FND-01 [PR #23](https://github.com/congminh1705/IT-Operation-Hub/pull/23) merged into main at 4e53ef9. Acceptance commit a7e6ff5 was pushed and verified. Parent merge and separate PO authorization gate FND-02.01.
+
+## Phase B — FND-02 joint PO acceptance
+
+- PO accepted FND-02.01, FND-02.02 and FND-02.03. Parent is EPIC_DONE. Board has 70 done and 160 pending.
+- [FND-02.01/attempt-02](task-history.md#task-fnd-02-01-attempt-02) records acceptance of migrations, isolated sessions, the injectable UTC clock and persistence across PostgreSQL restart. Implementation d98caed was pushed and verified.
+- [FND-02.02/attempt-02](task-history.md#task-fnd-02-02-attempt-02) records acceptance of atomic domain, redacted audit and outbox writes, including rollback after flush. Implementation 7e42f11 was pushed and verified.
+- [FND-02.03/attempt-02](task-history.md#task-fnd-02-03-attempt-02) records acceptance of expected-version conflicts, concurrent idempotent replay, changed-input conflicts and revoked replay authorization. Implementation f721e04 was pushed and verified.
+- Final agent verification recorded nine PostgreSQL 18.7 tests passing with zero skipped, plus Ruff, strict mypy, frozen lockfile, Alembic offline SQL and wheel/sdist build. PO approved the Parent.
+- FND-03.01 remains pending until verified FND-02 Parent merge and separate authorization.
+- FND-02 Parent [PR #24](https://github.com/congminh1705/IT-Operation-Hub/pull/24) is open from phase/b-backend into main. Acceptance commit 526a63c was pushed and verified. PO merge pending.
