@@ -22,6 +22,7 @@ from app.infrastructure.commands import (
 )
 from app.infrastructure.events import Actor, SafeFacts, Target, write_audit
 from app.modules.auth.http import (
+    COMMAND_HEADERS,
     AuthSettings,
     Error,
     UserView,
@@ -83,6 +84,7 @@ from app.modules.tickets.service import (
     create_text_ticket,
     public_ticket,
 )
+from app.modules.tickets.timeline import TicketEventPage, list_ticket_events
 from app.modules.users.provisioning import (
     ProvisionedAccountView,
     ProvisioningVerification,
@@ -554,9 +556,34 @@ def organization_router(
             admin=False,
         )
 
+    @router.get(
+        "/tickets/{id}/events",
+        operation_id="listTicketEvents",
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 404, 422, 503)},
+        response_model=TicketEventPage,
+        tags=["Ticket content"],
+    )
+    def ticket_events(
+        id: UUID,
+        request: Request,
+        page: Annotated[int, Query(ge=1, le=1_000_000)] = 1,
+        page_size: Annotated[int, Query(ge=1, le=100)] = 20,
+    ) -> Response:
+        return query(
+            request,
+            lambda db, actor: list_ticket_events(db, actor, id, page, page_size),
+            admin=False,
+        )
+
     @router.post(
         "/tickets/{id}/priority",
         operation_id="changeTicketPriority",
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
         response_model=TicketInternal,
         tags=["Tickets"],
     )

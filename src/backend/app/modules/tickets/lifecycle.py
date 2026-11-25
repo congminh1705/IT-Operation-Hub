@@ -22,7 +22,7 @@ from app.modules.tickets.assignment import (
     lock_ticket,
 )
 from app.modules.tickets.conversation import CommentCreate, append_comment
-from app.modules.tickets.models import Ticket, TicketTransitionReason
+from app.modules.tickets.models import Ticket, TicketChangeReason
 from app.modules.tickets.read import TicketAccess
 from app.modules.tickets.resolution import resume_resolution, stop_resolution
 from app.modules.tickets.service import TicketStatus
@@ -168,11 +168,10 @@ def record_transition(
     row.status = target.value
     row.version += 1
     if reason:
-        db.add(
-            TicketTransitionReason(ticket_id=row.id, version=row.version, reason=reason)
-        )
+        db.add(TicketChangeReason(ticket_id=row.id, version=row.version, reason=reason))
     after = SafeFacts(
         status=target,
+        previous_status=source,
         version=row.version,
         assignee_id=row.assignee_id,
         reason_provided=bool(reason),

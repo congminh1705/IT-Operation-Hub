@@ -28,6 +28,7 @@ class SafeFacts:
     version: int | None = None
     assignee_id: UUID | None = None
     status: StrEnum | None = None
+    previous_status: StrEnum | None = None
     verification_id: UUID | None = None
     approval_id: UUID | None = None
     team_id: UUID | None = None
@@ -63,6 +64,8 @@ class SafeFacts:
             result["priority"] = self.priority
         if self.previous_priority is not None:
             result["previous_priority"] = self.previous_priority
+        if self.previous_status is not None:
+            result["previous_status"] = self.previous_status.value
         return result
 
 
