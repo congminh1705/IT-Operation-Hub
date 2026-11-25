@@ -10383,3 +10383,83 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-03.01.
 - Eligibility / remaining prerequisite: Verified FND-02 Parent merge and separate authorization.
+
+<a id="task-fnd-03-01-attempt-01"></a>
+
+### FND-03.01 — Attempt 01 — 2026-11-25T14:28:22+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-03.01/attempt-01
+- Task: [task specification](../tasks/FND-03.01.md)
+- Parent / phase: FND-03 / Phase B
+- Executor: Codex
+- Started at: 2026-11-25T14:19:08+07:00 (observed readiness and contract review)
+- Ended at: 2026-11-25T14:28:22+07:00
+- State before / after: pending / review, through in-progress
+- Previous attempt / correction: None. First implementation attempt.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Reconcile real API projections with the Phase A gateway and supply draft/runtime OpenAPI generation and drift verification.
+- Delivered this attempt: Generated DTOs from six account operations and two ticket reads. Added a separately composed HTTP account adapter, scoped account-query entry point and type boundary for public/internal ticket responses. The main workspace still uses explicit DEMO composition.
+- Incomplete scope / deviations: No runtime account/ticket service or browser cutover in this task. Login 401 and optional contact_phone remain draft discrepancies. The adapter maps a generic 401 if received and sends only display_name and expectedVersion for profile.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/api/generate_frontend_contract.py, docs/api/test_frontend_contract.py, docs/api/README.md | Generator, runtime comparison, regression checks, instructions | Make the selected drift checks reproducible |
+| src/frontend/src/lib/api/contract.generated.ts, types.ts, projections.ts | Selected wire DTOs, AccountGateway aliases, TicketPublic and TicketPage | Keep frontend types aligned and prevent internal ticket types from satisfying a public view |
+| src/frontend/src/lib/api/http-account.ts, http-account.test.ts, gateway.ts | createHttpAccountGateway, currentAccountQuery, response and request tests | Isolate account HTTP behavior and keep adapter selection explicit until INT-01 |
+| docs/implementation/README.md, docs/implementation/tasks/FND-03.01.md and workflow records | Parent activation, evidence handoff and review state | Reflect the verified result |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Reconcile Phase A gateway and HTTP contracts | Generated types for reviewed endpoints and drift workflow | Eight draft operations generate deterministically. Matching synthetic runtime source passes. Semantic regressions fail. | pass | [Generation instructions](../../api/README.md#frontend-contract-generation-and-drift-checks) |
+| Preserve selected Parent criterion 1 | Keep account and public/internal data boundaries, route credentials and errors correctly | Public ticket type excludes internal context and retains the three assignee states. Account adapter validates the closed response, forwards only reviewed input and uses browser-managed same-origin cookies plus per-mutation CSRF. | pass | [Contract tests](../../../src/frontend/src/lib/api/http-account.test.ts) |
+| Enforce phase and failure semantics | Scope query keys and avoid fabricated effects or released sensitive fields | Query bridge discards old-scope results and clears cache on active-session 401. Errors are distinct, 202 and lost mutation responses remain unconfirmed, no automatic retry. Existing DEMO selection remains explicit. | pass | [Contract tests](../../../src/frontend/src/lib/api/http-account.test.ts) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | `python docs/api/generate_frontend_contract.py --check` | Selected contract current | All 8 operations matched generated output | pass |
+| repository | `python -B -m unittest discover -s docs/api -p test_frontend_contract.py -v` | A compatible export passes and designed regressions fail | 5 tests passed, including public widening, missing CSRF/session requirements and missing conflict status | pass |
+| src/frontend | `pnpm.cmd typecheck` | Typecheck DTOs, type tests and existing routes | Next route typegen and TypeScript exited 0 | pass |
+| src/frontend | `pnpm.cmd test` | Account/query contract and all frontend regressions pass | 22 test files, 128 tests passed, including 14 new | pass |
+| src/frontend | `pnpm.cmd lint` | ESLint passes | Exit 0 | pass |
+| src/frontend | `pnpm.cmd exec prettier --check src/lib/api/contract.generated.ts src/lib/api/http-account.ts src/lib/api/http-account.test.ts src/lib/api/projections.ts src/lib/api/types.ts src/lib/api/gateway.ts` | Scoped formatting passes | All listed files pass | pass |
+| src/frontend | `pnpm.cmd build` | Production Next build and route generation pass | Optimized build and all seven static pages generated | pass |
+| repository | Compare a deployed FastAPI runtime export and exercise HTTP, server scope and browser cookies | Live integration matches reviewed contracts | Routes are not implemented. The adapter tests inject fetch and the drift suite uses synthetic exports. No browser or PostgreSQL run for this frontend contract slice. | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent self-review. PO review pending.
+- Findings / resolution: Draft login omits 401 and profile contains a proposed contact field. Verified bounded compatibility handling with focused tests, without treating draft choices as approved production settings.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: None for this leaf review. Live service verification awaits the applicable backend routes and INT-01.
+- Required resolution / owner: PO reviews FND-03.01. Consumer task owners reconcile runtime exports and final D-40 wire details.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [FND-03.01 evidence](../tasks/FND-03.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Frontend contract tests](../../../src/frontend/src/lib/api/http-account.test.ts), [drift checks](../../api/test_frontend_contract.py). No screenshots for this contract-only change.
+- Commit / build / environment: Next production build passed. Implementation push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Latest report, check status and preceding verified merge recorded.
+- Parent state: EPIC_IN_PROGRESS. FND-03.02 and INT-01 closure still pending. No Parent PR yet.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FND-03.01, then FND-03.02.
+- Eligibility / remaining prerequisite: FND-03.01 done and a separate implementation request for FND-03.02.

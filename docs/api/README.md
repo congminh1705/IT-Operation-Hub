@@ -16,7 +16,7 @@ purpose: "Define the OpenAPI contract, security, DEMO examples, and verification
 
 # OpenAPI Document
 
-**Static design contract; no API server, generated client, or API test results exist.** The [OpenAPI 3.1.1 JSON](openapi.json) follows the reference repository's contract-first approach while retaining FastAPI/Pydantic and existing JSON schemas. It is not a runtime export.
+**Static design contract.** The [OpenAPI 3.1.1 JSON](openapi.json) follows the contract-first approach with FastAPI/Pydantic. FND-03.01 generates and tests a selected frontend boundary from this draft. Runtime service exports are a separate verification step.
 
 ## Scope and status
 
@@ -70,7 +70,31 @@ Expected: saved decision is distinct from execution. Changed versions/policy/ski
 
 ## Verification and future handover
 
-Check JSON, local refs, operationId/path parameters, schema/required fields, scope metadata, API01–19 coverage. Official OpenAPI validation/client generation and live HTTP tests have not run. Before implementation, review DTO enums/naming, complete projections/historical resource shapes, and D-40 operations. Then semantically compare FastAPI exports with the approved contract, generate TypeScript, and run negative scope/version/concurrency/CSRF tests. This document does not activate M1–M5.
+### Frontend contract generation and drift checks
+
+The FND-03.01 slice covers six account operations (CSRF, login, current user, logout, profile and password) and two ticket reads (list and detail). The [generator](generate_frontend_contract.py) reads OpenAPI and emits the selected DTOs and account operation metadata. Run these commands from the repo root:
+
+```text
+python docs/api/generate_frontend_contract.py
+python docs/api/generate_frontend_contract.py --check
+python -B -m unittest discover -s docs/api -p test_frontend_contract.py
+pnpm --dir src/frontend typecheck
+pnpm --dir src/frontend exec vitest run src/lib/api/http-account.test.ts
+```
+
+Review generated diffs and run the drift check before committing contract changes. TypeScript tests pin the account fields, supported profile fields and public/internal ticket boundary. The ticket server selects and authorizes its projection before serializing a response. The public TypeScript boundary excludes internal ticket context and preserves the draft's omitted, null or UUID assignee states.
+
+The [account HTTP adapter](../../src/frontend/src/lib/api/http-account.ts) uses same-origin browser cookies, fetches the session-bound CSRF token before each mutation and forwards the draft idempotency header only where specified. It never automatically retries a mutation. Keep a caller-provided key with the confirmed intent for any later reconciliation. The browser supplies Origin and manages cookie values. Scoped account reads reuse the existing QueryClient identity key, abort signal and unauthorized handler. The app continues using its explicit DEMO transport until INT-01.
+
+The draft still omits a login 401 and includes a proposed contact phone. The frontend maps a generic 401 if returned and only sends display name plus expectedVersion on a profile update. This compatibility handling leaves D-40 cookie names, password rules, contact fields and TTLs with their decision owners.
+
+After the server implements the selected slice, export the FastAPI application's OpenAPI JSON to a local file and run:
+
+```text
+python docs/api/generate_frontend_contract.py --runtime /path/to/runtime-openapi.json
+```
+
+The check resolves local references and compares effective security, parameters, request schemas, status codes, response headers and response schemas. The operation IDs must match. Documented field names, required fields and additional-property constraints are significant. Prose and ordering of unordered schema alternatives are ignored. Resolve reported differences against the reviewed contract before updating the draft and regenerating. Real browser cookies, authorization, scope and concurrent mutations still require service and INT-01 verification.
 
 [OpenAPI 3.1.1](https://spec.openapis.org/oas/v3.1.1.html) · [C4](../architecture/c4/README.md) · [DBML/ER](../database/README.md).
 

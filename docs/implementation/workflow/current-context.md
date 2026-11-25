@@ -3,7 +3,7 @@ id: itoh-current-context
 title: "Current task context"
 type: planning
 owner: PO
-updated: 2026-11-21
+updated: 2026-11-25
 authority: derived
 ---
 
@@ -13,6 +13,8 @@ authority: derived
 - FE-10 is EPIC_DONE following joint PO acceptance.
 
 ## Latest task report
+
+- [FND-03.01/attempt-01](task-history.md#task-fnd-03-01-attempt-01), review. Generated DTOs for eight draft OpenAPI operations, added same-origin account HTTP transport and scoped current-account queries, and separated public/internal ticket projections. Five drift tests, 128 frontend tests, TypeScript, lint, scoped formatting and production build passed. Runtime FastAPI/browser verification remains with service and INT-01 tasks. Implementation push receipt pending. [Task handoff](../tasks/FND-03.01.md#6-evidence-and-handoff). FND-03.02 remains pending until acceptance and separate authorization.
 
 - [FE-11.02/attempt-02](task-history.md#task-fe-11-02-attempt-02), done. Decisions with reason, stale recovery and separate execution verified (103 unit, 11 Chromium). [Comparison](../evidence/FE-11.02/comparison.md). 6199c2a pushed and verified.
 
@@ -125,5 +127,5 @@ authority: derived
 - [FND-02.02/attempt-02](task-history.md#task-fnd-02-02-attempt-02) records acceptance of atomic domain, redacted audit and outbox writes, including rollback after flush. Implementation 7e42f11 was pushed and verified.
 - [FND-02.03/attempt-02](task-history.md#task-fnd-02-03-attempt-02) records acceptance of expected-version conflicts, concurrent idempotent replay, changed-input conflicts and revoked replay authorization. Implementation f721e04 was pushed and verified.
 - Final agent verification recorded nine PostgreSQL 18.7 tests passing with zero skipped, plus Ruff, strict mypy, frozen lockfile, Alembic offline SQL and wheel/sdist build. PO approved the Parent.
-- FND-03.01 remains pending until verified FND-02 Parent merge and separate authorization.
-- FND-02 Parent [PR #24](https://github.com/congminh1705/IT-Operation-Hub/pull/24) is open from phase/b-backend into main. Acceptance commit 526a63c was pushed and verified. PO merge pending.
+- PO authorized FND-03.01 after the FND-02 merge.
+- FND-02 Parent [PR #24](https://github.com/congminh1705/IT-Operation-Hub/pull/24) merged into main at c77f71c. The Phase B branch fast-forwarded to the verified merge. Acceptance commit 526a63c was pushed and verified.

@@ -6,7 +6,7 @@ export function createAccountGateway(options: {
 }): DemoAdapter {
   if (options?.mode !== "demo") {
     throw new Error(
-      "Only explicit DEMO mode is available. Real account transport is not implemented.",
+      "Only explicit DEMO mode is available. Real adapter selection is not implemented in the workspace.",
     );
   }
   return createDemoGateway();
