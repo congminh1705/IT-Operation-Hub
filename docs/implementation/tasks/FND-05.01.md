@@ -73,18 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-**Planning state:** no implementation attempt/report, application test, review, commit or build evidence exists for this task. Application checks are **NOT RUN**. Replace this planning statement with actual evidence when work occurs.
-
-**Report contract:** after every actual attempt or session handoff, append a report to [task history](../workflow/task-history.md#reports) using [Format version 1](../workflow/task-history.md#entry-format), preserving its ten subsections and tables. Apply the [report validation checklist](../workflow/task-history.md#report-validation-before-handoff), then update this section with the latest report and current summary. A report may end in blocked/review/in-progress; it does not imply DONE.
-
-- Latest Report ID: none; no implementation attempt yet.
-- Latest history entry: none; add the exact existing report anchor after actual work.
-- Delivered result / incomplete scope:
-- Actual changed paths / key symbols:
-- Acceptance and check summary: pass/fail/not-run; link full expected/actual results and exact commands in the report.
-- Review type / findings / resolution:
-- Remaining blockers / decisions / defects:
-- Commit/build if available:
-- Next eligible task / resume step:
-
-Keep sections 1-5 unchanged unless a justified authorized refinement is recorded. Update this handoff after every attempt, including unfinished/blocked work; retain earlier attempt reports in history. Synchronize the execution-board state/owner and current-context latest summary/history link. Do not duplicate report bodies in the board, invent evidence or mark unrelated parent/system gates passed.
+- Latest Report ID: FND-05.01/attempt-01.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-05-01-attempt-01).
+- Delivered: Admin department lifecycle, preserved historical account references, and own-department lookup.
+- Changed paths: src/backend/app/modules/organization, app/modules/auth, app/main.py, migrations/versions/0004_departments.py, tests/test_organization.py.
+- Checks: 17 PostgreSQL-backed tests, Ruff and strict mypy passed. Normalized duplicates and stale writes return 409. Non-Admin writes and directory access are denied. Inactive departments are excluded from active choices without removing account references.
+- Review: Agent verified. Joint PO review pending.
+- Remaining: Ticket-category lookups belong to FND-08.01. Intake lookup is next in FND-05.02. INT-01 owns browser closure.
+- Commit/build: FND-05.01 implementation push receipt pending.
+- Next: Joint PO review after both FND-05 leaves pass their checks. Parent closure requires INT-01.

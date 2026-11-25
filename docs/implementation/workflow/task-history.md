@@ -10966,3 +10966,75 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-05.01.
 - Eligibility / remaining prerequisite: Separate authorization to implement the next leaf.
+
+<a id="task-fnd-05-01-attempt-01"></a>
+
+### FND-05.01 - Attempt 01 - 2026-11-25T15:04:12+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-05.01/attempt-01
+- Task: [Task card](../tasks/FND-05.01.md)
+- Parent / phase: FND-05 / B
+- Executor: Codex
+- Started at: 2026-11-25 (exact time not captured)
+- Ended at: 2026-11-25T15:04:12+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None. PO requested the whole Parent; joint review follows sequential verification.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Complete FND-05.01 within FND-05.
+- Delivered: Admin department lifecycle, preserved historical account references, and own-department lookup.
+- Incomplete scope / deviations: Ticket-category lookups belong to FND-08.01. Intake lookup is next in FND-05.02. INT-01 owns browser closure.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/organization, app/modules/auth, app/main.py, migrations/versions/0004_departments.py, tests/test_organization.py. | Organization domain, Alembic and API checks | Deliver the selected leaf |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Leaf service checks | Bounded real PostgreSQL and API behavior | Admin department lifecycle, preserved historical account references, and own-department lookup. | pass | [Organization API tests](../../../src/backend/tests/test_organization.py) |
+| Scoped failures and selected Parent criteria | Role and record checks preserve allowed access and avoid unsafe partial changes | Normalized duplicates and stale writes return 409. Non-Admin writes and directory access are denied. Inactive departments are excluded from active choices without removing account references. | pass | [Organization API tests](../../../src/backend/tests/test_organization.py) |
+| Full Parent real-flow closure | Actual integrated frontend and production services | Deferred to INT-01 | not-run | [Closure mapping](../package-task-coverage.md#fnd-05) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | .venv/Scripts/python.exe -m pytest -q with ITOH_TEST_DATABASE_URL set to local Compose PostgreSQL | Backend API and database checks pass | 17 passed, zero skipped; upstream TestClient warning | pass |
+| src/backend | .venv/Scripts/ruff.exe check app migrations tests and .venv/Scripts/mypy.exe app migrations tests | Lint and strict typing pass | Exit 0 for both | pass |
+| deployment | Real browser cutover and production deployment | Verify integrated flows | Owned by INT-01 and deployment tasks | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. Joint PO review pending.
+- Findings / resolution: Normalized duplicates and stale writes return 409. Non-Admin writes and directory access are denied. Inactive departments are excluded from active choices without removing account references.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent closure awaits INT-01. Ticket-category lookups belong to FND-08.01. Intake lookup is next in FND-05.02. INT-01 owns browser closure.
+- Required resolution / owner: PO reviews the leaves. INT-01 owning tasks establish live-flow evidence.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-05.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [API tests](../../../src/backend/tests/test_organization.py). Backend-only verification.
+- Commit / build / environment: FND-05.01 implementation push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR before external closure.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint review of FND-05 leaves after sequential checks.
+- Eligibility / remaining prerequisite: PO review for done. External acceptance for Parent PR.

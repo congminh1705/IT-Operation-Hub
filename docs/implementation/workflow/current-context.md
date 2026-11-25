@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-05.01/attempt-01](task-history.md#task-fnd-05-01-attempt-01), review. Admin department lifecycle, preserved historical account references, and own-department lookup. 17 PostgreSQL-backed tests, Ruff and mypy passed. Ticket-category lookups belong to FND-08.01. Intake lookup is next in FND-05.02. INT-01 owns browser closure. FND-05.01 implementation push receipt pending.
+
 - [FND-04.02/attempt-02](task-history.md#task-fnd-04-02-attempt-02), done. PO accepted the implementation. Both FND-04 leaves are done. Parent remains EPIC_IN_PROGRESS pending INT-01 live-flow evidence. No Parent PR. Board totals: 74 done and 156 pending.
 
 - [FND-04.02/attempt-01](task-history.md#task-fnd-04-02-attempt-01), review. Added current account and server-side session enforcement, session-bound CSRF and logout revocation. 16 PostgreSQL tests, 130 frontend tests and five drift tests passed; lint and types passed. Membership storage is FND-05, real frontend cutover is INT-01. Implementation 3b8912b pushed and verified on origin/phase/b-backend.

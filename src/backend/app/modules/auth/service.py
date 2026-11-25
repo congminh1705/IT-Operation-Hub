@@ -85,12 +85,32 @@ class AuthService:
             return None
         return record, account
 
+    def account_in_transaction(
+        self,
+        session: Session,
+        token: str,
+        *,
+        lock_account: bool = False,
+    ) -> Account | None:
+        if lock_account:
+            account_id = session.scalar(
+                select(AuthSession.account_id).where(
+                    AuthSession.token_hash == digest(token)
+                )
+            )
+            if (
+                account_id is None
+                or session.get(Account, account_id, with_for_update=True) is None
+            ):
+                return None
+        current = self._live_session(session, token)
+        if current is None or current[0].password_change_only:
+            return None
+        return current[1]
+
     def current_account(self, token: str) -> Account | None:
         with self.database.transaction() as session:
-            current = self._live_session(session, token)
-            if current is None or current[0].password_change_only:
-                return None
-            return current[1]
+            return self.account_in_transaction(session, token)
 
     def authenticated_csrf(self, token: str) -> str | None:
         with self.database.transaction() as session:
