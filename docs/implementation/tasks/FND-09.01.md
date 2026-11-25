@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 31 backend tests on PostgreSQL and Ruff/mypy passed.
 - Review: Agent verified. Joint PO review pending.
 - Remaining: Persistence and HTTP entry point follow FND-09.02. Asset/files and live browser belong to later tasks.
-- Commit/build: FND-09.01 push receipt pending.
+- Commit/build: FND-09.01 implementation f8bf5e2 pushed and verified on origin/phase/b-backend.
 - Next: Joint review of the two FND-09 leaves after sequential verification.

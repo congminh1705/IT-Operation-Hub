@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 33 backend tests on PostgreSQL and Ruff/mypy passed.
 - Review: Agent verified. Joint PO review pending.
 - Remaining: Asset and file intake remain deferred; no worker or browser integration. INT-02 gates Parent closure.
-- Commit/build: FND-09.02 push receipt pending.
+- Commit/build: FND-09.02 implementation e5d542d pushed and verified on origin/phase/b-backend.
 - Next: Joint review of the two FND-09 leaves after sequential verification.
