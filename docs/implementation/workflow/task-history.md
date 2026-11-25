@@ -15096,3 +15096,72 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Joint PO review after both FND-14 leaves pass.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-fnd-14-02-attempt-01"></a>
+
+### FND-14.02 - Attempt 01 - 2026-11-25T18:29:36+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-14.02/attempt-01
+- Task: [Task card](../tasks/FND-14.02.md)
+- Parent / phase: FND-14 / B
+- Executor: Codex
+- Started at: 2026-11-25T18:29:36+07:00
+- Ended at: 2026-11-25T18:29:36+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implement the selected FND-14 leaf in dependency order.
+- Delivered: Committed verification, redacted audit, changed skill IDs and the skills.changed v1 outbox record in one transaction. Downstream consumers use the committed workforce version to re-read eligibility.
+- Incomplete scope / deviations: Real browser and actual affected-work evaluation are later gates. No personnel data, evidence reference or reason text is emitted in the event payload.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| `workforce/skills.py`, `workforce/models.py`, migration 0018, `tests/test_workforce_skills.py`, event and API contract docs | FND-14 implementation and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Concurrency, rollback and safe event | One success under concurrent same-version edits; rollback on outbox failure; event contains only structured reference and version | 200/409 verified, forced failure restored prior state, same-key retry/replay published one event, payload and audit redaction verified | pass | `test_skill_changes_are_atomic_and_event_payload_is_minimal` |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | `src/backend: .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider --tb=short` (49 passed on PostgreSQL); `.venv/Scripts/ruff.exe check app tests migrations`; `.venv/Scripts/ruff.exe format --check app tests migrations`; `.venv/Scripts/mypy.exe app`; `python docs/api/generate_frontend_contract.py --check`; `python -B -m unittest discover -s docs/api -p test_frontend_contract.py` (5 passed); compared five workforce operations with real FastAPI OpenAPI (all matched) | Consistent documented result | Verified | pass |
+| integration | Browser, production workers and downstream domain checks | Full Parent evidence | INT-03 owns real integrated flows | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. Joint PO review pending.
+- Findings / resolution: Agent verified the scoped API with synthetic records on real PostgreSQL. PO approval is pending.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Real browser and actual affected-work evaluation are later gates. No personnel data, evidence reference or reason text is emitted in the event payload.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-14.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Workforce skill tests](../../../src/backend/tests/test_workforce_skills.py).
+- Commit / build / environment: FND-14.02 push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review after both FND-14 leaves pass.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.

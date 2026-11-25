@@ -1,17 +1,29 @@
+from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime, timedelta
+from threading import Barrier
 from uuid import UUID, uuid4
 
+import pytest
 from fastapi.testclient import TestClient
+from sqlalchemy import select
+from sqlalchemy.exc import SQLAlchemyError
 from test_organization import ORIGIN, SETTINGS, actor
 from test_ticket_intake import prepare_catalog
 from test_ticket_lifecycle import command
 from test_ticket_reads import create_ticket
 
 from app.infrastructure.database import Database
+from app.infrastructure.models import AuditLog, DomainEvent, OutboxDelivery
 from app.main import create_app
 from app.modules.auth.models import Account
 from app.modules.auth.service import AuthService
 from app.modules.organization.models import Department, TeamMember
+from app.modules.workforce import skills
+from app.modules.workforce.models import (
+    UserSkill,
+    WorkforceSkillChange,
+    WorkforceSkills,
+)
 from app.modules.workforce.skills import (
     missing_task_skills,
     set_task_skill_requirements,
@@ -158,3 +170,120 @@ def test_skill_verification_and_minimal_current_scope(database: Database) -> Non
     assert tech.get(f"{URL}/{tech_id}").json()["verified_skill_ids"] == []
     with database.session() as db:
         assert missing_task_skills(db, task, tech_id, now) == {skill, missing}
+
+
+def test_skill_changes_are_atomic_and_event_payload_is_minimal(
+    database: Database,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    app = create_app(AuthService(database), SETTINGS)
+    first, second, technician = (TestClient(app, base_url=ORIGIN) for _ in range(3))
+    _, first_headers = actor(database, first, "ADMIN")
+    _, second_headers = actor(database, second, "ADMIN")
+    subject, _ = actor(database, technician, "TECHNICIAN")
+    created = command(
+        first, URL + "/skills", first_headers, {"name": "Audit scope skill"}
+    )
+    assert created.status_code == 201, created.text
+    skill = UUID(created.json()["id"])
+    path = f"{URL}/{subject}"
+    shared = {
+        "expectedVersion": 1,
+        "reason": "Restricted business context",
+        "skills": [
+            {
+                "skill_id": str(skill),
+                "verified": True,
+                "evidence_ref": "private-record",
+                "evidence_version": 3,
+            }
+        ],
+    }
+    ready = Barrier(2, timeout=10)
+
+    def compete(participant):
+        client, headers = participant
+        ready.wait()
+        return verify(client, headers, subject, shared)
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        results = list(
+            pool.map(compete, [(first, first_headers), (second, second_headers)])
+        )
+    assert sorted(response.status_code for response in results) == [200, 409]
+    assert (
+        next(response for response in results if response.status_code == 409).json()[
+            "code"
+        ]
+        == "STALE_VERSION"
+    )
+
+    revoke = {
+        "expectedVersion": 2,
+        "reason": "Withdraw current verification",
+        "skills": [{"skill_id": str(skill), "verified": False}],
+    }
+    headers = {**first_headers, "Idempotency-Key": "atomic-skill-revoke"}
+
+    def fail(db, **kwargs):
+        db.flush()
+        raise SQLAlchemyError("Synthetic event failure")
+
+    with monkeypatch.context() as patch:
+        patch.setattr(skills, "enqueue_event", fail)
+        assert first.patch(path, json=revoke, headers=headers).status_code == 503
+    with database.session() as db:
+        aggregate = db.get(WorkforceSkills, subject)
+        assert aggregate is not None and aggregate.version == 2
+        row = db.get(UserSkill, (subject, skill))
+        assert row is not None and row.verified and row.version == 1
+        assert db.get(WorkforceSkillChange, (subject, 3, skill)) is None
+        audit = list(db.scalars(select(AuditLog).where(AuditLog.target_id == subject)))
+        assert len(audit) == 1
+    assert first.patch(path, json=revoke, headers=headers).status_code == 200
+    assert first.patch(path, json=revoke, headers=headers).status_code == 200
+    assert technician.get(path).json()["verified_skill_ids"] == []
+
+    with database.session() as db:
+        events = list(
+            db.scalars(
+                select(DomainEvent)
+                .where(DomainEvent.aggregate_id == subject)
+                .order_by(DomainEvent.aggregate_version)
+            )
+        )
+        assert [(event.event_type, event.aggregate_version) for event in events] == [
+            ("skills.changed", 2),
+            ("skills.changed", 3),
+        ]
+        for event in events:
+            assert event.aggregate_type == "workforce" and event.schema_version == 1
+            assert event.payload == {
+                "active": None,
+                "assignee_id": None,
+                "status": None,
+                "version": event.aggregate_version,
+            }
+            ledger = db.get(
+                WorkforceSkillChange, (subject, event.aggregate_version, skill)
+            )
+            assert ledger is not None
+            delivery = db.scalar(
+                select(OutboxDelivery).where(OutboxDelivery.event_id == event.id)
+            )
+            assert (
+                delivery is not None
+                and delivery.handler_purpose == "workforce.affected_work"
+            )
+        audit = list(db.scalars(select(AuditLog).where(AuditLog.target_id == subject)))
+        assert len(audit) == 2
+        assert all(
+            item.before_after_redacted["after"]["reason_provided"] is True
+            for item in audit
+        )
+        assert "private-record" not in str(
+            [item.before_after_redacted for item in audit]
+        )
+        assert "Restricted business context" not in str(
+            [item.before_after_redacted for item in audit]
+        )

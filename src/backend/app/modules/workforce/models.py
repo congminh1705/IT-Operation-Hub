@@ -58,3 +58,15 @@ class TaskSkillRequirement(Base):
     skill_id: Mapped[UUID] = mapped_column(
         ForeignKey("workforce_skill.id"), primary_key=True
     )
+
+
+class WorkforceSkillChange(Base):
+    __tablename__ = "workforce_skill_change"
+
+    account_id: Mapped[UUID] = mapped_column(
+        ForeignKey("workforce_skills.account_id"), primary_key=True
+    )
+    workforce_version: Mapped[int] = mapped_column(primary_key=True)
+    skill_id: Mapped[UUID] = mapped_column(
+        ForeignKey("workforce_skill.id"), primary_key=True
+    )

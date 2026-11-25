@@ -364,7 +364,7 @@ def organization_router(
             request,
             "workforce.skill_create",
             body.model_dump(mode="json"),
-            lambda db, actor: create_skill(db, actor, body),
+            lambda db, actor: create_skill(db, actor, body, configured().clock),
             project,
             status=201,
             admin=False,

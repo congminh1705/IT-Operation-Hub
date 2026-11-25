@@ -158,6 +158,8 @@ Events describe committed domain facts, not HTTP requests/permissions. Logical n
 | EVT16 | knowledge.published | Knowledge service | Index published version, not read authorization | UC-OPS10, BR-21 |
 | EVT17 | access.revoked | Knowledge ACL service | Invalidate cache/retrieval; DB ACL effective without consumer delay | UC-OPS10, BR-21 |
 
+EVT09 v1 identifies the changed workforce aggregate and its committed version. The workforce change ledger records the affected skill IDs for that version. Consumers re-read current authoritative eligibility. Evidence references, reasons and personnel profile fields stay out of the event payload.
+
 Envelope: `event_id`, `event_type`, `schema_version`, `aggregate_type/id/version`, UTC `occurred_at`, `actor_type/id`, `correlation_id`, optional `causation_id`, minimal `payload`. No credentials/session tokens/full prompts/files. Payload actor is not authority evidence; services verify current principals/grants. Incompatible versions produce error/quarantine, not ignored successful ack.
 
 At-least-once delivery. OutboxDelivery owns claims/leases/nextAttempt/retry/dead-letter, never rewriting occurred facts. Event+handler/purpose dedups runs; intent+target/version dedups effects. Late/out-of-order events re-read aggregates/versions and audit skipped obsolete intents or re-evaluate, never reverse old snapshots. Bounded transient retries; no blind schema/access/conflict retries. Counts/backoff D-40.

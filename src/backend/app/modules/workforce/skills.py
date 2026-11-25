@@ -9,6 +9,13 @@ from sqlalchemy.sql.elements import ColumnElement
 
 from app.infrastructure.clock import Clock, read_utc
 from app.infrastructure.commands import CommandResult
+from app.infrastructure.events import (
+    Actor,
+    SafeFacts,
+    Target,
+    enqueue_event,
+    write_audit,
+)
 from app.modules.auth.models import Account
 from app.modules.organization.models import Department, TeamMember
 from app.modules.organization.team_scope import (
@@ -20,6 +27,7 @@ from app.modules.workforce.models import (
     Skill,
     TaskSkillRequirement,
     UserSkill,
+    WorkforceSkillChange,
     WorkforceSkills,
 )
 
@@ -250,7 +258,9 @@ def list_workforce(
     )
 
 
-def create_skill(db: Session, actor: Account, body: SkillCreate) -> CommandResult:
+def create_skill(
+    db: Session, actor: Account, body: SkillCreate, clock: Clock
+) -> CommandResult:
     lock_team_configuration(db)
     name = " ".join(normalize("NFKC", body.name).split())
     key = name.casefold()
@@ -270,6 +280,15 @@ def create_skill(db: Session, actor: Account, body: SkillCreate) -> CommandResul
             raise WorkforceRejected(409, "INELIGIBLE_DEPARTMENT")
     skill = Skill(id=uuid4(), name=name, name_key=key, department_id=department_id)
     db.add(skill)
+    write_audit(
+        db,
+        actor=Actor("user", actor.id),
+        action="workforce.skill_create",
+        target=Target("skill", skill.id),
+        before=SafeFacts(),
+        after=SafeFacts(version=1),
+        clock=clock,
+    )
     return CommandResult(skill.id, 1)
 
 
@@ -358,6 +377,38 @@ def update_workforce(
         row.evidence_version = verification.evidence_version
         row.expires_at = verification.expires_at
     aggregate.version += 1
+    db.add_all(
+        WorkforceSkillChange(
+            account_id=account_id,
+            workforce_version=aggregate.version,
+            skill_id=skill_id,
+        )
+        for skill_id in skill_ids
+    )
+    source, target = Actor("user", actor.id), Target("workforce", account_id)
+    before = SafeFacts(version=version)
+    after = SafeFacts(version=aggregate.version)
+    write_audit(
+        db,
+        actor=source,
+        action="workforce.verify_skills",
+        target=target,
+        before=before,
+        after=SafeFacts(version=aggregate.version, reason_provided=True),
+        clock=lambda: now,
+    )
+    enqueue_event(
+        db,
+        actor=source,
+        target=target,
+        event_type="skills.changed",
+        schema_version=1,
+        aggregate_version=aggregate.version,
+        correlation_id=account_id,
+        handlers=("workforce.affected_work",),
+        facts=after,
+        clock=lambda: now,
+    )
     return CommandResult(account_id, aggregate.version)
 
 
