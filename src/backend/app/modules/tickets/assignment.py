@@ -37,7 +37,7 @@ class TicketAssignment(BaseModel):
     expectedVersion: int = Field(ge=1, strict=True)
     team_id: UUID
     assignee_id: UUID | None = None
-    reason: str = Field(min_length=10, max_length=10000)
+    reason: str | None = Field(default=None, min_length=10, max_length=10000)
 
 
 def lock_ticket(db: Session, ticket_id: UUID) -> Ticket:
@@ -56,9 +56,20 @@ def check_version(row: Ticket, expected_version: int) -> None:
 def assign_ticket(
     db: Session, actor: Account, ticket_id: UUID, body: TicketAssignment, clock: Clock
 ) -> CommandResult:
-    if actor.role not in MANAGEMENT:
+    if actor.role not in (*MANAGEMENT, "TECHNICIAN"):
         raise TicketCommandRejected(403, "FORBIDDEN")
     row = lock_ticket(db, ticket_id)
+    if actor.role == "TECHNICIAN":
+        if row.team_id not in effective_team_ids(db, actor.id):
+            raise TicketCommandRejected(404, "NOT_FOUND")
+        if body.team_id != row.team_id or body.assignee_id != actor.id:
+            raise TicketCommandRejected(403, "FORBIDDEN")
+        check_version(row, body.expectedVersion)
+        if row.status not in ("New", "Open") or row.assignee_id is not None:
+            raise TicketCommandRejected(409, "CLAIM_UNAVAILABLE")
+        return record_assignment(db, actor, row, body, clock)
+    if body.reason is None:
+        raise TicketCommandRejected(422, "REASON_REQUIRED")
     check_version(row, body.expectedVersion)
     destination = db.get(Team, body.team_id)
     if destination is None or not destination.active:
@@ -68,21 +79,20 @@ def assign_ticket(
             raise TicketCommandRejected(409, "ASSIGNEE_REQUIRED")
     elif body.team_id not in effective_team_ids(db, body.assignee_id):
         raise TicketCommandRejected(409, "INELIGIBLE_ASSIGNEE")
-    return record_assignment(db, actor, row, body.team_id, body.assignee_id, clock)
+    return record_assignment(db, actor, row, body, clock)
 
 
 def record_assignment(
     db: Session,
     actor: Account,
     row: Ticket,
-    team_id: UUID,
-    assignee_id: UUID | None,
+    body: TicketAssignment,
     clock: Clock,
 ) -> CommandResult:
     previous = SafeFacts(
         version=row.version, team_id=row.team_id, assignee_id=row.assignee_id
     )
-    row.team_id, row.assignee_id = team_id, assignee_id
+    row.team_id, row.assignee_id = body.team_id, body.assignee_id
     row.version += 1
     current = SafeFacts(
         version=row.version,
@@ -90,7 +100,7 @@ def record_assignment(
         assignee_id=row.assignee_id,
         previous_team_id=previous.team_id,
         previous_assignee_id=previous.assignee_id,
-        reason_provided=True,
+        reason_provided=body.reason is not None,
     )
     now = read_utc(clock)
     event_actor, target = Actor("user", actor.id), Target("ticket", row.id)

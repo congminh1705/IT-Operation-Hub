@@ -56,6 +56,7 @@ from app.modules.tickets.intake import (
     TicketCreate,
     ticket_create_schema,
 )
+from app.modules.tickets.lifecycle import TicketTransition, transition_ticket
 from app.modules.tickets.models import Ticket
 from app.modules.tickets.read import (
     ListScope,
@@ -488,10 +489,10 @@ def organization_router(
         request: Request, db: Session, result: CommandResult
     ) -> TicketPublic | TicketInternal:
         current = authorize(db, request, write=True)
-        if current.role not in ("IT_MANAGER", "ADMIN"):
+        if current.role not in ("IT_MANAGER", "ADMIN", "TECHNICIAN"):
             raise Rejected(403, "FORBIDDEN")
         projection = get_ticket(db, TicketAccess.resolve(db, current), result.id)
-        if projection is None:
+        if not isinstance(projection, TicketInternal):
             raise Rejected(404, "NOT_FOUND")
         return projection
 
@@ -509,6 +510,27 @@ def organization_router(
             "ticket.assign",
             {"id": str(id), **body.model_dump(mode="json")},
             lambda db, account: assign_ticket(
+                db, account, id, body, configured().clock
+            ),
+            lambda db, result: project_ticket_command(request, db, result),
+            status=200,
+            admin=False,
+        )
+
+    @router.post(
+        "/tickets/{id}/transitions",
+        operation_id="transitionTicket",
+        response_model=TicketPublic | TicketInternal,
+        tags=["Tickets"],
+    )
+    def ticket_transition(
+        id: UUID, request: Request, body: TicketTransition
+    ) -> Response:
+        return change(
+            request,
+            "ticket.transition",
+            {"id": str(id), **body.model_dump(mode="json")},
+            lambda db, account: transition_ticket(
                 db, account, id, body, configured().clock
             ),
             lambda db, result: project_ticket_command(request, db, result),
