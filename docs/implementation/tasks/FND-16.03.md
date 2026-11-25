@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-16.03/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-16-03-attempt-01).
+- Latest Report ID: FND-16.03/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-16-03-attempt-02).
 - Delivered: Implemented guarded manual task lifecycle. Readiness and start recheck predecessors and reservations, Blocked retains capacity, and Done requires a valid human result and zero remaining minutes. Management cancellation checks successor impact. Task terminal outcomes release reservations while retaining history and leave the ticket unchanged.
 - Changed files: `work_management/lifecycle.py`, `allocation.py`, `service.py`, migration 0023, OpenAPI and `tests/test_manual_task_lifecycle.py`
 - Checks: 56 backend tests passed on PostgreSQL 18.7. Verified premature start, dependency guard, Blocked capacity, reasoned resume, invalid Done/cancel, terminal history and persisted ticket independence. Scoped FastAPI OpenAPI comparison and five contract tests passed.
-- Review: Agent verified. Joint PO acceptance pending.
+- Review: PO accepted all three backend leaves. Checks remain in attempt 01.
 - Remaining: Real browser and affected-work delivery belong to INT-03. Manual actions do not activate the Draft plan; DAG authoring and activation remain in the workflow package.
 - Commit/build: FND-16.03 implementation `c897498` pushed to origin/phase/b-backend.
-- Next: Joint review of all three FND-16 leaves. Full Parent closure depends on INT-03.
+- Next: FND-17 authorized. Full Parent closure awaits INT-03.

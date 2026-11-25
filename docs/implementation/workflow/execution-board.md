@@ -18,7 +18,7 @@ purpose: "Maintain the single status and owner registry for every refined execut
 
 ## 1. Scope and authority
 
-All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. Execution states are **106 done**, **3 review**, **121 pending**. PRE-02, PRE-03 and PRE-04 are EPIC_DONE. [FND-03, FND-04, FND-05, FND-06, FND-07, FND-08, FND-09, FND-10, FND-11, FND-12, FND-13, FND-14, FND-15 and FND-16 are EPIC_IN_PROGRESS in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
+All **88 work packages are decomposed into 230 executable tasks**: **63 frontend (A), 137 decisions/services (B), 16 real integration (C), and 14 acceptance/recovery (D)**. Execution states are **109 done**, **121 pending**. PRE-02, PRE-03 and PRE-04 are EPIC_DONE. [FND-03, FND-04, FND-05, FND-06, FND-07, FND-08, FND-09, FND-10, FND-11, FND-12, FND-13, FND-14, FND-15 and FND-16 are EPIC_IN_PROGRESS in the package registry](../README.md#4-task-tracker). Owner is **PO** for every task. AI Agent support is documented in the workflow; the board has no Executor column.
 
 The [package registry](../README.md#4-task-tracker) holds epic state; this board alone holds task state and PO ownership. Use the [task workflow](task-workflow.md). [Parent coverage and closure](../package-task-coverage.md) maps every parent criterion to outputs and names any external integration evidence. Package readiness means defined scope; dependencies, affected decisions and future coding authorization still gate execution.
 
@@ -141,9 +141,9 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FND-14.02](../tasks/FND-14.02.md) | [FND-14](../01-foundation.md#fnd-14) | Publish auditable skill-change effects | [FND-14.01](../tasks/FND-14.01.md) | PO | done |
 | [FND-15.01](../tasks/FND-15.01.md) | [FND-15](../01-foundation.md#fnd-15) | Implement period calendar and absence union calculations | [FND-14.02](../tasks/FND-14.02.md) | PO | done |
 | [FND-15.02](../tasks/FND-15.02.md) | [FND-15](../01-foundation.md#fnd-15) | Implement authorized calendar and absence mutations | [FND-15.01](../tasks/FND-15.01.md) | PO | done |
-| [FND-16.01](../tasks/FND-16.01.md) | [FND-16](../01-foundation.md#fnd-16) | Persist manual plan/task and enforce internal scope | [FND-11.02](../tasks/FND-11.02.md), [FND-15.02](../tasks/FND-15.02.md) | PO | review |
-| [FND-16.02](../tasks/FND-16.02.md) | [FND-16](../01-foundation.md#fnd-16) | Implement atomic manual assignment and remaining allocations | [FND-16.01](../tasks/FND-16.01.md) | PO | review |
-| [FND-16.03](../tasks/FND-16.03.md) | [FND-16](../01-foundation.md#fnd-16) | Implement guarded human task progress and completion | [FND-16.02](../tasks/FND-16.02.md) | PO | review |
+| [FND-16.01](../tasks/FND-16.01.md) | [FND-16](../01-foundation.md#fnd-16) | Persist manual plan/task and enforce internal scope | [FND-11.02](../tasks/FND-11.02.md), [FND-15.02](../tasks/FND-15.02.md) | PO | done |
+| [FND-16.02](../tasks/FND-16.02.md) | [FND-16](../01-foundation.md#fnd-16) | Implement atomic manual assignment and remaining allocations | [FND-16.01](../tasks/FND-16.01.md) | PO | done |
+| [FND-16.03](../tasks/FND-16.03.md) | [FND-16](../01-foundation.md#fnd-16) | Implement guarded human task progress and completion | [FND-16.02](../tasks/FND-16.02.md) | PO | done |
 | [FND-17.01](../tasks/FND-17.01.md) | [FND-17](../01-foundation.md#fnd-17) | Implement immediate access loss and protected account invariants | [FND-16.03](../tasks/FND-16.03.md) | PO | pending |
 | [FND-17.02](../tasks/FND-17.02.md) | [FND-17](../01-foundation.md#fnd-17) | Implement transactional active-work handover | [FND-17.01](../tasks/FND-17.01.md) | PO | pending |
 | [FND-17.03](../tasks/FND-17.03.md) | [FND-17](../01-foundation.md#fnd-17) | Publish affected-work changes and complete team deactivation | [FND-17.02](../tasks/FND-17.02.md) | PO | pending |

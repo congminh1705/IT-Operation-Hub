@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-16.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-16-02-attempt-01).
+- Latest Report ID: FND-16.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-16-02-attempt-02).
 - Delivered: Implemented scoped manual assignment with explicit per-day UTC reservations, assignment locks, and progress changes that revalidate increased remaining effort.
 - Changed files: `work_management/allocation.py`, `work_management/service.py`, `organization/http.py`, migration 0022, OpenAPI and `tests/test_manual_allocation.py`
 - Checks: 55 backend tests passed on PostgreSQL 18.7. Concurrent reservations yielded 200/409, and Blocked work retained its capacity. Scope, skills, stale calendar, explicit minutes, locked assignment and reservation history verified. Three scoped runtime OpenAPI operations and five contract tests passed.
-- Review: Agent verified. Joint PO acceptance pending.
+- Review: PO accepted all three backend leaves. Checks remain in attempt 01.
 - Remaining: Real browser and affected-work consumers await INT-03. Manual task lifecycle is delivered in FND-16.03.
 - Commit/build: FND-16.02 implementation `05bd1ab` pushed to origin/phase/b-backend.
-- Next: Joint review of all three FND-16 leaves. Full Parent closure depends on INT-03.
+- Next: FND-17 authorized. Full Parent closure awaits INT-03.

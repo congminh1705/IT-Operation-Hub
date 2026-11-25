@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-16.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-16-01-attempt-01).
+- Latest Report ID: FND-16.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-16-01-attempt-02).
 - Delivered: Added manual Draft plan creation and initial unassigned tasks with ticket-derived team, positive effort, UTC window, explicit evidence reference/version and current manager reviewer. Plan/task APIs filter by current team before paging.
 - Changed files: `work_management/service.py`, `work_management/models.py`, `organization/http.py`, migration 0021, reviewed OpenAPI and `tests/test_manual_work.py`
 - Checks: 54 passed on PostgreSQL 18.7. No requester reads; current scope, transfer, missing evidence, idempotent replay and audit rollback verified. Ruff, mypy, five contract tests and five FND-16.01 runtime OpenAPI comparisons passed.
-- Review: Agent verified. PO acceptance pending.
+- Review: PO accepted all three backend leaves. Checks remain in attempt 01.
 - Remaining: Manual allocation and progress are owned by FND-16.02/03. DAG activation is later workflow scope. The evidence reference is supplied by the authorized reviewer; no external evidence system is validated here. Browser and real integration await INT-03.
 - Commit/build: FND-16.01 implementation `f1c4798` pushed to origin/phase/b-backend.
-- Next: Joint PO review of FND-16.01 through FND-16.03. Full Parent closure depends on INT-03.
+- Next: FND-17 authorized. Full Parent closure awaits INT-03.

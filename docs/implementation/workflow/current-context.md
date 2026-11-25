@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- PO accepted [FND-16.01](task-history.md#task-fnd-16-01-attempt-02), [FND-16.02](task-history.md#task-fnd-16-02-attempt-02) and [FND-16.03](task-history.md#task-fnd-16-03-attempt-02). All three leaves are done. Parent closure awaits INT-03. FND-17 authorized.
+
 - [FND-16.03](task-history.md#task-fnd-16-03-attempt-01), review. Implemented guarded manual task lifecycle. Readiness and start recheck predecessors and reservations, Blocked retains capacity, and Done requires a valid human result and zero remaining minutes. Management cancellation checks successor impact. Task terminal outcomes release reservations while retaining history and leave the ticket unchanged. 56 backend tests passed. Board: 106 done, 3 review, 121 pending. Joint PO acceptance pending. FND-16.03 implementation `c897498` pushed to origin/phase/b-backend.
 
 - [FND-16.02](task-history.md#task-fnd-16-02-attempt-01), review. Implemented scoped manual assignment with explicit per-day UTC reservations, assignment locks, and progress changes that revalidate increased remaining effort. 55 backend tests passed. Board: 106 done, 2 review, 122 pending. Joint PO acceptance pending. FND-16.02 implementation `05bd1ab` pushed to origin/phase/b-backend.
