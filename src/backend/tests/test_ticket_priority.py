@@ -9,9 +9,11 @@ from test_ticket_lifecycle import command
 from test_ticket_reads import TICKETS, create_ticket
 
 from app.infrastructure.database import Database
+from app.infrastructure.models import DomainEvent
 from app.main import create_app
 from app.modules.auth.models import AuthSession
 from app.modules.auth.service import AuthService
+from app.modules.organization.models import Team, TeamMember
 from app.modules.sla.policy import PolicyRevision
 from app.modules.tickets.models import Ticket, TicketPriorityAdjustment, TicketSLABreach
 
@@ -117,3 +119,136 @@ def test_priority_adjustments_keep_original_budget_and_breaches(
         assert new_ticket.sla_snapshot["P3"]["resolution_seconds"] == 12 * 3600
         assert row.first_response_at == row.created_at + timedelta(minutes=20)
         assert row.adjustment_revision == 3 and row.sla_policy_version == 1
+
+
+def test_timeline_filters_before_paging_and_rechecks_team(database: Database) -> None:
+    category, initial_team = prepare_catalog(database)
+    now = datetime.now(UTC)
+    app = create_app(AuthService(database, clock=lambda: now), SETTINGS)
+    requester, admin, old_tech, new_tech = (
+        TestClient(app, base_url=ORIGIN) for _ in range(4)
+    )
+    requester_id, owner_headers = actor(database, requester, "REQUESTER")
+    admin_id, admin_headers = actor(database, admin, "ADMIN")
+    old_id, _ = actor(database, old_tech, "TECHNICIAN")
+    new_id, _ = actor(database, new_tech, "TECHNICIAN")
+    new_team = uuid4()
+    ticket = create_ticket(requester, owner_headers, category, "Timeline")
+    ticket_id = UUID(ticket["id"])
+    detail = f"{TICKETS}/{ticket_id}"
+    url = detail + "/events"
+    with database.transaction() as db:
+        db.add(
+            Team(
+                id=new_team,
+                name="Next team",
+                name_key="next-team",
+                active=True,
+                intake=False,
+                version=1,
+            )
+        )
+        db.flush()
+        db.add_all(
+            [
+                TeamMember(team_id=UUID(initial_team), account_id=old_id, active=True),
+                TeamMember(team_id=new_team, account_id=new_id, active=True),
+            ]
+        )
+        db.add(
+            DomainEvent(
+                id=uuid4(),
+                event_type="ticket.internal_note",
+                schema_version=1,
+                aggregate_type="ticket",
+                aggregate_id=ticket_id,
+                aggregate_version=1,
+                actor_type="user",
+                actor_id=admin_id,
+                correlation_id=ticket_id,
+                occurred_at=now,
+                payload={"safe_summary": "SECRET metadata"},
+            )
+        )
+    note = command(
+        admin,
+        detail + "/comments",
+        admin_headers,
+        {
+            "content": "PRIVATE NOTE",
+            "visibility": "INTERNAL",
+        },
+    )
+    assert note.status_code == 201
+    accepted = command(
+        admin,
+        detail + "/transitions",
+        admin_headers,
+        {
+            "target_status": "Open",
+            "expectedVersion": 1,
+        },
+    )
+    assert accepted.status_code == 200
+    priority = command(
+        admin,
+        detail + "/priority",
+        admin_headers,
+        {
+            "priority": "P1",
+            "expectedVersion": 2,
+            "reason": "Internal decision about impact",
+        },
+    )
+    assert priority.status_code == 200
+    assert new_tech.get(url).status_code == 404
+    assert old_tech.get(url).status_code == 200
+    assigned = command(
+        admin,
+        detail + "/assignment",
+        admin_headers,
+        {
+            "team_id": str(new_team),
+            "assignee_id": str(new_id),
+            "expectedVersion": 3,
+            "reason": "Transfer to specialist team",
+        },
+    )
+    assert assigned.status_code == 200
+    assert old_tech.get(url).status_code == 404
+    assert requester.get(f"{TICKETS}/{uuid4()}/events").status_code == 404
+    assert requester.get(url + "?page_size=101").status_code == 422
+    public = requester.get(url).json()
+    assert public["total"] == 3
+    assert [item["id"] for item in public["items"]] == sorted(
+        item["id"] for item in public["items"]
+    )
+    assert all(
+        item["occurred_at"] == public["items"][0]["occurred_at"]
+        for item in public["items"]
+    )
+    for page, expected in enumerate(public["items"], start=1):
+        response = requester.get(url, params={"page": page, "page_size": 1}).json()
+        assert response["total"] == 3 and response["items"] == [expected]
+        assert expected["visibility"] == "PUBLIC"
+        assert {"actor_id", "reason", "assignee_id"}.isdisjoint(expected)
+    internal = new_tech.get(url).json()
+    assert internal["total"] == 4
+    events = {item["event_type"]: item for item in internal["items"]}
+    assert events["ticket.created"]["actor_id"] == str(requester_id)
+    assert events["ticket.accepted"]["previous_status"] == "New"
+    assert events["ticket.accepted"]["status"] == "Open"
+    priority_event = events["ticket.priority_changed"]
+    assert (priority_event["previous_priority"], priority_event["priority"]) == (
+        "P2",
+        "P1",
+    )
+    assert priority_event["reason"] == "Internal decision about impact"
+    assignment = events["ticket.assigned"]
+    assert assignment["reason"] == "Transfer to specialist team"
+    assert assignment["previous_team_id"] == initial_team
+    assert assignment["team_id"] == str(new_team)
+    assert assignment["assignee_id"] == str(new_id)
+    assert "PRIVATE NOTE" not in str(internal) and "SECRET metadata" not in str(
+        internal
+    )

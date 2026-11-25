@@ -14820,3 +14820,72 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Joint PO review after both FND-13 leaves pass.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-fnd-13-02-attempt-01"></a>
+
+### FND-13.02 - Attempt 01 - 2026-11-25T18:14:55+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-13.02/attempt-01
+- Task: [Task card](../tasks/FND-13.02.md)
+- Parent / phase: FND-13 / B
+- Executor: Codex
+- Started at: 2026-11-25T18:14:55+07:00
+- Ended at: 2026-11-25T18:14:55+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implement the selected FND-13 leaf in dependency order.
+- Delivered: Added the paged ticket timeline with stable occurred_at/UUID ordering and current ticket scope. Requesters receive public events only. Scoped IT receives permitted actor, assignment changes and stored reasons.
+- Incomplete scope / deviations: Real browser and notifications remain for INT-02. Historical assignment reasons that were never stored are absent. Continuous monitoring and alert delivery belong to OPS-03/04.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| `tickets/timeline.py`, `tickets/assignment.py`, `tickets/lifecycle.py`, `organization/http.py`, `docs/api/openapi.json`, migration 0016, `tests/test_ticket_priority.py` | FND-13 implementation and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Timeline scope and ordering | Same timestamp stable order, no private placeholder/count leakage, scope revoked after transfer | API paging matched the authorized count, old team received 404, new team could read authorized history; raw private text excluded | pass | `test_timeline_filters_before_paging_and_rechecks_team` |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | `src/backend: .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider --tb=short` (47 passed on PostgreSQL); `.venv/Scripts/ruff.exe check app tests migrations`; `.venv/Scripts/ruff.exe format --check app tests migrations`; `.venv/Scripts/mypy.exe app`; `python docs/api/generate_frontend_contract.py --check`; `python -B -m unittest discover -s docs/api -p test_frontend_contract.py` (5 passed); compared `contract(create_app().openapi())` with `contract(draft)` for changeTicketPriority and listTicketEvents (both matched) | Consistent documented result | Verified | pass |
+| integration | Browser, production workers and downstream domain checks | Full Parent evidence | INT-02 owns real integrated flows | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. Joint PO review pending.
+- Findings / resolution: Agent verified the scoped API with synthetic records on real PostgreSQL. PO approval is pending.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Real browser and notifications remain for INT-02. Historical assignment reasons that were never stored are absent. Continuous monitoring and alert delivery belong to OPS-03/04.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-13.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Ticket priority tests](../../../src/backend/tests/test_ticket_priority.py).
+- Commit / build / environment: FND-13.02 push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review after both FND-13 leaves pass.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.

@@ -65,7 +65,12 @@ def create_app(
         request: Request, exc: RequestValidationError
     ) -> JSONResponse:
         operation = getattr(request.scope.get("route"), "operation_id", None)
-        if operation in {"getTicket", "listTickets"}:
+        if operation in {
+            "getTicket",
+            "listTickets",
+            "listTicketEvents",
+            "changeTicketPriority",
+        }:
             return error_response(422, "INVALID_INPUT")
         if operation == "getCsrf":
             return failure(422)

@@ -19,7 +19,7 @@ from app.modules.organization.team_scope import (
     effective_team_ids,
     lock_team_configuration,
 )
-from app.modules.tickets.models import Ticket
+from app.modules.tickets.models import Ticket, TicketChangeReason
 
 MANAGEMENT = ("IT_MANAGER", "ADMIN")
 
@@ -106,6 +106,12 @@ def record_assignment(
     )
     row.team_id, row.assignee_id = body.team_id, body.assignee_id
     row.version += 1
+    if body.reason:
+        db.add(
+            TicketChangeReason(
+                ticket_id=row.id, version=row.version, reason=body.reason
+            )
+        )
     current = SafeFacts(
         version=row.version,
         team_id=row.team_id,

@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-13.02/attempt-01](task-history.md#task-fnd-13-02-attempt-01), review. Added the paged ticket timeline with stable occurred_at/UUID ordering and current ticket scope. Requesters receive public events only. Scoped IT receives permitted actor, assignment changes and stored reasons. 47 backend tests on PostgreSQL passed. Both FND-13 operations match the reviewed OpenAPI. Board: 100 done, 2 review, 128 pending. Joint PO review pending; INT-02 owns full Parent closure. FND-13.02 push receipt pending.
+
 - [FND-13.01/attempt-01](task-history.md#task-fnd-13-01-attempt-01), review. Added versioned management priority changes using the original ticket SLA snapshot. Elapsed usage and first response are unchanged, and previous and newly observed breaches are preserved by clock and adjustment revision. 46 backend tests on PostgreSQL passed. Joint PO review pending. FND-13.01 push receipt pending.
 
 - PO accepted all four FND-12 service leaves. [FND-12.01](task-history.md#task-fnd-12-01-attempt-02), [FND-12.02](task-history.md#task-fnd-12-02-attempt-02), [FND-12.03](task-history.md#task-fnd-12-03-attempt-02) and [FND-12.04](task-history.md#task-fnd-12-04-attempt-02) are done. Board: 100 done, 130 pending. FND-12 Parent closure remains with INT-02. FND-13.01 is eligible on request.

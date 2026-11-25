@@ -3628,7 +3628,7 @@
         "tags": [
           "Tickets"
         ],
-        "description": "M/A only, reason required; new budget from ticket snapshot over elapsed usage, never reset. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "description": "M/A only, reason required; new budget from ticket snapshot over elapsed usage, never reset.",
         "security": [
           {
             "SessionCookie": []
@@ -3645,92 +3645,94 @@
             }
           },
           {
-            "$ref": "#/components/parameters/Csrf"
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
-            "$ref": "#/components/parameters/Idempotency"
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Committed successfully.",
+            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TicketView"
+                  "$ref": "#/components/schemas/TicketInternal"
                 }
               }
             }
           },
           "401": {
-            "description": "Missing/expired/revoked session.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Unauthorized"
           },
           "403": {
-            "description": "Function or CSRF/Origin denied.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Forbidden"
           },
           "404": {
-            "description": "Not found or outside scope; identical safe response.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Not Found"
           },
           "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Conflict"
           },
           "422": {
-            "description": "Field/business validation failed; no partial effects.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Unprocessable Content"
           },
           "503": {
-            "description": "Dependency unavailable; no fabricated success.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Service Unavailable"
           }
         },
         "x-contract-id": "API03",
@@ -11573,7 +11575,7 @@
         "tags": [
           "Ticket content"
         ],
-        "description": "Public timeline for requester; internal events only scoped IT. Filter before pagination/count. Design-draft; not implemented.",
+        "description": "Visibility is filtered before counting and paging. The current ticket scope determines access. Only scoped IT sees actor identifiers, reasons and assignment details.",
         "security": [
           {
             "SessionCookie": []
@@ -11590,15 +11592,31 @@
             }
           },
           {
-            "$ref": "#/components/parameters/Page"
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000000,
+              "minimum": 1,
+              "default": 1
+            }
           },
           {
-            "$ref": "#/components/parameters/PageSize"
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Scoped response.",
+            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
@@ -11608,74 +11626,44 @@
             }
           },
           "401": {
-            "description": "Missing/expired/revoked session.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "403": {
-            "description": "Function or CSRF/Origin denied.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Unauthorized"
           },
           "404": {
-            "description": "Not found or outside scope; identical safe response.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Not Found"
           },
           "422": {
-            "description": "Field/business validation failed; no partial effects.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Unprocessable Content"
           },
           "503": {
-            "description": "Dependency unavailable; no fabricated success.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Service Unavailable"
           }
         },
         "x-contract-id": "API04",
@@ -12644,11 +12632,10 @@
         "additionalProperties": false
       },
       "PriorityCommand": {
-        "type": "object",
         "properties": {
           "expectedVersion": {
             "type": "integer",
-            "minimum": 1
+            "minimum": 1.0
           },
           "priority": {
             "type": "string",
@@ -12661,15 +12648,17 @@
           },
           "reason": {
             "type": "string",
+            "maxLength": 10000,
             "minLength": 10
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "expectedVersion",
           "priority",
           "reason"
-        ],
-        "additionalProperties": false
+        ]
       },
       "CommentCreate": {
         "type": "object",
@@ -14956,8 +14945,6 @@
         ]
       },
       "TicketEventView": {
-        "type": "object",
-        "additionalProperties": false,
         "properties": {
           "id": {
             "type": "string",
@@ -14967,11 +14954,11 @@
             "type": "string"
           },
           "visibility": {
+            "type": "string",
             "enum": [
               "PUBLIC",
               "INTERNAL"
-            ],
-            "type": "string"
+            ]
           },
           "safe_summary": {
             "type": "string"
@@ -14979,40 +14966,107 @@
           "occurred_at": {
             "type": "string",
             "format": "date-time"
+          },
+          "previous_status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "New",
+                  "Open",
+                  "In Progress",
+                  "Pending",
+                  "Resolved",
+                  "Closed",
+                  "Cancelled"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "New",
+                  "Open",
+                  "In Progress",
+                  "Pending",
+                  "Resolved",
+                  "Closed",
+                  "Cancelled"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "previous_priority": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "priority": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "id",
           "event_type",
           "visibility",
           "safe_summary",
-          "occurred_at"
+          "occurred_at",
+          "previous_status",
+          "status",
+          "previous_priority",
+          "priority"
         ]
       },
       "TicketEventViewPage": {
-        "type": "object",
-        "additionalProperties": false,
         "properties": {
           "items": {
-            "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TicketEventView"
-            }
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/TicketEventInternal"
+                },
+                {
+                  "$ref": "#/components/schemas/TicketEventView"
+                }
+              ]
+            },
+            "type": "array"
           },
           "page": {
-            "type": "integer",
-            "minimum": 1
+            "type": "integer"
           },
           "page_size": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 100
+            "type": "integer"
           },
           "total": {
-            "type": "integer",
-            "minimum": 0
+            "type": "integer"
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "items",
           "page",
@@ -15375,6 +15429,173 @@
           "page",
           "page_size",
           "total"
+        ]
+      },
+      "TicketEventInternal": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "event_type": {
+            "type": "string"
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "PUBLIC",
+              "INTERNAL"
+            ]
+          },
+          "safe_summary": {
+            "type": "string"
+          },
+          "occurred_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "previous_status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "New",
+                  "Open",
+                  "In Progress",
+                  "Pending",
+                  "Resolved",
+                  "Closed",
+                  "Cancelled"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "New",
+                  "Open",
+                  "In Progress",
+                  "Pending",
+                  "Resolved",
+                  "Closed",
+                  "Cancelled"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "previous_priority": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "priority": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "actor_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "previous_team_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "team_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "previous_assignee_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "assignee_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "event_type",
+          "visibility",
+          "safe_summary",
+          "occurred_at",
+          "previous_status",
+          "status",
+          "previous_priority",
+          "priority",
+          "actor_id",
+          "reason",
+          "previous_team_id",
+          "team_id",
+          "previous_assignee_id",
+          "assignee_id"
         ]
       }
     }
