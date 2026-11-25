@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-06.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-06-02-attempt-01).
+- Latest Report ID: FND-06.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-06-02-attempt-02).
 - Delivered: Explicit allowlisted provisioning result, Admin authorization before credential parsing, sanitized validation, safe verification/approval audit references and SQLAlchemy parameter hiding.
 - Changed paths: users/provisioning.py, organization/http.py, database/event helpers, OpenAPI and API tests.
 - Checks: 28 PostgreSQL tests, Ruff, mypy and five OpenAPI drift tests passed. Captured logs omit password/verifier. Injected audit failure rolls back user, proof and idempotency key.
-- Review: Agent verified. PO approval pending.
+- Review: PO accepted the implementation. Original agent checks remain in attempt 01.
 - Remaining: Live D-29 verification source, approved IT-role approver and enterprise handover channel, and INT-01 native form integration.
 - Commit/build: Implementation 4075c43 pushed and verified on origin/phase/b-backend.
-- Next: PO reviews FND-06.02. Parent closure still requires INT-01.
+- Next: FND-09.01 is eligible and awaits separate authorization. Parent closure still requires INT-01.

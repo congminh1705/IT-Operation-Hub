@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-06.02/attempt-02](task-history.md#task-fnd-06-02-attempt-02), done. PO accepted the backend leaf. Both FND-06 leaves done; Parent remains EPIC_IN_PROGRESS pending INT-01 and live D-29 evidence. Board: 90 done, 140 pending. FND-09.01 is next eligible upon separate authorization.
+
 - [FND-06.02/attempt-01](task-history.md#task-fnd-06-02-attempt-01), review. Explicit Admin-only provisioning projection and redacted audit with verification references. 28 PostgreSQL tests and five OpenAPI checks pass; no live handover. Implementation 4075c43 pushed and verified on origin/phase/b-backend.
 
 - [FND-06.01/attempt-02](task-history.md#task-fnd-06-01-attempt-02), done. PO accepted the verified provisioning backend and authorized FND-06.02. Live verification source and operational approval/handover remain pending.
