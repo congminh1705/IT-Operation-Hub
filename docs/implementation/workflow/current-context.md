@@ -14,7 +14,7 @@ authority: derived
 
 ## Latest task report
 
-- [FND-08.02/attempt-01](task-history.md#task-fnd-08-02-attempt-01), review. Admin SLA publication with BR-09 initial defaults, immutable revisions and snapshot lookup. 22 PostgreSQL tests, Ruff, mypy and Alembic offline SQL passed. FND-08.01 is done. Implementation push receipt pending. Parent closure awaits live integration.
+- [FND-08.02/attempt-01](task-history.md#task-fnd-08-02-attempt-01), review. Admin SLA publication with BR-09 initial defaults, immutable revisions and snapshot lookup. 22 PostgreSQL tests, Ruff, mypy and Alembic offline SQL passed. FND-08.01 is done. Implementation d29aa10 pushed and verified on origin/phase/b-backend. Parent closure awaits live integration.
 
 - [FND-08.01/attempt-02](task-history.md#task-fnd-08-01-attempt-02), done. PO accepted the category lifecycle. The original 20 PostgreSQL tests, Ruff and mypy remain the verification record. FND-08.02 authorized.
 

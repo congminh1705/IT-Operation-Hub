@@ -79,5 +79,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 22 backend tests on PostgreSQL, 0 skipped. Ruff, mypy and Alembic offline SQL passed.
 - Review: Agent verified. PO implementation review pending.
 - Remaining: Persistent ticket snapshots and real UI integration remain in FND-09 and INT-01. Production and browser checks not run.
-- Commit/build: Implementation push receipt pending.
+- Commit/build: Implementation d29aa10 pushed and verified on origin/phase/b-backend.
 - Next: PO reviews FND-08.02. Parent closure requires live integration evidence.
