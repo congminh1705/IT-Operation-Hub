@@ -7,6 +7,7 @@ from app.infrastructure.database import create_database_engine
 from app.infrastructure.models import Base
 from app.modules.auth import models as auth_models  # noqa: F401
 from app.modules.organization import models as organization_models  # noqa: F401
+from app.modules.tickets import categories as ticket_categories  # noqa: F401
 
 
 def migrate(connection: Connection) -> None:

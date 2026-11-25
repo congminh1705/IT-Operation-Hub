@@ -302,3 +302,114 @@ def test_concurrent_intake_switch_keeps_exactly_one_active(database: Database) -
             lookup = requester.get("/api/v1/lookups?kind=intake_teams").json()
             assert lookup["total"] == 1 and lookup["items"][0]["id"] == chosen["id"]
             assert set(lookup["items"][0]) == {"id", "name", "active", "version"}
+
+
+def test_category_history_and_public_active_choices(database: Database) -> None:
+    from sqlalchemy import select
+
+    from app.infrastructure.models import AuditLog
+    from app.modules.tickets.categories import TicketCategory
+
+    app = create_app(AuthService(database), SETTINGS)
+    base = "/api/v1/categories"
+    with (
+        TestClient(app, base_url=ORIGIN) as admin,
+        TestClient(app, base_url=ORIGIN) as requester,
+    ):
+        _, admin_headers = actor(database, admin, "ADMIN")
+        _, requester_headers = actor(database, requester, "REQUESTER")
+        draft = {"name": "  Network   Access  "}
+        assert (
+            requester.post(
+                base,
+                json=draft,
+                headers={
+                    **requester_headers,
+                    "Idempotency-Key": "unauthorized",
+                },
+            ).status_code
+            == 403
+        )
+        assert requester.get(base).status_code == 403
+        created = admin.post(
+            base,
+            json=draft,
+            headers={
+                **admin_headers,
+                "Idempotency-Key": "initial",
+            },
+        )
+        assert created.status_code == 201
+        identifier = created.json()["id"]
+        assert created.json()["name"] == "Network Access"
+        lookup = "/api/v1/lookups?kind=ticket_categories"
+        result = requester.get(lookup)
+        assert result.status_code == 200 and result.json()["total"] == 1
+        assert set(result.json()["items"][0]) == {"id", "name", "active", "version"}
+        assert (
+            admin.post(
+                base,
+                json={"name": "network access"},
+                headers={
+                    **admin_headers,
+                    "Idempotency-Key": "duplicate",
+                },
+            ).status_code
+            == 409
+        )
+        change = {
+            "expectedVersion": 1,
+            "active": False,
+            "reason": "Category retired from intake",
+        }
+        detail = f"{base}/{identifier}"
+        result = admin.patch(
+            detail,
+            json=change,
+            headers={
+                **admin_headers,
+                "Idempotency-Key": "disable",
+            },
+        )
+        assert result.status_code == 200 and result.json()["version"] == 2
+        assert (
+            admin.patch(
+                detail,
+                json=change,
+                headers={
+                    **admin_headers,
+                    "Idempotency-Key": "stale",
+                },
+            ).status_code
+            == 409
+        )
+        assert admin.get(detail).json()["name"] == "Network Access"
+        assert admin.get(base + "?active=true").json()["total"] == 0
+        assert requester.get(lookup).json()["total"] == 0
+        assert requester.get(detail).status_code == 403
+        assert (
+            admin.post(
+                base,
+                json=draft,
+                headers={
+                    **admin_headers,
+                    "Idempotency-Key": "historical-duplicate",
+                },
+            ).status_code
+            == 409
+        )
+        with database.session() as db:
+            stored = db.get(TicketCategory, UUID(identifier))
+            assert (
+                stored is not None
+                and not stored.active
+                and stored.code == UUID(identifier).hex
+            )
+            assert (
+                len(
+                    db.scalars(
+                        select(AuditLog).where(AuditLog.target_id == UUID(identifier))
+                    ).all()
+                )
+                == 2
+            )

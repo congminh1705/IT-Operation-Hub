@@ -100,5 +100,7 @@ Removal and deactivation of active teams return HANDOVER_REQUIRED until
 the FND-17 handover service owns that transaction. Effective team IDs are
 computed from current eligible memberships by team_scope.effective_team_ids.
 Requester lookups expose only the active intake or their own department.
-Ticket categories are supplied by FND-08.01, and integrated UI verification
-is part of INT-01.
+Ticket categories use /api/v1/categories for Admin management and the
+active-only ticket_categories lookup for request forms. Inactive categories
+retain their stable ID, code and name. Integrated UI verification belongs
+to INT-01 and the ticket integration tasks.

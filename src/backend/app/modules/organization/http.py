@@ -1,6 +1,6 @@
 from collections.abc import Callable
 from hmac import compare_digest
-from typing import Annotated, Any, Literal
+from typing import Annotated, Any, Literal, cast
 from unicodedata import normalize
 from uuid import UUID, uuid4
 
@@ -22,6 +22,7 @@ from app.modules.auth.http import AuthSettings, UserView, user_view
 from app.modules.auth.models import Account
 from app.modules.auth.service import AuthService, session_csrf
 from app.modules.organization.models import Department, Team, TeamMember
+from app.modules.tickets.categories import TicketCategory
 
 
 class Rejected(Exception):
@@ -231,127 +232,147 @@ def organization_router(
         except SQLAlchemyError:
             return error_response(503, "UNAVAILABLE")
 
-    def department(db: Session, record_id: UUID, *, lock: bool = False) -> Department:
-        row = db.get(Department, record_id, with_for_update=lock)
-        if row is None:
-            raise Rejected(404, "NOT_FOUND")
-        return row
-
-    def view_result(db: Session, result: CommandResult) -> NamedView:
-        row = department(db, result.id)
-        if row.version != result.version:
-            raise Rejected(409, "REPLAY_STALE")
-        return NamedView.model_validate(row)
-
-    def audit(
-        db: Session, actor: Account, action: str, row: Department, before: SafeFacts
+    def register_named_lifecycle(
+        model: type[Department] | type[TicketCategory],
+        path: str,
+        entity: str,
+        singular: str,
+        plural: str,
     ) -> None:
-        write_audit(
-            db,
-            actor=Actor("user", actor.id),
-            action=action,
-            target=Target("department", row.id),
-            before=before,
-            after=SafeFacts(active=row.active, version=row.version),
-        )
+        def find_record(
+            db: Session, record_id: UUID, *, lock: bool = False
+        ) -> Department | TicketCategory:
+            row = db.get(model, record_id, with_for_update=lock)
+            if row is None:
+                raise Rejected(404, "NOT_FOUND")
+            return cast(Department | TicketCategory, row)
 
-    @router.get(
-        "/departments", operation_id="listDepartments", response_model=NamedPage
-    )
-    def departments(
-        request: Request,
-        page: Annotated[int, Query(ge=1, le=1_000_000)] = 1,
-        page_size: Annotated[int, Query(ge=1, le=100)] = 20,
-        active: bool | None = None,
-    ) -> Response:
-        def read(db: Session, _: Account) -> NamedPage:
-            rows = select(Department)
-            if active is not None:
-                rows = rows.where(Department.active == active)
-            total = db.scalar(select(func.count()).select_from(rows.subquery())) or 0
-            items = db.scalars(
-                rows.order_by(Department.name_key, Department.id)
-                .offset((page - 1) * page_size)
-                .limit(page_size)
-            )
-            return NamedPage(
-                items=[NamedView.model_validate(row) for row in items],
-                page=page,
-                page_size=page_size,
-                total=total,
+        def view_result(db: Session, result: CommandResult) -> NamedView:
+            row = find_record(db, result.id)
+            if row.version != result.version:
+                raise Rejected(409, "REPLAY_STALE")
+            return NamedView.model_validate(row)
+
+        def audit(
+            db: Session,
+            actor: Account,
+            action: str,
+            row: Department | TicketCategory,
+            before: SafeFacts,
+        ) -> None:
+            write_audit(
+                db,
+                actor=Actor("user", actor.id),
+                action=action,
+                target=Target(entity, row.id),
+                before=before,
+                after=SafeFacts(active=row.active, version=row.version),
             )
 
-        return query(request, read)
+        @router.get(path, operation_id="list" + plural, response_model=NamedPage)
+        def list_records(
+            request: Request,
+            page: Annotated[int, Query(ge=1, le=1_000_000)] = 1,
+            page_size: Annotated[int, Query(ge=1, le=100)] = 20,
+            active: bool | None = None,
+        ) -> Response:
+            def read(db: Session, _: Account) -> NamedPage:
+                rows = select(model)
+                if active is not None:
+                    rows = rows.where(model.active == active)
+                total = (
+                    db.scalar(select(func.count()).select_from(rows.subquery())) or 0
+                )
+                items = db.scalars(
+                    rows.order_by(model.name_key, model.id)
+                    .offset((page - 1) * page_size)
+                    .limit(page_size)
+                )
+                return NamedPage(
+                    items=[NamedView.model_validate(row) for row in items],
+                    page=page,
+                    page_size=page_size,
+                    total=total,
+                )
 
-    @router.get(
-        "/departments/{id}", operation_id="getDepartment", response_model=NamedView
-    )
-    def get_department(id: UUID, request: Request) -> Response:
-        return query(
-            request, lambda db, _: NamedView.model_validate(department(db, id))
+            return query(request, read)
+
+        @router.get(
+            path + "/{id}", operation_id="get" + singular, response_model=NamedView
         )
-
-    @router.post(
-        "/departments",
-        operation_id="createDepartment",
-        response_model=NamedView,
-        status_code=201,
-    )
-    def create_department(request: Request, body: NamedCreate) -> Response:
-        def execute(db: Session, actor: Account) -> CommandResult:
-            identifier = uuid4()
-            name, key = normalized_name(body.name)
-            row = Department(
-                id=identifier,
-                code=identifier.hex,
-                name=name,
-                name_key=key,
-                active=body.active,
-                version=1,
+        def get_record(id: UUID, request: Request) -> Response:
+            return query(
+                request, lambda db, _: NamedView.model_validate(find_record(db, id))
             )
-            db.add(row)
-            audit(db, actor, "department.create", row, SafeFacts())
-            return CommandResult(identifier, 1)
 
-        return change(
-            request,
-            "department.create",
-            body.model_dump(),
-            execute,
-            view_result,
-            status=201,
+        @router.post(
+            path,
+            operation_id="create" + singular,
+            response_model=NamedView,
+            status_code=201,
         )
+        def create_record(request: Request, body: NamedCreate) -> Response:
+            def execute(db: Session, actor: Account) -> CommandResult:
+                identifier = uuid4()
+                name, key = normalized_name(body.name)
+                row = model(
+                    id=identifier,
+                    code=identifier.hex,
+                    name=name,
+                    name_key=key,
+                    active=body.active,
+                    version=1,
+                )
+                db.add(row)
+                audit(db, actor, entity + ".create", row, SafeFacts())
+                return CommandResult(identifier, 1)
 
-    @router.patch(
-        "/departments/{id}", operation_id="updateDepartment", response_model=NamedView
+            return change(
+                request,
+                entity + ".create",
+                body.model_dump(),
+                execute,
+                view_result,
+                status=201,
+            )
+
+        @router.patch(
+            path + "/{id}", operation_id="update" + singular, response_model=NamedView
+        )
+        def update_record(id: UUID, request: Request, body: NamedUpdate) -> Response:
+            def execute(db: Session, actor: Account) -> CommandResult:
+                row = find_record(db, id, lock=True)
+                if row.version != body.expectedVersion:
+                    raise Rejected(409, "STALE_VERSION")
+                if len(body.reason.strip()) < 10 or (
+                    body.name is None and body.active is None
+                ):
+                    raise Rejected(422, "INVALID_CHANGE")
+                before = SafeFacts(active=row.active, version=row.version)
+                if body.name is not None:
+                    row.name, row.name_key = normalized_name(body.name)
+                if body.active is not None:
+                    row.active = body.active
+                row.version += 1
+                audit(db, actor, entity + ".update", row, before)
+                return CommandResult(row.id, row.version)
+
+            payload: dict[str, Any] = body.model_dump(exclude_unset=True)
+            return change(
+                request,
+                entity + ".update",
+                {"id": str(id), **payload},
+                execute,
+                view_result,
+                status=200,
+            )
+
+    register_named_lifecycle(
+        Department, "/departments", "department", "Department", "Departments"
     )
-    def update_department(id: UUID, request: Request, body: NamedUpdate) -> Response:
-        def execute(db: Session, actor: Account) -> CommandResult:
-            row = department(db, id, lock=True)
-            if row.version != body.expectedVersion:
-                raise Rejected(409, "STALE_VERSION")
-            if len(body.reason.strip()) < 10 or (
-                body.name is None and body.active is None
-            ):
-                raise Rejected(422, "INVALID_CHANGE")
-            before = SafeFacts(active=row.active, version=row.version)
-            if body.name is not None:
-                row.name, row.name_key = normalized_name(body.name)
-            if body.active is not None:
-                row.active = body.active
-            row.version += 1
-            audit(db, actor, "department.update", row, before)
-            return CommandResult(row.id, row.version)
-
-        payload: dict[str, Any] = body.model_dump(exclude_unset=True)
-        return change(
-            request,
-            "department.update",
-            {"id": str(id), **payload},
-            execute,
-            view_result,
-            status=200,
-        )
+    register_named_lifecycle(
+        TicketCategory, "/categories", "ticket_category", "Category", "Categories"
+    )
 
     def team(db: Session, record_id: UUID) -> Team:
         row = db.get(Team, record_id)
@@ -599,8 +620,29 @@ def organization_router(
                     page_size=page_size,
                     total=int(intake is not None),
                 )
-            if kind != "own_department":
-                raise Rejected(503, "LOOKUP_UNAVAILABLE")
+            if kind == "ticket_categories":
+                active_categories = select(TicketCategory).where(
+                    TicketCategory.active.is_(True)
+                )
+                total = (
+                    db.scalar(
+                        select(func.count()).select_from(active_categories.subquery())
+                    )
+                    or 0
+                )
+                items = db.scalars(
+                    active_categories.order_by(
+                        TicketCategory.name_key, TicketCategory.id
+                    )
+                    .offset((page - 1) * page_size)
+                    .limit(page_size)
+                )
+                return NamedPage(
+                    items=[NamedView.model_validate(category) for category in items],
+                    page=page,
+                    page_size=page_size,
+                    total=total,
+                )
             row = (
                 db.get(Department, account.department_id)
                 if account.department_id

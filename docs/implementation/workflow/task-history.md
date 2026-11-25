@@ -11250,3 +11250,77 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-06.01 once its policy prerequisites are resolved.
 - Eligibility / remaining prerequisite: D-40 provisioning decisions and a verified source of D-29 evidence.
+
+<a id="task-fnd-08-01-attempt-01"></a>
+
+### FND-08.01 - Attempt 01 - 2026-11-25T15:35:03+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-08.01/attempt-01
+- Task: [Task card](../tasks/FND-08.01.md)
+- Parent / phase: FND-08 / B
+- Executor: Codex
+- Started at: 2026-11-25 (exact time not captured)
+- Ended at: 2026-11-25T15:35:03+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None. FND-05.02 done. PO authorized the FND-08.01 leaf.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implement category lifecycle and permitted lookups.
+- Delivered: A PostgreSQL category table with retained UUID, normalized unique name and stable unique internal code. Admin writes use the existing Origin/CSRF, idempotency, audit and version behavior. Request-form lookup exposes active categories only.
+- Incomplete scope / deviations: Versioned SLA belongs to FND-08.02. Real ticket history integration belongs to later tickets and INT tasks.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/tickets/categories.py and migrations/versions/0006_ticket_categories.py | TicketCategory | Persist historical references |
+| src/backend/app/modules/organization/http.py | register_named_lifecycle and scoped lookup | Reuse administration controls |
+| src/backend/tests/test_organization.py | Category API regression | Verify PostgreSQL and access rules |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Category lifecycle | Normalized unique names, stable IDs/codes and non-destructive deactivation | PostgreSQL test retains name/code, rejects both active and inactive duplicate names and rejects stale edits | pass | [API test](../../../src/backend/tests/test_organization.py) |
+| Safe allowed lookups | Admin management only, active choices visible in requester lookup | Requester list and mutation forbidden; authorized lookup only includes active categories | pass | [API test](../../../src/backend/tests/test_organization.py) |
+| Actual history and UI integration | Verify later live ticket views | Service table retains the historical record; integrated browser and ticket association not run | not-run | [Parent coverage](../package-task-coverage.md#fnd-08) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | .venv/Scripts/python.exe -m pytest -q with local PostgreSQL ITOH_TEST_DATABASE_URL | All backend cases pass | 20 passed, 0 skipped; upstream TestClient warning | pass |
+| src/backend | .venv/Scripts/ruff.exe check app migrations tests and .venv/Scripts/mypy.exe app migrations tests | Lint and strict typing pass | Exit 0 for both | pass |
+| deployment | Browser, production and downstream ticket history | Run downstream consumer flows | Out of leaf scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO review pending.
+- Findings / resolution: Existing department tests continue to pass after sharing implementation with category lifecycle.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent is incomplete. SLA leaf and downstream integration remain.
+- Required resolution / owner: PO reviews this leaf; later owners deliver SLA and ticket integration.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-08.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [PostgreSQL API tests](../../../src/backend/tests/test_organization.py). No visual changes.
+- Commit / build / environment: Implementation push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated with latest report.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FND-08.01.
+- Eligibility / remaining prerequisite: FND-08.02 awaits done and separate authorization.
