@@ -161,7 +161,7 @@ PO approved local-day periods, explicit schedule slots and the missing-input beh
 
 ### D-40 concurrency, outbox and approval contracts (PRE-02.02)
 
-The design below is proposed for PO review. Configuration durations are pilot candidates, not approved production settings.
+PO accepted this contract on 2026-11-25. Timing values are for the pilot; production use requires validation and operational signoff.
 
 | Boundary | Contract proposal | Consumer |
 | --- | --- | --- |

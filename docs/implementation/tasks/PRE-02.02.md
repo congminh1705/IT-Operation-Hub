@@ -72,12 +72,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: PRE-02.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-02-02-attempt-01).
+- Latest Report ID: PRE-02.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-02-02-attempt-02).
 - Delivered: [D-40 concurrency and delivery proposal](../../decisions/design-decisions.md#d-40-concurrency-outbox-approval-pre-0202) covers lock order, uniqueness, intent dedupe, leases, retry and approval expiry.
 - Changed paths: docs/decisions/design-decisions.md, technical/architecture.md, technical/api-design.md and workflow records.
 - Checks: Synthetic capacity, stale approval, replay and lease assertions passed. No application tests or build for this documentation task.
-- Review: Agent checked the proposal. PO approval pending.
-- Remaining: Candidate lease, retry and expiry durations need approval before use. Production implementations remain with their owners.
+- Review: PO accepted the contract. Agent verification remains in attempt 01.
+- Remaining: The recorded timing values are pilot candidates. Production implementation and tuning remain with their owners.
 - Commit/build: Implementation de9bc28 pushed and verified on origin/phase/b-backend.
-- Next: PRE-02.03 awaits PO acceptance.
+- Next: PRE-02.03 authorized after PO acceptance.
