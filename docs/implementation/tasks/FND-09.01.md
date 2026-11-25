@@ -73,18 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-**Planning state:** no implementation attempt/report, application test, review, commit or build evidence exists for this task. Application checks are **NOT RUN**. Replace this planning statement with actual evidence when work occurs.
-
-**Report contract:** after every actual attempt or session handoff, append a report to [task history](../workflow/task-history.md#reports) using [Format version 1](../workflow/task-history.md#entry-format), preserving its ten subsections and tables. Apply the [report validation checklist](../workflow/task-history.md#report-validation-before-handoff), then update this section with the latest report and current summary. A report may end in blocked/review/in-progress; it does not imply DONE.
-
-- Latest Report ID: none; no implementation attempt yet.
-- Latest history entry: none; add the exact existing report anchor after actual work.
-- Delivered result / incomplete scope:
-- Actual changed paths / key symbols:
-- Acceptance and check summary: pass/fail/not-run; link full expected/actual results and exact commands in the report.
-- Review type / findings / resolution:
-- Remaining blockers / decisions / defects:
-- Commit/build if available:
-- Next eligible task / resume step:
-
-Keep sections 1-5 unchanged unless a justified authorized refinement is recorded. Update this handoff after every attempt, including unfinished/blocked work; retain earlier attempt reports in history. Synchronize the execution-board state/owner and current-context latest summary/history link. Do not duplicate report bodies in the board, invent evidence or mark unrelated parent/system gates passed.
+- Latest Report ID: FND-09.01/attempt-01.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-09-01-attempt-01).
+- Delivered: Validated text ticket input and server-owned requester, active intake, category, BR-03 priority and SLA policy; generated sequence-based ticket codes.
+- Changed paths: src/backend/app/modules/tickets/intake.py, organization team lock, Alembic 0010, tests/test_ticket_intake.py and workflow records
+- Checks: 31 backend tests on PostgreSQL and Ruff/mypy passed.
+- Review: Agent verified. Joint PO review pending.
+- Remaining: Persistence and HTTP entry point follow FND-09.02. Asset/files and live browser belong to later tasks.
+- Commit/build: FND-09.01 push receipt pending.
+- Next: Joint review of the two FND-09 leaves after sequential verification.

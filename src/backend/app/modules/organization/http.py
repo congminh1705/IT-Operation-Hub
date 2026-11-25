@@ -30,6 +30,7 @@ from app.modules.auth.service import (
     session_csrf,
 )
 from app.modules.organization.models import Department, Team, TeamMember
+from app.modules.organization.team_scope import lock_team_configuration
 from app.modules.sla.policy import (
     PolicyRevision,
     PolicyUpdate,
@@ -549,10 +550,6 @@ def organization_router(
             raise Rejected(404, "NOT_FOUND")
         return row
 
-    def team_lock(db: Session) -> None:
-        # Serialize intake switches, membership changes and team writes.
-        db.execute(text("SELECT pg_advisory_xact_lock(505002)"))
-
     def team_result(db: Session, result: CommandResult) -> TeamView:
         row = team(db, result.id)
         if row.version != result.version:
@@ -603,7 +600,7 @@ def organization_router(
     )
     def create_team(request: Request, body: NamedCreate) -> Response:
         def execute(db: Session, actor: Account) -> CommandResult:
-            team_lock(db)
+            lock_team_configuration(db)
             name, key = normalized_name(body.name)
             row = Team(
                 id=uuid4(),
@@ -624,7 +621,7 @@ def organization_router(
     @router.patch("/teams/{id}", operation_id="updateTeam", response_model=TeamView)
     def update_team(id: UUID, request: Request, body: TeamUpdate) -> Response:
         def execute(db: Session, actor: Account) -> CommandResult:
-            team_lock(db)
+            lock_team_configuration(db)
             row = team(db, id)
             if row.version != body.expectedVersion:
                 raise Rejected(409, "STALE_VERSION")
@@ -717,7 +714,7 @@ def organization_router(
     )
     def set_member(id: UUID, request: Request, body: MemberCommand) -> Response:
         def execute(db: Session, actor: Account) -> CommandResult:
-            team_lock(db)
+            lock_team_configuration(db)
             row = team(db, id)
             if row.version != body.expectedVersion:
                 raise Rejected(409, "STALE_VERSION")
