@@ -2,7 +2,7 @@ from datetime import datetime
 from enum import StrEnum
 from uuid import UUID, uuid4
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from sqlalchemy.orm import Session
 
 from app.infrastructure.clock import Clock, read_utc
@@ -31,6 +31,8 @@ class SLAView(BaseModel):
 
 
 class TicketPublic(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     id: UUID
     code: str
     title: str

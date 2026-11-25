@@ -50,8 +50,10 @@ from app.modules.tickets.read import (
     ListScope,
     Status,
     TicketAccess,
+    TicketInternal,
     TicketPage,
     TicketSort,
+    get_ticket,
     search_tickets,
 )
 from app.modules.tickets.service import TicketPublic, create_text_ticket, public_ticket
@@ -449,6 +451,21 @@ def organization_router(
                 page=page,
                 page_size=page_size,
             )
+
+        return query(request, read, admin=False)
+
+    @router.get(
+        "/tickets/{id}",
+        operation_id="getTicket",
+        response_model=TicketPublic | TicketInternal,
+        tags=["Tickets"],
+    )
+    def ticket_detail(request: Request, id: UUID) -> Response:
+        def read(db: Session, actor: Account) -> TicketPublic | TicketInternal:
+            projection = get_ticket(db, TicketAccess.resolve(db, actor), id)
+            if projection is None:
+                raise Rejected(404, "NOT_FOUND")
+            return projection
 
         return query(request, read, admin=False)
 
