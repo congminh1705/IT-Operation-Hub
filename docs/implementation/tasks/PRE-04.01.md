@@ -71,12 +71,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: PRE-04.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-04-01-attempt-01).
+- Latest Report ID: PRE-04.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-pre-04-01-attempt-02).
 - Delivered: Environment separation, operations/alert ownership, measured load and lag, protected backup and explicit RPO/RTO proposals. [D-40 operations proposal](../../decisions/design-decisions.md#d-40-deployment-recovery-pre-0401)
 - Changed paths: docs/decisions/design-decisions.md, docs/technical/architecture.md and workflow records.
 - Checks: Source review and synthetic RPO/RTO, alert and coherent-backup walkthroughs passed. No deployment or restore run.
-- Review: Agent checked proposal. PO approval pending.
-- Remaining: Name operator and backup, confirm environment and pilot numbers, and supply operational inputs before use.
+- Review: PO approved pilot targets. Agent verification remains in attempt 01.
+- Remaining: Name operator and backup, confirm production environment, and supply operational inputs before use.
 - Commit/build: Implementation 35afca7 pushed and verified on origin/phase/b-backend.
-- Next: PRE-04.02 after PO review and continuation.
+- Next: PRE-04.02 is authorized after PO acceptance.

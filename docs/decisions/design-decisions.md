@@ -281,7 +281,7 @@ PO approved this contract and its numeric synthetic-pilot settings on 2026-11-25
 
 ### D-40 deployment ownership and measurable targets (PRE-04.01)
 
-Architecture and NFR requirements remain in force. The settings below are decision proposals, not achieved metrics, production SLAs, procurement approval or deployment authorization.
+PO approved the PRE-04.01 pilot plan on 2026-11-25, including RPO <= 24 h, RTO <= 4 h, 14 daily recovery points and a monthly rehearsal. The settings are pilot targets. Production SLA, hosting, spend, named owners and deployment authorization remain separate.
 
 | Boundary | Pilot proposal and measurement contract | Unresolved / owner |
 | --- | --- | --- |
