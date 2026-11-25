@@ -79,5 +79,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 20 backend tests on real PostgreSQL; Ruff and strict mypy passed.
 - Review: Agent verified. PO implementation review pending.
 - Remaining: FND-08.02 versioned SLA, FND-09 ticket wiring and live integration evidence. Production/browser tests not run.
-- Commit/build: Implementation push receipt pending.
+- Commit/build: Implementation d35eca3 pushed and verified on origin/phase/b-backend.
 - Next: PO reviews FND-08.01. FND-08.02 remains pending.
