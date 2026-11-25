@@ -136,7 +136,7 @@ Production target: Linux Nginx/frontend/API/Celery/one Beat/PostgreSQL/Redis, pr
 
 One migration process per release before traffic, backup first, forward/backward compatibility review; replicas never auto-migrate. Future CI: frozen installs, lint/types/tests, clean/upgrade migrations, OpenAPI/type drift, build/E2 E. No executable pipeline/config created now.
 
-Daily PostgreSQL/private-file/object-version backups with D-40 access/encryption/retention, including KB/history/events/audit/usage. Restore isolated with model/email egress blocked and workers paused. Restore DB/files, verify migrations/references/counts/SLA/outbox and no successful-action replay, then resume workers under control. Switch traffic after checks, rehearse regularly. RPO/RTO/retention/rehearsal owner remain undecided/unpromised.
+Daily PostgreSQL/private-file/object-version backups with D-40 access/encryption/retention, including KB/history/events/audit/usage. Restore isolated with model/email egress blocked and workers paused. Restore DB/files, verify migrations/references/counts/SLA/outbox and no successful-action replay, then resume workers under control. Switch traffic after checks, rehearse regularly. See the [PRE-04.01 deployment and recovery proposal](../decisions/design-decisions.md#d-40-deployment-recovery-pre-0401) for suggested ownership, backup retention and measurable RPO/RTO. Production values remain pending.
 
 DEMO accounts/data/test DB separate from production. D-48 Gemini free-tier DEMO direction grants no real-data access. No deployment/backup/restore has run.
 

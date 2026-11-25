@@ -277,6 +277,30 @@ PO approved this contract and its numeric synthetic-pilot settings on 2026-11-25
 | Proposal expires before issue confirmation | No release job or stock change, because no inventory was reserved. |
 | Two authorized issue commands race for a single asset | First valid transaction writes one active assignment; second re-reads committed state and conflicts. Same-key replay cannot duplicate an issue. |
 
+<a id="d-40-deployment-recovery-pre-0401"></a>
+
+### D-40 deployment ownership and measurable targets (PRE-04.01)
+
+Architecture and NFR requirements remain in force. The settings below are decision proposals, not achieved metrics, production SLAs, procurement approval or deployment authorization.
+
+| Boundary | Pilot proposal and measurement contract | Unresolved / owner |
+| --- | --- | --- |
+| Environments | Keep local DEMO and an isolated Linux staging/recovery environment with synthetic fixtures. Production target follows the existing single-node Linux/Nginx/FastAPI/Celery/Beat/PostgreSQL/Redis/private object-storage architecture. Keep separate secrets, buckets, DBs and credentials by environment. Production host, region, capacity, data handling and spend need separate approval. | PO appoints platform owner and confirms hosting before procurement. |
+| Ownership and alerts | Proposed routing: operations primary owns host/readiness, backup, broker/outbox and SLA scan alerts; a named backup operator receives escalation; service maintainer handles application faults; PO approves traffic switch or a business-impacting failover. Test the route with a staging alert, record acknowledged timestamp and owner. If roles, channel or coverage hours are unset, readiness is incomplete. | Names, channel, coverage hours and escalation windows to be confirmed by PO/operations. |
+| Load and response | Start with the NFR11 fixture: 20 accounts, 60 tickets and 30 assets. Pilot traffic uses 10 simultaneous authenticated sessions for 15 minutes after 2 minutes warm-up, with a documented read/write mix. Candidate p95 thresholds: list reads <= 2 s; writes <= 3 s; record success/error counts separately so failed calls cannot improve the result. Record instance profile, fixture sizes, browser/API boundary and observation window. | Operations validates the profile and targets. No production SLO is asserted. |
+| Outage and lag | Healthy SLA scheduler scan target stays at <= 60 s. Report last successful scan age, oldest eligible outbox age, failures and queue depth. Pilot candidates: alert after two consecutive failed 30 s readiness probes; alert on oldest eligible outbox item > 120 s or SLA scan age > 120 s across two 30 s observations. Measure alerts from validated probe/timestamp through delivery and acknowledgement. Provider failure degrades the AI path only; broker outage has explicit catch-up evidence and no scan guarantee. | Operations confirms thresholds, alert channel and actual incident response. |
+| Backups and access | Daily encrypted PostgreSQL backup plus private object/version manifest copied to a separately controlled store. Only named backup/recovery operators have scoped rights; routine write access does not grant restore rights. Record a coherent recovery point, object versions/checksums, restore key custody and audit. Pilot proposal: retain 14 daily recovery points and run an isolated restore rehearsal monthly. A missing, unreadable or unmatched backup is a failed backup, not a recovery point. | PO/operations confirm key custody, retention and authorized operators. |
+| RPO and RTO | Candidate targets for a complete host-loss test: RPO <= 24 h and RTO <= 4 h. Calculate RPO from incident time to the newest verified coherent DB/object recovery point. Calculate RTO from recorded incident declaration until validated service readiness after data, ACL, clocks/outbox and integration checks. Include detection-to-declaration separately. A backup schedule alone does not prove either. | QA-05 measures from isolated exercises. PRE-04.02 defines the release/recovery sequence. |
+
+**Review fixtures**
+
+| Scenario | Expected |
+| --- | --- |
+| Incident at 10:00 and newest coherent recovery point at 02:00 | Measured RPO is 8 h. Declaration 10:05 and validated readiness 13:05 give RTO 3 h. Compare with candidate targets, not production evidence. |
+| Daily DB file exists but its private object manifest cannot be resolved | That timestamp does not qualify as a coherent recovery point. Alert operations and select the newest demonstrably restorable pair. |
+| Outbox age exceeds the pilot threshold while DB remains healthy and broker is unavailable | Show backlog and notify operations. Core writes retain durable outbox state; recovery uses the recorded intent and measures catch-up. |
+| No approved operator or no escalation acknowledgement | Mark deployment readiness incomplete and record the missing assignment or alert route. |
+
 ### D-40 login policy approved for FND-04.01
 
 PO approved the internal-app login policy on 2026-11-25. This supersedes the proposed values above for this scope.

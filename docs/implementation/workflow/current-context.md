@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [PRE-04.01/attempt-01](task-history.md#task-pre-04-01-attempt-01), review. Deployment environments, alert ownership, load/lag and backup controls with candidate RPO/RTO documented. Synthetic checks passed. Deployment/restore not run. Implementation push receipt pending.
+
 - PO approved PRE-03.02 and PRE-03.03. All PRE-03 leaves are done and Parent is EPIC_DONE. [Confirmation and budget approval](task-history.md#task-pre-03-02-attempt-02), [inventory decision approval](task-history.md#task-pre-03-03-attempt-02). Board: 86 done and 144 pending. Parent [PR #26](https://github.com/congminh1705/IT-Operation-Hub/pull/26) merged into main at 1dcb675. Phase B was reconciled with main and preserves FND records.
 
 - [PRE-03.03/attempt-01](task-history.md#task-pre-03-03-attempt-01), review. Proposed excluding durable asset holds from MVP. Preview is informational, issue remains a confirmed transaction. Shortage/competing plans/expiry/issue fixtures verified. Joint PO review pending. PRE-03.03 implementation a1dbff2 pushed and verified on origin/phase/b-backend.
