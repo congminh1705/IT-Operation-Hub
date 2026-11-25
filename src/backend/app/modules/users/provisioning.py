@@ -27,6 +27,19 @@ class UserCreate(BaseModel):
     verification_id: UUID
 
 
+class ProvisionedAccountView(BaseModel):
+    """Allowlisted admin result, independent of persistence and handover fields."""
+
+    model_config = ConfigDict(from_attributes=True)
+
+    id: UUID
+    email: str
+    display_name: str
+    role: Role
+    active: bool
+    version: int
+
+
 class ProvisioningVerification(Base):
     """Trusted, server-recorded D-29 evidence. No user-facing registration endpoint."""
 

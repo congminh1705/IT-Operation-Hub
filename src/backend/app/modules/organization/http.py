@@ -38,7 +38,11 @@ from app.modules.sla.policy import (
     snapshot_policy,
 )
 from app.modules.tickets.categories import TicketCategory
-from app.modules.users.provisioning import ProvisioningVerification, UserCreate
+from app.modules.users.provisioning import (
+    ProvisionedAccountView,
+    ProvisioningVerification,
+    UserCreate,
+)
 
 
 class Rejected(Exception):
@@ -251,7 +255,7 @@ def organization_router(
     @router.post(
         "/users",
         operation_id="createUser",
-        response_model=UserView,
+        response_model=ProvisionedAccountView,
         status_code=201,
         openapi_extra={
             "requestBody": {
@@ -263,6 +267,17 @@ def organization_router(
         },
     )
     async def create_user(request: Request) -> Response:
+        def authorize_entry() -> None:
+            with configured().database.transaction() as db:
+                authorize(db, request, admin=True, write=True)
+
+        try:
+            await run_in_threadpool(authorize_entry)
+        except Rejected as exc:
+            return error_response(exc.status, exc.code)
+        except SQLAlchemyError:
+            return error_response(503, "UNAVAILABLE")
+
         # Parse manually to keep validation errors from echoing credential input.
         if (
             request.headers.get("content-type", "").split(";", 1)[0].strip().lower()
@@ -344,12 +359,17 @@ def organization_router(
                 action="user.provision",
                 target=Target("account", identifier),
                 before=SafeFacts(),
-                after=SafeFacts(active=True, version=1),
+                after=SafeFacts(
+                    active=True,
+                    version=1,
+                    verification_id=proof.id,
+                    approval_id=proof.elevated_approval_id,
+                ),
                 clock=service.clock,
             )
             return CommandResult(identifier, 1)
 
-        def project(db: Session, result: CommandResult) -> UserView:
+        def project(db: Session, result: CommandResult) -> ProvisionedAccountView:
             proof = verification(db)
             row = db.get(Account, result.id)
             if (
@@ -363,7 +383,7 @@ def organization_router(
                 or not configured().verify(row.password_hash, secret)
             ):
                 raise Rejected(409, "REPLAY_STALE")
-            return user_view(row)
+            return ProvisionedAccountView.model_validate(row)
 
         return await run_in_threadpool(
             change,

@@ -899,7 +899,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserView"
+                  "$ref": "#/components/schemas/ProvisionedAccountView"
                 }
               }
             }
@@ -15411,6 +15411,48 @@
           "total"
         ],
         "additionalProperties": false
+      },
+      "ProvisionedAccountView": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "REQUESTER",
+              "TECHNICIAN",
+              "IT_MANAGER",
+              "ADMIN"
+            ]
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "display_name",
+          "role",
+          "active",
+          "version"
+        ],
+        "additionalProperties": false,
+        "description": "Admin provisioning result. Contains no verifier, temporary password, handover instructions or approval metadata."
       }
     }
   },

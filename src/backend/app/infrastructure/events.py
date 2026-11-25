@@ -28,9 +28,11 @@ class SafeFacts:
     version: int | None = None
     assignee_id: UUID | None = None
     status: StrEnum | None = None
+    verification_id: UUID | None = None
+    approval_id: UUID | None = None
 
     def project(self) -> dict[str, Scalar]:
-        return {
+        result: dict[str, Scalar] = {
             "active": self.active,
             "version": self.version,
             "assignee_id": str(self.assignee_id)
@@ -38,6 +40,11 @@ class SafeFacts:
             else None,
             "status": self.status.value if self.status is not None else None,
         }
+        if self.verification_id is not None:
+            result["verification_id"] = str(self.verification_id)
+        if self.approval_id is not None:
+            result["approval_id"] = str(self.approval_id)
+        return result
 
 
 def write_audit(
