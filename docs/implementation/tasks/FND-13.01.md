@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-13.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-13-01-attempt-01).
+- Latest Report ID: FND-13.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-13-01-attempt-02).
 - Delivered: Added versioned management priority changes using the original ticket SLA snapshot. Elapsed usage and first response are unchanged, and previous and newly observed breaches are preserved by clock and adjustment revision.
 - Changed paths: `tickets/priority.py`, `tickets/models.py`, `organization/http.py`, `infrastructure/events.py`, migration 0015, `tests/test_ticket_priority.py`
 - Checks: 46 backend tests on PostgreSQL and Ruff/mypy passed.
-- Review: Agent verified. Joint PO review pending.
+- Review: PO accepted both backend leaves. Agent verification is recorded in attempt 01.
 - Remaining: Browser wiring and notification delivery remain for INT-02. Continuous SLA monitoring is outside this service leaf.
 - Commit/build: FND-13.01 implementation `daf37c1` pushed to origin/phase/b-backend.
-- Next: Joint review of the two FND-13 leaves after sequential verification.
+- Next: FND-14.01 may start on request. Full Parent closure depends on INT-02.

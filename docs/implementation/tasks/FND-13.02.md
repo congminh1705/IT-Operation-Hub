@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-13.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-13-02-attempt-01).
+- Latest Report ID: FND-13.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-13-02-attempt-02).
 - Delivered: Added the paged ticket timeline with stable occurred_at/UUID ordering and current ticket scope. Requesters receive public events only. Scoped IT receives permitted actor, assignment changes and stored reasons.
 - Changed paths: `tickets/timeline.py`, `tickets/assignment.py`, `tickets/lifecycle.py`, `organization/http.py`, `docs/api/openapi.json`, migration 0016, `tests/test_ticket_priority.py`
 - Checks: 47 backend tests on PostgreSQL and Ruff/mypy passed.
-- Review: Agent verified. Joint PO review pending.
+- Review: PO accepted both backend leaves. Agent verification is recorded in attempt 01.
 - Remaining: Real browser and notifications remain for INT-02. Historical assignment reasons that were never stored are absent. Continuous monitoring and alert delivery belong to OPS-03/04.
 - Commit/build: FND-13.02 implementation `b2c5390` pushed to origin/phase/b-backend.
-- Next: Joint review of the two FND-13 leaves after sequential verification.
+- Next: FND-14.01 may start on request. Full Parent closure depends on INT-02.
