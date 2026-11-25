@@ -13088,3 +13088,74 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-06.02 authorized.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-fnd-06-02-attempt-01"></a>
+
+### FND-06.02 - Attempt 01 - 2026-11-25T17:09:09+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-06.02/attempt-01
+- Task: [Task card](../tasks/FND-06.02.md)
+- Parent / phase: FND-06 / B
+- Executor: Codex
+- Started at: 2026-11-25T17:09:09+07:00
+- Ended at: 2026-11-25T17:09:09+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Protect the account creation response, logs and audit.
+- Delivered: Added an allowlisted provisioned account DTO, Admin authorization before secret parsing, SQL parameter masking and redacted proof references with transactional audit.
+- Incomplete scope / deviations: Live verification source, authorized IT-role approver and handover channel still unresolved. INT-01 owns real form and full Parent acceptance.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/users/provisioning.py, organization/http.py, infrastructure helpers, tests/test_organization.py, docs/api/openapi.json and workflow records | FND-06 implementation and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Admin scope and outputs | Non-Admin denied; no secret in valid or invalid output | All three non-Admin roles denied. Response fields are explicitly allowlisted. | pass | [PostgreSQL API and captured-log tests](../../../src/backend/tests/test_organization.py) |
+| Logs and audit | No raw password or verifier; safe evidence refs only | Captured SQLAlchemy logs and persisted audit checked | pass | [PostgreSQL API and captured-log tests](../../../src/backend/tests/test_organization.py) |
+| Atomic failure | Audit failure rolls back account, proof and key | Injected failure after flush; same-key retry succeeds once | pass | [PostgreSQL API and captured-log tests](../../../src/backend/tests/test_organization.py) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | .venv/Scripts/python.exe -m pytest -q with local PostgreSQL: 28 passed, zero skipped. .venv/Scripts/ruff.exe check app migrations tests and mypy pass. python docs/api/generate_frontend_contract.py --check and five drift tests pass | Consistent documented result | Verified | pass |
+| integration | Real ticket evidence, enterprise handover and browser checks | Full Parent closure | Live workflow not wired; INT-01 and operational decisions remain | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent implementation verification. PO review pending.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Live verification source, authorized IT-role approver and handover channel still unresolved. INT-01 owns real form and full Parent acceptance.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-06.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [PostgreSQL API and captured-log tests](../../../src/backend/tests/test_organization.py).
+- Commit / build / environment: Implementation push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FND-06.02. Parent closure awaits INT-01.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.

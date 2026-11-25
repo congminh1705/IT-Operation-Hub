@@ -147,3 +147,12 @@ Nothing sends email or hands over a password. The response is the scoped
 account view. The idempotency digest excludes the password; replay checks
 the still-valid temporary verifier. Real approval authority and credential
 handover remain operational decisions and integration work.
+
+The FND-06.02 response returns an allowlisted account projection only.
+Validation errors do not echo submitted values. Audit records carry safe
+verification and optional approval references, with no credential or
+personnel text, and commit atomically with account creation. The backend suppresses SQLAlchemy parameter
+logging. Staff hand over
+initial credentials through the separately approved enterprise channel;
+ticket comments, notifications and automated email do not perform
+credential handover. INT-01 will wire the existing secure Admin form.

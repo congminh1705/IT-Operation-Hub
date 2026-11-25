@@ -1,6 +1,8 @@
+import logging
 from datetime import UTC, datetime, timedelta
 from uuid import UUID, uuid4
 
+import pytest
 from fastapi.testclient import TestClient
 
 from app.infrastructure.database import Database
@@ -600,13 +602,19 @@ def test_sla_concurrent_publish_only_accepts_one_expected_version(
 
 def test_provisioning_requires_trusted_evidence_and_protects_initial_password(
     database: Database,
+    caplog: pytest.LogCaptureFixture,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     from sqlalchemy import select
+    from sqlalchemy.exc import SQLAlchemyError
+    from sqlalchemy.orm import Session
 
     from app.infrastructure.models import AuditLog, ConfirmedCommand
+    from app.modules.organization import http as organization_http
     from app.modules.organization.models import Department
     from app.modules.users.provisioning import ProvisioningVerification
 
+    caplog.set_level(logging.INFO, logger="sqlalchemy.engine.Engine")
     password = "Initial synthetic credential"
     settings = AuthSettings(
         frozenset({ORIGIN}), blocked_passwords=frozenset({"blocked synthetic phrase"})
@@ -689,6 +697,45 @@ def test_provisioning_requires_trusted_evidence_and_protects_initial_password(
                 db.scalar(select(Account).where(Account.email == "new@example.invalid"))
                 is None
             )
+        for role in ("TECHNICIAN", "IT_MANAGER"):
+            with TestClient(app, base_url=ORIGIN) as prohibited:
+                _, prohibited_headers = actor(database, prohibited, role)
+                attempt = prohibited.post(
+                    path,
+                    json={"initial_password": password},
+                    headers={
+                        **prohibited_headers,
+                        "Idempotency-Key": "denied-role",
+                    },
+                )
+                assert attempt.status_code == 403 and password not in attempt.text
+        malformed = admin.post(
+            path,
+            json={**draft, "untrusted": password},
+            headers={**headers, "Idempotency-Key": "malformed"},
+        )
+        assert malformed.status_code == 422 and password not in malformed.text
+
+        def fail_audit(session: Session, **_: object) -> UUID:
+            session.flush()
+            raise SQLAlchemyError("synthetic audit failure")
+
+        with monkeypatch.context() as scoped:
+            scoped.setattr(organization_http, "write_audit", fail_audit)
+            failed = admin.post(
+                path, json=draft, headers={**headers, "Idempotency-Key": "verified"}
+            )
+            assert (
+                failed.status_code == 503
+                and "synthetic audit failure" not in failed.text
+            )
+        with database.session() as db:
+            stored_proof = db.get(ProvisioningVerification, proof_id)
+            assert stored_proof is not None and stored_proof.consumed_account_id is None
+            assert (
+                db.scalar(select(Account).where(Account.email == "new@example.invalid"))
+                is None
+            )
         created = admin.post(
             path, json=draft, headers={**headers, "Idempotency-Key": "verified"}
         )
@@ -733,6 +780,13 @@ def test_provisioning_requires_trusted_evidence_and_protects_initial_password(
             audit = db.scalars(
                 select(AuditLog).where(AuditLog.action == "user.provision")
             ).all()
+            assert (
+                row.password_hash is not None and row.password_hash not in caplog.text
+            )
+            assert password not in caplog.text
+            assert audit[0].before_after_redacted["after"]["verification_id"] == str(
+                proof_id
+            )
             assert len(audit) == 1 and password not in str(
                 audit[0].before_after_redacted
             )

@@ -73,18 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-**Planning state:** no implementation attempt/report, application test, review, commit or build evidence exists for this task. Application checks are **NOT RUN**. Replace this planning statement with actual evidence when work occurs.
-
-**Report contract:** after every actual attempt or session handoff, append a report to [task history](../workflow/task-history.md#reports) using [Format version 1](../workflow/task-history.md#entry-format), preserving its ten subsections and tables. Apply the [report validation checklist](../workflow/task-history.md#report-validation-before-handoff), then update this section with the latest report and current summary. A report may end in blocked/review/in-progress; it does not imply DONE.
-
-- Latest Report ID: none; no implementation attempt yet.
-- Latest history entry: none; add the exact existing report anchor after actual work.
-- Delivered result / incomplete scope:
-- Actual changed paths / key symbols:
-- Acceptance and check summary: pass/fail/not-run; link full expected/actual results and exact commands in the report.
-- Review type / findings / resolution:
-- Remaining blockers / decisions / defects:
-- Commit/build if available:
-- Next eligible task / resume step:
-
-Keep sections 1-5 unchanged unless a justified authorized refinement is recorded. Update this handoff after every attempt, including unfinished/blocked work; retain earlier attempt reports in history. Synchronize the execution-board state/owner and current-context latest summary/history link. Do not duplicate report bodies in the board, invent evidence or mark unrelated parent/system gates passed.
+- Latest Report ID: FND-06.02/attempt-01.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-06-02-attempt-01).
+- Delivered: Explicit allowlisted provisioning result, Admin authorization before credential parsing, sanitized validation, safe verification/approval audit references and SQLAlchemy parameter hiding.
+- Changed paths: users/provisioning.py, organization/http.py, database/event helpers, OpenAPI and API tests.
+- Checks: 28 PostgreSQL tests, Ruff, mypy and five OpenAPI drift tests passed. Captured logs omit password/verifier. Injected audit failure rolls back user, proof and idempotency key.
+- Review: Agent verified. PO approval pending.
+- Remaining: Live D-29 verification source, approved IT-role approver and enterprise handover channel, and INT-01 native form integration.
+- Commit/build: Implementation push receipt pending.
+- Next: PO reviews FND-06.02. Parent closure still requires INT-01.
