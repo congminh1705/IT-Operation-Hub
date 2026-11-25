@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 24 PostgreSQL backend tests, 130 frontend tests and five OpenAPI drift tests pass. Ruff, mypy and TypeScript pass.
 - Review: Agent verified. PO review pending.
 - Remaining: Password rotation belongs to FND-07.02. INT-01 owns live frontend behavior.
-- Commit/build: Implementation push receipt pending.
+- Commit/build: Implementation 0d36eab pushed and verified on origin/phase/b-backend.
 - Next: PO reviews FND-07.01. FND-07.02 remains pending.
