@@ -21,7 +21,13 @@ from app.infrastructure.commands import (
     run_idempotent,
 )
 from app.infrastructure.events import Actor, SafeFacts, Target, write_audit
-from app.modules.auth.http import AuthSettings, UserView, user_view
+from app.modules.auth.http import (
+    AuthSettings,
+    Error,
+    UserView,
+    session_cookie_dependency,
+    user_view,
+)
 from app.modules.auth.models import Account
 from app.modules.auth.service import (
     TEMPORARY_LIFETIME,
@@ -424,6 +430,8 @@ def organization_router(
     @router.get(
         "/tickets",
         operation_id="listTickets",
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 422, 503)},
         response_model=TicketPage,
         tags=["Tickets"],
     )
@@ -457,6 +465,8 @@ def organization_router(
     @router.get(
         "/tickets/{id}",
         operation_id="getTicket",
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 404, 422, 503)},
         response_model=TicketPublic | TicketInternal,
         tags=["Tickets"],
     )
