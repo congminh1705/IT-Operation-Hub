@@ -14,9 +14,9 @@ authority: derived
 
 ## Latest task report
 
-- [FND-10.02/attempt-01](task-history.md#task-fnd-10-02-attempt-01), review. Implemented GET /api/v1/tickets/{id}. Current scope determines access and public/internal projection. Inaccessible and missing IDs return the same NOT_FOUND error. Internal projection exposes only impact and urgency in addition to public fields. 35 backend tests on PostgreSQL passed. Joint PO review pending. FND-10.02 push receipt pending.
+- [FND-10.02/attempt-01](task-history.md#task-fnd-10-02-attempt-01), review. Implemented GET /api/v1/tickets/{id}. Current scope determines access and public/internal projection. Inaccessible and missing IDs return the same NOT_FOUND error. Internal projection exposes only impact and urgency in addition to public fields. 35 backend tests on PostgreSQL passed. Runtime OpenAPI comparison failed; ticket contract reconciliation and real browser verification remain for INT-02. Board: 92 done, 2 review, 136 pending. Joint PO review pending. FND-10.02 implementation `6ac3db4` pushed to origin/phase/b-backend.
 
-- [FND-10.01/attempt-01](task-history.md#task-fnd-10-01-attempt-01), review. Implemented GET /api/v1/tickets with current own/team/organization scope before search, count and paging. Added status, priority, literal code/title search and deterministic ordering. 34 backend tests on PostgreSQL passed. Joint PO review pending. FND-10.01 push receipt pending.
+- [FND-10.01/attempt-01](task-history.md#task-fnd-10-01-attempt-01), review. Implemented GET /api/v1/tickets with current own/team/organization scope before search, count and paging. Added status, priority, literal code/title search and deterministic ordering. 34 backend tests on PostgreSQL passed. Joint PO review pending. FND-10.01 implementation `525a68e` pushed to origin/phase/b-backend.
 
 - PO jointly accepted both FND-09 leaves. [FND-09.01](task-history.md#task-fnd-09-01-attempt-02) and [FND-09.02](task-history.md#task-fnd-09-02-attempt-02) are done. Board: 92 done, 138 pending. Parent awaits INT-02. FND-10 authorized.
 

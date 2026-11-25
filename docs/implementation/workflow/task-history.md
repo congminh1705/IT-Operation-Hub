@@ -13563,7 +13563,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/FND-10.01.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [Ticket read tests](../../../src/backend/tests/test_ticket_reads.py).
-- Commit / build / environment: FND-10.01 push receipt pending.
+- Commit / build / environment: FND-10.01 implementation `525a68e` pushed to origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 
@@ -13633,7 +13633,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/FND-10.02.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [Ticket read tests](../../../src/backend/tests/test_ticket_reads.py).
-- Commit / build / environment: FND-10.02 push receipt pending.
+- Commit / build / environment: FND-10.02 implementation `6ac3db4` pushed to origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 

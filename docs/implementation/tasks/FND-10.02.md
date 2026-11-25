@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 35 backend tests on PostgreSQL and Ruff/mypy passed.
 - Review: Agent verified. Joint PO review pending.
 - Remaining: The runtime OpenAPI comparison reported drift in ticket list parameters, list/detail responses and security, and in existing auth operations. Runtime contract reconciliation and the browser/session/cache flow still need verification before FND-10 Parent closure at INT-02.
-- Commit/build: FND-10.02 push receipt pending.
+- Commit/build: FND-10.02 implementation `6ac3db4` pushed to origin/phase/b-backend.
 - Next: Joint review of the two FND-10 leaves after sequential verification.

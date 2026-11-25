@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 34 backend tests on PostgreSQL and Ruff/mypy passed.
 - Review: Agent verified. Joint PO review pending.
 - Remaining: Integrated browser and session/cache acceptance remains INT-02.
-- Commit/build: FND-10.01 push receipt pending.
+- Commit/build: FND-10.01 implementation `525a68e` pushed to origin/phase/b-backend.
 - Next: Joint review of the two FND-10 leaves after sequential verification.
