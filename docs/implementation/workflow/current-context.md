@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-10.01/attempt-01](task-history.md#task-fnd-10-01-attempt-01), review. Implemented GET /api/v1/tickets with current own/team/organization scope before search, count and paging. Added status, priority, literal code/title search and deterministic ordering. 34 backend tests on PostgreSQL passed. Joint PO review pending. FND-10.01 push receipt pending.
+
 - PO jointly accepted both FND-09 leaves. [FND-09.01](task-history.md#task-fnd-09-01-attempt-02) and [FND-09.02](task-history.md#task-fnd-09-02-attempt-02) are done. Board: 92 done, 138 pending. Parent awaits INT-02. FND-10 authorized.
 
 - [FND-09.02/attempt-01](task-history.md#task-fnd-09-02-attempt-01), review. POST /api/v1/tickets persists New ticket, immutable full SLA snapshot, clock facts, audit, event, outbox and idempotent result in one transaction. 33 backend tests on PostgreSQL passed. Joint PO review pending. FND-09.02 implementation e5d542d pushed and verified on origin/phase/b-backend.

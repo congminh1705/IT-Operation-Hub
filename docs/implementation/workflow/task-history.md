@@ -13507,3 +13507,72 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-10 authorized.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-fnd-10-01-attempt-01"></a>
+
+### FND-10.01 - Attempt 01 - 2026-11-25T17:26:01+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-10.01/attempt-01
+- Task: [Task card](../tasks/FND-10.01.md)
+- Parent / phase: FND-10 / B
+- Executor: Codex
+- Started at: 2026-11-25T17:26:01+07:00
+- Ended at: 2026-11-25T17:26:01+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implement the selected FND-10 leaf in dependency order.
+- Delivered: Implemented GET /api/v1/tickets with current own/team/organization scope before search, count and paging. Added status, priority, literal code/title search and deterministic ordering.
+- Incomplete scope / deviations: Integrated browser and session/cache acceptance remains INT-02.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| `read.py`, `organization/http.py`, `test_ticket_reads.py`, OpenAPI and generated contract metadata | FND-10 implementation and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Query authorization and pagination | No cross-scope count, deduplicated team union, stable tie-breaker, reject out-of-bounds input | Passed for four roles and unauthenticated request | pass | `test_list_scope_filters_and_paging` |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | `src/backend: .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider --tb=short` (local PostgreSQL, 34 passed); `.venv/Scripts/ruff.exe check app tests`; `.venv/Scripts/mypy.exe app`; `python docs/api/generate_frontend_contract.py --check`; `python -B -m unittest discover -s docs/api -p test_frontend_contract.py` (5 passed) | Consistent documented result | Verified | pass |
+| integration | Browser, production workers and downstream domain checks | Full Parent evidence | INT-02 owns real integrated flows | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. Joint PO review pending.
+- Findings / resolution: Agent verified the scoped API with synthetic records on real PostgreSQL. PO approval is pending.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Integrated browser and session/cache acceptance remains INT-02.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-10.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Ticket read tests](../../../src/backend/tests/test_ticket_reads.py).
+- Commit / build / environment: FND-10.01 push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review after both FND-10 leaves pass.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
