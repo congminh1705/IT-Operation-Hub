@@ -79,5 +79,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: Synthetic edited/repeated/expired and held-budget cases verified. No runtime or provider calls.
 - Review: Agent checked the contract. Joint PO review pending.
 - Remaining: PO review, production retention and real quota settings remain. Numeric examples are synthetic pilot candidates.
-- Commit/build: PRE-03.02 push receipt pending.
+- Commit/build: PRE-03.02 implementation dec02ca pushed and verified on origin/phase/b-backend.
 - Next: Joint PO review after PRE-03.02 and PRE-03.03 verification.

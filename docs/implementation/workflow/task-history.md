@@ -12446,7 +12446,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/PRE-03.02.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [D-40 assistant scenarios](../../decisions/design-decisions.md#d-40-assistant-confirmation-budget-pre-0302).
-- Commit / build / environment: PRE-03.02 push receipt pending.
+- Commit / build / environment: PRE-03.02 implementation dec02ca pushed and verified on origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 
@@ -12517,7 +12517,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/PRE-03.03.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [D-40 inventory scenarios](../../decisions/design-decisions.md#d-40-inventory-source-pre-0303).
-- Commit / build / environment: PRE-03.03 push receipt pending.
+- Commit / build / environment: PRE-03.03 implementation a1dbff2 pushed and verified on origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 

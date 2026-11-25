@@ -79,5 +79,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: Synthetic shortage, competing preview/hold, expiry and concurrent issue cases reviewed; no runtime or provider calls.
 - Review: Agent checked the contract. Joint PO review pending.
 - Remaining: PO approval for the proposed reservation exclusion and later live-provider and production data decisions.
-- Commit/build: PRE-03.03 push receipt pending.
+- Commit/build: PRE-03.03 implementation a1dbff2 pushed and verified on origin/phase/b-backend.
 - Next: Joint PO review with PRE-03.02. Parent closure after accepted criteria.
