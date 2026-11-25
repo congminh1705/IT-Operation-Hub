@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-04.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-04-02-attempt-01).
+- Latest Report ID: FND-04.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-04-02-attempt-02).
 - Delivered: Current account from PostgreSQL, session-bound CSRF, transactional logout and expired, inactive and revoked session rejection. Account-wide revocation is available to policy consumers.
 - Changed paths: src/backend/app/modules/auth/http.py and service.py, tests/test_auth_login.py, frontend HTTP adapter and OpenAPI contract.
 - Checks: 16 backend PostgreSQL tests, 130 frontend tests, five OpenAPI drift tests, mypy, Ruff, TypeScript and scoped ESLint/Prettier passed.
-- Review: Agent verified. PO review pending.
+- Review: Agent verification retained in attempt 01. PO accepted implementation.
 - Remaining: FND-05 owns team membership storage and authorization. INT-01 owns live UI/session integration and full Parent closure.
 - Commit/build: Implementation 3b8912b pushed and verified on origin/phase/b-backend.
-- Next: PO reviews FND-04.02. No subsequent work started.
+- Next: FND-05.01 awaits separate authorization. Parent closure requires INT-01.
