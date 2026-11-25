@@ -12248,3 +12248,74 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Resolve Parent-only PR delivery; subsequent work needs authorization.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-pre-03-01-attempt-01"></a>
+
+### PRE-03.01 - Attempt 01 - 2026-11-25T16:24:42+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: PRE-03.01/attempt-01
+- Task: [Task card](../tasks/PRE-03.01.md)
+- Parent / phase: PRE-03 / B
+- Executor: Codex
+- Started at: 2026-11-25T16:24:42+07:00
+- Ended at: 2026-11-25T16:24:42+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Refine knowledge publication, ACL and index contracts.
+- Delivered: Recorded explicit scoped roles, immutable source versions, authorization before retrieval/provider/output/history and model/freshness candidates.
+- Incomplete scope / deviations: PO approval and live grants, actual project quota and provider verification remain outstanding.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/decisions/design-decisions.md, docs/technical/api-design.md and PRE-03.01 records | PRE-03 decisions and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Draft/internal/revoked | No context or citation leakage under stale index | Confirmed current ACL and source-state gates before ranking, provider and output/history | pass | [D-40 knowledge walkthroughs](../../decisions/design-decisions.md#d-40-knowledge-access-index-pre-0301) |
+| Freshness and compatibility | Reject stale/mismatched generations | Synthetic old version and wrong dimension denied | pass | [D-40 knowledge walkthroughs](../../decisions/design-decisions.md#d-40-knowledge-access-index-pre-0301) |
+| Exact provider availability | Verify account and quota before effect | Google public docs reviewed; did not call a project | not-run | [D-40 knowledge walkthroughs](../../decisions/design-decisions.md#d-40-knowledge-access-index-pre-0301) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Run Python boolean assertions for Draft, revoked ACL, stale source version, 3072 versus candidate 768 and matching allowed source. Read BR-21/D-37/D-48; check git diff whitespace | Consistent documented result | Verified | pass |
+| application | Run application tests and build | Runtime verification for later consumers | Documentation-only scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent contract review. PO approval pending.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO approval and live grants, actual project quota and provider verification remain outstanding.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/PRE-03.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [D-40 knowledge walkthroughs](../../decisions/design-decisions.md#d-40-knowledge-access-index-pre-0301).
+- Commit / build / environment: Implementation push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PRE-03.02 after PO acceptance.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.

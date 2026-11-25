@@ -206,6 +206,31 @@ PO accepted the bounded automation design for PRE-02 closure on 2026-11-25. BR-1
 | Manager intervenes on in-progress or locked work | Show current record and affected allocations; require confirmation and applicable approval. Any stale version or overbooking blocks the write. |
 | Reminder limit has been reached or recipient lost scope | Suppress the reminder. Current recipient authorization is checked before delivery and repeated intents do not consume the budget twice. |
 
+<a id="d-40-knowledge-access-index-pre-0301"></a>
+
+### D-40 knowledge publication, ACL and indexing (PRE-03.01)
+
+D-37, BR-21 and D-48 are confirmed. The reviewer designations and index settings below are proposals. No provider model, production data or spend is authorized by this entry.
+
+| Boundary | Confirmed rule and review proposal | Consumer |
+| --- | --- | --- |
+| Author, publisher and ACL authority | Default deny. Propose separately granted author, publisher and ACL-management capabilities scoped to a collection or article. An author can edit permitted Draft content. Eligible IT Manager/Admin staff still need the relevant explicit scoped grant to publish or alter ACLs. Holding a role or publishing a document adds no implicit read access. Record grantor, scope, version and expiry. Named role assignments and separation-of-duty requirements await PO. | AI-01, OPS-06, INT-05 |
+| Immutable source version | Publish with reviewed version, audience and current permission. Published content and provenance remain immutable; edit by creating a new Draft. Track the current Published version explicitly. Superseded/Retired versions are excluded from current retrieval; historical citations resolve only under current ACL, valid version policy and intended audience. A missing or hidden citation uses unavailable state and exposes no title, excerpt or metadata. | AI-01, OPS-06, INT-05 |
+| Revocation and output | Current DB scope/ACL governs candidate filtering before ranking/token budgeting, source loading before provider context, and revalidation before output, citation or history display. Caches include identity/current policy/version; invalidation events accelerate cleanup. If authority changes during a model call, discard the affected output and refuse stale citations. If a historical answer includes content from an unreadable source, hide that source-derived answer or excerpt with a generic unavailable state. Index state never authorizes reads. | OPS-07, OPS-09, INT-05 |
+| Chunks and embeddings | Preserve article/version, chunk order, source offsets/heading, normalized content digest, and parser/config/model/dimension/index revisions. Candidate synthetic pilot: heading-aware text, up to 512 tokens per chunk with up to 64 tokens of overlap, split on paragraphs when possible, 768 dimensions with Gemini Embedding 2 in text mode. Verify per-account model/region/quota compatibility with D-48 before any call. Query vectors and indexed vectors must match the approved model, dimension and preprocessing profile; mismatches require a new generation, never a mixed index. Numerical values and model are candidates pending PO and test evidence. | OPS-07, AI-03, PRE-03.02 |
+| Freshness and fallback | Background reindex tasks are idempotent per source version and index profile. Activate a ready generation only after all expected chunks match manifest digests and that version is still current and readable. A new publication with failed/pending indexing cannot use a superseded version as current evidence. A stale or mismatched generation returns a typed unavailable/insufficient-evidence result. Proposal for pilot alert: current approved source pending more than 15 minutes; the alert does not change authorization or imply successful indexing. | OPS-07, WF-05, INT-05 |
+
+Google documents [embedding dimensionality](https://ai.google.dev/gemini-api/docs/embeddings), [public pricing](https://ai.google.dev/gemini-api/docs/pricing/) and [unpaid data-use terms](https://ai.google.dev/gemini-api/terms#unpaid-services). Treat free-tier availability as account-dependent and use synthetic data only under D-48. This review did not call Google or validate a real account.
+
+**Scenario review**
+
+| Scenario | Expected |
+| --- | --- |
+| Draft or internal-only version appears in an old index for a Requester | Current version and ACL remove it before ranking or provider context. Citation lookup does not disclose a title or excerpt. |
+| Access revoked after prompt assembly or answer stored in history | Recheck before output and history display. Hide unauthorized evidence even if the old vector, cache or citation is still present. |
+| New publication replaces a source before asynchronous indexing completes | Previous version does not become current evidence. Return unavailable/insufficient evidence until a matching generation is ready. |
+| Mixed embedding dimensions or configuration | Reject candidate vectors and rebuild a separate generation. Input never crosses D-48 data-use boundaries. |
+
 ### D-40 login policy approved for FND-04.01
 
 PO approved the internal-app login policy on 2026-11-25. This supersedes the proposed values above for this scope.
