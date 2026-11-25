@@ -72,12 +72,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-08.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-08-01-attempt-01).
+- Latest Report ID: FND-08.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-08-01-attempt-02).
 - Delivered: Admin category list, detail, create and versioned edit/deactivate; active-only requester lookup; historical names and unique stable codes retained.
 - Changed paths: src/backend/app/modules/tickets/categories.py, organization/http.py, migrations and tests/test_organization.py.
 - Checks: 20 backend tests on real PostgreSQL; Ruff and strict mypy passed.
-- Review: Agent verified. PO implementation review pending.
+- Review: PO accepted the implementation. Agent verification is in attempt 01.
 - Remaining: FND-08.02 versioned SLA, FND-09 ticket wiring and live integration evidence. Production/browser tests not run.
 - Commit/build: Implementation d35eca3 pushed and verified on origin/phase/b-backend.
-- Next: PO reviews FND-08.01. FND-08.02 remains pending.
+- Next: FND-08.02 is authorized and ready.
