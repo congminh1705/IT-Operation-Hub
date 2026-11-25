@@ -80,4 +80,4 @@ A future request authorizes the selected implementation (or this decision-refine
 - Review: PO approved the contract. Agent verification remains in attempt 01.
 - Remaining: PO approved excluding durable reservations in MVP. Live-provider and production data decisions remain separate.
 - Commit/build: PRE-03.03 implementation a1dbff2 pushed and verified on origin/phase/b-backend.
-- Next: PRE-03 is EPIC_DONE. Scope-safe Parent PR delivery is pending.
+- Next: PRE-03 is EPIC_DONE. Parent [PR #26](https://github.com/congminh1705/IT-Operation-Hub/pull/26) merged into main at 1dcb675.
