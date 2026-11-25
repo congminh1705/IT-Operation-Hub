@@ -231,6 +231,30 @@ Google documents [embedding dimensionality](https://ai.google.dev/gemini-api/doc
 | New publication replaces a source before asynchronous indexing completes | Previous version does not become current evidence. Return unavailable/insufficient evidence until a matching generation is ready. |
 | Mixed embedding dimensions or configuration | Reject candidate vectors and rebuild a separate generation. Input never crosses D-48 data-use boundaries. |
 
+<a id="d-40-assistant-confirmation-budget-pre-0302"></a>
+
+### D-40 assistant confirmation, retention and shared budget (PRE-03.02)
+
+D-25, D-42, BR-20 and D-48 remain binding. The following contract and numeric test settings are proposed for PO review.
+
+| Boundary | Contract |
+| --- | --- |
+| Registry and actor | A trusted server registry maps a versioned, allowlisted intent/form key to the existing published domain action and closed input projection. Cards contain only safe form key and prefill. User confirms through the existing service with their current identity and CSRF. The service supplies actor and authorization; model output cannot supply endpoint, privilege or credentials. Automated policy effects stay under AI_COORDINATOR and current grantor authority. |
+| Preview and confirmation | Bind draft ID/version, registry revision, actor, target and canonical validated fields to a server-generated digest and expiration. Propose 15 minutes for synthetic pilot, shortened by any relevant source/grant expiry. Recheck the digest, version and current rights in the effect transaction. Changed fields or expired drafts require a new preview and confirmation; cancellation before commit cannot create an effect. Approved repeat with same key/digest returns the safe prior result after current scope check. Different digest conflicts. Lost response after commit reconciles the existing effect instead of issuing another one. |
+| Chat and run retention | Keep conversation ownership and current source ACL checks through output, history and citations. Proposal: synthetic pilot chat messages expire 30 days after creation and redacted run summaries after 90 days. User chat deletion hides chat immediately and queues purge. Chat deletion does not delete confirmed domain data, runs, audit or durable command outcomes. Define operational purge windows, incident access and retention independently before production. Admin has no implicit access to others' conversations. |
+| Redaction | Logs and audit keep actor, scope, version, correlation, model/config ID, safe outcome and measured usage when present. Exclude raw prompts, answers, credential values and private source excerpts by default. Redacted run history is separately scoped. Content needed for authorized chat history is stored separately and revalidated at read; provider dispatch is restricted to the approved data policy. |
+| Shared budget and sublimits | One atomic ledger per provider account/model/quota window constrains both modes, including embeddings and retries where they share a provider quota. Reserve request/token units against both global ceiling and mode sublimit before dispatch. Use a unique call intent and bounded attempts. Proposed synthetic split for remaining shared quota: up to 60 percent assistant and 40 percent background, with no borrowing in the pilot. Respect registered provider quota dimensions and use actual verified quota snapshots rather than fixed vendor assumptions. D-48 authorizes USD 0 paid spend: deny paid, unknown-billing and unverified configurations. |
+| Cancellation and reconciliation | Release reservation only if dispatch did not occur or provider confirms no usage. In-flight cancellation, timeout or missing usage keeps reservation held pending authenticated reconciliation or expiry of its quota window. Record unknown usage/cost as unknown. Exhaustion returns typed unavailable/limited and leaves authorized manual flows usable. |
+
+**Synthetic scenario review**
+
+| Scenario | Expected |
+| --- | --- |
+| Edit, expire or cancel a draft before confirmation | No write. Edit or expiry requires a new preview. Cancellation after commit reconciles the actual saved result. |
+| Repeat same confirmation or send different digest with same key | Existing authorized result is returned for the same digest. Changed digest conflicts. |
+| Assistant and background both request shared allowance | A single atomic ledger checks total and mode ceilings. Their reservations cannot create additional global quota. |
+| Cancelled request after dispatch or unknown provider cost | Hold reservation and mark unknown until reconciliation. Do not refund early, silently count zero, retry blindly or activate billing. |
+
 ### D-40 login policy approved for FND-04.01
 
 PO approved the internal-app login policy on 2026-11-25. This supersedes the proposed values above for this scope.

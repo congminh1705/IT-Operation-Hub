@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [PRE-03.02/attempt-01](task-history.md#task-pre-03-02-attempt-01), review. Defined the trusted form registry, server-bound confirmation, separate chat/run retention, redaction and the shared budget reservation model. Synthetic edited/repeated/expired and held-budget cases verified. No runtime or provider calls. Joint PO review pending. PRE-03.02 push receipt pending.
+
 - [PRE-03.01/attempt-02](task-history.md#task-pre-03-01-attempt-02), done. PO accepted the knowledge contract and authorized remaining PRE-03 leaves under joint review. Provider/account validation remains separate.
 
 - [PRE-03.01/attempt-01](task-history.md#task-pre-03-01-attempt-01), review. Scoped knowledge author/publisher permissions, immutable versions, stale-index ACL denial, candidate Gemini text embeddings and freshness proposed. Synthetic assertions passed; provider calls not run. Implementation 570b398 pushed and verified on origin/phase/b-backend.
