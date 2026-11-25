@@ -13369,3 +13369,141 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Joint PO review after both FND-09 leaves pass.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-fnd-09-01-attempt-02"></a>
+
+### FND-09.01 - Attempt 02 - 2026-11-25T17:22:55+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-09.01/attempt-02
+- Task: [Task card](../tasks/FND-09.01.md)
+- Parent / phase: FND-09 / B
+- Executor: Codex
+- Started at: 2026-11-25T17:22:55+07:00
+- Ended at: 2026-11-25T17:22:55+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Agent verification](#task-fnd-09-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record joint PO acceptance of FND-09.
+- Delivered: Both leaves accepted and synchronized.
+- Incomplete scope / deviations: INT-02 remains required for Parent closure and PR.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-09.01.md and workflow records | FND-09 acceptance records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Leaf acceptance | Agent evidence and PO approval | PO accepted | pass | [Prior verification](#task-fnd-09-01-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Inspect board, card and evidence anchors; git diff --check | Consistent documented result | Verified | pass |
+| application | Run application tests and build | Runtime verification for later consumers | Documentation-only scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Joint PO acceptance.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: INT-02 remains required for Parent closure and PR.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-09.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-09-01-attempt-01).
+- Commit / build / environment: Implementation f8bf5e2 pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-10 authorized.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-fnd-09-02-attempt-02"></a>
+
+### FND-09.02 - Attempt 02 - 2026-11-25T17:22:55+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-09.02/attempt-02
+- Task: [Task card](../tasks/FND-09.02.md)
+- Parent / phase: FND-09 / B
+- Executor: Codex
+- Started at: 2026-11-25T17:22:55+07:00
+- Ended at: 2026-11-25T17:22:55+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Agent verification](#task-fnd-09-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record joint PO acceptance of FND-09.
+- Delivered: Both leaves accepted and synchronized.
+- Incomplete scope / deviations: INT-02 remains required for Parent closure and PR.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-09.02.md and workflow records | FND-09 acceptance records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Leaf acceptance | Agent evidence and PO approval | PO accepted | pass | [Prior verification](#task-fnd-09-02-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Inspect board, card and evidence anchors; git diff --check | Consistent documented result | Verified | pass |
+| application | Run application tests and build | Runtime verification for later consumers | Documentation-only scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Joint PO acceptance.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: INT-02 remains required for Parent closure and PR.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-09.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-09-02-attempt-01).
+- Commit / build / environment: Implementation e5d542d pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-10 authorized.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.

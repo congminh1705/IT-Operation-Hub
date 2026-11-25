@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- PO jointly accepted both FND-09 leaves. [FND-09.01](task-history.md#task-fnd-09-01-attempt-02) and [FND-09.02](task-history.md#task-fnd-09-02-attempt-02) are done. Board: 92 done, 138 pending. Parent awaits INT-02. FND-10 authorized.
+
 - [FND-09.02/attempt-01](task-history.md#task-fnd-09-02-attempt-01), review. POST /api/v1/tickets persists New ticket, immutable full SLA snapshot, clock facts, audit, event, outbox and idempotent result in one transaction. 33 backend tests on PostgreSQL passed. Joint PO review pending. FND-09.02 implementation e5d542d pushed and verified on origin/phase/b-backend.
 
 - [FND-09.01/attempt-01](task-history.md#task-fnd-09-01-attempt-01), review. Validated text ticket input and server-owned requester, active intake, category, BR-03 priority and SLA policy; generated sequence-based ticket codes. 31 backend tests on PostgreSQL passed. Joint PO review pending. FND-09.01 implementation f8bf5e2 pushed and verified on origin/phase/b-backend.

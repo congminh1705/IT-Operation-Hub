@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-09.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-09-02-attempt-01).
+- Latest Report ID: FND-09.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-09-02-attempt-02).
 - Delivered: POST /api/v1/tickets persists New ticket, immutable full SLA snapshot, clock facts, audit, event, outbox and idempotent result in one transaction.
 - Changed paths: src/backend/app/modules/tickets service/model/intake, organization/http.py, Alembic 0011, tests/test_ticket_intake.py, backend README and workflow records
 - Checks: 33 backend tests on PostgreSQL and Ruff/mypy passed.
-- Review: Agent verified. Joint PO review pending.
+- Review: PO accepted both leaves. Agent verification remains in attempt 01.
 - Remaining: Asset and file intake remain deferred; no worker or browser integration. INT-02 gates Parent closure.
 - Commit/build: FND-09.02 implementation e5d542d pushed and verified on origin/phase/b-backend.
-- Next: Joint review of the two FND-09 leaves after sequential verification.
+- Next: FND-10 authorized. Parent FND-09 closure awaits INT-02.
