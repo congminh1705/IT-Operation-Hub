@@ -1,7 +1,7 @@
 from typing import Literal
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, ValidationError
 from sqlalchemy.orm import Session
 
 from app.infrastructure.clock import Clock, read_utc
@@ -21,14 +21,20 @@ from app.modules.tickets.assignment import (
     check_version,
     lock_ticket,
 )
+from app.modules.tickets.conversation import CommentCreate, append_comment
+from app.modules.tickets.resolution import resume_resolution, stop_resolution
 from app.modules.tickets.service import TicketStatus
 
 
 class TicketTransition(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
 
     expectedVersion: int = Field(ge=1, strict=True)
-    target_status: Literal[TicketStatus.OPEN, TicketStatus.IN_PROGRESS]
+    target_status: Literal[
+        TicketStatus.OPEN, TicketStatus.IN_PROGRESS, TicketStatus.PENDING
+    ]
+    reason: str | None = Field(default=None, max_length=10000)
+    public_message: str | None = Field(default=None, max_length=10000)
 
 
 def transition_ticket(
@@ -47,23 +53,54 @@ def transition_ticket(
         raise TicketCommandRejected(404, "NOT_FOUND")
     check_version(row, body.expectedVersion)
     target = body.target_status
-    expected = TicketStatus.NEW if target == TicketStatus.OPEN else TicketStatus.OPEN
-    if row.status != expected:
+    expected = (
+        TicketStatus(row.status)
+        if row.status
+        in (
+            TicketStatus.NEW,
+            TicketStatus.OPEN,
+            TicketStatus.IN_PROGRESS,
+            TicketStatus.PENDING,
+        )
+        else None
+    )
+    if (expected, target) not in {
+        (TicketStatus.NEW, TicketStatus.OPEN),
+        (TicketStatus.OPEN, TicketStatus.IN_PROGRESS),
+        (TicketStatus.IN_PROGRESS, TicketStatus.PENDING),
+        (TicketStatus.PENDING, TicketStatus.IN_PROGRESS),
+    }:
         raise TicketCommandRejected(409, "INVALID_TRANSITION")
-    if target == TicketStatus.IN_PROGRESS:
+    if target != TicketStatus.OPEN:
         if row.assignee_id is None or row.team_id not in effective_team_ids(
             db, row.assignee_id
         ):
             raise TicketCommandRejected(409, "INELIGIBLE_ASSIGNEE")
         if actor.role == "TECHNICIAN" and row.assignee_id != actor.id:
             raise TicketCommandRejected(403, "FORBIDDEN")
+    assert expected is not None
     previous = SafeFacts(
         status=expected, version=row.version, assignee_id=row.assignee_id
     )
+    now = read_utc(clock)
+    if target == TicketStatus.PENDING:
+        if not body.reason:
+            raise TicketCommandRejected(422, "REASON_REQUIRED")
+        try:
+            question = CommentCreate(
+                content=body.public_message or "", visibility="PUBLIC"
+            )
+        except ValidationError:
+            raise TicketCommandRejected(422, "QUESTION_REQUIRED") from None
+        append_comment(db, actor, row, question, now, internal=True)
+        stop_resolution(row, now)
+    elif expected == TicketStatus.PENDING:
+        if not body.reason:
+            raise TicketCommandRejected(422, "REASON_REQUIRED")
+        resume_resolution(row, now)
     row.status = target.value
     row.version += 1
     current = SafeFacts(status=target, version=row.version, assignee_id=row.assignee_id)
-    now = read_utc(clock)
     event_actor, event_target = Actor("user", actor.id), Target("ticket", row.id)
     write_audit(
         db,
@@ -78,9 +115,12 @@ def transition_ticket(
         db,
         actor=event_actor,
         target=event_target,
-        event_type="ticket.accepted"
-        if target == TicketStatus.OPEN
-        else "ticket.started",
+        event_type={
+            (TicketStatus.NEW, TicketStatus.OPEN): "ticket.accepted",
+            (TicketStatus.OPEN, TicketStatus.IN_PROGRESS): "ticket.started",
+            (TicketStatus.IN_PROGRESS, TicketStatus.PENDING): "ticket.pending",
+            (TicketStatus.PENDING, TicketStatus.IN_PROGRESS): "ticket.resumed",
+        }[expected, target],
         schema_version=1,
         aggregate_version=row.version,
         correlation_id=row.id,

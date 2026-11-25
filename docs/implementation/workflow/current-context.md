@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-12.02/attempt-01](task-history.md#task-fnd-12-02-attempt-01), review. Pending now stores a public clarification and pauses resolution atomically. A substantive requester reply or authorized reasoned IT action resumes the clock. 39 backend tests on PostgreSQL passed. Joint PO review pending. FND-12.02 push receipt pending.
+
 - [FND-12.01/attempt-01](task-history.md#task-fnd-12-01-attempt-01), review. Added audience-scoped comments/notes and one-time eligible first response. 38 backend tests on PostgreSQL passed. Joint PO review pending. FND-12.01 push receipt pending.
 
 - PO accepted [FND-11.01](task-history.md#task-fnd-11-01-attempt-02) and [FND-11.02](task-history.md#task-fnd-11-02-attempt-02). Both leaves are done. Parent closure awaits INT-02. FND-12 authorized.

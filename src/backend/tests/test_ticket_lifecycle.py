@@ -9,6 +9,7 @@ from test_ticket_reads import TICKETS, create_ticket
 from app.infrastructure.database import Database
 from app.main import create_app
 from app.modules.auth.service import AuthService
+from app.modules.organization.models import TeamMember
 from app.modules.tickets.models import Ticket
 
 
@@ -77,3 +78,83 @@ def test_comment_audience_and_first_response(database: Database) -> None:
         assert command(owner, url, owner_headers, public).status_code == 409
         assert command(admin, url, admin_headers, note).status_code == 409
         assert owner.get(url).json()["total"] == 3
+
+
+def test_pending_question_and_requester_reply_are_atomic(database: Database) -> None:
+    category, team = prepare_catalog(database)
+    now = datetime.now(UTC)
+    app = create_app(AuthService(database, clock=lambda: now), SETTINGS)
+    owner, admin = (TestClient(app, base_url=ORIGIN) for _ in range(2))
+    _, owner_headers = actor(database, owner, "REQUESTER")
+    admin_id, admin_headers = actor(database, admin, "ADMIN")
+    ticket = create_ticket(owner, owner_headers, category, "Pending")
+    detail = f"{TICKETS}/{ticket['id']}"
+    with database.transaction() as db:
+        db.add(TeamMember(team_id=UUID(team), account_id=admin_id, active=True))
+        row = db.get(Ticket, UUID(ticket["id"]))
+        assert row is not None
+        row.status = "In Progress"
+        row.assignee_id = admin_id
+    transitions, comments = detail + "/transitions", detail + "/comments"
+
+    def change(target, version, **payload):
+        return command(
+            admin,
+            transitions,
+            admin_headers,
+            {
+                "expectedVersion": version,
+                "target_status": target,
+                **payload,
+            },
+        )
+
+    now += timedelta(seconds=90)
+    assert (
+        change(
+            "Pending", 1, reason="Need clarification", public_message="  "
+        ).status_code
+        == 422
+    )
+    assert owner.get(comments).json()["total"] == 0
+    assert owner.get(detail).json()["status"] == "In Progress"
+    pending = change(
+        "Pending", 1, reason="Need clarification", public_message="Which location?"
+    )
+    assert pending.status_code == 200, pending.text
+    assert pending.json()["version"] == 2
+    assert pending.json()["sla"]["resolution_used_seconds"] == 90
+    assert pending.json()["sla"]["response_used_seconds"] == 90
+    assert pending.json()["sla"]["resolution_paused"]
+    assert owner.get(comments).json()["items"][0]["content"] == "Which location?"
+    now += timedelta(seconds=200)
+    assert change("In Progress", 2).status_code == 422
+    assert (
+        command(
+            admin,
+            comments,
+            admin_headers,
+            {"visibility": "INTERNAL", "content": "Private note"},
+        ).status_code
+        == 201
+    )
+    assert owner.get(detail).json()["status"] == "Pending"
+    assert (
+        command(
+            owner,
+            comments,
+            owner_headers,
+            {"visibility": "PUBLIC", "content": "First floor"},
+        ).status_code
+        == 201
+    )
+    resumed = owner.get(detail).json()
+    assert resumed["status"] == "In Progress" and resumed["version"] == 3
+    assert resumed["sla"]["resolution_used_seconds"] == 90
+    assert not resumed["sla"]["resolution_paused"]
+    assert owner.get(comments).json()["total"] == 2
+    now += timedelta(seconds=30)
+    again = change("Pending", 3, reason="Another detail", public_message="Which room?")
+    assert again.status_code == 200
+    assert again.json()["sla"]["resolution_used_seconds"] == 120
+    assert change("In Progress", 4, reason="Clarification received").status_code == 200

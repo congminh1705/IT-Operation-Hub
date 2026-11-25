@@ -22,6 +22,7 @@ class TicketStatus(StrEnum):
     NEW = "New"
     OPEN = "Open"
     IN_PROGRESS = "In Progress"
+    PENDING = "Pending"
 
 
 class SLAView(BaseModel):
