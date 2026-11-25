@@ -79,5 +79,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: Synthetic Draft, revoked ACL, source-version mismatch, incompatible dimensions and eligible published case passed; verified published provider documentation. Runtime, build and provider calls not run.
 - Review: Agent checked the contract. PO approval pending.
 - Remaining: Named grants, model/dimension and index pilot values, real account eligibility and provider tests.
-- Commit/build: Implementation push receipt pending.
+- Commit/build: Implementation 570b398 pushed and verified on origin/phase/b-backend.
 - Next: PRE-03.02 awaits PO acceptance of this leaf.

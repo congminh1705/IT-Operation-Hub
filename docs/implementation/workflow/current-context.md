@@ -14,7 +14,7 @@ authority: derived
 
 ## Latest task report
 
-- [PRE-03.01/attempt-01](task-history.md#task-pre-03-01-attempt-01), review. Scoped knowledge author/publisher permissions, immutable versions, stale-index ACL denial, candidate Gemini text embeddings and freshness proposed. Synthetic assertions passed; provider calls not run. Implementation push receipt pending.
+- [PRE-03.01/attempt-01](task-history.md#task-pre-03-01-attempt-01), review. Scoped knowledge author/publisher permissions, immutable versions, stale-index ACL denial, candidate Gemini text embeddings and freshness proposed. Synthetic assertions passed; provider calls not run. Implementation 570b398 pushed and verified on origin/phase/b-backend.
 
 - [PRE-02.03/attempt-02](task-history.md#task-pre-02-03-attempt-02), done. PO accepted all three PRE-02 leaves and closed the Parent (EPIC_DONE). Board totals: 83 done, 147 pending. Parent [PR #25](https://github.com/congminh1705/IT-Operation-Hub/pull/25) merged into main at 5e20a37. Main was merged into the shared Phase B branch with FND records preserved. No next task started.
 
