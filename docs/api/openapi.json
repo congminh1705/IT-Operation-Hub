@@ -12208,19 +12208,27 @@
               "TECHNICIAN",
               "IT_MANAGER",
               "ADMIN"
-            ]
+            ],
+            "default": "REQUESTER"
           },
           "initial_password": {
             "type": "string",
-            "writeOnly": true
+            "writeOnly": true,
+            "minLength": 15,
+            "maxLength": 128
+          },
+          "verification_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Reference to trusted server-recorded D-29 or initial setup verification. A client-supplied identifier is never approval."
           }
         },
         "required": [
           "email",
           "display_name",
-          "role",
           "initial_password",
-          "department_id"
+          "department_id",
+          "verification_id"
         ],
         "additionalProperties": false
       },
