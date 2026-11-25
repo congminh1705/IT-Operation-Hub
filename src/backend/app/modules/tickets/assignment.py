@@ -14,6 +14,7 @@ from app.infrastructure.events import (
     write_audit,
 )
 from app.modules.auth.models import Account
+from app.modules.organization.containment import work_is_held
 from app.modules.organization.models import Team
 from app.modules.organization.team_scope import (
     effective_team_ids,
@@ -48,6 +49,11 @@ def lock_ticket(db: Session, ticket_id: UUID) -> Ticket:
     return row
 
 
+def require_ticket_not_held(db: Session, ticket_id: UUID) -> None:
+    if work_is_held(db, "ticket", ticket_id):
+        raise TicketCommandRejected(409, "HANDOVER_PENDING")
+
+
 def check_version(row: Ticket, expected_version: int) -> None:
     if row.version != expected_version:
         raise TicketCommandRejected(409, "STALE_VERSION")
@@ -59,9 +65,12 @@ def assign_ticket(
     if actor.role not in (*MANAGEMENT, "TECHNICIAN"):
         raise TicketCommandRejected(403, "FORBIDDEN")
     row = lock_ticket(db, ticket_id)
+    if actor.role == "TECHNICIAN" and row.team_id not in effective_team_ids(
+        db, actor.id
+    ):
+        raise TicketCommandRejected(404, "NOT_FOUND")
+    require_ticket_not_held(db, row.id)
     if actor.role == "TECHNICIAN":
-        if row.team_id not in effective_team_ids(db, actor.id):
-            raise TicketCommandRejected(404, "NOT_FOUND")
         if body.team_id != row.team_id or body.assignee_id != actor.id:
             raise TicketCommandRejected(403, "FORBIDDEN")
         check_version(row, body.expectedVersion)

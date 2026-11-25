@@ -1049,7 +1049,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserView"
+                  "$ref": "#/components/schemas/AccountAccessView"
                 }
               }
             }
@@ -1115,7 +1115,7 @@
             "description": "Service Unavailable"
           }
         },
-        "description": "Admin changes active state, role or department and revokes prior sessions atomically. Open assignments require reviewed handover before the access change."
+        "description": "Admin changes access with a reviewed handover, or explicitly suspends access with a pending handover. Prior sessions are revoked. The last active Admin is protected."
       }
     },
     "/departments": {
@@ -2810,7 +2810,7 @@
             "description": "Service Unavailable"
           }
         },
-        "description": "Admin updates membership and revokes prior sessions. Removing a member with active assignments requires reviewed handover."
+        "description": "Admin updates membership and revokes sessions. Removing a member with active work requires one versioned decision per affected record."
       }
     },
     "/lookups": {
@@ -12121,6 +12121,220 @@
         },
         "description": "Inclusive range of up to 366 local days. Slots are UTC. Missing calendar or budget returns unknown and has no assignable capacity."
       }
+    },
+    "/users/{id}/handover": {
+      "get": {
+        "tags": [
+          "Administration",
+          "Administration"
+        ],
+        "summary": "Preview User Handover",
+        "operationId": "previewUserHandover",
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HandoverView"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "description": "Admin previews active work versions and whether a suspended account still has work held for handover."
+      },
+      "post": {
+        "tags": [
+          "Administration",
+          "Administration"
+        ],
+        "summary": "Repair User Handover",
+        "operationId": "repairUserHandover",
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HandoverCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HandoverView"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "description": "Admin resolves work holds after rechecking versions, current eligibility and capacity. This action leaves the affected account suspended."
+      }
     }
   },
   "components": {
@@ -12481,6 +12695,17 @@
             "type": "string",
             "maxLength": 1000,
             "minLength": 10
+          },
+          "handover": {
+            "items": {
+              "$ref": "#/components/schemas/HandoverItem"
+            },
+            "type": "array",
+            "maxItems": 100
+          },
+          "suspend_without_replacement": {
+            "type": "boolean",
+            "default": false
           }
         },
         "additionalProperties": false,
@@ -12575,6 +12800,13 @@
             "type": "string",
             "maxLength": 1000,
             "minLength": 10
+          },
+          "handover": {
+            "items": {
+              "$ref": "#/components/schemas/HandoverItem"
+            },
+            "type": "array",
+            "maxItems": 100
           }
         },
         "additionalProperties": false,
@@ -16487,6 +16719,214 @@
           "id",
           "version",
           "request_id"
+        ]
+      },
+      "HandoverItem": {
+        "properties": {
+          "kind": {
+            "$ref": "#/components/schemas/WorkKind"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1.0
+          },
+          "replacement_user_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "protected_work_reviewed": {
+            "type": "boolean",
+            "default": false
+          },
+          "allocations": {
+            "items": {
+              "$ref": "#/components/schemas/Interval"
+            },
+            "type": "array",
+            "maxItems": 366
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "kind",
+          "id",
+          "expectedVersion",
+          "replacement_user_id"
+        ]
+      },
+      "WorkKind": {
+        "type": "string",
+        "enum": [
+          "ticket",
+          "task"
+        ]
+      },
+      "AccountAccessView": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "role": {
+            "$ref": "#/components/schemas/UserRole"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1.0
+          },
+          "department_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "handover_pending": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "email",
+          "display_name",
+          "role",
+          "active",
+          "version",
+          "department_id",
+          "handover_pending"
+        ]
+      },
+      "UserRole": {
+        "type": "string",
+        "enum": [
+          "ADMIN",
+          "IT_MANAGER",
+          "TECHNICIAN",
+          "REQUESTER"
+        ]
+      },
+      "HandoverView": {
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "suspension_pending": {
+            "type": "boolean"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/HandoverWork"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "required": [
+          "account_id",
+          "version",
+          "suspension_pending",
+          "items"
+        ]
+      },
+      "HandoverWork": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/WorkKind"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "team_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string"
+          },
+          "requires_replacement": {
+            "type": "boolean"
+          },
+          "protected_work": {
+            "type": "boolean"
+          },
+          "held": {
+            "type": "boolean"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "version",
+          "team_id",
+          "status",
+          "requires_replacement",
+          "protected_work",
+          "held"
+        ]
+      },
+      "HandoverCommand": {
+        "properties": {
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1.0
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 10
+          },
+          "handover": {
+            "items": {
+              "$ref": "#/components/schemas/HandoverItem"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "minItems": 1
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expectedVersion",
+          "reason",
+          "handover"
         ]
       }
     }

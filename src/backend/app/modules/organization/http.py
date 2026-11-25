@@ -40,8 +40,16 @@ from app.modules.auth.service import (
 )
 from app.modules.organization.access import (
     UserUpdate,
-    require_no_open_assignments,
     update_account,
+)
+from app.modules.organization.containment import open_holds
+from app.modules.organization.handover import (
+    HandoverCommand,
+    HandoverItem,
+    HandoverView,
+    apply_handover,
+    preview_handover,
+    repair_handover,
 )
 from app.modules.organization.models import Department, Team, TeamMember
 from app.modules.organization.team_scope import lock_team_configuration
@@ -197,12 +205,18 @@ class TeamPage(BaseModel):
     total: int
 
 
+class AccountAccessView(UserView):
+    department_id: UUID | None
+    handover_pending: bool
+
+
 class MemberCommand(BaseModel):
     model_config = ConfigDict(extra="forbid")
     user_id: UUID
     expectedVersion: int = Field(ge=1, strict=True)
     active: bool = Field(strict=True)
     reason: str = Field(min_length=10, max_length=1000)
+    handover: list[HandoverItem] = Field(default_factory=list, max_length=100)
 
 
 class MemberPage(BaseModel):
@@ -753,7 +767,7 @@ def organization_router(
         "/users/{id}",
         operation_id="updateUser",
         tags=["Administration"],
-        response_model=UserView,
+        response_model=AccountAccessView,
         dependencies=[session_cookie_dependency(settings)],
         responses={
             status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
@@ -761,11 +775,15 @@ def organization_router(
         openapi_extra={"parameters": COMMAND_HEADERS},
     )
     def update_user(id: UUID, request: Request, body: UserUpdate) -> Response:
-        def project(db: Session, result: CommandResult) -> UserView:
+        def project(db: Session, result: CommandResult) -> AccountAccessView:
             account = db.get(Account, result.id)
             if account is None:
                 raise Rejected(404, "NOT_FOUND")
-            return user_view(account)
+            return AccountAccessView(
+                **user_view(account).model_dump(),
+                department_id=account.department_id,
+                handover_pending=bool(open_holds(db, account.id)),
+            )
 
         return change(
             request,
@@ -773,6 +791,40 @@ def organization_router(
             {"id": str(id), **body.model_dump(mode="json", exclude_unset=True)},
             lambda db, actor: update_account(db, actor, id, body, configured().clock),
             project,
+            status=200,
+        )
+
+    @router.get(
+        "/users/{id}/handover",
+        operation_id="previewUserHandover",
+        tags=["Administration"],
+        response_model=HandoverView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 403, 404, 422, 503)},
+    )
+    def preview_user_handover(id: UUID, request: Request) -> Response:
+        return query(request, lambda db, _: preview_handover(db, id))
+
+    @router.post(
+        "/users/{id}/handover",
+        operation_id="repairUserHandover",
+        tags=["Administration"],
+        response_model=HandoverView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
+    )
+    def repair_user_handover(
+        id: UUID, request: Request, body: HandoverCommand
+    ) -> Response:
+        return change(
+            request,
+            "account.handover_repair",
+            {"id": str(id), **body.model_dump(mode="json")},
+            lambda db, actor: repair_handover(db, actor, id, body, configured().clock),
+            lambda db, result: preview_handover(db, result.id),
             status=200,
         )
 
@@ -1534,8 +1586,20 @@ def organization_router(
             if not body.active:
                 if membership is None or not membership.active:
                     raise Rejected(404, "NOT_FOUND")
-                require_no_open_assignments(db, candidate.id, id)
+                if open_holds(db, candidate.id):
+                    raise Rejected(409, "HANDOVER_PENDING")
+                apply_handover(
+                    db,
+                    actor,
+                    candidate.id,
+                    body.handover,
+                    body.reason.strip(),
+                    read_utc(configured().clock),
+                    id,
+                )
                 membership.active = False
+            elif body.handover:
+                raise Rejected(422, "INVALID_HANDOVER")
             elif membership is None:
                 db.add(TeamMember(team_id=id, account_id=candidate.id, active=True))
             elif membership.active:

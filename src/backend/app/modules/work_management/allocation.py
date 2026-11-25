@@ -17,6 +17,7 @@ from app.infrastructure.events import (
     write_audit,
 )
 from app.modules.auth.models import Account
+from app.modules.organization.containment import work_is_held
 from app.modules.organization.team_scope import effective_team_ids
 from app.modules.tickets.assignment import (
     MANAGEMENT,
@@ -82,6 +83,8 @@ def lock_work_task(
         raise TicketCommandRejected(404, "NOT_FOUND")
     if task.team_id != ticket.team_id:
         raise TicketCommandRejected(409, "TEAM_HANDOVER_REQUIRED")
+    if work_is_held(db, "task", task.id):
+        raise TicketCommandRejected(409, "HANDOVER_PENDING")
     if task.version != expected:
         raise TicketCommandRejected(409, "STALE_VERSION")
     if plan.state in ("Superseded", "Cancelled") or ticket.status in (

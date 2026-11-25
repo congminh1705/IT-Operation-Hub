@@ -20,6 +20,7 @@ from app.modules.tickets.assignment import (
     TicketCommandRejected,
     check_version,
     lock_ticket,
+    require_ticket_not_held,
 )
 from app.modules.tickets.conversation import CommentCreate, append_comment
 from app.modules.tickets.models import Ticket, TicketChangeReason
@@ -70,6 +71,7 @@ def transition_ticket(
     if not internal and not (own and requester_action):
         raise TicketCommandRejected(404, "NOT_FOUND")
 
+    require_ticket_not_held(db, row.id)
     check_version(row, body.expectedVersion)
     try:
         source = TicketStatus(row.status)

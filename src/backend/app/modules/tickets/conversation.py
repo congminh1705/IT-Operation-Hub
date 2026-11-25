@@ -17,7 +17,11 @@ from app.infrastructure.events import (
 )
 from app.modules.auth.models import Account
 from app.modules.organization.team_scope import effective_team_ids
-from app.modules.tickets.assignment import TicketCommandRejected, lock_ticket
+from app.modules.tickets.assignment import (
+    TicketCommandRejected,
+    lock_ticket,
+    require_ticket_not_held,
+)
 from app.modules.tickets.models import Ticket, TicketComment
 from app.modules.tickets.read import TicketAccess
 from app.modules.tickets.resolution import resume_resolution
@@ -130,6 +134,7 @@ def create_comment(
     row, internal = conversation_access(db, actor, ticket_id)
     if body.visibility == "INTERNAL" and not internal:
         raise TicketCommandRejected(403, "FORBIDDEN")
+    require_ticket_not_held(db, row.id)
     if row.status in ("Closed", "Cancelled"):
         raise TicketCommandRejected(409, "TICKET_READ_ONLY")
     now = read_utc(clock)
