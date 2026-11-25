@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 28 PostgreSQL tests, Ruff, mypy and five OpenAPI drift tests passed. Captured logs omit password/verifier. Injected audit failure rolls back user, proof and idempotency key.
 - Review: Agent verified. PO approval pending.
 - Remaining: Live D-29 verification source, approved IT-role approver and enterprise handover channel, and INT-01 native form integration.
-- Commit/build: Implementation push receipt pending.
+- Commit/build: Implementation 4075c43 pushed and verified on origin/phase/b-backend.
 - Next: PO reviews FND-06.02. Parent closure still requires INT-01.
