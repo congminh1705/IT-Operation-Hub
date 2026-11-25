@@ -29,7 +29,9 @@ purpose: "Trace operationId, routes, principals, and business rules."
 | API02 | GET | `/users` | `listUsers` | ADMIN | Admin management list; no public employee directory. |
 | API02 | POST | `/users` | `createUser` | ADMIN | Admin only; account role request requires D-29 authorization. |
 | API02 | GET | `/users/{id}` | `getUser` | ADMIN | Admin management record. |
-| API02 | PATCH | `/users/{id}` | `updateUser` | ADMIN | Admin only; current versions; atomic handover/revoke if rights affected. Emergency no replacement remains D-40. |
+| API02 | PATCH | `/users/{id}` | `updateUser` | ADMIN | Admin only. Normal access loss requires reviewed handover; explicit emergency suspension revokes access and reports pending handover. |
+| API02 | GET | `/users/{id}/handover` | `previewUserHandover` | ADMIN | Read scoped affected-work versions and suspension status. |
+| API02 | POST | `/users/{id}/handover` | `repairUserHandover` | ADMIN | Release holds after eligible versioned handover. The account stays suspended. |
 | API02 | GET | `/departments` | `listDepartments` | ADMIN | Admin management list; no public employee directory. |
 | API02 | POST | `/departments` | `createDepartment` | ADMIN | Admin only; account role request requires D-29 authorization. |
 | API02 | GET | `/departments/{id}` | `getDepartment` | ADMIN | Admin management record. |
@@ -37,7 +39,8 @@ purpose: "Trace operationId, routes, principals, and business rules."
 | API02 | GET | `/teams` | `listTeams` | ADMIN | Admin management list; no public employee directory. |
 | API02 | POST | `/teams` | `createTeam` | ADMIN | Admin only; account role request requires D-29 authorization. |
 | API02 | GET | `/teams/{id}` | `getTeam` | ADMIN | Admin management record. |
-| API02 | PATCH | `/teams/{id}` | `updateTeam` | ADMIN | Admin only; current versions; atomic handover/revoke if rights affected. Emergency no replacement remains D-40. |
+| API02 | PATCH | `/teams/{id}` | `updateTeam` | ADMIN | Admin only. Retirement requires reviewed open-work transfers and an eligible intake replacement where applicable. |
+| API02 | GET | `/teams/{id}/handover` | `previewTeamHandover` | ADMIN | Read all open work and versions required for retirement. |
 | API02 | GET | `/categories` | `listCategorys` | ADMIN | Admin management list; no public employee directory. |
 | API02 | POST | `/categories` | `createCategory` | ADMIN | Admin only; account role request requires D-29 authorization. |
 | API02 | GET | `/categories/{id}` | `getCategory` | ADMIN | Admin management record. |

@@ -16131,3 +16131,72 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Joint PO review of FND-17.01 through FND-17.03.
 - Eligibility / remaining prerequisite: Follow task dependencies and PO review.
+
+<a id="task-fnd-17-03-attempt-01"></a>
+
+### FND-17.03 - Attempt 01 - 2026-11-25T23:30:32+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-17.03/attempt-01
+- Task: [Task card](../tasks/FND-17.03.md)
+- Parent / phase: FND-17 / B
+- Executor: Codex
+- Started at: 2026-11-25T23:30:32+07:00
+- Ended at: 2026-11-25T23:30:32+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Added reviewed all-open-work team retirement, atomic intake replacement, membership session revocation and membership.changed/load.changed outbox records. Historical ownership is preserved.
+- Delivered: Added reviewed all-open-work team retirement, atomic intake replacement, membership session revocation and membership.changed/load.changed outbox records. Historical ownership is preserved.
+- Incomplete scope / deviations: Service evidence is ready for PO review. Real browser, affected-work processing and full Parent closure await INT-01 and INT-03.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| `organization/http.py`, `organization/handover.py`, `organization/access.py`, OpenAPI, `tests/test_team_retirement.py` | FND-17.03 | Service delivery and evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scoped acceptance | Task card criteria | 60 passed. Verified complete versus partial handover, stale competing membership/deactivation changes, old cookie revocation, destination intake plus active task/ticket routing, historical assignee retention and outbox. Six live OpenAPI operations and five contract checks passed. | pass | [Task card](../tasks/FND-17.03.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | `$env:ITOH_TEST_DATABASE_URL=<repo Compose PostgreSQL>; .venv/Scripts/python.exe -m pytest -qx -p no:cacheprovider --tb=short`; Ruff check/format; mypy app; frontend contract --check, five contract unit tests and scoped live OpenAPI comparison | Task evidence | 60 passed. Verified complete versus partial handover, stale competing membership/deactivation changes, old cookie revocation, destination intake plus active task/ticket routing, historical assignee retention and outbox. Six live OpenAPI operations and five contract checks passed. | pass |
+| integration | Real browser and affected-work evaluation | Full Parent evidence | Remaining at INT-03 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO acceptance pending.
+- Findings / resolution: 60 passed. Verified complete versus partial handover, stale competing membership/deactivation changes, old cookie revocation, destination intake plus active task/ticket routing, historical assignee retention and outbox. Six live OpenAPI operations and five contract checks passed.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Service evidence is ready for PO review. Real browser, affected-work processing and full Parent closure await INT-01 and INT-03.
+- Required resolution / owner: INT-03 and operations.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-17.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: Test commands above.
+- Commit / build / environment: FND-17.03 delivery on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review of FND-17.01 through FND-17.03.
+- Eligibility / remaining prerequisite: Follow task dependencies and PO review.

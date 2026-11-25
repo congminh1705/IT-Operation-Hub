@@ -7,7 +7,13 @@ from sqlalchemy.orm import Session
 
 from app.infrastructure.clock import Clock, read_utc
 from app.infrastructure.commands import CommandResult
-from app.infrastructure.events import Actor, SafeFacts, Target, write_audit
+from app.infrastructure.events import (
+    Actor,
+    SafeFacts,
+    Target,
+    enqueue_event,
+    write_audit,
+)
 from app.modules.auth.models import Account
 from app.modules.auth.service import revoke_account_sessions
 from app.modules.organization.containment import open_holds
@@ -26,7 +32,7 @@ class UserUpdate(BaseModel):
     active: bool | None = Field(default=None, strict=True)
     department_id: UUID | None = None
     reason: str = Field(min_length=10, max_length=1000)
-    handover: list[HandoverItem] = Field(default_factory=list, max_length=100)
+    handover: list[HandoverItem] = Field(default_factory=list)
     suspend_without_replacement: bool = Field(default=False, strict=True)
 
 
@@ -116,4 +122,17 @@ def update_account(
         after=SafeFacts(active=active, version=account.version, reason_provided=True),
         clock=lambda: now,
     )
+    for event_type in ("membership.changed", "load.changed"):
+        enqueue_event(
+            db,
+            actor=Actor("user", actor.id),
+            target=Target("account", account_id),
+            event_type=event_type,
+            schema_version=1,
+            aggregate_version=account.version,
+            correlation_id=account_id,
+            handlers=("workforce.affected_work",),
+            facts=SafeFacts(active=account.active, version=account.version),
+            clock=lambda: now,
+        )
     return CommandResult(account_id, account.version)

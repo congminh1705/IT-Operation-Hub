@@ -89,6 +89,8 @@ def create_app(
             "previewUserHandover",
             "repairUserHandover",
             "setTeamMembership",
+            "updateTeam",
+            "previewTeamHandover",
         }:
             return error_response(422, "INVALID_INPUT")
         if operation == "getCsrf":

@@ -258,6 +258,10 @@ def record_task_effect(
         reason_provided=reason,
         status=status,
         previous_status=before.status,
+        active=task.assignment_locked if before.active is not None else None,
+        team_id=task.team_id if before.team_id is not None else None,
+        previous_team_id=before.team_id,
+        previous_assignee_id=before.assignee_id,
     )
     write_audit(
         db,
