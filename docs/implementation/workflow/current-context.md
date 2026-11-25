@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- PO accepted all four FND-12 service leaves. [FND-12.01](task-history.md#task-fnd-12-01-attempt-02), [FND-12.02](task-history.md#task-fnd-12-02-attempt-02), [FND-12.03](task-history.md#task-fnd-12-03-attempt-02) and [FND-12.04](task-history.md#task-fnd-12-04-attempt-02) are done. Board: 100 done, 130 pending. FND-12 Parent closure remains with INT-02. FND-13.01 is eligible on request.
+
 - [FND-10 runtime OpenAPI correction](task-history.md#task-fnd-10-02-attempt-03). Real FastAPI export now matches all 8 reviewed operations. 45 PostgreSQL-backed backend suite tests and 130 frontend tests passed. FND-10 service states remain done, FND-12 is still in joint PO review, and INT-02 browser/cache acceptance remains open.
 
 - [FND-12.04/attempt-01](task-history.md#task-fnd-12-04-attempt-01), review. Implemented reasoned reopen and role-specific cancellation. Closed permits only management reopening and the narrow eligible replacement needed before reopen. Cancelled remains terminal. Reopening retains consumed time and the original SLA budget snapshot; an exhausted budget remains exhausted. 42 backend tests on PostgreSQL passed. Board: 96 done, 4 review, 130 pending. Joint PO review pending; full Parent closure depends on INT-02. FND-12.04 implementation `c06c4ca` pushed to origin/phase/b-backend.

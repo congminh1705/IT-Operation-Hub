@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-12.01/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-12-01-attempt-01).
+- Latest Report ID: FND-12.01/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-12-01-attempt-02).
 - Delivered: Added audience-scoped comments/notes and one-time eligible first response.
 - Changed paths: `tickets/conversation.py`, `tickets/models.py`, `organization/http.py`, migration 0013, `tests/test_ticket_lifecycle.py`
 - Checks: 38 backend tests on PostgreSQL and Ruff/mypy passed.
-- Review: Agent verified. Joint PO review pending.
+- Review: PO accepted all four service leaves. See attempt 01 for agent checks.
 - Remaining: Real browser and notification delivery remain with INT-02. Runtime OpenAPI drift from FND-10 was not retested.
 - Commit/build: FND-12.01 implementation `c112973` pushed to origin/phase/b-backend.
-- Next: Joint review of the four FND-12 leaves after sequential verification.
+- Next: FND-13.01 is eligible on request. Full Parent closure depends on INT-02.

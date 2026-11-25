@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-12.04/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-12-04-attempt-01).
+- Latest Report ID: FND-12.04/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-12-04-attempt-02).
 - Delivered: Implemented reasoned reopen and role-specific cancellation. Closed permits only management reopening and the narrow eligible replacement needed before reopen. Cancelled remains terminal. Reopening retains consumed time and the original SLA budget snapshot; an exhausted budget remains exhausted.
 - Changed paths: `tickets/lifecycle.py`, `tickets/assignment.py`, `tickets/models.py`, `organization/http.py`, migration 0014, `tests/test_ticket_lifecycle.py`
 - Checks: 42 backend tests on PostgreSQL and Ruff/mypy passed.
-- Review: Agent verified. Joint PO review pending.
+- Review: PO accepted all four service leaves. See attempt 01 for agent checks.
 - Remaining: Browser, real notification delivery and live SLA alert/breach projections remain unverified and belong to INT-02 and OPS-03/04. Runtime OpenAPI drift from FND-10 was not rerun. The live task-Done flow is not implemented in this Parent.
 - Commit/build: FND-12.04 implementation `c06c4ca` pushed to origin/phase/b-backend.
-- Next: Joint review of the four FND-12 leaves after sequential verification.
+- Next: FND-13.01 is eligible on request. Full Parent closure depends on INT-02.
