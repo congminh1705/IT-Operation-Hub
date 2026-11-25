@@ -80,7 +80,7 @@ Mutations atomically commit domain + audit + outbox, fully rolling back failures
 
 Multiple plan versions per ticket with partial uniqueness for one Effective. Same-plan DAG dependencies; no starts before predecessors Done. One unreturned AssetAssignment per asset via partial unique+transaction. Resource checks/reservations are atomic, not UI-only.
 
-Assignments lock relevant workforce/allocation rows in fixed order, re-read load/calendar/skills, then write. Schedule/skill/assignment edits follow the same order. Lock only needed resources, not all users. Physical granularity/isolation/order require pre-M1/M2 refinement; no DDL/migrations yet.
+Assignments lock relevant workforce/allocation rows in fixed order, re-read load/calendar/skills, then write. Schedule/skill/assignment edits follow the same order. Lock only needed resources, not all users. See the [PRE-02.02 lock-order and isolation proposal](../decisions/design-decisions.md#d-40-concurrency-outbox-approval-pre-0202) for scope, revalidation and redelivery. Physical implementation stays with the owning services.
 
 ## 4. Model calls outside transactions
 
@@ -112,11 +112,11 @@ Transient failures use bounded timeouts/retries/jittered backoff. Authorization/
 
 BR-16 defines minute-based formulas/concrete windows. Multi-period allocations follow schedule/period intersections and total remaining effort, not full effort repeated per period. Absence overlaps use interval union; missing data is not availability. Unallocated work is visible risk, not omitted reporting.
 
-Check load, skills/team schedules, predecessors, deadlines, commitments/SLA. Aggregate capacity does not prove schedulability. Period length/daily budget/calendar timezone/slot granularity remain D-40; DEMO schedules are not enterprise policy.
+Check load, skills/team schedules, predecessors, deadlines, commitments/SLA. Aggregate capacity does not prove schedulability. See the [PRE-02.01 period and verification proposal](../decisions/design-decisions.md#d-40-workforce-periods-pre-0201). Production calendars and budget values await the PO and operations; DEMO schedules are illustrative.
 
 ## 7. Approval and intervention
 
-Proposal: before/after/reason/impact/record-policy-workforce-plan versions/sources. Decision Pending→Approved/Rejected/Expired/Superseded; execution separately Pending/Running/Succeeded/Failed/Conflict. Approval is a decision, not effect success. Both decision/execution recheck rights/effective policies/capacity/versions. Stale→Conflict/new proposal, never automatic stale application.
+Proposal: before/after/reason/impact/record-policy-workforce-plan versions/sources. Decision Pending→Approved/Rejected/Expired/Superseded; execution separately Pending/Running/Succeeded/Failed/Conflict. Approval is a decision, not effect success. Both decision/execution recheck rights/effective policies/capacity/versions. Stale→Conflict/new proposal, never automatic stale application. See the [PRE-02.03 bounded automation contract](../decisions/design-decisions.md#d-40-bounded-automation-pre-0203) for live policy scope and limit decisions.
 
 Policy disable/assignment locks take effect before writes. Respect/audit manual overrides. Undo uses valid compensating actions, not history deletion or Done regression.
 

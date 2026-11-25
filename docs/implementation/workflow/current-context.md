@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- PRE-02 is EPIC_DONE after PO accepted all three leaves. [PRE-02.01 periods and verified inputs](task-history.md#task-pre-02-01-attempt-02), [PRE-02.02 concurrency and delivery](task-history.md#task-pre-02-02-attempt-02), [PRE-02.03 bounded automation](task-history.md#task-pre-02-03-attempt-02). Parent [PR #25](https://github.com/congminh1705/IT-Operation-Hub/pull/25) is open into main from the scoped delivery/pre-02 branch. PO merge pending. Live workforce configuration, automation grants and runtime verification stay with their consumer tasks.
+
 - [FE-11.02/attempt-02](task-history.md#task-fe-11-02-attempt-02), done. Decisions with reason, stale recovery and separate execution verified (103 unit, 11 Chromium). [Comparison](../evidence/FE-11.02/comparison.md). 6199c2a pushed and verified.
 
 - [FE-11.01/attempt-02](task-history.md#task-fe-11-01-attempt-02), done. Proposal diff and missing evidence verified (103 unit, 4 Chromium). [Comparison](../evidence/FE-11.01/comparison.md). dc4dcc7 pushed and verified.

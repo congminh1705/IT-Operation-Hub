@@ -134,6 +134,78 @@ This section records confirmed requirements and candidates for PO review. Candid
 | Access loss and regular handover | D-17/NFR01 require immediate access loss and protect the last active Admin. History is retained. Reassignment must preserve ticket/task eligibility and lock invariants. | Review replacement eligibility, reason and affected versions before a regular change. At confirmation serialize the last-Admin check, recheck eligibility/versions and apply handover and access changes consistently. Reject normal deactivation when no eligible replacement exists and escalate to an authorized owner. | FND-17.01, FND-17.02, FND-17.03 |
 | Emergency without replacement | D-40 leaves this branch open. Immediate access loss and assignment invariants are still binding. | First preference is an already eligible designated on-call replacement. When none exists, temporary authorization suspension, active-work containment and repair need an explicit approved contract, including authority, allowable state transitions, SLA and lock semantics. Do not auto-assign the last Admin, reactivate a revoked principal, silently clear a lock or report handover as complete. | FND-17.01, FND-17.02, FND-17.03 |
 
+<a id="d-40-workforce-periods-pre-0201"></a>
+
+### D-40 workforce periods and verified inputs (PRE-02.01)
+
+PO approved local-day periods, explicit schedule slots and the missing-input behavior on 2026-11-25. Production calendars, daily budgets and verification sources remain inputs to supply before operational use.
+
+| Topic | Confirmed behavior | Proposed setting or pending operational input | Consumer |
+| --- | --- | --- | --- |
+| Periods and boundaries | UTC storage and Asia/Ho_Chi_Minh business display. Measure capacity and allocations in integer minutes. | Use local calendar days as budget periods and explicitly bounded schedule intersections as slots. Represent every interval as [start, end), split at local midnight and convert to UTC before intersecting. Use minute precision and no blanket minimum slot duration until operations supplies one. | FND-15.01, WF-04 |
+| Working calendar and budget | Only configured working intervals count. Per-day capacity is the lesser of the configured budget and scheduled minutes remaining after absences. SLA clocks follow BR-08 through BR-10 independently of staff schedules. | Operations supplies the work schedules, holiday calendar and per-person daily budget. A configured day off has zero capacity. Missing schedule, holiday coverage or budget is unknown and blocks automatic allocation. No implicit weekday schedule, eight-hour budget or holiday feed. | FND-15, WF-04 |
+| Overlaps and multi-day work | Union overlapping schedule and absence intervals before calculating availability. Sum allocated remaining minutes for unfinished work, including Blocked. Every slot and period must fit. | Clip absences to scheduled intervals and allocation windows to approved slots. Allocate a multi-day task explicitly by period, totaling remaining effort exactly. If allocation is incomplete, show unallocated work as a risk and request clarification. | FND-15, FND-16, WF-04 |
+| Skill evidence | IT Manager and Admin configure and verify skills within their current authorized scope. Technician self records and model output are not verification. | Persist verifier identity, effective scope, verification time and evidence reference/version. Missing, expired or superseded evidence cannot satisfy a required skill. The real skill taxonomy and any validity policy need PO/operations approval. | FND-14, WF-02, WF-04 |
+| Effort source | Published template versions are immutable. Automation needs verified effort; undocumented work is not zero minutes. | IT Manager verifies a scoped estimate or template effort against traceable evidence such as a prior completed run or reviewed technical estimate. Record the source, version, verifier and positive minutes per step. AI suggestions may be reviewed as drafts. Without verified input, keep manual planning/clarification available and leave automation unable to assign. | WF-02, FND-16, WF-04 |
+
+**Scenario review using synthetic minutes**
+
+| Scenario | Inputs | Expected |
+| --- | --- | --- |
+| Overlapping absences | Schedule 09:00-12:00, daily budget 150, absences 09:30-10:30 and 10:00-11:00 | Union is 90 minutes. Scheduled remainder and effective capacity are 90 minutes. |
+| Multi-period fit | Remaining effort 150. Free capacity 120 on day 1 and 30 on day 2. | Explicit allocation 120 + 30 fits if both slots fit. Allocation 100 + 50 fails on day 2 even though the aggregate is 150. Repeating 150 into each day is invalid. |
+| Unknown evidence | Missing calendar or required skill verification, with positive verified effort | Automatic assignments are denied. The existing manual clarification path remains available with the missing field identified. |
+| Unknown effort | Verified skill and calendar, but an AI-only effort estimate | Keep it as a draft. It cannot authorize automated assignment or count as zero load. |
+
+<a id="d-40-concurrency-outbox-approval-pre-0202"></a>
+
+### D-40 concurrency, outbox and approval contracts (PRE-02.02)
+
+PO accepted this contract on 2026-11-25. Timing values are for the pilot; production use requires validation and operational signoff.
+
+| Boundary | Contract proposal | Consumer |
+| --- | --- | --- |
+| Lock order and isolation | PostgreSQL READ COMMITTED with explicit transaction row locks. Each command locks its affected authorization/grant and policy rows, then ticket, plan and task rows, then workforce and normalized local-day capacity rows, in that order and ascending stable keys within each group. All allocation and capacity writers use the same order. For missing period rows use a unique person/day row and insert-or-get before locking. Read authoritative versions, schedules, slot demand and current load after obtaining the locks. Retain conditional versions on writes. Close read transactions before external calls; lock contention retries may reuse the same intent only for known rolled-back transient transactions. | WF-04, FND-15, FND-16, FND-17 |
+| Uniqueness and capacity | Enforce one active assignment per task and one allocation row per assignment/person/period/slot; retain history. Period rows serialize competing aggregate and slot checks across all relevant plans. Verify required minutes against every slot and period after acquiring the capacity lock. Required assignment, allocations, audit and outbox commit together. Partial reassignment or overbooking rolls back. | WF-04, WF-07 |
+| Intent and delivery | API retries use the existing actor/operation/idempotency-key ledger and canonical validated payload digest. Worker transport dedupe uses event ID and handler. Business-effect identity is separate: use an immutable confirmed command or approved proposal ID plus action and target, enforced uniquely in the effect transaction. Do not derive identity from broker message, worker attempt or model output. Same intent/digest reconciles the prior result after current read authorization; changed digest conflicts. A new approval receives a new intent and checks current versions and scope again. | WF-05, WF-07, WF-08, AI-08 |
+| Lease and retry | Claim a committed delivery in a short transaction using a unique lease owner/token, DB-clock deadline and conditional heartbeat/finalization. An expired lease can be claimed by another worker. For a new database effect, lock and verify the current lease after domain locks in the same effect transaction, and commit the effect and completion together. A stale token cannot finalize or start a fresh effect. Finish the DB effect before queue ack. Candidate pilot values: lease 60 s, heartbeat 20 s, up to five attempts, with 5/15/45/120 s retry delays plus bounded jitter. Retry transient failure or known rollback. Terminal validation/authorization conflicts go to terminal outcome. Exhausted transient deliveries retain a redacted dead-letter record. Redrive uses the original identity after operator review. For an unconfirmed external result, reconcile by downstream idempotency key or status before redrive. | WF-05, WF-07, PRE-04 |
+| Approvals and exceptions | Approval is a decision, with execution tracked separately. A Pending record expires at its earliest validity limit; candidate default maximum is 24 h, clamped by applicable grant/policy/window end. Approve/deny only while pending and valid under the current authority and snapshot. If stale before decision, supersede and issue a fresh proposal only after re-evaluation. If expired, stale or revoked before effect, prevent execution and retain its conflict/expired reason. Explicit exception scope and expiry bind the approved intent and never extend deadlines, restore revoked rights or bypass capacity checks. | WF-08, WF-09, AI-08 |
+
+PostgreSQL reference: [Row-level locks](https://www.postgresql.org/docs/18/explicit-locking.html#LOCKING-ROWS) and [transaction isolation](https://www.postgresql.org/docs/18/transaction-iso.html).
+
+**Contract walkthroughs (synthetic examples)**
+
+| Scenario | Input | Expected |
+| --- | --- | --- |
+| Competing assignments | Two different tasks each request 60 minutes against the same 90-minute slot and person-day. | First transaction commits 60. Second rereads 30 free under the shared lock and returns conflict. One allocation/audit/outbox set persists. |
+| Approval becomes stale | Proposal uses workforce version 7. An absence changes it to 8 after approval or before the decision. | Before decision, supersede the stale proposal. After approval, execution reports conflict with zero writes and no blind retry. A replacement uses a new proposal and intent. |
+| Postcommit redelivery | The worker commits a confirmed effect and crashes before queue ack. | Redelivery observes the committed business-intent result and records delivery completion without another effect or audit. A different payload for that intent conflicts. |
+| Lease expires and external result is unknown | Worker A loses its lease. Worker B claims the delivery. A later response arrives. | A cannot finalize with its stale token. B reconciles the original intent/provider status before any retry. Exhaustion retains redacted dead-letter evidence. |
+
+<a id="d-40-bounded-automation-pre-0203"></a>
+
+### D-40 bounded automation policy (PRE-02.03)
+
+PO accepted the bounded automation design for PRE-02 closure on 2026-11-25. BR-17, BR-18 and D-38 remain the baseline. Live grants and numerical pilot caps must be explicitly configured and approved before automation uses them.
+
+| Boundary | Confirmed or proposed contract | Consumer |
+| --- | --- | --- |
+| Scope and grantor | An enabled, versioned policy must explicitly bind the published workflow ID/version, team IDs, priorities, action allowlist, grantor, limits and effective UTC interval. A manager grants only within current management authority and team scope. A policy cannot grant itself new rights, and a service identity cannot stand in for the grantor. Empty or omitted allowlists do not match any target. | WF-03, WF-07, AI-08 |
+| Assignment and adjustments | Within a current grant, automated assignment/reassignment is limited to eligible unstarted tasks. Verify current lock, dependencies, skills, period/slot capacity, and concurrency snapshots at commit. In-progress, manually locked, cross-team, priority, SLA or commitment changes require the relevant authorized management decision. An approval does not remove hard authorization and capacity constraints. | WF-04, WF-08, WF-09 |
+| Admin and restricted operations | Account creation/role changes, autonomous completion or closure, and shell execution are unavailable to AI_COORDINATOR. Human work uses existing service authorization; automation policy configuration cannot switch these actions on. | FND-06, WF-03, AI-08 |
+| Limits | Require explicit nonnegative adjustment limits and explicit reminder interval, recipient scope and rate limits before permitting the respective action. Missing, exhausted or zero action allowance denies the action. Count committed effects atomically under their intent keys. Candidate pilot for review: at most one automated reassignment per task per local day and one deadline reminder per task per eligible recipient per local day. These are proposed caps, never fallback settings. | WF-03, WF-06, WF-07, WF-09 |
+| Revocation, missing data and intervention | Disable/revoke effective immediately at the domain commit boundary. Re-evaluate claims, retries and approvals against the latest policy, grantor and state. Missing verification or a stale proposal leaves the action unapplied and surfaces a safe reason. A manager can use current permissions to manually intervene, preserving the existing preview, explicit confirmation, audit and feasibility checks. Human decisions remain distinct from automated effects. | FND-14, FND-15, WF-07, WF-08, WF-09 |
+
+**Scenario review**
+
+| Scenario | Expected |
+| --- | --- |
+| Disabled policy or grantor revoked after worker claim | Reject before write. A pending or previously approved action cannot re-enable the grant. Record the safe blocked reason. |
+| Allowed workflow but wrong team, priority or action | Reject the effect despite other fields matching. Empty scope cannot act as a wildcard. |
+| An eligible unstarted task is in scope but data or capacity is missing | Do not assign. Surface clarification when authorized, without substituting estimates or availability. |
+| Manager intervenes on in-progress or locked work | Show current record and affected allocations; require confirmation and applicable approval. Any stale version or overbooking blocks the write. |
+| Reminder limit has been reached or recipient lost scope | Suppress the reminder. Current recipient authorization is checked before delivery and repeated intents do not consume the budget twice. |
+
 Reference guidance for candidates: [NIST SP 800-63B-4](https://pages.nist.gov/800-63-4/sp800-63b.html) for password length, blocklist and throttling. [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) for server-side expiry, cookie settings and renewal on authentication changes. These references do not set this project's timeouts or quotas.
 
 The companion [PRE-01.02 foundation contract reconciliation](../technical/api-design.md#pre-0102-foundation-contract-reconciliation) records the API/DBML differences and downstream review gates.
