@@ -21,6 +21,7 @@ from app.modules.tickets.assignment import (
     TicketCommandRejected,
     check_version,
     lock_ticket,
+    require_ticket_not_held,
 )
 from app.modules.tickets.models import Ticket, TicketPriorityAdjustment, TicketSLABreach
 
@@ -78,6 +79,7 @@ def change_priority(
     if actor.role not in MANAGEMENT:
         raise TicketCommandRejected(403, "FORBIDDEN")
     row = lock_ticket(db, ticket_id)
+    require_ticket_not_held(db, row.id)
     check_version(row, body.expectedVersion)
     if row.status in ("Closed", "Cancelled"):
         raise TicketCommandRejected(409, "TICKET_READ_ONLY")

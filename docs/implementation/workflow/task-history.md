@@ -16062,3 +16062,72 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Implement the approved regular FND-17.02 handover.
 - Eligibility / remaining prerequisite: Follow task dependencies and PO review.
+
+<a id="task-fnd-17-02-attempt-01"></a>
+
+### FND-17.02 - Attempt 01 - 2026-11-25T23:24:33+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-17.02/attempt-01
+- Task: [Task card](../tasks/FND-17.02.md)
+- Parent / phase: FND-17 / B
+- Executor: Codex
+- Started at: 2026-11-25T23:24:33+07:00
+- Ended at: 2026-11-25T23:24:33+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Added exact-version normal handover for tickets and tasks and the PO-approved emergency suspension. Held work retains assignee, state, locks and SLA. Admin repairs holds only after confirming eligible replacements; repair leaves access suspended.
+- Delivered: Added exact-version normal handover for tickets and tasks and the PO-approved emergency suspension. Held work retains assignee, state, locks and SLA. Admin repairs holds only after confirming eligible replacements; repair leaves access suspended.
+- Incomplete scope / deviations: Real browser and affected-work delivery await integration. The emergency policy is recorded in D-40; team retirement is FND-17.03.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| `organization/access.py`, `organization/handover.py`, `organization/containment.py`, ticket/task write guards, migration 0024, OpenAPI and `tests/test_access_handover.py` | FND-17.02 | Service delivery and evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scoped acceptance | Task card criteria | 59 passed. Verified protected task handover rollback, emergency session revocation, hidden scope, blocked operations, rejection of ownerless Pending work, successful repair and preservation of SLA/lock. | pass | [Task card](../tasks/FND-17.02.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | `$env:ITOH_TEST_DATABASE_URL=<repo Compose PostgreSQL>; .venv/Scripts/python.exe -m pytest -qx -p no:cacheprovider --tb=short`; Ruff check/format; mypy app; frontend contract --check, five contract unit tests and scoped live OpenAPI comparison | Task evidence | 59 passed. Verified protected task handover rollback, emergency session revocation, hidden scope, blocked operations, rejection of ownerless Pending work, successful repair and preservation of SLA/lock. | pass |
+| integration | Real browser and affected-work evaluation | Full Parent evidence | Remaining at INT-03 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO acceptance pending.
+- Findings / resolution: 59 passed. Verified protected task handover rollback, emergency session revocation, hidden scope, blocked operations, rejection of ownerless Pending work, successful repair and preservation of SLA/lock.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Real browser and affected-work delivery await integration. The emergency policy is recorded in D-40; team retirement is FND-17.03.
+- Required resolution / owner: INT-03 and operations.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-17.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: Test commands above.
+- Commit / build / environment: FND-17.02 delivery on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review of FND-17.01 through FND-17.03.
+- Eligibility / remaining prerequisite: Follow task dependencies and PO review.

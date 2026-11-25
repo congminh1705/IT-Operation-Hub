@@ -86,6 +86,8 @@ def create_app(
             "updateTaskProgress",
             "transitionTask",
             "updateUser",
+            "previewUserHandover",
+            "repairUserHandover",
             "setTeamMembership",
         }:
             return error_response(422, "INVALID_INPUT")

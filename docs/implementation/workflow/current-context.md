@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-17.02](task-history.md#task-fnd-17-02-attempt-01), review. Added exact-version normal handover for tickets and tasks and the PO-approved emergency suspension. Held work retains assignee, state, locks and SLA. Admin repairs holds only after confirming eligible replacements; repair leaves access suspended. 59 backend tests passed. Board: 109 done, 2 review, 119 pending. Joint PO acceptance pending. FND-17.02 push receipt pending.
+
 - [FND-17.01](task-history.md#task-fnd-17-01-attempt-01), review. Added versioned Admin role, department and lock changes and membership removal with session revocation and last-active-Admin protection. 58 passed on PostgreSQL 18.7. Old cookies and prior team URLs were denied, unlock did not revive revoked cookies, and concurrent Admin locks preserved one active Admin. FND-17.01 push receipt pending.
 
 - PO accepted [FND-16.01](task-history.md#task-fnd-16-01-attempt-02), [FND-16.02](task-history.md#task-fnd-16-02-attempt-02) and [FND-16.03](task-history.md#task-fnd-16-03-attempt-02). All three leaves are done. Parent closure awaits INT-03. FND-17 authorized.
