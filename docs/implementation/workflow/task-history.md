@@ -12726,7 +12726,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/PRE-04.01.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [D-40 operations proposal](../../decisions/design-decisions.md#d-40-deployment-recovery-pre-0401).
-- Commit / build / environment: Implementation push receipt pending.
+- Commit / build / environment: Implementation 35afca7 pushed and verified on origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 

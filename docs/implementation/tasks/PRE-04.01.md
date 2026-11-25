@@ -78,5 +78,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: Source review and synthetic RPO/RTO, alert and coherent-backup walkthroughs passed. No deployment or restore run.
 - Review: Agent checked proposal. PO approval pending.
 - Remaining: Name operator and backup, confirm environment and pilot numbers, and supply operational inputs before use.
-- Commit/build: Implementation push receipt pending.
+- Commit/build: Implementation 35afca7 pushed and verified on origin/phase/b-backend.
 - Next: PRE-04.02 after PO review and continuation.
