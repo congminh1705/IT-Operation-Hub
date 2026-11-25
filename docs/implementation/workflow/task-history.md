@@ -15359,7 +15359,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/FND-15.01.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: Test commands above.
-- Commit / build / environment: FND-15.01 delivery on phase/b-backend.
+- Commit / build / environment: FND-15.01 implementation `6182059` pushed to origin/phase/b-backend; PostgreSQL 18.7 via repository Compose.
 
 #### 9. Execution record synchronization
 
@@ -15428,7 +15428,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/FND-15.02.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: Test commands above.
-- Commit / build / environment: FND-15.02 delivery on phase/b-backend.
+- Commit / build / environment: FND-15.02 implementation `1df29d1` pushed to origin/phase/b-backend; PostgreSQL 18.7 via repository Compose.
 
 #### 9. Execution record synchronization
 
