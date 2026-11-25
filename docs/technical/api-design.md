@@ -88,7 +88,7 @@ API06 includes M/A reasoned `POST /tasks/{id}/assignment-lock`; assignments neve
 | Conflict | 409 stale version/approval, same key/different digest, capacity/assignment conflict; no blind retry |
 | Other errors | 401 session, 403 function, 404 scope/missing, 422 input, 429 limits, 503 dependency; no stack |
 
-`expectedVersion` belongs to the edited aggregate. Approval also carries plan/task/workforce/policy snapshots. Failed conditional updates write no effects. Idempotency/effects are atomic; same in-flight key returns clear status, not arbitrary repeated provider calls. Command/key TTL/wait durations remain D-40.
+`expectedVersion` belongs to the edited aggregate. Approval also carries plan/task/workforce/policy snapshots. Failed conditional updates write no effects. Idempotency/effects are atomic; same in-flight key returns clear status, not arbitrary repeated provider calls. Command/key retention remains D-40. See the [PRE-02.02 intent, lease and approval proposal](../decisions/design-decisions.md#d-40-concurrency-outbox-approval-pre-0202) for candidate timing and retry contracts.
 
 ## Conceptual schemas for review
 

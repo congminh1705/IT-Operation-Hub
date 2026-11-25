@@ -11968,3 +11968,74 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: PRE-02.02 authorized.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-pre-02-02-attempt-01"></a>
+
+### PRE-02.02 - Attempt 01 - 2026-11-25T16:04:01+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: PRE-02.02/attempt-01
+- Task: [Task card](../tasks/PRE-02.02.md)
+- Parent / phase: PRE-02 / B
+- Executor: Codex
+- Started at: 2026-11-25T16:04:01+07:00
+- Ended at: 2026-11-25T16:04:01+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Refine concurrency, durable delivery and approval contracts.
+- Delivered: Mapped locks, capacity reservation, immutable intent identity, delivery leases and expiry to consumer tasks.
+- Incomplete scope / deviations: Timing candidates require PO approval. Real worker and database implementations remain deferred.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/decisions/design-decisions.md, docs/technical/architecture.md, docs/technical/api-design.md and workflow records | PRE-02 decisions and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Simultaneous allocation | Re-read locked capacity | First writes 60, second conflicts with 30 free | pass | [D-40 walkthroughs](../../decisions/design-decisions.md#d-40-concurrency-outbox-approval-pre-0202) |
+| Stale proposal | Block effect on version change | Version 7 versus 8 produces zero new effects | pass | [D-40 walkthroughs](../../decisions/design-decisions.md#d-40-concurrency-outbox-approval-pre-0202) |
+| Redelivery and takeover | Preserve original intent and reject stale lease | Same key retains one effect; stale token cannot finalize | pass | [D-40 walkthroughs](../../decisions/design-decisions.md#d-40-concurrency-outbox-approval-pre-0202) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Run Python fixture assertions for 90 minus 60 competing capacity, version 7 versus 8, repeated intent key/digest and stale lease token; review walkthroughs and git diff --check | Consistent documented result | Verified | pass |
+| application | Run application tests and build | Runtime verification for later consumers | Documentation-only scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent proposal review. PO approval pending.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Timing candidates require PO approval. Real worker and database implementations remain deferred.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/PRE-02.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [D-40 walkthroughs](../../decisions/design-decisions.md#d-40-concurrency-outbox-approval-pre-0202).
+- Commit / build / environment: Implementation push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PRE-02.03 after PO acceptance.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.

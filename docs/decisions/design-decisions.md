@@ -157,6 +157,31 @@ PO approved local-day periods, explicit schedule slots and the missing-input beh
 | Unknown evidence | Missing calendar or required skill verification, with positive verified effort | Automatic assignments are denied. The existing manual clarification path remains available with the missing field identified. |
 | Unknown effort | Verified skill and calendar, but an AI-only effort estimate | Keep it as a draft. It cannot authorize automated assignment or count as zero load. |
 
+<a id="d-40-concurrency-outbox-approval-pre-0202"></a>
+
+### D-40 concurrency, outbox and approval contracts (PRE-02.02)
+
+The design below is proposed for PO review. Configuration durations are pilot candidates, not approved production settings.
+
+| Boundary | Contract proposal | Consumer |
+| --- | --- | --- |
+| Lock order and isolation | PostgreSQL READ COMMITTED with explicit transaction row locks. Each command locks its affected authorization/grant and policy rows, then ticket, plan and task rows, then workforce and normalized local-day capacity rows, in that order and ascending stable keys within each group. All allocation and capacity writers use the same order. For missing period rows use a unique person/day row and insert-or-get before locking. Read authoritative versions, schedules, slot demand and current load after obtaining the locks. Retain conditional versions on writes. Close read transactions before external calls; lock contention retries may reuse the same intent only for known rolled-back transient transactions. | WF-04, FND-15, FND-16, FND-17 |
+| Uniqueness and capacity | Enforce one active assignment per task and one allocation row per assignment/person/period/slot; retain history. Period rows serialize competing aggregate and slot checks across all relevant plans. Verify required minutes against every slot and period after acquiring the capacity lock. Required assignment, allocations, audit and outbox commit together. Partial reassignment or overbooking rolls back. | WF-04, WF-07 |
+| Intent and delivery | API retries use the existing actor/operation/idempotency-key ledger and canonical validated payload digest. Worker transport dedupe uses event ID and handler. Business-effect identity is separate: use an immutable confirmed command or approved proposal ID plus action and target, enforced uniquely in the effect transaction. Do not derive identity from broker message, worker attempt or model output. Same intent/digest reconciles the prior result after current read authorization; changed digest conflicts. A new approval receives a new intent and checks current versions and scope again. | WF-05, WF-07, WF-08, AI-08 |
+| Lease and retry | Claim a committed delivery in a short transaction using a unique lease owner/token, DB-clock deadline and conditional heartbeat/finalization. An expired lease can be claimed by another worker. For a new database effect, lock and verify the current lease after domain locks in the same effect transaction, and commit the effect and completion together. A stale token cannot finalize or start a fresh effect. Finish the DB effect before queue ack. Candidate pilot values: lease 60 s, heartbeat 20 s, up to five attempts, with 5/15/45/120 s retry delays plus bounded jitter. Retry transient failure or known rollback. Terminal validation/authorization conflicts go to terminal outcome. Exhausted transient deliveries retain a redacted dead-letter record. Redrive uses the original identity after operator review. For an unconfirmed external result, reconcile by downstream idempotency key or status before redrive. | WF-05, WF-07, PRE-04 |
+| Approvals and exceptions | Approval is a decision, with execution tracked separately. A Pending record expires at its earliest validity limit; candidate default maximum is 24 h, clamped by applicable grant/policy/window end. Approve/deny only while pending and valid under the current authority and snapshot. If stale before decision, supersede and issue a fresh proposal only after re-evaluation. If expired, stale or revoked before effect, prevent execution and retain its conflict/expired reason. Explicit exception scope and expiry bind the approved intent and never extend deadlines, restore revoked rights or bypass capacity checks. | WF-08, WF-09, AI-08 |
+
+PostgreSQL reference: [Row-level locks](https://www.postgresql.org/docs/18/explicit-locking.html#LOCKING-ROWS) and [transaction isolation](https://www.postgresql.org/docs/18/transaction-iso.html).
+
+**Contract walkthroughs (synthetic examples)**
+
+| Scenario | Input | Expected |
+| --- | --- | --- |
+| Competing assignments | Two different tasks each request 60 minutes against the same 90-minute slot and person-day. | First transaction commits 60. Second rereads 30 free under the shared lock and returns conflict. One allocation/audit/outbox set persists. |
+| Approval becomes stale | Proposal uses workforce version 7. An absence changes it to 8 after approval or before the decision. | Before decision, supersede the stale proposal. After approval, execution reports conflict with zero writes and no blind retry. A replacement uses a new proposal and intent. |
+| Postcommit redelivery | The worker commits a confirmed effect and crashes before queue ack. | Redelivery observes the committed business-intent result and records delivery completion without another effect or audit. A different payload for that intent conflicts. |
+| Lease expires and external result is unknown | Worker A loses its lease. Worker B claims the delivery. A later response arrives. | A cannot finalize with its stale token. B reconciles the original intent/provider status before any retry. Exhaustion retains redacted dead-letter evidence. |
+
 ### D-40 login policy approved for FND-04.01
 
 PO approved the internal-app login policy on 2026-11-25. This supersedes the proposed values above for this scope.

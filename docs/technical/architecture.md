@@ -80,7 +80,7 @@ Mutations atomically commit domain + audit + outbox, fully rolling back failures
 
 Multiple plan versions per ticket with partial uniqueness for one Effective. Same-plan DAG dependencies; no starts before predecessors Done. One unreturned AssetAssignment per asset via partial unique+transaction. Resource checks/reservations are atomic, not UI-only.
 
-Assignments lock relevant workforce/allocation rows in fixed order, re-read load/calendar/skills, then write. Schedule/skill/assignment edits follow the same order. Lock only needed resources, not all users. Physical granularity/isolation/order require pre-M1/M2 refinement; no DDL/migrations yet.
+Assignments lock relevant workforce/allocation rows in fixed order, re-read load/calendar/skills, then write. Schedule/skill/assignment edits follow the same order. Lock only needed resources, not all users. See the [PRE-02.02 lock-order and isolation proposal](../decisions/design-decisions.md#d-40-concurrency-outbox-approval-pre-0202) for scope, revalidation and redelivery. Physical implementation stays with the owning services.
 
 ## 4. Model calls outside transactions
 
