@@ -72,12 +72,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-08.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-08-02-attempt-01).
+- Latest Report ID: FND-08.02/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-08-02-attempt-02).
 - Delivered: Admin-only P1-P4 SLA publication, BR-09 seed, optimistic and idempotent writes, audit and immutable old/new policy lookups.
 - Changed paths: src/backend/app/modules/sla/policy.py, organization/http.py, migrations/versions/0007_sla_policy.py and tests/test_organization.py.
 - Checks: 22 backend tests on PostgreSQL, 0 skipped. Ruff, mypy and Alembic offline SQL passed.
-- Review: Agent verified. PO implementation review pending.
+- Review: PO accepted implementation. Agent verification remains in attempt 01.
 - Remaining: Persistent ticket snapshots and real UI integration remain in FND-09 and INT-01. Production and browser checks not run.
 - Commit/build: Implementation d29aa10 pushed and verified on origin/phase/b-backend.
-- Next: PO reviews FND-08.02. Parent closure requires live integration evidence.
+- Next: Parent closure requires INT-01. FND-07.01 is technically eligible and awaits separate authorization.
