@@ -116,7 +116,7 @@ Check load, skills/team schedules, predecessors, deadlines, commitments/SLA. Agg
 
 ## 7. Approval and intervention
 
-Proposal: before/after/reason/impact/record-policy-workforce-plan versions/sources. Decision Pending→Approved/Rejected/Expired/Superseded; execution separately Pending/Running/Succeeded/Failed/Conflict. Approval is a decision, not effect success. Both decision/execution recheck rights/effective policies/capacity/versions. Stale→Conflict/new proposal, never automatic stale application.
+Proposal: before/after/reason/impact/record-policy-workforce-plan versions/sources. Decision Pending→Approved/Rejected/Expired/Superseded; execution separately Pending/Running/Succeeded/Failed/Conflict. Approval is a decision, not effect success. Both decision/execution recheck rights/effective policies/capacity/versions. Stale→Conflict/new proposal, never automatic stale application. See the [PRE-02.03 bounded automation contract](../decisions/design-decisions.md#d-40-bounded-automation-pre-0203) for live policy scope and limit decisions.
 
 Policy disable/assignment locks take effect before writes. Respect/audit manual overrides. Undo uses valid compensating actions, not history deletion or Done regression.
 

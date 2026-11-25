@@ -182,6 +182,30 @@ PostgreSQL reference: [Row-level locks](https://www.postgresql.org/docs/18/expli
 | Postcommit redelivery | The worker commits a confirmed effect and crashes before queue ack. | Redelivery observes the committed business-intent result and records delivery completion without another effect or audit. A different payload for that intent conflicts. |
 | Lease expires and external result is unknown | Worker A loses its lease. Worker B claims the delivery. A later response arrives. | A cannot finalize with its stale token. B reconciles the original intent/provider status before any retry. Exhaustion retains redacted dead-letter evidence. |
 
+<a id="d-40-bounded-automation-pre-0203"></a>
+
+### D-40 bounded automation policy (PRE-02.03)
+
+The confirmed baseline is BR-17, BR-18 and D-38. Specific live grants and pilot values remain unconfigured until an authorized manager supplies and approves them.
+
+| Boundary | Confirmed or proposed contract | Consumer |
+| --- | --- | --- |
+| Scope and grantor | An enabled, versioned policy must explicitly bind the published workflow ID/version, team IDs, priorities, action allowlist, grantor, limits and effective UTC interval. A manager grants only within current management authority and team scope. A policy cannot grant itself new rights, and a service identity cannot stand in for the grantor. Empty or omitted allowlists do not match any target. | WF-03, WF-07, AI-08 |
+| Assignment and adjustments | Within a current grant, automated assignment/reassignment is limited to eligible unstarted tasks. Verify current lock, dependencies, skills, period/slot capacity, and concurrency snapshots at commit. In-progress, manually locked, cross-team, priority, SLA or commitment changes require the relevant authorized management decision. An approval does not remove hard authorization and capacity constraints. | WF-04, WF-08, WF-09 |
+| Admin and restricted operations | Account creation/role changes, autonomous completion or closure, and shell execution are unavailable to AI_COORDINATOR. Human work uses existing service authorization; automation policy configuration cannot switch these actions on. | FND-06, WF-03, AI-08 |
+| Limits | Require explicit nonnegative adjustment limits and explicit reminder interval, recipient scope and rate limits before permitting the respective action. Missing, exhausted or zero action allowance denies the action. Count committed effects atomically under their intent keys. Candidate pilot for review: at most one automated reassignment per task per local day and one deadline reminder per task per eligible recipient per local day. These are proposed caps, never fallback settings. | WF-03, WF-06, WF-07, WF-09 |
+| Revocation, missing data and intervention | Disable/revoke effective immediately at the domain commit boundary. Re-evaluate claims, retries and approvals against the latest policy, grantor and state. Missing verification or a stale proposal leaves the action unapplied and surfaces a safe reason. A manager can use current permissions to manually intervene, preserving the existing preview, explicit confirmation, audit and feasibility checks. Human decisions remain distinct from automated effects. | FND-14, FND-15, WF-07, WF-08, WF-09 |
+
+**Scenario review**
+
+| Scenario | Expected |
+| --- | --- |
+| Disabled policy or grantor revoked after worker claim | Reject before write. A pending or previously approved action cannot re-enable the grant. Record the safe blocked reason. |
+| Allowed workflow but wrong team, priority or action | Reject the effect despite other fields matching. Empty scope cannot act as a wildcard. |
+| An eligible unstarted task is in scope but data or capacity is missing | Do not assign. Surface clarification when authorized, without substituting estimates or availability. |
+| Manager intervenes on in-progress or locked work | Show current record and affected allocations; require confirmation and applicable approval. Any stale version or overbooking blocks the write. |
+| Reminder limit has been reached or recipient lost scope | Suppress the reminder. Current recipient authorization is checked before delivery and repeated intents do not consume the budget twice. |
+
 ### D-40 login policy approved for FND-04.01
 
 PO approved the internal-app login policy on 2026-11-25. This supersedes the proposed values above for this scope.
