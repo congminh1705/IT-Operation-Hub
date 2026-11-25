@@ -70,6 +70,10 @@ def create_app(
             "listTickets",
             "listTicketEvents",
             "changeTicketPriority",
+            "createWorkforceSkill",
+            "listWorkforce",
+            "getWorkforce",
+            "updateWorkforce",
         }:
             return error_response(422, "INVALID_INPUT")
         if operation == "getCsrf":

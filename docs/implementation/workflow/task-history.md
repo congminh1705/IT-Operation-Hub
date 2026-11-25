@@ -15027,3 +15027,72 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: FND-14.01 may start on request. INT-02 remains the Parent closure gate.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-fnd-14-01-attempt-01"></a>
+
+### FND-14.01 - Attempt 01 - 2026-11-25T18:27:11+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-14.01/attempt-01
+- Task: [Task card](../tasks/FND-14.01.md)
+- Parent / phase: FND-14 / B
+- Executor: Codex
+- Started at: 2026-11-25T18:27:11+07:00
+- Ended at: 2026-11-25T18:27:11+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implement the selected FND-14 leaf in dependency order.
+- Delivered: Added scoped skill catalog and versioned workforce verification with reviewer, effective department, timestamp, evidence reference/version and optional explicit expiry. Stored required skills through the trusted task service boundary and exposed an eligibility check.
+- Incomplete scope / deviations: No production catalog seeded. Required-skill persistence has no public task mutation until the task aggregate is implemented at FND-16. Scoped Technician teammate lookup is tied to an authorized current ticket team. Browser wiring belongs to INT-03.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| `workforce/models.py`, `workforce/skills.py`, `organization/http.py`, migration 0017, OpenAPI, `tests/test_workforce_skills.py` | FND-14 implementation and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Verification, scope and eligibility | Manager/Admin authorized, self denied, invalid and expired evidence cannot satisfy requirements, minimal team views | Verified on PostgreSQL with four roles, missing and unverified skills, explicit expiry and current ticket scope | pass | `test_skill_verification_and_minimal_current_scope` |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | `src/backend: .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider --tb=short` (48 passed with PostgreSQL); Ruff and mypy; `python docs/api/generate_frontend_contract.py --check`; `python -B -m unittest discover -s docs/api -p test_frontend_contract.py` (5 passed) | Consistent documented result | Verified | pass |
+| integration | Browser, production workers and downstream domain checks | Full Parent evidence | INT-03 owns real integrated flows | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. Joint PO review pending.
+- Findings / resolution: Agent verified the scoped API with synthetic records on real PostgreSQL. PO approval is pending.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: No production catalog seeded. Required-skill persistence has no public task mutation until the task aggregate is implemented at FND-16. Scoped Technician teammate lookup is tied to an authorized current ticket team. Browser wiring belongs to INT-03.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-14.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Workforce skill tests](../../../src/backend/tests/test_workforce_skills.py).
+- Commit / build / environment: FND-14.01 push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Joint PO review after both FND-14 leaves pass.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.

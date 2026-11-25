@@ -5598,12 +5598,12 @@
     },
     "/workforce": {
       "get": {
-        "operationId": "listWorkforce",
-        "summary": "Search workforce",
         "tags": [
+          "Administration",
           "Workforce"
         ],
-        "description": "T self/minimal task lookup; M/A managed IT scope; no global private calendar for T. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "summary": "Workforce List",
+        "operationId": "listWorkforce",
         "security": [
           {
             "SessionCookie": []
@@ -5611,15 +5611,47 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/Page"
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000000,
+              "minimum": 1,
+              "default": 1
+            }
           },
           {
-            "$ref": "#/components/parameters/PageSize"
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20
+            }
+          },
+          {
+            "name": "ticket_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Scoped response.",
+            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
@@ -5629,96 +5661,67 @@
             }
           },
           "401": {
-            "description": "Missing/expired/revoked session.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Unauthorized"
           },
           "403": {
-            "description": "Function or CSRF/Origin denied.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Forbidden"
           },
           "404": {
-            "description": "Not found or outside scope; identical safe response.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Not Found"
           },
           "422": {
-            "description": "Field/business validation failed; no partial effects.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Unprocessable Content"
           },
           "503": {
-            "description": "Dependency unavailable; no fabricated success.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Service Unavailable"
           }
         },
-        "x-contract-id": "API07",
-        "x-required-roles": [
-          "TECHNICIAN",
-          "IT_MANAGER",
-          "ADMIN"
-        ],
-        "x-data-scope": "T self/minimal task lookup; M/A managed IT scope; no global private calendar for T.",
-        "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC-OPS01",
-        "x-business-rules": "BR-16; no assumed availability"
+        "description": "Paged skill summaries over the current workforce scope. A Technician defaults to self and can request a minimal lookup in an authorized ticket's current team."
       }
     },
     "/workforce/{id}": {
       "get": {
-        "operationId": "getWorkforce",
-        "summary": "Workforce details",
         "tags": [
+          "Administration",
           "Workforce"
         ],
-        "description": "T self/minimal scoped projection; M/A managed scope. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "summary": "Workforce Detail",
+        "operationId": "getWorkforce",
         "security": [
           {
             "SessionCookie": []
@@ -5733,108 +5736,102 @@
               "type": "string",
               "format": "uuid"
             }
+          },
+          {
+            "name": "ticket_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Scoped response.",
+            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/WorkforceView"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/WorkforceDetail"
+                    },
+                    {
+                      "$ref": "#/components/schemas/WorkforceView"
+                    }
+                  ]
                 }
               }
             }
           },
           "401": {
-            "description": "Missing/expired/revoked session.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Unauthorized"
           },
           "403": {
-            "description": "Function or CSRF/Origin denied.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Forbidden"
           },
           "404": {
-            "description": "Not found or outside scope; identical safe response.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Not Found"
           },
           "422": {
-            "description": "Field/business validation failed; no partial effects.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Unprocessable Content"
           },
           "503": {
-            "description": "Dependency unavailable; no fabricated success.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Service Unavailable"
           }
         },
-        "x-contract-id": "API07",
-        "x-required-roles": [
-          "TECHNICIAN",
-          "IT_MANAGER",
-          "ADMIN"
-        ],
-        "x-data-scope": "T self/minimal scoped projection; M/A managed scope.",
-        "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC-OPS01",
-        "x-business-rules": "BR-16; no assumed availability"
+        "description": "Management receives verification provenance within its current scope. Technician views return only the minimal projection for self or the current scoped ticket team."
       },
       "patch": {
-        "operationId": "updateWorkforce",
-        "summary": "Verify skills/schedule",
         "tags": [
+          "Administration",
           "Workforce"
         ],
-        "description": "MA confirms source data. Calendar/capacity values D-40; not attendance/payroll. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "summary": "Workforce Update",
+        "operationId": "updateWorkforce",
         "security": [
           {
             "SessionCookie": []
@@ -5851,101 +5848,24 @@
             }
           },
           {
-            "$ref": "#/components/parameters/Csrf"
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
-            "$ref": "#/components/parameters/Idempotency"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Committed successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/WorkforceView"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Missing/expired/revoked session.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Function or CSRF/Origin denied.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found or outside scope; identical safe response.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Field/business validation failed; no partial effects.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "Dependency unavailable; no fabricated success.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
             }
           }
-        },
-        "x-contract-id": "API07",
-        "x-required-roles": [
-          "IT_MANAGER",
-          "ADMIN"
         ],
-        "x-data-scope": "MA confirms source data. Calendar/capacity values D-40; not attendance/payroll.",
-        "x-implementation-status": "not-started",
         "requestBody": {
           "required": true,
           "content": {
@@ -5956,8 +5876,79 @@
             }
           }
         },
-        "x-source-use-cases": "UC-OPS01",
-        "x-business-rules": "BR-16; no assumed availability"
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkforceDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "description": "IT Manager or Admin verifies or revokes skill evidence in current scope. Self-verification is denied. Calendar configuration is a separate capability."
       }
     },
     "/workforce/{id}/absences": {
@@ -11803,6 +11794,180 @@
         "x-source-use-cases": "UC27–31",
         "x-business-rules": "BR-11; atomic assignment"
       }
+    },
+    "/workforce/skills": {
+      "get": {
+        "tags": [
+          "Administration",
+          "Workforce"
+        ],
+        "summary": "Workforce Skill Catalog",
+        "operationId": "listWorkforceSkills",
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkillCatalog"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "description": "Management reads shared and department-scoped skill catalog entries within current authority."
+      },
+      "post": {
+        "tags": [
+          "Administration",
+          "Workforce"
+        ],
+        "summary": "Workforce Skill Create",
+        "operationId": "createWorkforceSkill",
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SkillCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkillView"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ],
+        "description": "IT Manager adds skills in their active department. Admin may add shared or department-scoped skills."
+      }
     }
   },
   "components": {
@@ -13058,93 +13223,57 @@
         "additionalProperties": false
       },
       "WorkforceView": {
-        "type": "object",
         "properties": {
           "id": {
             "type": "string",
             "format": "uuid"
           },
           "version": {
-            "type": "integer",
-            "minimum": 1
+            "type": "integer"
           },
           "verified_skill_ids": {
-            "type": "array",
             "items": {
               "type": "string",
               "format": "uuid"
-            }
-          },
-          "calendar_timezone": {
-            "type": "string"
-          },
-          "available_minutes": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "allocated_remaining_minutes": {
-            "type": "integer",
-            "minimum": 0
+            },
+            "type": "array"
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "id",
           "version",
-          "verified_skill_ids",
-          "calendar_timezone"
-        ],
-        "additionalProperties": false
+          "verified_skill_ids"
+        ]
       },
       "WorkforceUpdate": {
-        "type": "object",
         "properties": {
           "expectedVersion": {
             "type": "integer",
-            "minimum": 1
+            "minimum": 1.0
           },
-          "verified_skill_ids": {
-            "type": "array",
+          "skills": {
             "items": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          "calendar_timezone": {
-            "type": "string"
-          },
-          "working_intervals": {
+              "$ref": "#/components/schemas/SkillVerification"
+            },
             "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "starts_at": {
-                  "type": "string",
-                  "description": "ISO8601 UTC, offset required.",
-                  "format": "date-time"
-                },
-                "ends_at": {
-                  "type": "string",
-                  "description": "ISO8601 UTC, offset required.",
-                  "format": "date-time"
-                }
-              },
-              "required": [
-                "starts_at",
-                "ends_at"
-              ],
-              "additionalProperties": false
-            }
+            "maxItems": 50,
+            "minItems": 1
           },
           "reason": {
             "type": "string",
+            "maxLength": 10000,
             "minLength": 10
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "expectedVersion",
+          "skills",
           "reason"
-        ],
-        "additionalProperties": false
+        ]
       },
       "AbsenceCreate": {
         "type": "object",
@@ -14609,34 +14738,30 @@
         "additionalProperties": false
       },
       "WorkforceViewPage": {
-        "type": "object",
         "properties": {
           "items": {
-            "type": "array",
             "items": {
               "$ref": "#/components/schemas/WorkforceView"
-            }
+            },
+            "type": "array"
           },
           "page": {
-            "type": "integer",
-            "minimum": 1
+            "type": "integer"
           },
           "page_size": {
-            "type": "integer",
-            "minimum": 1
+            "type": "integer"
           },
           "total": {
-            "type": "integer",
-            "minimum": 0
+            "type": "integer"
           }
         },
+        "type": "object",
         "required": [
           "items",
           "page",
           "page_size",
           "total"
-        ],
-        "additionalProperties": false
+        ]
       },
       "WorkflowViewPage": {
         "type": "object",
@@ -15596,6 +15721,248 @@
           "team_id",
           "previous_assignee_id",
           "assignee_id"
+        ]
+      },
+      "SkillCatalog": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/SkillView"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items"
+        ]
+      },
+      "SkillCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1
+          },
+          "department_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name"
+        ]
+      },
+      "SkillView": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "department_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "department_id"
+        ]
+      },
+      "SkillRecord": {
+        "properties": {
+          "skill_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "verified": {
+            "type": "boolean"
+          },
+          "verified_by": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "verified_department_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "verified_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evidence_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evidence_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "skill_id",
+          "version",
+          "verified",
+          "verified_by",
+          "verified_department_id",
+          "verified_at",
+          "expires_at",
+          "evidence_ref",
+          "evidence_version"
+        ]
+      },
+      "SkillVerification": {
+        "properties": {
+          "skill_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "verified": {
+            "type": "boolean"
+          },
+          "evidence_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evidence_version": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "skill_id",
+          "verified"
+        ]
+      },
+      "WorkforceDetail": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "verified_skill_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array"
+          },
+          "skills": {
+            "items": {
+              "$ref": "#/components/schemas/SkillRecord"
+            },
+            "type": "array"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "version",
+          "verified_skill_ids",
+          "skills"
         ]
       }
     }
