@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 52 backend tests passed on PostgreSQL. Two same-version writes returned 200/409; forced outbox error rolled back the absence; retry and replay created one final effect. Scope, distinct day states and unchanged ticket SLA verified. Three runtime OpenAPI operations match and five contract tests passed.
 - Review: Agent verified. Joint PO acceptance pending.
 - Remaining: Real browser and actual affected-work evaluation remain for INT-03 and downstream consumers. Production calendars, holidays and budgets require operational inputs.
-- Commit/build: FND-15.02 push receipt pending.
+- Commit/build: FND-15.02 implementation `1df29d1` pushed to origin/phase/b-backend.
 - Next: Joint review of FND-15.01 and FND-15.02.
