@@ -16200,3 +16200,210 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Joint PO review of FND-17.01 through FND-17.03.
 - Eligibility / remaining prerequisite: Follow task dependencies and PO review.
+
+<a id="task-fnd-17-01-attempt-02"></a>
+
+### FND-17.01 - Attempt 02 - 2026-11-25T23:33:04+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-17.01/attempt-02
+- Task: [Task card](../tasks/FND-17.01.md)
+- Parent / phase: FND-17 / B
+- Executor: Codex
+- Started at: 2026-11-25T23:33:04+07:00
+- Ended at: 2026-11-25T23:33:04+07:00
+- State before / after: review / done
+- Previous attempt / correction: Attempt 01.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO acceptance of FND-17 backend.
+- Delivered: Record PO acceptance of FND-17 backend.
+- Incomplete scope / deviations: Full integration awaits INT-01 and INT-03.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| Task card, board, context and history | FND-17.01 | Service delivery and evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scoped acceptance | Task card criteria | PO confirmed acceptance | pass | [Task card](../tasks/FND-17.01.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | No new technical verification during status change | Task evidence | PO confirmed acceptance | not-run |
+| integration | Real browser and affected-work evaluation | Full Parent evidence | Remaining at INT-01 and INT-03 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance recorded.
+- Findings / resolution: PO confirmed acceptance
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Full integration awaits INT-01 and INT-03.
+- Required resolution / owner: INT-01, INT-03 and operations.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-17.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: Test commands above.
+- Commit / build / environment: FND-17.01 delivery on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: INT-01.01 is eligible on request.
+- Eligibility / remaining prerequisite: Follow task dependencies and PO review.
+
+<a id="task-fnd-17-02-attempt-02"></a>
+
+### FND-17.02 - Attempt 02 - 2026-11-25T23:33:04+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-17.02/attempt-02
+- Task: [Task card](../tasks/FND-17.02.md)
+- Parent / phase: FND-17 / B
+- Executor: Codex
+- Started at: 2026-11-25T23:33:04+07:00
+- Ended at: 2026-11-25T23:33:04+07:00
+- State before / after: review / done
+- Previous attempt / correction: Attempt 01.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO acceptance of FND-17 backend.
+- Delivered: Record PO acceptance of FND-17 backend.
+- Incomplete scope / deviations: Full integration awaits INT-01 and INT-03.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| Task card, board, context and history | FND-17.02 | Service delivery and evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scoped acceptance | Task card criteria | PO confirmed acceptance | pass | [Task card](../tasks/FND-17.02.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | No new technical verification during status change | Task evidence | PO confirmed acceptance | not-run |
+| integration | Real browser and affected-work evaluation | Full Parent evidence | Remaining at INT-01 and INT-03 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance recorded.
+- Findings / resolution: PO confirmed acceptance
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Full integration awaits INT-01 and INT-03.
+- Required resolution / owner: INT-01, INT-03 and operations.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-17.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: Test commands above.
+- Commit / build / environment: FND-17.02 delivery on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: INT-01.01 is eligible on request.
+- Eligibility / remaining prerequisite: Follow task dependencies and PO review.
+
+<a id="task-fnd-17-03-attempt-02"></a>
+
+### FND-17.03 - Attempt 02 - 2026-11-25T23:33:04+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-17.03/attempt-02
+- Task: [Task card](../tasks/FND-17.03.md)
+- Parent / phase: FND-17 / B
+- Executor: Codex
+- Started at: 2026-11-25T23:33:04+07:00
+- Ended at: 2026-11-25T23:33:04+07:00
+- State before / after: review / done
+- Previous attempt / correction: Attempt 01.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO acceptance of FND-17 backend.
+- Delivered: Record PO acceptance of FND-17 backend.
+- Incomplete scope / deviations: Full integration awaits INT-01 and INT-03.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| Task card, board, context and history | FND-17.03 | Service delivery and evidence |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Scoped acceptance | Task card criteria | PO confirmed acceptance | pass | [Task card](../tasks/FND-17.03.md) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | No new technical verification during status change | Task evidence | PO confirmed acceptance | not-run |
+| integration | Real browser and affected-work evaluation | Full Parent evidence | Remaining at INT-01 and INT-03 | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance recorded.
+- Findings / resolution: PO confirmed acceptance
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Full integration awaits INT-01 and INT-03.
+- Required resolution / owner: INT-01, INT-03 and operations.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-17.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: Test commands above.
+- Commit / build / environment: FND-17.03 delivery on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: INT-01.01 is eligible on request.
+- Eligibility / remaining prerequisite: Follow task dependencies and PO review.

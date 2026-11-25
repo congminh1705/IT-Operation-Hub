@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- PO accepted [FND-17.01](task-history.md#task-fnd-17-01-attempt-02), [FND-17.02](task-history.md#task-fnd-17-02-attempt-02) and [FND-17.03](task-history.md#task-fnd-17-03-attempt-02). All three service leaves are done. Board: 112 done, 118 pending. INT-01.01 is eligible on request. Parent closure awaits INT-01 and INT-03.
+
 - [FND-17.03](task-history.md#task-fnd-17-03-attempt-01), review. Added reviewed all-open-work team retirement, atomic intake replacement, membership session revocation and membership.changed/load.changed outbox records. Historical ownership is preserved. 60 backend tests passed. Board: 109 done, 3 review, 118 pending. Joint PO acceptance pending. FND-17.03 implementation `0acfa10` pushed to origin/phase/b-backend.
 
 - [FND-17.02](task-history.md#task-fnd-17-02-attempt-01), review. Added exact-version normal handover for tickets and tasks and the PO-approved emergency suspension. Held work retains assignee, state, locks and SLA. Admin repairs holds only after confirming eligible replacements; repair leaves access suspended. 59 backend tests passed. Board: 109 done, 2 review, 119 pending. Joint PO acceptance pending. FND-17.02 implementation `9de8cfa` pushed to origin/phase/b-backend.

@@ -73,12 +73,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-17.03/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-17-03-attempt-01).
+- Latest Report ID: FND-17.03/attempt-02.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-17-03-attempt-02).
 - Delivered: Added reviewed all-open-work team retirement, atomic intake replacement, membership session revocation and membership.changed/load.changed outbox records. Historical ownership is preserved.
 - Changed files: `organization/http.py`, `organization/handover.py`, `organization/access.py`, OpenAPI, `tests/test_team_retirement.py`
 - Checks: 60 backend tests passed on PostgreSQL 18.7. Verified complete versus partial handover, stale competing membership/deactivation changes, old cookie revocation, destination intake plus active task/ticket routing, historical assignee retention and outbox. Six live OpenAPI operations and five contract checks passed.
-- Review: Agent verified. Joint PO acceptance pending.
+- Review: PO accepted all three backend leaves. Checks remain in attempt 01.
 - Remaining: Service evidence is ready for PO review. Real browser, affected-work processing and full Parent closure await INT-01 and INT-03.
 - Commit/build: FND-17.03 implementation `0acfa10` pushed to origin/phase/b-backend.
-- Next: Joint review of all three FND-17 leaves. Full Parent closure depends on INT-01 and INT-03.
+- Next: INT-01.01 is eligible on request. Full Parent closure awaits INT-01 and INT-03.
