@@ -50,6 +50,30 @@ class TicketAccess:
         team = Ticket.team_id.in_(self.team_ids)
         return team if scope == "work" else or_(own, team)
 
+    def can_view_internal(self, ticket: Ticket) -> bool:
+        return self.role in ("IT_MANAGER", "ADMIN") or (
+            self.role == "TECHNICIAN" and ticket.team_id in self.team_ids
+        )
+
+
+class TicketInternal(TicketPublic):
+    internal_context: str
+
+
+def get_ticket(
+    db: Session, access: TicketAccess, ticket_id: UUID
+) -> TicketPublic | TicketInternal | None:
+    row = db.scalar(select(Ticket).where(Ticket.id == ticket_id, access.predicate()))
+    if row is None:
+        return None
+    projected = public_ticket(row)
+    if access.can_view_internal(row):
+        return TicketInternal(
+            **projected.model_dump(),
+            internal_context=f"Impact: {row.impact}; Urgency: {row.urgency}",
+        )
+    return projected
+
 
 class TicketPage(BaseModel):
     items: list[TicketPublic]
