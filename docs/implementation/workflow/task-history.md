@@ -11744,7 +11744,7 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Detailed task handoff: [Task card](../tasks/FND-07.02.md#6-evidence-and-handoff).
 - Logs / screenshots / reports: [Backend tests](../../../src/backend/tests/test_auth_login.py). No UI changes or screenshots.
-- Commit / build / environment: Implementation push receipt pending.
+- Commit / build / environment: Implementation f1213a6 pushed and verified on origin/phase/b-backend.
 
 #### 9. Execution record synchronization
 

@@ -80,5 +80,5 @@ A future request authorizes the selected implementation (or this decision-refine
 - Checks: 26 tests on PostgreSQL, zero skipped. Ruff, mypy and offline Alembic SQL passed.
 - Review: Agent verified. PO review pending.
 - Remaining: Browser cutover under INT-01 and deployment blocklist setup. Previously issued restricted sessions without verifiers require an authorized replacement credential.
-- Commit/build: Implementation push receipt pending.
+- Commit/build: Implementation f1213a6 pushed and verified on origin/phase/b-backend.
 - Next: PO reviews FND-07.02. Parent closure awaits INT-01.
