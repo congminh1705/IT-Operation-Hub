@@ -301,6 +301,30 @@ PO approved the PRE-04.01 pilot plan on 2026-11-25, including RPO <= 24 h, RTO <
 | Outbox age exceeds the pilot threshold while DB remains healthy and broker is unavailable | Show backlog and notify operations. Core writes retain durable outbox state; recovery uses the recorded intent and measures catch-up. |
 | No approved operator or no escalation acknowledgement | Mark deployment readiness incomplete and record the missing assignment or alert route. |
 
+<a id="d-40-release-isolated-recovery-pre-0402"></a>
+
+### D-40 controlled release and isolated recovery (PRE-04.02)
+
+This procedure is proposed for PO review. Use the approved PRE-04.01 pilot targets when evaluating rehearsal results. Production deployment, failover and external egress each require their own authorization.
+
+| Gate | Required sequence and evidence |
+| --- | --- |
+| 1. Release preparation | Pin the image or artifact digest, expected schema revision, compatible previous release, migration plan and identity of the single migration runner. Verify change approval, environment-specific secrets and a readable, coherent DB/object recovery point. Stage the upgrade and compatibility checks for API plus worker. Record release ID and affected data. Block traffic switch while prerequisites are missing. |
+| 2. Single upgrade | Pause incompatible traffic and consumers, and stop Beat when the migration plan requires a maintenance window. Exactly one authorized migration runner acquires an environment-level database lock before checking the starting revision and migrating. Replica startup never migrates. Save before/after schema revision, timestamps and commit status. |
+| 3. Failed migration | Keep new traffic and incompatible workers stopped. Check whether the transaction rolled back and whether any nontransactional or external step applied. If cleanly rolled back, verify the old schema, artifacts and worker compatibility before returning to the old deployment. If state is partial or schema is incompatible, quarantine and follow the approved forward-fix or coherent restoration path. No blind downgrade or repeated upgrade against unknown state. |
+| 4. Isolated recovery | Use separate staging/recovery DB, storage, broker and credentials. Deny provider, email and other external effect egress before restore and verify those blocks. Keep workers and Beat stopped and avoid importing live queue messages. Select a verified coherent database point plus object-version manifest and restore privately. Record backup identity, event watermarks and incident/declaration times. |
+| 5. Validation and effect reconciliation | Check schema, DB/object linkage, checksums, ACL/session projections, ticket clocks and preserved snapshots, durable outbox, confirmed command ledger and redacted audit. Compare pre-loss effect identifiers from independent records with restored state. If an external effect may have succeeded after the restore point or a result is unknown, quarantine it and reconcile with operators/provider before any replay. Do not assume a restored missing ledger row proves the effect did not happen. |
+| 6. Controlled resume | Keep production side effects blocked during rehearsal. Bring up read-only readiness first, then explicitly release a scoped worker and one Beat only after ACLs, leases, verified outbox intent identity and backlog are reviewed. Reconcile before retry. Observe lag, errors, duplicate effects and SLA catch-up. Authorized production release separately decides egress and traffic switch after checks pass. If a gate regresses, stop progression and retain logs/evidence. |
+
+**QA-05 handoff evidence:** artifact and migration runner identity, source and target revisions, clean vs partial failure outcome, backup/manifest checks, proof egress remained blocked, worker/Beat status, reconciliation sample, before/after ACL and clock evidence, actual RPO/RTO and approver for any production resume.
+
+| Synthetic walkthrough | Expected |
+| --- | --- |
+| Migration fails before commit and previous revision remains intact. | Do not switch to new traffic. Only return to the previous version after compatibility and readiness pass. |
+| Migration fails after a nontransactional change or schema state is unknown. | Quarantine new deployment. Require an explicit forward-fix or coherent restore plan before resume. |
+| Recovery manifest is incomplete or an effect is unconfirmed after the recovery point. | Keep workers and external traffic blocked. Resolve missing objects or reconcile the original effect before actions can resume. |
+| Isolated restore validates identity, clocks and outbox. | Record measured rehearsal results. Start authorized scoped rehearsal workers with egress blocked. Production switch is a separate decision. |
+
 ### D-40 login policy approved for FND-04.01
 
 PO approved the internal-app login policy on 2026-11-25. This supersedes the proposed values above for this scope.

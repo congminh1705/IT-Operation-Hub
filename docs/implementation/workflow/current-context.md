@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [PRE-04.02/attempt-01](task-history.md#task-pre-04-02-attempt-01), review. Documented single migration runner, rollback/forward split, isolated restore/egress blocks and evidence gates for controlled resume. Synthetic walkthroughs passed; no real deployment. Implementation push receipt pending.
+
 - [PRE-04.01/attempt-02](task-history.md#task-pre-04-01-attempt-02), done. PO accepted pilot targets and authorized PRE-04.02. Production and deployment remain separate.
 
 - [PRE-04.01/attempt-01](task-history.md#task-pre-04-01-attempt-01), review. Deployment environments, alert ownership, load/lag and backup controls with candidate RPO/RTO documented. Synthetic checks passed. Deployment/restore not run. Implementation 35afca7 pushed and verified on origin/phase/b-backend.

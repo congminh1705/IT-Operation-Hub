@@ -142,6 +142,8 @@ DEMO accounts/data/test DB separate from production. D-48 Gemini free-tier DEMO 
 
 ### Proposed release and recovery order
 
+See the [PRE-04.02 release and isolation contract](../decisions/design-decisions.md#d-40-release-isolated-recovery-pre-0402) for migration failure branches, replay quarantine and QA-05 evidence.
+
 | Step | Planned condition/action | Control |
 | --- | --- | --- |
 | Prerelease | Authorization, environment-correct settings/secrets, compatibility/readable backup | Not performed; design is not production execution approval |

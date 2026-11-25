@@ -12808,3 +12808,74 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: PRE-04.02 authorized.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-pre-04-02-attempt-01"></a>
+
+### PRE-04.02 - Attempt 01 - 2026-11-25T16:47:47+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: PRE-04.02/attempt-01
+- Task: [Task card](../tasks/PRE-04.02.md)
+- Parent / phase: PRE-04 / B
+- Executor: Codex
+- Started at: 2026-11-25T16:47:47+07:00
+- Ended at: 2026-11-25T16:47:47+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Finalize release and isolated recovery sequence.
+- Delivered: Defined single-runner migrations, compatibility and failure gate, scoped restore and replay-safe controlled resume.
+- Incomplete scope / deviations: PO review and future QA-05 live evidence. No deployment or restore executed.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/decisions/design-decisions.md, docs/technical/architecture.md and PRE-04.02 workflow records | PRE-04 decisions and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Migration failure | Avoid new traffic on failed/partial schema | Clean rollback and forward-fix branches reviewed | pass | [D-40 release and recovery walkthroughs](../../decisions/design-decisions.md#d-40-release-isolated-recovery-pre-0402) |
+| Isolated restore | Prevent external effects and verify coherent sources | Pause, egress deny and reconciliation gates documented | pass | [D-40 release and recovery walkthroughs](../../decisions/design-decisions.md#d-40-release-isolated-recovery-pre-0402) |
+| Controlled resume | Separate staging rehearsal from production authorization | Worker/Beat startup and evidence order reviewed | pass | [D-40 release and recovery walkthroughs](../../decisions/design-decisions.md#d-40-release-isolated-recovery-pre-0402) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Review NFR04/NFR21/A13 and architecture; Python checks all gates and four failure scenarios; git diff --check | Consistent documented result | Verified | pass |
+| application | Run application tests and build | Runtime verification for later consumers | Documentation-only scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent proposal review. PO approval pending.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO review and future QA-05 live evidence. No deployment or restore executed.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/PRE-04.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [D-40 release and recovery walkthroughs](../../decisions/design-decisions.md#d-40-release-isolated-recovery-pre-0402).
+- Commit / build / environment: Implementation push receipt pending.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews PRE-04.02 before Parent closure.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
