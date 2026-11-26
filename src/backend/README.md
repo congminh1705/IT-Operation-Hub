@@ -100,5 +100,17 @@ Removal and deactivation of active teams return HANDOVER_REQUIRED until
 the FND-17 handover service owns that transaction. Effective team IDs are
 computed from current eligible memberships by team_scope.effective_team_ids.
 Requester lookups expose only the active intake or their own department.
-Ticket categories are supplied by FND-08.01, and integrated UI verification
-is part of INT-01.
+Ticket categories use /api/v1/categories for Admin management and the
+active-only ticket_categories lookup for request forms. Inactive categories
+retain their stable ID, code and name. Integrated UI verification belongs
+to INT-01 and the ticket integration tasks.
+
+## Default SLA policy (FND-08.02)
+
+The migration seeds version 1 from BR-09. Admin reads the current policy
+through GET /api/v1/sla/policy and publishes the complete positive P1-P4
+table through PATCH with expectedVersion, reason, session CSRF, Origin and
+Idempotency-Key. PostgreSQL rejects updates and deletes to prior revisions.
+Ticket creation should call snapshot_policy in its own transaction and
+persist the captured version and all four budgets. Changing defaults
+does not modify a previously captured snapshot.
