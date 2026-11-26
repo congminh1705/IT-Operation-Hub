@@ -302,3 +302,297 @@ def test_concurrent_intake_switch_keeps_exactly_one_active(database: Database) -
             lookup = requester.get("/api/v1/lookups?kind=intake_teams").json()
             assert lookup["total"] == 1 and lookup["items"][0]["id"] == chosen["id"]
             assert set(lookup["items"][0]) == {"id", "name", "active", "version"}
+
+
+def test_category_history_and_public_active_choices(database: Database) -> None:
+    from sqlalchemy import select
+
+    from app.infrastructure.models import AuditLog
+    from app.modules.tickets.categories import TicketCategory
+
+    app = create_app(AuthService(database), SETTINGS)
+    base = "/api/v1/categories"
+    with (
+        TestClient(app, base_url=ORIGIN) as admin,
+        TestClient(app, base_url=ORIGIN) as requester,
+    ):
+        _, admin_headers = actor(database, admin, "ADMIN")
+        _, requester_headers = actor(database, requester, "REQUESTER")
+        draft = {"name": "  Network   Access  "}
+        assert (
+            requester.post(
+                base,
+                json=draft,
+                headers={
+                    **requester_headers,
+                    "Idempotency-Key": "unauthorized",
+                },
+            ).status_code
+            == 403
+        )
+        assert requester.get(base).status_code == 403
+        created = admin.post(
+            base,
+            json=draft,
+            headers={
+                **admin_headers,
+                "Idempotency-Key": "initial",
+            },
+        )
+        assert created.status_code == 201
+        identifier = created.json()["id"]
+        assert created.json()["name"] == "Network Access"
+        lookup = "/api/v1/lookups?kind=ticket_categories"
+        result = requester.get(lookup)
+        assert result.status_code == 200 and result.json()["total"] == 1
+        assert set(result.json()["items"][0]) == {"id", "name", "active", "version"}
+        assert (
+            admin.post(
+                base,
+                json={"name": "network access"},
+                headers={
+                    **admin_headers,
+                    "Idempotency-Key": "duplicate",
+                },
+            ).status_code
+            == 409
+        )
+        change = {
+            "expectedVersion": 1,
+            "active": False,
+            "reason": "Category retired from intake",
+        }
+        detail = f"{base}/{identifier}"
+        result = admin.patch(
+            detail,
+            json=change,
+            headers={
+                **admin_headers,
+                "Idempotency-Key": "disable",
+            },
+        )
+        assert result.status_code == 200 and result.json()["version"] == 2
+        assert (
+            admin.patch(
+                detail,
+                json=change,
+                headers={
+                    **admin_headers,
+                    "Idempotency-Key": "stale",
+                },
+            ).status_code
+            == 409
+        )
+        assert admin.get(detail).json()["name"] == "Network Access"
+        assert admin.get(base + "?active=true").json()["total"] == 0
+        assert requester.get(lookup).json()["total"] == 0
+        assert requester.get(detail).status_code == 403
+        assert (
+            admin.post(
+                base,
+                json=draft,
+                headers={
+                    **admin_headers,
+                    "Idempotency-Key": "historical-duplicate",
+                },
+            ).status_code
+            == 409
+        )
+        with database.session() as db:
+            stored = db.get(TicketCategory, UUID(identifier))
+            assert (
+                stored is not None
+                and not stored.active
+                and stored.code == UUID(identifier).hex
+            )
+            assert (
+                len(
+                    db.scalars(
+                        select(AuditLog).where(AuditLog.target_id == UUID(identifier))
+                    ).all()
+                )
+                == 2
+            )
+
+
+def test_sla_publish_is_versioned_and_keeps_old_policy(database: Database) -> None:
+    from copy import deepcopy
+
+    import pytest
+    from sqlalchemy import text
+    from sqlalchemy.exc import IntegrityError
+
+    from app.modules.sla.policy import snapshot_policy
+
+    app = create_app(AuthService(database), SETTINGS)
+    path = "/api/v1/sla/policy"
+    with database.session() as db:
+        old = snapshot_policy(db)
+        assert old is not None and old.priority_budgets.P3.resolution_seconds == 86400
+
+    with (
+        TestClient(app, base_url=ORIGIN) as admin,
+        TestClient(app, base_url=ORIGIN) as requester,
+    ):
+        _, headers = actor(database, admin, "ADMIN")
+        _, requester_headers = actor(database, requester, "REQUESTER")
+        budgets = admin.get(path).json()["priority_budgets"]
+        assert budgets["P1"] == {"response_seconds": 900, "resolution_seconds": 14400}
+        body = {
+            "expectedVersion": 1,
+            "priority_budgets": budgets,
+            "reason": "Update response commitments",
+        }
+        assert requester.get(path).status_code == 403
+        assert (
+            requester.patch(
+                path,
+                json=body,
+                headers={
+                    **requester_headers,
+                    "Idempotency-Key": "deny",
+                },
+            ).status_code
+            == 403
+        )
+        invalid = deepcopy(body)
+        invalid["priority_budgets"]["P3"]["resolution_seconds"] = 0
+        assert (
+            admin.patch(
+                path,
+                json=invalid,
+                headers={
+                    **headers,
+                    "Idempotency-Key": "invalid",
+                },
+            ).status_code
+            == 422
+        )
+        incomplete = deepcopy(body)
+        del incomplete["priority_budgets"]["P4"]
+        assert (
+            admin.patch(
+                path,
+                json=incomplete,
+                headers={
+                    **headers,
+                    "Idempotency-Key": "incomplete",
+                },
+            ).status_code
+            == 422
+        )
+        budgets["P3"]["resolution_seconds"] = 43200
+        confirmed = {**headers, "Idempotency-Key": "publish-v2"}
+        result = admin.patch(path, json=body, headers=confirmed)
+        assert result.status_code == 200 and result.json()["version"] == 2
+        assert set(result.json()) == {"version", "priority_budgets"}
+        assert (
+            admin.get(path).json()["priority_budgets"]["P3"]["resolution_seconds"]
+            == 43200
+        )
+        assert (
+            admin.patch(
+                path,
+                json=body,
+                headers={
+                    **headers,
+                    "Idempotency-Key": "stale",
+                },
+            ).status_code
+            == 409
+        )
+
+        latest = deepcopy(body)
+        latest["expectedVersion"] = 2
+        latest["priority_budgets"]["P3"]["resolution_seconds"] = 54000
+        assert (
+            admin.patch(
+                path,
+                json=latest,
+                headers={
+                    **headers,
+                    "Idempotency-Key": "publish-v3",
+                },
+            ).status_code
+            == 200
+        )
+        assert admin.patch(path, json=body, headers=confirmed).json() == result.json()
+
+    with database.session() as db:
+        original = snapshot_policy(db, version=1)
+        current = snapshot_policy(db)
+        assert original == old
+        assert (
+            current is not None
+            and current.priority_budgets.P3.resolution_seconds == 54000
+        )
+        assert (
+            original is not None
+            and original.priority_budgets.for_priority("P3").resolution_seconds == 86400
+        )
+    with pytest.raises(IntegrityError, match="immutable"), database.transaction() as db:
+        db.execute(
+            text(
+                "UPDATE sla_policy_revision SET reason = 'rewritten' WHERE version = 1"
+            )
+        )
+
+
+def test_sla_concurrent_publish_only_accepts_one_expected_version(
+    database: Database,
+) -> None:
+    from concurrent.futures import ThreadPoolExecutor
+    from threading import Barrier
+
+    from sqlalchemy import func, select
+
+    from app.infrastructure.models import AuditLog
+    from app.modules.sla.policy import PolicyRevision
+
+    app = create_app(AuthService(database), SETTINGS)
+    path = "/api/v1/sla/policy"
+    with (
+        TestClient(app, base_url=ORIGIN) as first,
+        TestClient(app, base_url=ORIGIN) as second,
+    ):
+        _, one = actor(database, first, "ADMIN")
+        _, two = actor(database, second, "ADMIN")
+        budgets = first.get(path).json()["priority_budgets"]
+        barrier = Barrier(2)
+
+        def publish(client: TestClient, headers: dict[str, str], budget: int) -> int:
+            draft = {
+                "expectedVersion": 1,
+                "priority_budgets": {
+                    **budgets,
+                    "P3": {**budgets["P3"], "resolution_seconds": budget},
+                },
+                "reason": "Concurrent policy revision test",
+            }
+            barrier.wait(timeout=5)
+            response = client.patch(
+                path,
+                json=draft,
+                headers={
+                    **headers,
+                    "Idempotency-Key": f"sla-{budget}",
+                },
+            )
+            return int(response.status_code)
+
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            pending = [
+                pool.submit(publish, first, one, 43200),
+                pool.submit(publish, second, two, 54000),
+            ]
+            assert sorted(future.result(timeout=10) for future in pending) == [200, 409]
+    with database.session() as db:
+        assert db.scalar(select(func.count()).select_from(PolicyRevision)) == 2
+        assert (
+            db.scalar(
+                select(func.count())
+                .select_from(AuditLog)
+                .where(AuditLog.action == "sla.policy_publish")
+            )
+            == 1
+        )

@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- FND-08 is EPIC_DONE following PO acceptance of both leaves and INT-01. [Category acceptance](task-history.md#task-fnd-08-01-attempt-02) and [SLA acceptance](task-history.md#task-fnd-08-02-attempt-02). FND-05 PR #30 merged at 641407e.
+
 - FND-05 is EPIC_DONE following PO acceptance of both leaves and INT-01. [Department acceptance](task-history.md#task-fnd-05-01-attempt-02) and [team acceptance](task-history.md#task-fnd-05-02-attempt-02). FND-04 PR #29 merged at 8a8d876.
 
 - FND-04 is EPIC_DONE following PO acceptance of both leaves and INT-01. [Login acceptance](task-history.md#task-fnd-04-01-attempt-02) and [session acceptance](task-history.md#task-fnd-04-02-attempt-02). FND-03 PR #28 merged into main at f6d215d.

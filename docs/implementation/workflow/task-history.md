@@ -12378,3 +12378,292 @@ FND-04 Parent closure is supported by PO acceptance of both backend leaves and I
 - Eligibility / remaining prerequisite: D-40 provisioning decisions and a verified source of D-29 evidence.
 
 FND-05 Parent closure is supported by PO acceptance of both Phase B leaves and INT-01 (Phase C closure commit b6e42a2).
+
+<a id="task-fnd-08-01-attempt-01"></a>
+
+### FND-08.01 - Attempt 01 - 2026-11-25T15:35:03+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-08.01/attempt-01
+- Task: [Task card](../tasks/FND-08.01.md)
+- Parent / phase: FND-08 / B
+- Executor: Codex
+- Started at: 2026-11-25 (exact time not captured)
+- Ended at: 2026-11-25T15:35:03+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None. FND-05.02 done. PO authorized the FND-08.01 leaf.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implement category lifecycle and permitted lookups.
+- Delivered: A PostgreSQL category table with retained UUID, normalized unique name and stable unique internal code. Admin writes use the existing Origin/CSRF, idempotency, audit and version behavior. Request-form lookup exposes active categories only.
+- Incomplete scope / deviations: Versioned SLA belongs to FND-08.02. Real ticket history integration belongs to later tickets and INT tasks.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/tickets/categories.py and migrations/versions/0006_ticket_categories.py | TicketCategory | Persist historical references |
+| src/backend/app/modules/organization/http.py | register_named_lifecycle and scoped lookup | Reuse administration controls |
+| src/backend/tests/test_organization.py | Category API regression | Verify PostgreSQL and access rules |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Category lifecycle | Normalized unique names, stable IDs/codes and non-destructive deactivation | PostgreSQL test retains name/code, rejects both active and inactive duplicate names and rejects stale edits | pass | [API test](../../../src/backend/tests/test_organization.py) |
+| Safe allowed lookups | Admin management only, active choices visible in requester lookup | Requester list and mutation forbidden; authorized lookup only includes active categories | pass | [API test](../../../src/backend/tests/test_organization.py) |
+| Actual history and UI integration | Verify later live ticket views | Service table retains the historical record; integrated browser and ticket association not run | not-run | [Parent coverage](../package-task-coverage.md#fnd-08) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | .venv/Scripts/python.exe -m pytest -q with local PostgreSQL ITOH_TEST_DATABASE_URL | All backend cases pass | 20 passed, 0 skipped; upstream TestClient warning | pass |
+| src/backend | .venv/Scripts/ruff.exe check app migrations tests and .venv/Scripts/mypy.exe app migrations tests | Lint and strict typing pass | Exit 0 for both | pass |
+| deployment | Browser, production and downstream ticket history | Run downstream consumer flows | Out of leaf scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO review pending.
+- Findings / resolution: Existing department tests continue to pass after sharing implementation with category lifecycle.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent is incomplete. SLA leaf and downstream integration remain.
+- Required resolution / owner: PO reviews this leaf; later owners deliver SLA and ticket integration.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-08.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [PostgreSQL API tests](../../../src/backend/tests/test_organization.py). No visual changes.
+- Commit / build / environment: Implementation d35eca3 pushed and verified on origin/phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated with latest report.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FND-08.01.
+- Eligibility / remaining prerequisite: FND-08.02 awaits done and separate authorization.
+
+<a id="task-fnd-08-01-attempt-02"></a>
+
+### FND-08.01 - Attempt 02 - 2026-11-25T15:38:04+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-08.01/attempt-02
+- Task: [Task card](../tasks/FND-08.01.md)
+- Parent / phase: FND-08 / B
+- Executor: Codex
+- Started at: 2026-11-25T15:38:04+07:00
+- Ended at: 2026-11-25T15:38:04+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Agent verification](#task-fnd-08-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO acceptance and continue to FND-08.02.
+- Delivered: Category leaf marked done with evidence references synchronized.
+- Incomplete scope / deviations: FND-08.02 and INT-01 acceptance remain.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-08.01.md and workflow records | PO signoff | Synchronize closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Leaf acceptance | Agent evidence and PO signoff | PO accepted | pass | [Original verification](#task-fnd-08-01-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Check board and task history anchors; git diff --check | Synchronized closure | Category leaf done | pass |
+| src/backend | Repeat PostgreSQL suite | Prior evidence available | Documentation-only closure | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance.
+- Findings / resolution: PO reviewed and requested continuation.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: INT-01 gates Parent acceptance.
+- Required resolution / owner: Integration owners provide live-flow evidence.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-08.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-08-01-attempt-01).
+- Commit / build / environment: Implementation d35eca3 pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-08.02.
+- Eligibility / remaining prerequisite: Direct dependency accepted; continuation authorized.
+
+<a id="task-fnd-08-02-attempt-01"></a>
+
+### FND-08.02 - Attempt 01 - 2026-11-25T15:40:20+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-08.02/attempt-01
+- Task: [Task card](../tasks/FND-08.02.md)
+- Parent / phase: FND-08 / B
+- Executor: Codex
+- Started at: 2026-11-25 (exact time not captured)
+- Ended at: 2026-11-25T15:40:20+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None. FND-08.01 accepted before implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Publish positive P1-P4 SLA budgets as immutable revisions with audited rollback-safe changes.
+- Delivered: Admin-only SLA policy read and publish routes. BR-09 defaults are migration seeded. A frozen full-budgets snapshot can be captured or looked up by version. Concurrent stale publishes are rejected, and successful prior commands can be replayed safely.
+- Incomplete scope / deviations: Ticket persistence and actual snapshot attachment belong to FND-09. Real UI acceptance belongs to INT-01.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/sla/policy.py | Budget, PolicyRevision, snapshot_policy | Validate and resolve immutable full-table policies |
+| src/backend/app/modules/organization/http.py | Admin GET/PATCH SLA policy | Enforce scope, audit, expected version and idempotency |
+| src/backend/migrations/versions/0007_sla_policy.py and src/backend/tests/test_organization.py | Default seed, append-only trigger and API tests | Verify real PostgreSQL behavior |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Validated audited publication | Positive complete table, Admin only, one success per expected version | Missing priority and nonpositive budget rejected. Requester denied. Concurrent publication yields one 200, one 409 and one audit entry. | pass | [API tests](../../../src/backend/tests/test_organization.py) |
+| Historic snapshot | Prior P3 budget remains stable after a default change | Old P3 remains 24h while new policies publish 12h and 15h. Direct rewrite is rejected by PostgreSQL. | pass | [API tests](../../../src/backend/tests/test_organization.py) |
+| Existing tickets and browser | Verify real persistent ticket snapshots and UI behavior | Snapshot consumer boundary tested. Actual ticket integration awaits FND-09 and INT-01. | not-run | [Parent coverage](../package-task-coverage.md#fnd-08) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | .venv/Scripts/python.exe -m pytest -q with local PostgreSQL ITOH_TEST_DATABASE_URL | API and DB tests pass | 22 passed, zero skipped; upstream TestClient warning | pass |
+| src/backend | .venv/Scripts/ruff.exe check app migrations tests and .venv/Scripts/mypy.exe app migrations tests | Lint and typing pass | Exit 0 for both | pass |
+| src/backend | .venv/Scripts/alembic.exe upgrade head --sql | Offline migration renders | Exit 0 | pass |
+| deployment | Browser cutover, production rollout and real ticket snapshot | Verify downstream customer flow | Owned by later tasks | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO review pending.
+- Findings / resolution: BR-09 seed matches the baseline. Old policy and audit lineage stay intact after publication.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent closure awaits INT-01. Real ticket writes await FND-09.
+- Required resolution / owner: PO reviews the leaf. Ticket and integration owners verify real consumers.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-08.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [API tests](../../../src/backend/tests/test_organization.py). No visual change.
+- Commit / build / environment: Implementation d29aa10 pushed and verified on origin/phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FND-08.02.
+- Eligibility / remaining prerequisite: FND-09.01 also depends on FND-06.02; no subsequent task is authorized in this handoff.
+
+<a id="task-fnd-08-02-attempt-02"></a>
+
+### FND-08.02 - Attempt 02 - 2026-11-25T15:42:39+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-08.02/attempt-02
+- Task: [Task card](../tasks/FND-08.02.md)
+- Parent / phase: FND-08 / B
+- Executor: Codex
+- Started at: 2026-11-25T15:42:39+07:00
+- Ended at: 2026-11-25T15:42:39+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Agent verification](#task-fnd-08-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO review and identify the next eligible task.
+- Delivered: Task closure synchronized across card, history, context and board.
+- Incomplete scope / deviations: INT-01 remains required for Parent closure.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-08.02.md and workflow records | PO acceptance | Synchronize closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Leaf acceptance | Agent evidence and PO signoff | PO confirmed review | pass | [Original verification](#task-fnd-08-02-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Check board, report anchors and git diff --check | Synchronized closure | Both FND-08 leaves done. FND-07.01 prerequisite done. | pass |
+| src/backend | Repeat runtime checks | Original implementation evidence retained | Documentation-only closure | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance.
+- Findings / resolution: PO confirmed review and asked for the next task.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: INT-01 gates Parent closure. FND-09.01 still requires FND-06.02.
+- Required resolution / owner: Integration and provisioning owners complete their prerequisites.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-08.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-08-02-attempt-01).
+- Commit / build / environment: Implementation d29aa10 pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-07.01, own-profile update.
+- Eligibility / remaining prerequisite: FND-04.02 done; separate implementation authorization.
+
+FND-08 Parent closure is supported by PO acceptance of both Phase B leaves and INT-01 (Phase C closure commit b6e42a2).
