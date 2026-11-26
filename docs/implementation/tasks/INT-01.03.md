@@ -78,13 +78,14 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: INT-01.03/attempt-01.
-- Latest history entry: [Verification report](../workflow/task-history.md#task-int-01-03-attempt-01).
+- Latest Report ID: INT-01.03/attempt-04.
+- Latest correction: [Post-review fixes and browser evidence](../workflow/task-history.md#task-int-01-03-attempt-03). Agent verified and [PO accepted](../workflow/task-history.md#task-int-01-03-attempt-04).
+- Previous history entry: [PO acceptance](../workflow/task-history.md#task-int-01-03-attempt-02) and [verification](../workflow/task-history.md#task-int-01-03-attempt-01).
 - Delivered: scope-bound Admin reads and mutations, private snapshot handling, real browser account-switch and backend profile field checks.
-- Checks: 7 real auth Chrome cases, 3 real Admin Chrome cases, 133 frontend tests, TypeScript, lint and one targeted PostgreSQL profile test passed.
-- Review: agent verification complete; PO acceptance pending.
+- Checks: 9 real auth Chrome cases and 135 frontend tests on the correction, plus 3 earlier real Admin Chrome cases, TypeScript, lint and one targeted PostgreSQL profile test passed.
+- Review: agent verification complete; PO accepted this leaf.
 - Delivery: local phase/c-integration. Push remains pending destination authorization.
-- Next: PO acceptance of INT-01.03 and Parent INT-01 closure.
+- Next: Parent INT-01 is done. Phase B PR eligibility can be reviewed separately.
 
 > **Semantic UI states:** Follow the mandatory state-color mapping in [approved format](../../design/approved-format.md): active blue, ready/done green, waiting amber, blocked/error/overdue rose, locked/disabled gray. Use business enums and visible labels; capture task-owned evidence against the current final HTML.
 

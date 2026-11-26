@@ -42,15 +42,22 @@ export function RealSessionProvider({
       if (document.visibilityState === "visible") refresh();
     };
     window.addEventListener("focus", refresh);
+    let snapshotGeneration = 0;
     const hideSnapshot = () => {
+      snapshotGeneration++;
       if (sessionSurface.current) sessionSurface.current.style.display = "none";
     };
     const restoreSnapshot = async (event: PageTransitionEvent) => {
+      const generation = ++snapshotGeneration;
       const surface = sessionSurface.current;
       if (!surface) return;
-      if (event.persisted) await store.refresh(true);
+      if (event.persisted) {
+        surface.style.display = "none";
+        await store.refresh(true);
+      }
       requestAnimationFrame(() => {
-        surface.style.display = "contents";
+        if (generation === snapshotGeneration)
+          surface.style.display = "contents";
       });
     };
     window.addEventListener("pagehide", hideSnapshot);
@@ -58,6 +65,7 @@ export function RealSessionProvider({
     document.addEventListener("visibilitychange", whenVisible);
     const interval = window.setInterval(whenVisible, POLL_INTERVAL_MS);
     return () => {
+      snapshotGeneration++;
       window.removeEventListener("focus", refresh);
       window.removeEventListener("pagehide", hideSnapshot);
       window.removeEventListener("pageshow", restoreSnapshot);

@@ -31,7 +31,25 @@ export class RealSessionStore {
   private listeners = new Set<() => void>();
   private operation = 0;
   private reader?: AbortController;
-  private writing = false;
+  private pendingWrite?: Promise<void>;
+  private finishWrite?: () => void;
+  private logoutRequest?: Promise<void>;
+
+  private get writing() {
+    return !!this.pendingWrite;
+  }
+
+  private beginWrite() {
+    this.pendingWrite = new Promise((resolve) => {
+      this.finishWrite = resolve;
+    });
+  }
+
+  private endWrite() {
+    this.finishWrite?.();
+    this.finishWrite = undefined;
+    this.pendingWrite = undefined;
+  }
   private scopeEpoch = 0;
 
   private scope(state: State) {
@@ -84,6 +102,10 @@ export class RealSessionStore {
   }
 
   refresh = async (hidePrevious = false) => {
+    if (hidePrevious) {
+      while (this.pendingWrite || this.logoutRequest)
+        await (this.logoutRequest ?? this.pendingWrite);
+    }
     if (
       this.writing ||
       ["logout-error", "password-required"].includes(this.state.status)
@@ -100,11 +122,11 @@ export class RealSessionStore {
   login = async (input: LoginInput): Promise<ApiOutcome<UserView>> => {
     if (this.writing) return unknown;
     const id = this.interrupt();
-    this.writing = true;
+    this.beginWrite();
     this.set(checking);
     try {
       const outcome = await this.gateway.login(input);
-      if (id !== this.operation) return unknown;
+      if (id !== this.operation || this.logoutRequest) return unknown;
       if (outcome.kind !== "success") {
         if (
           outcome.kind === "forbidden" &&
@@ -117,7 +139,7 @@ export class RealSessionStore {
       const reader = new AbortController();
       this.reader = reader;
       const verified = await this.gateway.currentUser(reader.signal);
-      if (id !== this.operation) return unknown;
+      if (id !== this.operation || this.logoutRequest) return unknown;
       if (verified.kind === "success" && verified.data.id !== outcome.data.id) {
         this.set({ status: "signed-out" });
         return unknown;
@@ -127,7 +149,7 @@ export class RealSessionStore {
         ? unknown
         : verified;
     } finally {
-      if (id === this.operation) this.writing = false;
+      if (id === this.operation) this.endWrite();
     }
   };
 
@@ -137,17 +159,17 @@ export class RealSessionStore {
     if (this.writing || this.state.status !== "authenticated") return unknown;
     const current = this.state.user.id;
     const id = this.interrupt();
-    this.writing = true;
+    this.beginWrite();
     try {
       const result = await this.gateway.updateOwnProfile(input);
-      if (id !== this.operation) return unknown;
+      if (id !== this.operation || this.logoutRequest) return unknown;
       if (result.kind === "success" && result.data.id === current)
         this.accept(result);
       else if (result.kind === "unauthenticated") this.accept(result);
       else if (result.kind === "success") return unknown;
       return result;
     } finally {
-      if (id === this.operation) this.writing = false;
+      if (id === this.operation) this.endWrite();
     }
   };
 
@@ -160,15 +182,15 @@ export class RealSessionStore {
     )
       return unknown;
     const id = this.interrupt();
-    this.writing = true;
+    this.beginWrite();
     try {
       const result = await this.gateway.changeOwnPassword(input);
-      if (id !== this.operation) return unknown;
+      if (id !== this.operation || this.logoutRequest) return unknown;
       if (result.kind === "success" || result.kind === "unauthenticated")
         this.set({ status: "signed-out" });
       return result;
     } finally {
-      if (id === this.operation) this.writing = false;
+      if (id === this.operation) this.endWrite();
     }
   };
 
@@ -190,10 +212,20 @@ export class RealSessionStore {
     return result;
   };
 
-  logout = async () => {
-    if (this.writing) return;
+  logout = () => {
+    if (!this.logoutRequest) {
+      this.set(checking);
+      this.logoutRequest = this.revokeAfterWrite().finally(() => {
+        this.logoutRequest = undefined;
+      });
+    }
+    return this.logoutRequest;
+  };
+
+  private revokeAfterWrite = async () => {
+    while (this.pendingWrite) await this.pendingWrite;
     const id = this.interrupt();
-    this.writing = true;
+    this.beginWrite();
     this.set(checking);
     try {
       const outcome = await this.gateway.logout();
@@ -205,21 +237,22 @@ export class RealSessionStore {
             : "logout-error",
       });
     } finally {
-      if (id === this.operation) this.writing = false;
+      if (id === this.operation) this.endWrite();
     }
   };
 
   connect = () => {
     const stop = this.client.onUnauthorized(() => {
       this.interrupt();
-      this.writing = false;
+      this.endWrite();
       this.set({ status: "signed-out" });
     });
     void this.refresh();
     return () => {
       stop();
+      if (this.logoutRequest) return;
       this.interrupt();
-      this.writing = false;
+      this.endWrite();
       this.set(checking);
     };
   };

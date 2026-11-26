@@ -177,37 +177,179 @@ test("a delayed directory response cannot reappear after logout and account swit
   await expect(
     page.getByRole("row").filter({ hasText: "admin@integration.invalid" }),
   ).toBeVisible();
-  let markStarted!: () => void;
-  const started = new Promise<void>((resolve) => {
-    markStarted = resolve;
-  });
-  let release!: () => void;
-  const held = new Promise<void>((resolve) => {
-    release = resolve;
-  });
-  await page.route("**/api/v1/users?page=*", async (route) => {
-    const response = await route.fetch();
-    expect(response.status()).toBe(200);
-    markStarted();
-    await held;
-    await route.fulfill({ response }).catch(() => undefined);
+  // Hold the parsed body after Chrome has received the real response. A
+  // navigation abort can no longer turn this into a cancelled network test.
+  await page.addInitScript(() => {
+    const original = Response.prototype.json;
+    Response.prototype.json = async function () {
+      const body = await original.call(this);
+      if (this.url.includes("/api/v1/users?page=")) {
+        document.documentElement.dataset.directoryReceived = "true";
+        await new Promise<void>((resolve) =>
+          window.addEventListener("release-directory", () => resolve(), {
+            once: true,
+          }),
+        );
+        document.documentElement.dataset.directoryDelivered = "true";
+      }
+      return body;
+    };
+    const sample = () => {
+      if (
+        sessionStorage.getItem("watch-private") &&
+        [...document.querySelectorAll("tr")].some(
+          (row) =>
+            row.getClientRects().length &&
+            row.textContent?.includes("admin@integration.invalid"),
+        )
+      )
+        sessionStorage.setItem("private-flash", "true");
+    };
+    new MutationObserver(sample).observe(document, {
+      subtree: true,
+      childList: true,
+      attributes: true,
+      characterData: true,
+    });
+    const frame = () => {
+      sample();
+      requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
   });
   await page.reload();
-  await started;
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-directory-received",
+    "true",
+  );
+  const other = await page.context().newPage();
   try {
-    await page.goto("/logout");
-    await expect(page).toHaveURL(/login/);
-    await login(page, "REQUESTER", "/admin/users");
-    await expect(page).toHaveURL(/admin\/users$/);
-    release();
-    await expect(
-      page.getByRole("row").filter({ hasText: "admin@integration.invalid" }),
-    ).toHaveCount(0);
+    await other.goto("/logout");
+    await expect(other).toHaveURL(/login/);
+    await login(other, "REQUESTER");
+    await expect(other).toHaveURL(/dashboard$/);
+    await page.bringToFront();
+    await page.evaluate(() => {
+      sessionStorage.setItem("watch-private", "true");
+      window.dispatchEvent(new Event("focus"));
+    });
+    await expect(page.locator(".workspace-sidebar")).toContainText(
+      "Integration REQUESTER",
+    );
+    await page.evaluate(() =>
+      window.dispatchEvent(new Event("release-directory")),
+    );
+    await expect(page.locator("html")).toHaveAttribute(
+      "data-directory-delivered",
+      "true",
+    );
+    await page.goto("/dashboard");
     await page.goBack();
-    await expect(
-      page.getByRole("row").filter({ hasText: "admin@integration.invalid" }),
-    ).toHaveCount(0);
+    await expect(page.locator(".workspace-sidebar")).toContainText(
+      "Integration REQUESTER",
+    );
+    expect(
+      await page.evaluate(() => sessionStorage.getItem("private-flash")),
+    ).toBeNull();
   } finally {
-    release();
+    await other.close();
+  }
+});
+
+test("restored profile stays hidden while an earlier save is settling", async ({
+  page,
+}) => {
+  await login(page, "ADMIN", "/profile");
+  await expect(page.locator("#profile-name")).toBeVisible();
+  let received!: () => void;
+  const saving = new Promise<void>((resolve) => {
+    received = resolve;
+  });
+  let deliver!: () => void;
+  const held = new Promise<void>((resolve) => {
+    deliver = resolve;
+  });
+  await page.route("**/api/v1/auth/profile", async (route) => {
+    const response = await route.fetch();
+    expect(response.status()).toBe(200);
+    received();
+    await held;
+    await route.fulfill({ response });
+  });
+  await page.locator("#profile-name").fill("Restored profile test");
+  await page.locator(".profile-form button[type=submit]").click();
+  await saving;
+  const other = await page.context().newPage();
+  try {
+    await page.evaluate(() => {
+      window.dispatchEvent(
+        new PageTransitionEvent("pagehide", { persisted: true }),
+      );
+      const sample = () => {
+        if (document.querySelector("#profile-name")?.getClientRects().length)
+          sessionStorage.setItem("restored-private-flash", "true");
+      };
+      new MutationObserver(sample).observe(document, {
+        subtree: true,
+        attributes: true,
+        childList: true,
+      });
+      const frame = () => {
+        sample();
+        requestAnimationFrame(frame);
+      };
+      requestAnimationFrame(frame);
+      window.dispatchEvent(
+        new PageTransitionEvent("pageshow", { persisted: true }),
+      );
+    });
+    await other.goto("/logout");
+    await expect(other).toHaveURL(/login/);
+    await page.bringToFront();
+    await expect(page.locator("#profile-name")).toBeHidden();
+    deliver();
+    await expect(page).toHaveURL(/login/);
+    expect(
+      await page.evaluate(() =>
+        sessionStorage.getItem("restored-private-flash"),
+      ),
+    ).toBeNull();
+  } finally {
+    deliver();
+    await other.close();
+  }
+});
+
+test("logout from the account menu revokes the cookie after a pending save", async ({
+  page,
+}) => {
+  await login(page, "ADMIN", "/profile");
+  let received!: () => void;
+  const saving = new Promise<void>((resolve) => {
+    received = resolve;
+  });
+  let deliver!: () => void;
+  const held = new Promise<void>((resolve) => {
+    deliver = resolve;
+  });
+  await page.route("**/api/v1/auth/profile", async (route) => {
+    const response = await route.fetch();
+    expect(response.status()).toBe(200);
+    received();
+    await held;
+    await route.fulfill({ response });
+  });
+  await page.locator("#profile-name").fill("Logout race test");
+  await page.locator(".profile-form button[type=submit]").click();
+  await saving;
+  try {
+    await page.locator(".shell-avatar-button").click();
+    await page.locator('a[href="/logout"]:visible').first().click();
+    await expect(page).toHaveURL(/\/logout$/);
+    deliver();
+    await expect(page).toHaveURL(/\/login$/);
+    expect((await page.request.get("/api/v1/auth/me")).status()).toBe(401);
+  } finally {
+    deliver();
   }
 });

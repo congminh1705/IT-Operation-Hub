@@ -78,6 +78,44 @@ describe("real session store", () => {
     expect(gateway.admin).toHaveBeenCalledTimes(1);
   });
 
+  it.each(["logout", "restore"] as const)(
+    "waits for a pending profile write before %s",
+    async (action) => {
+      const { store, gateway } = fixture();
+      vi.mocked(gateway.currentUser)
+        .mockResolvedValueOnce(success)
+        .mockResolvedValueOnce(unauthenticated);
+      await store.refresh();
+      let release!: () => void;
+      vi.mocked(gateway.updateOwnProfile).mockImplementationOnce(
+        () =>
+          new Promise((resolve) => {
+            release = () => resolve(success);
+          }),
+      );
+      vi.mocked(gateway.logout).mockResolvedValue({
+        kind: "success",
+        status: 204,
+        data: null,
+      });
+      const saving = store.updateOwnProfile({
+        display_name: "Updated",
+        expectedVersion: 1,
+      });
+      const pending =
+        action === "logout" ? store.logout() : store.refresh(true);
+      expect(gateway.logout).not.toHaveBeenCalled();
+      expect(gateway.currentUser).toHaveBeenCalledTimes(1);
+      release();
+      await Promise.all([saving, pending]);
+      expect(store.getSnapshot().status).toBe("signed-out");
+      expect(gateway.logout).toHaveBeenCalledTimes(action === "logout" ? 1 : 0);
+      expect(gateway.currentUser).toHaveBeenCalledTimes(
+        action === "restore" ? 2 : 1,
+      );
+    },
+  );
+
   it("keeps an unconfirmed logout locked and ignores the old identity read", async () => {
     const { gateway, query, store } = fixture();
     vi.mocked(gateway.currentUser).mockResolvedValueOnce(success);
