@@ -81,3 +81,24 @@ per minute per IP and use HTTP 429 for edge throttling. The app enforces its
 own PostgreSQL per-identity budget independently of client-supplied IP headers.
 Schedule deletion of expired pre-sessions and old login budget records through
 the deployment/operations maintenance process.
+
+## Organization references (FND-05)
+
+Admin operations under /api/v1/departments and /api/v1/teams use the active
+server session. Mutations require an allowed Origin, a session CSRF header and
+Idempotency-Key. PATCH and membership changes use expectedVersion and a reason.
+Department names are normalized and unique across active and retained rows.
+Department identifiers and internal codes remain stable; use active=true in
+the Admin list for new account choices. The own_department lookup exposes
+only the current account's own active department.
+
+Select an active intake team with PATCH /api/v1/teams/{id} and intake=true.
+The first selection is explicit. Subsequent selections atomically swap the
+intake, and the PostgreSQL partial unique index enforces at most one selection.
+Membership updates use the team version and only permit active IT accounts.
+Removal and deactivation of active teams return HANDOVER_REQUIRED until
+the FND-17 handover service owns that transaction. Effective team IDs are
+computed from current eligible memberships by team_scope.effective_team_ids.
+Requester lookups expose only the active intake or their own department.
+Ticket categories are supplied by FND-08.01, and integrated UI verification
+is part of INT-01.

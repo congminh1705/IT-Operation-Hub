@@ -17,6 +17,9 @@ class Account(Base):
     active: Mapped[bool]
     version: Mapped[int]
     password_hash: Mapped[str | None] = mapped_column(Text)
+    department_id: Mapped[UUID | None] = mapped_column(
+        ForeignKey("org_department.id", name="fk_auth_account_department"), index=True
+    )
     temporary_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
