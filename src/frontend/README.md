@@ -89,16 +89,17 @@ under ignored `test-results`. Optional reference captures still require
 ## Real cookie-session integration (INT-01.01)
 
 Set `ITOH_AUTH_MODE=real` and `ITOH_BACKEND_ORIGIN` to the FastAPI origin
-in the Next process. The browser uses the frontend origin for `/api/v1/auth/*`.
+in the Next process. The browser uses the frontend origin for auth and the scoped administration API routes.
 Configure `ITOH_AUTH_ORIGINS` on FastAPI to allow that exact browser origin.
 For local loopback HTTP, use `ITOH_AUTH_INSECURE_DEV=1` on the backend only.
 Use the same settings at Next build and runtime. Without `ITOH_AUTH_MODE`
 the existing DEMO is served.
 
 Real mode renders the authenticated workspace shell with the account returned
-by FastAPI. Business routes display their pending state until their real
-adapters are connected. Profile edits and temporary-password rotation are
-verified separately in INT-01.02.
+by FastAPI. Profile, password and administration forms use that session.
+Other business routes display their pending state until their real adapters
+are connected. Account creation requires an existing trusted D-29 verification
+ID and the temporary password is submitted only to the server.
 
 With `ITOH_TEST_DATABASE_URL` set to a disposable PostgreSQL database, run
 `.venv/Scripts/python.exe tests/real_auth_browser.py` from `src/backend`.
@@ -107,3 +108,8 @@ The harness starts FastAPI at `http://127.0.0.1:8101` and Next at
 removes the schema afterwards. It generates a per-run password in memory.
 Use the Playwright-installed Chromium or set
 `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to a local Chrome/Chromium binary.
+
+For the INT-01.02 administration and password checks, run
+`.venv/Scripts/python.exe tests/real_auth_browser.py e2e/real-admin.spec.ts`
+from `src/backend` with the same PostgreSQL and Chrome settings. The harness
+creates synthetic D-29 verification evidence in the isolated test schema.

@@ -6,7 +6,7 @@ import subprocess
 import sys
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 import uvicorn
 from alembic import command
@@ -22,6 +22,8 @@ from app.main import create_app
 from app.modules.auth.http import AuthSettings
 from app.modules.auth.models import Account, AuthSession
 from app.modules.auth.service import AuthService
+from app.modules.organization.models import Department
+from app.modules.users.provisioning import ProvisioningVerification
 
 FRONTEND_ORIGIN = "http://127.0.0.1:3101"
 BACKEND_ORIGIN = "http://127.0.0.1:8101"
@@ -49,10 +51,24 @@ def serve() -> None:
     auth = AuthService(db)
     hashed = auth.hasher.hash(os.environ["ITOH_REAL_E2E_PASSWORD"])
     with db.transaction() as session:
+        admin_id = uuid4()
+        department_id = uuid4()
+        session.add(
+            Department(
+                id=department_id,
+                name="Integration IT",
+                code="integration-it",
+                name_key="integration it",
+                active=True,
+                version=1,
+            )
+        )
+        session.flush()
         for role in ROLES:
             session.add(
                 Account(
-                    id=uuid4(),
+                    id=admin_id if role == "ADMIN" else uuid4(),
+                    department_id=department_id,
                     email=f"{role.lower()}@integration.invalid",
                     display_name=f"Integration {role}",
                     role=role,
@@ -61,8 +77,26 @@ def serve() -> None:
                     password_hash=hashed,
                 )
             )
+        session.flush()
+        session.add(
+            ProvisioningVerification(
+                id=UUID(os.environ["ITOH_REAL_E2E_VERIFICATION"]),
+                source_kind="D29_REQUEST",
+                source_id=uuid4(),
+                email="provisioned@integration.invalid",
+                department_id=department_id,
+                role="REQUESTER",
+                verified_by=admin_id,
+                active=True,
+            )
+        )
     application = create_app(
-        auth, AuthSettings(frozenset({FRONTEND_ORIGIN}), secure_cookies=False)
+        auth,
+        AuthSettings(
+            frozenset({FRONTEND_ORIGIN}),
+            secure_cookies=False,
+            blocked_passwords=frozenset({"blocked integration phrase"}),
+        ),
     )
     uvicorn.run(application, host="127.0.0.1", port=8101, log_level="warning")
 
@@ -90,6 +124,7 @@ def run() -> int:
     env = {
         **os.environ,
         "ITOH_REAL_E2E_SCHEMA": schema,
+        "ITOH_REAL_E2E_VERIFICATION": str(uuid4()),
         "ITOH_REAL_E2E_PASSWORD": secrets.token_urlsafe(24),
         "ITOH_REAL_E2E_PYTHON": sys.executable,
         "ITOH_REAL_E2E_SCRIPT": str(Path(__file__).resolve()),
@@ -105,7 +140,7 @@ def run() -> int:
                 "exec",
                 "playwright",
                 "test",
-                "e2e/real-auth.spec.ts",
+                *(sys.argv[1:] or ["e2e/real-auth.spec.ts"]),
             ],
             cwd=BACKEND.parent / "frontend",
             env=env,

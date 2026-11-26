@@ -1,9 +1,22 @@
 import type { HttpAccountGateway } from "@/lib/api/http-account";
 import type { QueryClient } from "@/lib/api/query-client";
-import type { ApiOutcome, LoginInput, UserView } from "@/lib/api/types";
+import type {
+  ApiOutcome,
+  LoginInput,
+  PasswordChange,
+  ProfileUpdate,
+  UserView,
+} from "@/lib/api/types";
 
 type State =
-  | { status: "checking" | "signed-out" | "unavailable" | "logout-error" }
+  | {
+      status:
+        | "checking"
+        | "signed-out"
+        | "unavailable"
+        | "logout-error"
+        | "password-required";
+    }
   | { status: "authenticated"; user: UserView };
 
 const checking: State = { status: "checking" };
@@ -63,7 +76,11 @@ export class RealSessionStore {
   }
 
   refresh = async () => {
-    if (this.writing || this.state.status === "logout-error") return;
+    if (
+      this.writing ||
+      ["logout-error", "password-required"].includes(this.state.status)
+    )
+      return;
     const id = this.interrupt();
     const reader = new AbortController();
     this.reader = reader;
@@ -80,7 +97,12 @@ export class RealSessionStore {
       const outcome = await this.gateway.login(input);
       if (id !== this.operation) return unknown;
       if (outcome.kind !== "success") {
-        this.accept(outcome);
+        if (
+          outcome.kind === "forbidden" &&
+          outcome.error.code === "PASSWORD_CHANGE_REQUIRED"
+        )
+          this.set({ status: "password-required" });
+        else this.accept(outcome);
         return outcome;
       }
       const reader = new AbortController();
@@ -95,6 +117,47 @@ export class RealSessionStore {
       return verified.kind === "success" && !verified.data.active
         ? unknown
         : verified;
+    } finally {
+      if (id === this.operation) this.writing = false;
+    }
+  };
+
+  updateOwnProfile = async (
+    input: ProfileUpdate,
+  ): Promise<ApiOutcome<UserView>> => {
+    if (this.writing || this.state.status !== "authenticated") return unknown;
+    const current = this.state.user.id;
+    const id = this.interrupt();
+    this.writing = true;
+    try {
+      const result = await this.gateway.updateOwnProfile(input);
+      if (id !== this.operation) return unknown;
+      if (result.kind === "success" && result.data.id === current)
+        this.accept(result);
+      else if (result.kind === "unauthenticated") this.accept(result);
+      else if (result.kind === "success") return unknown;
+      return result;
+    } finally {
+      if (id === this.operation) this.writing = false;
+    }
+  };
+
+  changeOwnPassword = async (
+    input: PasswordChange,
+  ): Promise<ApiOutcome<null>> => {
+    if (
+      this.writing ||
+      !["authenticated", "password-required"].includes(this.state.status)
+    )
+      return unknown;
+    const id = this.interrupt();
+    this.writing = true;
+    try {
+      const result = await this.gateway.changeOwnPassword(input);
+      if (id !== this.operation) return unknown;
+      if (result.kind === "success" || result.kind === "unauthenticated")
+        this.set({ status: "signed-out" });
+      return result;
     } finally {
       if (id === this.operation) this.writing = false;
     }

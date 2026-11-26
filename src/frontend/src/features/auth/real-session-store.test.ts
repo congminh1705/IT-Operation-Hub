@@ -30,6 +30,7 @@ const unknown: ApiOutcome<null> = {
 
 function fixture() {
   const gateway: HttpAccountGateway = {
+    admin: vi.fn(),
     login: vi.fn(),
     currentUser: vi.fn(),
     logout: vi.fn(),

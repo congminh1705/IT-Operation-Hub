@@ -19,12 +19,12 @@ const nextConfig: NextConfig = {
     ) {
       throw new Error("ITOH_BACKEND_ORIGIN must be an HTTP(S) origin.");
     }
-    return [
-      {
-        source: "/api/v1/auth/:path*",
-        destination: `${backend.origin}/api/v1/auth/:path*`,
-      },
-    ];
+    return ["auth", "users", "departments", "categories", "teams", "sla"].map(
+      (resource) => ({
+        source: `/api/v1/${resource}/:path*`,
+        destination: `${backend.origin}/api/v1/${resource}/:path*`,
+      }),
+    );
   },
 };
 

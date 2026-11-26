@@ -86,6 +86,12 @@ export function LoginForm() {
                 new URLSearchParams(window.location.search).get("returnTo"),
               ),
             );
+          if (
+            real &&
+            result.kind === "forbidden" &&
+            result.error.code === "PASSWORD_CHANGE_REQUIRED"
+          )
+            router.replace("/profile/security");
           summary.textContent =
             result.kind === "success"
               ? real
