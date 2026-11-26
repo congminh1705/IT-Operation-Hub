@@ -325,6 +325,17 @@ PO approved this release and recovery contract on 2026-11-25. Use the approved P
 | Recovery manifest is incomplete or an effect is unconfirmed after the recovery point. | Keep workers and external traffic blocked. Resolve missing objects or reconcile the original effect before actions can resume. |
 | Isolated restore validates identity, clocks and outbox. | Record measured rehearsal results. Start authorized scoped rehearsal workers with egress blocked. Production switch is a separate decision. |
 
+### D-40 login policy approved for FND-04.01
+
+PO approved the internal-app login policy on 2026-11-25. This supersedes the proposed values above for this scope.
+
+- PostgreSQL stores opaque session token hashes and per-normalized-identity login budgets. Session limits are 30 minutes idle and 12 hours absolute. Background polls do not renew idle time. Successful login consumes the pre-session and rotates any presented existing session.
+- Production cookies are __Host-itoh_pre and __Host-itoh_session, using Secure, HttpOnly, SameSite=Lax and Path=/ without Domain. Local HTTP uses itoh_dev_pre and itoh_dev_session. Login checks an exact allowlisted Origin and the pre-session-bound CSRF header.
+- Use Argon2id. Password creation accepts 15 to 128 characters including Unicode and spaces and checks a password blocklist. Temporary credentials expire after 24 hours, are single-use and only allow the password-change workflow.
+- Begin progressive delays after five failed attempts per normalized identity within 15 minutes, capped at 15 minutes. Return generic 401 for invalid or inactive accounts, 403 for Origin/CSRF rejection, 429 with Retry-After while throttled and 503 when a required login store is unavailable. Existing sessions remain usable if their session store can still be read.
+- Nginx is the sole public entry point. It replaces forwarded client address headers and FastAPI trusts only the configured Nginx peer. The pilot starts at 120 login requests/minute/IP at Nginx, alongside the authoritative PostgreSQL per-identity budget. Deployment configuration and pilot tuning remain with the deployment owner.
+- First-Admin setup requires an authorized operator shell and a recorded authorization reference. The operator and internal handover channel are selected before any real bootstrap. The local tests use synthetic authorization and accounts.
+
 Reference guidance for candidates: [NIST SP 800-63B-4](https://pages.nist.gov/800-63-4/sp800-63b.html) for password length, blocklist and throttling. [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) for server-side expiry, cookie settings and renewal on authentication changes. These references do not set this project's timeouts or quotas.
 
 The companion [PRE-01.02 foundation contract reconciliation](../technical/api-design.md#pre-0102-foundation-contract-reconciliation) records the API/DBML differences and downstream review gates.

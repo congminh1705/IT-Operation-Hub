@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- FND-04 is EPIC_DONE following PO acceptance of both leaves and INT-01. [Login acceptance](task-history.md#task-fnd-04-01-attempt-02) and [session acceptance](task-history.md#task-fnd-04-02-attempt-02). FND-03 PR #28 merged into main at f6d215d.
+
 - FND-03 is EPIC_DONE following PO acceptance of its leaves and INT-01. [FND-03.01 acceptance](task-history.md#task-fnd-03-01-attempt-02), [FND-03.02 acceptance](task-history.md#task-fnd-03-02-attempt-02). [Parent PR #28](https://github.com/congminh1705/IT-Operation-Hub/pull/28) awaits PO merge.
 
 - PRE-04 is EPIC_DONE following PO approval of both decision leaves. [Operations targets](task-history.md#task-pre-04-01-attempt-02) and [Release and recovery](task-history.md#task-pre-04-02-attempt-02). Parent [PR #27](https://github.com/congminh1705/IT-Operation-Hub/pull/27) is open from delivery/pre-04 into main. PO merge pending. QA-05 owns live rehearsal evidence.

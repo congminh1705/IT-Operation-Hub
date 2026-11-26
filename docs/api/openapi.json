@@ -104,7 +104,20 @@
         ],
         "description": "Pre-session or authenticated session; no domain data. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
         "security": [],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "purpose",
+            "in": "query",
+            "required": false,
+            "description": "Pass login to request a pre-session even when an authenticated session cookie is present.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "login"
+              ]
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Scoped response.",
@@ -120,6 +133,16 @@
                 "description": "Opaque pre-session/session cookie, HttpOnly, SameSite=Lax; Secure in production. Cookie name/TTL pending DTO/security review. Never record actual cookie in docs/log.",
                 "schema": {
                   "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, expired or revoked session cookie, or invalid login credentials as applicable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -205,6 +228,16 @@
                 "description": "Opaque pre-session/session cookie, HttpOnly, SameSite=Lax; Secure in production. Cookie name/TTL pending DTO/security review. Never record actual cookie in docs/log.",
                 "schema": {
                   "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, expired or revoked session cookie, or invalid login credentials as applicable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
