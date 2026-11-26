@@ -8,6 +8,7 @@ from app.health import router as health_router
 from app.infrastructure.database import Database, create_database_engine
 from app.modules.auth.http import AuthSettings, auth_router
 from app.modules.auth.service import AuthService
+from app.modules.organization.http import organization_router
 
 
 def create_app(
@@ -42,6 +43,7 @@ def create_app(
     application = FastAPI(title="IT Operation Hub", lifespan=lifespan)
     application.include_router(health_router, prefix="/api/v1")
     application.include_router(auth_router(service, settings), prefix="/api/v1")
+    application.include_router(organization_router(service, settings), prefix="/api/v1")
     return application
 
 
