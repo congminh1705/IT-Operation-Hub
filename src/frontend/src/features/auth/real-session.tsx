@@ -5,6 +5,7 @@ import {
   useContext,
   useEffect,
   useState,
+  useRef,
   useSyncExternalStore,
   type ReactNode,
 } from "react";
@@ -31,6 +32,7 @@ export function RealSessionProvider({
         }).gateway,
       ),
   );
+  const sessionSurface = useRef<HTMLDivElement>(null);
   useEffect(() => store.connect(), [store]);
   useEffect(() => {
     const refresh = () => {
@@ -40,17 +42,36 @@ export function RealSessionProvider({
       if (document.visibilityState === "visible") refresh();
     };
     window.addEventListener("focus", refresh);
-    window.addEventListener("pageshow", refresh);
+    const hideSnapshot = () => {
+      if (sessionSurface.current) sessionSurface.current.style.display = "none";
+    };
+    const restoreSnapshot = async (event: PageTransitionEvent) => {
+      const surface = sessionSurface.current;
+      if (!surface) return;
+      if (event.persisted) await store.refresh(true);
+      requestAnimationFrame(() => {
+        surface.style.display = "contents";
+      });
+    };
+    window.addEventListener("pagehide", hideSnapshot);
+    window.addEventListener("pageshow", restoreSnapshot);
     document.addEventListener("visibilitychange", whenVisible);
     const interval = window.setInterval(whenVisible, POLL_INTERVAL_MS);
     return () => {
       window.removeEventListener("focus", refresh);
-      window.removeEventListener("pageshow", refresh);
+      window.removeEventListener("pagehide", hideSnapshot);
+      window.removeEventListener("pageshow", restoreSnapshot);
       document.removeEventListener("visibilitychange", whenVisible);
       window.clearInterval(interval);
     };
   }, [store]);
-  return <Context.Provider value={store}>{children}</Context.Provider>;
+  return (
+    <Context.Provider value={store}>
+      <div ref={sessionSurface} style={{ display: "contents" }}>
+        {children}
+      </div>
+    </Context.Provider>
+  );
 }
 
 export function useOptionalRealSession() {

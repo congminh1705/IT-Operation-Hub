@@ -54,6 +54,30 @@ describe("real session store", () => {
     expect(store.getSnapshot().status).toBe("signed-out");
   });
 
+  it("discards an in-flight directory result after losing Admin scope", async () => {
+    const { gateway, store } = fixture();
+    vi.mocked(gateway.currentUser).mockResolvedValueOnce({
+      ...success,
+      data: { ...user, role: "ADMIN" },
+    });
+    await store.refresh();
+    let deliver!: () => void;
+    vi.mocked(gateway.admin).mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          deliver = () =>
+            resolve({ kind: "success", status: 200, data: { items: [user] } });
+        }),
+    );
+    const response = store.admin("/api/v1/users");
+    vi.mocked(gateway.currentUser).mockResolvedValueOnce(success);
+    await store.refresh();
+    deliver();
+    expect((await response).kind).toBe("unknown");
+    expect((await store.admin("/api/v1/users")).kind).toBe("unknown");
+    expect(gateway.admin).toHaveBeenCalledTimes(1);
+  });
+
   it("keeps an unconfirmed logout locked and ignores the old identity read", async () => {
     const { gateway, query, store } = fixture();
     vi.mocked(gateway.currentUser).mockResolvedValueOnce(success);

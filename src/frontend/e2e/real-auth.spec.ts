@@ -167,3 +167,47 @@ test("wrong Origin, missing cookie and demo credentials fail closed", async ({
   await expect(page.locator(".workspace-shell")).toHaveCount(0);
   await expect(page.locator("#login-password")).toHaveValue("");
 });
+
+test("a delayed directory response cannot reappear after logout and account switch", async ({
+  page,
+}) => {
+  await login(page, "ADMIN");
+  await expect(page).toHaveURL(/dashboard$/);
+  await page.goto("/admin/users");
+  await expect(
+    page.getByRole("row").filter({ hasText: "admin@integration.invalid" }),
+  ).toBeVisible();
+  let markStarted!: () => void;
+  const started = new Promise<void>((resolve) => {
+    markStarted = resolve;
+  });
+  let release!: () => void;
+  const held = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await page.route("**/api/v1/users?page=*", async (route) => {
+    const response = await route.fetch();
+    expect(response.status()).toBe(200);
+    markStarted();
+    await held;
+    await route.fulfill({ response }).catch(() => undefined);
+  });
+  await page.reload();
+  await started;
+  try {
+    await page.goto("/logout");
+    await expect(page).toHaveURL(/login/);
+    await login(page, "REQUESTER", "/admin/users");
+    await expect(page).toHaveURL(/admin\/users$/);
+    release();
+    await expect(
+      page.getByRole("row").filter({ hasText: "admin@integration.invalid" }),
+    ).toHaveCount(0);
+    await page.goBack();
+    await expect(
+      page.getByRole("row").filter({ hasText: "admin@integration.invalid" }),
+    ).toHaveCount(0);
+  } finally {
+    release();
+  }
+});

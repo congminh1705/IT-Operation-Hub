@@ -122,7 +122,15 @@ export function RealWorkspaceEntry({
             "/admin/teams",
             "/admin/sla",
           ].includes(pathname) && canOpenDestination(persona, pathname) ? (
-          <RealAdmin key={state.user.id + pathname} pathname={pathname} />
+          <RealAdmin
+            key={JSON.stringify([
+              state.user.id,
+              state.user.role,
+              state.user.version,
+              pathname,
+            ])}
+            pathname={pathname}
+          />
         ) : undefined
       }
     />

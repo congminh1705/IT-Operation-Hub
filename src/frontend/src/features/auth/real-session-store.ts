@@ -1,4 +1,4 @@
-import type { HttpAccountGateway } from "@/lib/api/http-account";
+import type { AdminOutcome, HttpAccountGateway } from "@/lib/api/http-account";
 import type { QueryClient } from "@/lib/api/query-client";
 import type {
   ApiOutcome,
@@ -32,6 +32,13 @@ export class RealSessionStore {
   private operation = 0;
   private reader?: AbortController;
   private writing = false;
+  private scopeEpoch = 0;
+
+  private scope(state: State) {
+    return state.status === "authenticated"
+      ? JSON.stringify([state.user.id, state.user.role, state.user.version])
+      : undefined;
+  }
 
   constructor(
     private client: QueryClient,
@@ -48,6 +55,7 @@ export class RealSessionStore {
   };
 
   private set(state: State) {
+    if (this.scope(this.state) !== this.scope(state)) this.scopeEpoch++;
     this.state = state;
     if (state.status === "authenticated") {
       const { user } = state;
@@ -75,12 +83,13 @@ export class RealSessionStore {
     else this.set({ status: "unavailable" });
   }
 
-  refresh = async () => {
+  refresh = async (hidePrevious = false) => {
     if (
       this.writing ||
       ["logout-error", "password-required"].includes(this.state.status)
     )
       return;
+    if (hidePrevious) this.set(checking);
     const id = this.interrupt();
     const reader = new AbortController();
     this.reader = reader;
@@ -161,6 +170,24 @@ export class RealSessionStore {
     } finally {
       if (id === this.operation) this.writing = false;
     }
+  };
+
+  admin: HttpAccountGateway["admin"] = async <T>(
+    ...args: Parameters<HttpAccountGateway["admin"]>
+  ): Promise<AdminOutcome<T>> => {
+    if (
+      this.state.status !== "authenticated" ||
+      this.state.user.role !== "ADMIN"
+    )
+      return unknown;
+    const epoch = this.scopeEpoch;
+    const result = await this.gateway.admin<T>(...args);
+    if (epoch !== this.scopeEpoch) return unknown;
+    if (result.kind === "unauthenticated" || result.kind === "forbidden") {
+      await this.refresh();
+      if (epoch !== this.scopeEpoch) return unknown;
+    }
+    return result;
   };
 
   logout = async () => {

@@ -1,15 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { useOptionalRealSession } from "@/features/auth/real-session";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Feedback } from "@/components/feedback/feedback";
 import { roleLabels } from "@/lib/navigation";
-import {
-  createHttpAccountGateway,
-  type AdminPath,
-  type AdminOutcome,
-} from "@/lib/api/http-account";
+import { type AdminPath, type AdminOutcome } from "@/lib/api/http-account";
 import type { Role, UserView } from "@/lib/api/types";
 import "./users-screen.css";
 import "./catalog-screen.css";
@@ -44,7 +41,7 @@ type Priority = (typeof priorities)[number];
 type Budget = { response_seconds: number; resolution_seconds: number };
 type Policy = { version: number; priority_budgets: Record<Priority, Budget> };
 const priorities = ["P1", "P2", "P3", "P4"] as const;
-const gateway = createHttpAccountGateway();
+
 const users = "/api/v1/users";
 const departments = "/api/v1/departments";
 const value = (data: FormData, key: string) =>
@@ -61,6 +58,7 @@ function outcomeText(result: AdminOutcome<unknown>) {
 }
 
 function useRead<T>(path?: AdminPath) {
+  const admin = useOptionalRealSession()!.admin;
   const [result, setResult] = useState<{
     path: AdminPath;
     outcome: AdminOutcome<T>;
@@ -69,13 +67,11 @@ function useRead<T>(path?: AdminPath) {
   useEffect(() => {
     if (!path) return;
     const controller = new AbortController();
-    void gateway
-      .admin<T>(path, { signal: controller.signal })
-      .then((result) => {
-        if (!controller.signal.aborted) setResult({ path, outcome: result });
-      });
+    void admin<T>(path, { signal: controller.signal }).then((result) => {
+      if (!controller.signal.aborted) setResult({ path, outcome: result });
+    });
     return () => controller.abort();
-  }, [path, revision]);
+  }, [admin, path, revision]);
   return {
     state: result && result.path === path ? result.outcome : undefined,
     reload: () => setRevision((previous) => previous + 1),
@@ -83,6 +79,7 @@ function useRead<T>(path?: AdminPath) {
 }
 
 function useCollection<T>(resource?: AdminPath) {
+  const admin = useOptionalRealSession()!.admin;
   const [result, setResult] = useState<{
     resource: AdminPath;
     outcome: AdminOutcome<Page<T>>;
@@ -95,7 +92,7 @@ function useCollection<T>(resource?: AdminPath) {
     async function collect(path: AdminPath) {
       const items = new Map<string, T>();
       for (let page = 1; !signal.aborted; page += 1) {
-        const response = await gateway.admin<Page<T & { id: string }>>(
+        const response = await admin<Page<T & { id: string }>>(
           `${path}?page=${page}&page_size=100` as AdminPath,
           { signal },
         );
@@ -122,7 +119,7 @@ function useCollection<T>(resource?: AdminPath) {
     }
     void collect(resource);
     return () => controller.abort();
-  }, [resource, revision]);
+  }, [admin, resource, revision]);
   return {
     state: result?.resource === resource ? result?.outcome : undefined,
     reload: () => setRevision((current) => current + 1),
@@ -144,6 +141,7 @@ function Form({
   onSaved: () => void;
   children: React.ReactNode;
 }) {
+  const admin = useOptionalRealSession()!.admin;
   const [busy, setBusy] = useState(false);
   const commandKey = useRef<string>(undefined);
   const [message, setMessage] = useState<{ text: string; error: boolean }>();
@@ -154,7 +152,7 @@ function Form({
     setBusy(true);
     setMessage(undefined);
     try {
-      const result = await gateway.admin(path, {
+      const result = await admin(path, {
         method,
         body: body(new FormData(form)),
         key: (commandKey.current ??= crypto.randomUUID()),
