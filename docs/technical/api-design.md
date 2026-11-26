@@ -43,8 +43,9 @@ Methods/paths are review contracts, not execution commands.
 | Approvals | GET /approvals; GET /approvals/{id}; POST /approvals/{id}/decisions | M/A, before/after/impact/snapshot, separate executionStatus, stale 409 |
 | Assistant | POST /assistant/conversations; GET/DELETE /assistant/conversations/{id}; POST /assistant/conversations/{id}/messages | Owner/current visibility/sources only; DELETE chat under retention |
 | Ticket confirmation | POST /assistant/ticket-drafts; POST /assistant/ticket-drafts/{id}/confirm | Exact user-confirmed digest/version/TTL/idempotency, same Ticket service |
-| KB | GET /knowledge, /knowledge/{id}/versions/{version}; POST /knowledge, /knowledge/{id}/versions; POST /knowledge/{id}/publish, /access | Read accessible Published only; author/publish/ACL under separate policy/audit, D-40 |
+| KB | GET /knowledge, /knowledge/{id}/versions/{version}; POST /knowledge, /knowledge/{id}/versions; POST /knowledge/{id}/publish, /access | Read accessible Published only; author/publish/ACL under separate policy/audit. See [PRE-03.01](../decisions/design-decisions.md#d-40-knowledge-access-index-pre-0301) for the scoped grant and index lifecycle proposal |
 | Assets | GET/POST /assets; GET/PATCH /assets/{id}; POST /assets/{id}/assignments, /returns, /transitions | R/T scoped reads, M/A writes, atomic single assignment; no autonomous AI issue |
+| Inventory planning | Availability preview only | [PRE-03.03 proposal](../decisions/design-decisions.md#d-40-inventory-source-pre-0303) excludes durable holds; confirmed issue remains a distinct authorized mutation. |
 | Operations | GET /notifications; POST /notifications/{id}/read; GET /reports, /audit | Recipient/M/A metric/audit scope, no internal R payloads |
 | AI settings | GET/PATCH /admin/assistant | Admin availability, no secrets/others' chats; Manager policies separate |
 | Health | GET /health/live; GET /health/ready | Minimal status, no secrets/internal hosts; provider failure does not block core |
@@ -88,7 +89,7 @@ API06 includes M/A reasoned `POST /tasks/{id}/assignment-lock`; assignments neve
 | Conflict | 409 stale version/approval, same key/different digest, capacity/assignment conflict; no blind retry |
 | Other errors | 401 session, 403 function, 404 scope/missing, 422 input, 429 limits, 503 dependency; no stack |
 
-`expectedVersion` belongs to the edited aggregate. Approval also carries plan/task/workforce/policy snapshots. Failed conditional updates write no effects. Idempotency/effects are atomic; same in-flight key returns clear status, not arbitrary repeated provider calls. Command/key TTL/wait durations remain D-40.
+`expectedVersion` belongs to the edited aggregate. Approval also carries plan/task/workforce/policy snapshots. Failed conditional updates write no effects. Idempotency/effects are atomic; same in-flight key returns clear status, not arbitrary repeated provider calls. Command/key retention remains D-40. See the [PRE-02.02 intent, lease and approval proposal](../decisions/design-decisions.md#d-40-concurrency-outbox-approval-pre-0202) for candidate timing and retry contracts.
 
 ## Conceptual schemas for review
 

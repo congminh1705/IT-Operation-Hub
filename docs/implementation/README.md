@@ -113,12 +113,12 @@ This **work-package/epic registry** retains all 88 stable scope IDs. The registr
 | [INT-05](07-integration.md#int-05) | Connect knowledge, assistant and confirmed action forms | INT-02 INT-03 INT-04 OPS-15 OPS-19 | EPIC_READY |
 | [INT-06](07-integration.md#int-06) | Connect dashboards, report facts, notifications and audit | INT-02 INT-03 INT-04 INT-05 FND-18 OPS-16 OPS-18 | EPIC_READY |
 | [PRE-01](00-decisions.md#pre-01) | Review foundation contracts and identity decisions | — | EPIC_DONE |
-| [PRE-02](00-decisions.md#pre-02) | Define workforce and workflow concurrency contracts | — | EPIC_READY |
-| [PRE-03](00-decisions.md#pre-03) | Define minimum AI, knowledge and inventory data contracts | — | EPIC_READY |
-| [PRE-04](00-decisions.md#pre-04) | Define deployment and recovery targets | — | EPIC_READY |
+| [PRE-02](00-decisions.md#pre-02) | Define workforce and workflow concurrency contracts | — | EPIC_DONE |
+| [PRE-03](00-decisions.md#pre-03) | Define minimum AI, knowledge and inventory data contracts | — | EPIC_DONE |
+| [PRE-04](00-decisions.md#pre-04) | Define deployment and recovery targets | — | EPIC_DONE |
 | [FND-01](01-foundation.md#fnd-01) | Create reproducible development scaffold | [PRE-01](00-decisions.md#pre-01) | EPIC_DONE |
 | [FND-02](01-foundation.md#fnd-02) | Create database, transaction, audit and outbox primitives | [PRE-01](00-decisions.md#pre-01) | EPIC_DONE |
-| [FND-03](01-foundation.md#fnd-03) | Create accessible shell and typed API client | [FND-01](01-foundation.md#fnd-01) | EPIC_IN_PROGRESS |
+| [FND-03](01-foundation.md#fnd-03) | Create accessible shell and typed API client | [FND-01](01-foundation.md#fnd-01) | EPIC_DONE |
 | [FND-04](01-foundation.md#fnd-04) | Implement login, logout and current-session authorization | [FND-02](01-foundation.md#fnd-02), [FND-03](01-foundation.md#fnd-03) | EPIC_READY |
 | [FND-05](01-foundation.md#fnd-05) | Manage departments, teams and safe reference lookups | [FND-04](01-foundation.md#fnd-04) | EPIC_READY |
 | [FND-06](01-foundation.md#fnd-06) | Provision accounts through the authorized Admin flow | [FND-05](01-foundation.md#fnd-05) | EPIC_READY |
