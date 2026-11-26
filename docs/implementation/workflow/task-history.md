@@ -11800,3 +11800,295 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 - Eligibility / remaining prerequisite: INT-01 evidence for closing FND-03.
 
 FND-03 Parent closure was verified through PO-accepted INT-01 (Phase C closure commit b6e42a2). [Parent PR #28](https://github.com/congminh1705/IT-Operation-Hub/pull/28) is open for PO merge.
+
+<a id="task-fnd-04-01-attempt-01"></a>
+
+### FND-04.01 - Attempt 01 - 2026-11-25T14:47:14+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-04.01/attempt-01
+- Task: [Task card](../tasks/FND-04.01.md)
+- Parent / phase: FND-04 / B
+- Executor: Codex
+- Started at: 2026-11-25 (exact time not captured)
+- Ended at: 2026-11-25T14:47:14+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None. D-40 policy approved before implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implement first-Admin bootstrap and login under the approved authentication policy.
+- Delivered: Argon2id verification, opaque hashed sessions, one-time pre-session on login, protected cookie rotation, explicit Origin and CSRF checks, atomic Postgres per-identity throttling and safe errors.
+- Incomplete scope / deviations: Deployment edge settings documented. No real operator bootstrap, browser integration, authenticated CSRF, current-principal or password change delivery in this leaf.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/auth and src/backend/app/main.py | AuthService, auth_router, AuthSettings and bootstrap CLI | Account login and session creation |
+| src/backend/migrations/versions/0003_auth_login.py and tests/test_auth_login.py | Four persistence tables and five integration cases | Verify real database behavior |
+| docs/decisions/design-decisions.md and src/backend/README.md | PO policy and operational handoff | Record values and deployment boundary |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Login, bootstrap and secure cookies | Valid login, safe invalid/locked outcome, pre-session checks and rotated cookies | Real PostgreSQL and FastAPI TestClient verified rotation, expiry fields, one-time bootstrap and restricted temporary credentials | pass | [Tests](../../../src/backend/tests/test_auth_login.py) |
+| Selected failure semantics | Forged requests denied, throttling enforced, failure safe | 403 on invalid Origin/CSRF, 429 with Retry-After, 503 when budget storage is unavailable, sensitive fields omitted | pass | [Tests](../../../src/backend/tests/test_auth_login.py) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | .venv/Scripts/ruff.exe check app migrations tests | Lint passes | Exit 0 | pass |
+| src/backend | .venv/Scripts/mypy.exe app migrations tests | Strict typing passes | 25 source files pass | pass |
+| src/backend | .venv/Scripts/python.exe -m pytest -q with local Compose ITOH_TEST_DATABASE_URL | Login and regressions pass with real DB | 14 passed, zero skipped. Upstream TestClient deprecation warning. | pass |
+| src/backend | .venv/Scripts/alembic.exe upgrade head --sql | Offline migration SQL compiles | Exit 0 | pass |
+| deployment | Run live proxy, browser and first-Admin operator rollout | Confirm operational configuration | No deployment. Operator handover and consuming tasks remain pending. | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO policy approval. Agent implementation verification.
+- Findings / resolution: PO implementation review remains pending.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Deployment IP limits are documented. Real operator selection and handover are required before real bootstrap.
+- Required resolution / owner: PO and deployment owners confirm the deployment and integration steps.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-04.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Backend integration tests](../../../src/backend/tests/test_auth_login.py), [operator setup](../../../src/backend/README.md).
+- Commit / build / environment: Implementation 01541c5 pushed and verified on origin/phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FND-04.01.
+- Eligibility / remaining prerequisite: Ch?t done and separate task authorization before FND-04.02.
+
+<a id="task-fnd-04-01-attempt-02"></a>
+
+### FND-04.01 - Attempt 02 - 2026-11-25T14:50:10+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-04.01/attempt-02
+- Task: [Task card](../tasks/FND-04.01.md)
+- Parent / phase: FND-04 / B
+- Executor: Codex
+- Started at: 2026-11-25T14:50:10+07:00
+- Ended at: 2026-11-25T14:50:10+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Agent verification](#task-fnd-04-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO acceptance of FND-04.01.
+- Delivered this attempt: Synchronized closure records.
+- Incomplete scope / deviations: Nginx deployment, real operator bootstrap and downstream auth flows remain open with their owners.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-04.01.md and workflow records | PO acceptance | Synchronize handoff |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Leaf acceptance | Verified result and PO signoff | PO accepted the implementation | pass | [Original evidence](#task-fnd-04-01-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Review board and history links; git diff --check | Closure records synchronized | FND-04.01 done, FND-04.02 pending | pass |
+| src/backend | Repeat backend checks | Original implementation evidence retained | Documentation-only closure | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance.
+- Findings / resolution: PO confirmed done after agent verification.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: No blocker to leaf closure. Parent and live deployment remain open.
+- Required resolution / owner: PO separately authorizes FND-04.02 and integration owners verify downstream behavior.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-04.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-04-01-attempt-01).
+- Commit / build / environment: Implementation 01541c5 pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: PO acceptance recorded.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR yet.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-04.02.
+- Eligibility / remaining prerequisite: Separate PO authorization.
+
+<a id="task-fnd-04-02-attempt-01"></a>
+
+### FND-04.02 - Attempt 01 - 2026-11-25T14:54:51+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-04.02/attempt-01
+- Task: [Task card](../tasks/FND-04.02.md)
+- Parent / phase: FND-04 / B
+- Executor: Codex
+- Started at: 2026-11-25 (exact time not captured)
+- Ended at: 2026-11-25T14:54:51+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None. FND-04.01 accepted and pushed.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Current principal, logout and session revocation.
+- Delivered: Resolve current account and role from the database, validate idle and absolute expiry, revoke on logout and expose transaction-scoped account-wide revocation. Authenticated CSRF is tied to the live session; login requests an explicit pre-session token.
+- Incomplete scope / deviations: FND-05 owns team membership persistence and scoped domain authorization. INT-01 owns real browser cutover and full Parent acceptance. No additional screen work.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/auth/http.py and service.py | me, logout, authenticated_csrf, revoke_account_sessions | Resolve database-backed identity and enforce revocation |
+| src/backend/tests/test_auth_login.py | Current role, invalidated cookies and expiry tests | Verify API with PostgreSQL |
+| docs/api/openapi.json, docs/api/README.md, src/backend/README.md, src/frontend/src/lib/api | Explicit login CSRF purpose and session DTO/error alignment | Preserve transport compatibility |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Current principal | Use current stored role and ignore client assertions | Existing cookie sees a database role change. Role header and query do not affect results. Anonymous request returns 401. | pass | [Session tests](../../../src/backend/tests/test_auth_login.py) |
+| Logout and expiration | Protect logout with Origin and session CSRF; deny old cookie and expired session | Wrong Origin and pre-session token rejected. Logout returns 204 and expires cookie. Replay, idle timeout, absolute timeout, inactive account and explicit revocation return 401. | pass | [Session tests](../../../src/backend/tests/test_auth_login.py) |
+| Full Parent UI and effective membership | Live browser and production membership data | INT-01 and FND-05 own that evidence | not-run | [Parent closure](../package-task-coverage.md#fnd-04) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | .venv/Scripts/python.exe -m pytest -q with local PostgreSQL ITOH_TEST_DATABASE_URL | Backend API and DB checks pass | 16 passed, zero skipped, upstream TestClient warning | pass |
+| src/backend | .venv/Scripts/ruff.exe check app migrations tests and .venv/Scripts/mypy.exe app migrations tests | Lint and types pass | Exit 0 for both | pass |
+| src/frontend | pnpm.cmd test and pnpm.cmd typecheck | Unit and DTO checks pass | 130 passed; typecheck exit 0 | pass |
+| src/frontend | pnpm.cmd exec eslint src/lib/api/http-account.ts src/lib/api/http-account.test.ts and scoped Prettier check including contract.generated.ts | Changed files pass | Exit 0 for both | pass |
+| repository | python docs/api/generate_frontend_contract.py --check and python -B -m unittest discover -s docs/api -p test_frontend_contract.py -v | Generated types current and fixture drift checked | 8 operations matched, 5 tests passed | pass |
+| deployed integration | Live browser, actual membership and full runtime OpenAPI comparison | Verify real cutover | Pending other routes, FND-05 and INT-01; production build not rerun | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO review pending.
+- Findings / resolution: Read requests leave idle deadlines unchanged. Invalidated tokens never return protected account fields.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: FND-05 membership persistence and INT-01 live-flow evidence are outstanding.
+- Required resolution / owner: Membership and integration owners wire and test their respective flows.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-04.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Backend tests](../../../src/backend/tests/test_auth_login.py). No browser screenshots for this backend slice.
+- Commit / build / environment: Implementation 3b8912b pushed and verified on origin/phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR before external closure.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FND-04.02.
+- Eligibility / remaining prerequisite: Separate authorization for the next leaf after review. Parent closure requires INT-01.
+
+<a id="task-fnd-04-02-attempt-02"></a>
+
+### FND-04.02 - Attempt 02 - 2026-11-25T14:59:09+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-04.02/attempt-02
+- Task: [Task card](../tasks/FND-04.02.md)
+- Parent / phase: FND-04 / B
+- Executor: Codex
+- Started at: 2026-11-25T14:59:09+07:00
+- Ended at: 2026-11-25T14:59:09+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Agent verification](#task-fnd-04-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO acceptance of FND-04.02.
+- Delivered this attempt: Synchronized the task card, history, current context and board.
+- Incomplete scope / deviations: INT-01 live-flow acceptance remains outstanding.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-04.02.md and workflow records | PO acceptance | Record leaf closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Leaf acceptance | Agent verification and PO signoff | PO accepted the implementation | pass | [Original evidence](#task-fnd-04-02-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Inspect task and board state; git diff --check | Synchronized closure | Both FND-04 leaves done, Parent still active | pass |
+| src/backend and src/frontend | Repeat runtime checks | Original verification remains available | Documentation-only closure | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance.
+- Findings / resolution: PO confirmed done.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: INT-01.01 through INT-01.03 gate Parent closure and the Parent PR.
+- Required resolution / owner: INT-01 integration owners provide live-flow evidence.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-04.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-04-02-attempt-01).
+- Commit / build / environment: Implementation 3b8912b pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: PO acceptance recorded.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-05.01.
+- Eligibility / remaining prerequisite: Separate authorization to implement the next leaf.
+
+FND-04 Parent closure is supported by PO acceptance of both backend leaves and INT-01 (Phase C closure commit b6e42a2).

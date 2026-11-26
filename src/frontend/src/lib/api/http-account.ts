@@ -179,6 +179,7 @@ type RequestOptions = {
   body?: WireObject;
   key?: string;
   signal?: AbortSignal;
+  loginCsrf?: boolean;
 };
 type RequestResult =
   { response: Response } | { outcome: ApiFailure | UnconfirmedOutcome };
@@ -195,7 +196,9 @@ export function createHttpAccountGateway(
     try {
       const headers = new Headers({ Accept: "application/json" });
       if (csrf) {
-        const token = await request("getCsrf");
+        const token = await request("getCsrf", {
+          loginCsrf: operation === "login",
+        });
         if ("outcome" in token) return token;
         if (token.response.status !== 200)
           return { outcome: await failure(token.response, "GET") };
@@ -206,16 +209,19 @@ export function createHttpAccountGateway(
       if (idempotency)
         headers.set("Idempotency-Key", options.key ?? crypto.randomUUID());
       if (options.body) headers.set("Content-Type", "application/json");
-      const response = await fetcher(path, {
-        method,
-        headers,
-        credentials: "same-origin",
-        mode: "same-origin",
-        cache: "no-store",
-        redirect: "error",
-        signal: options.signal,
-        body: options.body && JSON.stringify(options.body),
-      });
+      const response = await fetcher(
+        options.loginCsrf ? path + "?purpose=login" : path,
+        {
+          method,
+          headers,
+          credentials: "same-origin",
+          mode: "same-origin",
+          cache: "no-store",
+          redirect: "error",
+          signal: options.signal,
+          body: options.body && JSON.stringify(options.body),
+        },
+      );
       return { response };
     } catch {
       return { outcome: unknown };
