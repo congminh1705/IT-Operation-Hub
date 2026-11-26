@@ -1,13 +1,32 @@
 import { createDemoGateway, type DemoAdapter } from "../demo/gateway";
+import {
+  createHttpAccountGateway,
+  type HttpAccountGateway,
+} from "./http-account";
 
-/** No default mode and no real-to-DEMO fallback. A real client belongs to integration. */
-export function createAccountGateway(options: {
-  mode: "demo" | "real";
-}): DemoAdapter {
-  if (options?.mode !== "demo") {
-    throw new Error(
-      "Only explicit DEMO mode is available. Real account transport is not implemented.",
-    );
+type DemoOptions = { mode: "demo" };
+type RealOptions = {
+  mode: "real";
+  configuration?: { deployment: "same-origin"; fetcher?: typeof fetch };
+};
+type RealAdapter = { mode: "real"; gateway: HttpAccountGateway };
+
+export function createAccountGateway(options: DemoOptions): DemoAdapter;
+export function createAccountGateway(options: RealOptions): RealAdapter;
+export function createAccountGateway(
+  options: DemoOptions | RealOptions,
+): DemoAdapter | RealAdapter {
+  if (options?.mode === "demo") return createDemoGateway();
+  if (
+    options?.mode === "real" &&
+    options.configuration?.deployment === "same-origin"
+  ) {
+    return {
+      mode: "real",
+      gateway: createHttpAccountGateway(options.configuration.fetcher),
+    };
   }
-  return createDemoGateway();
+  throw new Error(
+    "Only explicit DEMO or configured real mode is supported. Real adapter selection is not implemented without same-origin configuration.",
+  );
 }

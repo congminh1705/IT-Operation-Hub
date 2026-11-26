@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- FND-03 is EPIC_DONE following PO acceptance of its leaves and INT-01. [FND-03.01 acceptance](task-history.md#task-fnd-03-01-attempt-02), [FND-03.02 acceptance](task-history.md#task-fnd-03-02-attempt-02). [Parent PR #28](https://github.com/congminh1705/IT-Operation-Hub/pull/28) awaits PO merge.
+
 - PRE-04 is EPIC_DONE following PO approval of both decision leaves. [Operations targets](task-history.md#task-pre-04-01-attempt-02) and [Release and recovery](task-history.md#task-pre-04-02-attempt-02). Parent [PR #27](https://github.com/congminh1705/IT-Operation-Hub/pull/27) is open from delivery/pre-04 into main. PO merge pending. QA-05 owns live rehearsal evidence.
 
 - PRE-03 is EPIC_DONE following PO approval of all three leaves. [Knowledge](task-history.md#task-pre-03-01-attempt-02), [confirmation and quota](task-history.md#task-pre-03-02-attempt-02), [inventory](task-history.md#task-pre-03-03-attempt-02). Parent [PR #26](https://github.com/congminh1705/IT-Operation-Hub/pull/26) is open into main from delivery/pre-03. PO merge pending. Live provider eligibility, configured limits and operational data remain with their consumer tasks.

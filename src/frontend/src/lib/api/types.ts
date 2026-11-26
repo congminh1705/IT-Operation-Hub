@@ -1,39 +1,24 @@
-/** A1 wire DTO subset; handwritten from the draft OpenAPI, not generated types. */
-export type Role = "REQUESTER" | "TECHNICIAN" | "IT_MANAGER" | "ADMIN";
+import type {
+  Error as WireError,
+  Login,
+  PasswordChange,
+  ProfileUpdate as DraftProfileUpdate,
+  UserView,
+} from "./contract.generated";
 
-export interface UserView {
-  id: string;
-  display_name: string;
-  email?: string;
-  role: Role;
-  active: boolean;
-  version: number;
-}
+export type { PasswordChange, UserView } from "./contract.generated";
+
+export type Role = UserView["role"];
 
 /** Transient input only. Never retain credentials in fixtures, logs or storage. */
-export interface LoginInput {
-  email: string;
-  password: string;
-}
+export type LoginInput = Login;
 
 /** Own display name only in A1. No user ID, email, role or active flag writes. */
-export interface ProfileUpdate {
-  expectedVersion: number;
-  display_name: string;
-}
+export type ProfileUpdate = Required<
+  Pick<DraftProfileUpdate, "expectedVersion" | "display_name">
+>;
 
-/** Policy thresholds remain undecided; DEMO scenarios do not establish them. */
-export interface PasswordChange {
-  current_password: string;
-  new_password: string;
-}
-
-export interface ApiError {
-  code: string;
-  message: string;
-  field_errors?: Record<string, string[]>;
-  request_id: string;
-}
+export type ApiError = WireError;
 
 type FailureStatus = {
   unauthenticated: 401;

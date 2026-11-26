@@ -11505,3 +11505,298 @@ Use Report ID `{TASK_ID}/attempt-{NN}` and anchor `task-{lowercase-task-id-with-
 
 - Next eligible task / resume step: Resolve scoped Parent PR delivery. No subsequent work started.
 - Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+<a id="task-fnd-03-01-attempt-01"></a>
+
+### FND-03.01 — Attempt 01 — 2026-11-25T14:28:22+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-03.01/attempt-01
+- Task: [task specification](../tasks/FND-03.01.md)
+- Parent / phase: FND-03 / Phase B
+- Executor: Codex
+- Started at: 2026-11-25T14:19:08+07:00 (observed readiness and contract review)
+- Ended at: 2026-11-25T14:28:22+07:00
+- State before / after: pending / review, through in-progress
+- Previous attempt / correction: None. First implementation attempt.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Reconcile real API projections with the Phase A gateway and supply draft/runtime OpenAPI generation and drift verification.
+- Delivered this attempt: Generated DTOs from six account operations and two ticket reads. Added a separately composed HTTP account adapter, scoped account-query entry point and type boundary for public/internal ticket responses. The main workspace still uses explicit DEMO composition.
+- Incomplete scope / deviations: No runtime account/ticket service or browser cutover in this task. Login 401 and optional contact_phone remain draft discrepancies. The adapter maps a generic 401 if received and sends only display_name and expectedVersion for profile.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/api/generate_frontend_contract.py, docs/api/test_frontend_contract.py, docs/api/README.md | Generator, runtime comparison, regression checks, instructions | Make the selected drift checks reproducible |
+| src/frontend/src/lib/api/contract.generated.ts, types.ts, projections.ts | Selected wire DTOs, AccountGateway aliases, TicketPublic and TicketPage | Keep frontend types aligned and prevent internal ticket types from satisfying a public view |
+| src/frontend/src/lib/api/http-account.ts, http-account.test.ts, gateway.ts | createHttpAccountGateway, currentAccountQuery, response and request tests | Isolate account HTTP behavior and keep adapter selection explicit until INT-01 |
+| docs/implementation/README.md, docs/implementation/tasks/FND-03.01.md and workflow records | Parent activation, evidence handoff and review state | Reflect the verified result |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Reconcile Phase A gateway and HTTP contracts | Generated types for reviewed endpoints and drift workflow | Eight draft operations generate deterministically. Matching synthetic runtime source passes. Semantic regressions fail. | pass | [Generation instructions](../../api/README.md#frontend-contract-generation-and-drift-checks) |
+| Preserve selected Parent criterion 1 | Keep account and public/internal data boundaries, route credentials and errors correctly | Public ticket type excludes internal context and retains the three assignee states. Account adapter validates the closed response, forwards only reviewed input and uses browser-managed same-origin cookies plus per-mutation CSRF. | pass | [Contract tests](../../../src/frontend/src/lib/api/http-account.test.ts) |
+| Enforce phase and failure semantics | Scope query keys and avoid fabricated effects or released sensitive fields | Query bridge discards old-scope results and clears cache on active-session 401. Errors are distinct, 202 and lost mutation responses remain unconfirmed, no automatic retry. Existing DEMO selection remains explicit. | pass | [Contract tests](../../../src/frontend/src/lib/api/http-account.test.ts) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | `python docs/api/generate_frontend_contract.py --check` | Selected contract current | All 8 operations matched generated output | pass |
+| repository | `python -B -m unittest discover -s docs/api -p test_frontend_contract.py -v` | A compatible export passes and designed regressions fail | 5 tests passed, including public widening, missing CSRF/session requirements and missing conflict status | pass |
+| src/frontend | `pnpm.cmd typecheck` | Typecheck DTOs, type tests and existing routes | Next route typegen and TypeScript exited 0 | pass |
+| src/frontend | `pnpm.cmd test` | Account/query contract and all frontend regressions pass | 22 test files, 128 tests passed, including 14 new | pass |
+| src/frontend | `pnpm.cmd lint` | ESLint passes | Exit 0 | pass |
+| src/frontend | `pnpm.cmd exec prettier --check src/lib/api/contract.generated.ts src/lib/api/http-account.ts src/lib/api/http-account.test.ts src/lib/api/projections.ts src/lib/api/types.ts src/lib/api/gateway.ts` | Scoped formatting passes | All listed files pass | pass |
+| src/frontend | `pnpm.cmd build` | Production Next build and route generation pass | Optimized build and all seven static pages generated | pass |
+| repository | Compare a deployed FastAPI runtime export and exercise HTTP, server scope and browser cookies | Live integration matches reviewed contracts | Routes are not implemented. The adapter tests inject fetch and the drift suite uses synthetic exports. No browser or PostgreSQL run for this frontend contract slice. | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent self-review. PO review pending.
+- Findings / resolution: Draft login omits 401 and profile contains a proposed contact field. Verified bounded compatibility handling with focused tests, without treating draft choices as approved production settings.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: None for this leaf review. Live service verification awaits the applicable backend routes and INT-01.
+- Required resolution / owner: PO reviews FND-03.01. Consumer task owners reconcile runtime exports and final D-40 wire details.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [FND-03.01 evidence](../tasks/FND-03.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Frontend contract tests](../../../src/frontend/src/lib/api/http-account.test.ts), [drift checks](../../api/test_frontend_contract.py). No screenshots for this contract-only change.
+- Commit / build / environment: Next production build passed. Implementation 265c85a pushed to phase/b-backend and verified on origin.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Latest report, check status and preceding verified merge recorded.
+- Parent state: EPIC_IN_PROGRESS. FND-03.02 and INT-01 closure still pending. No Parent PR yet.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FND-03.01, then FND-03.02.
+- Eligibility / remaining prerequisite: FND-03.01 done and a separate implementation request for FND-03.02.
+
+<a id="task-fnd-03-02-attempt-01"></a>
+
+### FND-03.02 — Attempt 01 — 2026-11-25T14:33:37+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-03.02/attempt-01
+- Task: [task specification](../tasks/FND-03.02.md)
+- Parent / phase: FND-03 / B
+- Executor: Codex
+- Started at: 2026-11-25T14:32+07:00 (observed execution interval)
+- Ended at: 2026-11-25T14:33:37+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None. FND-03.01 verification passed and was delivered before this continuation. PO requested completion of the Parent; both leaves await joint review.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Complete remaining FND-03 implementation.
+- Delivered: Configured same-origin real adapter selection and reusable scoped page reads/poll registration.
+- Incomplete scope / deviations: Live UI and service integration require INT-01. Existing navigation, Vietnam time formatting and 30-second polling policy are reused.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/lib/api/gateway.ts, paged-query.ts, production-boundary.test.ts | createAccountGateway, createPagedQuery and tests | Isolate real mode and bound paged read behavior |
+| docs/implementation/tasks/FND-03.02.md and workflow records | Report and review status | Record delivery |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Adapter and error behavior | Explicit real mode, no DEMO fallback | Same-origin configuration required and real request failure remains unconfirmed | pass | [Tests](../../../src/frontend/src/lib/api/production-boundary.test.ts) |
+| Parent criteria 2 and 3 within leaf scope | Existing shell, timezone and active-tab polling reused with bounded pages and isolated scope | QueryClient reused. Page size is bounded from 1 to 100 and denied reads remain errors. Workspace wiring remains for INT-01. | pass | [Paged queries](../../../src/frontend/src/lib/api/paged-query.ts) |
+| Live service/browser acceptance | Real scope and rendering evidence | INT-01 has not run | not-run | [Parent closure](../package-task-coverage.md#fnd-03) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/frontend | pnpm.cmd test | Unit and contract tests pass | 130 tests passed | pass |
+| src/frontend | pnpm.cmd typecheck | Next route types and TypeScript pass | Exit 0 | pass |
+| src/frontend | pnpm.cmd exec eslint src/lib/api/gateway.ts src/lib/api/paged-query.ts src/lib/api/production-boundary.test.ts | Changed files pass | Exit 0 | pass |
+| src/frontend | pnpm.cmd exec prettier --check src/lib/api/gateway.ts src/lib/api/paged-query.ts src/lib/api/production-boundary.test.ts | Changed files pass | Exit 0 | pass |
+| src/frontend | Production build and live browser runs | Integrated app checked | Build was verified in FND-03.01. Browser cutover and real server evidence are deferred to INT-01. | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO joint review pending.
+- Findings / resolution: Real mode never substitutes a fixture on failure. Only successful empty pages produce an empty result.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: INT-01.01, INT-01.02 and INT-01.03 gate full Parent closure.
+- Required resolution / owner: PO reviews the Phase B leaves and integration owners provide real-flow evidence in INT-01.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task evidence](../tasks/FND-03.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Contract tests](../../../src/frontend/src/lib/api/production-boundary.test.ts). No screenshots for this nonvisual slice.
+- Commit / build / environment: Implementation 021db02 pushed and verified on origin/phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated with joint review handoff.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR yet.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO joint review of both FND-03 leaves.
+- Eligibility / remaining prerequisite: INT-01 evidence is required for Parent closure. No subsequent Parent work started.
+
+<a id="task-fnd-03-01-attempt-02"></a>
+
+### FND-03.01 - Attempt 02 - 2026-11-25T14:35:35+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-03.01/attempt-02
+- Task: [Task card](../tasks/FND-03.01.md)
+- Parent / phase: FND-03 / B
+- Executor: Codex
+- Started at: 2026-11-25T14:35:35+07:00
+- Ended at: 2026-11-25T14:35:35+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Agent verification](#task-fnd-03-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record joint PO acceptance of the two FND-03 leaves.
+- Delivered this attempt: Updated the board, task card, history and current context.
+- Incomplete scope / deviations: INT-01 real-flow evidence is outstanding.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-03.01.md and workflow records | PO acceptance | Synchronize closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Leaf handoff | Agent verification and PO acceptance | PO approved both leaves | pass | [Original verification](#task-fnd-03-01-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Inspect board and history links; git diff --check | Correct closure records | Both leaves done and Parent remains active | pass |
+| src/frontend | Repeat frontend checks | Prior technical evidence available | Documentation-only acceptance | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Joint PO acceptance.
+- Findings / resolution: PO confirmed closure of the reviewed leaves.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: INT-01.01 through INT-01.03 evidence still required for Parent closure.
+- Required resolution / owner: INT-01 integration owners verify real flows.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-03.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-03-01-attempt-01).
+- Commit / build / environment: Implementation 265c85a pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Joint acceptance recorded.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR yet.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Await separate authorization for subsequent work.
+- Eligibility / remaining prerequisite: INT-01 evidence for closing FND-03.
+
+<a id="task-fnd-03-02-attempt-02"></a>
+
+### FND-03.02 - Attempt 02 - 2026-11-25T14:35:35+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-03.02/attempt-02
+- Task: [Task card](../tasks/FND-03.02.md)
+- Parent / phase: FND-03 / B
+- Executor: Codex
+- Started at: 2026-11-25T14:35:35+07:00
+- Ended at: 2026-11-25T14:35:35+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Agent verification](#task-fnd-03-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record joint PO acceptance of the two FND-03 leaves.
+- Delivered this attempt: Updated the board, task card, history and current context.
+- Incomplete scope / deviations: INT-01 real-flow evidence is outstanding.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-03.02.md and workflow records | PO acceptance | Synchronize closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Leaf handoff | Agent verification and PO acceptance | PO approved both leaves | pass | [Original verification](#task-fnd-03-02-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Inspect board and history links; git diff --check | Correct closure records | Both leaves done and Parent remains active | pass |
+| src/frontend | Repeat frontend checks | Prior technical evidence available | Documentation-only acceptance | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Joint PO acceptance.
+- Findings / resolution: PO confirmed closure of the reviewed leaves.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: INT-01.01 through INT-01.03 evidence still required for Parent closure.
+- Required resolution / owner: INT-01 integration owners verify real flows.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-03.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-03-02-attempt-01).
+- Commit / build / environment: Implementation 021db02 pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Joint acceptance recorded.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR yet.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Await separate authorization for subsequent work.
+- Eligibility / remaining prerequisite: INT-01 evidence for closing FND-03.
+
+FND-03 Parent closure was verified through PO-accepted INT-01 (Phase C closure commit b6e42a2). [Parent PR #28](https://github.com/congminh1705/IT-Operation-Hub/pull/28) is open for PO merge.
