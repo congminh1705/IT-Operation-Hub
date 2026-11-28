@@ -14642,3 +14642,6 @@ Updated task, board, parent registry and current context.
 #### 10. Next step
 
 Finish WF-01.01 verification and continue through WF-01.02 and WF-01.03 in order.
+
+
+WF-01.01 PostgreSQL recovery follow-up (2026-11-29). The healthy container had no published port. Recreated only the local postgres container with docker compose up -d --force-recreate --wait postgres, preserving the named volume. Verified mapping 127.0.0.1:55432->5432. From .wf01/src/backend, pytest tests/test_plan_dag.py tests/test_manual_work.py tests/test_runtime_openapi.py -qx --tb=short with workspace basetemp and ITOH_TEST_DATABASE_URL passed all 11 tests. The previously blocked DAG API persistence test passed. Remaining WF-01 effort-source and activation work is still open. Existing Starlette/httpx deprecation warning persists.

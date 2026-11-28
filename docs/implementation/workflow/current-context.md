@@ -14,7 +14,7 @@ authority: derived
 
 ## Latest task report
 
-- WF-01.01 in_progress. Draft DAG validation and persistence implemented; 8 unit and runtime OpenAPI checks passed. PostgreSQL API test stopped at connection setup. WF-01.02 and .03 pending. [Report](task-history.md#task-wf-01-01-dag-start).
+- WF-01.01 in_progress. Draft DAG validation and persistence implemented; 8 unit and runtime OpenAPI checks passed. PostgreSQL connection restored; 11 DAG, manual plan and OpenAPI checks passed. WF-01.02 and .03 pending. [Report](task-history.md#task-wf-01-01-dag-start).
 
 - INT-01 EPIC_DONE. All three leaves accepted by PO. [Final evidence](task-history.md#task-int-01-03-attempt-04). Delivery branch phase-c/int-01-real-identity.
 
