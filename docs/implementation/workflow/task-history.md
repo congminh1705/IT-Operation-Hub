@@ -13662,3 +13662,39 @@ PR titles must be in English with format `<type>(<scope>): Phase <A|B|C|D> | <PA
 
 #### 10. Next step
 - PO review and merge before preparing FND-12.
+
+
+<a id="fnd-12-backend-delivery"></a>
+
+### FND-12 backend delivery - 2026-11-28
+
+#### 1. Report metadata
+- Format version: 1. Owner: PO. Phase B. Four leaves done. Parent EPIC_IN_PROGRESS.
+
+#### 2. Scope and delivered result
+- Public comments and internal notes, atomic Pending clarification and SLA pause/resume, public resolution and requester closure, guarded reopen and terminal cancellation.
+
+#### 3. Changed files and key symbols
+- conversation.py, lifecycle.py, resolution.py, organization HTTP routes, migrations 0013/0014 and ticket lifecycle tests.
+
+#### 4. Acceptance results
+- PO previously accepted all four service tasks. Native integration remains INT-02.
+
+#### 5. Verification results
+- Scoped worktree .fnd12-pr. Backend PostgreSQL pytest: 45 pass including runtime contract. Ruff and Mypy pass after correcting helper annotations. Existing Starlette/httpx warning.
+- Frontend pnpm test: 130 pass. Lint, typecheck and production build pass. Real browser journey: not-run.
+
+#### 6. Review
+- Agent verified PR branch. Prior PO backend acceptance recorded separately.
+
+#### 7. Remaining blockers and decisions
+- Early backend PR authorized. Parent closure awaits INT-02.
+
+#### 8. Artifacts and evidence
+- phase-b/fnd-12-ticket-lifecycle from main 9c120a8. Child commits 3c2098c, 211f6a8, 44e6be0 and 4e599d5.
+
+#### 9. Execution record synchronization
+- Cards, current context, board and parent registry reflect scope and pending integration.
+
+#### 10. Next step
+- Review and merge FND-12, then prepare FND-13 against verified main.

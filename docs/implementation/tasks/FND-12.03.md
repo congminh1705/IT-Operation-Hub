@@ -82,3 +82,6 @@ A future request authorizes the selected implementation (or this decision-refine
 - Remaining: Real browser and notification delivery remain with INT-02. Runtime OpenAPI drift from FND-10 was not retested.
 - Commit/build: FND-12.03 push receipt pending.
 - Next: Joint review of the four FND-12 leaves after sequential verification.
+
+
+[Backend delivery evidence](../workflow/task-history.md#fnd-12-backend-delivery). Service leaf accepted by PO. Parent awaits INT-02.

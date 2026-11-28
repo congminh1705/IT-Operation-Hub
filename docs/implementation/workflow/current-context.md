@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- FND-12 backend delivery awaits merge review. Four service leaves were PO accepted. Parent remains EPIC_IN_PROGRESS pending INT-02. [Delivery report](task-history.md#fnd-12-backend-delivery).
+
 - FND-11 backend delivery: 40 PostgreSQL tests and 130 frontend tests passed. Both leaves are PO accepted. Parent awaits INT-02. [Report](task-history.md#fnd-11-backend-delivery).
 
 - FND-10 backend delivery: 38 PostgreSQL tests, Ruff and Mypy pass on phase-b/fnd-10-ticket-queries. Both service leaves done; Parent awaits INT-02. [Report](task-history.md#fnd-10-backend-delivery-2026-11-28).

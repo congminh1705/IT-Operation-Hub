@@ -131,10 +131,10 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FND-10.02](../tasks/FND-10.02.md) | [FND-10](../01-foundation.md#fnd-10) | Implement authorized ticket detail projections | [FND-10.01](../tasks/FND-10.01.md) | PO | done |
 | [FND-11.01](../tasks/FND-11.01.md) | [FND-11](../01-foundation.md#fnd-11) | Implement eligible assignment and team transfer | [FND-10.02](../tasks/FND-10.02.md) | PO | done |
 | [FND-11.02](../tasks/FND-11.02.md) | [FND-11](../01-foundation.md#fnd-11) | Implement concurrent self-claim and accept-start commands | [FND-11.01](../tasks/FND-11.01.md) | PO | done |
-| [FND-12.01](../tasks/FND-12.01.md) | [FND-12](../01-foundation.md#fnd-12) | Implement audience-separated comment and note commands | [FND-11.02](../tasks/FND-11.02.md) | PO | pending |
-| [FND-12.02](../tasks/FND-12.02.md) | [FND-12](../01-foundation.md#fnd-12) | Implement atomic Pending question and requester resume | [FND-12.01](../tasks/FND-12.01.md) | PO | pending |
-| [FND-12.03](../tasks/FND-12.03.md) | [FND-12](../01-foundation.md#fnd-12) | Implement resolution and requester closure | [FND-12.02](../tasks/FND-12.02.md) | PO | pending |
-| [FND-12.04](../tasks/FND-12.04.md) | [FND-12](../01-foundation.md#fnd-12) | Implement reasoned reopen and cancellation branches | [FND-12.03](../tasks/FND-12.03.md) | PO | pending |
+| [FND-12.01](../tasks/FND-12.01.md) | [FND-12](../01-foundation.md#fnd-12) | Implement audience-separated comment and note commands | [FND-11.02](../tasks/FND-11.02.md) | PO | done |
+| [FND-12.02](../tasks/FND-12.02.md) | [FND-12](../01-foundation.md#fnd-12) | Implement atomic Pending question and requester resume | [FND-12.01](../tasks/FND-12.01.md) | PO | done |
+| [FND-12.03](../tasks/FND-12.03.md) | [FND-12](../01-foundation.md#fnd-12) | Implement resolution and requester closure | [FND-12.02](../tasks/FND-12.02.md) | PO | done |
+| [FND-12.04](../tasks/FND-12.04.md) | [FND-12](../01-foundation.md#fnd-12) | Implement reasoned reopen and cancellation branches | [FND-12.03](../tasks/FND-12.03.md) | PO | done |
 | [FND-13.01](../tasks/FND-13.01.md) | [FND-13](../01-foundation.md#fnd-13) | Implement priority adjustment without SLA reset | [FND-12.04](../tasks/FND-12.04.md) | PO | pending |
 | [FND-13.02](../tasks/FND-13.02.md) | [FND-13](../01-foundation.md#fnd-13) | Implement visibility-filtered event timeline query | [FND-13.01](../tasks/FND-13.01.md) | PO | pending |
 | [FND-14.01](../tasks/FND-14.01.md) | [FND-14](../01-foundation.md#fnd-14) | Implement skill taxonomy and authorized verification | [FND-05.02](../tasks/FND-05.02.md), [PRE-02.03](../tasks/PRE-02.03.md) | PO | pending |

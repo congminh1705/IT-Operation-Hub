@@ -1,10 +1,14 @@
+from collections.abc import Mapping
 from datetime import UTC, datetime, timedelta
+from typing import Never, cast
 from uuid import UUID, uuid4
 
 import pytest
 from fastapi.testclient import TestClient
+from httpx import Response
 from sqlalchemy import select, update
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import Session
 from test_organization import ORIGIN, SETTINGS, actor
 from test_ticket_intake import prepare_catalog
 from test_ticket_reads import TICKETS, create_ticket
@@ -19,9 +23,14 @@ from app.modules.tickets import lifecycle
 from app.modules.tickets.models import Ticket, TicketTransitionReason
 
 
-def command(client, url, headers, payload):
-    return client.post(
-        url, json=payload, headers={**headers, "Idempotency-Key": str(uuid4())}
+def command(
+    client: TestClient, url: str, headers: dict[str, str], payload: Mapping[str, object]
+) -> Response:
+    return cast(
+        Response,
+        client.post(
+            url, json=dict(payload), headers={**headers, "Idempotency-Key": str(uuid4())}
+        ),
     )
 
 
@@ -105,7 +114,7 @@ def test_pending_question_and_requester_reply_are_atomic(
         row.assignee_id = admin_id
     transitions, comments = detail + "/transitions", detail + "/comments"
 
-    def change(target, version, **payload):
+    def change(target: str, version: int, **payload: object) -> Response:
         return command(
             admin,
             transitions,
@@ -127,7 +136,7 @@ def test_pending_question_and_requester_reply_are_atomic(
     assert owner.get(comments).json()["total"] == 0
     assert owner.get(detail).json()["status"] == "In Progress"
 
-    def fail_publish(db, **kwargs):
+    def fail_publish(db: Session, **kwargs: object) -> Never:
         db.flush()
         raise SQLAlchemyError("Synthetic outbox failure")
 
@@ -273,7 +282,13 @@ def test_reopen_preserves_usage_and_cancel_is_terminal(database: Database) -> No
         row.resolution_used_seconds = 7 * 3600
         snapshot = row.sla_snapshot
 
-    def transition(client, headers, target, version, **data):
+    def transition(
+        client: TestClient,
+        headers: dict[str, str],
+        target: str,
+        version: int,
+        **data: object,
+    ) -> Response:
         return command(
             client,
             detail + "/transitions",

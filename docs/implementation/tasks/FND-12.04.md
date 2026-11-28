@@ -82,3 +82,6 @@ A future request authorizes the selected implementation (or this decision-refine
 - Remaining: Browser, real notification delivery and live SLA alert/breach projections remain unverified and belong to INT-02 and OPS-03/04. Runtime OpenAPI drift from FND-10 was not rerun. The live task-Done flow is not implemented in this Parent.
 - Commit/build: FND-12.04 push receipt pending.
 - Next: Joint review of the four FND-12 leaves after sequential verification.
+
+
+[Backend delivery evidence](../workflow/task-history.md#fnd-12-backend-delivery). Service leaf accepted by PO. Parent awaits INT-02.
