@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from hmac import compare_digest
 from typing import Literal
 from urllib.parse import urlsplit
 from uuid import UUID, uuid4
@@ -7,15 +8,30 @@ from fastapi import APIRouter, Request, Response
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import Session
+from starlette.concurrency import run_in_threadpool
 
+from app.infrastructure.commands import (
+    CommandResult,
+    IdempotencyConflict,
+    run_idempotent,
+)
+from app.infrastructure.events import Actor, SafeFacts, Target, write_audit
 from app.modules.auth.models import Account
-from app.modules.auth.service import ABSOLUTE, PRE_LIFETIME, AuthService, LoginRejected
+from app.modules.auth.service import (
+    ABSOLUTE,
+    PRE_LIFETIME,
+    AuthService,
+    LoginRejected,
+    session_csrf,
+)
 
 
 @dataclass(frozen=True)
 class AuthSettings:
     origins: frozenset[str]
     secure_cookies: bool = True
+    blocked_passwords: frozenset[str] = frozenset()
 
     def __post_init__(self) -> None:
         schemes = {"https"} if self.secure_cookies else {"http", "https"}
@@ -47,6 +63,25 @@ class LoginInput(BaseModel):
     password: str = Field(min_length=1, max_length=128, repr=False)
 
 
+class PasswordChange(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+
+    current_password: str = Field(min_length=1, max_length=128, repr=False)
+    new_password: str = Field(min_length=1, max_length=128, repr=False)
+
+
+class ProfileUpdate(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+
+    expectedVersion: int = Field(ge=1)
+    display_name: str = Field(min_length=1, max_length=120)
+
+
+class ProfileRejected(Exception):
+    def __init__(self, status: int) -> None:
+        self.status = status
+
+
 class UserView(BaseModel):
     id: UUID
     email: str
@@ -75,19 +110,25 @@ class Error(BaseModel):
     code: str
     message: str
     request_id: str
+    field_errors: dict[str, list[str]] | None = None
 
 
 ERRORS = {
     401: ("INVALID_CREDENTIALS", "Email hoac mat khau khong hop le."),
     403: ("AUTH_FORBIDDEN", "Yeu cau xac thuc bi tu choi."),
-    422: ("INVALID_INPUT", "Du lieu dang nhap khong hop le."),
+    409: ("PROFILE_CONFLICT", "H? s? ?? thay ??i. Vui l?ng t?i l?i tr??c khi l?u."),
+    422: ("INVALID_INPUT", "D? li?u kh?ng h?p l?."),
     429: ("LOGIN_THROTTLED", "Vui long thu lai sau."),
     503: ("AUTH_UNAVAILABLE", "Dang nhap tam thoi khong kha dung."),
 }
 
 
 def failure(
-    status: int, retry_after: int | None = None, *, session_error: bool = False
+    status: int,
+    retry_after: int | None = None,
+    *,
+    session_error: bool = False,
+    field_errors: dict[str, list[str]] | None = None,
 ) -> JSONResponse:
     code, message = ERRORS[status]
     if session_error and status == 401:
@@ -96,7 +137,12 @@ def failure(
     if retry_after is not None:
         headers["Retry-After"] = str(retry_after)
     return JSONResponse(
-        Error(code=code, message=message, request_id=str(uuid4())).model_dump(),
+        Error(
+            code=code,
+            message=message,
+            request_id=str(uuid4()),
+            field_errors=field_errors,
+        ).model_dump(exclude_none=True),
         status_code=status,
         headers=headers,
     )
@@ -137,6 +183,229 @@ def auth_router(service: AuthService | None, settings: AuthSettings) -> APIRoute
             return failure(401, session_error=True)
         response.headers["Cache-Control"] = "no-store"
         return user_view(account)
+
+    @router.patch(
+        "/profile",
+        operation_id="updateOwnProfile",
+        response_model=UserView,
+        responses={status: {"model": Error} for status in (401, 403, 409, 422, 503)},
+        openapi_extra={
+            "requestBody": {
+                "required": True,
+                "content": {
+                    "application/json": {"schema": ProfileUpdate.model_json_schema()},
+                },
+            },
+            "parameters": [
+                {
+                    "in": "header",
+                    "name": header,
+                    "required": True,
+                    "schema": {"type": "string"},
+                }
+                for header in ("X-CSRF-Token", "Idempotency-Key")
+            ],
+        },
+    )
+    async def update_profile(request: Request) -> Response:
+        if service is None:
+            return failure(503)
+        token = request.cookies.get(settings.session_cookie)
+        if not token:
+            return failure(401, session_error=True)
+        origins = request.headers.getlist("origin")
+        csrf = request.headers.getlist("x-csrf-token")
+        if (
+            len(origins) != 1
+            or origins[0] not in settings.origins
+            or len(csrf) != 1
+            or not compare_digest(session_csrf(token).encode(), csrf[0].encode())
+        ):
+            return failure(403)
+        keys = request.headers.getlist("idempotency-key")
+        if len(keys) != 1 or not keys[0].strip() or len(keys[0]) > 128:
+            return failure(422)
+        if (
+            request.headers.get("content-type", "").split(";", 1)[0].strip().lower()
+            != "application/json"
+        ):
+            return failure(422)
+        payload = bytearray()
+        async for chunk in request.stream():
+            if len(payload) + len(chunk) > 4096:
+                return failure(422)
+            payload.extend(chunk)
+        try:
+            body = ProfileUpdate.model_validate_json(bytes(payload))
+        except ValidationError as exc:
+            invalid_name = any(
+                error["loc"] == ("display_name",)
+                for error in exc.errors(include_input=False)
+            )
+            return failure(
+                422,
+                field_errors={
+                    "display_name": ["Nh?p t?n hi?n th? h?p l?."],
+                }
+                if invalid_name
+                else None,
+            )
+        name = body.display_name.strip()
+        if not name or len(name) > 120 or "\0" in name:
+            return failure(
+                422,
+                field_errors={
+                    "display_name": ["T?n hi?n th? ph?i c? t? 1 ??n 120 k? t?."],
+                },
+            )
+
+        def save(auth: AuthService) -> UserView:
+            current = auth.current_account(token)
+            if current is None:
+                raise ProfileRejected(401)
+            actor_id = current.id
+            result_view: UserView | None = None
+
+            def account(db: Session) -> Account:
+                row = auth.account_in_transaction(db, token, lock_account=True)
+                if row is None or row.id != actor_id:
+                    raise ProfileRejected(401)
+                return row
+
+            def authorize(db: Session, replay: CommandResult | None) -> None:
+                nonlocal result_view
+                row = account(db)
+                if replay is not None:
+                    if replay.id != row.id or replay.version != row.version:
+                        raise ProfileRejected(409)
+                    result_view = user_view(row)
+
+            def execute(db: Session) -> CommandResult:
+                nonlocal result_view
+                row = account(db)
+                if row.version != body.expectedVersion:
+                    raise ProfileRejected(409)
+                previous = row.version
+                row.display_name = name
+                row.version += 1
+                write_audit(
+                    db,
+                    actor=Actor("user", row.id),
+                    action="auth.profile_update",
+                    target=Target("account", row.id),
+                    before=SafeFacts(version=previous),
+                    after=SafeFacts(version=row.version),
+                    clock=auth.clock,
+                )
+                result_view = user_view(row)
+                return CommandResult(row.id, row.version)
+
+            run_idempotent(
+                auth.database,
+                actor_id=actor_id,
+                operation="auth.profile_update",
+                key=keys[0],
+                payload={"expectedVersion": body.expectedVersion, "display_name": name},
+                authorize=authorize,
+                execute=execute,
+                clock=auth.clock,
+            )
+            assert result_view is not None
+            return result_view
+
+        try:
+            result = await run_in_threadpool(save, service)
+        except ProfileRejected as exc:
+            return failure(exc.status, session_error=True)
+        except IdempotencyConflict:
+            return failure(409)
+        except SQLAlchemyError:
+            return failure(503)
+        return JSONResponse(
+            result.model_dump(mode="json"), headers={"Cache-Control": "no-store"}
+        )
+
+    @router.post(
+        "/password",
+        operation_id="changeOwnPassword",
+        status_code=204,
+        responses={status: {"model": Error} for status in (401, 403, 422, 503)},
+        openapi_extra={
+            "requestBody": {
+                "required": True,
+                "content": {
+                    "application/json": {"schema": PasswordChange.model_json_schema()},
+                },
+            },
+            "parameters": [
+                {
+                    "in": "header",
+                    "name": header,
+                    "required": True,
+                    "schema": {"type": "string"},
+                }
+                for header in ("X-CSRF-Token", "Idempotency-Key")
+            ],
+        },
+    )
+    async def change_password(request: Request) -> Response:
+        if service is None or not settings.blocked_passwords:
+            return failure(503)
+        token = request.cookies.get(settings.session_cookie)
+        if not token:
+            return failure(401, session_error=True)
+        origins = request.headers.getlist("origin")
+        csrf = request.headers.getlist("x-csrf-token")
+        if (
+            len(origins) != 1
+            or origins[0] not in settings.origins
+            or len(csrf) != 1
+            or not compare_digest(session_csrf(token).encode(), csrf[0].encode())
+        ):
+            return failure(403)
+        keys = request.headers.getlist("idempotency-key")
+        if len(keys) != 1 or not keys[0].strip() or len(keys[0]) > 128:
+            return failure(422)
+        if (
+            request.headers.get("content-type", "").split(";", 1)[0].strip().lower()
+            != "application/json"
+        ):
+            return failure(422)
+        payload = bytearray()
+        async for chunk in request.stream():
+            if len(payload) + len(chunk) > 4096:
+                return failure(422)
+            payload.extend(chunk)
+        try:
+            body = PasswordChange.model_validate_json(bytes(payload))
+        except ValidationError:
+            return failure(422)
+        try:
+            outcome = await run_in_threadpool(
+                service.change_password,
+                token,
+                body.current_password,
+                body.new_password,
+                settings.blocked_passwords,
+            )
+        except SQLAlchemyError:
+            return failure(503)
+        if outcome == "session":
+            return expired_cookie()
+        if outcome == "current_password":
+            return failure(
+                422, field_errors={outcome: ["M?t kh?u hi?n t?i kh?ng ??ng."]}
+            )
+        if outcome == "new_password":
+            return failure(
+                422,
+                field_errors={
+                    outcome: ["Ch?n m?t kh?u m?i h?p l? v? kh?c m?t kh?u hi?n t?i."]
+                },
+            )
+        response = Response(status_code=204, headers={"Cache-Control": "no-store"})
+        clear_session_cookie(response)
+        return response
 
     @router.post(
         "/logout",
@@ -249,8 +518,6 @@ def auth_router(service: AuthService | None, settings: AuthSettings) -> APIRoute
         except ValidationError:
             return failure(422)
 
-        from starlette.concurrency import run_in_threadpool
-
         try:
             outcome = await run_in_threadpool(
                 service.login,
@@ -272,7 +539,7 @@ def auth_router(service: AuthService | None, settings: AuthSettings) -> APIRoute
                     code="PASSWORD_CHANGE_REQUIRED",
                     message="Can doi mat khau tam thoi.",
                     request_id=str(uuid4()),
-                ).model_dump(),
+                ).model_dump(exclude_none=True),
                 status_code=403,
                 headers={"Cache-Control": "no-store"},
             )

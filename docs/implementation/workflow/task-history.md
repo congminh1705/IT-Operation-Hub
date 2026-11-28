@@ -12667,3 +12667,294 @@ FND-05 Parent closure is supported by PO acceptance of both Phase B leaves and I
 - Eligibility / remaining prerequisite: FND-04.02 done; separate implementation authorization.
 
 FND-08 Parent closure is supported by PO acceptance of both Phase B leaves and INT-01 (Phase C closure commit b6e42a2).
+
+<a id="task-fnd-07-01-attempt-01"></a>
+
+### FND-07.01 - Attempt 01 - 2026-11-25T15:46:43+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-07.01/attempt-01
+- Task: [Task card](../tasks/FND-07.01.md)
+- Parent / phase: FND-07 / B
+- Executor: Codex
+- Started at: 2026-11-25 (exact time not captured)
+- Ended at: 2026-11-25T15:46:43+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None. FND-04.02 already done.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implement restricted own-profile display-name edit.
+- Delivered: The server derives identity from the live session, checks Origin and session CSRF, validates the two-field DTO, and writes the name, version, audit and idempotency ledger atomically.
+- Incomplete scope / deviations: Contact phone remains an open policy proposal and is excluded from the DTO. Password rotation and browser cutover belong to subsequent tasks.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/auth/http.py | ProfileUpdate and updateOwnProfile route | Validate and write scoped profile changes |
+| src/backend/tests/test_auth_login.py | Profile scope and rollback cases | Verify effects on PostgreSQL |
+| docs/api/openapi.json, docs/api/README.md, src/frontend/src/lib/api/contract.generated.ts | Closed profile schema | Keep existing transport contract aligned |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Own profile only | Valid session updates own name; forged ID, email and role rejected | Own name changes and other account stays unchanged. Unauthenticated, bad CSRF and extra DTO fields denied. | pass | [API tests](../../../src/backend/tests/test_auth_login.py) |
+| Safe failure and retry | Field errors and 409 preserve scope; failed write rolls back | Invalid names get display_name errors. Stale version and changed payload conflict. Injected post-flush error rolls back data and key; same-key retry succeeds. | pass | [API tests](../../../src/backend/tests/test_auth_login.py) |
+| Browser acceptance | Check actual focus and form state on live API | Existing UI unchanged. INT-01 owns cutover. | not-run | [Parent coverage](../package-task-coverage.md#fnd-07) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | .venv/Scripts/python.exe -m pytest -q with ITOH_TEST_DATABASE_URL set to local Compose PostgreSQL | API and DB checks pass | 24 passed, zero skipped. Upstream TestClient warning. | pass |
+| src/backend | .venv/Scripts/ruff.exe check app migrations tests and .venv/Scripts/mypy.exe app migrations tests | Lint and types pass | Exit 0 | pass |
+| src/frontend | pnpm.cmd typecheck and pnpm.cmd test | Types and frontend regressions pass | 130 tests passed | pass |
+| repository | python docs/api/generate_frontend_contract.py --check and python -B -m unittest discover -s docs/api -p test_frontend_contract.py | Generated types and drift fixtures pass | 8 operation slice current, 5 tests passed | pass |
+| deployment | Live browser cutover and production build | Verify integrated runtime | Out of leaf scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO review pending.
+- Findings / resolution: Trimmed display-name update leaves existing scopes and sessions intact. Audit stores version changes without the submitted name.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: None for leaf review. FND-07.02 and INT-01 remain for Parent.
+- Required resolution / owner: PO reviews this leaf. Integration owners verify live browser behavior.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-07.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [API tests](../../../src/backend/tests/test_auth_login.py). No visual changes.
+- Commit / build / environment: Implementation 0d36eab pushed and verified on origin/phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FND-07.01.
+- Eligibility / remaining prerequisite: FND-07.02 requires this leaf done and separate authorization.
+
+<a id="task-fnd-07-01-attempt-02"></a>
+
+### FND-07.01 - Attempt 02 - 2026-11-25T15:53:00+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-07.01/attempt-02
+- Task: [Task card](../tasks/FND-07.01.md)
+- Parent / phase: FND-07 / B
+- Executor: Codex
+- Started at: 2026-11-25T15:53:00+07:00
+- Ended at: 2026-11-25T15:53:00+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Agent verification](#task-fnd-07-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO acceptance.
+- Delivered: Closed the own-profile leaf and recorded authorization for FND-07.02.
+- Incomplete scope / deviations: Parent closure awaits INT-01.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-07.01.md and workflow records | PO signoff | Synchronize closure |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Leaf acceptance | Technical checks and PO approval | PO accepted | pass | [Original verification](#task-fnd-07-01-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Check board, card and anchors; git diff --check | Synchronized closure | Leaf done | pass |
+| application | Repeat runtime checks | Original evidence retained | Documentation-only closure | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance.
+- Findings / resolution: PO confirmed done and authorized continuation.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: INT-01 gates Parent closure.
+- Required resolution / owner: INT-01 owners verify live flows.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-07.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-07-01-attempt-01).
+- Commit / build / environment: Implementation 0d36eab pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-07.02.
+- Eligibility / remaining prerequisite: Prerequisite accepted; continuation authorized.
+
+<a id="task-fnd-07-02-attempt-01"></a>
+
+### FND-07.02 - Attempt 01 - 2026-11-25T15:55:22+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-07.02/attempt-01
+- Task: [Task card](../tasks/FND-07.02.md)
+- Parent / phase: FND-07 / B
+- Executor: Codex
+- Started at: 2026-11-25 (exact time not captured)
+- Ended at: 2026-11-25T15:55:22+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None. FND-07.01 accepted before implementation.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Verify current password and rotate the credential under the approved D-40 policy.
+- Delivered: Closed credential DTO, session Origin/CSRF, policy validation, Argon2id update, redacted audit and atomic revocation of all sessions. Restricted temporary sessions can prove the consumed initial credential and set a permanent one.
+- Incomplete scope / deviations: INT-01 owns browser wiring. Deployment must supply a blocklist. Previously issued restricted sessions lack the old verifier and need authorized credential replacement.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/auth/http.py, service.py, models.py and app/main.py | changeOwnPassword, AuthService.change_password, explicit blocklist | Verify and rotate credentials |
+| src/backend/migrations/versions/0008_password_rotation.py | Restricted session temporary verifier | Verify the initial secret without permitting another login |
+| src/backend/tests/test_auth_login.py | Password rotation and bootstrap transition tests | Verify real PostgreSQL behavior |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Current password and policy | Wrong current password, noncompliant new input and old password denied | 422 on wrong, short, blocklisted and identical passwords. New login succeeds, old login fails. | pass | [Backend tests](../../../src/backend/tests/test_auth_login.py) |
+| Session and audit | Old sessions cannot replay and outputs omit password data | Current and other sessions revoked. Replayed cookie returns 401. Audit contains version only and no password ledger row is created. | pass | [Backend tests](../../../src/backend/tests/test_auth_login.py) |
+| Live UI and browser | Verify safe form behavior with real identity adapter | INT-01 owns browser cutover | not-run | [Parent coverage](../package-task-coverage.md#fnd-07) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | .venv/Scripts/python.exe -m pytest -q with local PostgreSQL ITOH_TEST_DATABASE_URL | DB-backed API tests pass | 26 passed, zero skipped; upstream TestClient warning | pass |
+| src/backend | .venv/Scripts/ruff.exe check app migrations tests and .venv/Scripts/mypy.exe app migrations tests | Static checks pass | Exit 0 | pass |
+| src/backend | .venv/Scripts/alembic.exe upgrade head --sql | Offline migrations render | Exit 0 | pass |
+| integration | Live browser and production rollout | Verify integrated behavior | Not run in this backend leaf | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO implementation review pending.
+- Findings / resolution: Successful rotation requires re-login. Temporary verifier is cleared upon session revocation.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: INT-01 evidence gates Parent closure; blocklist configuration is required to enable password changes.
+- Required resolution / owner: Deployment and integration owners configure and verify their respective flows.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-07.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Backend tests](../../../src/backend/tests/test_auth_login.py). No UI changes or screenshots.
+- Commit / build / environment: Implementation f1213a6 pushed and verified on origin/phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FND-07.02.
+- Eligibility / remaining prerequisite: Parent closure awaits INT-01. Subsequent tasks need separate authorization.
+
+<a id="task-fnd-07-02-attempt-02"></a>
+
+### FND-07.02 - Attempt 02 - 2026-11-25T15:59:32+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-07.02/attempt-02
+- Task: [Task card](../tasks/FND-07.02.md)
+- Parent / phase: FND-07 / B
+- Executor: Codex
+- Started at: 2026-11-25T15:59:32+07:00
+- Ended at: 2026-11-25T15:59:32+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Agent verification](#task-fnd-07-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO acceptance.
+- Delivered: Marked FND-07.02 done and linked the original technical evidence.
+- Incomplete scope / deviations: Parent closure still requires INT-01.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-07.02.md and workflow records | PO acceptance | Synchronize status |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Leaf acceptance | Agent evidence and PO signoff | PO accepted | pass | [Original verification](#task-fnd-07-02-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Inspect board, card and anchors; git diff --check | Consistent handoff | Both FND-07 leaves done | pass |
+| application | Repeat runtime tests | Preserve previous evidence | Documentation-only closure | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance.
+- Findings / resolution: PO confirmed done and requested continuation.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: INT-01 gates Parent closure. FND-06 provisioning decisions remain unconfirmed.
+- Required resolution / owner: Integration and PO decision owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-07.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-07-02-attempt-01).
+- Commit / build / environment: Implementation f1213a6 pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PRE-02.01, workforce contract.
+- Eligibility / remaining prerequisite: FE-18.03 done; continuation authorized.
+
+FND-07 Parent closure follows PO acceptance of both Phase B leaves and INT-01 (Phase C closure commit b6e42a2).

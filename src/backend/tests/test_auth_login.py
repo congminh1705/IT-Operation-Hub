@@ -333,3 +333,257 @@ def test_idle_and_absolute_expiry_and_account_revocation(database: Database) -> 
         for token in (idle_token, absolute_token):
             record = db.get(AuthSession, digest(token))
             assert record is not None and record.revoked_at is not None
+
+
+def test_own_profile_rejects_forged_fields_and_preserves_session(
+    database: Database,
+) -> None:
+    from app.infrastructure.models import AuditLog
+
+    service = AuthService(database)
+    seed(service)
+    other_id = uuid4()
+    with database.transaction() as db:
+        db.add(
+            Account(
+                id=other_id,
+                email="other@example.invalid",
+                display_name="Other",
+                role="ADMIN",
+                active=True,
+                version=1,
+            )
+        )
+
+    with TestClient(
+        create_app(service, AuthSettings(frozenset({ORIGIN}))), base_url=ORIGIN
+    ) as client:
+        path = f"{BASE}/profile"
+        draft = {"display_name": "  T?n m?i  ", "expectedVersion": 1}
+        assert client.patch(path, json=draft).status_code == 401
+        assert login(client, preflight(client)).status_code == 200
+        csrf = str(client.get(f"{BASE}/csrf").json()["csrf_token"])
+        headers = {
+            "Origin": ORIGIN,
+            "X-CSRF-Token": csrf,
+            "Idempotency-Key": "profile-1",
+        }
+        assert (
+            client.patch(
+                path, json=draft, headers={**headers, "X-CSRF-Token": "invalid"}
+            ).status_code
+            == 403
+        )
+        for key, value in {
+            "userId": str(other_id),
+            "email": "other@example.invalid",
+            "role": "ADMIN",
+            "contact_phone": "secret-phone",
+        }.items():
+            rejected = client.patch(path, json={**draft, key: value}, headers=headers)
+            assert rejected.status_code == 422
+            assert value not in rejected.text
+        blank = client.patch(
+            path, json={**draft, "display_name": "   "}, headers=headers
+        )
+        assert (
+            blank.status_code == 422 and "display_name" in blank.json()["field_errors"]
+        )
+        invalid = client.patch(
+            path, json={**draft, "display_name": None}, headers=headers
+        )
+        assert (
+            invalid.status_code == 422
+            and "display_name" in invalid.json()["field_errors"]
+        )
+
+        result = client.patch(path, json=draft, headers=headers)
+        assert result.status_code == 200
+        view = result.json()
+        assert view["display_name"] == "T?n m?i" and view["version"] == 2
+        assert view["role"] == "REQUESTER" and view["email"] == EMAIL
+        assert client.get(f"{BASE}/me").json() == view
+        assert client.patch(path, json=draft, headers=headers).json() == view
+        stale = client.patch(
+            path, json=draft, headers={**headers, "Idempotency-Key": "stale"}
+        )
+        assert stale.status_code == 409 and stale.json()["code"] == "PROFILE_CONFLICT"
+        different = client.patch(
+            path, json={**draft, "display_name": "other"}, headers=headers
+        )
+        assert different.status_code == 409
+
+    with database.session() as db:
+        other = db.get(Account, other_id)
+        assert (
+            other is not None and other.display_name == "Other" and other.version == 1
+        )
+        audit = db.scalars(
+            select(AuditLog).where(AuditLog.action == "auth.profile_update")
+        ).all()
+        assert len(audit) == 1
+        assert audit[0].target_id != other_id
+        assert "T?n m?i" not in str(audit[0].before_after_redacted)
+
+
+def test_profile_failure_rolls_back_version_and_idempotency_key(
+    database: Database,
+) -> None:
+    from typing import Any
+
+    import pytest
+    from sqlalchemy.exc import SQLAlchemyError
+    from sqlalchemy.orm import Session
+
+    from app.modules.auth import http
+
+    service = AuthService(database)
+    seed(service)
+    with TestClient(
+        create_app(service, AuthSettings(frozenset({ORIGIN}))), base_url=ORIGIN
+    ) as client:
+        assert login(client, preflight(client)).status_code == 200
+        csrf = str(client.get(f"{BASE}/csrf").json()["csrf_token"])
+        headers = {
+            "Origin": ORIGIN,
+            "X-CSRF-Token": csrf,
+            "Idempotency-Key": "profile-retry",
+        }
+        body = {"display_name": "New display name", "expectedVersion": 1}
+
+        def fail_after_flush(session: Session, **_: Any) -> None:
+            session.flush()
+            raise SQLAlchemyError("synthetic transaction failure")
+
+        with pytest.MonkeyPatch.context() as patch:
+            patch.setattr(http, "write_audit", fail_after_flush)
+            failed = client.patch(f"{BASE}/profile", json=body, headers=headers)
+            assert failed.status_code == 503 and "synthetic" not in failed.text
+        old = client.get(f"{BASE}/me").json()
+        assert old["display_name"] == "Synthetic" and old["version"] == 1
+        retried = client.patch(f"{BASE}/profile", json=body, headers=headers)
+        assert retried.status_code == 200 and retried.json()["version"] == 2
+
+
+def test_password_change_verifies_policy_and_revokes_all_sessions(
+    database: Database,
+) -> None:
+    from app.infrastructure.models import AuditLog, ConfirmedCommand
+
+    service = AuthService(database)
+    seed(service)
+    blocked = "blocked synthetic phrase"
+    new_password = "M?t kh?u m?i cho ki?m th?"
+    settings = AuthSettings(frozenset({ORIGIN}), blocked_passwords=frozenset({blocked}))
+    application = create_app(service, settings)
+    with (
+        TestClient(application, base_url=ORIGIN) as current,
+        TestClient(application, base_url=ORIGIN) as other,
+    ):
+        assert login(current, preflight(current)).status_code == 200
+        assert login(other, preflight(other)).status_code == 200
+        original_token = current.cookies[settings.session_cookie]
+        csrf = str(current.get(f"{BASE}/csrf").json()["csrf_token"])
+        headers = {
+            "Origin": ORIGIN,
+            "X-CSRF-Token": csrf,
+            "Idempotency-Key": "change-password",
+        }
+        path = f"{BASE}/password"
+        invalid = current.post(
+            path,
+            headers=headers,
+            json={
+                "current_password": "incorrect secret",
+                "new_password": new_password,
+            },
+        )
+        assert (
+            invalid.status_code == 422
+            and "current_password" in invalid.json()["field_errors"]
+        )
+        assert (
+            "incorrect secret" not in invalid.text and new_password not in invalid.text
+        )
+        for candidate in ("too short", blocked, PASSWORD):
+            invalid = current.post(
+                path,
+                headers=headers,
+                json={
+                    "current_password": PASSWORD,
+                    "new_password": candidate,
+                },
+            )
+            assert (
+                invalid.status_code == 422
+                and "new_password" in invalid.json()["field_errors"]
+            )
+        assert other.get(f"{BASE}/me").status_code == 200
+        body = {"current_password": PASSWORD, "new_password": new_password}
+        assert (
+            current.post(
+                path,
+                headers={**headers, "Origin": "https://elsewhere.invalid"},
+                json=body,
+            ).status_code
+            == 403
+        )
+        result = current.post(path, headers=headers, json=body)
+        assert result.status_code == 204 and not result.content
+        assert "Max-Age=0" in result.headers["set-cookie"]
+        assert other.get(f"{BASE}/me").status_code == 401
+        current.cookies.set(settings.session_cookie, original_token)
+        assert current.post(path, headers=headers, json=body).status_code == 401
+        assert login(current, preflight(current), PASSWORD).status_code == 401
+        assert login(current, preflight(current), new_password).status_code == 200
+    with database.session() as db:
+        rows = db.scalars(
+            select(AuditLog).where(AuditLog.action == "auth.password_change")
+        ).all()
+        assert len(rows) == 1
+        stored = str(rows[0].before_after_redacted)
+        assert new_password not in stored and PASSWORD not in stored
+        assert (
+            db.scalar(
+                select(ConfirmedCommand).where(
+                    ConfirmedCommand.operation == "auth.password_change"
+                )
+            )
+            is None
+        )
+
+
+def test_temporary_password_can_only_be_rotated_after_first_use(
+    database: Database,
+) -> None:
+    service = AuthService(database)
+    service.bootstrap_admin(uuid4(), EMAIL, "Test Admin", PASSWORD, set())
+    settings = AuthSettings(
+        frozenset({ORIGIN}), blocked_passwords=frozenset({"blocked synthetic phrase"})
+    )
+    with TestClient(create_app(service, settings), base_url=ORIGIN) as client:
+        assert (
+            login(client, preflight(client)).json()["code"]
+            == "PASSWORD_CHANGE_REQUIRED"
+        )
+        token = client.cookies[settings.session_cookie]
+        assert client.get(f"{BASE}/me").status_code == 401
+        assert login(client, preflight(client)).status_code == 401
+        csrf = str(client.get(f"{BASE}/csrf").json()["csrf_token"])
+        new_password = "Permanent synthetic phrase"
+        result = client.post(
+            f"{BASE}/password",
+            headers={
+                "Origin": ORIGIN,
+                "X-CSRF-Token": csrf,
+                "Idempotency-Key": "temporary",
+            },
+            json={"current_password": PASSWORD, "new_password": new_password},
+        )
+        assert result.status_code == 204
+        assert login(client, preflight(client), new_password).status_code == 200
+        assert client.get(f"{BASE}/me").json()["role"] == "ADMIN"
+    with database.session() as db:
+        restricted = db.get(AuthSession, digest(token))
+        assert restricted is not None and restricted.revoked_at is not None
+        assert restricted.temporary_verifier is None
