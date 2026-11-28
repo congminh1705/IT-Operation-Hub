@@ -13622,3 +13622,6 @@ PR titles must be in English with format `<type>(<scope>): Phase <A|B|C|D> | <PA
 
 #### 10. Next step
 - PO reviews and merges FND-10. Then prepare FND-11 on verified main.
+
+
+**FND-10 frontend verification follow-up:** Initial typecheck failed because the test expected assignee_id from FND-11. Corrected the frontend contract assertion. On the PR worktree, pnpm test passed 130/130 across 23 files, typecheck and production build passed after the correction, and full lint passed before the test-only correction. Browser integration remains INT-02.

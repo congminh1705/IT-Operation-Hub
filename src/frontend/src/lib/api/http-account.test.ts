@@ -229,12 +229,12 @@ describe("typed projection and query integration", () => {
     >();
     expectTypeOf<
       Exclude<keyof TicketInternal, keyof WireTicketPublic>
-    >().toEqualTypeOf<"internal_context" | "assignee_id">();
+    >().toEqualTypeOf<"internal_context">();
     expectTypeOf<TicketInternal>().not.toExtend<TicketPublic>();
     expectTypeOf<TicketPage<TicketInternal>>().not.toExtend<
       TicketPage<TicketPublic>
     >();
-    expectTypeOf<TicketPublic["assignee_id"]>().toEqualTypeOf<undefined>();
+    expectTypeOf<Extract<keyof TicketPublic, "assignee_id">>().toBeNever();
   });
 
   it("aborts old-scope reads, ignores late responses, and clears scoped cache on a current-session 401", async () => {
