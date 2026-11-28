@@ -12830,6 +12830,16 @@
           "suspend_without_replacement": {
             "type": "boolean",
             "default": false
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -12872,6 +12882,16 @@
           "reason": {
             "type": "string",
             "minLength": 10
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [
@@ -12930,6 +12950,16 @@
               "$ref": "#/components/schemas/HandoverItem"
             },
             "type": "array"
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -13251,6 +13281,16 @@
           "public_message": {
             "type": "string",
             "maxLength": 10000
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [
@@ -13286,6 +13326,16 @@
             "minLength": 10,
             "maxLength": 10000,
             "description": "Required for IT Manager and Admin assignment or transfer. Optional for Technician self-claim."
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [
@@ -13313,6 +13363,16 @@
             "type": "string",
             "maxLength": 10000,
             "minLength": 10
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -13743,6 +13803,16 @@
             },
             "type": "array",
             "maxItems": 366
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -13768,6 +13838,16 @@
             "type": "string",
             "maxLength": 10000,
             "minLength": 10
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -13821,6 +13901,16 @@
             "type": "string",
             "maxLength": 10000,
             "minLength": 10
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -13849,6 +13939,16 @@
             "type": "string",
             "maxLength": 10000,
             "minLength": 10
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -14122,6 +14222,16 @@
             "type": "boolean",
             "default": false,
             "description": "Explicit MA enablement only after current authority, scope, limits and grant validation. Default deny."
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [
@@ -14992,6 +15102,36 @@
           "reason_recorded": {
             "type": "boolean",
             "title": "Reason Recorded"
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reason_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason Label"
+          },
+          "reason_status": {
+            "type": "string",
+            "enum": [
+              "available",
+              "unavailable",
+              "not_recorded"
+            ],
+            "title": "Reason Status"
           }
         },
         "additionalProperties": false,
@@ -15006,6 +15146,9 @@
           "safe_summary",
           "before",
           "after",
+          "reason_code",
+          "reason_label",
+          "reason_status",
           "reason_recorded"
         ],
         "title": "AuditView"
@@ -16075,6 +16218,16 @@
               "$ref": "#/components/schemas/HandoverItem"
             },
             "type": "array"
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -16688,6 +16841,16 @@
             "type": "string",
             "maxLength": 10000,
             "minLength": 10
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -17154,6 +17317,16 @@
             },
             "type": "array",
             "minItems": 1
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -17186,6 +17359,18 @@
           "version",
           "items"
         ]
+      },
+      "AuditReason": {
+        "type": "string",
+        "enum": [
+          "BUSINESS_IMPACT",
+          "CAPACITY",
+          "ACCESS_CHANGE",
+          "POLICY_REQUIREMENT",
+          "DATA_CORRECTION",
+          "OTHER"
+        ],
+        "title": "AuditReason"
       }
     }
   },

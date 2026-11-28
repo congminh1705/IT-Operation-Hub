@@ -285,3 +285,5 @@ Phase A exits at **FE-18.03** after all frontend output/checks are complete. Pha
 Evidence exists for completed tasks, including PO-approved FE-02.03; unopened tasks remain NOT RUN. See [current context](current-context.md), the [task template](task-template.md) and [coverage/closure](../package-task-coverage.md). Preserve stable IDs when later implementation discovers a justified refinement; record changed edges and evidence instead of silently broadening scope.
 
 The owner-facing [latest task report](current-context.md#latest-task-report) is maintained only in current context; this board remains the task state/owner/dependency registry.
+
+FND-18 follow-up evidence: [structured reason review](task-history.md#fnd-18-structured-reason-review). Both leaves remain review pending PO acceptance; INT-06 owns browser closure.

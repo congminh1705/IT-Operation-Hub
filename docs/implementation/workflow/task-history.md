@@ -13908,3 +13908,55 @@ Task cards, board, registry, context and history updated.
 
 #### 10. Next step
 Complete the outstanding reason criterion and review the service scope. Parent closure requires INT-06.
+
+<a id="fnd-18-structured-reason-review"></a>
+
+### FND-18 — Bổ sung lý do audit có cấu trúc (2026-11-28)
+
+#### 1. Metadata
+
+Format version: 1. Phase B. Owner: PO. FND-18.01 và FND-18.02 ở review. Parent EPIC_IN_PROGRESS. PO duyệt phương án triển khai trong hội thoại, nghiệm thu kết quả bổ sung đang chờ.
+
+#### 2. Kết quả
+
+Thêm sáu mã lý do được kiểm soát, nhãn tiếng Việt và reason_status available/unavailable/not_recorded. Mã xuất phát từ tham số người thực hiện gửi. API giữ reason_recorded để tương thích. Các luồng ticket, nhân sự, phân công, quyền tài khoản, bàn giao, nhóm và SLA truyền mã vào audit trong cùng giao dịch. Bản ghi cũ hoặc client chưa gửi mã trả trạng thái thiếu nội dung rõ ràng. Ghi chú tự do giữ cơ chế lưu và quyền của từng nghiệp vụ hiện có.
+
+#### 3. File chính
+
+src/backend/app/infrastructure/events.py; app/modules/audit.py; các command và bộ ghi sự kiện trong tickets, workforce, work_management, organization và sla; tests/test_scoped_audit.py; tests/test_ticket_priority.py; docs/api/openapi.json và contract.generated.ts.
+
+#### 4. Nghiệm thu
+
+Tiêu chí lý do đã được làm rõ tại mục FND-18 của 01-foundation.md theo phương án PO duyệt. API có dữ liệu lý do an toàn cho client mới và trạng thái tương thích lịch sử. INT-06 cần thêm lựa chọn lý do trên giao diện và kiểm thử luồng trình duyệt. Chưa chốt DONE hoặc EPIC_DONE.
+
+#### 5. Kiểm tra
+
+| Nơi chạy | Lệnh | Kết quả |
+| --- | --- | --- |
+| .fnd18/src/backend | Python môi trường D:/IT-Operation-Hub/src/backend/.venv/Scripts/python.exe -m pytest -qx --basetemp=D:/IT-Operation-Hub/.fnd18-final-test-temp với ITOH_TEST_DATABASE_URL trỏ PostgreSQL local 55432 | PASS 63, gồm API quyền/phạm vi, lịch sử thiếu lý do, mã không tin cậy và đổi ưu tiên đến audit |
+| .fnd18 | Python cùng môi trường -m ruff check src/backend/app src/backend/tests; -m mypy src/backend/app src/backend/tests | PASS; 69 file Mypy |
+| .fnd18/src/frontend | pnpm.cmd typecheck; pnpm.cmd test; pnpm.cmd lint; pnpm.cmd build | PASS; 130 test, build thành công |
+| .fnd18/src/backend | pytest tests/test_runtime_openapi.py -qx với basetemp riêng | PASS 3 sau cập nhật contract |
+| Trình duyệt nối API thật | INT-06 | NOT RUN |
+
+Lượt đầu gặp contract drift và quyền truy cập thư mục tạm pytest. Đã đồng bộ contract, dùng thư mục tạm trong workspace và chạy lại thành công. PostgreSQL đã chạy ở cổng 55432; lần khởi động Compose bổ sung báo cổng đang dùng, các test dùng instance hiện có. Có cảnh báo deprecation Starlette/httpx.
+
+#### 6. Review
+
+Agent đã kiểm tra và chạy các lệnh trên. PO mới duyệt phương án, chưa nghiệm thu bản sửa. Một lượt export dùng nhầm đường dẫn thư mục gốc đã được sửa về worktree .fnd18. Hai file sinh tự động ở thư mục gốc được lưu bản sao tạm và phục hồi về HEAD; thay đổi triển khai nằm trong worktree.
+
+#### 7. Giới hạn
+
+Không có nội dung lịch sử để phục hồi từ cờ boolean. Client cũ được phép chưa gửi mã và trả unavailable nếu đã ghi nhận lý do. Giao diện chọn mã và kiểm thử trình duyệt chờ INT-06. Không có preview API hay tài khoản DEMO mới được khởi chạy trong lượt này.
+
+#### 8. Git delivery
+
+Nhánh phase-b/fnd-18-audit-search. Commit bổ sung mang Task ID FND-18.01 và FND-18.02. Kết quả push được ghi ở final report sau khi xác minh remote. Chưa tạo PR.
+
+#### 9. Tài liệu
+
+Đã cập nhật hai task card, task-history, current-context, execution-board và tiêu chí Parent. PO có thể xem API contract và các test nêu trên để kiểm tra mã lý do, trạng thái lịch sử và quyền truy cập.
+
+#### 10. Bước tiếp theo
+
+PO nghiệm thu phần bổ sung FND-18. INT-06 tiếp nhận hợp đồng và nối giao diện khi đủ dependency. Chưa bắt đầu Parent khác.

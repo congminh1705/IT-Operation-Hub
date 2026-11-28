@@ -14,7 +14,7 @@ authority: derived
 
 ## Latest task report
 
-- FND-18 service implementation in review. 62 PostgreSQL tests, 5 scoped reruns and 130 frontend unit tests passed. Reason content and INT-06 remain open. [Report](task-history.md#fnd-18-implementation-review).
+- FND-18 structured reasons implemented under PO-approved contract. Both leaves remain review; Parent EPIC_IN_PROGRESS. PostgreSQL 63 pass, frontend 130 pass, typecheck/lint passed. INT-06 browser wiring pending. [Report](task-history.md#fnd-18-structured-reason-review).
 
 - FND-17 backend delivery from merged FND-16. Three service leaves previously PO accepted. Parent awaits INT-03. [Report](task-history.md#fnd-17-backend-delivery).
 
