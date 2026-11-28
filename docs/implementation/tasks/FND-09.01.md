@@ -82,3 +82,6 @@ A future request authorizes the selected implementation (or this decision-refine
 - Remaining: Persistence and HTTP entry point follow FND-09.02. Asset/files and live browser belong to later tasks.
 - Commit/build: FND-09.01 push receipt pending.
 - Next: Joint review of the two FND-09 leaves after sequential verification.
+
+
+Backend delivery: PO accepted this service leaf. Fresh PR-branch suite passed 33 tests. Parent remains EPIC_IN_PROGRESS pending INT-02. [Delivery report](../workflow/task-history.md#fnd-09-backend-delivery-2026-11-28).

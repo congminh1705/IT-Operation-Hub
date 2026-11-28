@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- FND-09 backend delivery is ready for PO merge review. 33 PostgreSQL tests and Ruff passed on phase-b/fnd-09-ticket-intake. Both leaves done; Parent awaits INT-02. See [report](task-history.md#fnd-09-backend-delivery-2026-11-28).
+
 - PO approved delivery naming on 2026-11-28. Parent branches use `phase-<letter>/<parent-id>-<short-description>`, e.g. `phase-b/fnd-18-audit-search`. PR titles use `Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. One PR per Parent and one commit per child. See task-workflow.md.
 
 - [FND-06 Parent closure](task-history.md#parent-fnd-06-closure-2026-11-28), 2026-11-28: EPIC_DONE under PO-approved synthetic-data acceptance before real users exist. Both leaves and INT-01 are done; PO accepted 3 Admin browser, 9 auth browser and 60 backend checks. QA-04.01 retains the full business journey; real authority/handover remains required before rollout. This does not claim production readiness or PR merge.

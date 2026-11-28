@@ -13530,3 +13530,47 @@ All commands below ran from src/backend unless noted. Tests used the documented 
 ### Delivery naming approved - 2026-11-28
 
 PO approved publishing this documentation update to main. Parent branches use `phase-<letter>/<parent-id>-<short-description>`, e.g. `phase-b/fnd-18-audit-search`. PR titles use `Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. Workflow, both execution prompts, README and current context are synchronized. One PR per Parent and individually identifiable child commits remain required. Existing published branch names retain their history. Documentation-only change verified by Git diff checks.
+
+
+<a id="fnd-09-backend-delivery-2026-11-28"></a>
+
+### FND-09 backend delivery - 2026-11-28
+
+#### 1. Report metadata
+- Format version: 1
+- Report ID: FND-09/backend-delivery-01. Owner: PO.
+- Parent remains EPIC_IN_PROGRESS. Both service leaves are PO accepted and done.
+
+#### 2. Scope and delivered result
+- PO authorized sequential backend-only PRs for FND-09 through FND-13 before INT-02 acceptance.
+- FND-09 validates ticket intake and persists ticket, SLA snapshot, audit, event, outbox and idempotent result atomically.
+
+#### 3. Changed files and key symbols
+- tickets/intake.py, tickets/service.py, tickets/models.py, organization/http.py, migrations 0010/0011 and test_ticket_intake.py.
+- Delivery records and status updated for this Parent.
+
+#### 4. Acceptance results
+- Service implementation accepted previously by PO.
+- Integration/real UI acceptance remains INT-02. Parent closure is pending.
+
+#### 5. Verification results
+- Exact PR worktree .fnd09-pr/src/backend with shared Python environment and disposable local PostgreSQL.
+- python -m pytest -qx -p no:cacheprovider --tb=short: 33 passed, one existing Starlette deprecation warning.
+- python -m ruff check app tests: pass.
+- Browser/INT-02: not-run for this backend delivery.
+
+#### 6. Review
+- Agent reran backend checks on the scoped PR source. PO previously accepted both service leaves.
+
+#### 7. Remaining blockers and decisions
+- INT-02 owns Parent integration acceptance. PO approved early backend merge eligibility.
+
+#### 8. Artifacts and evidence
+- Branch phase-b/fnd-09-ticket-intake from main b3555e9.
+- Child commits bd8e496 and ff65410. PR receipt follows publication.
+
+#### 9. Execution record synchronization
+- Both task cards, board, Parent registry and current context reflect backend delivery and pending Parent acceptance.
+
+#### 10. Next step
+- PO reviews/merges FND-09 PR. Then prepare FND-10 on verified merged main.
