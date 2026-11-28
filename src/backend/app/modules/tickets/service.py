@@ -22,6 +22,12 @@ from app.modules.tickets.models import Ticket
 
 class TicketStatus(StrEnum):
     NEW = "New"
+    OPEN = "Open"
+    IN_PROGRESS = "In Progress"
+    PENDING = "Pending"
+    RESOLVED = "Resolved"
+    CLOSED = "Closed"
+    CANCELLED = "Cancelled"
 
 
 class SLAView(BaseModel):

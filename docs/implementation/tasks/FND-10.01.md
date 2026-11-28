@@ -82,3 +82,6 @@ A future request authorizes the selected implementation (or this decision-refine
 - Remaining: Integrated browser and session/cache acceptance remains INT-02.
 - Commit/build: FND-10.01 push receipt pending.
 - Next: Joint review of the two FND-10 leaves after sequential verification.
+
+
+Latest delivery report: [FND-10/backend-delivery-01](../workflow/task-history.md#fnd-10-backend-delivery-2026-11-28). Service leaf PO accepted, done. Fresh branch: 38 PostgreSQL tests, Ruff and Mypy pass. Parent awaits INT-02.

@@ -1,4 +1,5 @@
 from datetime import UTC, datetime
+from typing import Any, cast
 from uuid import UUID, uuid4
 
 from fastapi.testclient import TestClient
@@ -18,14 +19,14 @@ TICKETS = "/api/v1/tickets"
 
 def create_ticket(
     client: TestClient, headers: dict[str, str], category: str, title: str
-) -> dict:
+) -> dict[str, Any]:
     response = client.post(
         TICKETS,
         json={**ticket_payload(category), "title": title},
         headers={**headers, "Idempotency-Key": title},
     )
     assert response.status_code == 201, response.json()
-    return response.json()
+    return cast(dict[str, Any], response.json())
 
 
 def test_list_scope_filters_and_paging(database: Database) -> None:
@@ -148,13 +149,13 @@ def test_detail_uses_current_role_and_team_membership(database: Database) -> Non
         for private in ("private note", "proposed plan", "candidate metadata"):
             assert private not in response.text
 
-    def not_found(client: TestClient, url: str) -> dict:
+    def not_found(client: TestClient, url: str) -> dict[str, Any]:
         response = client.get(url)
         assert response.status_code == 404, response.text
         body = response.json()
         UUID(body.pop("request_id"))
         assert body["code"] == "NOT_FOUND"
-        return body
+        return cast(dict[str, Any], body)
 
     assert anonymous.get(team_url).status_code == 401
     assert not_found(requester, own_url) == not_found(requester, f"{TICKETS}/{uuid4()}")

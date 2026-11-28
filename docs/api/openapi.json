@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.1",
   "info": {
-    "title": "IT Operations Hub — Design API",
+    "title": "IT Operations Hub â€” Design API",
     "version": "0.1.0-design",
     "description": "Documentation-only target contract. No running API, code, generated client or approved deployment. D-40 open decisions remain. Synthetic DEMO examples only; never credentials or real personnel data."
   },
@@ -176,7 +176,7 @@
         "x-required-roles": [],
         "x-data-scope": "Pre-session or authenticated session; no domain data.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC01–04",
+        "x-source-use-cases": "UC01â€“04",
         "x-business-rules": "BR-01, NFR02/15"
       }
     },
@@ -292,7 +292,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC01–04",
+        "x-source-use-cases": "UC01â€“04",
         "x-business-rules": "BR-01, NFR02/15"
       }
     },
@@ -365,7 +365,7 @@
         ],
         "x-data-scope": "",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC01–04",
+        "x-source-use-cases": "UC01â€“04",
         "x-business-rules": "BR-01, NFR02/15"
       }
     },
@@ -423,7 +423,7 @@
         ],
         "x-data-scope": "Current session owner only.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC01–04",
+        "x-source-use-cases": "UC01â€“04",
         "x-business-rules": "BR-01, NFR02/15"
       }
     },
@@ -536,7 +536,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC01–04",
+        "x-source-use-cases": "UC01â€“04",
         "x-business-rules": "BR-01, NFR02/15"
       }
     },
@@ -639,7 +639,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC01–04",
+        "x-source-use-cases": "UC01â€“04",
         "x-business-rules": "BR-01, NFR02/15"
       }
     },
@@ -752,7 +752,7 @@
         ],
         "x-data-scope": "Admin management list; no public employee directory.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "post": {
@@ -873,7 +873,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -989,7 +989,7 @@
         ],
         "x-data-scope": "Admin management record.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "patch": {
@@ -1119,7 +1119,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -1241,7 +1241,7 @@
         ],
         "x-data-scope": "Admin management list; no public employee directory.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "post": {
@@ -1362,7 +1362,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -1478,7 +1478,7 @@
         ],
         "x-data-scope": "Admin management record.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "patch": {
@@ -1608,7 +1608,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -1721,7 +1721,7 @@
         ],
         "x-data-scope": "Admin management list; no public employee directory.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "post": {
@@ -1842,7 +1842,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -1958,7 +1958,7 @@
         ],
         "x-data-scope": "Admin management record.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "patch": {
@@ -2088,7 +2088,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -2201,7 +2201,7 @@
         ],
         "x-data-scope": "Admin management list; no public employee directory.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "post": {
@@ -2322,7 +2322,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -2438,7 +2438,7 @@
         ],
         "x-data-scope": "Admin management record.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "patch": {
@@ -2568,7 +2568,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -2690,7 +2690,7 @@
         ],
         "x-data-scope": "Admin management view; member lookup is a separate minimal projection.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "post": {
@@ -2820,7 +2820,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -2949,7 +2949,7 @@
         ],
         "x-data-scope": "Only permitted categories, intake teams and own department reference. No employee enumeration; allowlisted kind required.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -3135,8 +3135,8 @@
         ],
         "x-data-scope": "R own; T active teams plus own public view; M/A organization. Scope before count.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC10–14, UC18–23",
-        "x-business-rules": "BR-02–05/08/09"
+        "x-source-use-cases": "UC10â€“14, UC18â€“23",
+        "x-business-rules": "BR-02â€“05/08/09"
       },
       "post": {
         "operationId": "createTicket",
@@ -3259,8 +3259,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC10–14, UC18–23",
-        "x-business-rules": "BR-02–05/08/09"
+        "x-source-use-cases": "UC10â€“14, UC18â€“23",
+        "x-business-rules": "BR-02â€“05/08/09"
       }
     },
     "/tickets/{id}": {
@@ -3348,8 +3348,8 @@
         ],
         "x-data-scope": "Server projects public or scoped IT data; no workforce/approval/action data for requester.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC10–14, UC18–23",
-        "x-business-rules": "BR-02–05/08/09"
+        "x-source-use-cases": "UC10â€“14, UC18â€“23",
+        "x-business-rules": "BR-02â€“05/08/09"
       }
     },
     "/tickets/{id}/transitions": {
@@ -3483,8 +3483,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC10–14, UC18–23",
-        "x-business-rules": "BR-02–05/08/09"
+        "x-source-use-cases": "UC10â€“14, UC18â€“23",
+        "x-business-rules": "BR-02â€“05/08/09"
       }
     },
     "/tickets/{id}/assignment": {
@@ -3617,8 +3617,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC10–14, UC18–23",
-        "x-business-rules": "BR-02–05/08/09"
+        "x-source-use-cases": "UC10â€“14, UC18â€“23",
+        "x-business-rules": "BR-02â€“05/08/09"
       }
     },
     "/tickets/{id}/priority": {
@@ -3750,8 +3750,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC10–14, UC18–23",
-        "x-business-rules": "BR-02–05/08/09"
+        "x-source-use-cases": "UC10â€“14, UC18â€“23",
+        "x-business-rules": "BR-02â€“05/08/09"
       }
     },
     "/tickets/{id}/comments": {
@@ -3875,8 +3875,8 @@
         ],
         "x-data-scope": "Parent ticket scope and audience; internal note never requester.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC15–17",
-        "x-business-rules": "BR-06–08; parent-content scope"
+        "x-source-use-cases": "UC15â€“17",
+        "x-business-rules": "BR-06â€“08; parent-content scope"
       },
       "post": {
         "operationId": "createTicketComment",
@@ -4008,8 +4008,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC15–17",
-        "x-business-rules": "BR-06–08; parent-content scope"
+        "x-source-use-cases": "UC15â€“17",
+        "x-business-rules": "BR-06â€“08; parent-content scope"
       }
     },
     "/tickets/{id}/attachments": {
@@ -4146,8 +4146,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC15–17",
-        "x-business-rules": "BR-06–08; parent-content scope"
+        "x-source-use-cases": "UC15â€“17",
+        "x-business-rules": "BR-06â€“08; parent-content scope"
       }
     },
     "/attachments/{id}/download": {
@@ -4282,8 +4282,8 @@
         ],
         "x-data-scope": "Current parent content scope, no public object URL; safe Content-Disposition, nosniff.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC15–17",
-        "x-business-rules": "BR-06–08; parent-content scope"
+        "x-source-use-cases": "UC15â€“17",
+        "x-business-rules": "BR-06â€“08; parent-content scope"
       }
     },
     "/tickets/{id}/plans": {
@@ -4938,8 +4938,8 @@
         ],
         "x-data-scope": "Current group membership; no requester projection.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC-OPS05–07",
-        "x-business-rules": "BR-15–18; manual lock/version/capacity"
+        "x-source-use-cases": "UC-OPS05â€“07",
+        "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
       }
     },
     "/tasks/{id}": {
@@ -5056,8 +5056,8 @@
         ],
         "x-data-scope": "Current group membership or M/A scope.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC-OPS05–07",
-        "x-business-rules": "BR-15–18; manual lock/version/capacity"
+        "x-source-use-cases": "UC-OPS05â€“07",
+        "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
       }
     },
     "/tasks/{id}/transitions": {
@@ -5190,8 +5190,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC-OPS05–07",
-        "x-business-rules": "BR-15–18; manual lock/version/capacity"
+        "x-source-use-cases": "UC-OPS05â€“07",
+        "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
       }
     },
     "/tasks/{id}/progress": {
@@ -5324,8 +5324,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC-OPS05–07",
-        "x-business-rules": "BR-15–18; manual lock/version/capacity"
+        "x-source-use-cases": "UC-OPS05â€“07",
+        "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
       }
     },
     "/tasks/{id}/assignment": {
@@ -5457,8 +5457,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC-OPS05–07",
-        "x-business-rules": "BR-15–18; manual lock/version/capacity"
+        "x-source-use-cases": "UC-OPS05â€“07",
+        "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
       }
     },
     "/tasks/{id}/assignment-lock": {
@@ -5590,8 +5590,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC-OPS05–07",
-        "x-business-rules": "BR-15–18; manual lock/version/capacity"
+        "x-source-use-cases": "UC-OPS05â€“07",
+        "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
       }
     },
     "/workforce": {
@@ -7946,7 +7946,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC-AI01/02/04–07",
+        "x-source-use-cases": "UC-AI01/02/04â€“07",
         "x-business-rules": "BR-20/21; owner and public/internal"
       }
     },
@@ -8065,7 +8065,7 @@
         ],
         "x-data-scope": "Owner only; current source visibility rechecked, revoked content redacted.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC-AI01/02/04–07",
+        "x-source-use-cases": "UC-AI01/02/04â€“07",
         "x-business-rules": "BR-20/21; owner and public/internal"
       },
       "delete": {
@@ -8184,7 +8184,7 @@
         ],
         "x-data-scope": "Owner only; retention/tombstone D-40; never delete Ticket/Task/audit/idempotency evidence.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC-AI01/02/04–07",
+        "x-source-use-cases": "UC-AI01/02/04â€“07",
         "x-business-rules": "BR-20/21; owner and public/internal"
       }
     },
@@ -8319,7 +8319,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC-AI01/02/04–07",
+        "x-source-use-cases": "UC-AI01/02/04â€“07",
         "x-business-rules": "BR-20/21; owner and public/internal"
       },
       "get": {
@@ -8442,7 +8442,7 @@
         ],
         "x-data-scope": "Owner only; source ACL/current visibility redacted again when reading history. No other users chats.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC-AI01/02/04–07",
+        "x-source-use-cases": "UC-AI01/02/04â€“07",
         "x-business-rules": "BR-20/21; owner and public/internal"
       }
     },
@@ -9596,7 +9596,7 @@
         ],
         "x-data-scope": "R assigned-to-self minimal; T related group ticket/own; MA organization.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       },
       "post": {
@@ -9718,7 +9718,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       }
     },
@@ -9837,7 +9837,7 @@
         ],
         "x-data-scope": "R self-assigned minimal; T related group ticket/own; related ticket links checked separately.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       },
       "patch": {
@@ -9968,7 +9968,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       }
     },
@@ -10101,7 +10101,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       },
       "get": {
@@ -10224,7 +10224,7 @@
         ],
         "x-data-scope": "R only own current assignment, never previous holders; T asset related to current group ticket or own; MA history within authority.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       }
     },
@@ -10357,7 +10357,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       }
     },
@@ -10490,7 +10490,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       }
     },
@@ -11075,7 +11075,7 @@
         "x-data-scope": "Safe status only; no credential read endpoint.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC-AI08",
-        "x-business-rules": "D-24/33; no secrets or others’ chats"
+        "x-business-rules": "D-24/33; no secrets or othersâ€™ chats"
       },
       "patch": {
         "operationId": "updateAssistantSettings",
@@ -11196,7 +11196,7 @@
           }
         },
         "x-source-use-cases": "UC-AI08",
-        "x-business-rules": "D-24/33; no secrets or others’ chats"
+        "x-business-rules": "D-24/33; no secrets or othersâ€™ chats"
       }
     },
     "/health/live": {
@@ -11442,7 +11442,7 @@
         "x-data-scope": "Admin configuration; others see own ticket SLA projection.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC09/24/25",
-        "x-business-rules": "BR-08–10; Admin GET/PATCH /sla/policy, ticket clock projection; internal SLA worker"
+        "x-business-rules": "BR-08â€“10; Admin GET/PATCH /sla/policy, ticket clock projection; internal SLA worker"
       },
       "patch": {
         "operationId": "updateSLAPolicy",
@@ -11563,7 +11563,7 @@
           }
         },
         "x-source-use-cases": "UC09/24/25",
-        "x-business-rules": "BR-08–10; Admin GET/PATCH /sla/policy, ticket clock projection; internal SLA worker"
+        "x-business-rules": "BR-08â€“10; Admin GET/PATCH /sla/policy, ticket clock projection; internal SLA worker"
       }
     },
     "/tickets/{id}/events": {
@@ -11687,8 +11687,8 @@
         ],
         "x-data-scope": "Public timeline for requester; internal events only scoped IT. Filter before pagination/count.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC15–17",
-        "x-business-rules": "BR-06–08; parent-content scope"
+        "x-source-use-cases": "UC15â€“17",
+        "x-business-rules": "BR-06â€“08; parent-content scope"
       }
     },
     "/assets/{id}/tickets": {
@@ -11812,7 +11812,7 @@
         ],
         "x-data-scope": "Asset access does not grant ticket access; each linked ticket scope checked before count.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       }
     }
@@ -12533,17 +12533,6 @@
           "internal_context": {
             "type": "string",
             "description": "Only scoped IT; no raw prompt, credentials or globally visible workforce data."
-          },
-          "assignee_id": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "uuid"
-              },
-              {
-                "type": "null"
-              }
-            ]
           }
         },
         "additionalProperties": false,
@@ -12559,8 +12548,7 @@
           "team_id",
           "version",
           "sla",
-          "internal_context",
-          "assignee_id"
+          "internal_context"
         ]
       },
       "TicketView": {
@@ -12733,7 +12721,7 @@
         "properties": {
           "file": {
             "type": "string",
-            "description": "≤10 MB, MIME/signature allowlist; ≤5 per request. No public object URL.",
+            "description": "â‰¤10 MB, MIME/signature allowlist; â‰¤5 per request. No public object URL.",
             "format": "binary"
           },
           "comment_id": {

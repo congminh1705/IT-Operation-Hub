@@ -13579,3 +13579,46 @@ PO approved publishing this documentation update to main. Parent branches use `p
 ### PR language and reporting convention - 2026-11-28
 
 PR titles must be in English with format `<type>(<scope>): Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. PR descriptions, including headings, must be in Vietnamese. Preserve commands, identifiers and paths. Explain functional behavior before task IDs. Report actual checks, evidence, PO acceptance and remaining integration work. Verify rendered Markdown after publishing. PO approved publishing this documentation update. PR #35 was updated to match the convention. Documentation-only verification uses scoped diff and whitespace checks.
+
+
+<a id="fnd-10-backend-delivery-2026-11-28"></a>
+
+### FND-10 backend delivery - 2026-11-28
+
+#### 1. Report metadata
+- Format version: 1
+- Report ID: FND-10/backend-delivery-01. Owner: PO.
+- Parent EPIC_IN_PROGRESS; both service leaves done and previously PO accepted.
+
+#### 2. Scope and delivered result
+- Scoped ticket search, paging/counts and public/internal detail projection.
+- Reconciled OpenAPI runtime and frontend transport contracts. Complete status enum supports lifecycle data. Assignment field remains with FND-11 delivery.
+
+#### 3. Changed files and key symbols
+- tickets/read.py, tickets/service.py, organization/http.py, auth/http.py, main.py, API contract, generated frontend types and account transport alignment.
+- Backend ticket read and runtime OpenAPI tests.
+
+#### 4. Acceptance results
+- Backend scope verified. Full browser integration remains INT-02.
+
+#### 5. Verification results
+- On .fnd10-pr/src/backend, python -m pytest -qx -p no:cacheprovider --tb=short with disposable PostgreSQL: initial run 26 passed/1 failed on runtime OpenAPI drift; corrected run 38 passed in 15.50s.
+- python -m ruff check app tests: pass.
+- python -m mypy app tests: initial four test-helper typing errors; corrected run passes 39 files.
+- Frontend tests/build and browser flow: not-run in this delivery. Existing Starlette/httpx deprecation warning remains.
+
+#### 6. Review
+- PO previously accepted both service leaves. Agent verified scoped branch. New transport reconciliation requires PR review.
+
+#### 7. Remaining blockers and decisions
+- PO authorized early backend delivery. Parent remains pending INT-02 acceptance.
+
+#### 8. Artifacts and evidence
+- phase-b/fnd-10-ticket-queries; base main 9f345e7. Implementation db2907f, 6938c69 and contract reconciliation cd15a33.
+- PR receipt recorded after publication.
+
+#### 9. Execution record synchronization
+- Task cards, board and current context link this report. Parent remains EPIC_IN_PROGRESS.
+
+#### 10. Next step
+- PO reviews and merges FND-10. Then prepare FND-11 on verified main.
