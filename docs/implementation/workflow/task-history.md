@@ -13574,3 +13574,8 @@ PO approved publishing this documentation update to main. Parent branches use `p
 
 #### 10. Next step
 - PO reviews/merges FND-09 PR. Then prepare FND-10 on verified merged main.
+
+
+### PR language and reporting convention - 2026-11-28
+
+PR titles must be in English with format `<type>(<scope>): Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. PR descriptions, including headings, must be in Vietnamese. Preserve commands, identifiers and paths. Explain functional behavior before task IDs. Report actual checks, evidence, PO acceptance and remaining integration work. Verify rendered Markdown after publishing. PO approved publishing this documentation update. PR #35 was updated to match the convention. Documentation-only verification uses scoped diff and whitespace checks.

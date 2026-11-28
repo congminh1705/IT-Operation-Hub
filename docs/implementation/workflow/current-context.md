@@ -149,3 +149,8 @@ authority: derived
 - Final agent verification recorded nine PostgreSQL 18.7 tests passing with zero skipped, plus Ruff, strict mypy, frozen lockfile, Alembic offline SQL and wheel/sdist build. PO approved the Parent.
 - FND-03.01 remains pending until verified FND-02 Parent merge and separate authorization.
 - FND-02 Parent [PR #24](https://github.com/congminh1705/IT-Operation-Hub/pull/24) is open from phase/b-backend into main. Acceptance commit 526a63c was pushed and verified. PO merge pending.
+
+
+### PR language and reporting convention - 2026-11-28
+
+PR titles must be in English with format `<type>(<scope>): Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. PR descriptions, including headings, must be in Vietnamese. Preserve commands, identifiers and paths. Explain functional behavior before task IDs. Report actual checks, evidence, PO acceptance and remaining integration work. Verify rendered Markdown after publishing. PO approved publishing this documentation update. PR #35 was updated to match the convention. Documentation-only verification uses scoped diff and whitespace checks.

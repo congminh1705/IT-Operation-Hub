@@ -119,7 +119,9 @@ Prefer one coherent task commit including its checks and available execution rec
 
 #### Parent pull requests
 
-Required title format: `Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. Child commit names retain `<type>(<scope>): <TASK_ID> <specific outcome>`.
+PR titles must be in English with format `<type>(<scope>): Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. PR descriptions, including headings, must be in Vietnamese. Preserve commands, identifiers and paths. Explain functional behavior before task IDs. Report actual checks, evidence, PO acceptance and remaining integration work. Verify rendered Markdown after publishing.
+
+Required title format: `<type>(<scope>): Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. Child commit names retain `<type>(<scope>): <TASK_ID> <specific outcome>`.
 
 This policy applies to **all 230 tasks and all 88 Parents across phases A, B, C and D**, including non-FE decisions, foundation, services, AI, integration and acceptance work. Parent completion includes its existing external closure requirements; a child service being done does not close its Parent early. On every handoff report task commit/push, Parent closure/PR state, PO merge reminder if open, and phase exit state when applicable. Check required preceding Parent PR merges at session start rather than relying on chat memory.
 
@@ -133,39 +135,35 @@ After PO reports merging, verify the PR is merged and fetch `origin/main`. Creat
 
 Use title `<type>(<scope>): <PARENT_ID> <specific delivered outcome>` in concise English. Examples:
 
-- `Phase A | FE-01 | Establish reproducible DEMO foundation`
-- `Phase B | FND-18 | Expose scoped audit search`
-- `Phase C | INT-02 | Connect ticket workflows`
+- `feat(frontend): Phase A | FE-01 | Establish reproducible DEMO foundation`
+- `feat(audit): Phase B | FND-18 | Expose scoped audit search`
+- `feat(tickets): Phase C | INT-02 | Connect ticket workflows`
 
 Describe the actual final diff for a reviewer who has not read the chat. Use this description template:
 
 ```markdown
-## Outcome
-{Concrete problem addressed and resulting behavior.}
+## K?t qu? b?n giao
+{Gi?i th?ch v?n ??, ch?c n?ng v? h?nh vi sau thay ??i b?ng ti?ng Vi?t.}
 
-## Delivered scope
-- Parent: {PARENT_ID}; phase: {A/B/C/D}.
-- Source branch: {Parent branch, e.g. phase-b/fnd-18-audit-search}; base: main.
-- Child tasks: {all delivered task IDs and their concrete outputs}.
-- Parent acceptance: {criterion-by-criterion closure and real evidence}.
+## Ch?c n?ng v? ph?m vi
+{M? t? thao t?c ng??i d?ng, k?t qu? v? m?t v? d? khi c?n. Sau ?? ?nh x? Parent, phase v? c?c task con v?o ch?c n?ng t??ng ?ng.}
 
-## Validation
-| Check / acceptance | Actual result | Evidence |
+## C?c file ch?nh
+{???ng d?n v? vai tr? c?a c?c file gi?p reviewer hi?u thay ??i.}
+
+## Ki?m tra v? b?ng ch?ng
+| Ki?m tra | K?t qu? th?c t? | B?ng ch?ng |
 | --- | --- | --- |
-| {Relevant command or manual check} | {pass/fail/not-run and reason} | {real path/link} |
+| {L?nh ho?c thao t?c, m?i tr??ng v? source ?? ki?m tra} | {pass/fail/not-run c?ng l? do} | {Link ho?c ???ng d?n th?c t?} |
 
-## Design and review
-{Applicable approved HTML reference, real comparison evidence and actual PO
-verdict; justified N/A for nonvisual work. Self-review is not PO approval.}
+## Nghi?m thu
+{Ph?n bi?t ki?m tra c?a agent v?i nghi?m thu PO. N?u ??i chi?u thi?t k? khi c? UI v? tr?ng th?i t?ng ti?u ch? quan tr?ng.}
 
-## Risks and remaining work
-{Known limitations, mock versus real behavior, migration/configuration effects
-and explicit missing evidence or local-only documentation.}
+## Gi?i h?n v? ph?n c?n l?i
+{N?u ph?n t?ch h?p ch?a ch?y, d? li?u gi? l?p, c?u h?nh/migration v? ?i?u ki?n tri?n khai c?n thi?u.}
 
-## Handoff
-{Task/history/current-context references actually available to the reviewer.
-Ask PO to review and merge this PR before starting another Parent on the shared
-branch. Keep the phase branch for subsequent Parents.}
+## Git delivery v? b?n giao
+{Nh?nh ngu?n, main, commit v? link h? s? task/history/current-context. ?? ngh? PO review v? merge khi PR c?n m?. X?c minh merge tr??c khi b?n giao Parent ph? thu?c ti?p theo.}
 ```
 
 Publish the required title and description directly to the Parent PR on GitHub. Do not create or retain per-Parent PR Markdown files or a `pull-requests` folder in the repository. Prefer a structured GitHub API request; if `gh --body-file` is needed, use a temporary file outside the repository and delete it after use. Verify the returned PR URL, base/head, title/body and commit scope; record only the delivery status and PR link in current context, task/history and the final handoff. On missing access or failure, provide the prepared title/body in the response and report PR creation as not-run/failed; never invent a URL or merge automatically. One PR per Parent, the Parent delivery branch and the reminder for PO to merge remain required.
