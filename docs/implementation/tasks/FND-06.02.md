@@ -73,12 +73,15 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: FND-06.02/attempt-01.
-- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-06-02-attempt-01).
+- Latest Report ID: FND-06.02/attempt-05 (PO accepted fresh technical verification).
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-06-02-attempt-05).
 - Delivered: Explicit allowlisted provisioning result, Admin authorization before credential parsing, sanitized validation, safe verification/approval audit references and SQLAlchemy parameter hiding.
 - Changed paths: users/provisioning.py, organization/http.py, database/event helpers, OpenAPI and API tests.
 - Checks: 28 PostgreSQL tests, Ruff, mypy and five OpenAPI drift tests passed. Captured logs omit password/verifier. Injected audit failure rolls back user, proof and idempotency key.
-- Review: Agent verified. PO approval pending.
-- Remaining: Live D-29 verification source, approved IT-role approver and enterprise handover channel, and INT-01 native form integration.
-- Commit/build: Implementation push receipt pending.
-- Next: PO reviews FND-06.02. Parent closure still requires INT-01.
+- Review: PO accepted the implementation and, on 2026-11-28, accepted the fresh technical verification from attempt 04. Live D-29 handover remains unverified.
+- Remaining: Live D-29 verification source, approved IT-role approver and enterprise handover channel. INT-01 integration is accepted with synthetic verification. The 2026-11-28 isolated reruns passed: 3 Admin browser cases, 9 auth/lifecycle browser cases and 60 backend tests. Local PostgreSQL connectivity recovered with WSL kept active; see attempt 04.
+- Commit/build: Implementation 4075c43 pushed and verified on origin/phase/b-backend.
+- Next: Collect live D-29 verification and handover evidence for Parent closure. INT-01 is already accepted; no subsequent task started in this follow-up.
+
+
+**Parent closure (2026-11-28):** FND-06 is EPIC_DONE under the PO-approved pre-user synthetic-data acceptance basis. INT-01 is done and the fresh technical checks were accepted. Earlier live-evidence blockers above are deferred to real-user rollout; they are not claimed as executed. Full D-29 business journey remains QA-04.01. See [closure report](../workflow/task-history.md#parent-fnd-06-closure-2026-11-28).

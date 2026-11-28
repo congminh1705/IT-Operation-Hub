@@ -121,7 +121,7 @@ This **work-package/epic registry** retains all 88 stable scope IDs. The registr
 | [FND-03](01-foundation.md#fnd-03) | Create accessible shell and typed API client | [FND-01](01-foundation.md#fnd-01) | EPIC_DONE |
 | [FND-04](01-foundation.md#fnd-04) | Implement login, logout and current-session authorization | [FND-02](01-foundation.md#fnd-02), [FND-03](01-foundation.md#fnd-03) | EPIC_DONE |
 | [FND-05](01-foundation.md#fnd-05) | Manage departments, teams and safe reference lookups | [FND-04](01-foundation.md#fnd-04) | EPIC_DONE |
-| [FND-06](01-foundation.md#fnd-06) | Provision accounts through the authorized Admin flow | [FND-05](01-foundation.md#fnd-05) | EPIC_READY |
+| [FND-06](01-foundation.md#fnd-06) | Provision accounts through the authorized Admin flow | [FND-05](01-foundation.md#fnd-05) | EPIC_DONE |
 | [FND-07](01-foundation.md#fnd-07) | Implement own profile and password changes | [FND-04](01-foundation.md#fnd-04) | EPIC_DONE |
 | [FND-08](01-foundation.md#fnd-08) | Configure categories and versioned default SLA | [FND-05](01-foundation.md#fnd-05) | EPIC_DONE |
 | [FND-09](01-foundation.md#fnd-09) | Create a text ticket with priority and SLA snapshot | [FND-06](01-foundation.md#fnd-06), [FND-08](01-foundation.md#fnd-08) | EPIC_READY |

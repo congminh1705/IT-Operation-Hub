@@ -12958,3 +12958,570 @@ FND-08 Parent closure is supported by PO acceptance of both Phase B leaves and I
 - Eligibility / remaining prerequisite: FE-18.03 done; continuation authorized.
 
 FND-07 Parent closure follows PO acceptance of both Phase B leaves and INT-01 (Phase C closure commit b6e42a2).
+
+
+<a id="task-fnd-06-01-attempt-01"></a>
+
+### FND-06.01 - Attempt 01 - 2026-11-25T17:04:31+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-06.01/attempt-01
+- Task: [Task card](../tasks/FND-06.01.md)
+- Parent / phase: FND-06 / B
+- Executor: Codex
+- Started at: 2026-11-25T17:04:31+07:00
+- Ended at: 2026-11-25T17:04:31+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Implement the verified provisioning backend while keeping unconfigured routes default-deny.
+- Delivered: Implemented Admin session checks, active department, normalized identity, Requester default, one-use trusted evidence and elevated-approval guard. Used synthetic fixture evidence to exercise the command.
+- Incomplete scope / deviations: Real ticket/approval verification producer is not wired. Named role approver and secure handover policy remain unresolved. FND-06.02 and INT-01 remain pending.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/users/provisioning.py, organization/http.py, Alembic 0009, tests/test_organization.py, docs/api/openapi.json and workflow records | FND-06 implementation and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Verified account creation | Admin, unique normalized email, active department and trusted proof | Authorization, default Requester and synthetic proof required | pass | [PostgreSQL API tests](../../../src/backend/tests/test_organization.py) |
+| Concurrent and scoped failures | One account for same normalized email; false or incomplete role authorization rejected | Competing requests produce 201/409; stale used proof and missing role authorization rejected | pass | [PostgreSQL API tests](../../../src/backend/tests/test_organization.py) |
+| Live ticket verification | Ticket creation cannot grant an account | No public verification writer or side effects on proof seeding. Live ticket/approval producer not integrated | not-run | [PostgreSQL API tests](../../../src/backend/tests/test_organization.py) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | .venv/Scripts/python.exe -m pytest -q with local PostgreSQL: 28 passed, zero skipped. Ruff and mypy passed. Alembic upgrade head --sql, OpenAPI generation check and five drift unit tests passed | Consistent documented result | Verified | pass |
+| deployment | Live enterprise approval, handover and browser checks | Verify end-to-end integration | Real evidence producer and operational decisions are pending | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent implementation verification. PO review pending.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Real ticket/approval verification producer is not wired. Named role approver and secure handover policy remain unresolved. FND-06.02 and INT-01 remain pending.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-06.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [PostgreSQL API tests](../../../src/backend/tests/test_organization.py).
+- Commit / build / environment: Implementation 8d55172 pushed and verified on origin/phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FND-06.01 before FND-06.02.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+
+<a id="task-fnd-06-01-attempt-02"></a>
+
+### FND-06.01 - Attempt 02 - 2026-11-25T17:06:57+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-06.01/attempt-02
+- Task: [Task card](../tasks/FND-06.01.md)
+- Parent / phase: FND-06 / B
+- Executor: Codex
+- Started at: 2026-11-25T17:06:57+07:00
+- Ended at: 2026-11-25T17:06:57+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Agent verification](#task-fnd-06-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO acceptance and continue provisioning.
+- Delivered: FND-06.01 accepted and synchronized.
+- Incomplete scope / deviations: Live integration and enterprise role approvals remain outstanding.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-06.01.md and workflow records | FND-06 execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Leaf acceptance | Agent evidence and PO signoff | PO accepted | pass | [Original verification](#task-fnd-06-01-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Check board, card, report links and git diff --check | Consistent documented result | Verified | pass |
+| application | Run application tests and build | Runtime verification for later consumers | Documentation-only scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Live integration and enterprise role approvals remain outstanding.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-06.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-06-01-attempt-01).
+- Commit / build / environment: Implementation 8d55172 pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-06.02 authorized.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+
+<a id="task-fnd-06-02-attempt-01"></a>
+
+### FND-06.02 - Attempt 01 - 2026-11-25T17:09:09+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-06.02/attempt-01
+- Task: [Task card](../tasks/FND-06.02.md)
+- Parent / phase: FND-06 / B
+- Executor: Codex
+- Started at: 2026-11-25T17:09:09+07:00
+- Ended at: 2026-11-25T17:09:09+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Protect the account creation response, logs and audit.
+- Delivered: Added an allowlisted provisioned account DTO, Admin authorization before secret parsing, SQL parameter masking and redacted proof references with transactional audit.
+- Incomplete scope / deviations: Live verification source, authorized IT-role approver and handover channel still unresolved. INT-01 owns real form and full Parent acceptance.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/backend/app/modules/users/provisioning.py, organization/http.py, infrastructure helpers, tests/test_organization.py, docs/api/openapi.json and workflow records | FND-06 implementation and execution records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Admin scope and outputs | Non-Admin denied; no secret in valid or invalid output | All three non-Admin roles denied. Response fields are explicitly allowlisted. | pass | [PostgreSQL API and captured-log tests](../../../src/backend/tests/test_organization.py) |
+| Logs and audit | No raw password or verifier; safe evidence refs only | Captured SQLAlchemy logs and persisted audit checked | pass | [PostgreSQL API and captured-log tests](../../../src/backend/tests/test_organization.py) |
+| Atomic failure | Audit failure rolls back account, proof and key | Injected failure after flush; same-key retry succeeds once | pass | [PostgreSQL API and captured-log tests](../../../src/backend/tests/test_organization.py) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | .venv/Scripts/python.exe -m pytest -q with local PostgreSQL: 28 passed, zero skipped. .venv/Scripts/ruff.exe check app migrations tests and mypy pass. python docs/api/generate_frontend_contract.py --check and five drift tests pass | Consistent documented result | Verified | pass |
+| integration | Real ticket evidence, enterprise handover and browser checks | Full Parent closure | Live workflow not wired; INT-01 and operational decisions remain | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent implementation verification. PO review pending.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Live verification source, authorized IT-role approver and handover channel still unresolved. INT-01 owns real form and full Parent acceptance.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-06.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [PostgreSQL API and captured-log tests](../../../src/backend/tests/test_organization.py).
+- Commit / build / environment: Implementation 4075c43 pushed and verified on origin/phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 01.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO reviews FND-06.02. Parent closure awaits INT-01.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+
+<a id="task-fnd-06-02-attempt-02"></a>
+
+### FND-06.02 - Attempt 02 - 2026-11-25T17:11:39+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-06.02/attempt-02
+- Task: [Task card](../tasks/FND-06.02.md)
+- Parent / phase: FND-06 / B
+- Executor: Codex
+- Started at: 2026-11-25T17:11:39+07:00
+- Ended at: 2026-11-25T17:11:39+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Agent verification](#task-fnd-06-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO acceptance of the secure provisioning result and audit leaf.
+- Delivered: Both FND-06 leaves are done and task closure records are synchronized.
+- Incomplete scope / deviations: Live D-29 verification, approved IT-role approver/handover channel and INT-01 evidence remain outstanding. Parent stays EPIC_IN_PROGRESS.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/FND-06.02.md and workflow records | FND-06 acceptance records | Keep contract and handoff synchronized |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Leaf acceptance | Verified API and PO approval | PO accepted FND-06.02 | pass | [Original verification](#task-fnd-06-02-attempt-01) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| repository | Verify board, task card and report links; git diff --check | Consistent documented result | Verified | pass |
+| application | Run application tests and build | Runtime verification for later consumers | Documentation-only scope | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance.
+- Findings / resolution: Proposals and operating inputs retain their explicit approval status.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Live D-29 verification, approved IT-role approver/handover channel and INT-01 evidence remain outstanding. Parent stays EPIC_IN_PROGRESS.
+- Required resolution / owner: PO and relevant implementation or operations owners.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/FND-06.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Original verification](#task-fnd-06-02-attempt-01).
+- Commit / build / environment: Implementation 4075c43 pushed and verified on phase/b-backend.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Linked to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: FND-09.01 is eligible upon separate authorization.
+- Eligibility / remaining prerequisite: Later leaves follow the execution board and PO acceptance.
+
+
+<a id="task-fnd-06-02-attempt-03"></a>
+
+### FND-06.02 - Attempt 03 - 2026-11-28 - D-29 evidence follow-up
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-06.02/attempt-03
+- Task: [FND-06.02](../tasks/FND-06.02.md); Parent FND-06; Phase B, integration evidence from INT-01.
+- Owner: PO. Executor: Codex.
+- Started / ended: 2026-11-28 (exact times not recorded).
+- State before / after: done / done; Parent remains EPIC_IN_PROGRESS.
+- Previous report: [attempt 02](#task-fnd-06-02-attempt-02).
+
+#### 2. Scope and delivered result
+
+- PO requested assistance executing and recording D-29 evidence, then asked where the required organizational information comes from.
+- Reviewed current implementation evidence and attempted the existing isolated real-browser harness. No application code changed.
+- Organizational authority and credential handover remain unverified. Synthetic verification is not live authorization evidence.
+
+#### 3. Changed files and key symbols
+
+- FND-06.02 task card, task-history, current-context and execution-board: record this follow-up without changing accepted leaf states.
+- Preserved existing changes to account-provisioning.md, implementation README and frontend files.
+
+#### 4. Acceptance results
+
+| Criterion | Actual | Outcome |
+| --- | --- | --- |
+| INT-01 native form integration | Previously accepted; previous run used synthetic D-29 verification | Historical evidence only |
+| Fresh browser provisioning and password checks | Harness stopped before browser test execution | not-run |
+| Authorized department head, Admin and live verification source | Not supplied; cannot derive organizational authority from app roles | not-run |
+| Approved credential handover and recipient confirmation | No live account provisioned or credential delivered in this attempt | not-run |
+
+#### 5. Verification results
+
+| Directory | Command / check | Actual | Outcome |
+| --- | --- | --- | --- |
+| repository | git status --short; git diff --stat | Existing unrelated changes identified and preserved | pass |
+| repository | wsl -d Ubuntu-24.04 -- docker compose -f /mnt/d/IT-Operation-Hub/src/backend/compose.yaml up -d --wait postgres | Initial sandbox access denied; elevated retry reported container Healthy | pass on retry |
+| src/backend | .venv/Scripts/python.exe tests/real_auth_browser.py e2e/real-admin.spec.ts | With documented local Compose database URL and installed Chrome; both normal and elevated attempts failed before cases ran: psycopg.errors.ConnectionTimeout: connection timeout expired | fail: environment setup |
+| deployment | Real D-29 verification and handover | No approved environment, organizational actors or channel supplied | not-run |
+
+#### 6. Review
+
+- Agent inspected evidence and attempted rerun. PO accepted the implementation previously; no new operational D-29 acceptance is claimed.
+- PostgreSQL container health does not establish Windows client connectivity. No fresh screenshot or browser pass was generated.
+
+#### 7. Remaining blockers and decisions
+
+- Diagnose Windows-to-WSL loopback PostgreSQL connectivity before rerunning the browser harness.
+- PO supplies or designates the real department head (Truong phong; no team-lead position), authorized Admin, environment and enterprise credential channel. Never send passwords in the report/chat.
+- Runtime account roles do not prove organizational authority. Test verification IDs are synthetic.
+
+#### 8. Artifacts and evidence
+
+- Existing [D-29 screenshot](../evidence/INT-01.02/admin-user-real.png) is historical, not produced by this attempt.
+- Reproduction: [frontend README](../../../src/frontend/README.md#real-cookie-session-integration-int-0101); source: [real browser harness](../../../src/backend/tests/real_auth_browser.py).
+- Harness URL is http://127.0.0.1:3101 during a successful run only; no running preview is asserted. Test accounts use @integration.invalid; passwords are ephemeral, generated in memory.
+- Local branch phase/c-integration. No commit, push or PR in this attempt. PostgreSQL test container was started and left running; no live user was provisioned.
+
+#### 9. Execution record synchronization
+
+- Task card, history, current-context and board linked to this report. FND-06 leaves remain done; Parent remains EPIC_IN_PROGRESS.
+- Unrelated stale delivery entries were not reconciled without remote verification.
+
+#### 10. Next step
+
+- Restore test connectivity and rerun technical verification; collect approved real D-29 actors/source/channel before live execution and Parent closure.
+- No subsequent Parent started.
+
+
+<a id="task-fnd-06-02-attempt-04"></a>
+
+### FND-06.02 - Attempt 04 - 2026-11-28 - Test environment recovery
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-06.02/attempt-04
+- Task: [FND-06.02](../tasks/FND-06.02.md); Parent FND-06; Phase B with INT-01 integration evidence.
+- Owner: PO. Executor: Codex.
+- Started / ended: 2026-11-28 (exact times not recorded).
+- State before / after: done / done; Parent remains EPIC_IN_PROGRESS.
+- Previous report: [attempt 03](#task-fnd-06-02-attempt-03).
+
+#### 2. Scope and delivered result
+
+- PO authorized recovery of the local test environment and rerunning verification.
+- Compose initially listed no running PostgreSQL container. Restarted it, held a foreground WSL Docker observer open, verified Windows loopback TCP connectivity, and successfully ran tests.
+- Added reproducible WSL lifetime/connectivity and independent browser-suite instructions to the backend README. No product code or network exposure changes.
+- The initial combined browser invocation contaminated auth fixtures: Admin tests change the seeded Requester password and Technician role/version. Reran each suite in a separate fresh schema as documented.
+
+#### 3. Changed files and key symbols
+
+- src/backend/README.md: local Windows/WSL troubleshooting and separate harness invocations.
+- docs/implementation/evidence/FND-06.02/attempt-04/: three new browser screenshots.
+- FND-06.02 task card, task-history, current-context and execution-board: updated evidence and remaining live closure gate.
+- Existing unrelated source/document changes preserved. Documentation line endings reconciled with the committed baseline to avoid unrelated line churn.
+
+#### 4. Acceptance results
+
+| Criterion | Actual | Outcome |
+| --- | --- | --- |
+| Local real API/database/browser execution | Chrome to Next to FastAPI to isolated PostgreSQL schemas | pass |
+| D-29 Admin provisioning and temporary password rotation | Native form created test account; temporary session restricted; password rotation exercised | pass, synthetic verification |
+| Profile/password and Admin conflicts | Other session revoked; profile saved; conflicting changes preserve draft | pass |
+| Four roles and session lifecycle | Reload, unsafe return URL, expiry/revocation, wrong Origin/missing cookie, delayed response after account switch, restored page and pending-save logout | pass |
+| Backend authorization and secure provisioning regression | Full PostgreSQL backend suite | pass |
+| Live organizational verification and credential handover | No approved real source, actors and channel provided | not-run |
+
+#### 5. Verification results
+
+All commands below ran from src/backend unless noted. Tests used the documented disposable local Compose database via ITOH_TEST_DATABASE_URL and installed Chrome via PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH. No secrets are recorded here.
+
+| Command / check | Actual | Outcome |
+| --- | --- | --- |
+| WSL Compose ps, then up -d --wait postgres; foreground docker events observer | Initially no running container; restart healthy; Windows Python socket connection to 127.0.0.1:55432 succeeded | pass |
+| .venv/Scripts/python.exe tests/real_auth_browser.py e2e/real-admin.spec.ts e2e/real-auth.spec.ts | 8 passed, 4 failed from shared mutated fixture state | fail; corrected execution isolation below |
+| .venv/Scripts/python.exe tests/real_auth_browser.py e2e/real-auth.spec.ts | 9 passed in 25.0 seconds on a fresh schema | pass |
+| .venv/Scripts/python.exe tests/real_auth_browser.py e2e/real-admin.spec.ts | 3 passed in 16.4 seconds on another fresh schema | pass |
+| .venv/Scripts/python.exe -m pytest -qx -p no:cacheprovider --tb=short | 60 passed in 52.74 seconds; one existing Starlette/httpx deprecation warning | pass |
+| Production HTTPS and live D-29 handover | Outside this local run; no live verification source supplied | not-run |
+| Build/lint/frontend unit suite | No product code changed in this attempt | not-run |
+
+#### 6. Review
+
+- Agent ran the checks and inspected the D-29 screenshot. Previous PO acceptance of service leaves remains valid; fresh operational acceptance is not implied.
+- Four combined-run failures are retained above, not hidden as a clean first run. Separate runs verify the expected original fixture state without weakening assertions.
+- Keeping WSL active restored connectivity in this session. This is a local execution procedure, not a proven diagnosis of every possible WSL timeout.
+
+#### 7. Remaining blockers and decisions
+
+- Local test connectivity and fresh technical verification are resolved for this attempt.
+- Live D-29 authority/source, authorized Admin, environment and credential handover still need organizational confirmation. Synthetic test records do not establish real authority.
+- FND-06 Parent remains EPIC_IN_PROGRESS. No additional Parent started.
+
+#### 8. Artifacts and evidence
+
+- New [D-29 form](../evidence/FND-06.02/attempt-04/admin-user-real.png), [profile](../evidence/FND-06.02/attempt-04/profile-real.png), [membership conflict](../evidence/FND-06.02/attempt-04/membership-conflict.png). Form screenshot is before submission; the successful provisioning/rotation result is the browser assertion outcome.
+- Application URL during the run: http://127.0.0.1:3101. Harness stops API/frontend and removes its isolated schema afterwards; this is not a persistent PO preview.
+- Accounts: admin@integration.invalid, requester@integration.invalid, technician@integration.invalid, it_manager@integration.invalid; generated ephemeral test passwords are not published.
+- Reproduce with [backend README](../../../src/backend/README.md), then inspect form submission, temporary-password restriction, rotation and denied non-Admin user access using the harness.
+- Git: local phase/c-integration. No commit/push/PR in this follow-up; existing unrelated dirty files preserved.
+
+#### 9. Execution record synchronization
+
+- Task card, history, current-context and board updated to this report. Leaves remain done; Parent closure unchanged.
+- Previous attempt 03 timeout remains historical; this attempt records its successful technical follow-up.
+
+#### 10. Next step
+
+- PO reviews fresh technical evidence, then supplies approved live D-29 actors/source/channel for operational verification before Parent closure and completed-Parent PR.
+- No live credential delivered and no subsequent task implemented. The temporary WSL observer was stopped after testing; no Docker volume was removed.
+
+
+<a id="task-fnd-06-02-attempt-05"></a>
+
+### FND-06.02 - Attempt 05 - 2026-11-28 - PO technical acceptance
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-06.02/attempt-05
+- Task: [FND-06.02](../tasks/FND-06.02.md); Parent FND-06; Phase B.
+- Owner: PO. Executor: Codex.
+- Started / ended: 2026-11-28; exact times not recorded.
+- State before / after: done / done. Parent remains EPIC_IN_PROGRESS.
+- Previous report: [attempt 04](#task-fnd-06-02-attempt-04).
+
+#### 2. Scope and delivered result
+
+- PO stated ?t?i ?? nghi?m thu? following the technical rerun report.
+- Recorded acceptance of local environment recovery and technical verification. This does not assert that live D-29 authority verification or credential handover occurred.
+
+#### 3. Changed files and key symbols
+
+- FND-06.02 task card, task-history, current-context and execution-board: acceptance and consistent remaining gate.
+- Removed obsolete task-card next step claiming INT-01 was still outstanding. No product code changes.
+
+#### 4. Acceptance results
+
+- Fresh technical verification: accepted by PO.
+- FND-06.01 and FND-06.02: remain done.
+- Live D-29 verification/handover: not-run; Parent remains EPIC_IN_PROGRESS.
+
+#### 5. Verification results
+
+- No test rerun for this documentation-only acceptance.
+- Accepted attempt 04 evidence: 3/3 Admin browser, 9/9 auth/lifecycle browser, 60/60 backend tests passed on real local PostgreSQL with synthetic D-29 verification.
+- Earlier combined-suite failure and corrected isolated runs remain documented in attempt 04.
+
+#### 6. Review
+
+- Reviewer: PO. Explicit acceptance recorded on 2026-11-28.
+- Agent checks and PO acceptance are distinct; no new operational execution is asserted.
+
+#### 7. Remaining blockers and decisions
+
+- Approved live environment, organizational authority source, Admin actor and credential handover evidence remain outstanding.
+- No waiver of the live closure gate was requested or inferred.
+
+#### 8. Artifacts and evidence
+
+- [Technical report and screenshots](#task-fnd-06-02-attempt-04).
+- Harness URL/accounts are ephemeral, as described in attempt 04; no persistent preview or password supplied.
+- Local phase/c-integration; no commit, push or PR performed in this acceptance update.
+
+#### 9. Execution record synchronization
+
+- Task, history, current-context and execution-board updated. Existing unrelated changes preserved.
+- Task counts unchanged; FND-06 Parent closure is not claimed.
+
+#### 10. Next step
+
+- Obtain and execute approved live D-29 verification/handover before Parent closure. No next task started.
+
+
+<a id="parent-fnd-06-closure-2026-11-28"></a>
+
+### FND-06 ? Parent closure ? 2026-11-28
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: FND-06/closure-01
+- Parent: Provision accounts through the authorized Admin flow; Phase B. Owner: PO; Executor: Codex.
+- Date: 2026-11-28; exact times not recorded.
+- State before / after: EPIC_IN_PROGRESS / EPIC_DONE.
+- Previous evidence: FND-06.01/attempt-02, FND-06.02/attempt-04 and attempt-05; INT-01 acceptance.
+
+#### 2. Scope and delivered result
+
+- Both service leaves and INT-01 are done. PO accepted the fresh tests, then explicitly authorized synthetic data because no users exist yet.
+- Close the development Parent under that revised acceptance basis. No real organizational approval, enterprise handover or production readiness is asserted.
+
+#### 3. Changed files and key symbols
+
+- Parent registry, foundation acceptance note, both task cards, execution-board, current-context and this history: consistent closure and evidence boundary.
+- No application source changed in this closure update. Unrelated working-tree edits preserved.
+
+#### 4. Acceptance results
+
+| Parent criterion | Evidence / outcome |
+| --- | --- |
+| Normalized unique email, department, default Requester, role authorization | Accepted FND-06.01; provisioning and concurrent uniqueness backend tests passed |
+| Trusted setup/D-29 reference; no automatic user creation from ticket/model | Accepted service checks and INT-01 Admin flow; authorization records are synthetic under PO-approved basis |
+| Secure result, non-Admin denial and password handling | Accepted FND-06.02 backend checks and browser temporary-password rotation; enterprise handover execution deferred by PO pre-user acceptance basis |
+| Required native integration | INT-01 done; real browser/API/PostgreSQL checks accepted |
+
+#### 5. Verification results
+
+- No tests rerun for this status-only closure.
+- Attempt 04: 3/3 Admin browser, 9/9 auth/lifecycle browser and 60/60 backend tests passed. Earlier combined-fixture failure remains recorded there.
+- Actual enterprise handover and production HTTPS: not-run. Full D-29 journey remains QA-04.01.
+
+#### 6. Review
+
+- PO accepted technical evidence and approved synthetic data for the current pre-user stage.
+- Agent verified closure mapping; no claim of real-user operation or merged delivery.
+
+#### 7. Remaining blockers and decisions
+
+- No remaining development Parent acceptance blocker under the revised basis.
+- Before real-user rollout: establish actual authority source, trusted verification issuance, Admin actor and secure handover channel. QA-04.01 owns full business journey coverage; this fixture seeds source_id directly.
+
+#### 8. Artifacts and evidence
+
+- [Fresh results and screenshots](#task-fnd-06-02-attempt-04).
+- Test URL http://127.0.0.1:3101 was ephemeral; test accounts and passwords are not persistent PO credentials.
+- Local phase/c-integration. No commit, push, PR creation or merge performed by this closure update. Git delivery remains separate from this acceptance state.
+
+#### 9. Execution record synchronization
+
+- Registry and board: FND-06 EPIC_DONE; both leaf states remain done; leaf counts unchanged.
+- Both cards, parent acceptance note and current-context reference this closure. Historical attempts retain their original states/limitations.
+
+#### 10. Next step
+
+- Prepare scoped FND-06 Git delivery against the current merged baseline; do not include unrelated Parents or dirty frontend changes.
+- No next task started. Full business QA and rollout remain at their respective gates.

@@ -119,8 +119,8 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FND-04.02](../tasks/FND-04.02.md) | [FND-04](../01-foundation.md#fnd-04) | Implement current-principal, logout and session revocation | [FND-04.01](../tasks/FND-04.01.md) | PO | done |
 | [FND-05.01](../tasks/FND-05.01.md) | [FND-05](../01-foundation.md#fnd-05) | Implement department and category-safe reference ownership | [FND-04.02](../tasks/FND-04.02.md) | PO | done |
 | [FND-05.02](../tasks/FND-05.02.md) | [FND-05](../01-foundation.md#fnd-05) | Implement teams, memberships and single intake configuration | [FND-05.01](../tasks/FND-05.01.md) | PO | done |
-| [FND-06.01](../tasks/FND-06.01.md) | [FND-06](../01-foundation.md#fnd-06) | Implement verified account provisioning command | [FND-05.02](../tasks/FND-05.02.md) | PO | pending |
-| [FND-06.02](../tasks/FND-06.02.md) | [FND-06](../01-foundation.md#fnd-06) | Implement secure provisioning result and audit contract | [FND-06.01](../tasks/FND-06.01.md) | PO | pending |
+| [FND-06.01](../tasks/FND-06.01.md) | [FND-06](../01-foundation.md#fnd-06) | Implement verified account provisioning command | [FND-05.02](../tasks/FND-05.02.md) | PO | done |
+| [FND-06.02](../tasks/FND-06.02.md) | [FND-06](../01-foundation.md#fnd-06) | Implement secure provisioning result and audit contract | [FND-06.01](../tasks/FND-06.01.md) | PO | done |
 | [FND-07.01](../tasks/FND-07.01.md) | [FND-07](../01-foundation.md#fnd-07) | Implement restricted own-profile update | [FND-04.02](../tasks/FND-04.02.md) | PO | done |
 | [FND-07.02](../tasks/FND-07.02.md) | [FND-07](../01-foundation.md#fnd-07) | Implement current-password verification and password rotation | [FND-07.01](../tasks/FND-07.01.md) | PO | done |
 | [FND-08.01](../tasks/FND-08.01.md) | [FND-08](../01-foundation.md#fnd-08) | Implement ticket category lifecycle and permitted lookups | [FND-05.02](../tasks/FND-05.02.md) | PO | done |

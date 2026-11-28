@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- [FND-06 Parent closure](task-history.md#parent-fnd-06-closure-2026-11-28), 2026-11-28: EPIC_DONE under PO-approved synthetic-data acceptance before real users exist. Both leaves and INT-01 are done; PO accepted 3 Admin browser, 9 auth browser and 60 backend checks. QA-04.01 retains the full business journey; real authority/handover remains required before rollout. This does not claim production readiness or PR merge.
+
 - FND-07 is EPIC_DONE following PO acceptance of both leaves and INT-01. [Profile acceptance](task-history.md#task-fnd-07-01-attempt-02) and [password acceptance](task-history.md#task-fnd-07-02-attempt-02). FND-08 PR #31 merged at 973984f.
 
 - FND-08 is EPIC_DONE following PO acceptance of both leaves and INT-01. [Category acceptance](task-history.md#task-fnd-08-01-attempt-02) and [SLA acceptance](task-history.md#task-fnd-08-02-attempt-02). FND-05 PR #30 merged at 641407e.

@@ -30,7 +30,7 @@ purpose: "Specify department-head requests and Admin verification/account creati
 | User | Receive account, sign in, use authorized profile/password functions |
 | Authorized implementer | Bootstrap the first Admin during setup |
 
-Department head is an organization title, not a new app role or necessarily IT Manager. Requester role/same department does not prove authority; Admin verifies organizational responsibility.
+For D-29, the department head is the head of the department (Truong phong). A person explicitly delegated by the department head may submit on their behalf. The project has no team-lead position. The submitter uses the existing Requester role. Requester role/same department does not prove authority; Admin verifies organizational responsibility.
 
 Account categories are not restricted entirely to department heads: anyone may request ordinary account support. New-person provisioning must be verified as a valid department-head request. Ticket text/Requester rights do not create users.
 
@@ -90,3 +90,12 @@ Not run on an application. See [permissions](permissions-matrix.md), [business r
 AI may break down/assign/monitor a verification/provisioning task to an authorized person in an approved workflow, remind, and escalate; **it cannot call user-creation/role-change tools or hand over passwords**. Backend checks Admin rights at creation; task assignment does not grant a Technician administration rights. Candidates must meet action authorization and skills/team/schedule/capacity.
 
 IT_MANAGER policy/operational exception authority differs from a requesting department head. Automation approval does not replace IT-role approval evidence or close tickets. Performer records results; requester accepts under BR-04. Task/plan rules are BR-14–18. No executable code/API is created in this documentation phase.
+
+
+## Pre-user acceptance basis approved by PO ? 2026-11-28
+
+PO confirmed that the project has no users yet and authorized synthetic data as the current acceptance basis. Do not require a real employee or production credential handover for this development-stage evidence. This is not a claim that organizational verification, production readiness or live handover has occurred.
+
+The current real-browser harness uses four existing roles, an active department, per-run generated credentials and a D29_REQUEST verification record matching the target email, department and Requester role, verified_by the seeded Admin. UI/API/database effects are real within an isolated PostgreSQL schema. Run the Admin and auth suites separately because they mutate seeded identities.
+
+Coverage boundary: the verification record is inserted by the harness; source_id is a generated UUID, not a ticket created by a department-head user. The harness does not exercise the complete requester-ticket to human verification to enterprise handover chain. Preserve this distinction in reports. Full D-29 scenario coverage remains with QA-04.01; actual authority and secure handover arrangements must be established before real-user rollout.
