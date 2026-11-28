@@ -90,6 +90,22 @@ from app.modules.users.provisioning import (
     ProvisioningVerification,
     UserCreate,
 )
+from app.modules.workforce.models import Skill
+from app.modules.workforce.skills import (
+    SkillCatalog,
+    SkillCreate,
+    SkillView,
+    WorkforceDetail,
+    WorkforcePage,
+    WorkforceRejected,
+    WorkforceUpdate,
+    WorkforceView,
+    catalog_scope,
+    create_skill,
+    get_workforce,
+    list_workforce,
+    update_workforce,
+)
 
 
 class Rejected(Exception):
@@ -239,7 +255,7 @@ def organization_router(
                     result.model_dump(mode="json"),
                     headers={"Cache-Control": "no-store"},
                 )
-        except (Rejected, TicketCommandRejected) as exc:
+        except (Rejected, TicketCommandRejected, WorkforceRejected) as exc:
             return error_response(exc.status, exc.code)
         except SQLAlchemyError:
             return error_response(503, "UNAVAILABLE")
@@ -293,12 +309,136 @@ def organization_router(
                 status_code=status,
                 headers={"Cache-Control": "no-store"},
             )
-        except (Rejected, IntakeRejected, TicketCommandRejected) as exc:
+        except (
+            Rejected,
+            IntakeRejected,
+            TicketCommandRejected,
+            WorkforceRejected,
+        ) as exc:
             return error_response(exc.status, exc.code)
         except (IntegrityError, IdempotencyConflict):
             return error_response(409, "CONFLICT")
         except SQLAlchemyError:
             return error_response(503, "UNAVAILABLE")
+
+    @router.get(
+        "/workforce/skills",
+        operation_id="listWorkforceSkills",
+        tags=["Workforce"],
+        response_model=SkillCatalog,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 403, 503)},
+    )
+    def workforce_skill_catalog(request: Request) -> Response:
+        def read(db: Session, actor: Account) -> SkillCatalog:
+            rows = db.scalars(
+                select(Skill).where(catalog_scope(db, actor)).order_by(Skill.name_key)
+            )
+            return SkillCatalog(items=[SkillView.model_validate(row) for row in rows])
+
+        return query(request, read, admin=False)
+
+    @router.post(
+        "/workforce/skills",
+        operation_id="createWorkforceSkill",
+        tags=["Workforce"],
+        response_model=SkillView,
+        status_code=201,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
+    )
+    def workforce_skill_create(request: Request, body: SkillCreate) -> Response:
+        def project(db: Session, result: CommandResult) -> SkillView:
+            current = authorize(db, request, write=True)
+            skill = db.scalar(
+                select(Skill).where(Skill.id == result.id, catalog_scope(db, current))
+            )
+            if skill is None:
+                raise Rejected(404, "NOT_FOUND")
+            return SkillView.model_validate(skill)
+
+        return change(
+            request,
+            "workforce.skill_create",
+            body.model_dump(mode="json"),
+            lambda db, actor: create_skill(db, actor, body, configured().clock),
+            project,
+            status=201,
+            admin=False,
+        )
+
+    @router.get(
+        "/workforce",
+        operation_id="listWorkforce",
+        tags=["Workforce"],
+        response_model=WorkforcePage,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 403, 404, 422, 503)},
+    )
+    def workforce_list(
+        request: Request,
+        page: Annotated[int, Query(ge=1, le=1_000_000)] = 1,
+        page_size: Annotated[int, Query(ge=1, le=100)] = 20,
+        ticket_id: UUID | None = None,
+    ) -> Response:
+        return query(
+            request,
+            lambda db, actor: list_workforce(
+                db, actor, page, page_size, configured().clock, ticket_id
+            ),
+            admin=False,
+        )
+
+    @router.get(
+        "/workforce/{id}",
+        operation_id="getWorkforce",
+        tags=["Workforce"],
+        response_model=WorkforceDetail | WorkforceView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 403, 404, 422, 503)},
+    )
+    def workforce_detail(
+        id: UUID, request: Request, ticket_id: UUID | None = None
+    ) -> Response:
+        return query(
+            request,
+            lambda db, actor: get_workforce(
+                db, actor, id, configured().clock, ticket_id
+            ),
+            admin=False,
+        )
+
+    @router.patch(
+        "/workforce/{id}",
+        operation_id="updateWorkforce",
+        tags=["Workforce"],
+        response_model=WorkforceDetail,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
+    )
+    def workforce_update(id: UUID, request: Request, body: WorkforceUpdate) -> Response:
+        def project(db: Session, result: CommandResult) -> WorkforceDetail:
+            current = authorize(db, request, write=True)
+            view = get_workforce(db, current, result.id, configured().clock)
+            if not isinstance(view, WorkforceDetail) or current.id == id:
+                raise Rejected(403, "FORBIDDEN")
+            return view
+
+        return change(
+            request,
+            "workforce.verify_skills",
+            {"id": str(id), **body.model_dump(mode="json")},
+            lambda db, actor: update_workforce(db, actor, id, body, configured().clock),
+            project,
+            status=200,
+            admin=False,
+        )
 
     @router.post(
         "/users",

@@ -209,3 +209,6 @@ Use lowercase ASCII and hyphens in each path segment. Keep the phase letter and 
 ### Approved early backend delivery - 2026-11-28
 
 PO authorized sequential backend PRs for FND-09 through FND-13 before INT-02 acceptance. Each scoped PR must pass checks on its own source and disclose outstanding integration acceptance. Service leaves retain done; Parents remain EPIC_IN_PROGRESS until their closure criteria pass. Verify each preceding merge before preparing the next dependent PR.
+
+
+PO authorized the same early backend delivery process for FND-14. Parent acceptance still requires INT-03.
