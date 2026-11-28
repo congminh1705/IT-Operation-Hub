@@ -1,6 +1,7 @@
 from uuid import UUID
 
 from fastapi.testclient import TestClient
+from httpx import Response
 from sqlalchemy import select
 from test_manual_allocation import allocation, patch
 from test_manual_work import TASKS, manual_input
@@ -79,7 +80,14 @@ def test_task_transitions_keep_blocked_load_and_ticket_independent(
             )
         )
 
-    def transition(client, headers, task, version, status, **extra):
+    def transition(
+        client: TestClient,
+        headers: dict[str, str],
+        task: str,
+        version: int,
+        status: str,
+        **extra: object,
+    ) -> Response:
         return command(
             client,
             f"{TASKS}/{task}/transitions",
@@ -91,7 +99,7 @@ def test_task_transitions_keep_blocked_load_and_ticket_independent(
             },
         )
 
-    def assign(task):
+    def assign(task: str) -> Response:
         return command(
             admin,
             f"{TASKS}/{task}/assignment",

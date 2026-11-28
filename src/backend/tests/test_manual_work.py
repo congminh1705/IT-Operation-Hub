@@ -1,3 +1,4 @@
+from typing import Any, Never
 from uuid import UUID, uuid4
 
 import pytest
@@ -5,6 +6,7 @@ from fastapi.testclient import TestClient
 from pydantic import ValidationError
 from sqlalchemy import func, select
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import Session
 from test_organization import ORIGIN, SETTINGS, actor
 from test_ticket_intake import prepare_catalog
 from test_ticket_lifecycle import command
@@ -21,7 +23,7 @@ from app.modules.workforce.models import TaskSkillRequirement
 TASKS = "/api/v1/tasks"
 
 
-def manual_input(skill_id: str) -> dict:
+def manual_input(skill_id: str) -> dict[str, Any]:
     return {
         "expectedVersion": 1,
         "goal": "Restore internal service",
@@ -87,7 +89,7 @@ def test_manual_plan_persists_provenance_and_scopes_reads(
     unknown = manual_input(str(uuid4()))
     assert command(admin, url, admin_headers, unknown).json()["code"] == "UNKNOWN_SKILL"
 
-    def fail(db, **kwargs):
+    def fail(db: Session, **kwargs: object) -> Never:
         db.flush()
         raise SQLAlchemyError("Synthetic audit failure")
 

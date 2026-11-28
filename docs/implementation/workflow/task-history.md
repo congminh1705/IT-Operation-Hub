@@ -13803,3 +13803,38 @@ Task cards, execution board, parent registry and current context reflect backend
 
 #### 10. Next step
 PO reviews and merges the scoped PR. Subsequent Parent delivery follows separately.
+
+
+<a id="fnd-16-backend-delivery"></a>
+
+### FND-16 backend delivery (2026-11-28)
+
+#### 1. Metadata
+Format version: 1. Owner: PO. Phase B. Three leaves done. Parent EPIC_IN_PROGRESS.
+
+#### 2. Delivered scope
+Scoped manual plans and tasks, capacity reservations, guarded task transitions and terminal release.
+
+#### 3. Files
+work_management/service.py, allocation.py, lifecycle.py, organization/http.py, migrations 0021-0023, OpenAPI and backend tests.
+
+#### 4. Acceptance
+PO previously accepted the service leaves. INT-03 integration remains pending.
+
+#### 5. Checks
+On .fnd16-pr: 56 PostgreSQL tests passed. Initial mypy failed on test annotations. After correction, Ruff and Mypy passed across app/tests (61 files checked by Mypy), and 7 affected backend tests including runtime OpenAPI passed. Frontend 130 unit tests, lint, typecheck and build passed. Browser/real API not run. Existing Starlette/httpx deprecation warning.
+
+#### 6. Review
+Agent checked the scoped branch. PO service acceptance is historical.
+
+#### 7. Remaining work
+INT-03 and deployment migrations.
+
+#### 8. Evidence
+phase-b/fnd-16-manual-work-management from main 4fd2290. Child commits 612eeeb, 846cbaa, d121922.
+
+#### 9. Records
+Task cards, context, board, registry and history reflect the scoped handoff.
+
+#### 10. Next step
+PO reviews and merges before FND-17 delivery.

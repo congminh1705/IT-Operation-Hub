@@ -82,3 +82,6 @@ A future request authorizes the selected implementation (or this decision-refine
 - Remaining: Real browser and affected-work delivery belong to INT-03. Manual actions do not activate the Draft plan; DAG authoring and activation remain in the workflow package.
 - Commit/build: FND-16.03 push receipt pending.
 - Next: Joint review of all three FND-16 leaves. Full Parent closure depends on INT-03.
+
+
+PO previously accepted this service leaf. [Backend delivery](../workflow/task-history.md#fnd-16-backend-delivery). Parent awaits INT-03.

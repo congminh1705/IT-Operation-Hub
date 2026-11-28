@@ -1,8 +1,11 @@
+from collections.abc import Mapping
 from concurrent.futures import ThreadPoolExecutor
 from threading import Barrier
+from typing import cast
 from uuid import UUID, uuid4
 
 from fastapi.testclient import TestClient
+from httpx import Response
 from sqlalchemy import select
 from test_manual_work import TASKS, manual_input
 from test_organization import ORIGIN, SETTINGS, actor
@@ -17,9 +20,14 @@ from app.modules.organization.models import TeamMember
 from app.modules.work_management.models import TaskAllocation, WorkTask
 
 
-def patch(client, headers, url, body):
-    return client.patch(
-        url, json=body, headers={**headers, "Idempotency-Key": str(uuid4())}
+def patch(
+    client: TestClient, headers: dict[str, str], url: str, body: Mapping[str, object]
+) -> Response:
+    return cast(
+        Response,
+        client.patch(
+            url, json=dict(body), headers={**headers, "Idempotency-Key": str(uuid4())}
+        ),
     )
 
 
@@ -81,7 +89,9 @@ def test_manual_capacity_concurrency_and_progress_revalidation(
         "allocations": [allocation("08:00", "08:30")],
     }
 
-    def assign(client, headers, task_id, **changes):
+    def assign(
+        client: TestClient, headers: dict[str, str], task_id: str, **changes: object
+    ) -> Response:
         return command(
             client, f"{TASKS}/{task_id}/assignment", headers, {**request, **changes}
         )
@@ -118,7 +128,7 @@ def test_manual_capacity_concurrency_and_progress_revalidation(
     )
     ready = Barrier(2, timeout=10)
 
-    def compete(data):
+    def compete(data: tuple[TestClient, dict[str, str], str]) -> Response:
         client, headers, task_id = data
         ready.wait()
         return assign(client, headers, task_id)
