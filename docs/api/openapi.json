@@ -12159,21 +12159,13 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 120
-          },
-          "contact_phone": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "maxLength": 40,
-            "description": "Optional contact value; allowed contact fields require final DTO review."
           }
         },
         "required": [
-          "expectedVersion"
+          "expectedVersion",
+          "display_name"
         ],
-        "additionalProperties": false,
-        "minProperties": 2
+        "additionalProperties": false
       },
       "PasswordChange": {
         "type": "object",

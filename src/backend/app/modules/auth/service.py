@@ -5,6 +5,7 @@ from hmac import compare_digest
 from hmac import digest as hmac_digest
 from math import ceil
 from secrets import token_urlsafe
+from typing import Literal
 from unicodedata import normalize
 from uuid import UUID, uuid4
 
@@ -39,7 +40,7 @@ def revoke_account_sessions(session: Session, account_id: UUID, now: datetime) -
     session.execute(
         update(AuthSession)
         .where(AuthSession.account_id == account_id, AuthSession.revoked_at.is_(None))
-        .values(revoked_at=now)
+        .values(revoked_at=now, temporary_verifier=None)
     )
 
 
@@ -82,6 +83,7 @@ class AuthService:
             or not account.active
         ):
             record.revoked_at = now
+            record.temporary_verifier = None
             return None
         return record, account
 
@@ -126,7 +128,69 @@ class AuthService:
             if not compare_digest(session_csrf(token).encode(), csrf.encode()):
                 return 403
             current[0].revoked_at = read_utc(self.clock)
+            current[0].temporary_verifier = None
             return 204
+
+    def change_password(
+        self,
+        token: str,
+        current_password: str,
+        new_password: str,
+        blocked: frozenset[str],
+    ) -> Literal["changed", "session", "current_password", "new_password"]:
+        current_secret = normalize("NFC", current_password)
+        new_secret = normalize("NFC", new_password)
+        with self.database.transaction() as session:
+            session.execute(text("SET LOCAL lock_timeout = '2s'"))
+            account_id = session.scalar(
+                select(AuthSession.account_id).where(
+                    AuthSession.token_hash == digest(token),
+                )
+            )
+            if account_id is None:
+                return "session"
+            account = session.get(Account, account_id, with_for_update=True)
+            live = self._live_session(session, token)
+            if live is None or account is None:
+                return "session"
+            record, _ = live
+            now = read_utc(self.clock)
+            if record.password_change_only and (
+                account.temporary_until is None
+                or account.temporary_until <= now
+                or record.temporary_verifier is None
+            ):
+                record.revoked_at = now
+                record.temporary_verifier = None
+                return "session"
+            verifier = (
+                record.temporary_verifier
+                if record.password_change_only
+                else account.password_hash
+            )
+            if verifier is None or not self.verify(verifier, current_secret):
+                return "current_password"
+            if (
+                not 15 <= len(new_secret) <= 128
+                or new_secret.casefold() in blocked
+                or compare_digest(current_secret.encode(), new_secret.encode())
+            ):
+                return "new_password"
+            before = account.version
+            account.password_hash = self.hasher.hash(new_secret)
+            account.temporary_until = None
+            account.version += 1
+            revoke_account_sessions(session, account.id, now)
+            write_audit(
+                session,
+                actor=Actor("user", account.id),
+                action="auth.password_change",
+                target=Target("account", account.id),
+                before=SafeFacts(version=before),
+                after=SafeFacts(version=account.version),
+                clock=self.clock,
+            )
+            return "changed"
 
     def issue_pre_session(self, previous: str | None) -> tuple[str, str]:
         token, csrf = token_urlsafe(32), token_urlsafe(32)
@@ -232,7 +296,7 @@ class AuthService:
                         AuthSession.token_hash == digest(previous_session),
                         AuthSession.revoked_at.is_(None),
                     )
-                    .values(revoked_at=now)
+                    .values(revoked_at=now, temporary_verifier=None)
                 )
             session.add(
                 AuthSession(
@@ -241,6 +305,7 @@ class AuthService:
                     idle_until=now + IDLE,
                     expires_at=now + ABSOLUTE,
                     password_change_only=temporary,
+                    temporary_verifier=verifier if temporary else None,
                 )
             )
             session.delete(pre)
