@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- PO finalized PR language rules on 2026-11-28: English title using `<type>(<scope>): Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>` and detailed Vietnamese description. PR #35 title was corrected on GitHub. Apply to subsequent Parents.
+
 - FND-09 backend delivery is ready for PO merge review. 33 PostgreSQL tests and Ruff passed on phase-b/fnd-09-ticket-intake. Both leaves done; Parent awaits INT-02. See [report](task-history.md#fnd-09-backend-delivery-2026-11-28).
 
 - PO approved delivery naming on 2026-11-28. Parent branches use `phase-<letter>/<parent-id>-<short-description>`, e.g. `phase-b/fnd-18-audit-search`. PR titles use `Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. One PR per Parent and one commit per child. See task-workflow.md.

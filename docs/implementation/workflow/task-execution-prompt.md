@@ -88,7 +88,7 @@ Git delivery is part of this assignment:
 - Record branch, implementation commit/link and actual push result in task
   section 6, task-history section 8, current-context and the final report.
 - At verified Parent completion, create/update that Parent PR into main using the
-  workflow's required PR title and description; report the actual PR URL.
+  workflow's required English PR title and Vietnamese description; report the actual PR URL.
 - Do not merge automatically, push main, force-push or include unrelated changes.
 - Report Git access/push/PR failures explicitly; do not claim successful delivery.
 
@@ -187,7 +187,7 @@ Verify and hand off:
 
 Apply the Task commits and GitHub delivery policy in [task-workflow.md](task-workflow.md#task-commits-and-github-delivery) after each actual task attempt. This rule supersedes any older commit/push prohibition in copied prompts. Commit only scoped changes, push the Parent delivery branch, verify the remote SHA, and report branch, implementation commit, final delivery HEAD and actual push result. Do not include the existing uncommitted planning/design baseline in a coding task commit. Git delivery does not substitute for task acceptance or owner visual review.
 
-Use one Parent branch such as `phase-b/fnd-18-audit-search`, following task-workflow.md baseline and dependency checks. Name each child commit `<type>(<scope>): <TASK_ID> <specific outcome>`. At verified Parent completion, publish one PR into `main` titled `Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. Report its URL and remind PO to merge. Verify dependency merges before subsequent delivery.
+Use one Parent branch such as `phase-b/fnd-18-audit-search`, following task-workflow.md baseline and dependency checks. Name each child commit `<type>(<scope>): <TASK_ID> <specific outcome>`. At verified Parent completion, publish one PR into `main` titled `<type>(<scope>): Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. Report its URL and remind PO to merge. Verify dependency merges before subsequent delivery.
 
 ## Frontend-only copyable prompt
 
@@ -233,7 +233,7 @@ Git delivery is part of this assignment:
 - Record branch, implementation commit/link and actual push result in task
   section 6, task-history section 8, current-context and the final report.
 - At verified Parent completion, create/update that Parent PR into main using the
-  workflow's required PR title and description; report the actual PR URL.
+  workflow's required English PR title and Vietnamese description; report the actual PR URL.
 - Do not merge automatically, push main, force-push or include unrelated changes.
 - Report Git access/push/PR failures explicitly; do not claim successful delivery.
 
@@ -329,3 +329,6 @@ The short assignment supplies the real ID to the reusable instructions. If execu
 
 
 PR publication rule: publish one Parent PR with the required title/description directly on GitHub. Do not save per-Parent PR .md files or create a pull-requests folder. Temporary body files belong outside the repo and must be removed after use. Record the PR link/status in existing task/history/current-context records and remind PO to merge.
+
+
+PR titles must be in English and include type, scope, phase, Parent ID and a concrete outcome. PR descriptions must be in Vietnamese, including section headings and explanations. Keep code identifiers, commands, paths and technical names verbatim. Explain each delivered capability before referring to task IDs, and report files, checks with pass/fail/not-run, PO acceptance, remaining work and Git delivery.

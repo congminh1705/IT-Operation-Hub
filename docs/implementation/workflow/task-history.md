@@ -13574,3 +13574,8 @@ PO approved publishing this documentation update to main. Parent branches use `p
 
 #### 10. Next step
 - PO reviews/merges FND-09 PR. Then prepare FND-10 on verified merged main.
+
+
+### PR language convention - 2026-11-28
+
+PO requested English PR titles and Vietnamese descriptions. Updated workflow and both prompt blocks, plus current context. PR #35 now uses `feat(tickets): Phase B | FND-09 | Create tickets with validated intake and SLA snapshots`; the detailed Vietnamese body is retained. Documentation checks only; no application tests required. This convention applies to subsequent Parent PRs.

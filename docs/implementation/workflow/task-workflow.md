@@ -119,7 +119,9 @@ Prefer one coherent task commit including its checks and available execution rec
 
 #### Parent pull requests
 
-Required title format: `Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. Child commit names retain `<type>(<scope>): <TASK_ID> <specific outcome>`.
+PR titles must be in English and include type, scope, phase, Parent ID and a concrete outcome. PR descriptions must be in Vietnamese, including section headings and explanations. Keep code identifiers, commands, paths and technical names verbatim. Explain each delivered capability before referring to task IDs, and report files, checks with pass/fail/not-run, PO acceptance, remaining work and Git delivery.
+
+Required title format: `<type>(<scope>): Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. Child commit names retain `<type>(<scope>): <TASK_ID> <specific outcome>`.
 
 This policy applies to **all 230 tasks and all 88 Parents across phases A, B, C and D**, including non-FE decisions, foundation, services, AI, integration and acceptance work. Parent completion includes its existing external closure requirements; a child service being done does not close its Parent early. On every handoff report task commit/push, Parent closure/PR state, PO merge reminder if open, and phase exit state when applicable. Check required preceding Parent PR merges at session start rather than relying on chat memory.
 
@@ -133,9 +135,9 @@ After PO reports merging, verify the PR is merged and fetch `origin/main`. Creat
 
 Use title `<type>(<scope>): <PARENT_ID> <specific delivered outcome>` in concise English. Examples:
 
-- `Phase A | FE-01 | Establish reproducible DEMO foundation`
-- `Phase B | FND-18 | Expose scoped audit search`
-- `Phase C | INT-02 | Connect ticket workflows`
+- `feat(frontend): Phase A | FE-01 | Establish reproducible DEMO foundation`
+- `feat(audit): Phase B | FND-18 | Expose scoped audit search`
+- `feat(tickets): Phase C | INT-02 | Connect ticket workflows`
 
 Describe the actual final diff for a reviewer who has not read the chat. Use this description template:
 
@@ -211,3 +213,8 @@ Use lowercase ASCII and hyphens in each path segment. Keep the phase letter and 
 ### Approved early backend delivery - 2026-11-28
 
 PO authorized sequential backend PRs for FND-09 through FND-13 before INT-02 acceptance. Each scoped PR must pass checks on its own source and disclose outstanding integration acceptance. Service leaves retain done; Parents remain EPIC_IN_PROGRESS until their closure criteria pass. Verify each preceding merge before preparing the next dependent PR.
+
+
+### PR reporting refinement - 2026-11-28
+
+Include change type and scope before the phase and Parent ID, e.g. `feat(tickets): Phase B | FND-10 | Scoped ticket search and detail`. Explain the user-facing capability and concrete behavior before listing task IDs. Describe main files, actual checks on the PR branch, pass/fail/not-run outcomes, PO acceptance, remaining integration and rollout limits, and delivery evidence. Expand Parent/task terminology for readers unfamiliar with the planning system. Publish real Markdown newlines and verify the rendered title/body after updating GitHub.
