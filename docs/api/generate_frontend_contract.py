@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DRAFT = ROOT / "docs/api/openapi.json"
 OUTPUT = ROOT / "src/frontend/src/lib/api/contract.generated.ts"
 OPERATIONS = {
+    ("/audit", "get"): "listAudit",
     ("/auth/csrf", "get"): "getCsrf",
     ("/auth/login", "post"): "login",
     ("/auth/me", "get"): "getCurrentUser",

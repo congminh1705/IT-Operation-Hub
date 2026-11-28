@@ -10894,12 +10894,12 @@
     },
     "/audit": {
       "get": {
-        "operationId": "listAudit",
-        "summary": "Read audit",
         "tags": [
+          "Administration",
           "Operations"
         ],
-        "description": "M business scope; A additional user/role/SLA administration; neither arbitrary chat/raw secrets. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "summary": "List Audit",
+        "operationId": "listAudit",
         "security": [
           {
             "SessionCookie": []
@@ -10907,15 +10907,85 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/Page"
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 10000,
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
           },
           {
-            "$ref": "#/components/parameters/PageSize"
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20,
+              "title": "Page Size"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 80
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "actor_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Actor Id"
+            }
+          },
+          {
+            "name": "target_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Target Id"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Scoped response.",
+            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
@@ -10925,74 +10995,44 @@
             }
           },
           "401": {
-            "description": "Missing/expired/revoked session.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Unauthorized"
           },
           "403": {
-            "description": "Function or CSRF/Origin denied.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "404": {
-            "description": "Not found or outside scope; identical safe response.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Forbidden"
           },
           "422": {
-            "description": "Field/business validation failed; no partial effects.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Unprocessable Content"
           },
           "503": {
-            "description": "Dependency unavailable; no fabricated success.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Service Unavailable"
           }
         },
         "x-contract-id": "API16",
@@ -11001,9 +11041,10 @@
           "ADMIN"
         ],
         "x-data-scope": "M business scope; A additional user/role/SLA administration; neither arbitrary chat/raw secrets.",
-        "x-implementation-status": "not-started",
+        "x-implementation-status": "in-progress",
         "x-source-use-cases": "UC26/32/33, UC-OPS09",
-        "x-business-rules": "BR-12/22; recipient and MET scope"
+        "x-business-rules": "BR-12/22; recipient and MET scope",
+        "description": "Current role and domain scope apply before search, counts and paging. Search matches action names; audit facts are allowlisted and reasons are represented by a recorded flag."
       }
     },
     "/admin/assistant": {
@@ -12789,6 +12830,16 @@
           "suspend_without_replacement": {
             "type": "boolean",
             "default": false
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -12831,6 +12882,16 @@
           "reason": {
             "type": "string",
             "minLength": 10
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [
@@ -12889,6 +12950,16 @@
               "$ref": "#/components/schemas/HandoverItem"
             },
             "type": "array"
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -13210,6 +13281,16 @@
           "public_message": {
             "type": "string",
             "maxLength": 10000
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [
@@ -13245,6 +13326,16 @@
             "minLength": 10,
             "maxLength": 10000,
             "description": "Required for IT Manager and Admin assignment or transfer. Optional for Technician self-claim."
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [
@@ -13272,6 +13363,16 @@
             "type": "string",
             "maxLength": 10000,
             "minLength": 10
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -13702,6 +13803,16 @@
             },
             "type": "array",
             "maxItems": 366
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -13727,6 +13838,16 @@
             "type": "string",
             "maxLength": 10000,
             "minLength": 10
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -13780,6 +13901,16 @@
             "type": "string",
             "maxLength": 10000,
             "minLength": 10
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -13808,6 +13939,16 @@
             "type": "string",
             "maxLength": 10000,
             "minLength": 10
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -14081,6 +14222,16 @@
             "type": "boolean",
             "default": false,
             "description": "Explicit MA enablement only after current authority, scope, limits and grant validation. Default deny."
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [
@@ -14872,43 +15023,135 @@
         "additionalProperties": false
       },
       "AuditView": {
-        "type": "object",
         "properties": {
           "id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "title": "Id"
           },
           "actor_type": {
             "type": "string",
             "enum": [
               "HUMAN",
               "SERVICE"
-            ]
+            ],
+            "title": "Actor Type"
+          },
+          "actor_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Actor Id"
           },
           "action": {
-            "type": "string"
+            "type": "string",
+            "title": "Action"
           },
           "resource_reference": {
-            "type": "string"
+            "type": "string",
+            "title": "Resource Reference"
           },
           "occurred_at": {
             "type": "string",
-            "description": "ISO8601 UTC, offset required.",
-            "format": "date-time"
+            "format": "date-time",
+            "title": "Occurred At"
           },
           "safe_summary": {
-            "type": "string"
+            "type": "string",
+            "title": "Safe Summary"
+          },
+          "before": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Before"
+          },
+          "after": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "After"
+          },
+          "reason_recorded": {
+            "type": "boolean",
+            "title": "Reason Recorded"
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reason_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason Label"
+          },
+          "reason_status": {
+            "type": "string",
+            "enum": [
+              "available",
+              "unavailable",
+              "not_recorded"
+            ],
+            "title": "Reason Status"
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "id",
           "actor_type",
+          "actor_id",
           "action",
           "resource_reference",
           "occurred_at",
-          "safe_summary"
+          "safe_summary",
+          "before",
+          "after",
+          "reason_code",
+          "reason_label",
+          "reason_status",
+          "reason_recorded"
         ],
-        "additionalProperties": false
+        "title": "AuditView"
       },
       "AssistantSettings": {
         "type": "object",
@@ -15510,34 +15753,41 @@
         "additionalProperties": false
       },
       "AuditViewPage": {
-        "type": "object",
         "properties": {
           "items": {
-            "type": "array",
             "items": {
               "$ref": "#/components/schemas/AuditView"
-            }
+            },
+            "type": "array",
+            "title": "Items"
           },
           "page": {
             "type": "integer",
-            "minimum": 1
+            "maximum": 10000.0,
+            "minimum": 1.0,
+            "title": "Page"
           },
           "page_size": {
             "type": "integer",
-            "minimum": 1
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "title": "Page Size"
           },
           "total": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0.0,
+            "title": "Total"
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "items",
           "page",
           "page_size",
           "total"
         ],
-        "additionalProperties": false
+        "title": "AuditViewPage"
       },
       "AssetAssignmentView": {
         "type": "object",
@@ -15968,6 +16218,16 @@
               "$ref": "#/components/schemas/HandoverItem"
             },
             "type": "array"
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -16581,6 +16841,16 @@
             "type": "string",
             "maxLength": 10000,
             "minLength": 10
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -17047,6 +17317,16 @@
             },
             "type": "array",
             "minItems": 1
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AuditReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -17079,6 +17359,18 @@
           "version",
           "items"
         ]
+      },
+      "AuditReason": {
+        "type": "string",
+        "enum": [
+          "BUSINESS_IMPACT",
+          "CAPACITY",
+          "ACCESS_CHANGE",
+          "POLICY_REQUIREMENT",
+          "DATA_CORRECTION",
+          "OTHER"
+        ],
+        "title": "AuditReason"
       }
     }
   },

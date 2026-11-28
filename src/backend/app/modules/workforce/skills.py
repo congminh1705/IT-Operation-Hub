@@ -11,6 +11,7 @@ from app.infrastructure.clock import Clock, read_utc
 from app.infrastructure.commands import CommandResult
 from app.infrastructure.events import (
     Actor,
+    AuditReason,
     SafeFacts,
     Target,
     enqueue_event,
@@ -77,6 +78,7 @@ class WorkforceUpdate(BaseModel):
     expectedVersion: int = Field(ge=1, strict=True)
     skills: list[SkillVerification] = Field(min_length=1, max_length=50)
     reason: str = Field(min_length=10, max_length=10000)
+    reason_code: AuditReason | None = None
 
 
 class SkillRecord(BaseModel):
@@ -403,7 +405,11 @@ def update_workforce(
         action="workforce.verify_skills",
         target=target,
         before=before,
-        after=SafeFacts(version=aggregate.version, reason_provided=True),
+        after=SafeFacts(
+            version=aggregate.version,
+            reason_provided=True,
+            reason_code=body.reason_code,
+        ),
         clock=lambda: now,
     )
     enqueue_event(

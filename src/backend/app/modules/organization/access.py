@@ -9,6 +9,7 @@ from app.infrastructure.clock import Clock, read_utc
 from app.infrastructure.commands import CommandResult
 from app.infrastructure.events import (
     Actor,
+    AuditReason,
     SafeFacts,
     Target,
     enqueue_event,
@@ -32,6 +33,7 @@ class UserUpdate(BaseModel):
     active: bool | None = Field(default=None, strict=True)
     department_id: UUID | None = None
     reason: str = Field(min_length=10, max_length=1000)
+    reason_code: AuditReason | None = None
     handover: list[HandoverItem] = Field(default_factory=list)
     suspend_without_replacement: bool = Field(default=False, strict=True)
 
@@ -92,7 +94,15 @@ def update_account(
             raise TicketCommandRejected(422, "INVALID_SUSPENSION")
         contain_work(db, account_id, now)
     elif access_change:
-        apply_handover(db, actor, account_id, body.handover, body.reason, now)
+        apply_handover(
+            db,
+            actor,
+            account_id,
+            body.handover,
+            body.reason,
+            now,
+            reason_code=body.reason_code,
+        )
     elif body.handover:
         raise TicketCommandRejected(422, "INVALID_HANDOVER")
     before = SafeFacts(active=account.active, version=account.version)
@@ -119,7 +129,12 @@ def update_account(
         else "account.access_change",
         target=Target("account", account_id),
         before=before,
-        after=SafeFacts(active=active, version=account.version, reason_provided=True),
+        after=SafeFacts(
+            active=active,
+            version=account.version,
+            reason_provided=True,
+            reason_code=body.reason_code,
+        ),
         clock=lambda: now,
     )
     for event_type in ("membership.changed", "load.changed"):

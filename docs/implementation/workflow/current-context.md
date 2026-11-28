@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- FND-18 structured reasons implemented under PO-approved contract. Both leaves remain review; Parent EPIC_IN_PROGRESS. PostgreSQL 63 pass, frontend 130 pass, typecheck/lint passed. INT-06 browser wiring pending. [Report](task-history.md#fnd-18-structured-reason-review).
+
 - FND-17 backend delivery from merged FND-16. Three service leaves previously PO accepted. Parent awaits INT-03. [Report](task-history.md#fnd-17-backend-delivery).
 
 - FND-16 service leaves previously accepted by PO. Backend delivery awaits merge and Parent awaits INT-03. [Report](task-history.md#fnd-16-backend-delivery).
@@ -172,3 +174,5 @@ authority: derived
 ### PR language and reporting convention - 2026-11-28
 
 PR titles must be in English with format `<type>(<scope>): Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. PR descriptions, including headings, must be in Vietnamese. Preserve commands, identifiers and paths. Explain functional behavior before task IDs. Report actual checks, evidence, PO acceptance and remaining integration work. Verify rendered Markdown after publishing. PO approved publishing this documentation update. PR #35 was updated to match the convention. Documentation-only verification uses scoped diff and whitespace checks.
+
+Git delivery 2026-11-29: [PR #45](https://github.com/congminh1705/IT-Operation-Hub/pull/45) open, phase-b/fnd-18-audit-search -> main. Title and Vietnamese report verified through GitHub API. Service leaves remain review; Parent awaits INT-06.

@@ -147,8 +147,8 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FND-17.01](../tasks/FND-17.01.md) | [FND-17](../01-foundation.md#fnd-17) | Implement immediate access loss and protected account invariants | [FND-16.03](../tasks/FND-16.03.md) | PO | done |
 | [FND-17.02](../tasks/FND-17.02.md) | [FND-17](../01-foundation.md#fnd-17) | Implement transactional active-work handover | [FND-17.01](../tasks/FND-17.01.md) | PO | done |
 | [FND-17.03](../tasks/FND-17.03.md) | [FND-17](../01-foundation.md#fnd-17) | Publish affected-work changes and complete team deactivation | [FND-17.02](../tasks/FND-17.02.md) | PO | done |
-| [FND-18.01](../tasks/FND-18.01.md) | [FND-18](../01-foundation.md#fnd-18) | Implement business versus administration audit projection | [FND-13.02](../tasks/FND-13.02.md), [FND-17.03](../tasks/FND-17.03.md) | PO | pending |
-| [FND-18.02](../tasks/FND-18.02.md) | [FND-18](../01-foundation.md#fnd-18) | Implement bounded audit search and shared projection contract | [FND-18.01](../tasks/FND-18.01.md) | PO | pending |
+| [FND-18.01](../tasks/FND-18.01.md) | [FND-18](../01-foundation.md#fnd-18) | Implement business versus administration audit projection | [FND-13.02](../tasks/FND-13.02.md), [FND-17.03](../tasks/FND-17.03.md) | PO | review |
+| [FND-18.02](../tasks/FND-18.02.md) | [FND-18](../01-foundation.md#fnd-18) | Implement bounded audit search and shared projection contract | [FND-18.01](../tasks/FND-18.01.md) | PO | review |
 | [WF-01.01](../tasks/WF-01.01.md) | [WF-01](../02-workflows.md#wf-01) | Validate sourced same-version plan DAGs | [FND-16.03](../tasks/FND-16.03.md) | PO | pending |
 | [WF-01.02](../tasks/WF-01.02.md) | [WF-01](../02-workflows.md#wf-01) | Activate one effective plan version atomically | [WF-01.01](../tasks/WF-01.01.md) | PO | pending |
 | [WF-01.03](../tasks/WF-01.03.md) | [WF-01](../02-workflows.md#wf-01) | Revalidate task readiness against effective predecessors | [WF-01.02](../tasks/WF-01.02.md) | PO | pending |
@@ -285,3 +285,5 @@ Phase A exits at **FE-18.03** after all frontend output/checks are complete. Pha
 Evidence exists for completed tasks, including PO-approved FE-02.03; unopened tasks remain NOT RUN. See [current context](current-context.md), the [task template](task-template.md) and [coverage/closure](../package-task-coverage.md). Preserve stable IDs when later implementation discovers a justified refinement; record changed edges and evidence instead of silently broadening scope.
 
 The owner-facing [latest task report](current-context.md#latest-task-report) is maintained only in current context; this board remains the task state/owner/dependency registry.
+
+FND-18 follow-up evidence: [structured reason review](task-history.md#fnd-18-structured-reason-review). Both leaves remain review pending PO acceptance; INT-06 owns browser closure.

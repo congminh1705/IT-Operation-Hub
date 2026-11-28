@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 from app.infrastructure.clock import Clock, read_utc
 from app.infrastructure.commands import CommandResult
-from app.infrastructure.events import Actor, SafeFacts, Target, write_audit
+from app.infrastructure.events import Actor, AuditReason, SafeFacts, Target, write_audit
 from app.modules.auth.models import Account
 from app.modules.organization.containment import (
     WorkAccessHold,
@@ -53,6 +53,7 @@ class HandoverCommand(BaseModel):
 
     expectedVersion: int = Field(ge=1, strict=True)
     reason: str = Field(min_length=10, max_length=1000)
+    reason_code: AuditReason | None = None
     handover: list[HandoverItem] = Field(min_length=1)
 
 
@@ -185,6 +186,7 @@ def apply_handover(
     team_id: UUID | None = None,
     *,
     repair: bool = False,
+    reason_code: AuditReason | None = None,
 ) -> None:
     tickets, tasks = affected_work(db, subject, team_id, lock=True)
     existing_holds = {(row.kind, row.work_id): row for row in open_holds(db, subject)}
@@ -197,7 +199,15 @@ def apply_handover(
         expected = set(existing_holds)
     reviewed = validate_decisions(decisions, expected)
     apply_reviewed_work(
-        db, actor, tickets, tasks, reviewed, reason, now, subject=subject
+        db,
+        actor,
+        tickets,
+        tasks,
+        reviewed,
+        reason,
+        now,
+        subject=subject,
+        reason_code=reason_code,
     )
     if repair:
         for hold in existing_holds.values():
@@ -223,6 +233,7 @@ def apply_team_handover(
     decisions: list[HandoverItem],
     reason: str,
     now: datetime,
+    reason_code: AuditReason | None = None,
 ) -> None:
     tickets, tasks = affected_work(db, None, source, lock=True)
     expected = {("ticket", row.id) for row in tickets} | {
@@ -234,7 +245,15 @@ def apply_team_handover(
         raise TicketCommandRejected(409, "HANDOVER_PENDING")
     reviewed = validate_decisions(decisions, expected)
     apply_reviewed_work(
-        db, actor, tickets, tasks, reviewed, reason, now, destination=destination
+        db,
+        actor,
+        tickets,
+        tasks,
+        reviewed,
+        reason,
+        now,
+        destination=destination,
+        reason_code=reason_code,
     )
 
 
@@ -249,6 +268,7 @@ def apply_reviewed_work(
     *,
     subject: UUID | None = None,
     destination: UUID | None = None,
+    reason_code: AuditReason | None = None,
 ) -> None:
     for row in tickets:
         item = reviewed.get(("ticket", row.id))
@@ -272,6 +292,7 @@ def apply_reviewed_work(
                 team_id=team_id,
                 assignee_id=item.replacement_user_id,
                 reason=reason,
+                reason_code=reason_code,
             ),
             lambda: now,
         )
@@ -286,7 +307,7 @@ def apply_reviewed_work(
             if ticket is None or ticket.team_id != destination:
                 raise TicketCommandRejected(409, "TICKET_HANDOVER_REQUIRED")
         check_decision(db, subject, team_id, task, item)
-        handover_task(db, actor, task, item, team_id, now)
+        handover_task(db, actor, task, item, team_id, now, reason_code)
 
 
 def handover_task(
@@ -296,6 +317,7 @@ def handover_task(
     item: HandoverItem,
     team_id: UUID,
     now: datetime,
+    reason_code: AuditReason | None = None,
 ) -> None:
     if (
         task.assignment_locked or task.status in ("In Progress", "Blocked")
@@ -324,7 +346,16 @@ def handover_task(
     reservation_owner = new_assignee or old_assignee
     if reservation_owner is not None:
         replace_slots(db, task, reservation_owner, grouped, slots, now)
-    record_task_effect(db, actor, task, before, now, "task.assigned", reason=True)
+    record_task_effect(
+        db,
+        actor,
+        task,
+        before,
+        now,
+        "task.assigned",
+        reason=True,
+        reason_code=reason_code,
+    )
 
 
 def check_decision(
@@ -370,7 +401,16 @@ def repair_handover(
     if account.version != body.expectedVersion or chr(0) in body.reason:
         raise TicketCommandRejected(409, "STALE_HANDOVER")
     now = read_utc(clock)
-    apply_handover(db, actor, subject, body.handover, body.reason, now, repair=True)
+    apply_handover(
+        db,
+        actor,
+        subject,
+        body.handover,
+        body.reason,
+        now,
+        repair=True,
+        reason_code=body.reason_code,
+    )
     before = SafeFacts(active=False, version=account.version)
     account.version += 1
     write_audit(
@@ -379,7 +419,12 @@ def repair_handover(
         action="account.handover_repair",
         target=Target("account", subject),
         before=before,
-        after=SafeFacts(active=False, version=account.version, reason_provided=True),
+        after=SafeFacts(
+            active=False,
+            version=account.version,
+            reason_provided=True,
+            reason_code=body.reason_code,
+        ),
         clock=lambda: now,
     )
     return CommandResult(subject, account.version)

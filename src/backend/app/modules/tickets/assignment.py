@@ -8,6 +8,7 @@ from app.infrastructure.clock import Clock, read_utc
 from app.infrastructure.commands import CommandResult
 from app.infrastructure.events import (
     Actor,
+    AuditReason,
     SafeFacts,
     Target,
     enqueue_event,
@@ -39,6 +40,7 @@ class TicketAssignment(BaseModel):
     team_id: UUID
     assignee_id: UUID | None = None
     reason: str | None = Field(default=None, min_length=10, max_length=10000)
+    reason_code: AuditReason | None = None
 
 
 def lock_ticket(db: Session, ticket_id: UUID) -> Ticket:
@@ -128,6 +130,7 @@ def record_assignment(
         previous_team_id=previous.team_id,
         previous_assignee_id=previous.assignee_id,
         reason_provided=body.reason is not None,
+        reason_code=body.reason_code,
     )
     now = read_utc(clock)
     event_actor, target = Actor("user", actor.id), Target("ticket", row.id)

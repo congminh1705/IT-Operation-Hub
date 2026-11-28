@@ -20,6 +20,25 @@ class Target:
     id: UUID
 
 
+class AuditReason(StrEnum):
+    BUSINESS_IMPACT = "BUSINESS_IMPACT"
+    CAPACITY = "CAPACITY"
+    ACCESS_CHANGE = "ACCESS_CHANGE"
+    POLICY_REQUIREMENT = "POLICY_REQUIREMENT"
+    DATA_CORRECTION = "DATA_CORRECTION"
+    OTHER = "OTHER"
+
+
+AUDIT_REASON_LABELS = {
+    AuditReason.BUSINESS_IMPACT: "Thay đổi mức độ ảnh hưởng nghiệp vụ",
+    AuditReason.CAPACITY: "Điều chỉnh theo nguồn lực",
+    AuditReason.ACCESS_CHANGE: "Thay đổi nhu cầu truy cập",
+    AuditReason.POLICY_REQUIREMENT: "Đáp ứng quy định nội bộ",
+    AuditReason.DATA_CORRECTION: "Sửa thông tin chưa chính xác",
+    AuditReason.OTHER: "Lý do khác đã được người thực hiện ghi nhận",
+}
+
+
 @dataclass(frozen=True)
 class SafeFacts:
     """Projection of structured facts only. Never pass raw request or entity data."""
@@ -35,6 +54,7 @@ class SafeFacts:
     previous_team_id: UUID | None = None
     previous_assignee_id: UUID | None = None
     reason_provided: bool | None = None
+    reason_code: AuditReason | None = None
     priority: str | None = None
     previous_priority: str | None = None
 
@@ -60,6 +80,9 @@ class SafeFacts:
             )
         if self.reason_provided is not None:
             result["reason_provided"] = self.reason_provided
+        if isinstance(self.reason_code, AuditReason):
+            result["reason_code"] = self.reason_code.value
+            result["reason_provided"] = True
         if self.priority is not None:
             result["priority"] = self.priority
         if self.previous_priority is not None:
