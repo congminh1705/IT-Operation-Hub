@@ -1,5 +1,6 @@
 import re
 from collections.abc import Callable
+from datetime import date
 from hmac import compare_digest
 from typing import Annotated, Any, Literal, cast
 from unicodedata import normalize
@@ -89,6 +90,16 @@ from app.modules.users.provisioning import (
     ProvisionedAccountView,
     ProvisioningVerification,
     UserCreate,
+)
+from app.modules.workforce.availability import (
+    AbsenceCreate,
+    AbsenceReference,
+    AvailabilityView,
+    CalendarUpdate,
+    absence_reference,
+    get_availability,
+    record_absence,
+    update_calendar,
 )
 from app.modules.workforce.models import Skill
 from app.modules.workforce.skills import (
@@ -422,21 +433,78 @@ def organization_router(
         },
         openapi_extra={"parameters": COMMAND_HEADERS},
     )
-    def workforce_update(id: UUID, request: Request, body: WorkforceUpdate) -> Response:
+    def workforce_update(
+        id: UUID, request: Request, body: WorkforceUpdate | CalendarUpdate
+    ) -> Response:
         def project(db: Session, result: CommandResult) -> WorkforceDetail:
             current = authorize(db, request, write=True)
             view = get_workforce(db, current, result.id, configured().clock)
-            if not isinstance(view, WorkforceDetail) or current.id == id:
+            if not isinstance(view, WorkforceDetail) or (
+                isinstance(body, WorkforceUpdate) and current.id == id
+            ):
                 raise Rejected(403, "FORBIDDEN")
             return view
 
+        operation = (
+            "workforce.verify_skills"
+            if isinstance(body, WorkforceUpdate)
+            else "workforce.calendar_update"
+        )
+
+        def perform(db: Session, actor: Account) -> CommandResult:
+            if isinstance(body, WorkforceUpdate):
+                return update_workforce(db, actor, id, body, configured().clock)
+            return update_calendar(db, actor, id, body, configured().clock)
+
         return change(
             request,
-            "workforce.verify_skills",
+            operation,
             {"id": str(id), **body.model_dump(mode="json")},
-            lambda db, actor: update_workforce(db, actor, id, body, configured().clock),
+            perform,
             project,
             status=200,
+            admin=False,
+        )
+
+    @router.get(
+        "/workforce/{id}/availability",
+        operation_id="getWorkforceAvailability",
+        tags=["Workforce"],
+        response_model=AvailabilityView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 403, 404, 422, 503)},
+    )
+    def workforce_availability(
+        id: UUID, request: Request, start_date: date, end_date: date
+    ) -> Response:
+        return query(
+            request,
+            lambda db, actor: get_availability(db, actor, id, start_date, end_date),
+            admin=False,
+        )
+
+    @router.post(
+        "/workforce/{id}/absences",
+        operation_id="recordAbsence",
+        tags=["Workforce"],
+        response_model=AbsenceReference,
+        status_code=201,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
+    )
+    def workforce_absence(id: UUID, request: Request, body: AbsenceCreate) -> Response:
+        return change(
+            request,
+            "workforce.absence_create",
+            {"id": str(id), **body.model_dump(mode="json")},
+            lambda db, actor: record_absence(db, actor, id, body, configured().clock),
+            lambda db, result: absence_reference(
+                db, authorize(db, request, write=True), id, result
+            ),
+            status=201,
             admin=False,
         )
 

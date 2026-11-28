@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- FND-15 backend delivery follows merged FND-14. Both service leaves are PO accepted. Parent awaits INT-03. [Delivery report](task-history.md#fnd-15-backend-delivery).
+
 - FND-14 backend delivery approved before INT-03. Two service leaves are done. Parent awaits INT-03. [Delivery report](task-history.md#fnd-14-backend-delivery).
 
 - FND-13 service leaves accepted by PO. Backend delivery awaits merge; Parent awaits INT-02. [Report](task-history.md#fnd-13-backend-delivery).

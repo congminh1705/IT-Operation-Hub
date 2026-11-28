@@ -13768,3 +13768,38 @@ Task cards, board, registry, current context, workflow and history reflect early
 
 #### 10. Next step
 PO reviews and merges FND-14. Subsequent Parent delivery follows separately.
+
+
+<a id="fnd-15-backend-delivery"></a>
+
+### FND-15 backend delivery (2026-11-28)
+
+#### 1. Report metadata
+Format version: 1. Phase B. Owner: PO. Both leaves done. Parent EPIC_IN_PROGRESS.
+
+#### 2. Delivered scope
+Versioned local-day calendars and UTC absences. Availability uses the union of absences, configured working periods and daily budget. Scoped updates record audit and availability.changed atomically.
+
+#### 3. Main files
+workforce/calendar.py, workforce/availability.py, workforce/models.py, organization/http.py, OpenAPI, migrations 0019/0020 and calendar tests.
+
+#### 4. Acceptance
+PO previously accepted both service leaves. INT-03 integration remains pending.
+
+#### 5. Verification
+On .fnd15-pr, PostgreSQL pytest 52 pass including runtime OpenAPI. Ruff and Mypy pass on the corrected source. Initial Mypy failed on test typing, corrected with typed helpers and Interval validation. Frontend 130/130 unit tests, lint, typecheck and build pass. Real browser integration not-run. Existing Starlette/httpx warning remains.
+
+#### 6. Review
+Agent verified the delivery branch. Prior PO acceptance applies to service leaves.
+
+#### 7. Remaining work
+INT-03 and production rollout remain open.
+
+#### 8. Evidence
+phase-b/fnd-15-workforce-availability from main 500a188. Child commits 0ba7948 and 10e2ced.
+
+#### 9. Records
+Task cards, execution board, parent registry and current context reflect backend delivery and pending integration.
+
+#### 10. Next step
+PO reviews and merges the scoped PR. Subsequent Parent delivery follows separately.

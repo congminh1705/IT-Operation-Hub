@@ -67,9 +67,10 @@ purpose: "Trace operationId, routes, principals, and business rules."
 | API06 | POST | `/tasks/{id}/assignment-lock` | `lockTaskAssignment` | IT_MANAGER, ADMIN | Manual lock/unlock requires reason; does not bypass in-progress/approval rules. |
 | API07 | GET | `/workforce` | `listWorkforce` | TECHNICIAN, IT_MANAGER, ADMIN | T self/minimal task lookup; M/A managed IT scope; no global private calendar for T. |
 | API07 | GET | `/workforce/{id}` | `getWorkforce` | TECHNICIAN, IT_MANAGER, ADMIN | T self/minimal scoped projection; M/A managed scope. |
-| API07 | PATCH | `/workforce/{id}` | `updateWorkforce` | IT_MANAGER, ADMIN | Versioned skill verification or revocation with evidence and reason. Current scope, no self-verification. Calendar capability follows FND-15. |
+| API07 | PATCH | `/workforce/{id}` | `updateWorkforce` | IT_MANAGER, ADMIN | Versioned skill verification or revocation with evidence and reason. Current scope, no self-verification. Also accepts a versioned local-day calendar update from authorized management. |
 | API07 | GET | `/workforce/skills` | `listWorkforceSkills` | IT_MANAGER, ADMIN | Shared and authorized department skill catalog. |
 | API07 | POST | `/workforce/skills` | `createWorkforceSkill` | IT_MANAGER, ADMIN | Managers add entries in their department. Admin can add shared or department entries. |
+| API07 | GET | `/workforce/{id}/availability` | `getWorkforceAvailability` | TECHNICIAN, IT_MANAGER, ADMIN | Self or authorized management scope. Local-day capacity and UTC slots, with explicit unknown and off states. |
 | API07 | POST | `/workforce/{id}/absences` | `recordAbsence` | IT_MANAGER, ADMIN | Validated interval; version/event triggers reevaluation, not automatic override of working/locked task. |
 | API08 | GET | `/workflows` | `listWorkflows` | TECHNICIAN, IT_MANAGER, ADMIN | T only effective templates needed for execution; M/A management. |
 | API08 | POST | `/workflows` | `createWorkflow` | IT_MANAGER, ADMIN | MA workflow authority. |

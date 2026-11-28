@@ -302,17 +302,30 @@ def catalog_scope(db: Session, actor: Account) -> ColumnElement[bool]:
     raise WorkforceRejected(403, "FORBIDDEN")
 
 
+def lock_workforce(
+    db: Session, actor: Account, account_id: UUID, expected: int
+) -> WorkforceSkills:
+    lock_team_configuration(db)
+    workforce_account(db, actor, account_id)
+    aggregate = db.get(WorkforceSkills, account_id, with_for_update=True)
+    version = aggregate.version if aggregate is not None else 1
+    if version != expected:
+        raise WorkforceRejected(409, "STALE_VERSION")
+    if aggregate is None:
+        aggregate = WorkforceSkills(account_id=account_id, version=version)
+        db.add(aggregate)
+        db.flush()
+    return aggregate
+
+
 def update_workforce(
     db: Session, actor: Account, account_id: UUID, body: WorkforceUpdate, clock: Clock
 ) -> CommandResult:
     if actor.role not in MANAGEMENT or actor.id == account_id:
         raise WorkforceRejected(403, "FORBIDDEN")
-    lock_team_configuration(db)
+    aggregate = lock_workforce(db, actor, account_id, body.expectedVersion)
     person = workforce_account(db, actor, account_id)
-    aggregate = db.get(WorkforceSkills, account_id, with_for_update=True)
-    version = aggregate.version if aggregate else 1
-    if version != body.expectedVersion:
-        raise WorkforceRejected(409, "STALE_VERSION")
+    version = aggregate.version
     skill_ids = {item.skill_id for item in body.skills}
     if len(skill_ids) != len(body.skills) or chr(0) in body.reason:
         raise WorkforceRejected(422, "INVALID_SKILL_UPDATE")
@@ -329,10 +342,6 @@ def update_workforce(
     ):
         raise WorkforceRejected(422, "UNKNOWN_SKILL")
     now = read_utc(clock)
-    if aggregate is None:
-        aggregate = WorkforceSkills(account_id=account_id, version=version)
-        db.add(aggregate)
-        db.flush()
     for verification in body.skills:
         if verification.verified:
             if (
