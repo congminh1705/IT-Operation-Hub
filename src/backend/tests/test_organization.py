@@ -208,26 +208,22 @@ def test_team_membership_scope_and_handover_guard(database: Database) -> None:
             },
             headers={**headers, "Idempotency-Key": "remove"},
         )
-        assert (
-            result.status_code == 409 and result.json()["code"] == "HANDOVER_REQUIRED"
-        )
+        assert result.status_code == 200 and result.json()["version"] == 3
         result = admin.patch(
             scope,
             json={
-                "expectedVersion": 2,
+                "expectedVersion": 3,
                 "active": False,
                 "reason": "Retire the support team",
             },
             headers={**headers, "Idempotency-Key": "retire"},
         )
-        assert (
-            result.status_code == 409 and result.json()["code"] == "HANDOVER_REQUIRED"
-        )
+        assert result.status_code == 200 and result.json()["active"] is False
         with database.session() as db:
-            assert effective_team_ids(db, tech_id) == {UUID(identifier)}
+            assert effective_team_ids(db, tech_id) == set()
             assert effective_team_ids(db, requester_id) == set()
             row = db.scalar(select(TeamMember).where(TeamMember.account_id == tech_id))
-            assert row is not None and row.active
+            assert row is not None and not row.active
 
 
 def test_concurrent_intake_switch_keeps_exactly_one_active(database: Database) -> None:

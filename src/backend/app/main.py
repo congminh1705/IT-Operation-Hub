@@ -85,6 +85,12 @@ def create_app(
             "lockTaskAssignment",
             "updateTaskProgress",
             "transitionTask",
+            "updateUser",
+            "previewUserHandover",
+            "repairUserHandover",
+            "setTeamMembership",
+            "updateTeam",
+            "previewTeamHandover",
         }:
             return error_response(422, "INVALID_INPUT")
         if operation == "getCsrf":

@@ -21,7 +21,13 @@ from app.infrastructure.commands import (
     JsonValue,
     run_idempotent,
 )
-from app.infrastructure.events import Actor, SafeFacts, Target, write_audit
+from app.infrastructure.events import (
+    Actor,
+    SafeFacts,
+    Target,
+    enqueue_event,
+    write_audit,
+)
 from app.modules.auth.http import (
     COMMAND_HEADERS,
     AuthSettings,
@@ -35,7 +41,25 @@ from app.modules.auth.service import (
     TEMPORARY_LIFETIME,
     AuthService,
     normalize_identity,
+    revoke_account_sessions,
     session_csrf,
+)
+from app.modules.organization.access import (
+    UserUpdate,
+    update_account,
+)
+from app.modules.organization.containment import open_holds
+from app.modules.organization.handover import (
+    HandoverCommand,
+    HandoverItem,
+    HandoverView,
+    TeamHandoverView,
+    affected_work,
+    apply_handover,
+    apply_team_handover,
+    describe_work,
+    preview_handover,
+    repair_handover,
 )
 from app.modules.organization.models import Department, Team, TeamMember
 from app.modules.organization.team_scope import lock_team_configuration
@@ -178,6 +202,9 @@ class NamedPage(BaseModel):
 
 class TeamUpdate(NamedUpdate):
     intake: bool | None = None
+    handover_team_id: UUID | None = Field(default=None, strict=False)
+    handover_team_expectedVersion: int | None = Field(default=None, ge=1, strict=True)
+    handover: list[HandoverItem] = Field(default_factory=list)
 
 
 class TeamView(NamedView):
@@ -191,12 +218,18 @@ class TeamPage(BaseModel):
     total: int
 
 
+class AccountAccessView(UserView):
+    department_id: UUID | None
+    handover_pending: bool
+
+
 class MemberCommand(BaseModel):
     model_config = ConfigDict(extra="forbid")
     user_id: UUID
     expectedVersion: int = Field(ge=1, strict=True)
     active: bool = Field(strict=True)
     reason: str = Field(min_length=10, max_length=1000)
+    handover: list[HandoverItem] = Field(default_factory=list)
 
 
 class MemberPage(BaseModel):
@@ -315,6 +348,7 @@ def organization_router(
 
             def authorization(db: Session, replay: CommandResult | None) -> None:
                 nonlocal response_body
+                lock_team_configuration(db)
                 if authorize(db, request, admin=admin, write=True).id != actor_id:
                     raise Rejected(403, "FORBIDDEN")
                 if replay is not None:
@@ -740,6 +774,71 @@ def organization_router(
             "task.transition",
             body,
             lambda db, actor: transition_task(db, actor, id, body, configured().clock),
+        )
+
+    @router.patch(
+        "/users/{id}",
+        operation_id="updateUser",
+        tags=["Administration"],
+        response_model=AccountAccessView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
+    )
+    def update_user(id: UUID, request: Request, body: UserUpdate) -> Response:
+        def project(db: Session, result: CommandResult) -> AccountAccessView:
+            account = db.get(Account, result.id)
+            if account is None:
+                raise Rejected(404, "NOT_FOUND")
+            return AccountAccessView(
+                **user_view(account).model_dump(),
+                department_id=account.department_id,
+                handover_pending=bool(open_holds(db, account.id)),
+            )
+
+        return change(
+            request,
+            "account.access_change",
+            {"id": str(id), **body.model_dump(mode="json", exclude_unset=True)},
+            lambda db, actor: update_account(db, actor, id, body, configured().clock),
+            project,
+            status=200,
+        )
+
+    @router.get(
+        "/users/{id}/handover",
+        operation_id="previewUserHandover",
+        tags=["Administration"],
+        response_model=HandoverView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 403, 404, 422, 503)},
+    )
+    def preview_user_handover(id: UUID, request: Request) -> Response:
+        return query(request, lambda db, _: preview_handover(db, id))
+
+    @router.post(
+        "/users/{id}/handover",
+        operation_id="repairUserHandover",
+        tags=["Administration"],
+        response_model=HandoverView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
+    )
+    def repair_user_handover(
+        id: UUID, request: Request, body: HandoverCommand
+    ) -> Response:
+        return change(
+            request,
+            "account.handover_repair",
+            {"id": str(id), **body.model_dump(mode="json")},
+            lambda db, actor: repair_handover(db, actor, id, body, configured().clock),
+            lambda db, result: preview_handover(db, result.id),
+            status=200,
         )
 
     @router.post(
@@ -1376,21 +1475,120 @@ def organization_router(
             request, "team.create", body.model_dump(), execute, team_result, status=201
         )
 
-    @router.patch("/teams/{id}", operation_id="updateTeam", response_model=TeamView)
+    @router.get(
+        "/teams/{id}/handover",
+        operation_id="previewTeamHandover",
+        tags=["Administration"],
+        response_model=TeamHandoverView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 403, 404, 422, 503)},
+    )
+    def preview_team_handover(id: UUID, request: Request) -> Response:
+        def read(db: Session, _: Account) -> TeamHandoverView:
+            row = team(db, id)
+            tickets, tasks = affected_work(db, None, id)
+            return TeamHandoverView(
+                team_id=id, version=row.version, items=describe_work(db, tickets, tasks)
+            )
+
+        return query(request, read)
+
+    def publish_team_scope(
+        db: Session, actor: Account, row: Team, event_type: str
+    ) -> None:
+        enqueue_event(
+            db,
+            actor=Actor("user", actor.id),
+            target=Target("team", row.id),
+            event_type=event_type,
+            schema_version=1,
+            aggregate_version=row.version,
+            correlation_id=row.id,
+            handlers=("workforce.affected_work",),
+            facts=SafeFacts(active=row.active, version=row.version),
+            clock=configured().clock,
+        )
+
+    def retire_team(db: Session, actor: Account, row: Team, body: TeamUpdate) -> None:
+        destination = None
+        if body.handover_team_id is not None:
+            destination = db.get(Team, body.handover_team_id)
+            if (
+                destination is None
+                or not destination.active
+                or destination.id == row.id
+            ):
+                raise Rejected(409, "INELIGIBLE_HANDOVER_TEAM")
+            if destination.version != body.handover_team_expectedVersion:
+                raise Rejected(409, "STALE_HANDOVER_TEAM")
+        elif body.handover_team_expectedVersion is not None:
+            raise Rejected(422, "INVALID_HANDOVER")
+        if row.intake and destination is None:
+            raise Rejected(409, "INTAKE_REPLACEMENT_REQUIRED")
+        now = read_utc(configured().clock)
+        apply_team_handover(
+            db,
+            actor,
+            row.id,
+            destination.id if destination else None,
+            body.handover,
+            body.reason.strip(),
+            now,
+        )
+        if row.intake:
+            assert destination is not None
+            row.intake = False
+            db.flush()
+            previous = SafeFacts(active=destination.active, version=destination.version)
+            destination.intake = True
+            destination.version += 1
+            audit_team(db, actor, "team.intake_set", destination, previous)
+        members = db.scalars(
+            select(TeamMember)
+            .where(TeamMember.team_id == row.id, TeamMember.active.is_(True))
+            .order_by(TeamMember.account_id)
+            .with_for_update()
+        ).all()
+        for membership in members:
+            membership.active = False
+            revoke_account_sessions(db, membership.account_id, now)
+
+    @router.patch(
+        "/teams/{id}",
+        operation_id="updateTeam",
+        response_model=TeamView,
+        tags=["Administration"],
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
+    )
     def update_team(id: UUID, request: Request, body: TeamUpdate) -> Response:
         def execute(db: Session, actor: Account) -> CommandResult:
             lock_team_configuration(db)
             row = team(db, id)
             if row.version != body.expectedVersion:
                 raise Rejected(409, "STALE_VERSION")
-            if len(body.reason.strip()) < 10 or all(
-                v is None for v in (body.name, body.active, body.intake)
+            if (
+                len(body.reason.strip()) < 10
+                or chr(0) in body.reason
+                or all(v is None for v in (body.name, body.active, body.intake))
             ):
                 raise Rejected(422, "INVALID_CHANGE")
-            if body.intake is False and row.intake:
+            retiring = body.active is False and row.active
+            if retiring:
+                if body.intake is True:
+                    raise Rejected(409, "INACTIVE_INTAKE")
+                retire_team(db, actor, row, body)
+            elif (
+                body.handover_team_id is not None
+                or body.handover
+                or body.handover_team_expectedVersion is not None
+            ):
+                raise Rejected(422, "INVALID_HANDOVER")
+            elif body.intake is False and row.intake:
                 raise Rejected(409, "INTAKE_REPLACEMENT_REQUIRED")
-            if body.active is False and row.active:
-                raise Rejected(409, "HANDOVER_REQUIRED")
 
             before = SafeFacts(active=row.active, version=row.version)
             if body.name is not None:
@@ -1422,9 +1620,12 @@ def organization_router(
                 row,
                 before,
             )
+            if retiring:
+                publish_team_scope(db, actor, row, "membership.changed")
+                publish_team_scope(db, actor, row, "load.changed")
             return CommandResult(row.id, row.version)
 
-        payload: dict[str, Any] = body.model_dump(exclude_unset=True)
+        payload: dict[str, Any] = body.model_dump(mode="json", exclude_unset=True)
         return change(
             request,
             "team.update",
@@ -1468,6 +1669,11 @@ def organization_router(
     @router.post(
         "/teams/{id}/members",
         operation_id="setTeamMembership",
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
         response_model=TeamReference,
     )
     def set_member(id: UUID, request: Request, body: MemberCommand) -> Response:
@@ -1476,37 +1682,61 @@ def organization_router(
             row = team(db, id)
             if row.version != body.expectedVersion:
                 raise Rejected(409, "STALE_VERSION")
-            if not body.active:
-                raise Rejected(409, "HANDOVER_REQUIRED")
-            if len(body.reason.strip()) < 10:
+            if len(body.reason.strip()) < 10 or chr(0) in body.reason:
                 raise Rejected(422, "INVALID_CHANGE")
             candidate = db.get(Account, body.user_id, with_for_update=True)
             if (
                 not row.active
                 or candidate is None
-                or not candidate.active
-                or candidate.role not in ("TECHNICIAN", "IT_MANAGER", "ADMIN")
+                or (
+                    body.active
+                    and (
+                        not candidate.active
+                        or candidate.role not in ("TECHNICIAN", "IT_MANAGER", "ADMIN")
+                    )
+                )
             ):
                 raise Rejected(409, "INELIGIBLE_MEMBER")
             membership = db.get(TeamMember, (id, candidate.id))
-            if membership is None:
+            if not body.active:
+                if membership is None or not membership.active:
+                    raise Rejected(404, "NOT_FOUND")
+                if open_holds(db, candidate.id):
+                    raise Rejected(409, "HANDOVER_PENDING")
+                apply_handover(
+                    db,
+                    actor,
+                    candidate.id,
+                    body.handover,
+                    body.reason.strip(),
+                    read_utc(configured().clock),
+                    id,
+                )
+                membership.active = False
+            elif body.handover:
+                raise Rejected(422, "INVALID_HANDOVER")
+            elif membership is None:
                 db.add(TeamMember(team_id=id, account_id=candidate.id, active=True))
             elif membership.active:
                 raise Rejected(409, "MEMBER_EXISTS")
             else:
                 membership.active = True
+            revoke_account_sessions(db, candidate.id, read_utc(configured().clock))
             before = SafeFacts(active=row.active, version=row.version)
             row.version += 1
             write_audit(
                 db,
                 actor=Actor("user", actor.id),
-                action="team.member_add",
+                action="team.member_add" if body.active else "team.member_remove",
                 target=Target("team", id),
                 before=before,
                 after=SafeFacts(
                     active=row.active, version=row.version, assignee_id=candidate.id
                 ),
             )
+            publish_team_scope(db, actor, row, "membership.changed")
+            if not body.active:
+                publish_team_scope(db, actor, row, "load.changed")
             return CommandResult(id, row.version)
 
         def reference(_: Session, result: CommandResult) -> TeamReference:

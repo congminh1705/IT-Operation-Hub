@@ -18,6 +18,7 @@ from app.modules.tickets.assignment import (
     TicketCommandRejected,
     check_version,
     lock_ticket,
+    require_ticket_not_held,
 )
 from app.modules.tickets.models import Ticket
 from app.modules.tickets.read import ListScope
@@ -227,6 +228,7 @@ def create_manual_plan(
     if actor.role not in MANAGEMENT:
         raise TicketCommandRejected(403, "FORBIDDEN")
     ticket = lock_ticket(db, ticket_id)
+    require_ticket_not_held(db, ticket.id)
     check_version(ticket, body.expectedVersion)
     team = db.get(Team, ticket.team_id)
     if ticket.status in ("Closed", "Cancelled") or team is None or not team.active:
