@@ -2,8 +2,8 @@ from datetime import datetime
 from typing import Literal
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict
-from sqlalchemy import and_, or_, select
+from pydantic import BaseModel, ConfigDict, Field
+from sqlalchemy import and_, func, or_, select
 from sqlalchemy.orm import Session
 from sqlalchemy.sql.elements import ColumnElement
 
@@ -51,8 +51,8 @@ class AuditView(BaseModel):
     resource_reference: str
     occurred_at: datetime
     safe_summary: str
-    before: dict[str, Scalar]
-    after: dict[str, Scalar]
+    before: dict[str, str | int | bool | None]
+    after: dict[str, str | int | bool | None]
     reason_recorded: bool
 
 
@@ -156,4 +156,45 @@ def project_audit(row: AuditLog) -> AuditView:
         before=before,
         after=after,
         reason_recorded=after.get("reason_provided") is True,
+    )
+
+
+class AuditViewPage(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    items: list[AuditView]
+    page: int = Field(ge=1, le=10_000)
+    page_size: int = Field(ge=1, le=100)
+    total: int = Field(ge=0)
+
+
+def search_audit(
+    db: Session,
+    actor: Account,
+    page: int,
+    page_size: int,
+    q: str | None = None,
+    actor_id: UUID | None = None,
+    target_id: UUID | None = None,
+) -> AuditViewPage:
+    predicates = [audit_scope(db, actor)]
+    if q:
+        predicates.append(AuditLog.action.icontains(q, autoescape=True))
+    if actor_id is not None:
+        predicates.append(AuditLog.actor_id == actor_id)
+    if target_id is not None:
+        predicates.append(AuditLog.target_id == target_id)
+    total = db.scalar(select(func.count()).select_from(AuditLog).where(*predicates))
+    rows = db.scalars(
+        select(AuditLog)
+        .where(*predicates)
+        .order_by(AuditLog.occurred_at.desc(), AuditLog.id.desc())
+        .offset((page - 1) * page_size)
+        .limit(page_size)
+    )
+    return AuditViewPage(
+        items=[project_audit(row) for row in rows],
+        page=page,
+        page_size=page_size,
+        total=total or 0,
     )

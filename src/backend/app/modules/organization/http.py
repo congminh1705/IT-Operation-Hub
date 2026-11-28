@@ -28,6 +28,7 @@ from app.infrastructure.events import (
     enqueue_event,
     write_audit,
 )
+from app.modules.audit import AuditViewPage, search_audit
 from app.modules.auth.http import (
     COMMAND_HEADERS,
     AuthSettings,
@@ -325,6 +326,29 @@ def organization_router(
             return error_response(exc.status, exc.code)
         except SQLAlchemyError:
             return error_response(503, "UNAVAILABLE")
+
+    @router.get(
+        "/audit",
+        operation_id="listAudit",
+        response_model=AuditViewPage,
+        tags=["Operations"],
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 403, 422, 503)},
+    )
+    def list_audit(
+        request: Request,
+        page: Annotated[int, Query(ge=1, le=10_000)] = 1,
+        page_size: Annotated[int, Query(ge=1, le=100)] = 20,
+        q: Annotated[str | None, Query(min_length=1, max_length=80)] = None,
+        actor_id: UUID | None = None,
+        target_id: UUID | None = None,
+    ) -> Response:
+        def read(db: Session, actor: Account) -> AuditViewPage:
+            if actor.role not in ("IT_MANAGER", "ADMIN"):
+                raise Rejected(403, "FORBIDDEN")
+            return search_audit(db, actor, page, page_size, q, actor_id, target_id)
+
+        return query(request, read, admin=False)
 
     def change(
         request: Request,

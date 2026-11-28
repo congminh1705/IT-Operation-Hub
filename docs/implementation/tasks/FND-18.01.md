@@ -87,3 +87,6 @@ A future request authorizes the selected implementation (or this decision-refine
 - Next eligible task / resume step:
 
 Keep sections 1-5 unchanged unless a justified authorized refinement is recorded. Update this handoff after every attempt, including unfinished/blocked work; retain earlier attempt reports in history. Synchronize the execution-board state/owner and current-context latest summary/history link. Do not duplicate report bodies in the board, invent evidence or mark unrelated parent/system gates passed.
+
+
+[Implementation review](../workflow/task-history.md#fnd-18-implementation-review). Code and local checks are ready for PO review. Reason content remains unresolved; INT-06 browser verification has not run.

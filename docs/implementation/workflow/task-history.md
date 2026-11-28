@@ -13873,3 +13873,38 @@ Task cards, board, registry, current context and history updated for scoped deli
 
 #### 10. Next step
 PO reviews and merges. FND-18 audit search remains the next requested foundation Parent.
+
+
+<a id="fnd-18-implementation-review"></a>
+
+### FND-18 implementation review (2026-11-28)
+
+#### 1. Metadata
+Format version: 1. Phase B. Owner: PO. Both leaves pending to review. Parent EPIC_IN_PROGRESS.
+
+#### 2. Delivered scope
+Scoped business and administrative audit, redacted structured facts, and bounded API search with paging and typed frontend contract.
+
+#### 3. Main files
+app/modules/audit.py, organization/http.py, app/main.py, OpenAPI, contract generator and test_scoped_audit.py.
+
+#### 4. Acceptance
+Manager business rows and Admin administration rows verified. Unsupported targets excluded. Reason presence projected from safe facts. Criterion requiring reason content remains open. Browser integration is INT-06.
+
+#### 5. Verification
+Worktree .fnd18. FND-18.01 targeted PostgreSQL 1 pass. FND-18.02 full PostgreSQL 62 pass. After expanding the positive Manager scenario, 5 scoped audit and OpenAPI tests passed. Backend Ruff and Mypy pass. Frontend 130 unit tests, lint, typecheck and build pass. Browser not run.
+
+#### 6. Review
+Agent verified implementation and checks. PO review pending.
+
+#### 7. Remaining work
+Resolve safe reason content projection. INT-06 owns frontend integration. Later modules supply their own audit sources.
+
+#### 8. Evidence
+Branch phase-b/fnd-18-audit-search from main 4a985d1. Projection commit 62eccb9. Test commands: backend pytest -qx -p no:cacheprovider; frontend pnpm test, lint, typecheck and build.
+
+#### 9. Records
+Task cards, board, registry, context and history updated.
+
+#### 10. Next step
+Complete the outstanding reason criterion and review the service scope. Parent closure requires INT-06.

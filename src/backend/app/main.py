@@ -66,6 +66,7 @@ def create_app(
     ) -> JSONResponse:
         operation = getattr(request.scope.get("route"), "operation_id", None)
         if operation in {
+            "listAudit",
             "getTicket",
             "listTickets",
             "listTicketEvents",
