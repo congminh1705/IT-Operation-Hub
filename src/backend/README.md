@@ -13,6 +13,8 @@ On Windows with Docker inside WSL2, run Compose from the Linux distribution agai
 
 Set `ITOH_DATABASE_DSN` in the terminal that starts Uvicorn. In PowerShell, use the local Compose credentials:
 
+If Windows connections time out after the WSL command exits, keep Compose running in a WSL terminal throughout development and testing. From the mounted checkout's `src/backend` directory, run `docker compose up postgres` in that terminal. Check that `docker compose ps` shows `127.0.0.1:55432->5432/tcp`. If a stale container reports healthy without that mapping, recreate the local container with `docker compose up -d --force-recreate --wait postgres`, then run `docker compose up postgres` in the persistent terminal. Recreation preserves the named volume. Verify a PostgreSQL query from Windows before running tests.
+
 ```powershell
 $env:ITOH_DATABASE_DSN = 'postgresql://itoh:local-development-only@127.0.0.1:55432/itoh'
 uv run --frozen uvicorn app.main:app --host 127.0.0.1 --port 8000
