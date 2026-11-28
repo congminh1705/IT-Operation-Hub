@@ -1,10 +1,14 @@
 from uuid import UUID
 
-from sqlalchemy import select
+from sqlalchemy import select, text
 from sqlalchemy.orm import Session
 
 from app.modules.auth.models import Account
 from app.modules.organization.models import Team, TeamMember
+
+
+def lock_team_configuration(session: Session) -> None:
+    session.execute(text("SELECT pg_advisory_xact_lock(505002)"))
 
 
 def effective_team_ids(session: Session, account_id: UUID) -> frozenset[UUID]:

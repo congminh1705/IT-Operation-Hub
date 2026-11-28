@@ -30,6 +30,7 @@ from app.modules.auth.service import (
     session_csrf,
 )
 from app.modules.organization.models import Department, Team, TeamMember
+from app.modules.organization.team_scope import lock_team_configuration
 from app.modules.sla.policy import (
     PolicyRevision,
     PolicyUpdate,
@@ -38,6 +39,13 @@ from app.modules.sla.policy import (
     snapshot_policy,
 )
 from app.modules.tickets.categories import TicketCategory
+from app.modules.tickets.intake import (
+    IntakeRejected,
+    TicketCreate,
+    ticket_create_schema,
+)
+from app.modules.tickets.models import Ticket
+from app.modules.tickets.service import TicketPublic, create_text_ticket, public_ticket
 from app.modules.users.provisioning import (
     ProvisionedAccountView,
     ProvisioningVerification,
@@ -205,12 +213,13 @@ def organization_router(
         project: Callable[[Session, CommandResult], BaseModel],
         *,
         status: int,
+        admin: bool = True,
     ) -> Response:
         try:
             database = configured().database
             key = request.headers.getlist("idempotency-key")
             with database.transaction() as db:
-                actor_id = authorize(db, request, admin=True, write=True).id
+                actor_id = authorize(db, request, admin=admin, write=True).id
             if len(key) != 1 or not key[0].strip() or len(key[0]) > 128:
                 raise Rejected(422, "INVALID_IDEMPOTENCY_KEY")
 
@@ -218,14 +227,14 @@ def organization_router(
 
             def authorization(db: Session, replay: CommandResult | None) -> None:
                 nonlocal response_body
-                if authorize(db, request, admin=True, write=True).id != actor_id:
+                if authorize(db, request, admin=admin, write=True).id != actor_id:
                     raise Rejected(403, "FORBIDDEN")
                 if replay is not None:
                     response_body = project(db, replay)
 
             def perform(db: Session) -> CommandResult:
                 nonlocal response_body
-                result = execute(db, authorize(db, request, admin=True, write=True))
+                result = execute(db, authorize(db, request, admin=admin, write=True))
                 db.flush()
                 response_body = project(db, result)
                 return result
@@ -245,7 +254,7 @@ def organization_router(
                 status_code=status,
                 headers={"Cache-Control": "no-store"},
             )
-        except Rejected as exc:
+        except (Rejected, IntakeRejected) as exc:
             return error_response(exc.status, exc.code)
         except (IntegrityError, IdempotencyConflict):
             return error_response(409, "CONFLICT")
@@ -401,6 +410,70 @@ def organization_router(
             status=201,
         )
 
+    @router.post(
+        "/tickets",
+        operation_id="createTicket",
+        status_code=201,
+        response_model=TicketPublic,
+        tags=["Tickets"],
+        openapi_extra={
+            "requestBody": {
+                "required": True,
+                "content": {
+                    "application/json": {"schema": ticket_create_schema()},
+                },
+            },
+        },
+    )
+    async def create_ticket(request: Request) -> Response:
+        def authenticate() -> None:
+            with configured().database.transaction() as db:
+                authorize(db, request, write=True)
+
+        try:
+            await run_in_threadpool(authenticate)
+        except Rejected as exc:
+            return error_response(exc.status, exc.code)
+        except SQLAlchemyError:
+            return error_response(503, "UNAVAILABLE")
+        if (
+            request.headers.get("content-type", "").split(";", 1)[0].strip().lower()
+            != "application/json"
+        ):
+            return error_response(422, "INVALID_TICKET")
+        payload = bytearray()
+        async for chunk in request.stream():
+            if len(payload) + len(chunk) > 65536:
+                return error_response(422, "INVALID_TICKET")
+            payload.extend(chunk)
+        try:
+            body = TicketCreate.model_validate_json(bytes(payload))
+        except ValidationError:
+            return error_response(422, "INVALID_TICKET")
+
+        def execute(db: Session, actor: Account) -> CommandResult:
+            return create_text_ticket(
+                db, Actor("user", actor.id), body, configured().clock
+            )
+
+        def project(db: Session, result: CommandResult) -> TicketPublic:
+            ticket = db.get(Ticket, result.id)
+            current = authorize(db, request, write=True)
+            if ticket is None or ticket.requester_id != current.id:
+                raise Rejected(404, "NOT_FOUND")
+            return public_ticket(ticket)
+
+        return await run_in_threadpool(
+            change,
+            request,
+            "ticket.create",
+            body.model_dump(mode="json", exclude_none=True),
+            execute,
+            project,
+            status=201,
+            admin=False,
+        )
+
     def register_named_lifecycle(
         model: type[Department] | type[TicketCategory],
         path: str,
@@ -549,10 +622,6 @@ def organization_router(
             raise Rejected(404, "NOT_FOUND")
         return row
 
-    def team_lock(db: Session) -> None:
-        # Serialize intake switches, membership changes and team writes.
-        db.execute(text("SELECT pg_advisory_xact_lock(505002)"))
-
     def team_result(db: Session, result: CommandResult) -> TeamView:
         row = team(db, result.id)
         if row.version != result.version:
@@ -603,7 +672,7 @@ def organization_router(
     )
     def create_team(request: Request, body: NamedCreate) -> Response:
         def execute(db: Session, actor: Account) -> CommandResult:
-            team_lock(db)
+            lock_team_configuration(db)
             name, key = normalized_name(body.name)
             row = Team(
                 id=uuid4(),
@@ -624,7 +693,7 @@ def organization_router(
     @router.patch("/teams/{id}", operation_id="updateTeam", response_model=TeamView)
     def update_team(id: UUID, request: Request, body: TeamUpdate) -> Response:
         def execute(db: Session, actor: Account) -> CommandResult:
-            team_lock(db)
+            lock_team_configuration(db)
             row = team(db, id)
             if row.version != body.expectedVersion:
                 raise Rejected(409, "STALE_VERSION")
@@ -717,7 +786,7 @@ def organization_router(
     )
     def set_member(id: UUID, request: Request, body: MemberCommand) -> Response:
         def execute(db: Session, actor: Account) -> CommandResult:
-            team_lock(db)
+            lock_team_configuration(db)
             row = team(db, id)
             if row.version != body.expectedVersion:
                 raise Rejected(409, "STALE_VERSION")
