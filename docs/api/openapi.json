@@ -4290,12 +4290,12 @@
     },
     "/tickets/{id}/plans": {
       "get": {
-        "operationId": "listTicketPlans",
-        "summary": "Read plan",
         "tags": [
+          "Administration",
           "Plans"
         ],
-        "description": "T current ticket team; M/A scope; requester excluded. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "summary": "Ticket Plans",
+        "operationId": "listTicketPlans",
         "security": [
           {
             "SessionCookie": []
@@ -4312,15 +4312,31 @@
             }
           },
           {
-            "$ref": "#/components/parameters/Page"
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000000,
+              "minimum": 1,
+              "default": 1
+            }
           },
           {
-            "$ref": "#/components/parameters/PageSize"
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Scoped response.",
+            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
@@ -4330,96 +4346,192 @@
             }
           },
           "401": {
-            "description": "Missing/expired/revoked session.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Unauthorized"
           },
           "403": {
-            "description": "Function or CSRF/Origin denied.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Forbidden"
           },
           "404": {
-            "description": "Not found or outside scope; identical safe response.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Not Found"
           },
           "422": {
-            "description": "Field/business validation failed; no partial effects.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Unprocessable Content"
           },
           "503": {
-            "description": "Dependency unavailable; no fabricated success.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "description": "Lists the latest version per plan under the current ticket team scope and omits ineligible nested tasks."
+      },
+      "post": {
+        "tags": [
+          "Administration",
+          "Plans"
+        ],
+        "summary": "Manual Ticket Plan",
+        "operationId": "createManualTicketPlan",
+        "security": [
+          {
+            "SessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManualPlanCreate"
               }
             }
           }
         },
-        "x-contract-id": "API05",
-        "x-required-roles": [
-          "TECHNICIAN",
-          "IT_MANAGER",
-          "ADMIN"
-        ],
-        "x-data-scope": "T current ticket team; M/A scope; requester excluded.",
-        "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC-OPS04",
-        "x-business-rules": "BR-14/15/17; one effective version"
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanView"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "description": "Management creates a Draft version and its initial unassigned tasks atomically. Effort requires an explicit reviewed evidence reference and version. Team and ticket version derive from the current parent ticket."
       }
     },
     "/plans/{id}/versions": {
       "get": {
-        "operationId": "listPlanVersions",
-        "summary": "Read plan versions",
         "tags": [
+          "Administration",
           "Plans"
         ],
-        "description": "Same scoped IT plan permission. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "summary": "Plan Versions",
+        "operationId": "listPlanVersions",
         "security": [
           {
             "SessionCookie": []
@@ -4436,15 +4548,31 @@
             }
           },
           {
-            "$ref": "#/components/parameters/Page"
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000000,
+              "minimum": 1,
+              "default": 1
+            }
           },
           {
-            "$ref": "#/components/parameters/PageSize"
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Scoped response.",
+            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
@@ -4454,86 +4582,57 @@
             }
           },
           "401": {
-            "description": "Missing/expired/revoked session.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Unauthorized"
           },
           "403": {
-            "description": "Function or CSRF/Origin denied.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Forbidden"
           },
           "404": {
-            "description": "Not found or outside scope; identical safe response.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Not Found"
           },
           "422": {
-            "description": "Field/business validation failed; no partial effects.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Unprocessable Content"
           },
           "503": {
-            "description": "Dependency unavailable; no fabricated success.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Service Unavailable"
           }
         },
-        "x-contract-id": "API05",
-        "x-required-roles": [
-          "TECHNICIAN",
-          "IT_MANAGER",
-          "ADMIN"
-        ],
-        "x-data-scope": "Same scoped IT plan permission.",
-        "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC-OPS04",
-        "x-business-rules": "BR-14/15/17; one effective version"
+        "description": "Lists historical versions of an authorized work plan."
       }
     },
     "/tickets/{id}/plan-proposals": {
@@ -4804,12 +4903,12 @@
     },
     "/tasks": {
       "get": {
-        "operationId": "listTasks",
-        "summary": "List tasks",
         "tags": [
+          "Administration",
           "Tasks"
         ],
-        "description": "Current group membership; no requester projection. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "summary": "Work Tasks",
+        "operationId": "listTasks",
         "security": [
           {
             "SessionCookie": []
@@ -4817,42 +4916,73 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/Page"
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000000,
+              "minimum": 1,
+              "default": 1
+            }
           },
           {
-            "$ref": "#/components/parameters/PageSize"
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20
+            }
           },
           {
             "name": "scope",
             "in": "query",
+            "required": false,
             "schema": {
-              "type": "string",
-              "enum": [
-                "mine",
-                "work"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "mine",
+                    "work"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
               ]
-            },
-            "description": "Presentation filter only, intersect with backend authorized scope."
+            }
           },
           {
             "name": "status",
             "in": "query",
+            "required": false,
             "schema": {
-              "type": "string",
-              "enum": [
-                "To Do",
-                "Ready",
-                "In Progress",
-                "Blocked",
-                "Done",
-                "Cancelled"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "To Do",
+                    "Ready",
+                    "In Progress",
+                    "Blocked",
+                    "Done",
+                    "Cancelled"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
               ]
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Scoped response.",
+            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
@@ -4862,76 +4992,47 @@
             }
           },
           "401": {
-            "description": "Missing/expired/revoked session.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Unauthorized"
           },
           "403": {
-            "description": "Function or CSRF/Origin denied.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "404": {
-            "description": "Not found or outside scope; identical safe response.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Forbidden"
           },
           "422": {
-            "description": "Field/business validation failed; no partial effects.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Unprocessable Content"
           },
           "503": {
-            "description": "Dependency unavailable; no fabricated success.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Service Unavailable"
           }
         },
+        "description": "Lists current-scope tasks and intersects requested filters before counting and paging.",
         "x-contract-id": "API06",
         "x-required-roles": [
           "TECHNICIAN",
@@ -4939,19 +5040,19 @@
           "ADMIN"
         ],
         "x-data-scope": "Current group membership; no requester projection.",
-        "x-implementation-status": "not-started",
+        "x-implementation-status": "in-progress",
         "x-source-use-cases": "UC-OPS05â€“07",
         "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
       }
     },
     "/tasks/{id}": {
       "get": {
-        "operationId": "getTask",
-        "summary": "Task details",
         "tags": [
+          "Administration",
           "Tasks"
         ],
-        "description": "Current group membership or M/A scope. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "summary": "Work Task",
+        "operationId": "getTask",
         "security": [
           {
             "SessionCookie": []
@@ -4970,7 +5071,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Scoped response.",
+            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
@@ -4980,76 +5081,57 @@
             }
           },
           "401": {
-            "description": "Missing/expired/revoked session.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Unauthorized"
           },
           "403": {
-            "description": "Function or CSRF/Origin denied.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Forbidden"
           },
           "404": {
-            "description": "Not found or outside scope; identical safe response.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Not Found"
           },
           "422": {
-            "description": "Field/business validation failed; no partial effects.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Unprocessable Content"
           },
           "503": {
-            "description": "Dependency unavailable; no fabricated success.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Service Unavailable"
           }
         },
+        "description": "Reads an authorized work task; requester is denied and out-of-scope IDs return 404.",
         "x-contract-id": "API06",
         "x-required-roles": [
           "TECHNICIAN",
@@ -5057,19 +5139,19 @@
           "ADMIN"
         ],
         "x-data-scope": "Current group membership or M/A scope.",
-        "x-implementation-status": "not-started",
+        "x-implementation-status": "in-progress",
         "x-source-use-cases": "UC-OPS05â€“07",
         "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
       }
     },
     "/tasks/{id}/transitions": {
       "post": {
-        "operationId": "transitionTask",
-        "summary": "Task transitions",
         "tags": [
+          "Administration",
           "Tasks"
         ],
-        "description": "Assignee or authorized M/A; dependency/state/version; Done requires human result and remaining=0. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "summary": "Work Task Transition",
+        "operationId": "transitionTask",
         "security": [
           {
             "SessionCookie": []
@@ -5086,102 +5168,24 @@
             }
           },
           {
-            "$ref": "#/components/parameters/Csrf"
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
-            "$ref": "#/components/parameters/Idempotency"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Committed successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskView"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Missing/expired/revoked session.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Function or CSRF/Origin denied.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found or outside scope; identical safe response.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Field/business validation failed; no partial effects.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "Dependency unavailable; no fabricated success.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
             }
           }
-        },
-        "x-contract-id": "API06",
-        "x-required-roles": [
-          "TECHNICIAN",
-          "IT_MANAGER",
-          "ADMIN"
         ],
-        "x-data-scope": "Assignee or authorized M/A; dependency/state/version; Done requires human result and remaining=0.",
-        "x-implementation-status": "not-started",
         "requestBody": {
           "required": true,
           "content": {
@@ -5192,18 +5196,89 @@
             }
           }
         },
-        "x-source-use-cases": "UC-OPS05â€“07",
-        "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskView"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "description": "Applies allowed human task transitions. Readiness and start require completed predecessors and a currently feasible allocation. Done requires a substantive result and zero remaining minutes. Cancellation is management-only and active downstream impact requires review."
       }
     },
     "/tasks/{id}/progress": {
       "post": {
-        "operationId": "updateTaskProgress",
-        "summary": "Task progress",
         "tags": [
+          "Administration",
           "Tasks"
         ],
-        "description": "Assignee or authorized M/A; remaining cannot become Done without explicit valid transition. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "summary": "Work Task Progress",
+        "operationId": "updateTaskProgress",
         "security": [
           {
             "SessionCookie": []
@@ -5220,124 +5295,117 @@
             }
           },
           {
-            "$ref": "#/components/parameters/Csrf"
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
-            "$ref": "#/components/parameters/Idempotency"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Committed successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskView"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Missing/expired/revoked session.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Function or CSRF/Origin denied.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found or outside scope; identical safe response.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Field/business validation failed; no partial effects.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "Dependency unavailable; no fabricated success.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
             }
           }
-        },
-        "x-contract-id": "API06",
-        "x-required-roles": [
-          "TECHNICIAN",
-          "IT_MANAGER",
-          "ADMIN"
         ],
-        "x-data-scope": "Assignee or authorized M/A; remaining cannot become Done without explicit valid transition.",
-        "x-implementation-status": "not-started",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ProgressCommand"
+                "$ref": "#/components/schemas/TaskProgress"
               }
             }
           }
         },
-        "x-source-use-cases": "UC-OPS05â€“07",
-        "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskView"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "description": "Performer or management changes remaining effort in active work. Increased effort requires a replacement allocation. Saving progress never completes the task."
       }
     },
     "/tasks/{id}/assignment": {
       "post": {
-        "operationId": "assignTask",
-        "summary": "Task assignment",
         "tags": [
+          "Administration",
           "Tasks"
         ],
-        "description": "MA only; recheck skills/calendar/remaining/capacity/manual lock; atomic allocation. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "summary": "Work Task Assignment",
+        "operationId": "assignTask",
         "security": [
           {
             "SessionCookie": []
@@ -5354,101 +5422,24 @@
             }
           },
           {
-            "$ref": "#/components/parameters/Csrf"
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
-            "$ref": "#/components/parameters/Idempotency"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Committed successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskView"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Missing/expired/revoked session.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Function or CSRF/Origin denied.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found or outside scope; identical safe response.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Field/business validation failed; no partial effects.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "Dependency unavailable; no fabricated success.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
             }
           }
-        },
-        "x-contract-id": "API06",
-        "x-required-roles": [
-          "IT_MANAGER",
-          "ADMIN"
         ],
-        "x-data-scope": "MA only; recheck skills/calendar/remaining/capacity/manual lock; atomic allocation.",
-        "x-implementation-status": "not-started",
         "requestBody": {
           "required": true,
           "content": {
@@ -5459,18 +5450,89 @@
             }
           }
         },
-        "x-source-use-cases": "UC-OPS05â€“07",
-        "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskView"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "description": "Management assigns an eligible current-team technician with explicit UTC slots totaling remaining minutes. Each slot and local-day capacity is rechecked atomically."
       }
     },
     "/tasks/{id}/assignment-lock": {
       "post": {
-        "operationId": "lockTaskAssignment",
-        "summary": "Task assignment-lock",
         "tags": [
+          "Administration",
           "Tasks"
         ],
-        "description": "Manual lock/unlock requires reason; does not bypass in-progress/approval rules. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "summary": "Work Task Lock",
+        "operationId": "lockTaskAssignment",
         "security": [
           {
             "SessionCookie": []
@@ -5487,101 +5549,24 @@
             }
           },
           {
-            "$ref": "#/components/parameters/Csrf"
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
-            "$ref": "#/components/parameters/Idempotency"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Committed successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskView"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Missing/expired/revoked session.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Function or CSRF/Origin denied.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found or outside scope; identical safe response.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Field/business validation failed; no partial effects.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "Dependency unavailable; no fabricated success.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
             }
           }
-        },
-        "x-contract-id": "API06",
-        "x-required-roles": [
-          "IT_MANAGER",
-          "ADMIN"
         ],
-        "x-data-scope": "Manual lock/unlock requires reason; does not bypass in-progress/approval rules.",
-        "x-implementation-status": "not-started",
         "requestBody": {
           "required": true,
           "content": {
@@ -5592,8 +5577,79 @@
             }
           }
         },
-        "x-source-use-cases": "UC-OPS05â€“07",
-        "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskView"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "description": "Management changes a manual assignment lock with a reason and current version."
       }
     },
     "/workforce": {
@@ -13061,7 +13117,6 @@
         "description": "Server snapshot map: aggregate resource ID to version; re-read before effect."
       },
       "TaskView": {
-        "type": "object",
         "properties": {
           "id": {
             "type": "string",
@@ -13101,23 +13156,41 @@
             ]
           },
           "version": {
-            "type": "integer",
-            "minimum": 1
+            "type": "integer"
           },
           "estimated_minutes": {
-            "type": "integer",
-            "minimum": 1
+            "type": "integer"
           },
           "remaining_minutes": {
-            "type": "integer",
-            "minimum": 0
+            "type": "integer"
           },
-          "predecessor_ids": {
-            "type": "array",
+          "starts_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ends_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "required_skill_ids": {
             "items": {
               "type": "string",
               "format": "uuid"
-            }
+            },
+            "type": "array"
+          },
+          "predecessor_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array"
+          },
+          "allocations": {
+            "items": {
+              "$ref": "#/components/schemas/Interval"
+            },
+            "type": "array"
           },
           "assignment_locked": {
             "type": "boolean"
@@ -13133,19 +13206,28 @@
             ]
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "id",
           "plan_version_id",
           "title",
+          "team_id",
+          "assignee_id",
           "status",
           "version",
+          "estimated_minutes",
           "remaining_minutes",
-          "assignment_locked"
-        ],
-        "additionalProperties": false
+          "starts_at",
+          "ends_at",
+          "required_skill_ids",
+          "predecessor_ids",
+          "allocations",
+          "assignment_locked",
+          "result"
+        ]
       },
       "PlanView": {
-        "type": "object",
         "properties": {
           "id": {
             "type": "string",
@@ -13155,9 +13237,12 @@
             "type": "string",
             "format": "uuid"
           },
+          "plan_version_id": {
+            "type": "string",
+            "format": "uuid"
+          },
           "version": {
-            "type": "integer",
-            "minimum": 1
+            "type": "integer"
           },
           "state": {
             "type": "string",
@@ -13168,31 +13253,34 @@
               "Cancelled"
             ]
           },
+          "goal": {
+            "type": "string"
+          },
           "tasks": {
-            "type": "array",
             "items": {
               "$ref": "#/components/schemas/TaskView"
-            }
+            },
+            "type": "array"
           },
           "source_versions": {
-            "$ref": "#/components/schemas/Snapshot"
-          },
-          "plan_version_id": {
-            "type": "string",
-            "format": "uuid"
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object"
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "id",
           "ticket_id",
+          "plan_version_id",
           "version",
           "state",
+          "goal",
           "tasks",
-          "source_versions",
-          "plan_version_id"
-        ],
-        "additionalProperties": false,
-        "description": "id is WorkPlan resource ID; plan_version_id is selected PlanVersion ID; version is optimistic concurrency version of the activated/current plan projection."
+          "source_versions"
+        ]
       },
       "ProposalCommand": {
         "type": "object",
@@ -13246,46 +13334,61 @@
         "additionalProperties": false
       },
       "TaskTransition": {
-        "type": "object",
         "properties": {
           "expectedVersion": {
             "type": "integer",
-            "minimum": 1
+            "minimum": 1.0
           },
           "target_status": {
-            "type": "string",
-            "enum": [
-              "To Do",
-              "Ready",
-              "In Progress",
-              "Blocked",
-              "Done",
-              "Cancelled"
-            ]
+            "$ref": "#/components/schemas/TaskState"
           },
           "remaining_minutes": {
-            "type": "integer",
-            "minimum": 0
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2147483647.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "result": {
-            "type": "string"
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 10000
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "reason": {
-            "type": "string"
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 10000
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "expectedVersion",
           "target_status"
-        ],
-        "additionalProperties": false
+        ]
       },
       "TaskAssignment": {
-        "type": "object",
         "properties": {
           "expectedVersion": {
             "type": "integer",
-            "minimum": 1
+            "minimum": 1.0
           },
           "assignee_id": {
             "type": "string",
@@ -13297,38 +13400,49 @@
           },
           "reason": {
             "type": "string",
+            "maxLength": 10000,
             "minLength": 10
+          },
+          "allocations": {
+            "items": {
+              "$ref": "#/components/schemas/Interval"
+            },
+            "type": "array",
+            "maxItems": 366
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "expectedVersion",
           "assignee_id",
           "team_id",
-          "reason"
-        ],
-        "additionalProperties": false
+          "reason",
+          "allocations"
+        ]
       },
       "LockCommand": {
-        "type": "object",
         "properties": {
           "expectedVersion": {
             "type": "integer",
-            "minimum": 1
+            "minimum": 1.0
           },
           "locked": {
             "type": "boolean"
           },
           "reason": {
             "type": "string",
+            "maxLength": 10000,
             "minLength": 10
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "expectedVersion",
           "locked",
           "reason"
-        ],
-        "additionalProperties": false
+        ]
       },
       "WorkforceView": {
         "properties": {
@@ -14785,64 +14899,56 @@
         "additionalProperties": false
       },
       "PlanViewPage": {
-        "type": "object",
         "properties": {
           "items": {
-            "type": "array",
             "items": {
               "$ref": "#/components/schemas/PlanView"
-            }
-          },
-          "page": {
-            "type": "integer",
-            "minimum": 1
-          },
-          "page_size": {
-            "type": "integer",
-            "minimum": 1
+            },
+            "type": "array"
           },
           "total": {
-            "type": "integer",
-            "minimum": 0
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "page_size": {
+            "type": "integer"
           }
         },
+        "type": "object",
         "required": [
           "items",
+          "total",
           "page",
-          "page_size",
-          "total"
-        ],
-        "additionalProperties": false
+          "page_size"
+        ]
       },
       "TaskViewPage": {
-        "type": "object",
         "properties": {
           "items": {
-            "type": "array",
             "items": {
               "$ref": "#/components/schemas/TaskView"
-            }
-          },
-          "page": {
-            "type": "integer",
-            "minimum": 1
-          },
-          "page_size": {
-            "type": "integer",
-            "minimum": 1
+            },
+            "type": "array"
           },
           "total": {
-            "type": "integer",
-            "minimum": 0
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "page_size": {
+            "type": "integer"
           }
         },
+        "type": "object",
         "required": [
           "items",
+          "total",
           "page",
-          "page_size",
-          "total"
-        ],
-        "additionalProperties": false
+          "page_size"
+        ]
       },
       "WorkforceViewPage": {
         "properties": {
@@ -16239,6 +16345,140 @@
         "required": [
           "starts_at",
           "ends_at"
+        ]
+      },
+      "ManualPlanCreate": {
+        "properties": {
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1.0
+          },
+          "goal": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 1
+          },
+          "tasks": {
+            "items": {
+              "$ref": "#/components/schemas/ManualTaskInput"
+            },
+            "type": "array",
+            "maxItems": 50,
+            "minItems": 1
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expectedVersion",
+          "goal",
+          "tasks"
+        ]
+      },
+      "ManualTaskInput": {
+        "properties": {
+          "starts_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ends_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 180,
+            "minLength": 1
+          },
+          "estimated_minutes": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0
+          },
+          "effort_evidence_ref": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1
+          },
+          "effort_evidence_version": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0
+          },
+          "required_skill_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 50
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "starts_at",
+          "ends_at",
+          "title",
+          "estimated_minutes",
+          "effort_evidence_ref",
+          "effort_evidence_version",
+          "required_skill_ids"
+        ]
+      },
+      "TaskProgress": {
+        "properties": {
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1.0
+          },
+          "remaining_minutes": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 0.0
+          },
+          "result": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 10000
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "allocations": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Interval"
+                },
+                "type": "array",
+                "maxItems": 366
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expectedVersion",
+          "remaining_minutes"
+        ]
+      },
+      "TaskState": {
+        "type": "string",
+        "enum": [
+          "To Do",
+          "Ready",
+          "In Progress",
+          "Blocked",
+          "Done",
+          "Cancelled"
         ]
       }
     }

@@ -91,6 +91,28 @@ from app.modules.users.provisioning import (
     ProvisioningVerification,
     UserCreate,
 )
+from app.modules.work_management.allocation import (
+    LockCommand,
+    TaskAssignment,
+    TaskProgress,
+    assign_task,
+    set_assignment_lock,
+    update_task_progress,
+)
+from app.modules.work_management.lifecycle import TaskTransition, transition_task
+from app.modules.work_management.service import (
+    ManualPlanCreate,
+    PlanPage,
+    PlanView,
+    TaskPage,
+    TaskStatus,
+    TaskView,
+    create_manual_plan,
+    created_plan,
+    get_task,
+    list_plans,
+    list_tasks,
+)
 from app.modules.workforce.availability import (
     AbsenceCreate,
     AbsenceReference,
@@ -506,6 +528,218 @@ def organization_router(
             ),
             status=201,
             admin=False,
+        )
+
+    @router.post(
+        "/tickets/{id}/plans",
+        operation_id="createManualTicketPlan",
+        tags=["Plans"],
+        response_model=PlanView,
+        status_code=201,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
+    )
+    def manual_ticket_plan(
+        id: UUID, request: Request, body: ManualPlanCreate
+    ) -> Response:
+        return change(
+            request,
+            "work_plan.manual_create",
+            {"id": str(id), **body.model_dump(mode="json")},
+            lambda db, actor: create_manual_plan(
+                db, actor, id, body, configured().clock
+            ),
+            lambda db, result: created_plan(
+                db, authorize(db, request, write=True), result
+            ),
+            status=201,
+            admin=False,
+        )
+
+    @router.get(
+        "/tickets/{id}/plans",
+        operation_id="listTicketPlans",
+        tags=["Plans"],
+        response_model=PlanPage,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 403, 404, 422, 503)},
+    )
+    def ticket_plans(
+        id: UUID,
+        request: Request,
+        page: Annotated[int, Query(ge=1, le=1_000_000)] = 1,
+        page_size: Annotated[int, Query(ge=1, le=100)] = 20,
+    ) -> Response:
+        return query(
+            request,
+            lambda db, actor: list_plans(
+                db, actor, id, page, page_size, by_ticket=True
+            ),
+            admin=False,
+        )
+
+    @router.get(
+        "/plans/{id}/versions",
+        operation_id="listPlanVersions",
+        tags=["Plans"],
+        response_model=PlanPage,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 403, 404, 422, 503)},
+    )
+    def plan_versions(
+        id: UUID,
+        request: Request,
+        page: Annotated[int, Query(ge=1, le=1_000_000)] = 1,
+        page_size: Annotated[int, Query(ge=1, le=100)] = 20,
+    ) -> Response:
+        return query(
+            request,
+            lambda db, actor: list_plans(
+                db, actor, id, page, page_size, by_ticket=False
+            ),
+            admin=False,
+        )
+
+    @router.get(
+        "/tasks",
+        operation_id="listTasks",
+        tags=["Tasks"],
+        response_model=TaskPage,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 403, 422, 503)},
+    )
+    def work_tasks(
+        request: Request,
+        page: Annotated[int, Query(ge=1, le=1_000_000)] = 1,
+        page_size: Annotated[int, Query(ge=1, le=100)] = 20,
+        scope: ListScope | None = None,
+        status: TaskStatus | None = None,
+    ) -> Response:
+        return query(
+            request,
+            lambda db, actor: list_tasks(db, actor, page, page_size, scope, status),
+            admin=False,
+        )
+
+    @router.get(
+        "/tasks/{id}",
+        operation_id="getTask",
+        tags=["Tasks"],
+        response_model=TaskView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 403, 404, 422, 503)},
+    )
+    def work_task(id: UUID, request: Request) -> Response:
+        return query(request, lambda db, actor: get_task(db, actor, id), admin=False)
+
+    def task_change(
+        request: Request,
+        task_id: UUID,
+        operation: str,
+        body: BaseModel,
+        perform: Callable[[Session, Account], CommandResult],
+    ) -> Response:
+        return change(
+            request,
+            operation,
+            {"id": str(task_id), **body.model_dump(mode="json")},
+            perform,
+            lambda db, result: get_task(
+                db, authorize(db, request, write=True), result.id
+            ),
+            status=200,
+            admin=False,
+        )
+
+    @router.post(
+        "/tasks/{id}/assignment",
+        operation_id="assignTask",
+        tags=["Tasks"],
+        response_model=TaskView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
+    )
+    def work_task_assignment(
+        id: UUID, request: Request, body: TaskAssignment
+    ) -> Response:
+        return task_change(
+            request,
+            id,
+            "task.assigned",
+            body,
+            lambda db, actor: assign_task(db, actor, id, body, configured().clock),
+        )
+
+    @router.post(
+        "/tasks/{id}/assignment-lock",
+        operation_id="lockTaskAssignment",
+        tags=["Tasks"],
+        response_model=TaskView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
+    )
+    def work_task_lock(id: UUID, request: Request, body: LockCommand) -> Response:
+        return task_change(
+            request,
+            id,
+            "task.assignment_lock_changed",
+            body,
+            lambda db, actor: set_assignment_lock(
+                db, actor, id, body, configured().clock
+            ),
+        )
+
+    @router.post(
+        "/tasks/{id}/progress",
+        operation_id="updateTaskProgress",
+        tags=["Tasks"],
+        response_model=TaskView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
+    )
+    def work_task_progress(id: UUID, request: Request, body: TaskProgress) -> Response:
+        return task_change(
+            request,
+            id,
+            "task.progressed",
+            body,
+            lambda db, actor: update_task_progress(
+                db, actor, id, body, configured().clock
+            ),
+        )
+
+    @router.post(
+        "/tasks/{id}/transitions",
+        operation_id="transitionTask",
+        tags=["Tasks"],
+        response_model=TaskView,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={
+            status: {"model": Error} for status in (401, 403, 404, 409, 422, 503)
+        },
+        openapi_extra={"parameters": COMMAND_HEADERS},
+    )
+    def work_task_transition(
+        id: UUID, request: Request, body: TaskTransition
+    ) -> Response:
+        return task_change(
+            request,
+            id,
+            "task.transition",
+            body,
+            lambda db, actor: transition_task(db, actor, id, body, configured().clock),
         )
 
     @router.post(

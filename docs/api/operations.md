@@ -56,14 +56,15 @@ purpose: "Trace operationId, routes, principals, and business rules."
 | API04 | POST | `/tickets/{id}/attachments` | `uploadTicketAttachment` | REQUESTER, TECHNICIAN, IT_MANAGER, ADMIN | Parent/comment audience verified; max 10 MB/file; one file per operation, up to 5 accepted in one user action. |
 | API04 | GET | `/attachments/{id}/download` | `downloadAttachment` | REQUESTER, TECHNICIAN, IT_MANAGER, ADMIN | Current parent content scope, no public object URL; safe Content-Disposition, nosniff. |
 | API05 | GET | `/tickets/{id}/plans` | `listTicketPlans` | TECHNICIAN, IT_MANAGER, ADMIN | T current ticket team; M/A scope; requester excluded. |
+| API05 | POST | `/tickets/{id}/plans` | `createManualTicketPlan` | IT_MANAGER, ADMIN | Creates one Draft plan version and initial unassigned tasks with explicit effort evidence and a parent-derived team. |
 | API05 | GET | `/plans/{id}/versions` | `listPlanVersions` | TECHNICIAN, IT_MANAGER, ADMIN | Same scoped IT plan permission. |
 | API05 | POST | `/tickets/{id}/plan-proposals` | `proposePlan` | IT_MANAGER, ADMIN | MA requests proposal; model runs outside DB transaction; no assignment implied. |
 | API05 | POST | `/plans/{id}/activate` | `activatePlan` | IT_MANAGER, ADMIN | One Effective version; semantic/DAG/source checks. Policy automation uses internal services, not public service login. |
 | API06 | GET | `/tasks` | `listTasks` | TECHNICIAN, IT_MANAGER, ADMIN | Current group membership; no requester projection. |
 | API06 | GET | `/tasks/{id}` | `getTask` | TECHNICIAN, IT_MANAGER, ADMIN | Current group membership or M/A scope. |
-| API06 | POST | `/tasks/{id}/transitions` | `transitionTask` | TECHNICIAN, IT_MANAGER, ADMIN | Assignee or authorized M/A; dependency/state/version; Done requires human result and remaining=0. |
-| API06 | POST | `/tasks/{id}/progress` | `updateTaskProgress` | TECHNICIAN, IT_MANAGER, ADMIN | Assignee or authorized M/A; remaining cannot become Done without explicit valid transition. |
-| API06 | POST | `/tasks/{id}/assignment` | `assignTask` | IT_MANAGER, ADMIN | MA only; recheck skills/calendar/remaining/capacity/manual lock; atomic allocation. |
+| API06 | POST | `/tasks/{id}/transitions` | `transitionTask` | TECHNICIAN, IT_MANAGER, ADMIN | Assignee or authorized M/A. Ready/start rechecks predecessors and reserved slots; Done requires a substantive result and remaining=0. M/A cancellation requires a reason and checks successor impact. |
+| API06 | POST | `/tasks/{id}/progress` | `updateTaskProgress` | TECHNICIAN, IT_MANAGER, ADMIN | Assignee or authorized M/A. Increased remaining effort requires a replacement reservation. Progress alone leaves the task state unchanged. |
+| API06 | POST | `/tasks/{id}/assignment` | `assignTask` | IT_MANAGER, ADMIN | M/A only. Explicit UTC slots must total remaining minutes and fit verified skills, calendar and capacity. Existing manual locks apply. |
 | API06 | POST | `/tasks/{id}/assignment-lock` | `lockTaskAssignment` | IT_MANAGER, ADMIN | Manual lock/unlock requires reason; does not bypass in-progress/approval rules. |
 | API07 | GET | `/workforce` | `listWorkforce` | TECHNICIAN, IT_MANAGER, ADMIN | T self/minimal task lookup; M/A managed IT scope; no global private calendar for T. |
 | API07 | GET | `/workforce/{id}` | `getWorkforce` | TECHNICIAN, IT_MANAGER, ADMIN | T self/minimal scoped projection; M/A managed scope. |

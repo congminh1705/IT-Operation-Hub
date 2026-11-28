@@ -141,9 +141,9 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FND-14.02](../tasks/FND-14.02.md) | [FND-14](../01-foundation.md#fnd-14) | Publish auditable skill-change effects | [FND-14.01](../tasks/FND-14.01.md) | PO | done |
 | [FND-15.01](../tasks/FND-15.01.md) | [FND-15](../01-foundation.md#fnd-15) | Implement period calendar and absence union calculations | [FND-14.02](../tasks/FND-14.02.md) | PO | done |
 | [FND-15.02](../tasks/FND-15.02.md) | [FND-15](../01-foundation.md#fnd-15) | Implement authorized calendar and absence mutations | [FND-15.01](../tasks/FND-15.01.md) | PO | done |
-| [FND-16.01](../tasks/FND-16.01.md) | [FND-16](../01-foundation.md#fnd-16) | Persist manual plan/task and enforce internal scope | [FND-11.02](../tasks/FND-11.02.md), [FND-15.02](../tasks/FND-15.02.md) | PO | pending |
-| [FND-16.02](../tasks/FND-16.02.md) | [FND-16](../01-foundation.md#fnd-16) | Implement atomic manual assignment and remaining allocations | [FND-16.01](../tasks/FND-16.01.md) | PO | pending |
-| [FND-16.03](../tasks/FND-16.03.md) | [FND-16](../01-foundation.md#fnd-16) | Implement guarded human task progress and completion | [FND-16.02](../tasks/FND-16.02.md) | PO | pending |
+| [FND-16.01](../tasks/FND-16.01.md) | [FND-16](../01-foundation.md#fnd-16) | Persist manual plan/task and enforce internal scope | [FND-11.02](../tasks/FND-11.02.md), [FND-15.02](../tasks/FND-15.02.md) | PO | done |
+| [FND-16.02](../tasks/FND-16.02.md) | [FND-16](../01-foundation.md#fnd-16) | Implement atomic manual assignment and remaining allocations | [FND-16.01](../tasks/FND-16.01.md) | PO | done |
+| [FND-16.03](../tasks/FND-16.03.md) | [FND-16](../01-foundation.md#fnd-16) | Implement guarded human task progress and completion | [FND-16.02](../tasks/FND-16.02.md) | PO | done |
 | [FND-17.01](../tasks/FND-17.01.md) | [FND-17](../01-foundation.md#fnd-17) | Implement immediate access loss and protected account invariants | [FND-16.03](../tasks/FND-16.03.md) | PO | pending |
 | [FND-17.02](../tasks/FND-17.02.md) | [FND-17](../01-foundation.md#fnd-17) | Implement transactional active-work handover | [FND-17.01](../tasks/FND-17.01.md) | PO | pending |
 | [FND-17.03](../tasks/FND-17.03.md) | [FND-17](../01-foundation.md#fnd-17) | Publish affected-work changes and complete team deactivation | [FND-17.02](../tasks/FND-17.02.md) | PO | pending |
