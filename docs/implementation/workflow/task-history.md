@@ -14594,3 +14594,51 @@ PO review và merge PR #45. INT-06 thực hiện khi đủ dependency. Chưa tri
 
 - Next eligible task / resume step: Review Phase B PR eligibility.
 - Eligibility / remaining prerequisite: INT-01.03 is done.
+
+<a id="task-wf-01-01-dag-start"></a>
+
+### WF-01.01 draft DAG implementation (2026-11-29)
+
+#### 1. Metadata
+
+Format version 1. Phase B. Owner PO. WF-01.01 in_progress and Parent EPIC_IN_PROGRESS.
+
+#### 2. Delivered scope
+
+Validate draft node references, duplicates, self-edges and cycles before storage. Persist edges within the draft using existing same-version database constraints.
+
+#### 3. Files
+
+work_management/service.py, test_plan_dag.py, OpenAPI and generated frontend contract.
+
+#### 4. Acceptance
+
+Local graph validation passes. PostgreSQL persistence and verification of unsupported effort sources remain open.
+
+#### 5. Checks
+
+| Command | Result |
+| --- | --- |
+| pytest tests/test_plan_dag.py tests/test_runtime_openapi.py -q | 8 passed, PostgreSQL test stopped at connection setup |
+| mypy app tests/test_plan_dag.py | Pass, 48 files |
+| ruff check on changed Python files | Pass |
+
+#### 6. Review
+
+Agent checks only. PO acceptance pending.
+
+#### 7. Remaining work
+
+Verify persistence on PostgreSQL and finish effort-source checks before activation and predecessor lifecycle changes.
+
+#### 8. Git delivery
+
+Branch phase-b/wf-01-versioned-plan-dag from main 8ebb2ae.
+
+#### 9. Records
+
+Updated task, board, parent registry and current context.
+
+#### 10. Next step
+
+Finish WF-01.01 verification and continue through WF-01.02 and WF-01.03 in order.

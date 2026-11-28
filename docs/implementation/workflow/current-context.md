@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- WF-01.01 in_progress. Draft DAG validation and persistence implemented; 8 unit and runtime OpenAPI checks passed. PostgreSQL API test stopped at connection setup. WF-01.02 and .03 pending. [Report](task-history.md#task-wf-01-01-dag-start).
+
 - INT-01 EPIC_DONE. All three leaves accepted by PO. [Final evidence](task-history.md#task-int-01-03-attempt-04). Delivery branch phase-c/int-01-real-identity.
 
 - FND-18 structured reasons implemented under PO-approved contract. Both leaves done following PO acceptance on 2026-11-29; Parent EPIC_IN_PROGRESS. PostgreSQL 63 pass, frontend 130 pass, typecheck/lint passed. INT-06 browser wiring pending. [Report](task-history.md#fnd-18-structured-reason-review).

@@ -61,12 +61,47 @@ class ManualTaskInput(Interval):
         return self
 
 
+class PlanDependencyInput(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    task_index: int = Field(ge=0, strict=True)
+    predecessor_index: int = Field(ge=0, strict=True)
+
+
+def ordered_plan_nodes(
+    node_count: int, dependencies: list[PlanDependencyInput]
+) -> list[int]:
+    successors: list[set[int]] = [set() for _ in range(node_count)]
+    outstanding = [0] * node_count
+    for edge in dependencies:
+        task, predecessor = edge.task_index, edge.predecessor_index
+        if not (0 <= task < node_count and 0 <= predecessor < node_count):
+            raise TicketCommandRejected(422, "UNKNOWN_PLAN_NODE")
+        if task == predecessor or task in successors[predecessor]:
+            raise TicketCommandRejected(422, "INVALID_PLAN_DEPENDENCY")
+        successors[predecessor].add(task)
+        outstanding[task] += 1
+
+    order = [i for i, count in enumerate(outstanding) if count == 0]
+    for predecessor in order:
+        for task in sorted(successors[predecessor]):
+            outstanding[task] -= 1
+            if outstanding[task] == 0:
+                order.append(task)
+    if len(order) != node_count:
+        raise TicketCommandRejected(422, "PLAN_DEPENDENCY_CYCLE")
+    return order
+
+
 class ManualPlanCreate(BaseModel):
     model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
 
     expectedVersion: int = Field(ge=1, strict=True)
     goal: str = Field(min_length=1, max_length=4000)
     tasks: list[ManualTaskInput] = Field(min_length=1, max_length=50)
+    dependencies: list[PlanDependencyInput] = Field(
+        default_factory=list, max_length=1225
+    )
 
     @field_validator("goal")
     @classmethod
@@ -233,6 +268,7 @@ def create_manual_plan(
     team = db.get(Team, ticket.team_id)
     if ticket.status in ("Closed", "Cancelled") or team is None or not team.active:
         raise TicketCommandRejected(409, "PLAN_UNAVAILABLE")
+    ordered_plan_nodes(len(body.tasks), body.dependencies)
     skills = {skill for item in body.tasks for skill in item.required_skill_ids}
     if skills and skills != set(
         db.scalars(
@@ -255,9 +291,10 @@ def create_manual_plan(
     )
     db.add(version)
     db.flush()
-    for item in body.tasks:
+    task_ids = [uuid4() for _ in body.tasks]
+    for task_id, item in zip(task_ids, body.tasks, strict=True):
         task = WorkTask(
-            id=uuid4(),
+            id=task_id,
             plan_version_id=version.id,
             team_id=team.id,
             title=item.title,
@@ -275,6 +312,16 @@ def create_manual_plan(
         )
         db.add(task)
         set_task_skill_requirements(db, task.id, frozenset(item.required_skill_ids))
+    if body.dependencies:
+        db.flush()
+        db.add_all(
+            TaskDependency(
+                plan_version_id=version.id,
+                task_id=task_ids[edge.task_index],
+                predecessor_id=task_ids[edge.predecessor_index],
+            )
+            for edge in body.dependencies
+        )
     write_audit(
         db,
         actor=Actor("user", actor.id),

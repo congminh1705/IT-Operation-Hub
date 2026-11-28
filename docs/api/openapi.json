@@ -16975,6 +16975,14 @@
             "type": "array",
             "maxItems": 50,
             "minItems": 1
+          },
+          "dependencies": {
+            "items": {
+              "$ref": "#/components/schemas/PlanDependencyInput"
+            },
+            "type": "array",
+            "maxItems": 1225,
+            "title": "Dependencies"
           }
         },
         "additionalProperties": false,
@@ -17371,6 +17379,27 @@
           "OTHER"
         ],
         "title": "AuditReason"
+      },
+      "PlanDependencyInput": {
+        "properties": {
+          "task_index": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Task Index"
+          },
+          "predecessor_index": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Predecessor Index"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "task_index",
+          "predecessor_index"
+        ],
+        "title": "PlanDependencyInput"
       }
     }
   },
