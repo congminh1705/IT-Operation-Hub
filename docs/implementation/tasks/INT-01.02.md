@@ -78,14 +78,14 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: INT-01.02/attempt-01.
-- Latest history entry: [Format version 1 report](../workflow/task-history.md#task-int-01-02-attempt-01).
+- Latest Report ID: INT-01.02/attempt-02.
+- Latest history entry: [Format version 1 report](../workflow/task-history.md#task-int-01-02-attempt-02).
 - Delivered: live profile and password forms, restricted temporary-password rotation, Admin users and organization/SLA forms with server versions, CSRF, and handover decisions.
 - Key paths: `src/frontend/src/features/auth`, `src/frontend/src/features/administration/real-admin.tsx`, `src/frontend/src/lib/api/http-account.ts`, and runtime `GET /api/v1/users`.
 - Checks: 3 scoped Chrome cases, 6 real-auth regression cases, 132 frontend tests, 60 service tests, build, lint, types and reviewed contract checks passed. [Profile](../evidence/INT-01.02/profile-real.png), [D-29 form](../evidence/INT-01.02/admin-user-real.png), [membership conflict](../evidence/INT-01.02/membership-conflict.png).
-- Review: agent verified locally; PO acceptance pending. The D-29 verification was synthetic. Live evidence issuance and production HTTPS were not exercised.
+- Review: agent verified locally; PO accepted. The D-29 verification was synthetic. Live evidence issuance and production HTTPS were not exercised.
 - Delivery: local `phase/c-integration`. Remote push still awaits explicit approval. No Parent PR yet.
-- Next: INT-01.03 after INT-01.02 is accepted and recorded done.
+- Next: INT-01.03 is now eligible.
 
 > **Semantic UI states:** Follow the mandatory state-color mapping in [approved format](../../design/approved-format.md): active blue, ready/done green, waiting amber, blocked/error/overdue rose, locked/disabled gray. Use business enums and visible labels; capture task-owned evidence against the current final HTML.
 

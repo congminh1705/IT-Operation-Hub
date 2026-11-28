@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- INT-01 EPIC_DONE. All three leaves accepted by PO. [Final evidence](task-history.md#task-int-01-03-attempt-04). Delivery branch phase-c/int-01-real-identity.
+
 - FND-18 structured reasons implemented under PO-approved contract. Both leaves done following PO acceptance on 2026-11-29; Parent EPIC_IN_PROGRESS. PostgreSQL 63 pass, frontend 130 pass, typecheck/lint passed. INT-06 browser wiring pending. [Report](task-history.md#fnd-18-structured-reason-review).
 
 - FND-17 backend delivery from merged FND-16. Three service leaves previously PO accepted. Parent awaits INT-03. [Report](task-history.md#fnd-17-backend-delivery).

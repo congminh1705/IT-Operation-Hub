@@ -240,9 +240,9 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 
 | Task | Parent | Deliverable | Depends on | Owner | Status |
 | --- | --- | --- | --- | --- | --- |
-| [INT-01.01](../tasks/INT-01.01.md) | [INT-01](../07-integration.md#int-01) | Replace mock identity with real cookie-session adapter | [FND-07.02](../tasks/FND-07.02.md), [FND-17.03](../tasks/FND-17.03.md) | PO | pending |
-| [INT-01.02](../tasks/INT-01.02.md) | [INT-01](../07-integration.md#int-01) | Connect profile, password and administrator flows | [INT-01.01](../tasks/INT-01.01.md) | PO | pending |
-| [INT-01.03](../tasks/INT-01.03.md) | [INT-01](../07-integration.md#int-01) | Verify identity-scoped query and error lifecycle | [INT-01.02](../tasks/INT-01.02.md) | PO | pending |
+| [INT-01.01](../tasks/INT-01.01.md) | [INT-01](../07-integration.md#int-01) | Replace mock identity with real cookie-session adapter | [FND-07.02](../tasks/FND-07.02.md), [FND-17.03](../tasks/FND-17.03.md) | PO | done |
+| [INT-01.02](../tasks/INT-01.02.md) | [INT-01](../07-integration.md#int-01) | Connect profile, password and administrator flows | [INT-01.01](../tasks/INT-01.01.md) | PO | done |
+| [INT-01.03](../tasks/INT-01.03.md) | [INT-01](../07-integration.md#int-01) | Verify identity-scoped query and error lifecycle | [INT-01.02](../tasks/INT-01.02.md) | PO | done |
 | [INT-02.01](../tasks/INT-02.01.md) | [INT-02](../07-integration.md#int-02) | Connect real ticket search, create and native actions | [INT-01.03](../tasks/INT-01.03.md), [OPS-04.02](../tasks/OPS-04.02.md), [OPS-05.03](../tasks/OPS-05.03.md) | PO | pending |
 | [INT-02.02](../tasks/INT-02.02.md) | [INT-02](../07-integration.md#int-02) | Connect private attachment upload and outcome recovery | [INT-02.01](../tasks/INT-02.01.md) | PO | pending |
 | [INT-02.03](../tasks/INT-02.03.md) | [INT-02](../07-integration.md#int-02) | Connect real SLA and recipient notification projections | [INT-02.02](../tasks/INT-02.02.md) | PO | pending |

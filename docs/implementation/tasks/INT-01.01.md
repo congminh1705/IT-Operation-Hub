@@ -78,14 +78,14 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-- Latest Report ID: INT-01.01/attempt-01.
-- Latest history entry: [Format version 1 report](../workflow/task-history.md#task-int-01-01-attempt-01).
+- Latest Report ID: INT-01.01/attempt-02.
+- Latest history entry: [PO acceptance](../workflow/task-history.md#task-int-01-01-attempt-02) and [implementation evidence](../workflow/task-history.md#task-int-01-01-attempt-01).
 - Delivered: real login, current user, scoped shell, secure return path, logout, expiry and revocation. Real mode rejects DEMO credentials and preview.
 - Key paths: `src/frontend/src/features/auth/real-session-store.ts`, `real-workspace-entry.tsx`, Next auth rewrite and isolated browser harness.
 - Checks: 6 real browser cases, 2 DEMO browser cases, 132 frontend tests, 60 PostgreSQL tests, build, types, lint and contract check passed. [Login screenshot](../evidence/INT-01.01/login-real.png).
-- Review: agent verified; PO acceptance pending. Local HTTP uses the intentional dev cookie; deployed HTTPS browser smoke and live credentials were not exercised.
+- Review: agent verified; PO accepted and confirmed done. Local HTTP uses the intentional dev cookie; deployed HTTPS browser smoke and live credentials were not exercised.
 - Delivery: `phase/c-integration`, stacked on approved backend commit `d1f1074`; no Parent PR yet. See history for the delivery receipt.
-- Next: INT-01.02 after PO accepts this leaf. INT-01.03 owns the wider query and error lifecycle coverage.
+- Next: INT-01.02 is eligible. INT-01.03 owns the wider query and error lifecycle coverage.
 
 > **Semantic UI states:** Follow the mandatory state-color mapping in [approved format](../../design/approved-format.md): active blue, ready/done green, waiting amber, blocked/error/overdue rose, locked/disabled gray. Use business enums and visible labels; capture task-owned evidence against the current final HTML.
 
