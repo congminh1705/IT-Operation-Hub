@@ -13,6 +13,7 @@ def create_database_engine(url: str | URL) -> Engine:
     return create_engine(
         parsed.set(drivername="postgresql+psycopg"),
         pool_pre_ping=True,
+        hide_parameters=True,
         connect_args={"connect_timeout": 3},
     )
 

@@ -116,6 +116,8 @@ These are group/epic summaries. Each heading names the group goal. Implementatio
 
 **Scope:** Verified Admin provisioning and secure account result/handover under D-29.
 
+**PO-approved acceptance basis (2026-11-28):** Before real users exist, synthetic authorization inputs with real UI/API/PostgreSQL effects satisfy this development Parent acceptance. Credential secrecy and restricted first login/rotation are verified; enterprise handover itself is deferred until rollout. Complete requester-ticket/verification/handover journey remains QA-04.01. This is not production-readiness acceptance. [Closure evidence](workflow/task-history.md#parent-fnd-06-closure-2026-11-28).
+
 **Trace:** US05; AC05; D-29.
 
 **Completion criteria**

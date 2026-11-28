@@ -127,3 +127,32 @@ are kept out of the idempotency ledger and audit.
 Restricted temporary sessions issued before revision 0008 lack the consumed
 verifier. An authorized operator must replace the temporary credential through
 the approved recovery process before that user can complete rotation.
+
+## Verified account provisioning (FND-06.01)
+
+POST /api/v1/users requires an active Admin session, an allowed Origin,
+session CSRF, Idempotency-Key, an active department and an existing
+server-recorded verification_id. Links to a ticket or approval supplied
+by a client do not create verification. This leaf supplies no public
+writer for verification records. The eventual trusted producer must
+bind the verified source to the normalized email, department and role.
+Until it is integrated, the live path denies requests without evidence.
+
+Default role is REQUESTER. Initial setup evidence is limited to initial
+Requester accounts; first-Admin setup remains the authorized CLI. IT roles
+require separately recorded approval. Use ITOH_PASSWORD_BLOCKLIST as for
+password rotation. The create transaction stores an Argon2id verifier and
+24-hour expiry, consumes the evidence and writes a redacted audit record.
+Nothing sends email or hands over a password. The response is the scoped
+account view. The idempotency digest excludes the password; replay checks
+the still-valid temporary verifier. Real approval authority and credential
+handover remain operational decisions and integration work.
+
+The FND-06.02 response returns an allowlisted account projection only.
+Validation errors do not echo submitted values. Audit records carry safe
+verification and optional approval references, with no credential or
+personnel text, and commit atomically with account creation. The backend suppresses SQLAlchemy parameter
+logging. Staff hand over
+initial credentials through the separately approved enterprise channel;
+ticket comments, notifications and automated email do not perform
+credential handover. INT-01 will wire the existing secure Admin form.

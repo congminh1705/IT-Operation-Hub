@@ -899,7 +899,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserView"
+                  "$ref": "#/components/schemas/ProvisionedAccountView"
                 }
               }
             }
@@ -12208,19 +12208,27 @@
               "TECHNICIAN",
               "IT_MANAGER",
               "ADMIN"
-            ]
+            ],
+            "default": "REQUESTER"
           },
           "initial_password": {
             "type": "string",
-            "writeOnly": true
+            "writeOnly": true,
+            "minLength": 15,
+            "maxLength": 128
+          },
+          "verification_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Reference to trusted server-recorded D-29 or initial setup verification. A client-supplied identifier is never approval."
           }
         },
         "required": [
           "email",
           "display_name",
-          "role",
           "initial_password",
-          "department_id"
+          "department_id",
+          "verification_id"
         ],
         "additionalProperties": false
       },
@@ -15403,6 +15411,48 @@
           "total"
         ],
         "additionalProperties": false
+      },
+      "ProvisionedAccountView": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "REQUESTER",
+              "TECHNICIAN",
+              "IT_MANAGER",
+              "ADMIN"
+            ]
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "display_name",
+          "role",
+          "active",
+          "version"
+        ],
+        "additionalProperties": false,
+        "description": "Admin provisioning result. Contains no verifier, temporary password, handover instructions or approval metadata."
       }
     }
   },
