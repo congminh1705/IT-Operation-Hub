@@ -13576,6 +13576,6 @@ PO approved publishing this documentation update to main. Parent branches use `p
 - PO reviews/merges FND-09 PR. Then prepare FND-10 on verified merged main.
 
 
-### PR language convention - 2026-11-28
+### PR language and reporting convention - 2026-11-28
 
-PO requested English PR titles and Vietnamese descriptions. Updated workflow and both prompt blocks, plus current context. PR #35 now uses `feat(tickets): Phase B | FND-09 | Create tickets with validated intake and SLA snapshots`; the detailed Vietnamese body is retained. Documentation checks only; no application tests required. This convention applies to subsequent Parent PRs.
+PR titles must be in English with format `<type>(<scope>): Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. PR descriptions, including headings, must be in Vietnamese. Preserve commands, identifiers and paths. Explain functional behavior before task IDs. Report actual checks, evidence, PO acceptance and remaining integration work. Verify rendered Markdown after publishing. PO approved publishing this documentation update. PR #35 was updated to match the convention. Documentation-only verification uses scoped diff and whitespace checks.
