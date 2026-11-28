@@ -82,3 +82,6 @@ A future request authorizes the selected implementation (or this decision-refine
 - Remaining: Service evidence is ready for PO review. Real browser, affected-work processing and full Parent closure await INT-01 and INT-03.
 - Commit/build: FND-17.03 push receipt pending.
 - Next: Joint review of all three FND-17 leaves. Full Parent closure depends on INT-01 and INT-03.
+
+
+PO previously accepted this service leaf. [Backend delivery](../workflow/task-history.md#fnd-17-backend-delivery). Parent awaits INT-03.

@@ -1,9 +1,12 @@
+from collections.abc import Mapping
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime, timedelta
 from threading import Barrier
+from typing import cast
 from uuid import UUID, uuid4
 
 from fastapi.testclient import TestClient
+from httpx import Response
 from sqlalchemy import func, select
 from test_organization import ORIGIN, SETTINGS, actor
 from test_ticket_intake import prepare_catalog
@@ -17,9 +20,14 @@ from app.modules.auth.service import AuthService, digest
 from app.modules.organization.models import TeamMember
 
 
-def patch(client, headers, url, body):
-    return client.patch(
-        url, json=body, headers={**headers, "Idempotency-Key": str(uuid4())}
+def patch(
+    client: TestClient, headers: dict[str, str], url: str, body: Mapping[str, object]
+) -> Response:
+    return cast(
+        Response,
+        client.patch(
+            url, json=dict(body), headers={**headers, "Idempotency-Key": str(uuid4())}
+        ),
     )
 
 
@@ -128,7 +136,7 @@ def test_concurrent_admin_lockout_preserves_last_active_admin(
     participants = [(client, *actor(database, client, "ADMIN")) for client in clients]
     barrier = Barrier(2, timeout=10)
 
-    def compete(data):
+    def compete(data: tuple[TestClient, UUID, dict[str, str]]) -> Response:
         client, subject, headers = data
         barrier.wait()
         return patch(

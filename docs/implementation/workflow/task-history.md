@@ -13838,3 +13838,38 @@ Task cards, context, board, registry and history reflect the scoped handoff.
 
 #### 10. Next step
 PO reviews and merges before FND-17 delivery.
+
+
+<a id="fnd-17-backend-delivery"></a>
+
+### FND-17 backend delivery (2026-11-28)
+
+#### 1. Metadata
+Format version: 1. Owner: PO. Phase B. Three leaves done. Parent EPIC_IN_PROGRESS.
+
+#### 2. Delivered scope
+Immediate session revocation on access changes, transactional reviewed handover, emergency suspension and team retirement with intake replacement.
+
+#### 3. Files
+organization/access.py, containment.py, handover.py and http.py, migration 0024, OpenAPI and access/retirement tests.
+
+#### 4. Acceptance
+PO previously accepted service leaves. INT-01 is done. INT-03 remains pending.
+
+#### 5. Checks
+Scoped worktree .fnd17-pr. 60 PostgreSQL tests passed. Initial Mypy reported test annotations. Mypy passed on 67 files after correction. Ruff and 7 targeted tests including runtime OpenAPI passed after correction. Frontend 130 unit tests, ESLint, typecheck and build passed. Browser with real API not run. Existing Starlette/httpx deprecation warning.
+
+#### 6. Review
+Agent checked scoped delivery. Service acceptance predates this PR.
+
+#### 7. Remaining work
+INT-03 integration and migration deployment.
+
+#### 8. Evidence
+phase-b/fnd-17-access-handover from main 7016de8. Child commits a6f3170, c56ecad and 5b351e4.
+
+#### 9. Records
+Task cards, board, registry, current context and history updated for scoped delivery.
+
+#### 10. Next step
+PO reviews and merges. FND-18 audit search remains the next requested foundation Parent.

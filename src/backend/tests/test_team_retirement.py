@@ -1,8 +1,10 @@
 from concurrent.futures import ThreadPoolExecutor
 from threading import Barrier
+from typing import Any
 from uuid import UUID, uuid4
 
 from fastapi.testclient import TestClient
+from httpx import Response
 from sqlalchemy import select
 from test_access_lifecycle import new_session, patch
 from test_manual_work import TASKS, manual_input
@@ -69,7 +71,7 @@ def test_intake_retirement_transfers_open_work_and_serializes_membership(
     scope = f"/api/v1/teams/{source}"
     preview = admin.get(scope + "/handover").json()
     assert {item["id"] for item in preview["items"]} == {str(ticket_id), task["id"]}
-    payload = {
+    payload: dict[str, Any] = {
         "expectedVersion": 1,
         "active": False,
         "reason": "Review intake team retirement",
@@ -100,11 +102,11 @@ def test_intake_retirement_transfers_open_work_and_serializes_membership(
     )
     barrier = Barrier(2, timeout=10)
 
-    def retire():
+    def retire() -> Response:
         barrier.wait()
         return patch(admin, admin_headers, scope, payload)
 
-    def add_member():
+    def add_member() -> Response:
         barrier.wait()
         return command(
             rival,

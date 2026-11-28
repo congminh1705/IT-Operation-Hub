@@ -82,3 +82,6 @@ A future request authorizes the selected implementation (or this decision-refine
 - Remaining: Handover for assigned active work is FND-17.02. Team retirement is FND-17.03. Real browser acceptance remains with INT-01.
 - Commit/build: FND-17.01 push receipt pending.
 - Next: Joint PO review of FND-17.01 through FND-17.03.
+
+
+PO previously accepted this service leaf. [Backend delivery](../workflow/task-history.md#fnd-17-backend-delivery). Parent awaits INT-03.
