@@ -174,3 +174,5 @@ authority: derived
 ### PR language and reporting convention - 2026-11-28
 
 PR titles must be in English with format `<type>(<scope>): Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. PR descriptions, including headings, must be in Vietnamese. Preserve commands, identifiers and paths. Explain functional behavior before task IDs. Report actual checks, evidence, PO acceptance and remaining integration work. Verify rendered Markdown after publishing. PO approved publishing this documentation update. PR #35 was updated to match the convention. Documentation-only verification uses scoped diff and whitespace checks.
+
+Git delivery 2026-11-29: [PR #45](https://github.com/congminh1705/IT-Operation-Hub/pull/45) open, phase-b/fnd-18-audit-search -> main. Title and Vietnamese report verified through GitHub API. Service leaves remain review; Parent awaits INT-06.

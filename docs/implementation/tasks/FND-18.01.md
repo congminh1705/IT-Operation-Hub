@@ -92,3 +92,5 @@ Keep sections 1-5 unchanged unless a justified authorized refinement is recorded
 [Implementation review](../workflow/task-history.md#fnd-18-implementation-review). Code and local checks are ready for PO review. Structured reason implementation is ready for PO review. INT-06 browser verification has not run.
 
 [Latest verification and limitations](../workflow/task-history.md#fnd-18-structured-reason-review).
+
+Git delivery 2026-11-29: [PR #45](https://github.com/congminh1705/IT-Operation-Hub/pull/45) open, phase-b/fnd-18-audit-search -> main. Title and Vietnamese report verified through GitHub API. Service leaves remain review; Parent awaits INT-06.
