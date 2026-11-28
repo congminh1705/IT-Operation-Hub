@@ -1,12 +1,16 @@
+from collections.abc import Mapping
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime, timedelta
 from threading import Barrier
+from typing import Never, cast
 from uuid import UUID, uuid4
 
 import pytest
 from fastapi.testclient import TestClient
+from httpx import Response
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import Session
 from test_organization import ORIGIN, SETTINGS, actor
 from test_ticket_intake import prepare_catalog
 from test_ticket_lifecycle import command
@@ -32,11 +36,19 @@ from app.modules.workforce.skills import (
 URL = "/api/v1/workforce"
 
 
-def verify(client, headers, subject, payload):
-    return client.patch(
-        f"{URL}/{subject}",
-        json=payload,
-        headers={**headers, "Idempotency-Key": str(uuid4())},
+def verify(
+    client: TestClient,
+    headers: dict[str, str],
+    subject: UUID,
+    payload: Mapping[str, object],
+) -> Response:
+    return cast(
+        Response,
+        client.patch(
+            f"{URL}/{subject}",
+            json=dict(payload),
+            headers={**headers, "Idempotency-Key": str(uuid4())},
+        ),
     )
 
 
@@ -201,7 +213,7 @@ def test_skill_changes_are_atomic_and_event_payload_is_minimal(
     }
     ready = Barrier(2, timeout=10)
 
-    def compete(participant):
+    def compete(participant: tuple[TestClient, dict[str, str]]) -> Response:
         client, headers = participant
         ready.wait()
         return verify(client, headers, subject, shared)
@@ -225,7 +237,7 @@ def test_skill_changes_are_atomic_and_event_payload_is_minimal(
     }
     headers = {**first_headers, "Idempotency-Key": "atomic-skill-revoke"}
 
-    def fail(db, **kwargs):
+    def fail(db: Session, **kwargs: object) -> Never:
         db.flush()
         raise SQLAlchemyError("Synthetic event failure")
 

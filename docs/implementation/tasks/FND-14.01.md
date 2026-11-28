@@ -82,3 +82,6 @@ A future request authorizes the selected implementation (or this decision-refine
 - Remaining: No production catalog seeded. Required-skill persistence has no public task mutation until the task aggregate is implemented at FND-16. Scoped Technician teammate lookup is tied to an authorized current ticket team. Browser wiring belongs to INT-03.
 - Commit/build: FND-14.01 push receipt pending.
 - Next: Joint review of the two FND-14 leaves after sequential verification.
+
+
+PO previously accepted this service leaf. [Backend delivery report](../workflow/task-history.md#fnd-14-backend-delivery). Parent awaits INT-03.

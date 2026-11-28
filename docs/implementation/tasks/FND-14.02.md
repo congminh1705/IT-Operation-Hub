@@ -82,3 +82,6 @@ A future request authorizes the selected implementation (or this decision-refine
 - Remaining: Real browser and actual affected-work evaluation are later gates. No personnel data, evidence reference or reason text is emitted in the event payload.
 - Commit/build: FND-14.02 push receipt pending.
 - Next: Joint review of the two FND-14 leaves after sequential verification.
+
+
+PO previously accepted this service leaf. [Backend delivery report](../workflow/task-history.md#fnd-14-backend-delivery). Parent awaits INT-03.

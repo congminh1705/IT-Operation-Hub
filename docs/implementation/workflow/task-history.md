@@ -13733,3 +13733,38 @@ Updated task cards, board, parent registry and current context.
 
 #### 10. Next step
 PO reviews and merges the backend PR. This is the final Parent in the approved FND-09 through FND-13 early backend delivery batch.
+
+
+<a id="fnd-14-backend-delivery"></a>
+
+### FND-14 backend delivery (2026-11-28)
+
+#### 1. Report metadata
+Format version: 1. Phase B. Owner: PO. Both leaves done. Parent EPIC_IN_PROGRESS.
+
+#### 2. Delivered scope
+Skill catalog and scoped verification with evidence, reviewer and version. Skill modifications commit with redacted audit and skills.changed outbox records.
+
+#### 3. Main files
+workforce/models.py, workforce/skills.py, organization/http.py, migrations 0017 and 0018, workforce contract and tests.
+
+#### 4. Acceptance
+Both service tasks previously accepted by PO. INT-03 still owns integration acceptance.
+
+#### 5. Verification
+On .fnd14-pr, PostgreSQL pytest produced 49 passes and one existing Starlette/httpx deprecation warning. Ruff passed. Initial Mypy reported 11 errors in test fixture annotations. Corrected the test helpers, then Mypy passed on 51 files and pytest passed again. Frontend 130 unit tests, lint, typecheck and production build passed. Real browser integration not run.
+
+#### 6. Review
+Agent verified the delivery branch. Prior PO acceptance applies to service leaves.
+
+#### 7. Remaining work
+INT-03 and production rollout remain open.
+
+#### 8. Evidence
+Branch phase-b/fnd-14-workforce-skills from main c12a7c6. Implementation 9647e2c and 091d996.
+
+#### 9. Records
+Task cards, board, registry, current context, workflow and history reflect early backend delivery.
+
+#### 10. Next step
+PO reviews and merges FND-14. Subsequent Parent delivery follows separately.
