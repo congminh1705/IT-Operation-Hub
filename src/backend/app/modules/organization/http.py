@@ -45,12 +45,18 @@ from app.modules.sla.policy import (
     policy_revision,
     snapshot_policy,
 )
+from app.modules.tickets.assignment import (
+    TicketAssignment,
+    TicketCommandRejected,
+    assign_ticket,
+)
 from app.modules.tickets.categories import TicketCategory
 from app.modules.tickets.intake import (
     IntakeRejected,
     TicketCreate,
     ticket_create_schema,
 )
+from app.modules.tickets.lifecycle import TicketTransition, transition_ticket
 from app.modules.tickets.models import Ticket
 from app.modules.tickets.read import (
     ListScope,
@@ -271,7 +277,7 @@ def organization_router(
                 status_code=status,
                 headers={"Cache-Control": "no-store"},
             )
-        except (Rejected, IntakeRejected) as exc:
+        except (Rejected, IntakeRejected, TicketCommandRejected) as exc:
             return error_response(exc.status, exc.code)
         except (IntegrityError, IdempotencyConflict):
             return error_response(409, "CONFLICT")
@@ -478,6 +484,59 @@ def organization_router(
             return projection
 
         return query(request, read, admin=False)
+
+    def project_ticket_command(
+        request: Request, db: Session, result: CommandResult
+    ) -> TicketPublic | TicketInternal:
+        current = authorize(db, request, write=True)
+        if current.role not in ("IT_MANAGER", "ADMIN", "TECHNICIAN"):
+            raise Rejected(403, "FORBIDDEN")
+        projection = get_ticket(db, TicketAccess.resolve(db, current), result.id)
+        if not isinstance(projection, TicketInternal):
+            raise Rejected(404, "NOT_FOUND")
+        return projection
+
+    @router.post(
+        "/tickets/{id}/assignment",
+        operation_id="assignTicket",
+        response_model=TicketPublic | TicketInternal,
+        tags=["Tickets"],
+    )
+    def ticket_assignment(
+        id: UUID, request: Request, body: TicketAssignment
+    ) -> Response:
+        return change(
+            request,
+            "ticket.assign",
+            {"id": str(id), **body.model_dump(mode="json")},
+            lambda db, account: assign_ticket(
+                db, account, id, body, configured().clock
+            ),
+            lambda db, result: project_ticket_command(request, db, result),
+            status=200,
+            admin=False,
+        )
+
+    @router.post(
+        "/tickets/{id}/transitions",
+        operation_id="transitionTicket",
+        response_model=TicketPublic | TicketInternal,
+        tags=["Tickets"],
+    )
+    def ticket_transition(
+        id: UUID, request: Request, body: TicketTransition
+    ) -> Response:
+        return change(
+            request,
+            "ticket.transition",
+            {"id": str(id), **body.model_dump(mode="json")},
+            lambda db, account: transition_ticket(
+                db, account, id, body, configured().clock
+            ),
+            lambda db, result: project_ticket_command(request, db, result),
+            status=200,
+            admin=False,
+        )
 
     @router.post(
         "/tickets",

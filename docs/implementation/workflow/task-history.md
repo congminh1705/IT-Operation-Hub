@@ -13625,3 +13625,40 @@ PR titles must be in English with format `<type>(<scope>): Phase <A|B|C|D> | <PA
 
 
 **FND-10 frontend verification follow-up:** Initial typecheck failed because the test expected assignee_id from FND-11. Corrected the frontend contract assertion. On the PR worktree, pnpm test passed 130/130 across 23 files, typecheck and production build passed after the correction, and full lint passed before the test-only correction. Browser integration remains INT-02.
+
+
+<a id="fnd-11-backend-delivery"></a>
+
+### FND-11 backend delivery - 2026-11-28
+
+#### 1. Report metadata
+- Format version: 1
+- Owner: PO. Phase B. Both service tasks done. Parent EPIC_IN_PROGRESS.
+
+#### 2. Scope and delivered result
+- Management assigns or transfers tickets to eligible teams and assignees. Technicians can claim eligible tickets. Concurrent claims produce one winner. Authorized start preserves SLA facts.
+
+#### 3. Changed files and key symbols
+- tickets/assignment.py, tickets/lifecycle.py, ticket read projection, HTTP routes, migration 0012 and generated frontend contract.
+
+#### 4. Acceptance results
+- Service leaves previously accepted by PO. Browser integration remains INT-02.
+
+#### 5. Verification results
+- Scoped worktree .fnd11-pr. Backend pytest -qx -p no:cacheprovider --tb=short: 40 pass on PostgreSQL with one existing dependency warning, including runtime OpenAPI. Ruff and Mypy pass. Initial Mypy errors in test helpers corrected.
+- Frontend pnpm test: 130 pass. pnpm lint, typecheck and build: pass. Browser with real API: not-run.
+
+#### 6. Review
+- Agent verified this branch. PO previously accepted the service leaves.
+
+#### 7. Remaining blockers and decisions
+- Early backend delivery authorized. INT-02 remains required for Parent closure.
+
+#### 8. Artifacts and evidence
+- phase-b/fnd-11-ticket-assignment from main 18d0e71. Implementation commits fe968d8 and 1304fc8.
+
+#### 9. Execution record synchronization
+- Task cards, registry, board, context and history reflect acceptance and remaining integration.
+
+#### 10. Next step
+- PO review and merge before preparing FND-12.

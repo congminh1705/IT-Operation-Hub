@@ -73,18 +73,15 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-**Planning state:** no implementation attempt/report, application test, review, commit or build evidence exists for this task. Application checks are **NOT RUN**. Replace this planning statement with actual evidence when work occurs.
+- Latest Report ID: FND-11.02/attempt-01.
+- Latest history entry: [Format version 1](../workflow/task-history.md#task-fnd-11-02-attempt-01).
+- Delivered: Implemented Technician self-claim and the New to Open and Open to In Progress transitions. PostgreSQL serializes concurrent claims. Commands recheck current team, assignee, state and version and preserve initial SLA facts.
+- Changed paths: `tickets/assignment.py`, `tickets/lifecycle.py`, `organization/http.py`, `tickets/service.py`, `docs/api/openapi.json`, `tests/test_ticket_assignment.py`
+- Checks: 37 backend tests on PostgreSQL and Ruff/mypy passed.
+- Review: Agent verified. Joint PO review pending.
+- Remaining: INT-02 owns real browser flow and outbox delivery. Other transitions are assigned to later leaves. Runtime/draft OpenAPI reconciliation remains open from FND-10 and was not rerun in this task.
+- Commit/build: FND-11.02 push receipt pending.
+- Next: Joint review of the two FND-11 leaves after sequential verification.
 
-**Report contract:** after every actual attempt or session handoff, append a report to [task history](../workflow/task-history.md#reports) using [Format version 1](../workflow/task-history.md#entry-format), preserving its ten subsections and tables. Apply the [report validation checklist](../workflow/task-history.md#report-validation-before-handoff), then update this section with the latest report and current summary. A report may end in blocked/review/in-progress; it does not imply DONE.
 
-- Latest Report ID: none; no implementation attempt yet.
-- Latest history entry: none; add the exact existing report anchor after actual work.
-- Delivered result / incomplete scope:
-- Actual changed paths / key symbols:
-- Acceptance and check summary: pass/fail/not-run; link full expected/actual results and exact commands in the report.
-- Review type / findings / resolution:
-- Remaining blockers / decisions / defects:
-- Commit/build if available:
-- Next eligible task / resume step:
-
-Keep sections 1-5 unchanged unless a justified authorized refinement is recorded. Update this handoff after every attempt, including unfinished/blocked work; retain earlier attempt reports in history. Synchronize the execution-board state/owner and current-context latest summary/history link. Do not duplicate report bodies in the board, invent evidence or mark unrelated parent/system gates passed.
+[Verified backend delivery](../workflow/task-history.md#fnd-11-backend-delivery). Service leaf accepted by PO. Parent awaits INT-02.

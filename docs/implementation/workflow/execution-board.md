@@ -129,8 +129,8 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FND-09.02](../tasks/FND-09.02.md) | [FND-09](../01-foundation.md#fnd-09) | Persist ticket, SLA snapshot and events atomically | [FND-09.01](../tasks/FND-09.01.md) | PO | done |
 | [FND-10.01](../tasks/FND-10.01.md) | [FND-10](../01-foundation.md#fnd-10) | Implement scoped ticket search and count query | [FND-09.02](../tasks/FND-09.02.md) | PO | done |
 | [FND-10.02](../tasks/FND-10.02.md) | [FND-10](../01-foundation.md#fnd-10) | Implement authorized ticket detail projections | [FND-10.01](../tasks/FND-10.01.md) | PO | done |
-| [FND-11.01](../tasks/FND-11.01.md) | [FND-11](../01-foundation.md#fnd-11) | Implement eligible assignment and team transfer | [FND-10.02](../tasks/FND-10.02.md) | PO | pending |
-| [FND-11.02](../tasks/FND-11.02.md) | [FND-11](../01-foundation.md#fnd-11) | Implement concurrent self-claim and accept-start commands | [FND-11.01](../tasks/FND-11.01.md) | PO | pending |
+| [FND-11.01](../tasks/FND-11.01.md) | [FND-11](../01-foundation.md#fnd-11) | Implement eligible assignment and team transfer | [FND-10.02](../tasks/FND-10.02.md) | PO | done |
+| [FND-11.02](../tasks/FND-11.02.md) | [FND-11](../01-foundation.md#fnd-11) | Implement concurrent self-claim and accept-start commands | [FND-11.01](../tasks/FND-11.01.md) | PO | done |
 | [FND-12.01](../tasks/FND-12.01.md) | [FND-12](../01-foundation.md#fnd-12) | Implement audience-separated comment and note commands | [FND-11.02](../tasks/FND-11.02.md) | PO | pending |
 | [FND-12.02](../tasks/FND-12.02.md) | [FND-12](../01-foundation.md#fnd-12) | Implement atomic Pending question and requester resume | [FND-12.01](../tasks/FND-12.01.md) | PO | pending |
 | [FND-12.03](../tasks/FND-12.03.md) | [FND-12](../01-foundation.md#fnd-12) | Implement resolution and requester closure | [FND-12.02](../tasks/FND-12.02.md) | PO | pending |

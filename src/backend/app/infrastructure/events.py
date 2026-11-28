@@ -30,6 +30,10 @@ class SafeFacts:
     status: StrEnum | None = None
     verification_id: UUID | None = None
     approval_id: UUID | None = None
+    team_id: UUID | None = None
+    previous_team_id: UUID | None = None
+    previous_assignee_id: UUID | None = None
+    reason_provided: bool | None = None
 
     def project(self) -> dict[str, Scalar]:
         result: dict[str, Scalar] = {
@@ -44,6 +48,15 @@ class SafeFacts:
             result["verification_id"] = str(self.verification_id)
         if self.approval_id is not None:
             result["approval_id"] = str(self.approval_id)
+        if self.team_id is not None:
+            result["team_id"] = str(self.team_id)
+        if self.previous_team_id is not None:
+            result["previous_team_id"] = str(self.previous_team_id)
+            result["previous_assignee_id"] = (
+                str(self.previous_assignee_id) if self.previous_assignee_id else None
+            )
+        if self.reason_provided is not None:
+            result["reason_provided"] = self.reason_provided
         return result
 
 
