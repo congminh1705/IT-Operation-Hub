@@ -28,12 +28,15 @@ class SafeFacts:
     version: int | None = None
     assignee_id: UUID | None = None
     status: StrEnum | None = None
+    previous_status: StrEnum | None = None
     verification_id: UUID | None = None
     approval_id: UUID | None = None
     team_id: UUID | None = None
     previous_team_id: UUID | None = None
     previous_assignee_id: UUID | None = None
     reason_provided: bool | None = None
+    priority: str | None = None
+    previous_priority: str | None = None
 
     def project(self) -> dict[str, Scalar]:
         result: dict[str, Scalar] = {
@@ -57,6 +60,12 @@ class SafeFacts:
             )
         if self.reason_provided is not None:
             result["reason_provided"] = self.reason_provided
+        if self.priority is not None:
+            result["priority"] = self.priority
+        if self.previous_priority is not None:
+            result["previous_priority"] = self.previous_priority
+        if self.previous_status is not None:
+            result["previous_status"] = self.previous_status.value
         return result
 
 

@@ -13698,3 +13698,38 @@ PR titles must be in English with format `<type>(<scope>): Phase <A|B|C|D> | <PA
 
 #### 10. Next step
 - Review and merge FND-12, then prepare FND-13 against verified main.
+
+
+<a id="fnd-13-backend-delivery"></a>
+
+### FND-13 backend delivery (2026-11-28)
+
+#### 1. Report metadata
+Format version: 1. Phase B. Owner: PO. Both service leaves done. Parent EPIC_IN_PROGRESS.
+
+#### 2. Delivered scope
+Management priority changes preserve original SLA policy, consumed time and recorded breaches. Ticket timeline applies audience scope before paging.
+
+#### 3. Main files
+tickets/priority.py, tickets/timeline.py, organization/http.py, migrations 0015/0016, OpenAPI and backend tests.
+
+#### 4. Acceptance
+PO accepted both service leaves previously. INT-02 still owns browser integration.
+
+#### 5. Verification
+On .fnd13-pr, PostgreSQL pytest: 47 pass including runtime OpenAPI. Initial database setup error recovered by starting local Compose. Ruff and Mypy pass after adding test-helper annotations. Frontend install from lockfile, 130 unit tests, ESLint, typecheck and build passed. Browser integration not-run.
+
+#### 6. Review
+Agent checked the delivery branch. PO acceptance applies to backend leaves.
+
+#### 7. Remaining work
+INT-02 integration acceptance and production rollout remain open.
+
+#### 8. Evidence
+phase-b/fnd-13-priority-timeline from main 024d023. Child commits a708f60 and c2212d0.
+
+#### 9. Records
+Updated task cards, board, parent registry and current context.
+
+#### 10. Next step
+PO reviews and merges the backend PR. This is the final Parent in the approved FND-09 through FND-13 early backend delivery batch.

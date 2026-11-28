@@ -20,7 +20,7 @@ from app.modules.auth.models import AuthSession
 from app.modules.auth.service import AuthService
 from app.modules.organization.models import TeamMember
 from app.modules.tickets import lifecycle
-from app.modules.tickets.models import Ticket, TicketTransitionReason
+from app.modules.tickets.models import Ticket, TicketChangeReason
 
 
 def command(
@@ -423,7 +423,7 @@ def test_reopen_preserves_usage_and_cancel_is_terminal(database: Database) -> No
         assert (
             row.resolution_used_seconds > snapshot[row.priority]["resolution_seconds"]
         )
-        reason = db.get(TicketTransitionReason, (ticket_id, 9))
+        reason = db.get(TicketChangeReason, (ticket_id, 9))
         assert reason is not None and reason.reason == "Reopened by management"
         events = list(
             db.scalars(select(DomainEvent).where(DomainEvent.aggregate_id == ticket_id))

@@ -53,9 +53,35 @@ class TicketComment(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
 
 
-class TicketTransitionReason(Base):
-    __tablename__ = "ticket_transition_reason"
+class TicketChangeReason(Base):
+    __tablename__ = "ticket_change_reason"
 
     ticket_id: Mapped[UUID] = mapped_column(ForeignKey("ticket.id"), primary_key=True)
     version: Mapped[int] = mapped_column(primary_key=True)
     reason: Mapped[str] = mapped_column(Text)
+
+
+class TicketPriorityAdjustment(Base):
+    __tablename__ = "ticket_priority_adjustment"
+
+    ticket_id: Mapped[UUID] = mapped_column(ForeignKey("ticket.id"), primary_key=True)
+    revision: Mapped[int] = mapped_column(primary_key=True)
+    ticket_version: Mapped[int]
+    previous_priority: Mapped[str] = mapped_column(String(2))
+    priority: Mapped[str] = mapped_column(String(2))
+    reason: Mapped[str] = mapped_column(Text)
+    response_elapsed_seconds: Mapped[int | None]
+    resolution_elapsed_seconds: Mapped[int]
+    occurred_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+
+
+class TicketSLABreach(Base):
+    __tablename__ = "ticket_sla_breach"
+
+    ticket_id: Mapped[UUID] = mapped_column(ForeignKey("ticket.id"), primary_key=True)
+    adjustment_revision: Mapped[int] = mapped_column(primary_key=True)
+    clock_type: Mapped[str] = mapped_column(String(10), primary_key=True)
+    priority: Mapped[str] = mapped_column(String(2))
+    elapsed_seconds: Mapped[int]
+    budget_seconds: Mapped[int]
+    detected_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
