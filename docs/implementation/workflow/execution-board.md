@@ -139,8 +139,8 @@ All non-frontend work descends from the Phase A exit FE-18.03. Task prerequisite
 | [FND-13.02](../tasks/FND-13.02.md) | [FND-13](../01-foundation.md#fnd-13) | Implement visibility-filtered event timeline query | [FND-13.01](../tasks/FND-13.01.md) | PO | done |
 | [FND-14.01](../tasks/FND-14.01.md) | [FND-14](../01-foundation.md#fnd-14) | Implement skill taxonomy and authorized verification | [FND-05.02](../tasks/FND-05.02.md), [PRE-02.03](../tasks/PRE-02.03.md) | PO | done |
 | [FND-14.02](../tasks/FND-14.02.md) | [FND-14](../01-foundation.md#fnd-14) | Publish auditable skill-change effects | [FND-14.01](../tasks/FND-14.01.md) | PO | done |
-| [FND-15.01](../tasks/FND-15.01.md) | [FND-15](../01-foundation.md#fnd-15) | Implement period calendar and absence union calculations | [FND-14.02](../tasks/FND-14.02.md) | PO | pending |
-| [FND-15.02](../tasks/FND-15.02.md) | [FND-15](../01-foundation.md#fnd-15) | Implement authorized calendar and absence mutations | [FND-15.01](../tasks/FND-15.01.md) | PO | pending |
+| [FND-15.01](../tasks/FND-15.01.md) | [FND-15](../01-foundation.md#fnd-15) | Implement period calendar and absence union calculations | [FND-14.02](../tasks/FND-14.02.md) | PO | done |
+| [FND-15.02](../tasks/FND-15.02.md) | [FND-15](../01-foundation.md#fnd-15) | Implement authorized calendar and absence mutations | [FND-15.01](../tasks/FND-15.01.md) | PO | done |
 | [FND-16.01](../tasks/FND-16.01.md) | [FND-16](../01-foundation.md#fnd-16) | Persist manual plan/task and enforce internal scope | [FND-11.02](../tasks/FND-11.02.md), [FND-15.02](../tasks/FND-15.02.md) | PO | pending |
 | [FND-16.02](../tasks/FND-16.02.md) | [FND-16](../01-foundation.md#fnd-16) | Implement atomic manual assignment and remaining allocations | [FND-16.01](../tasks/FND-16.01.md) | PO | pending |
 | [FND-16.03](../tasks/FND-16.03.md) | [FND-16](../01-foundation.md#fnd-16) | Implement guarded human task progress and completion | [FND-16.02](../tasks/FND-16.02.md) | PO | pending |

@@ -1,13 +1,16 @@
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime
 from threading import Barrier
+from typing import Never, cast
 from uuid import uuid4
 
 import pytest
 from fastapi.testclient import TestClient
+from httpx import Response
 from pydantic import ValidationError
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import Session
 from test_organization import ORIGIN, SETTINGS, actor
 from test_ticket_intake import prepare_catalog
 from test_ticket_reads import TICKETS, create_ticket
@@ -19,7 +22,7 @@ from app.modules.auth.models import Account
 from app.modules.auth.service import AuthService
 from app.modules.organization.models import Department
 from app.modules.workforce import availability
-from app.modules.workforce.calendar import DayInput, period_availability
+from app.modules.workforce.calendar import DayInput, Interval, period_availability
 from app.modules.workforce.models import (
     CalendarDay,
     CapacityPeriodLock,
@@ -82,7 +85,7 @@ def test_availability_uses_local_days_union_and_versioned_inputs(
                 local_date=day,
                 holiday=holiday,
                 budget_minutes=budget,
-                working_intervals=intervals,
+                working_intervals=[Interval.model_validate(item) for item in intervals],
             )
             db.add(
                 CalendarDay(
@@ -198,9 +201,16 @@ def test_calendar_commands_respect_scope_and_commit_atomic_effects(
         "days": [day1, day2],
     }
 
-    def patch(client, headers, target=url):
-        return client.patch(
-            target, json=payload, headers={**headers, "Idempotency-Key": str(uuid4())}
+    def patch(
+        client: TestClient, headers: dict[str, str], target: str = url
+    ) -> Response:
+        return cast(
+            Response,
+            client.patch(
+                target,
+                json=payload,
+                headers={**headers, "Idempotency-Key": str(uuid4())},
+            ),
         )
 
     assert tech.get(read).json()["days"][0]["status"] == "unknown"
@@ -214,7 +224,7 @@ def test_calendar_commands_respect_scope_and_commit_atomic_effects(
     ticket = create_ticket(requester, requester_headers, category, "Independent SLA")
     ready = Barrier(2, timeout=10)
 
-    def compete(actor_headers):
+    def compete(actor_headers: tuple[TestClient, dict[str, str]]) -> Response:
         client, headers = actor_headers
         ready.wait()
         return patch(client, headers)
@@ -235,7 +245,7 @@ def test_calendar_commands_respect_scope_and_commit_atomic_effects(
     }
     headers = {**manager_headers, "Idempotency-Key": "calendar-rollback"}
 
-    def fail(db, **kwargs):
+    def fail(db: Session, **kwargs: object) -> Never:
         db.flush()
         raise SQLAlchemyError("Synthetic outbox failure")
 

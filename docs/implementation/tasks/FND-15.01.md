@@ -82,3 +82,6 @@ A future request authorizes the selected implementation (or this decision-refine
 - Remaining: Operations calendars and holidays are not seeded; real browser wiring belongs to INT-03.
 - Commit/build: FND-15.01 push receipt pending.
 - Next: Joint review of FND-15.01 and FND-15.02.
+
+
+PO previously accepted this service leaf. [Backend delivery report](../workflow/task-history.md#fnd-15-backend-delivery). Parent awaits INT-03.
