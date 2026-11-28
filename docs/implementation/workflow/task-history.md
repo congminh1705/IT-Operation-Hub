@@ -13962,3 +13962,47 @@ Nhánh phase-b/fnd-18-audit-search. Commit bổ sung mang Task ID FND-18.01 và 
 PO nghiệm thu phần bổ sung FND-18. INT-06 tiếp nhận hợp đồng và nối giao diện khi đủ dependency. Chưa bắt đầu Parent khác.
 
 Git delivery 2026-11-29: [PR #45](https://github.com/congminh1705/IT-Operation-Hub/pull/45) open, phase-b/fnd-18-audit-search -> main. Title and Vietnamese report verified through GitHub API. Service leaves remain review; Parent awaits INT-06.
+
+<a id="fnd-18-service-acceptance"></a>
+
+### FND-18 — Chốt nghiệm thu dịch vụ (2026-11-29)
+
+#### 1. Metadata
+
+Format version: 1. Owner: PO. FND-18.01 và FND-18.02 done. Parent EPIC_IN_PROGRESS.
+
+#### 2. Kết quả
+
+Ghi nhận phản hồi của PO yêu cầu các task con hiển thị done là xác nhận nghiệm thu phần dịch vụ đã bàn giao.
+
+#### 3. File
+
+Hai task card, execution-board, current-context và task-history.
+
+#### 4. Nghiệm thu
+
+Phạm vi dịch vụ gồm audit theo quyền, tìm kiếm có giới hạn và lý do có cấu trúc đã được chốt. INT-06 tiếp tục sở hữu tích hợp giao diện.
+
+#### 5. Kiểm tra
+
+Thay đổi trạng thái tài liệu. Đối chiếu hai hàng execution-board và task card. Kế thừa bằng chứng 63 test backend, 130 test frontend và 6 test audit/OpenAPI chạy lại tại báo cáo trước. Không chạy lại test ứng dụng trong lượt cập nhật tài liệu.
+
+#### 6. Review
+
+PO chốt phần dịch vụ qua phản hồi về trạng thái task con. Agent đồng bộ trạng thái và mô tả PR.
+
+#### 7. Giới hạn
+
+INT-06 và kiểm thử trình duyệt nối API thực còn chờ. Parent chưa đủ điều kiện EPIC_DONE.
+
+#### 8. Git
+
+Nhánh phase-b/fnd-18-audit-search, cập nhật vào PR #45 hiện có.
+
+#### 9. Tài liệu
+
+Hai task con done trên board và task card. Current-context ghi nhận nghiệm thu dịch vụ, báo cáo cũ giữ bằng chứng lịch sử.
+
+#### 10. Tiếp theo
+
+PO review và merge PR #45. INT-06 thực hiện khi đủ dependency. Chưa triển khai Parent tiếp theo.

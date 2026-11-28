@@ -6,10 +6,10 @@ domain: development
 module: delivery
 tags: [tasks, planning, implementation]
 priority: 1
-status: planned
+status: done
 owner: PO
-approval: needs-review
-updated: 2026-11-09
+approval: approved
+updated: 2026-11-29
 authority: derived
 purpose: "Define one bounded deliverable with explicit context, dependencies, ownership and verification."
 ---
@@ -72,12 +72,12 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-**Execution state:** implementation and automated checks completed; PO acceptance pending. See the latest reason follow-up report below.
+**Execution state:** implementation and automated checks completed; PO accepted the service scope on 2026-11-29. See the latest reason follow-up report below.
 
 **Report contract:** after every actual attempt or session handoff, append a report to [task history](../workflow/task-history.md#reports) using [Format version 1](../workflow/task-history.md#entry-format), preserving its ten subsections and tables. Apply the [report validation checklist](../workflow/task-history.md#report-validation-before-handoff), then update this section with the latest report and current summary. A report may end in blocked/review/in-progress; it does not imply DONE.
 
-- Latest Report ID: fnd-18-structured-reason-review.
-- Latest history entry: [Structured reason review](../workflow/task-history.md#fnd-18-structured-reason-review).
+- Latest Report ID: fnd-18-service-acceptance.
+- Latest history entry: [Service acceptance](../workflow/task-history.md#fnd-18-service-acceptance).
 - Delivered result / incomplete scope:
 - Actual changed paths / key symbols:
 - Acceptance and check summary: pass/fail/not-run; link full expected/actual results and exact commands in the report.
@@ -89,8 +89,8 @@ A future request authorizes the selected implementation (or this decision-refine
 Keep sections 1-5 unchanged unless a justified authorized refinement is recorded. Update this handoff after every attempt, including unfinished/blocked work; retain earlier attempt reports in history. Synchronize the execution-board state/owner and current-context latest summary/history link. Do not duplicate report bodies in the board, invent evidence or mark unrelated parent/system gates passed.
 
 
-[Implementation review](../workflow/task-history.md#fnd-18-implementation-review). Code and local checks are ready for PO review. Structured reason implementation is ready for PO review. INT-06 browser verification has not run.
+[Implementation review](../workflow/task-history.md#fnd-18-implementation-review). PO accepted the implementation and structured reason follow-up on 2026-11-29. INT-06 browser verification has not run.
 
 [Latest verification and limitations](../workflow/task-history.md#fnd-18-structured-reason-review).
 
-Git delivery 2026-11-29: [PR #45](https://github.com/congminh1705/IT-Operation-Hub/pull/45) open, phase-b/fnd-18-audit-search -> main. Title and Vietnamese report verified through GitHub API. Service leaves remain review; Parent awaits INT-06.
+Git delivery 2026-11-29: [PR #45](https://github.com/congminh1705/IT-Operation-Hub/pull/45) open, phase-b/fnd-18-audit-search -> main. Title and Vietnamese report verified through GitHub API. Service leaves done following PO acceptance on 2026-11-29; Parent awaits INT-06.
