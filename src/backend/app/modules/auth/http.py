@@ -1,12 +1,15 @@
 from dataclasses import dataclass
 from hmac import compare_digest
-from typing import Literal
+from typing import Literal, cast
 from urllib.parse import urlsplit
 from uuid import UUID, uuid4
 
 from fastapi import APIRouter, Request, Response
+from fastapi.params import Depends as Dependency
 from fastapi.responses import JSONResponse
+from fastapi.security import APIKeyCookie
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
+from pydantic.json_schema import SkipJsonSchema
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from starlette.concurrency import run_in_threadpool
@@ -59,15 +62,23 @@ class AuthSettings:
 
 class LoginInput(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    email: str = Field(min_length=1, max_length=254)
-    password: str = Field(min_length=1, max_length=128, repr=False)
+    email: str = Field(
+        min_length=1, max_length=254, json_schema_extra={"format": "email"}
+    )
+    password: str = Field(
+        min_length=1, max_length=128, repr=False, json_schema_extra={"writeOnly": True}
+    )
 
 
 class PasswordChange(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
 
-    current_password: str = Field(min_length=1, max_length=128, repr=False)
-    new_password: str = Field(min_length=1, max_length=128, repr=False)
+    current_password: str = Field(
+        min_length=1, max_length=128, repr=False, json_schema_extra={"writeOnly": True}
+    )
+    new_password: str = Field(
+        min_length=1, max_length=128, repr=False, json_schema_extra={"writeOnly": True}
+    )
 
 
 class ProfileUpdate(BaseModel):
@@ -82,13 +93,18 @@ class ProfileRejected(Exception):
         self.status = status
 
 
+type UserRole = Literal["ADMIN", "IT_MANAGER", "TECHNICIAN", "REQUESTER"]
+
+
 class UserView(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     id: UUID
-    email: str
+    email: str = Field(json_schema_extra={"format": "email"})
     display_name: str
-    role: str
+    role: UserRole
     active: bool
-    version: int
+    version: int = Field(ge=1)
 
 
 def user_view(account: Account) -> UserView:
@@ -96,21 +112,25 @@ def user_view(account: Account) -> UserView:
         id=account.id,
         email=account.email,
         display_name=account.display_name,
-        role=account.role,
+        role=cast(UserRole, account.role),
         active=account.active,
         version=account.version,
     )
 
 
 class Csrf(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     csrf_token: str
 
 
 class Error(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     code: str
     message: str
     request_id: str
-    field_errors: dict[str, list[str]] | None = None
+    field_errors: dict[str, list[str]] | SkipJsonSchema[None] = None
 
 
 ERRORS = {
@@ -148,6 +168,32 @@ def failure(
     )
 
 
+def session_cookie_dependency(settings: AuthSettings) -> Dependency:
+    return Dependency(
+        APIKeyCookie(
+            name=settings.session_cookie, scheme_name="SessionCookie", auto_error=False
+        )
+    )
+
+
+CSRF_HEADER = {
+    "in": "header",
+    "name": "X-CSRF-Token",
+    "required": True,
+    "schema": {"type": "string"},
+}
+COMMAND_HEADERS = [
+    CSRF_HEADER,
+    {
+        "in": "header",
+        "name": "Idempotency-Key",
+        "required": True,
+        "schema": {"type": "string", "minLength": 1, "maxLength": 128},
+    },
+]
+SET_COOKIE = {"Set-Cookie": {"schema": {"type": "string"}}}
+
+
 def auth_router(service: AuthService | None, settings: AuthSettings) -> APIRouter:
     router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -167,6 +213,7 @@ def auth_router(service: AuthService | None, settings: AuthSettings) -> APIRoute
     @router.get(
         "/me",
         operation_id="getCurrentUser",
+        dependencies=[session_cookie_dependency(settings)],
         response_model=UserView,
         responses={401: {"model": Error}, 503: {"model": Error}},
     )
@@ -187,6 +234,7 @@ def auth_router(service: AuthService | None, settings: AuthSettings) -> APIRoute
     @router.patch(
         "/profile",
         operation_id="updateOwnProfile",
+        dependencies=[session_cookie_dependency(settings)],
         response_model=UserView,
         responses={status: {"model": Error} for status in (401, 403, 409, 422, 503)},
         openapi_extra={
@@ -196,15 +244,7 @@ def auth_router(service: AuthService | None, settings: AuthSettings) -> APIRoute
                     "application/json": {"schema": ProfileUpdate.model_json_schema()},
                 },
             },
-            "parameters": [
-                {
-                    "in": "header",
-                    "name": header,
-                    "required": True,
-                    "schema": {"type": "string"},
-                }
-                for header in ("X-CSRF-Token", "Idempotency-Key")
-            ],
+            "parameters": COMMAND_HEADERS,
         },
     )
     async def update_profile(request: Request) -> Response:
@@ -328,8 +368,12 @@ def auth_router(service: AuthService | None, settings: AuthSettings) -> APIRoute
     @router.post(
         "/password",
         operation_id="changeOwnPassword",
+        dependencies=[session_cookie_dependency(settings)],
         status_code=204,
-        responses={status: {"model": Error} for status in (401, 403, 422, 503)},
+        responses={
+            204: {"headers": SET_COOKIE},
+            **{status: {"model": Error} for status in (401, 403, 422, 503)},
+        },
         openapi_extra={
             "requestBody": {
                 "required": True,
@@ -337,15 +381,7 @@ def auth_router(service: AuthService | None, settings: AuthSettings) -> APIRoute
                     "application/json": {"schema": PasswordChange.model_json_schema()},
                 },
             },
-            "parameters": [
-                {
-                    "in": "header",
-                    "name": header,
-                    "required": True,
-                    "schema": {"type": "string"},
-                }
-                for header in ("X-CSRF-Token", "Idempotency-Key")
-            ],
+            "parameters": COMMAND_HEADERS,
         },
     )
     async def change_password(request: Request) -> Response:
@@ -410,8 +446,13 @@ def auth_router(service: AuthService | None, settings: AuthSettings) -> APIRoute
     @router.post(
         "/logout",
         operation_id="logout",
+        dependencies=[session_cookie_dependency(settings)],
         status_code=204,
-        responses={status: {"model": Error} for status in (401, 403, 503)},
+        responses={
+            204: {"headers": SET_COOKIE},
+            **{status: {"model": Error} for status in (401, 403, 503)},
+        },
+        openapi_extra={"parameters": [CSRF_HEADER]},
     )
     def logout(request: Request) -> Response:
         if service is None:
@@ -437,7 +478,12 @@ def auth_router(service: AuthService | None, settings: AuthSettings) -> APIRoute
         "/csrf",
         operation_id="getCsrf",
         response_model=Csrf,
-        responses={401: {"model": Error}, 503: {"model": Error}},
+        responses={
+            200: {"headers": SET_COOKIE},
+            401: {"model": Error},
+            422: {"model": Error},
+            503: {"model": Error},
+        },
     )
     def csrf(
         request: Request, response: Response, purpose: Literal["login"] | None = None
@@ -472,7 +518,15 @@ def auth_router(service: AuthService | None, settings: AuthSettings) -> APIRoute
         "/login",
         operation_id="login",
         response_model=UserView,
-        responses={status: {"model": Error} for status in ERRORS},
+        responses={
+            200: {"headers": SET_COOKIE},
+            403: {"model": Error, "headers": SET_COOKIE},
+            429: {
+                "model": Error,
+                "headers": {"Retry-After": {"schema": {"type": "integer"}}},
+            },
+            **{status: {"model": Error} for status in (401, 422, 503)},
+        },
         openapi_extra={
             "requestBody": {
                 "required": True,
@@ -480,14 +534,7 @@ def auth_router(service: AuthService | None, settings: AuthSettings) -> APIRoute
                     "application/json": {"schema": LoginInput.model_json_schema()}
                 },
             },
-            "parameters": [
-                {
-                    "in": "header",
-                    "name": "X-CSRF-Token",
-                    "required": True,
-                    "schema": {"type": "string"},
-                }
-            ],
+            "parameters": [CSRF_HEADER],
         },
     )
     async def login(request: Request) -> Response:

@@ -21,7 +21,13 @@ from app.infrastructure.commands import (
     run_idempotent,
 )
 from app.infrastructure.events import Actor, SafeFacts, Target, write_audit
-from app.modules.auth.http import AuthSettings, UserView, user_view
+from app.modules.auth.http import (
+    AuthSettings,
+    Error,
+    UserView,
+    session_cookie_dependency,
+    user_view,
+)
 from app.modules.auth.models import Account
 from app.modules.auth.service import (
     TEMPORARY_LIFETIME,
@@ -35,6 +41,7 @@ from app.modules.sla.policy import (
     PolicyRevision,
     PolicyUpdate,
     PolicyView,
+    Priority,
     policy_revision,
     snapshot_policy,
 )
@@ -45,6 +52,16 @@ from app.modules.tickets.intake import (
     ticket_create_schema,
 )
 from app.modules.tickets.models import Ticket
+from app.modules.tickets.read import (
+    ListScope,
+    Status,
+    TicketAccess,
+    TicketInternal,
+    TicketPage,
+    TicketSort,
+    get_ticket,
+    search_tickets,
+)
 from app.modules.tickets.service import TicketPublic, create_text_ticket, public_ticket
 from app.modules.users.provisioning import (
     ProvisionedAccountView,
@@ -409,6 +426,58 @@ def organization_router(
             project,
             status=201,
         )
+
+    @router.get(
+        "/tickets",
+        operation_id="listTickets",
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 422, 503)},
+        response_model=TicketPage,
+        tags=["Tickets"],
+    )
+    def list_tickets(
+        request: Request,
+        page: Annotated[int, Query(ge=1, le=1_000_000)] = 1,
+        page_size: Annotated[int, Query(ge=1, le=100)] = 20,
+        scope: ListScope | None = None,
+        status: Status | None = None,
+        priority: Priority | None = None,
+        q: Annotated[str | None, Query(max_length=180)] = None,
+        sort: TicketSort = "recent",
+    ) -> Response:
+        def read(db: Session, actor: Account) -> TicketPage:
+            if q is not None and chr(0) in q:
+                raise Rejected(422, "INVALID_SEARCH")
+            return search_tickets(
+                db,
+                TicketAccess.resolve(db, actor),
+                scope=scope,
+                status=status,
+                priority=priority,
+                q=q,
+                sort=sort,
+                page=page,
+                page_size=page_size,
+            )
+
+        return query(request, read, admin=False)
+
+    @router.get(
+        "/tickets/{id}",
+        operation_id="getTicket",
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 404, 422, 503)},
+        response_model=TicketPublic | TicketInternal,
+        tags=["Tickets"],
+    )
+    def ticket_detail(request: Request, id: UUID) -> Response:
+        def read(db: Session, actor: Account) -> TicketPublic | TicketInternal:
+            projection = get_ticket(db, TicketAccess.resolve(db, actor), id)
+            if projection is None:
+                raise Rejected(404, "NOT_FOUND")
+            return projection
+
+        return query(request, read, admin=False)
 
     @router.post(
         "/tickets",

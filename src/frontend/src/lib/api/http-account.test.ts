@@ -8,6 +8,7 @@ import type { ProfileUpdate, UserView } from "./types";
 const user = {
   id: "00000000-0000-4000-8000-000000000001",
   display_name: "Synthetic account",
+  email: "synthetic@example.invalid",
   role: "REQUESTER",
   active: true,
   version: 2,
@@ -26,7 +27,7 @@ function transport(...responses: Response[]) {
 }
 
 describe("account HTTP contract", () => {
-  it("sends the draft login operation with fresh CSRF, same-origin settings, and an explicit command key", async () => {
+  it("sends login with fresh CSRF and same-origin settings without a command key", async () => {
     const { gateway, fetcher } = transport(csrf(), Response.json(user));
     const input = {
       email: "synthetic@example.invalid",
@@ -56,7 +57,7 @@ describe("account HTTP contract", () => {
     const init = fetcher.mock.calls[1][1];
     const headers = new Headers(init?.headers);
     expect(headers.get("X-CSRF-Token")).toBe("synthetic-token");
-    expect(headers.get("Idempotency-Key")).toBe("test-login-1");
+    expect(headers.has("Idempotency-Key")).toBe(false);
     expect(headers.has("Cookie")).toBe(false);
     expect(headers.has("Origin")).toBe(false);
     expect(JSON.parse(String(init?.body))).toEqual({
@@ -223,10 +224,8 @@ describe("typed projection and query integration", () => {
       | "priority"
       | "requester_id"
       | "team_id"
-      | "assignee_id"
       | "version"
       | "sla"
-      | "public_progress_summary"
     >();
     expectTypeOf<
       Exclude<keyof TicketInternal, keyof WireTicketPublic>
@@ -235,9 +234,7 @@ describe("typed projection and query integration", () => {
     expectTypeOf<TicketPage<TicketInternal>>().not.toExtend<
       TicketPage<TicketPublic>
     >();
-    expectTypeOf<TicketPublic["assignee_id"]>().toEqualTypeOf<
-      string | null | undefined
-    >();
+    expectTypeOf<Extract<keyof TicketPublic, "assignee_id">>().toBeNever();
   });
 
   it("aborts old-scope reads, ignores late responses, and clears scoped cache on a current-session 401", async () => {

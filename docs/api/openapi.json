@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.1",
   "info": {
-    "title": "IT Operations Hub — Design API",
+    "title": "IT Operations Hub â€” Design API",
     "version": "0.1.0-design",
     "description": "Documentation-only target contract. No running API, code, generated client or approved deployment. D-40 open decisions remain. Synthetic DEMO examples only; never credentials or real personnel data."
   },
@@ -109,11 +109,15 @@
             "name": "purpose",
             "in": "query",
             "required": false,
-            "description": "Pass login to request a pre-session even when an authenticated session cookie is present.",
             "schema": {
-              "type": "string",
-              "enum": [
-                "login"
+              "anyOf": [
+                {
+                  "const": "login",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
               ]
             }
           }
@@ -130,69 +134,49 @@
             },
             "headers": {
               "Set-Cookie": {
-                "description": "Opaque pre-session/session cookie, HttpOnly, SameSite=Lax; Secure in production. Cookie name/TTL pending DTO/security review. Never record actual cookie in docs/log.",
                 "schema": {
                   "type": "string"
-                }
+                },
+                "description": "Opaque pre-session/session cookie, HttpOnly, SameSite=Lax; Secure in production. Cookie name/TTL pending DTO/security review. Never record actual cookie in docs/log."
               }
             }
           },
           "401": {
-            "description": "Missing, expired or revoked session cookie, or invalid login credentials as applicable.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "403": {
-            "description": "Function or CSRF/Origin denied.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Missing, expired or revoked session cookie, or invalid login credentials as applicable."
           },
           "422": {
-            "description": "Field/business validation failed; no partial effects.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Field/business validation failed; no partial effects."
           },
           "503": {
-            "description": "Dependency unavailable; no fabricated success.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Dependency unavailable; no fabricated success."
           }
         },
         "x-contract-id": "API01",
         "x-required-roles": [],
         "x-data-scope": "Pre-session or authenticated session; no domain data.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC01–04",
+        "x-source-use-cases": "UC01â€“04",
         "x-business-rules": "BR-01, NFR02/15"
       }
     },
@@ -208,9 +192,6 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/Csrf"
-          },
-          {
-            "$ref": "#/components/parameters/Idempotency"
           }
         ],
         "responses": {
@@ -225,62 +206,76 @@
             },
             "headers": {
               "Set-Cookie": {
-                "description": "Opaque pre-session/session cookie, HttpOnly, SameSite=Lax; Secure in production. Cookie name/TTL pending DTO/security review. Never record actual cookie in docs/log.",
                 "schema": {
                   "type": "string"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Missing, expired or revoked session cookie, or invalid login credentials as applicable.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+                },
+                "description": "Opaque pre-session/session cookie, HttpOnly, SameSite=Lax; Secure in production. Cookie name/TTL pending DTO/security review. Never record actual cookie in docs/log."
               }
             }
           },
           "403": {
-            "description": "Function or CSRF/Origin denied.",
+            "headers": {
+              "Set-Cookie": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "422": {
-            "description": "Field/business validation failed; no partial effects.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Function or CSRF/Origin denied."
           },
           "429": {
-            "description": "Bounded request/provider budget limit.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Bounded request/provider budget limit."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Missing, expired or revoked session cookie, or invalid login credentials as applicable."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Field/business validation failed; no partial effects."
           },
           "503": {
-            "description": "Dependency unavailable; no fabricated success.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Dependency unavailable; no fabricated success."
           }
         },
         "x-contract-id": "API01",
@@ -297,7 +292,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC01–04",
+        "x-source-use-cases": "UC01â€“04",
         "x-business-rules": "BR-01, NFR02/15"
       }
     },
@@ -321,77 +316,44 @@
         ],
         "responses": {
           "204": {
-            "description": "Committed successfully."
+            "description": "Committed successfully.",
+            "headers": {
+              "Set-Cookie": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Missing/expired/revoked session.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Missing/expired/revoked session."
           },
           "403": {
-            "description": "Function or CSRF/Origin denied.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "404": {
-            "description": "Not found or outside scope; identical safe response.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Field/business validation failed; no partial effects.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Function or CSRF/Origin denied."
           },
           "503": {
-            "description": "Dependency unavailable; no fabricated success.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Dependency unavailable; no fabricated success."
           }
         },
         "x-contract-id": "API01",
@@ -403,7 +365,7 @@
         ],
         "x-data-scope": "",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC01–04",
+        "x-source-use-cases": "UC01â€“04",
         "x-business-rules": "BR-01, NFR02/15"
       }
     },
@@ -420,7 +382,6 @@
             "SessionCookie": []
           }
         ],
-        "parameters": [],
         "responses": {
           "200": {
             "description": "Scoped response.",
@@ -434,56 +395,6 @@
           },
           "401": {
             "description": "Missing/expired/revoked session.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Function or CSRF/Origin denied.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found or outside scope; identical safe response.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Field/business validation failed; no partial effects.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
             "content": {
               "application/json": {
                 "schema": {
@@ -512,7 +423,7 @@
         ],
         "x-data-scope": "Current session owner only.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC01–04",
+        "x-source-use-cases": "UC01â€“04",
         "x-business-rules": "BR-01, NFR02/15"
       }
     },
@@ -534,7 +445,14 @@
             "$ref": "#/components/parameters/Csrf"
           },
           {
-            "$ref": "#/components/parameters/Idempotency"
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
           }
         ],
         "responses": {
@@ -549,74 +467,54 @@
             }
           },
           "401": {
-            "description": "Missing/expired/revoked session.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Missing/expired/revoked session."
           },
           "403": {
-            "description": "Function or CSRF/Origin denied.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "404": {
-            "description": "Not found or outside scope; identical safe response.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Function or CSRF/Origin denied."
           },
           "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry."
           },
           "422": {
-            "description": "Field/business validation failed; no partial effects.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Field/business validation failed; no partial effects."
           },
           "503": {
-            "description": "Dependency unavailable; no fabricated success.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Dependency unavailable; no fabricated success."
           }
         },
         "x-contract-id": "API01",
@@ -638,7 +536,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC01–04",
+        "x-source-use-cases": "UC01â€“04",
         "x-business-rules": "BR-01, NFR02/15"
       }
     },
@@ -660,82 +558,66 @@
             "$ref": "#/components/parameters/Csrf"
           },
           {
-            "$ref": "#/components/parameters/Idempotency"
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
           }
         ],
         "responses": {
           "204": {
-            "description": "Committed successfully."
+            "description": "Committed successfully.",
+            "headers": {
+              "Set-Cookie": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Missing/expired/revoked session.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Missing/expired/revoked session."
           },
           "403": {
-            "description": "Function or CSRF/Origin denied.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "404": {
-            "description": "Not found or outside scope; identical safe response.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Function or CSRF/Origin denied."
           },
           "422": {
-            "description": "Field/business validation failed; no partial effects.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Field/business validation failed; no partial effects."
           },
           "503": {
-            "description": "Dependency unavailable; no fabricated success.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Dependency unavailable; no fabricated success."
           }
         },
         "x-contract-id": "API01",
@@ -757,7 +639,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC01–04",
+        "x-source-use-cases": "UC01â€“04",
         "x-business-rules": "BR-01, NFR02/15"
       }
     },
@@ -870,7 +752,7 @@
         ],
         "x-data-scope": "Admin management list; no public employee directory.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "post": {
@@ -991,7 +873,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -1107,7 +989,7 @@
         ],
         "x-data-scope": "Admin management record.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "patch": {
@@ -1237,7 +1119,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -1359,7 +1241,7 @@
         ],
         "x-data-scope": "Admin management list; no public employee directory.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "post": {
@@ -1480,7 +1362,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -1596,7 +1478,7 @@
         ],
         "x-data-scope": "Admin management record.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "patch": {
@@ -1726,7 +1608,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -1839,7 +1721,7 @@
         ],
         "x-data-scope": "Admin management list; no public employee directory.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "post": {
@@ -1960,7 +1842,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -2076,7 +1958,7 @@
         ],
         "x-data-scope": "Admin management record.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "patch": {
@@ -2206,7 +2088,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -2319,7 +2201,7 @@
         ],
         "x-data-scope": "Admin management list; no public employee directory.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "post": {
@@ -2440,7 +2322,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -2556,7 +2438,7 @@
         ],
         "x-data-scope": "Admin management record.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "patch": {
@@ -2686,7 +2568,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -2808,7 +2690,7 @@
         ],
         "x-data-scope": "Admin management view; member lookup is a separate minimal projection.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       },
       "post": {
@@ -2938,7 +2820,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -3067,7 +2949,7 @@
         ],
         "x-data-scope": "Only permitted categories, intake teams and own department reference. No employee enumeration; allowlisted kind required.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC05–08",
+        "x-source-use-cases": "UC05â€“08",
         "x-business-rules": "BR-01/02/05; Admin-only mutations"
       }
     },
@@ -3078,7 +2960,7 @@
         "tags": [
           "Tickets"
         ],
-        "description": "R own; T active teams plus own public view; M/A organization. Scope before count. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "description": "R own; T active teams plus own public view; M/A organization. Scope before count.",
         "security": [
           {
             "SessionCookie": []
@@ -3086,37 +2968,119 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/Page"
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000000,
+              "minimum": 1,
+              "default": 1
+            }
           },
           {
-            "$ref": "#/components/parameters/PageSize"
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20
+            }
           },
           {
             "name": "scope",
             "in": "query",
+            "required": false,
             "schema": {
-              "type": "string",
-              "enum": [
-                "mine",
-                "work"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "mine",
+                    "work"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
               ]
-            },
-            "description": "Presentation filter only, intersect with backend authorized scope."
+            }
           },
           {
             "name": "status",
             "in": "query",
+            "required": false,
             "schema": {
-              "type": "string",
-              "enum": [
-                "New",
-                "Open",
-                "In Progress",
-                "Pending",
-                "Resolved",
-                "Closed",
-                "Cancelled"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "New",
+                    "Open",
+                    "In Progress",
+                    "Pending",
+                    "Resolved",
+                    "Closed",
+                    "Cancelled"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
               ]
+            }
+          },
+          {
+            "name": "priority",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "P1",
+                    "P2",
+                    "P3",
+                    "P4"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 180
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "recent",
+                "oldest",
+                "priority"
+              ],
+              "type": "string",
+              "default": "recent"
             }
           }
         ],
@@ -3126,80 +3090,40 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TicketViewPage"
+                  "$ref": "#/components/schemas/TicketListPage"
                 }
               }
             }
           },
           "401": {
-            "description": "Missing/expired/revoked session.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "403": {
-            "description": "Function or CSRF/Origin denied.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found or outside scope; identical safe response.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Missing/expired/revoked session."
           },
           "422": {
-            "description": "Field/business validation failed; no partial effects.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Field/business validation failed; no partial effects."
           },
           "503": {
-            "description": "Dependency unavailable; no fabricated success.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Dependency unavailable; no fabricated success."
           }
         },
         "x-contract-id": "API03",
@@ -3211,8 +3135,8 @@
         ],
         "x-data-scope": "R own; T active teams plus own public view; M/A organization. Scope before count.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC10–14, UC18–23",
-        "x-business-rules": "BR-02–05/08/09"
+        "x-source-use-cases": "UC10â€“14, UC18â€“23",
+        "x-business-rules": "BR-02â€“05/08/09"
       },
       "post": {
         "operationId": "createTicket",
@@ -3335,8 +3259,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC10–14, UC18–23",
-        "x-business-rules": "BR-02–05/08/09"
+        "x-source-use-cases": "UC10â€“14, UC18â€“23",
+        "x-business-rules": "BR-02â€“05/08/09"
       }
     },
     "/tickets/{id}": {
@@ -3346,7 +3270,7 @@
         "tags": [
           "Tickets"
         ],
-        "description": "Server projects public or scoped IT data; no workforce/approval/action data for requester. Design-draft, not implemented. Service checks current rights and state; browser cannot impersonate AI_COORDINATOR.",
+        "description": "Server projects public or scoped IT data; no workforce/approval/action data for requester.",
         "security": [
           {
             "SessionCookie": []
@@ -3375,74 +3299,44 @@
             }
           },
           "401": {
-            "description": "Missing/expired/revoked session.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "403": {
-            "description": "Function or CSRF/Origin denied.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Missing/expired/revoked session."
           },
           "404": {
-            "description": "Not found or outside scope; identical safe response.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "409": {
-            "description": "Version, digest, capacity, snapshot or assignment conflict; never blindly retry.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Not found or outside scope; identical safe response."
           },
           "422": {
-            "description": "Field/business validation failed; no partial effects.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
-          },
-          "429": {
-            "description": "Bounded request/provider budget limit.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            },
+            "description": "Field/business validation failed; no partial effects."
           },
           "503": {
-            "description": "Dependency unavailable; no fabricated success.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
               }
-            }
+            },
+            "description": "Dependency unavailable; no fabricated success."
           }
         },
         "x-contract-id": "API03",
@@ -3454,8 +3348,8 @@
         ],
         "x-data-scope": "Server projects public or scoped IT data; no workforce/approval/action data for requester.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC10–14, UC18–23",
-        "x-business-rules": "BR-02–05/08/09"
+        "x-source-use-cases": "UC10â€“14, UC18â€“23",
+        "x-business-rules": "BR-02â€“05/08/09"
       }
     },
     "/tickets/{id}/transitions": {
@@ -3589,8 +3483,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC10–14, UC18–23",
-        "x-business-rules": "BR-02–05/08/09"
+        "x-source-use-cases": "UC10â€“14, UC18â€“23",
+        "x-business-rules": "BR-02â€“05/08/09"
       }
     },
     "/tickets/{id}/assignment": {
@@ -3723,8 +3617,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC10–14, UC18–23",
-        "x-business-rules": "BR-02–05/08/09"
+        "x-source-use-cases": "UC10â€“14, UC18â€“23",
+        "x-business-rules": "BR-02â€“05/08/09"
       }
     },
     "/tickets/{id}/priority": {
@@ -3856,8 +3750,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC10–14, UC18–23",
-        "x-business-rules": "BR-02–05/08/09"
+        "x-source-use-cases": "UC10â€“14, UC18â€“23",
+        "x-business-rules": "BR-02â€“05/08/09"
       }
     },
     "/tickets/{id}/comments": {
@@ -3981,8 +3875,8 @@
         ],
         "x-data-scope": "Parent ticket scope and audience; internal note never requester.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC15–17",
-        "x-business-rules": "BR-06–08; parent-content scope"
+        "x-source-use-cases": "UC15â€“17",
+        "x-business-rules": "BR-06â€“08; parent-content scope"
       },
       "post": {
         "operationId": "createTicketComment",
@@ -4114,8 +4008,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC15–17",
-        "x-business-rules": "BR-06–08; parent-content scope"
+        "x-source-use-cases": "UC15â€“17",
+        "x-business-rules": "BR-06â€“08; parent-content scope"
       }
     },
     "/tickets/{id}/attachments": {
@@ -4252,8 +4146,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC15–17",
-        "x-business-rules": "BR-06–08; parent-content scope"
+        "x-source-use-cases": "UC15â€“17",
+        "x-business-rules": "BR-06â€“08; parent-content scope"
       }
     },
     "/attachments/{id}/download": {
@@ -4388,8 +4282,8 @@
         ],
         "x-data-scope": "Current parent content scope, no public object URL; safe Content-Disposition, nosniff.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC15–17",
-        "x-business-rules": "BR-06–08; parent-content scope"
+        "x-source-use-cases": "UC15â€“17",
+        "x-business-rules": "BR-06â€“08; parent-content scope"
       }
     },
     "/tickets/{id}/plans": {
@@ -5044,8 +4938,8 @@
         ],
         "x-data-scope": "Current group membership; no requester projection.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC-OPS05–07",
-        "x-business-rules": "BR-15–18; manual lock/version/capacity"
+        "x-source-use-cases": "UC-OPS05â€“07",
+        "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
       }
     },
     "/tasks/{id}": {
@@ -5162,8 +5056,8 @@
         ],
         "x-data-scope": "Current group membership or M/A scope.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC-OPS05–07",
-        "x-business-rules": "BR-15–18; manual lock/version/capacity"
+        "x-source-use-cases": "UC-OPS05â€“07",
+        "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
       }
     },
     "/tasks/{id}/transitions": {
@@ -5296,8 +5190,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC-OPS05–07",
-        "x-business-rules": "BR-15–18; manual lock/version/capacity"
+        "x-source-use-cases": "UC-OPS05â€“07",
+        "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
       }
     },
     "/tasks/{id}/progress": {
@@ -5430,8 +5324,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC-OPS05–07",
-        "x-business-rules": "BR-15–18; manual lock/version/capacity"
+        "x-source-use-cases": "UC-OPS05â€“07",
+        "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
       }
     },
     "/tasks/{id}/assignment": {
@@ -5563,8 +5457,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC-OPS05–07",
-        "x-business-rules": "BR-15–18; manual lock/version/capacity"
+        "x-source-use-cases": "UC-OPS05â€“07",
+        "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
       }
     },
     "/tasks/{id}/assignment-lock": {
@@ -5696,8 +5590,8 @@
             }
           }
         },
-        "x-source-use-cases": "UC-OPS05–07",
-        "x-business-rules": "BR-15–18; manual lock/version/capacity"
+        "x-source-use-cases": "UC-OPS05â€“07",
+        "x-business-rules": "BR-15â€“18; manual lock/version/capacity"
       }
     },
     "/workforce": {
@@ -8052,7 +7946,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC-AI01/02/04–07",
+        "x-source-use-cases": "UC-AI01/02/04â€“07",
         "x-business-rules": "BR-20/21; owner and public/internal"
       }
     },
@@ -8171,7 +8065,7 @@
         ],
         "x-data-scope": "Owner only; current source visibility rechecked, revoked content redacted.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC-AI01/02/04–07",
+        "x-source-use-cases": "UC-AI01/02/04â€“07",
         "x-business-rules": "BR-20/21; owner and public/internal"
       },
       "delete": {
@@ -8290,7 +8184,7 @@
         ],
         "x-data-scope": "Owner only; retention/tombstone D-40; never delete Ticket/Task/audit/idempotency evidence.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC-AI01/02/04–07",
+        "x-source-use-cases": "UC-AI01/02/04â€“07",
         "x-business-rules": "BR-20/21; owner and public/internal"
       }
     },
@@ -8425,7 +8319,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC-AI01/02/04–07",
+        "x-source-use-cases": "UC-AI01/02/04â€“07",
         "x-business-rules": "BR-20/21; owner and public/internal"
       },
       "get": {
@@ -8548,7 +8442,7 @@
         ],
         "x-data-scope": "Owner only; source ACL/current visibility redacted again when reading history. No other users chats.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC-AI01/02/04–07",
+        "x-source-use-cases": "UC-AI01/02/04â€“07",
         "x-business-rules": "BR-20/21; owner and public/internal"
       }
     },
@@ -9702,7 +9596,7 @@
         ],
         "x-data-scope": "R assigned-to-self minimal; T related group ticket/own; MA organization.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       },
       "post": {
@@ -9824,7 +9718,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       }
     },
@@ -9943,7 +9837,7 @@
         ],
         "x-data-scope": "R self-assigned minimal; T related group ticket/own; related ticket links checked separately.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       },
       "patch": {
@@ -10074,7 +9968,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       }
     },
@@ -10207,7 +10101,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       },
       "get": {
@@ -10330,7 +10224,7 @@
         ],
         "x-data-scope": "R only own current assignment, never previous holders; T asset related to current group ticket or own; MA history within authority.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       }
     },
@@ -10463,7 +10357,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       }
     },
@@ -10596,7 +10490,7 @@
             }
           }
         },
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       }
     },
@@ -11181,7 +11075,7 @@
         "x-data-scope": "Safe status only; no credential read endpoint.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC-AI08",
-        "x-business-rules": "D-24/33; no secrets or others’ chats"
+        "x-business-rules": "D-24/33; no secrets or othersâ€™ chats"
       },
       "patch": {
         "operationId": "updateAssistantSettings",
@@ -11302,7 +11196,7 @@
           }
         },
         "x-source-use-cases": "UC-AI08",
-        "x-business-rules": "D-24/33; no secrets or others’ chats"
+        "x-business-rules": "D-24/33; no secrets or othersâ€™ chats"
       }
     },
     "/health/live": {
@@ -11548,7 +11442,7 @@
         "x-data-scope": "Admin configuration; others see own ticket SLA projection.",
         "x-implementation-status": "not-started",
         "x-source-use-cases": "UC09/24/25",
-        "x-business-rules": "BR-08–10; Admin GET/PATCH /sla/policy, ticket clock projection; internal SLA worker"
+        "x-business-rules": "BR-08â€“10; Admin GET/PATCH /sla/policy, ticket clock projection; internal SLA worker"
       },
       "patch": {
         "operationId": "updateSLAPolicy",
@@ -11669,7 +11563,7 @@
           }
         },
         "x-source-use-cases": "UC09/24/25",
-        "x-business-rules": "BR-08–10; Admin GET/PATCH /sla/policy, ticket clock projection; internal SLA worker"
+        "x-business-rules": "BR-08â€“10; Admin GET/PATCH /sla/policy, ticket clock projection; internal SLA worker"
       }
     },
     "/tickets/{id}/events": {
@@ -11793,8 +11687,8 @@
         ],
         "x-data-scope": "Public timeline for requester; internal events only scoped IT. Filter before pagination/count.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC15–17",
-        "x-business-rules": "BR-06–08; parent-content scope"
+        "x-source-use-cases": "UC15â€“17",
+        "x-business-rules": "BR-06â€“08; parent-content scope"
       }
     },
     "/assets/{id}/tickets": {
@@ -11918,7 +11812,7 @@
         ],
         "x-data-scope": "Asset access does not grant ticket access; each linked ticket scope checked before count.",
         "x-implementation-status": "not-started",
-        "x-source-use-cases": "UC27–31",
+        "x-source-use-cases": "UC27â€“31",
         "x-business-rules": "BR-11; atomic assignment"
       }
     }
@@ -11928,7 +11822,7 @@
       "SessionCookie": {
         "type": "apiKey",
         "in": "cookie",
-        "name": "itoh_session",
+        "name": "__Host-itoh_session",
         "description": "Proposed opaque HttpOnly session cookie; persisted hash in PostgreSQL. Secure in production, SameSite=Lax; CSRF/Origin required. Exact cookie name is a draft contract choice."
       }
     },
@@ -11984,7 +11878,6 @@
     },
     "schemas": {
       "Error": {
-        "type": "object",
         "properties": {
           "code": {
             "type": "string"
@@ -11992,25 +11885,26 @@
           "message": {
             "type": "string"
           },
-          "field_errors": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
           "request_id": {
             "type": "string"
+          },
+          "field_errors": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object"
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "code",
           "message",
           "request_id"
-        ],
-        "additionalProperties": false
+        ]
       },
       "VersionCommand": {
         "type": "object",
@@ -12077,26 +11971,25 @@
         "additionalProperties": false
       },
       "UserView": {
-        "type": "object",
         "properties": {
           "id": {
             "type": "string",
             "format": "uuid"
           },
-          "display_name": {
-            "type": "string"
-          },
           "email": {
             "type": "string",
             "format": "email"
           },
+          "display_name": {
+            "type": "string"
+          },
           "role": {
             "type": "string",
             "enum": [
-              "REQUESTER",
-              "TECHNICIAN",
+              "ADMIN",
               "IT_MANAGER",
-              "ADMIN"
+              "TECHNICIAN",
+              "REQUESTER"
             ]
           },
           "active": {
@@ -12104,28 +11997,33 @@
           },
           "version": {
             "type": "integer",
-            "minimum": 1
+            "minimum": 1.0
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "id",
+          "email",
           "display_name",
           "role",
           "active",
           "version"
-        ],
-        "additionalProperties": false
+        ]
       },
       "Login": {
-        "type": "object",
+        "additionalProperties": false,
         "properties": {
           "email": {
-            "type": "string",
-            "format": "email"
+            "format": "email",
+            "maxLength": 254,
+            "minLength": 1,
+            "type": "string"
           },
           "password": {
-            "type": "string",
+            "maxLength": 128,
             "minLength": 1,
+            "type": "string",
             "writeOnly": true
           }
         },
@@ -12133,58 +12031,62 @@
           "email",
           "password"
         ],
-        "additionalProperties": false
+        "type": "object"
       },
       "Csrf": {
-        "type": "object",
         "properties": {
           "csrf_token": {
             "type": "string",
             "description": "Opaque DEMO token placeholder in examples only; never log/store in repo."
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "csrf_token"
-        ],
-        "additionalProperties": false
+        ]
       },
       "ProfileUpdate": {
-        "type": "object",
+        "additionalProperties": false,
         "properties": {
           "expectedVersion": {
-            "type": "integer",
-            "minimum": 1
+            "minimum": 1,
+            "type": "integer"
           },
           "display_name": {
-            "type": "string",
+            "maxLength": 120,
             "minLength": 1,
-            "maxLength": 120
+            "type": "string"
           }
         },
         "required": [
           "expectedVersion",
           "display_name"
         ],
-        "additionalProperties": false
+        "type": "object"
       },
       "PasswordChange": {
-        "type": "object",
+        "additionalProperties": false,
         "properties": {
           "current_password": {
+            "maxLength": 128,
+            "minLength": 1,
             "type": "string",
             "writeOnly": true
           },
           "new_password": {
+            "maxLength": 128,
+            "minLength": 1,
             "type": "string",
-            "description": "Policy thresholds pending D-40; never logged.",
-            "writeOnly": true
+            "writeOnly": true,
+            "description": "Policy thresholds pending D-40; never logged."
           }
         },
         "required": [
           "current_password",
           "new_password"
         ],
-        "additionalProperties": false
+        "type": "object"
       },
       "UserCreate": {
         "type": "object",
@@ -12472,15 +12374,14 @@
         "additionalProperties": false
       },
       "SLAView": {
-        "type": "object",
         "properties": {
           "response_used_seconds": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0.0
           },
           "resolution_used_seconds": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0.0
           },
           "resolution_paused": {
             "type": "boolean"
@@ -12489,7 +12390,6 @@
             "anyOf": [
               {
                 "type": "string",
-                "description": "ISO8601 UTC, offset required.",
                 "format": "date-time"
               },
               {
@@ -12499,19 +12399,20 @@
           },
           "adjustment_revision": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0.0
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "response_used_seconds",
           "resolution_used_seconds",
           "resolution_paused",
+          "first_response_at",
           "adjustment_revision"
-        ],
-        "additionalProperties": false
+        ]
       },
       "TicketPublic": {
-        "type": "object",
         "properties": {
           "id": {
             "type": "string",
@@ -12555,42 +12456,30 @@
             "type": "string",
             "format": "uuid"
           },
-          "assignee_id": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "uuid"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
           "version": {
             "type": "integer",
-            "minimum": 1
+            "minimum": 1.0
           },
           "sla": {
             "$ref": "#/components/schemas/SLAView"
-          },
-          "public_progress_summary": {
-            "type": "string"
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "id",
           "code",
           "title",
+          "description",
           "status",
           "priority",
           "requester_id",
           "team_id",
-          "version"
-        ],
-        "additionalProperties": false
+          "version",
+          "sla"
+        ]
       },
       "TicketInternal": {
-        "type": "object",
         "properties": {
           "id": {
             "type": "string",
@@ -12634,55 +12523,44 @@
             "type": "string",
             "format": "uuid"
           },
-          "assignee_id": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "uuid"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
           "version": {
             "type": "integer",
-            "minimum": 1
+            "minimum": 1.0
           },
           "sla": {
             "$ref": "#/components/schemas/SLAView"
-          },
-          "public_progress_summary": {
-            "type": "string"
           },
           "internal_context": {
             "type": "string",
             "description": "Only scoped IT; no raw prompt, credentials or globally visible workforce data."
           }
         },
+        "additionalProperties": false,
+        "type": "object",
         "required": [
           "id",
           "code",
           "title",
+          "description",
           "status",
           "priority",
           "requester_id",
           "team_id",
           "version",
+          "sla",
           "internal_context"
-        ],
-        "additionalProperties": false
+        ]
       },
       "TicketView": {
-        "oneOf": [
+        "description": "Server selects public or scoped IT projection. Internal response requires internal_context; never send internal then hide client-side.",
+        "anyOf": [
           {
             "$ref": "#/components/schemas/TicketPublic"
           },
           {
             "$ref": "#/components/schemas/TicketInternal"
           }
-        ],
-        "description": "Server selects public or scoped IT projection. Internal response requires internal_context; never send internal then hide client-side."
+        ]
       },
       "TicketTransition": {
         "type": "object",
@@ -12843,7 +12721,7 @@
         "properties": {
           "file": {
             "type": "string",
-            "description": "≤10 MB, MIME/signature allowlist; ≤5 per request. No public object URL.",
+            "description": "â‰¤10 MB, MIME/signature allowlist; â‰¤5 per request. No public object URL.",
             "format": "binary"
           },
           "comment_id": {
@@ -15453,6 +15331,38 @@
         ],
         "additionalProperties": false,
         "description": "Admin provisioning result. Contains no verifier, temporary password, handover instructions or approval metadata."
+      },
+      "TicketListPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/TicketPublic"
+            },
+            "type": "array"
+          },
+          "page": {
+            "type": "integer",
+            "maximum": 1000000.0,
+            "minimum": 1.0
+          },
+          "page_size": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 1.0
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0.0
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "items",
+          "page",
+          "page_size",
+          "total"
+        ]
       }
     }
   },
