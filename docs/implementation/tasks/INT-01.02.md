@@ -78,21 +78,14 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-**Planning state:** no implementation attempt/report, application test, review, commit or build evidence exists for this task. Application checks are **NOT RUN**. Replace this planning statement with actual evidence when work occurs.
-
-**Report contract:** after every actual attempt or session handoff, append a report to [task history](../workflow/task-history.md#reports) using [Format version 1](../workflow/task-history.md#entry-format), preserving its ten subsections and tables. Apply the [report validation checklist](../workflow/task-history.md#report-validation-before-handoff), then update this section with the latest report and current summary. A report may end in blocked/review/in-progress; it does not imply DONE.
-
-- Latest Report ID: none; no implementation attempt yet.
-- Latest history entry: none; add the exact existing report anchor after actual work.
-- Delivered result / incomplete scope:
-- Actual changed paths / key symbols:
-- Acceptance and check summary: pass/fail/not-run; link full expected/actual results and exact commands in the report.
-- Review type / findings / resolution:
-- Remaining blockers / decisions / defects:
-- Commit/build if available:
-- Next eligible task / resume step:
-
-Keep sections 1-5 unchanged unless a justified authorized refinement is recorded. Update this handoff after every attempt, including unfinished/blocked work; retain earlier attempt reports in history. Synchronize the execution-board state/owner and current-context latest summary/history link. Do not duplicate report bodies in the board, invent evidence or mark unrelated parent/system gates passed.
+- Latest Report ID: INT-01.02/attempt-02.
+- Latest history entry: [Format version 1 report](../workflow/task-history.md#task-int-01-02-attempt-02).
+- Delivered: live profile and password forms, restricted temporary-password rotation, Admin users and organization/SLA forms with server versions, CSRF, and handover decisions.
+- Key paths: `src/frontend/src/features/auth`, `src/frontend/src/features/administration/real-admin.tsx`, `src/frontend/src/lib/api/http-account.ts`, and runtime `GET /api/v1/users`.
+- Checks: 3 scoped Chrome cases, 6 real-auth regression cases, 132 frontend tests, 60 service tests, build, lint, types and reviewed contract checks passed. [Profile](../evidence/INT-01.02/profile-real.png), [D-29 form](../evidence/INT-01.02/admin-user-real.png), [membership conflict](../evidence/INT-01.02/membership-conflict.png).
+- Review: agent verified locally; PO accepted. The D-29 verification was synthetic. Live evidence issuance and production HTTPS were not exercised.
+- Delivery: local `phase/c-integration`. Remote push still awaits explicit approval. No Parent PR yet.
+- Next: INT-01.03 is now eligible.
 
 > **Semantic UI states:** Follow the mandatory state-color mapping in [approved format](../../design/approved-format.md): active blue, ready/done green, waiting amber, blocked/error/overdue rose, locked/disabled gray. Use business enums and visible labels; capture task-owned evidence against the current final HTML.
 

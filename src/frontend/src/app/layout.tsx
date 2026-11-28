@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
+import { authMode } from "@/lib/api/auth-mode";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
@@ -12,7 +13,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="vi">
       <body>
-        <Providers>{children}</Providers>
+        <Providers mode={authMode()}>{children}</Providers>
       </body>
     </html>
   );

@@ -50,7 +50,7 @@ from app.modules.organization.access import (
     UserUpdate,
     update_account,
 )
-from app.modules.organization.containment import open_holds
+from app.modules.organization.containment import WorkAccessHold, open_holds
 from app.modules.organization.handover import (
     HandoverCommand,
     HandoverItem,
@@ -224,6 +224,13 @@ class TeamPage(BaseModel):
 class AccountAccessView(UserView):
     department_id: UUID | None
     handover_pending: bool
+
+
+class AccountAccessPage(BaseModel):
+    items: list[AccountAccessView]
+    page: int
+    page_size: int
+    total: int
 
 
 class MemberCommand(BaseModel):
@@ -802,6 +809,51 @@ def organization_router(
             body,
             lambda db, actor: transition_task(db, actor, id, body, configured().clock),
         )
+
+    @router.get(
+        "/users",
+        operation_id="listUsers",
+        tags=["Administration"],
+        response_model=AccountAccessPage,
+        dependencies=[session_cookie_dependency(settings)],
+        responses={status: {"model": Error} for status in (401, 403, 503)},
+    )
+    def list_users(
+        request: Request,
+        page: Annotated[int, Query(ge=1, le=1_000_000)] = 1,
+        page_size: Annotated[int, Query(ge=1, le=100)] = 20,
+    ) -> Response:
+        def read(db: Session, _: Account) -> AccountAccessPage:
+            total = db.scalar(select(func.count()).select_from(Account)) or 0
+            rows = db.scalars(
+                select(Account)
+                .order_by(Account.email, Account.id)
+                .offset((page - 1) * page_size)
+                .limit(page_size)
+            ).all()
+            held = set(
+                db.scalars(
+                    select(WorkAccessHold.account_id).where(
+                        WorkAccessHold.account_id.in_([row.id for row in rows]),
+                        WorkAccessHold.released_at.is_(None),
+                    )
+                )
+            )
+            return AccountAccessPage(
+                items=[
+                    AccountAccessView(
+                        **user_view(row).model_dump(),
+                        department_id=row.department_id,
+                        handover_pending=row.id in held,
+                    )
+                    for row in rows
+                ],
+                page=page,
+                page_size=page_size,
+                total=total,
+            )
+
+        return query(request, read)
 
     @router.patch(
         "/users/{id}",

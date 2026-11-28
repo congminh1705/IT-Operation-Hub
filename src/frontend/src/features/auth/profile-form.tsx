@@ -4,12 +4,33 @@ import Link from "next/link";
 import { useRef, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { roleLabels } from "@/lib/navigation";
-import type { UserView } from "@/lib/api/types";
+import type { AccountGateway, UserView } from "@/lib/api/types";
 import { useSession } from "./session";
 import "./profile-form.css";
 
 export function ProfileForm({ user }: { user: UserView }) {
   const { store, refresh } = useSession();
+  return (
+    <ProfileEditor
+      user={user}
+      saveProfile={store.updateOwnProfile}
+      reload={async () => {
+        await refresh();
+        return store.getSnapshot()?.user;
+      }}
+    />
+  );
+}
+
+export function ProfileEditor({
+  user,
+  saveProfile,
+  reload,
+}: {
+  user: UserView;
+  saveProfile: AccountGateway["updateOwnProfile"];
+  reload: () => Promise<UserView | undefined>;
+}) {
   const [draft, setDraft] = useState<{ name: string; version: number }>();
   const [feedback, setFeedback] = useState<{
     text: string;
@@ -36,7 +57,7 @@ export function ProfileForm({ user }: { user: UserView }) {
     setBusy(true);
     setFeedback(undefined);
     try {
-      const result = await store.updateOwnProfile({
+      const result = await saveProfile({
         display_name: name.trim(),
         expectedVersion: draft.version,
       });
@@ -84,8 +105,7 @@ export function ProfileForm({ user }: { user: UserView }) {
     request.current = true;
     setBusy(true);
     try {
-      await refresh();
-      const current = store.getSnapshot()?.user;
+      const current = await reload();
       if (current?.id === user.id) {
         setDraft({ name, version: current.version });
         setFeedback({

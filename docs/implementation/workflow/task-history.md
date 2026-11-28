@@ -14006,3 +14006,591 @@ Hai task con done trên board và task card. Current-context ghi nhận nghiệm
 #### 10. Tiếp theo
 
 PO review và merge PR #45. INT-06 thực hiện khi đủ dependency. Chưa triển khai Parent tiếp theo.
+
+<a id="task-int-01-01-attempt-01"></a>
+
+### INT-01.01 - Attempt 01 - 2026-11-25T23:47:56+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: INT-01.01/attempt-01
+- Task: [task specification](../tasks/INT-01.01.md)
+- Parent / phase: INT-01 / C
+- Executor: Codex
+- Started at: 2026-11-25T23:35:25+07:00
+- Ended at: 2026-11-25T23:47:56+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None. First recorded attempt.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Connect existing login and workspace identity to real cookie sessions.
+- Delivered this attempt: Same-origin auth transport with CSRF, explicit build mode, four real role shells, safe return URL, reload, logout and session invalidation. Cache is cleared on lost identity and in-flight identity results are fenced.
+- Incomplete scope / deviations: Business pages show their pending integration state. Profile, credential rotation and admin UI belong to INT-01.02. Wider lifecycle proof belongs to INT-01.03.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/next.config.ts, src/frontend/src/app and src/frontend/src/lib/api/auth-mode.ts | Auth mode and rewrite, gated workspace and preview | Select same-origin FastAPI transport in real mode |
+| src/frontend/src/features/auth and src/frontend/src/components/layout | RealSessionStore, RealWorkspaceEntry, LoginForm, role shell | Validate server identity and clear private UI on lost session |
+| src/frontend/e2e/real-auth.spec.ts and src/backend/tests/real_auth_browser.py | Chrome API/browser suite and isolated DB harness | Reproduce actual cookie and session effects |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Real login, me, logout, expiry, revocation and cookie/Origin errors | Four roles rendered their own menus; real Admin revoked a technician account and both expiry and revocation removed the workspace | pass | [Browser cases](../../../src/frontend/e2e/real-auth.spec.ts) |
+| 2 | Parent criteria 1 and 3 preserved within this leaf | Protected routes redirect, safe destination retained, cross-origin return suppressed, signed-out never shows protected shell | pass | [Browser cases](../../../src/frontend/e2e/real-auth.spec.ts) |
+| 3 | No fixture fallback or secret in evidence | Real preview denied and DEMO credentials rejected; browser used isolated PostgreSQL, generated password and FastAPI | pass | [Harness](../../../src/backend/tests/real_auth_browser.py), [screenshot](../evidence/INT-01.01/login-real.png) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | `.venv/Scripts/python.exe tests/real_auth_browser.py` with local PostgreSQL and Windows Chrome | All targeted real browser cases | 6/6 passed | pass |
+| src/frontend | `pnpm.cmd exec playwright test e2e/a1-handoff.spec.ts` with Windows Chrome | Existing DEMO role and keyboard flows | 2/2 passed at 1440 and 390 px | pass |
+| src/backend | `.venv/Scripts/python.exe -m pytest -qx -p no:cacheprovider --tb=short` with local PostgreSQL | Service regressions | 60 passed; existing Starlette deprecation warning | pass |
+| src/frontend | `pnpm.cmd test` | Unit regressions incl. identity races and uncertain logout | 132 passed | pass |
+| src/frontend | `pnpm.cmd build` with `ITOH_AUTH_MODE=real` and backend origin, then `pnpm.cmd exec tsc --noEmit`, `pnpm.cmd lint` | Compiles and passes static checks | Build, types and lint succeeded | pass |
+| repository root | `python docs/api/generate_frontend_contract.py --check` | Generated types match reviewed operations | 8 operations matched | pass |
+| deployment | Production HTTPS browser smoke and live identity handoff | Verify deployed secure cookie and actual operations credentials | Loopback environment only; no live deployment or credentials in this task | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent checks and captured desktop login comparison with D-47. PO acceptance pending.
+- Findings / resolution: Initial browser assertions used unscoped work URLs and the wrong origin for the Admin API call. Corrected both and verified JSON from actual FastAPI. Corrected Vitest test import and reran successfully.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: No known local acceptance gap. Production HTTPS smoke and live D-29 credentials remain unverified. Dependent business pages remain pending integration.
+- Required resolution / owner: PO acceptance of this leaf, then INT-01.02 and INT-01.03. Live handoff remains with operations and Parent acceptance.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/INT-01.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Local Chrome login](../evidence/INT-01.01/login-real.png), [reproduction guide](../../../src/frontend/README.md#real-cookie-session-integration-int-0101).
+- Commit / build / environment: Real production build succeeded locally. Phase C is stacked on published, PO-accepted Phase B commit d1f1074 (main ancestor 1baec70) for the requested integration checkpoint. No deployment.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Updated and linked to this entry.
+- Execution-board task row: review, Owner PO. 112 done, 1 review, 117 pending.
+- Current context: Updated with this entry.
+- Parent state: EPIC_IN_PROGRESS. INT-01.02 and INT-01.03 are pending. No Parent PR.
+
+#### 10. Next step
+
+- Next eligible task / resume step: INT-01.02, connect profile, password and administrator flows.
+- Eligibility / remaining prerequisite: INT-01.01 must be accepted by PO and recorded done.
+
+**Delivery receipt:** Local implementation commit `c8bb4c2` on `phase/c-integration`. Automatic approval rejected the push to `origin/phase/c-integration` pending explicit PO authorization of the repository and branch. The implementation is local and no PR was opened.
+
+<a id="task-int-01-01-attempt-02"></a>
+
+### INT-01.01 - Attempt 02 - 2026-11-25T23:53:33+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: INT-01.01/attempt-02
+- Task: [task specification](../tasks/INT-01.01.md)
+- Parent / phase: INT-01 / C
+- Executor: Codex
+- Started at: 2026-11-25T23:53:33+07:00
+- Ended at: 2026-11-25T23:53:33+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Attempt 01 implementation and checks](#task-int-01-01-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO's explicit acceptance of INT-01.01.
+- Delivered this attempt: Marked the accepted task done and synchronized the task card and workflow records.
+- Incomplete scope / deviations: Remote delivery remains pending explicit push approval. Parent remains in progress.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/INT-01.01.md | Evidence and handoff | Link acceptance and existing checks |
+| docs/implementation/workflow/execution-board.md, current-context.md and task-history.md | Done status, totals and acceptance record | Synchronize delivery records |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Task closure | Explicit PO approval after verification | PO confirmed done | pass | [Prior verification](#task-int-01-01-attempt-01) and PO confirmation in conversation |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| Repository root | Inspect task row, board totals, context and history links | Done and synchronized | 113 done and 117 pending; acceptance links updated | pass |
+| src/frontend and src/backend | Runtime suites documented in attempt 01 | Additional runtime verification if source changes | Documentation-only acceptance; previous results retained | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance.
+- Findings / resolution: PO confirmed task closure.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Push approval outstanding; subsequent leaves remain pending.
+- Required resolution / owner: PO to confirm destination if requesting push; implement remaining leaves separately.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/INT-01.01.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Attempt 01](#task-int-01-01-attempt-01).
+- Commit / build / environment: Local implementation c8bb4c2; existing validation in attempt 01.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Updated to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated with the acceptance.
+- Parent state: EPIC_IN_PROGRESS pending INT-01.02 and INT-01.03.
+
+#### 10. Next step
+
+- Next eligible task / resume step: INT-01.02.
+- Eligibility / remaining prerequisite: INT-01.01 is done.
+
+<a id="task-int-01-02-attempt-01"></a>
+
+### INT-01.02 - Attempt 01 - 2026-11-27T01:44:04+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: INT-01.02/attempt-01
+- Task: [task specification](../tasks/INT-01.02.md)
+- Parent / phase: INT-01 / C
+- Executor: Codex
+- Started at: 2026-11-25T23:58:50+07:00 (first retained administration source file; continued across sessions).
+- Ended at: 2026-11-27T01:44:04+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None; first implementation report for this leaf.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Connect native profile, password, Admin user, department, team, category and SLA forms to the actual services.
+- Delivered this attempt: Versioned writes with server-side authorization, CSRF, idempotency headers, D-29 verification, temporary-password restriction, current-session and other-session revocation, preservation of conflicting form drafts and handover decisions. Filled the runtime Admin list operation already named in the contract.
+- Incomplete scope / deviations: Cross-workspace query lifecycle belongs to INT-01.03. Production HTTPS and live D-29 evidence issuance and delivery were not exercised. Browser coverage uses no-open-work membership removal; protected and scheduled handover cases are covered by the backend suite.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/auth | ProfileEditor, PasswordEditor, RealSessionStore, RealWorkspaceEntry | Existing profile and password forms use the real service and restrict workspace before rotation |
+| src/frontend/src/features/administration/real-admin.tsx, src/frontend/src/lib/api/http-account.ts and src/frontend/next.config.ts | Admin forms, paged lookup and scoped same-origin transport | Connect the real organization and SLA operations |
+| src/backend/app/modules/organization/http.py | Admin-only listUsers with scoped response and paging | Match the named GET /users contract for the user list |
+| src/frontend/e2e/real-admin.spec.ts and src/backend/tests/real_auth_browser.py | Browser and isolated PostgreSQL D-29 setup | Reproduce profile, revocation, provisioning and concurrency |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Native forms read and write real data with versions | Profile and password were saved; Admin provisioned via D-29; departments, categories, teams, membership and SLA changes persisted | pass | [Browser suite](../../../src/frontend/e2e/real-admin.spec.ts) |
+| 2 | Real role and membership conflicts preserve input; server decides rights and handover | Requester directory API returned 403, both admin conflict paths returned STALE_VERSION and preserved drafts; backend suite covered protected handover | pass | [Conflict](../evidence/INT-01.02/membership-conflict.png), backend suite |
+| 3 | Real browser and API path; no fixture fallback in app | Next called FastAPI backed by an isolated PostgreSQL schema; D-29 IDs were seeded only in the test harness and passwords were generated in memory | pass | [Harness](../../../src/backend/tests/real_auth_browser.py) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | `.venv/Scripts/python.exe tests/real_auth_browser.py e2e/real-admin.spec.ts` with isolated PostgreSQL and Chrome | Profile, password, Admin and version conflicts | 3 passed | pass |
+| src/backend | `.venv/Scripts/python.exe tests/real_auth_browser.py` | INT-01.01 regression | 6 passed | pass |
+| src/backend | `.venv/Scripts/python.exe -m pytest -qx -p no:cacheprovider --tb=short` | PostgreSQL-backed service suite | 60 passed; existing Starlette deprecation warning | pass |
+| src/frontend | `pnpm.cmd test`, `pnpm.cmd lint`, `pnpm.cmd exec tsc --noEmit`, real mode `pnpm.cmd build` | Frontend regression and production compilation | 132 passed and static checks/build succeeded | pass |
+| repository root | `python docs/api/generate_frontend_contract.py --check`; export `create_app().openapi()` then `python docs/api/generate_frontend_contract.py --runtime <export>` | Existing reviewed account slice matches runtime | 8 operations matched both times | pass |
+| repository root | `src/backend/.venv/Scripts/python.exe -m ruff check src/backend/app/modules/organization/http.py src/backend/tests/real_auth_browser.py` | Changed Python files pass lint | No lint findings | pass |
+| deployment | Open real HTTPS environment and use operations-issued verification | Live D-29 proof and HTTPS cookie smoke | Local tests used a synthetic verification and loopback HTTP | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent functional checks and visual evidence; PO acceptance pending.
+- Findings / resolution: Fixed D-29 fixture creation order and department code, then fixed a consumed SQLAlchemy result that had returned an empty user page. Chrome verified the corrected flows.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Live D-29 issuance and HTTPS smoke are still unverified; Phase C push awaits explicit destination authorization after the earlier auto-review rejection.
+- Required resolution / owner: PO to review the local scope and authorize remote delivery separately. Wider identity cache behavior remains INT-01.03.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/INT-01.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Profile](../evidence/INT-01.02/profile-real.png), [D-29 form](../evidence/INT-01.02/admin-user-real.png), [membership conflict](../evidence/INT-01.02/membership-conflict.png), [reproduction](../../../src/frontend/README.md#real-cookie-session-integration-int-0101).
+- Commit / build / environment: Local `phase/c-integration`, real production build verified with loopback backend origin. Push pending. No PR.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Updated and linked to this report.
+- Execution-board task row: review, Owner PO. 113 done, 1 review, 116 pending.
+- Current context: Updated with the review and report link.
+- Parent state: EPIC_IN_PROGRESS. INT-01.03 is pending.
+
+#### 10. Next step
+
+- Next eligible task / resume step: INT-01.03, verify identity-scoped query and error lifecycle.
+- Eligibility / remaining prerequisite: PO acceptance and done recording for INT-01.02.
+
+**Delivery receipt:** Local implementation commit `a956b9c` on `phase/c-integration`. Push and PR were not run. The earlier automatic rejection requires explicit authorization of the destination before Phase C push.
+
+<a id="task-int-01-02-attempt-02"></a>
+
+### INT-01.02 - Attempt 02 - 2026-11-27T01:47:48+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: INT-01.02/attempt-02
+- Task: [task specification](../tasks/INT-01.02.md)
+- Parent / phase: INT-01 / C
+- Executor: Codex
+- Started at: 2026-11-27T01:47:48+07:00
+- Ended at: 2026-11-27T01:47:48+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Attempt 01 implementation and checks](#task-int-01-02-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO's explicit acceptance of INT-01.02.
+- Delivered this attempt: Marked the accepted task done and synchronized the task card and workflow records.
+- Incomplete scope / deviations: Remote delivery remains pending explicit push approval. Parent remains in progress.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/INT-01.02.md | Evidence and handoff | Link acceptance and existing checks |
+| docs/implementation/workflow/execution-board.md, current-context.md and task-history.md | Done status, totals and acceptance record | Synchronize delivery records |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Task closure | Explicit PO approval after verification | PO confirmed done | pass | [Prior verification](#task-int-01-02-attempt-01) and PO confirmation in conversation |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| Repository root | Inspect task row, board totals, context and history links | Done and synchronized | 114 done and 116 pending; acceptance links updated | pass |
+| src/frontend and src/backend | Runtime suites documented in attempt 01 | Additional runtime verification if source changes | Documentation-only acceptance; previous results retained | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance.
+- Findings / resolution: PO confirmed task closure.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Push approval outstanding; subsequent leaves remain pending.
+- Required resolution / owner: PO to confirm destination if requesting push; implement remaining leaves separately.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/INT-01.02.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Attempt 01](#task-int-01-02-attempt-01).
+- Commit / build / environment: Local implementation a956b9c; existing validation in attempt 01.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Updated to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated with the acceptance.
+- Parent state: EPIC_IN_PROGRESS pending INT-01.03.
+
+#### 10. Next step
+
+- Next eligible task / resume step: INT-01.03.
+- Eligibility / remaining prerequisite: INT-01.02 is done.
+
+<a id="task-int-01-03-attempt-01"></a>
+
+### INT-01.03 - Attempt 01 - 2026-11-27T01:53:58+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: INT-01.03/attempt-01
+- Task: [Task card](../tasks/INT-01.03.md)
+- Parent / phase: INT-01 / C
+- Executor: Codex
+- Started at: 2026-11-27T01:51:17+07:00 (first recorded verification)
+- Ended at: 2026-11-27T01:53:58+07:00
+- State before / after: pending / review
+- Previous attempt / correction: None.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Verify identity scope, private query lifetime, safe errors and DEMO isolation.
+- Delivered: Bound Admin query and mutation results to the authenticated scope, keyed private UI by scope, and hid page snapshots during browser-history restoration until revalidation. Kept form feedback on conflicts within the same scope.
+- Incomplete scope / deviations: Production HTTPS and browser-specific back-forward cache residency were not independently verified.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/auth and src/frontend/src/features/administration/real-admin.tsx | RealSessionStore.admin, RealSessionProvider, scope-keyed Admin surface | Invalidate private state when identity or authority changes |
+| src/frontend/e2e/real-auth.spec.ts and src/frontend/src/features/auth/real-session-store.test.ts | Delayed real response, account switch, back navigation and scope-loss regression | Verify stale results cannot return to the active view |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | Clear private data and discard late results | Admin-to-Requester switch and history navigation showed no Admin rows; a deferred result was discarded on role loss | pass | [Chrome suite](../../../src/frontend/e2e/real-auth.spec.ts) |
+| 2 | Preserve permissible form feedback and enforce field allowlists | Admin role/membership conflict drafts survived; forged profile fields were rejected | pass | [Admin suite](../../../src/frontend/e2e/real-admin.spec.ts) |
+| 3 | Keep fixtures isolated in DEMO mode | Chrome used FastAPI and PostgreSQL; real login rejected DEMO credentials and hid DEMO controls | pass | [Login test](../../../src/frontend/e2e/real-auth.spec.ts) |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | `.venv/Scripts/python.exe tests/real_auth_browser.py` | Login, revocation and account switch | 7 passed | pass |
+| src/backend | `.venv/Scripts/python.exe tests/real_auth_browser.py e2e/real-admin.spec.ts` | Admin and safe form feedback | 3 passed | pass |
+| src/backend | `.venv/Scripts/python.exe -m pytest -q tests/test_auth_login.py -k forged -p no:cacheprovider` | Reject forged profile fields | 1 passed | pass |
+| src/frontend | `pnpm.cmd test`, `pnpm.cmd typecheck`, `pnpm.cmd lint` | Frontend regression and static checks | 133 tests and static checks passed | pass |
+| Deployment | Production HTTPS and separate inspection of back-forward cache residency | Environment-specific proof | Local Chrome covered browser back; separate proof not run | not-run |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification. PO acceptance pending.
+- Findings / resolution: Admin reads and mutations originally bypassed the session store. Results now use the same active session scope check.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: PO review and remote delivery remain open.
+- Required resolution / owner: PO acceptance and explicit authorization of the previously rejected Phase C push destination.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/INT-01.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: Chrome suites and prior INT-01.02 form evidence.
+- Commit / build / environment: Local Phase C with loopback FastAPI and isolated PostgreSQL. No PR.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Updated.
+- Execution-board task row: review, Owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS pending PO acceptance.
+
+#### 10. Next step
+
+- Next eligible task / resume step: PO review of INT-01.03 and Parent INT-01.
+- Eligibility / remaining prerequisite: Record acceptance and check each dependent Phase B Parent's closure requirements.
+
+<a id="task-int-01-03-attempt-02"></a>
+
+### INT-01.03 - Attempt 02 - 2026-11-27T01:55:51+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: INT-01.03/attempt-02
+- Task: [task specification](../tasks/INT-01.03.md)
+- Parent / phase: INT-01 / C
+- Executor: Codex
+- Started at: 2026-11-27T01:55:51+07:00
+- Ended at: 2026-11-27T01:55:51+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Attempt 01 implementation and checks](#task-int-01-03-attempt-01).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO's explicit acceptance of INT-01.03.
+- Delivered this attempt: Marked the accepted task done and synchronized the task card and workflow records.
+- Incomplete scope / deviations: Remote delivery remains pending explicit push approval. Parent remains in progress.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/INT-01.03.md | Evidence and handoff | Link acceptance and existing checks |
+| docs/implementation/workflow/execution-board.md, current-context.md and task-history.md | Done status, totals and acceptance record | Synchronize delivery records |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Task closure | Explicit PO approval after verification | PO confirmed done | pass | [Prior verification](#task-int-01-03-attempt-01) and PO confirmation in conversation |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| Repository root | Inspect task row, board totals, context and history links | Done and synchronized | 115 done and 115 pending; acceptance links updated | pass |
+| src/frontend and src/backend | Runtime suites documented in attempt 01 | Additional runtime verification if source changes | Documentation-only acceptance; previous results retained | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance.
+- Findings / resolution: PO confirmed task closure.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Push approval outstanding; subsequent leaves remain pending.
+- Required resolution / owner: PO to confirm destination if requesting push; implement remaining leaves separately.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/INT-01.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Attempt 01](#task-int-01-03-attempt-01).
+- Commit / build / environment: Local implementation d98ab99; existing validation in attempt 01.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Updated to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated with the acceptance.
+- Parent state: EPIC_IN_PROGRESS pending Parent-level closure.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Parent INT-01 closure.
+- Eligibility / remaining prerequisite: INT-01.03 is done.
+
+<a id="task-int-01-03-attempt-03"></a>
+
+### INT-01.03 - Attempt 03 - 2026-11-27T02:02:29+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: INT-01.03/attempt-03
+- Task: [Task card](../tasks/INT-01.03.md)
+- Parent / phase: INT-01 / C
+- Executor: Codex
+- Started at: 2026-11-27T01:59:44+07:00 (first recorded regression test run)
+- Ended at: 2026-11-27T02:02:29+07:00
+- State before / after: done / review
+- Previous attempt / correction: [PO acceptance](#task-int-01-03-attempt-02); subsequent review found two lifecycle defects and a test gap.
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Resolve every finding in the three-leaf review.
+- Delivered: Queued logout, restoration gated on actual validation, continuous DOM/frame monitoring and confirmed late delivery.
+- Incomplete scope / deviations: Native cache residency is Chrome-dependent. The persisted-event race is triggered deterministically.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| src/frontend/src/features/auth/real-session-store.ts and real-session.tsx | Pending write completion, shared logout promise and snapshot generation | Serialize logout and prevent early reveal |
+| src/frontend/e2e/real-auth.spec.ts and src/frontend/src/features/auth/real-session-store.test.ts | Real response barriers and lifecycle checks | Reproduce the three findings |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Logout while saving | Revoke cookie once write settles | Account menu led to login and me returned 401 | pass | [Chrome suite](../../../src/frontend/e2e/real-auth.spec.ts) |
+| Restore while saving | No old private content before session check | Profile remained hidden after logout from another tab | pass | Same suite |
+| Late read after switching accounts | Observe actual delivery and any transient private rows | Delayed parsed response delivered, DOM and frame observers saw no old Admin rows | pass | Same suite |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| src/backend | `.venv/Scripts/python.exe tests/real_auth_browser.py` | Chrome with real FastAPI and isolated PostgreSQL | 9 passed | pass |
+| src/frontend | `pnpm.cmd test`, `pnpm.cmd typecheck`, `pnpm.cmd lint` | Unit and static regressions | 135 tests passed, types and lint passed | pass |
+
+#### 6. Review
+
+- Type / reviewer: Agent verification, pending PO review.
+- Findings / resolution: Initial browser run exposed React effect cleanup cancelling logout on direct navigation. Preserved the active logout through cleanup and verified all four roles.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Parent closure awaits PO review of this correction.
+- Required resolution / owner: PO.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Task card](../tasks/INT-01.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: Reproducible browser and unit regressions above.
+- Commit / build / environment: Local phase/c-integration, Chrome on loopback.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Updated to attempt 03.
+- Execution-board task row: review, owner PO.
+- Current context: Updated.
+- Parent state: EPIC_IN_PROGRESS.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Review the correction and close INT-01.
+- Eligibility / remaining prerequisite: PO acceptance.
+
+<a id="task-int-01-03-attempt-04"></a>
+
+### INT-01.03 - Attempt 04 - 2026-11-27T02:05:54+07:00
+
+#### 1. Report metadata
+
+- Format version: 1
+- Report ID: INT-01.03/attempt-04
+- Task: [task specification](../tasks/INT-01.03.md)
+- Parent / phase: INT-01 / C
+- Executor: Codex
+- Started at: 2026-11-27T02:05:54+07:00
+- Ended at: 2026-11-27T02:05:54+07:00
+- State before / after: review / done
+- Previous attempt / correction: [Attempt 01 implementation and checks](#task-int-01-03-attempt-03).
+
+#### 2. Scope and delivered result
+
+- Authorized objective: Record PO acceptance of the correction and Parent INT-01.
+- Delivered this attempt: Marked the accepted task done and synchronized the task card and workflow records.
+- Incomplete scope / deviations: Remote delivery remains pending explicit push approval. Parent INT-01 is EPIC_DONE.
+
+#### 3. Changed files and key symbols
+
+| Repository-relative path | Change / key symbols | Purpose |
+| --- | --- | --- |
+| docs/implementation/tasks/INT-01.03.md | Evidence and handoff | Link acceptance and existing checks |
+| docs/implementation/workflow/execution-board.md, current-context.md and task-history.md | Done status, totals and acceptance record | Synchronize delivery records |
+
+#### 4. Acceptance results
+
+| Task criterion | Expected | Actual | Outcome | Evidence |
+| --- | --- | --- | --- | --- |
+| Task closure | Explicit PO approval after verification | PO confirmed done | pass | [Prior verification](#task-int-01-03-attempt-03) and PO confirmation in conversation |
+
+#### 5. Verification results
+
+| Working directory | Exact command / manual steps | Expected | Actual / reason not run | Outcome |
+| --- | --- | --- | --- | --- |
+| Repository root | Inspect task row, board totals, context and history links | Done and synchronized | 115 done and 115 pending; acceptance links updated | pass |
+| src/frontend and src/backend | Runtime suites documented in attempt 01 | Additional runtime verification if source changes | Documentation-only acceptance; previous results retained | not-run |
+
+#### 6. Review
+
+- Type / reviewer: PO acceptance.
+- Findings / resolution: PO confirmed task closure.
+
+#### 7. Remaining blockers and decisions
+
+- Blocker / affected acceptance: Push approval outstanding; subsequent leaves remain pending.
+- Required resolution / owner: PO to confirm destination if requesting push; implement remaining leaves separately.
+
+#### 8. Artifacts and evidence
+
+- Detailed task handoff: [Evidence and handoff](../tasks/INT-01.03.md#6-evidence-and-handoff).
+- Logs / screenshots / reports: [Attempt 01](#task-int-01-03-attempt-03).
+- Commit / build / environment: Local implementation ee19e47; existing validation in attempt 01.
+
+#### 9. Execution record synchronization
+
+- Task Evidence and handoff: Updated to attempt 02.
+- Execution-board task row: done, Owner PO.
+- Current context: Updated with the acceptance.
+- Parent state: EPIC_DONE after explicit PO acceptance.
+
+#### 10. Next step
+
+- Next eligible task / resume step: Review Phase B PR eligibility.
+- Eligibility / remaining prerequisite: INT-01.03 is done.

@@ -43,7 +43,7 @@ Create one `Database` from an application-owned engine. Use `database.session()`
 
 For database tests, set `ITOH_TEST_DATABASE_URL` to a disposable PostgreSQL database whose user can create schemas, then run `uv run --frozen python -m pytest`. Tests create and remove isolated schemas. Without that variable the PostgreSQL tests are reported as skipped.
 
-The existing frontend lives in `../frontend`. Run `pnpm install --frozen-lockfile` there, then `pnpm dev` in a separate terminal. It still uses its Phase A DEMO transport until the integration tasks connect it to FastAPI.
+The existing frontend lives in `../frontend`. Run `pnpm install --frozen-lockfile` there, then `pnpm dev` in a separate terminal. For real cookie-session testing, use the [INT-01.01 frontend setup](../frontend/README.md#real-cookie-session-integration-int-0101).
 
 ## Account login (FND-04.01)
 

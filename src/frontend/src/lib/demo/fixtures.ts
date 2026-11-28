@@ -1,4 +1,8 @@
-import type { Role, UserView } from "../api/types";
+import type { Role } from "../api/types";
+import {
+  workspaceIdentity,
+  type WorkspaceIdentity,
+} from "../workspace-identity";
 
 export const DEMO_CONVENTIONS = {
   label: "DEMO — dữ liệu tổng hợp, không phải phân quyền thật",
@@ -10,32 +14,10 @@ export const DEMO_CONVENTIONS = {
     "Injected UTC clock, advanced explicitly; never infer production session TTL from DEMO.",
 } as const;
 
-/** A1 shell visibility projections only, never an authorization mechanism. */
-export type NavigationKey =
-  | "overview"
-  | "my-requests"
-  | "it-tickets"
-  | "work"
-  | "workforce"
-  | "assistant"
-  | "knowledge"
-  | "assets"
-  | "notifications"
-  | "reports"
-  | "audit"
-  | "administration"
-  | "profile"
-  | "password"
-  | "logout";
+export type { NavigationKey } from "../workspace-identity";
 
-export interface DemoPersona {
+export interface DemoPersona extends WorkspaceIdentity {
   demo: true;
-  user: UserView;
-  navigation: NavigationKey[];
-  scope: {
-    tickets: "mine" | "team-and-mine" | "organization";
-    workforce: "none" | "self-lookup" | "organization";
-  };
 }
 
 /** Pure factory: each call supplies fresh nested objects for deterministic reset. */
@@ -45,79 +27,26 @@ export function createDemoFixtures(): {
   sessionUserId: null;
   personas: Record<Role, DemoPersona>;
 } {
-  const common: NavigationKey[] = [
-    "overview",
-    "my-requests",
-    "assistant",
-    "knowledge",
-    "assets",
-    "notifications",
-    "profile",
-    "password",
-    "logout",
-  ];
-  const create = (
-    role: Role,
-    suffix: number,
-    navigation: NavigationKey[],
-    scope: DemoPersona["scope"],
-  ): DemoPersona => ({
-    demo: true,
-    user: {
+  const create = (role: Role, suffix: number): DemoPersona => ({
+    ...workspaceIdentity({
       id: `00000000-0000-4000-8000-00000000000${suffix}`,
       display_name: `DEMO ${role}`,
       email: `${role.toLowerCase()}@demo.invalid`,
       role,
       active: true,
       version: 1,
-    },
-    navigation: [...navigation],
-    scope,
+    }),
+    demo: true,
   });
   return {
     demo: true,
     now: DEMO_CONVENTIONS.initialTime,
     sessionUserId: null,
     personas: {
-      REQUESTER: create("REQUESTER", 1, common, {
-        tickets: "mine",
-        workforce: "none",
-      }),
-      TECHNICIAN: create(
-        "TECHNICIAN",
-        2,
-        [...common, "it-tickets", "work", "workforce"],
-        {
-          tickets: "team-and-mine",
-          workforce: "self-lookup",
-        },
-      ),
-      IT_MANAGER: create(
-        "IT_MANAGER",
-        3,
-        [...common, "it-tickets", "work", "workforce", "reports", "audit"],
-        {
-          tickets: "organization",
-          workforce: "organization",
-        },
-      ),
-      ADMIN: create(
-        "ADMIN",
-        4,
-        [
-          ...common,
-          "it-tickets",
-          "work",
-          "workforce",
-          "reports",
-          "audit",
-          "administration",
-        ],
-        {
-          tickets: "organization",
-          workforce: "organization",
-        },
-      ),
+      REQUESTER: create("REQUESTER", 1),
+      TECHNICIAN: create("TECHNICIAN", 2),
+      IT_MANAGER: create("IT_MANAGER", 3),
+      ADMIN: create("ADMIN", 4),
     },
   };
 }

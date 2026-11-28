@@ -9,7 +9,6 @@ export default async function WorkspaceRoute({
   searchParams: Promise<WorkspaceSearch>;
 }) {
   const { destination } = await params;
-  // The client boundary renders no private shell until a mock session exists.
   return (
     <WorkspaceEntry
       pathname={`/${destination.join("/")}`}

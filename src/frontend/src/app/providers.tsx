@@ -10,10 +10,18 @@ import {
 } from "react";
 import { bindQueryActivity, QueryClient } from "@/lib/api/query-client";
 import type { QueryKey } from "@/lib/api/query-keys";
+import type { AuthMode } from "@/lib/api/auth-mode";
+import { RealSessionProvider } from "@/features/auth/real-session";
 import { SessionProvider } from "@/features/auth/session";
 
 const QueryContext = createContext<QueryClient | null>(null);
-export function Providers({ children }: { children: ReactNode }) {
+export function Providers({
+  children,
+  mode,
+}: {
+  children: ReactNode;
+  mode: AuthMode;
+}) {
   const [client] = useState(() => new QueryClient());
   useEffect(() => bindQueryActivity(client, document, window), [client]);
   useEffect(() => {
@@ -36,7 +44,11 @@ export function Providers({ children }: { children: ReactNode }) {
   }, []);
   return (
     <QueryContext.Provider value={client}>
-      <SessionProvider client={client}>{children}</SessionProvider>
+      {mode === "real" ? (
+        <RealSessionProvider client={client}>{children}</RealSessionProvider>
+      ) : (
+        <SessionProvider client={client}>{children}</SessionProvider>
+      )}
     </QueryContext.Provider>
   );
 }

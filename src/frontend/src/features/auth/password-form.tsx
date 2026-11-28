@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRef, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
+import type { AccountGateway } from "@/lib/api/types";
 import { useSession } from "./session";
 import "./profile-form.css";
 import "./password-form.css";
@@ -15,6 +16,24 @@ const fields = [
 
 export function PasswordForm() {
   const { store } = useSession();
+  return (
+    <PasswordEditor
+      demo
+      changePassword={store.adapter.gateway.changeOwnPassword}
+      invalidate={store.invalidate}
+    />
+  );
+}
+
+export function PasswordEditor({
+  demo = false,
+  changePassword,
+  invalidate,
+}: {
+  demo?: boolean;
+  changePassword: AccountGateway["changeOwnPassword"];
+  invalidate?: () => void;
+}) {
   const form = useRef<HTMLFormElement>(null);
   const feedback = useRef<HTMLParagraphElement>(null);
   const inFlight = useRef(false);
@@ -41,9 +60,8 @@ export function PasswordForm() {
     const current = String(data.get("old-password") ?? "");
     const next = String(data.get("new-password") ?? "");
     if (!current.trim())
-      return showError("Nhập mật khẩu hiện tại DEMO.", "old-password");
-    if (!next.trim())
-      return showError("Nhập mật khẩu mới DEMO.", "new-password");
+      return showError("Nhập mật khẩu hiện tại.", "old-password");
+    if (!next.trim()) return showError("Nhập mật khẩu mới.", "new-password");
     if (next !== data.get("confirm-password"))
       return showError("Hai mật khẩu mới chưa khớp.", "confirm-password");
     inFlight.current = true;
@@ -51,17 +69,23 @@ export function PasswordForm() {
     setError(undefined);
     setVisible({});
     try {
-      const result = await store.adapter.gateway.changeOwnPassword({
+      const result = await changePassword({
         current_password: current,
         new_password: next,
       });
       if (result.kind === "success") formElement.reset();
       else if (result.kind === "unauthenticated") {
         formElement.reset();
-        store.invalidate();
+        invalidate?.();
       } else if (result.kind === "validation") {
-        showError("Mật khẩu hiện tại DEMO không đúng.", "old-password");
-      } else showError("Chưa xác nhận đổi mật khẩu DEMO. Vui lòng thử lại.");
+        const invalidNew = !!result.error.field_errors?.new_password;
+        if (invalidNew)
+          showError(
+            "Chọn mật khẩu mới hợp lệ và khác mật khẩu hiện tại.",
+            "new-password",
+          );
+        else showError("Mật khẩu hiện tại không đúng.", "old-password");
+      } else showError("Chưa xác nhận đổi mật khẩu. Vui lòng thử lại.");
     } catch {
       showError("Không kết nối được. Vui lòng thử lại.");
     } finally {
@@ -79,8 +103,9 @@ export function PasswordForm() {
       aria-busy={busy}
     >
       <p id="password-demo-help">
-        Chỉ dùng giá trị thử nghiệm. DEMO yêu cầu điền đủ và xác nhận đúng mật
-        khẩu mới. Chính sách thật chưa được áp dụng.
+        {demo
+          ? "Chỉ dùng giá trị thử nghiệm. Chính sách mật khẩu thật chưa được áp dụng."
+          : "Nhập mật khẩu mới và xác nhận lại để đổi mật khẩu."}
       </p>
       {fields.map(([id, label, autofill]) => (
         <div className="password-field" key={id}>
@@ -124,8 +149,9 @@ export function PasswordForm() {
       <div className="password-note">
         <strong>Mật khẩu không đi qua AI</strong>
         <p>
-          Đổi mật khẩu trong DEMO sẽ kết thúc phiên hiện tại và yêu cầu đăng
-          nhập lại.
+          {demo
+            ? "Đổi mật khẩu trong DEMO sẽ kết thúc phiên hiện tại và yêu cầu đăng nhập lại."
+            : "Đổi mật khẩu sẽ kết thúc các phiên đang mở. Hãy đăng nhập lại bằng mật khẩu mới."}
         </p>
       </div>
       <div className="profile-actions">
@@ -138,7 +164,7 @@ export function PasswordForm() {
           Hủy
         </Link>
         <Button type="submit" disabled={busy}>
-          {busy ? "Đang xử lý…" : "Đổi mật khẩu DEMO"}
+          {busy ? "Đang xử lý…" : demo ? "Đổi mật khẩu DEMO" : "Đổi mật khẩu"}
         </Button>
       </div>
     </form>

@@ -106,7 +106,7 @@ This **work-package/epic registry** retains all 88 stable scope IDs. The registr
 | [FE-16](06-frontend-first.md#fe-16) | Role dashboards and reporting interactions | FE-09 FE-10 FE-12 FE-14 | EPIC_DONE |
 | [FE-17](06-frontend-first.md#fe-17) | Notifications and scoped audit screens | FE-04 FE-06 FE-10 | EPIC_DONE |
 | [FE-18](06-frontend-first.md#fe-18) | Frontend DEMO acceptance and API handoff | FE-07 FE-15 FE-16 FE-17 | EPIC_DONE |
-| [INT-01](07-integration.md#int-01) | Connect identity, administration and shared transport | FE-18 FND-03 FND-04 FND-07 FND-08 FND-17 | EPIC_READY |
+| [INT-01](07-integration.md#int-01) | Connect identity, administration and shared transport | FE-18 FND-03 FND-04 FND-07 FND-08 FND-17 | EPIC_DONE |
 | [INT-02](07-integration.md#int-02) | Connect ticket lifecycle, attachments, SLA and notifications | INT-01 FND-13 OPS-03 OPS-04 OPS-05 | EPIC_READY |
 | [INT-03](07-integration.md#int-03) | Connect workforce, plans, policy, approvals and runs | INT-01 FND-15 FND-16 WF-10 AI-08 | EPIC_READY |
 | [INT-04](07-integration.md#int-04) | Connect asset inventory and ticket references | INT-02 OPS-02 | EPIC_READY |

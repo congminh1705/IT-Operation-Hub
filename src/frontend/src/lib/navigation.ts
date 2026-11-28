@@ -1,5 +1,5 @@
 import type { Role } from "./api/types";
-import type { DemoPersona, NavigationKey } from "./demo/fixtures";
+import type { WorkspaceIdentity, NavigationKey } from "./workspace-identity";
 
 export type IconName =
   | "dashboard"
@@ -44,7 +44,7 @@ export const roleLabels: Record<Role, string> = {
 };
 
 /** Visibility projection only; these fixture capabilities never grant real service access. */
-export function getNavigation(persona: DemoPersona): NavigationItem[] {
+export function getNavigation(persona: WorkspaceIdentity): NavigationItem[] {
   if (!persona.user.active) return [];
   const technician = persona.user.role === "TECHNICIAN";
   const personalAssets = persona.user.role === "REQUESTER" || technician;
@@ -204,7 +204,7 @@ export function getNavigation(persona: DemoPersona): NavigationItem[] {
   );
 }
 
-export function getAccountLinks(persona: DemoPersona) {
+export function getAccountLinks(persona: WorkspaceIdentity) {
   if (!persona.user.active) return [];
   return [
     { id: "profile", label: "Hồ sơ", href: "/profile" },
@@ -241,7 +241,7 @@ export const knownDestinations = new Set([
 ]);
 
 export function effectiveScope(
-  persona: DemoPersona,
+  persona: WorkspaceIdentity,
   pathname: string,
   requested?: string,
 ): string {
@@ -261,7 +261,7 @@ export function effectiveScope(
 }
 
 export function activeNavigation(
-  persona: DemoPersona,
+  persona: WorkspaceIdentity,
   pathname: string,
   requestedScope?: string,
 ) {
@@ -282,7 +282,10 @@ export const isTicketDetail = (pathname: string) =>
   /^\/tickets\/TKT-\d{6,}$/.test(pathname);
 export const isKnownDestination = (pathname: string) =>
   knownDestinations.has(pathname) || isTicketDetail(pathname);
-export function canOpenDestination(persona: DemoPersona, pathname: string) {
+export function canOpenDestination(
+  persona: WorkspaceIdentity,
+  pathname: string,
+) {
   const destination =
     pathname === "/tickets/new" || isTicketDetail(pathname)
       ? "/tickets"
@@ -297,7 +300,7 @@ export function canOpenDestination(persona: DemoPersona, pathname: string) {
 }
 
 export function ticketSearchHref(
-  persona: DemoPersona,
+  persona: WorkspaceIdentity,
   value: string,
   prefix = "",
 ) {

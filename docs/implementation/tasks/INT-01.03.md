@@ -78,21 +78,14 @@ A future request authorizes the selected implementation (or this decision-refine
 
 ## 6. Evidence and handoff
 
-**Planning state:** no implementation attempt/report, application test, review, commit or build evidence exists for this task. Application checks are **NOT RUN**. Replace this planning statement with actual evidence when work occurs.
-
-**Report contract:** after every actual attempt or session handoff, append a report to [task history](../workflow/task-history.md#reports) using [Format version 1](../workflow/task-history.md#entry-format), preserving its ten subsections and tables. Apply the [report validation checklist](../workflow/task-history.md#report-validation-before-handoff), then update this section with the latest report and current summary. A report may end in blocked/review/in-progress; it does not imply DONE.
-
-- Latest Report ID: none; no implementation attempt yet.
-- Latest history entry: none; add the exact existing report anchor after actual work.
-- Delivered result / incomplete scope:
-- Actual changed paths / key symbols:
-- Acceptance and check summary: pass/fail/not-run; link full expected/actual results and exact commands in the report.
-- Review type / findings / resolution:
-- Remaining blockers / decisions / defects:
-- Commit/build if available:
-- Next eligible task / resume step:
-
-Keep sections 1-5 unchanged unless a justified authorized refinement is recorded. Update this handoff after every attempt, including unfinished/blocked work; retain earlier attempt reports in history. Synchronize the execution-board state/owner and current-context latest summary/history link. Do not duplicate report bodies in the board, invent evidence or mark unrelated parent/system gates passed.
+- Latest Report ID: INT-01.03/attempt-04.
+- Latest correction: [Post-review fixes and browser evidence](../workflow/task-history.md#task-int-01-03-attempt-03). Agent verified and [PO accepted](../workflow/task-history.md#task-int-01-03-attempt-04).
+- Previous history entry: [PO acceptance](../workflow/task-history.md#task-int-01-03-attempt-02) and [verification](../workflow/task-history.md#task-int-01-03-attempt-01).
+- Delivered: scope-bound Admin reads and mutations, private snapshot handling, real browser account-switch and backend profile field checks.
+- Checks: 9 real auth Chrome cases and 135 frontend tests on the correction, plus 3 earlier real Admin Chrome cases, TypeScript, lint and one targeted PostgreSQL profile test passed.
+- Review: agent verification complete; PO accepted this leaf.
+- Delivery: local phase/c-integration. Push remains pending destination authorization.
+- Next: Parent INT-01 is done. Phase B PR eligibility can be reviewed separately.
 
 > **Semantic UI states:** Follow the mandatory state-color mapping in [approved format](../../design/approved-format.md): active blue, ready/done green, waiting amber, blocked/error/overdue rose, locked/disabled gray. Use business enums and visible labels; capture task-owned evidence against the current final HTML.
 

@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { useSession, safeReturnPath } from "./session";
+import { useOptionalSessionStore, safeReturnPath } from "./session";
+import { useOptionalRealSession } from "./real-session";
+import { realReturnPath } from "./real-workspace-entry";
 import { createDemoFixtures } from "@/lib/demo/fixtures";
 import { loginMarkup } from "./login-markup";
 import "./login.css";
@@ -9,12 +11,14 @@ import { mountLoginScene } from "./login-scene";
 
 export function LoginForm() {
   const root = useRef<HTMLDivElement>(null);
-  const session = useSession();
-  const store = session.store;
-  const login = useRef(session.login);
+  const demo = useOptionalSessionStore();
+  const real = useOptionalRealSession();
+  const store = real ?? demo;
+  if (!store) throw new Error("SessionProvider missing");
+  const login = useRef(store.login);
   useEffect(() => {
-    login.current = session.login;
-  }, [session.login]);
+    login.current = store.login;
+  }, [store]);
   const router = useRouter();
   useEffect(() => {
     const host = root.current!;
@@ -24,7 +28,7 @@ export function LoginForm() {
     const form = host.querySelector<HTMLFormElement>("form")!;
     const button = host.querySelector<HTMLButtonElement>("#access-submit")!;
     const summary = host.querySelector<HTMLElement>("#access-summary")!;
-    if (store.passwordChanged) {
+    if (demo?.passwordChanged) {
       summary.textContent =
         "Đã mô phỏng đổi mật khẩu. Phiên DEMO đã kết thúc. Vui lòng đăng nhập lại.";
       summary.focus();
@@ -78,18 +82,31 @@ export function LoginForm() {
           if (!alive) return;
           if (result.kind === "success")
             router.replace(
-              safeReturnPath(
+              (real ? realReturnPath : safeReturnPath)(
                 new URLSearchParams(window.location.search).get("returnTo"),
               ),
             );
+          if (
+            real &&
+            result.kind === "forbidden" &&
+            result.error.code === "PASSWORD_CHANGE_REQUIRED"
+          )
+            router.replace("/profile/security");
           summary.textContent =
             result.kind === "success"
-              ? "Đăng nhập DEMO thành công. Đang mở không gian làm việc…"
+              ? real
+                ? "Đăng nhập thành công. Đang mở không gian làm việc…"
+                : "Đăng nhập DEMO thành công. Đang mở không gian làm việc…"
               : result.kind === "unauthenticated"
                 ? "Không thể đăng nhập. Kiểm tra thông tin hoặc liên hệ Admin."
-                : result.kind === "pending" || result.kind === "unknown"
-                  ? "Chưa xác nhận được kết quả. Vui lòng thử lại."
-                  : "Chưa thể kết nối. Vui lòng thử lại.";
+                : result.kind === "rate-limited"
+                  ? "Đã thử đăng nhập quá nhiều lần. Vui lòng thử lại sau."
+                  : result.kind === "forbidden" &&
+                      result.error.code === "PASSWORD_CHANGE_REQUIRED"
+                    ? "Tài khoản yêu cầu đổi mật khẩu. Vui lòng liên hệ Admin."
+                    : result.kind === "pending" || result.kind === "unknown"
+                      ? "Chưa xác nhận được kết quả. Vui lòng thử lại."
+                      : "Chưa thể kết nối. Vui lòng thử lại.";
           password.value = "";
           summary.focus();
         } catch {
@@ -181,29 +198,33 @@ export function LoginForm() {
       events.abort();
       password.value = "";
     };
-  }, [router, store]);
+  }, [router, store, real, demo]);
   return (
     <div className="login-root readable-ui" data-surface="graphite">
       <div ref={root} dangerouslySetInnerHTML={{ __html: loginMarkup }} />
-      <details className="login-demo">
-        <summary>Tài khoản DEMO — dữ liệu giả lập</summary>
-        <p>Chỉ dùng mật khẩu thử bất kỳ, không dùng mật khẩu thật.</p>
-        {Object.values(createDemoFixtures().personas).map(({ user }) => (
-          <button
-            key={user.id}
-            type="button"
-            onClick={() => {
-              const input =
-                root.current!.querySelector<HTMLInputElement>("#login-email")!;
-              input.value = user.email!;
-              input.dispatchEvent(new Event("input", { bubbles: true }));
-              input.focus();
-            }}
-          >
-            {user.role}
-          </button>
-        ))}
-      </details>
+      {!real && (
+        <details className="login-demo">
+          <summary>Tài khoản DEMO — dữ liệu giả lập</summary>
+          <p>Chỉ dùng mật khẩu thử bất kỳ, không dùng mật khẩu thật.</p>
+          {Object.values(createDemoFixtures().personas).map(({ user }) => (
+            <button
+              key={user.id}
+              type="button"
+              onClick={() => {
+                const input =
+                  root.current!.querySelector<HTMLInputElement>(
+                    "#login-email",
+                  )!;
+                input.value = user.email!;
+                input.dispatchEvent(new Event("input", { bubbles: true }));
+                input.focus();
+              }}
+            >
+              {user.role}
+            </button>
+          ))}
+        </details>
+      )}
     </div>
   );
 }

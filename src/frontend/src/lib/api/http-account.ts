@@ -22,6 +22,7 @@ type WireObject = Record<string, unknown>;
 export interface HttpAccountGateway extends AccountGateway {
   login(input: LoginInput, command?: Mutation): Promise<ApiOutcome<UserView>>;
   currentUser(signal?: AbortSignal): Promise<ApiOutcome<UserView>>;
+  admin<T>(path: AdminPath, options?: AdminRequest): Promise<AdminOutcome<T>>;
   updateOwnProfile(
     input: ProfileUpdate,
     command?: Mutation,
@@ -175,6 +176,19 @@ async function failure(
   return { kind: "error", status: 500, error: parseError(undefined) };
 }
 
+export type AdminPath =
+  `/api/v1/${"users" | "teams" | "departments" | "categories" | "sla"}${"" | `/${string}` | `?${string}`}`;
+export type AdminOutcome<T> =
+  | ApiFailure
+  | UnconfirmedOutcome
+  | { kind: "success"; status: 200 | 201; data: T };
+type AdminRequest = {
+  method?: "GET" | "POST" | "PATCH";
+  body?: WireObject;
+  key?: string;
+  signal?: AbortSignal;
+};
+
 type RequestOptions = {
   body?: WireObject;
   key?: string;
@@ -189,10 +203,18 @@ export function createHttpAccountGateway(
   fetcher: Fetch = globalThis.fetch.bind(globalThis),
 ): HttpAccountGateway {
   async function request(
-    operation: Operation,
+    operation:
+      | Operation
+      | {
+          path: AdminPath;
+          method: string;
+          csrf: boolean;
+          idempotency: boolean;
+        },
     options: RequestOptions = {},
   ): Promise<RequestResult> {
-    const { path, method, csrf, idempotency } = accountOperations[operation];
+    const { path, method, csrf, idempotency } =
+      typeof operation === "string" ? accountOperations[operation] : operation;
     try {
       const headers = new Headers({ Accept: "application/json" });
       if (csrf) {
@@ -263,6 +285,23 @@ export function createHttpAccountGateway(
       }),
     currentUser: (signal) => readUser("getCurrentUser", { signal }),
     logout: () => noContent("logout"),
+    admin: async <T>(
+      path: AdminPath,
+      options: AdminRequest = {},
+    ): Promise<AdminOutcome<T>> => {
+      const method = options.method ?? "GET";
+      const result = await request(
+        { path, method, csrf: method !== "GET", idempotency: method !== "GET" },
+        options,
+      );
+      if ("outcome" in result) return result.outcome;
+      if (result.response.status !== 200 && result.response.status !== 201)
+        return failure(result.response, method);
+      const data = await json(result.response);
+      return isObject(data)
+        ? { kind: "success", status: result.response.status, data: data as T }
+        : unknown;
+    },
     updateOwnProfile: ({ expectedVersion, display_name }, command) =>
       readUser("updateOwnProfile", {
         body: { expectedVersion, display_name },
