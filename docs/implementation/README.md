@@ -198,4 +198,4 @@ Completion record
 Application evidence is currently **NOT RUN**. Documentation checks for this backlog establish only link/ID/coverage/dependency consistency.
 
 
-Parent delivery: one PR per completed work package, using the shared phase branch. FE-01 PR #1 and FE-02 baseline PR #2 are merged. FE-02.04 is done; remaining FE-02 delta delivery follows Parent closure. Preserve the phase branch; follow [workflow PR rules](workflow/task-workflow.md#parent-pull-requests).
+Parent delivery: one PR per completed work package, using a Parent branch such as `phase-b/fnd-18-audit-search` and PR title `Phase B | FND-18 | <specific outcome>`. FE-01 PR #1 and FE-02 baseline PR #2 are merged. FE-02.04 is done; remaining FE-02 delta delivery follows Parent closure. Preserve the phase branch; follow [workflow PR rules](workflow/task-workflow.md#parent-pull-requests).

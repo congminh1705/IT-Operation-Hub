@@ -54,11 +54,11 @@ RAG/context evolution; LangChain/LangGraph are not selected dependencies.
 
 Delivery checklist - mandatory for every task in every phase (A/B/C/D):
 1. Resolve this task's Parent and phase; keep Owner = PO. Check the previous
-   Parent PR on GitHub before coding another Parent on the shared phase branch.
+   Parent PR on GitHub before coding another Parent on the Parent delivery branch.
    If it remains open, report its URL, remind PO to review/merge, and stop
    dependent implementation. A statement that it was merged needs verification.
 2. Commit each child task separately with its Task ID and specific outcome;
-   push to the correct phase branch, verify the remote SHA, and update the task,
+   push to the correct Parent branch, verify the remote SHA, and update the task,
    task-history and current-context with actual results. Do not create a PR
    for each child or claim a partial Parent is complete.
 3. After this task, check all children AND Parent acceptance/closure criteria,
@@ -68,8 +68,8 @@ Delivery checklist - mandatory for every task in every phase (A/B/C/D):
    using task-workflow.md title/body rules. Final report MUST include the real PR
    URL, actual open/merged state and a reminder for PO to review/merge while open.
 5. Do not add another Parent's code while that PR is open. After verified merge,
-   fetch/sync the merged baseline without force-push or destructive reset; keep
-   the phase branch. Only start the next task when separately assigned and ready.
+   fetch/sync the merged baseline without force-push or destructive reset; preserve
+   existing phase branches. Only start the next task when separately assigned and ready.
 6. At phase handoff verify every Parent PR is merged, every phase acceptance and
    exit gate has passed, then record actual phase results and next prerequisites.
    There is no extra phase PR. Do not start the next phase or merge automatically.
@@ -78,13 +78,13 @@ Delivery checklist - mandatory for every task in every phase (A/B/C/D):
 
 Git delivery is part of this assignment:
 - One PR per completed Parent, not per phase. While its PR is open, remind PO
-  to merge with its URL; do not start another Parent on the shared branch.
+  to merge with its URL; do not start another Parent on the Parent branch.
 - Read task-workflow.md section "Task commits and GitHub delivery" at task start.
-- Use the existing phase branch: phase/a-frontend, phase/b-backend,
-  phase/c-integration or phase/d-acceptance. Do not create a branch per task.
+- Use one Parent branch named phase-<letter>/<parent-id>-<short-description>, for example
+  phase-b/fnd-18-audit-search or phase-c/int-02-ticket-integration. Follow the workflow baseline/dependency checks.
 - Commit each small task separately with title:
   <type>(<scope>): <TASK_ID> <specific outcome>.
-- Push scoped task commits to that phase branch and verify its remote SHA.
+- Push scoped task commits to that Parent branch and verify its remote SHA.
 - Record branch, implementation commit/link and actual push result in task
   section 6, task-history section 8, current-context and the final report.
 - At verified Parent completion, create/update that Parent PR into main using the
@@ -185,9 +185,9 @@ Verify and hand off:
 
 ## Git delivery rule for both prompts
 
-Apply the Task commits and GitHub delivery policy in [task-workflow.md](task-workflow.md#task-commits-and-github-delivery) after each actual task attempt. This rule supersedes any older commit/push prohibition in copied prompts. Commit only scoped changes, push the shared phase branch, verify the remote SHA, and report branch, implementation commit, final delivery HEAD and actual push result. Do not include the existing uncommitted planning/design baseline in a coding task commit. Git delivery does not substitute for task acceptance or owner visual review.
+Apply the Task commits and GitHub delivery policy in [task-workflow.md](task-workflow.md#task-commits-and-github-delivery) after each actual task attempt. This rule supersedes any older commit/push prohibition in copied prompts. Commit only scoped changes, push the Parent delivery branch, verify the remote SHA, and report branch, implementation commit, final delivery HEAD and actual push result. Do not include the existing uncommitted planning/design baseline in a coding task commit. Git delivery does not substitute for task acceptance or owner visual review.
 
-Use one branch per phase (`phase/a-frontend`, `phase/b-backend`, `phase/c-integration`, `phase/d-acceptance`), not per task. Name each task commit `<type>(<scope>): <TASK_ID> <specific outcome>`. At verified Parent completion, create the Parent PR into `main` with the title and description template in task-workflow.md; report its actual URL and remind PO to merge. Do not add the next Parent to the shared phase branch until this PR is verified merged; do not merge automatically.
+Use one Parent branch such as `phase-b/fnd-18-audit-search`, following task-workflow.md baseline and dependency checks. Name each child commit `<type>(<scope>): <TASK_ID> <specific outcome>`. At verified Parent completion, publish one PR into `main` titled `Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. Report its URL and remind PO to merge. Verify dependency merges before subsequent delivery.
 
 ## Frontend-only copyable prompt
 
@@ -199,11 +199,11 @@ TASK_ID: <TASK_ID>
 
 Delivery checklist - mandatory for every task in every phase (A/B/C/D):
 1. Resolve this task's Parent and phase; keep Owner = PO. Check the previous
-   Parent PR on GitHub before coding another Parent on the shared phase branch.
+   Parent PR on GitHub before coding another Parent on the Parent delivery branch.
    If it remains open, report its URL, remind PO to review/merge, and stop
    dependent implementation. A statement that it was merged needs verification.
 2. Commit each child task separately with its Task ID and specific outcome;
-   push to the correct phase branch, verify the remote SHA, and update the task,
+   push to the correct Parent branch, verify the remote SHA, and update the task,
    task-history and current-context with actual results. Do not create a PR
    for each child or claim a partial Parent is complete.
 3. After this task, check all children AND Parent acceptance/closure criteria,
@@ -213,8 +213,8 @@ Delivery checklist - mandatory for every task in every phase (A/B/C/D):
    using task-workflow.md title/body rules. Final report MUST include the real PR
    URL, actual open/merged state and a reminder for PO to review/merge while open.
 5. Do not add another Parent's code while that PR is open. After verified merge,
-   fetch/sync the merged baseline without force-push or destructive reset; keep
-   the phase branch. Only start the next task when separately assigned and ready.
+   fetch/sync the merged baseline without force-push or destructive reset; preserve
+   existing phase branches. Only start the next task when separately assigned and ready.
 6. At phase handoff verify every Parent PR is merged, every phase acceptance and
    exit gate has passed, then record actual phase results and next prerequisites.
    There is no extra phase PR. Do not start the next phase or merge automatically.
@@ -223,13 +223,13 @@ Delivery checklist - mandatory for every task in every phase (A/B/C/D):
 
 Git delivery is part of this assignment:
 - One PR per completed Parent, not per phase. While its PR is open, remind PO
-  to merge with its URL; do not start another Parent on the shared branch.
+  to merge with its URL; do not start another Parent on the Parent branch.
 - Read task-workflow.md section "Task commits and GitHub delivery" at task start.
-- Use the existing phase branch: phase/a-frontend, phase/b-backend,
-  phase/c-integration or phase/d-acceptance. Do not create a branch per task.
+- Use one Parent branch named phase-<letter>/<parent-id>-<short-description>, for example
+  phase-b/fnd-18-audit-search or phase-c/int-02-ticket-integration. Follow the workflow baseline/dependency checks.
 - Commit each small task separately with title:
   <type>(<scope>): <TASK_ID> <specific outcome>.
-- Push scoped task commits to that phase branch and verify its remote SHA.
+- Push scoped task commits to that Parent branch and verify its remote SHA.
 - Record branch, implementation commit/link and actual push result in task
   section 6, task-history section 8, current-context and the final report.
 - At verified Parent completion, create/update that Parent PR into main using the

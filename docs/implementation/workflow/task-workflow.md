@@ -99,7 +99,7 @@ A package becomes EPIC_DONE only after all children are done or explicitly cance
 Hoang Cong Minh requested task-by-task commits and GitHub delivery on 11 November 2026. Future task assignments using this workflow authorize scoped commits and ordinary pushes to the current phase branch; no repeated routine permission is needed. This documentation update does not itself commit or push the existing workspace. Remote observed: `origin` = `https://github.com/congminh1705/IT-Operation-Hub.git`; verify it at execution rather than silently changing it.
 
 1. Inspect `git status --short`, the current branch, remotes and staged changes. Preserve unrelated work. This workspace currently includes substantial uncommitted design/planning work: do not sweep that baseline into the first coding task. If required baseline files are not committed, report that dependency and prepare a separate, explicitly scoped baseline delivery before claiming the phase branch is reproducible.
-2. Use exactly one delivery branch per phase: `phase/a-frontend`, `phase/b-backend`, `phase/c-integration`, `phase/d-acceptance`. All child tasks in a phase commit to that same branch; do not create task branches. Create the phase branch once from the verified, merged baseline on `main`, then reuse it across sessions. Start the next phase only after its prerequisites and the previous phase Parent PRs are accepted and merged. If checkout would mix or overwrite unrelated changes, use an isolated worktree from the committed baseline when possible; do not automatically stash, reset or discard work. An uncommitted prerequisite remains a delivery gap.
+2. PO updated branch naming on 28 November 2026. Use one delivery branch per Parent, named `phase-<letter>/<parent-id>-<short-description>`, for example `phase-b/fnd-18-audit-search`, `phase-c/int-02-ticket-integration`, or `phase-d/qa-04-business-acceptance`. Commit each child separately on its Parent branch. Create the branch from verified `origin/main` when prerequisites are merged. If prerequisite code exists only on an earlier phase branch, inspect ancestry and record the required dependency commits before choosing a baseline. Keep the Parent PR diff scoped and report outstanding dependency merges. Preserve existing phase branches and unrelated working-tree changes, using isolated worktrees as needed.
 3. After meaningful checks, inspect the diff and stage only explicitly selected task files and relevant evidence/workflow updates. Inspect `git diff --cached --stat` and `git diff --cached` before committing. Do not use blanket staging of the dirty workspace; exclude credentials, local environment files, dependencies and generated caches.
 4. Prefer one coherent implementation commit per task, for example `feat(frontend): FE-03.01 implement approved login`. Use `fix`, `refactor`, `test`, `docs` or `chore` as appropriate; always include Task ID. Follow-up fixes or genuine session checkpoints may use additional commits. Label incomplete work as WIP; a commit does not establish acceptance or owner approval.
 5. Push the current phase branch after each task, for example `git push -u origin phase/a-frontend` (substitute the actual phase). Subsequent pushes use the verified upstream. Never force-push, merge, push directly to `main`, rewrite published history, deploy or alter repository permissions under this standing instruction. A non-fast-forward, missing remote or authentication failure is a specific delivery gap: preserve the local commit and report the actual failure without claiming success.
@@ -119,21 +119,23 @@ Prefer one coherent task commit including its checks and available execution rec
 
 #### Parent pull requests
 
+Required title format: `Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. Child commit names retain `<type>(<scope>): <TASK_ID> <specific outcome>`.
+
 This policy applies to **all 230 tasks and all 88 Parents across phases A, B, C and D**, including non-FE decisions, foundation, services, AI, integration and acceptance work. Parent completion includes its existing external closure requirements; a child service being done does not close its Parent early. On every handoff report task commit/push, Parent closure/PR state, PO merge reminder if open, and phase exit state when applicable. Check required preceding Parent PR merges at session start rather than relying on chat memory.
 
-Confirmed by PO on 13 November 2026: **one PR per completed Parent** (FE-01, FE-02, and every other work package), superseding the earlier one-PR-per-phase rule. Keep one branch per phase and one identifiable commit per child task.
+PO confirmed one PR per completed Parent on 13 November 2026. On 28 November 2026, PO approved phase-prefixed PR titles and Parent delivery branches. This supersedes the earlier shared-phase delivery branch requirement for future Parents. Existing branch and PR names retain their historical meaning.
 
-When every child and the Parent's own closure criteria pass, push the phase branch and create/update that Parent's PR into `main`. This is standing authorization for PR creation, not merging. Do not create empty PRs for unstarted Parents or call a partially verified Parent complete. Reuse an existing PR for that Parent instead of duplicating it.
+When every child and the Parent's own closure criteria pass, push the Parent branch and create/update that Parent's PR into `main`. This is standing authorization for PR creation, not merging. Do not create empty PRs for unstarted Parents or call a partially verified Parent complete. Reuse an existing PR for that Parent instead of duplicating it.
 
-Because Parents share a phase branch, deliver them sequentially: after opening a Parent PR, stop adding another Parent's commits to the branch until PO merges it. Otherwise the open PR would automatically absorb those new changes. In every final handoff while the PR is open, remind PO to review and merge it and include its actual URL. Do not claim a reminder was scheduled or sent outside this chat. If the user explicitly requests parallel delivery, clarify/refine the branching arrangement before mixing Parent scopes.
+Deliver Parent PRs in dependency order. While a Parent PR is open, report its URL and remind PO to review/merge. Verify prerequisite merges before dependent delivery. Each Parent branch contains its own scoped changes and identified prerequisites. Start subsequent work only when assigned and its task dependencies permit it.
 
-After PO reports merging, verify the PR is actually merged, fetch `origin/main` and compare ancestry. Retain the phase branch and bring the merged baseline into it with a normal fast-forward or merge as appropriate; never reset/force-push published history. Preserve unrelated dirty files; use an isolated worktree if needed. If PO uses squash/rebase merge, normal merge of `origin/main` into the phase branch may be necessary so future Parent PRs exclude previously delivered changes. Review `git diff origin/main...HEAD` before each PR. The phase is complete only when all its Parents, exit gates and required reviews pass and its Parent PRs are merged; no redundant final phase PR is required.
+After PO reports merging, verify the PR is merged and fetch `origin/main`. Create the next authorized Parent branch from the verified baseline. Preserve existing phase branches and published history. Review `git diff origin/main...HEAD` and the commit list before each PR. The phase completes after all Parent acceptance/exit gates pass and all Parent PRs merge.
 
 Use title `<type>(<scope>): <PARENT_ID> <specific delivered outcome>` in concise English. Examples:
 
-- `feat(frontend): FE-01 establish reproducible DEMO foundation`
-- `feat(ui): FE-02 deliver approved design system and workspace shell`
-- `feat(backend): FND-01 establish service foundation`
+- `Phase A | FE-01 | Establish reproducible DEMO foundation`
+- `Phase B | FND-18 | Expose scoped audit search`
+- `Phase C | INT-02 | Connect ticket workflows`
 
 Describe the actual final diff for a reviewer who has not read the chat. Use this description template:
 
@@ -143,7 +145,7 @@ Describe the actual final diff for a reviewer who has not read the chat. Use thi
 
 ## Delivered scope
 - Parent: {PARENT_ID}; phase: {A/B/C/D}.
-- Source branch: {phase branch}; base: main.
+- Source branch: {Parent branch, e.g. phase-b/fnd-18-audit-search}; base: main.
 - Child tasks: {all delivered task IDs and their concrete outputs}.
 - Parent acceptance: {criterion-by-criterion closure and real evidence}.
 
@@ -166,7 +168,7 @@ Ask PO to review and merge this PR before starting another Parent on the shared
 branch. Keep the phase branch for subsequent Parents.}
 ```
 
-Publish the required title and description directly to the Parent PR on GitHub. Do not create or retain per-Parent PR Markdown files or a `pull-requests` folder in the repository. Prefer a structured GitHub API request; if `gh --body-file` is needed, use a temporary file outside the repository and delete it after use. Verify the returned PR URL, base/head, title/body and commit scope; record only the delivery status and PR link in current context, task/history and the final handoff. On missing access or failure, provide the prepared title/body in the response and report PR creation as not-run/failed; never invent a URL or merge automatically. One PR per Parent, the shared phase branch and the reminder for PO to merge remain required.
+Publish the required title and description directly to the Parent PR on GitHub. Do not create or retain per-Parent PR Markdown files or a `pull-requests` folder in the repository. Prefer a structured GitHub API request; if `gh --body-file` is needed, use a temporary file outside the repository and delete it after use. Verify the returned PR URL, base/head, title/body and commit scope; record only the delivery status and PR link in current context, task/history and the final handoff. On missing access or failure, provide the prepared title/body in the response and report PR creation as not-run/failed; never invent a URL or merge automatically. One PR per Parent, the Parent delivery branch and the reminder for PO to merge remain required.
 
 Typical commands (examples only; replace Task ID and select actual paths):
 
@@ -199,3 +201,8 @@ The local kit's AGENT.md/task template uses lowercase task states, while some ex
 ## Mandatory final-HTML comparison
 
 For every UI task, list and open the affected `docs/design/final/*.html` reference before implementation. Match the owned surface rather than redesigning it from prose. Before visual handoff, capture the running app and the reference at matching viewport/role/state, record material differences and link actual captures/review in the existing task evidence/history format. Use `docs/implementation/evidence/<TASK_ID>/` only when actual evidence exists. Record Hoang Cong Minh's visual verdict or pending review explicitly; never infer owner approval. Nonvisual-only work records N/A with reason and does not add screens just to satisfy this requirement.
+
+
+### Parent branch naming details
+
+Use lowercase ASCII and hyphens in each path segment. Keep the phase letter and stable Parent ID visible, followed by a concise English scope description. All child commits for a Parent use its selected branch. Example: `phase-b/fnd-18-audit-search`. This refinement supersedes the short `phase/b-fnd-18` convention. Existing published branches retain their names unless explicitly renamed.
