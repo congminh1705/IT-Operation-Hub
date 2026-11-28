@@ -2,6 +2,7 @@ from datetime import UTC, datetime, timedelta
 from uuid import UUID, uuid4
 
 from fastapi.testclient import TestClient
+from httpx import Response
 from sqlalchemy import select, update
 from test_organization import ORIGIN, SETTINGS, actor
 from test_ticket_intake import prepare_catalog
@@ -54,7 +55,13 @@ def test_priority_adjustments_keep_original_budget_and_breaches(
         row.first_response_at = now + timedelta(minutes=20)
         row.response_used_seconds = 1200
 
-    def change(client, headers, version, priority, reason="Updated business impact"):
+    def change(
+        client: TestClient,
+        headers: dict[str, str],
+        version: int,
+        priority: str,
+        reason: str = "Updated business impact",
+    ) -> Response:
         return command(
             client,
             url,

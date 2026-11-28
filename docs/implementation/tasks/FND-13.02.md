@@ -82,3 +82,6 @@ A future request authorizes the selected implementation (or this decision-refine
 - Remaining: Real browser and notifications remain for INT-02. Historical assignment reasons that were never stored are absent. Continuous monitoring and alert delivery belong to OPS-03/04.
 - Commit/build: FND-13.02 push receipt pending.
 - Next: Joint review of the two FND-13 leaves after sequential verification.
+
+
+PO accepted this service leaf. [Backend delivery evidence](../workflow/task-history.md#fnd-13-backend-delivery). Parent awaits INT-02.

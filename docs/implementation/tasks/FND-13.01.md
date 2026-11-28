@@ -82,3 +82,6 @@ A future request authorizes the selected implementation (or this decision-refine
 - Remaining: Browser wiring and notification delivery remain for INT-02. Continuous SLA monitoring is outside this service leaf.
 - Commit/build: FND-13.01 push receipt pending.
 - Next: Joint review of the two FND-13 leaves after sequential verification.
+
+
+PO accepted this service leaf. [Backend delivery evidence](../workflow/task-history.md#fnd-13-backend-delivery). Parent awaits INT-02.
