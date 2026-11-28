@@ -13525,3 +13525,8 @@ All commands below ran from src/backend unless noted. Tests used the documented 
 
 - Prepare scoped FND-06 Git delivery against the current merged baseline; do not include unrelated Parents or dirty frontend changes.
 - No next task started. Full business QA and rollout remain at their respective gates.
+
+
+### Delivery naming approved - 2026-11-28
+
+PO approved publishing this documentation update to main. Parent branches use `phase-<letter>/<parent-id>-<short-description>`, e.g. `phase-b/fnd-18-audit-search`. PR titles use `Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>`. Workflow, both execution prompts, README and current context are synchronized. One PR per Parent and individually identifiable child commits remain required. Existing published branch names retain their history. Documentation-only change verified by Git diff checks.
