@@ -71,6 +71,18 @@ def assign_ticket(
     if body.reason is None:
         raise TicketCommandRejected(422, "REASON_REQUIRED")
     check_version(row, body.expectedVersion)
+    if row.status == "Cancelled" or (
+        row.status == "Closed"
+        and (
+            not body.assignee_id
+            or body.team_id != row.team_id
+            or (
+                row.assignee_id
+                and row.team_id in effective_team_ids(db, row.assignee_id)
+            )
+        )
+    ):
+        raise TicketCommandRejected(409, "TICKET_READ_ONLY")
     destination = db.get(Team, body.team_id)
     if destination is None or not destination.active:
         raise TicketCommandRejected(409, "INELIGIBLE_TEAM")

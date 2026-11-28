@@ -1,7 +1,7 @@
 from datetime import datetime
 from uuid import UUID
 
-from sqlalchemy import DateTime, ForeignKey, String, Text
+from sqlalchemy import CheckConstraint, DateTime, ForeignKey, String, Text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -39,3 +39,23 @@ class Ticket(Base):
     )
     sla_snapshot: Mapped[dict[str, dict[str, int]]] = mapped_column(JSONB)
     workflow_context: Mapped[dict[str, object] | None] = mapped_column(JSONB)
+
+
+class TicketComment(Base):
+    __tablename__ = "ticket_comment"
+    __table_args__ = (CheckConstraint("visibility IN ('PUBLIC', 'INTERNAL')"),)
+
+    id: Mapped[UUID] = mapped_column(primary_key=True)
+    ticket_id: Mapped[UUID] = mapped_column(ForeignKey("ticket.id"), index=True)
+    author_id: Mapped[UUID] = mapped_column(ForeignKey("auth_account.id"))
+    visibility: Mapped[str] = mapped_column(String(8))
+    content: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+
+
+class TicketTransitionReason(Base):
+    __tablename__ = "ticket_transition_reason"
+
+    ticket_id: Mapped[UUID] = mapped_column(ForeignKey("ticket.id"), primary_key=True)
+    version: Mapped[int] = mapped_column(primary_key=True)
+    reason: Mapped[str] = mapped_column(Text)

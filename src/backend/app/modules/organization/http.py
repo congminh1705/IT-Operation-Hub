@@ -51,6 +51,14 @@ from app.modules.tickets.assignment import (
     assign_ticket,
 )
 from app.modules.tickets.categories import TicketCategory
+from app.modules.tickets.conversation import (
+    CommentCreate,
+    CommentPage,
+    CommentView,
+    comment_result,
+    create_comment,
+    list_comments,
+)
 from app.modules.tickets.intake import (
     IntakeRejected,
     TicketCreate,
@@ -68,7 +76,12 @@ from app.modules.tickets.read import (
     get_ticket,
     search_tickets,
 )
-from app.modules.tickets.service import TicketPublic, create_text_ticket, public_ticket
+from app.modules.tickets.service import (
+    TicketPublic,
+    TicketStatus,
+    create_text_ticket,
+    public_ticket,
+)
 from app.modules.users.provisioning import (
     ProvisionedAccountView,
     ProvisioningVerification,
@@ -223,7 +236,7 @@ def organization_router(
                     result.model_dump(mode="json"),
                     headers={"Cache-Control": "no-store"},
                 )
-        except Rejected as exc:
+        except (Rejected, TicketCommandRejected) as exc:
             return error_response(exc.status, exc.code)
         except SQLAlchemyError:
             return error_response(503, "UNAVAILABLE")
@@ -486,15 +499,59 @@ def organization_router(
         return query(request, read, admin=False)
 
     def project_ticket_command(
-        request: Request, db: Session, result: CommandResult
+        request: Request,
+        db: Session,
+        result: CommandResult,
+        *,
+        internal_only: bool = True,
     ) -> TicketPublic | TicketInternal:
         current = authorize(db, request, write=True)
-        if current.role not in ("IT_MANAGER", "ADMIN", "TECHNICIAN"):
+        if internal_only and current.role not in ("IT_MANAGER", "ADMIN", "TECHNICIAN"):
             raise Rejected(403, "FORBIDDEN")
         projection = get_ticket(db, TicketAccess.resolve(db, current), result.id)
-        if not isinstance(projection, TicketInternal):
+        if projection is None or (
+            internal_only and not isinstance(projection, TicketInternal)
+        ):
             raise Rejected(404, "NOT_FOUND")
         return projection
+
+    @router.get(
+        "/tickets/{id}/comments",
+        operation_id="listTicketComments",
+        response_model=CommentPage,
+        tags=["Ticket content"],
+    )
+    def ticket_comments(
+        id: UUID,
+        request: Request,
+        page: Annotated[int, Query(ge=1, le=1_000_000)] = 1,
+        page_size: Annotated[int, Query(ge=1, le=100)] = 20,
+    ) -> Response:
+        return query(
+            request,
+            lambda db, actor: list_comments(db, actor, id, page, page_size),
+            admin=False,
+        )
+
+    @router.post(
+        "/tickets/{id}/comments",
+        operation_id="createTicketComment",
+        response_model=CommentView,
+        status_code=201,
+        tags=["Ticket content"],
+    )
+    def ticket_comment(id: UUID, request: Request, body: CommentCreate) -> Response:
+        return change(
+            request,
+            "ticket.comment",
+            {"id": str(id), **body.model_dump(mode="json")},
+            lambda db, actor: create_comment(db, actor, id, body, configured().clock),
+            lambda db, result: comment_result(
+                db, authorize(db, request, write=True), id, result
+            ),
+            status=201,
+            admin=False,
+        )
 
     @router.post(
         "/tickets/{id}/assignment",
@@ -533,7 +590,13 @@ def organization_router(
             lambda db, account: transition_ticket(
                 db, account, id, body, configured().clock
             ),
-            lambda db, result: project_ticket_command(request, db, result),
+            lambda db, result: project_ticket_command(
+                request,
+                db,
+                result,
+                internal_only=body.target_status
+                in (TicketStatus.OPEN, TicketStatus.PENDING, TicketStatus.RESOLVED),
+            ),
             status=200,
             admin=False,
         )
