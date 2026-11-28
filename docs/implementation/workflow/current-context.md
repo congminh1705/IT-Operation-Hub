@@ -14,6 +14,8 @@ authority: derived
 
 ## Latest task report
 
+- FND-11 backend delivery: 40 PostgreSQL tests and 130 frontend tests passed. Both leaves are PO accepted. Parent awaits INT-02. [Report](task-history.md#fnd-11-backend-delivery).
+
 - FND-10 backend delivery: 38 PostgreSQL tests, Ruff and Mypy pass on phase-b/fnd-10-ticket-queries. Both service leaves done; Parent awaits INT-02. [Report](task-history.md#fnd-10-backend-delivery-2026-11-28).
 
 - PO finalized PR language rules on 2026-11-28: English title using `<type>(<scope>): Phase <A|B|C|D> | <PARENT_ID> | <specific outcome>` and detailed Vietnamese description. PR #35 title was corrected on GitHub. Apply to subsequent Parents.

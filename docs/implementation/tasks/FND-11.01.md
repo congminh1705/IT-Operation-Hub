@@ -82,3 +82,6 @@ A future request authorizes the selected implementation (or this decision-refine
 - Remaining: Browser and notification delivery belong to INT-02. Audit/event record structured changes and reason presence; free-text reason is not stored in the event.
 - Commit/build: FND-11.01 push receipt pending.
 - Next: Joint review of the two FND-11 leaves after sequential verification.
+
+
+[Verified backend delivery](../workflow/task-history.md#fnd-11-backend-delivery). Service leaf accepted by PO. Parent awaits INT-02.

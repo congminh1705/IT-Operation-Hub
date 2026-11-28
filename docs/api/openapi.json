@@ -12533,6 +12533,17 @@
           "internal_context": {
             "type": "string",
             "description": "Only scoped IT; no raw prompt, credentials or globally visible workforce data."
+          },
+          "assignee_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -12548,7 +12559,8 @@
           "team_id",
           "version",
           "sla",
-          "internal_context"
+          "internal_context",
+          "assignee_id"
         ]
       },
       "TicketView": {

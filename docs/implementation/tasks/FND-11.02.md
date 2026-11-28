@@ -82,3 +82,6 @@ A future request authorizes the selected implementation (or this decision-refine
 - Remaining: INT-02 owns real browser flow and outbox delivery. Other transitions are assigned to later leaves. Runtime/draft OpenAPI reconciliation remains open from FND-10 and was not rerun in this task.
 - Commit/build: FND-11.02 push receipt pending.
 - Next: Joint review of the two FND-11 leaves after sequential verification.
+
+
+[Verified backend delivery](../workflow/task-history.md#fnd-11-backend-delivery). Service leaf accepted by PO. Parent awaits INT-02.

@@ -1,9 +1,11 @@
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime, timedelta
 from threading import Barrier
+from typing import cast
 from uuid import UUID, uuid4
 
 from fastapi.testclient import TestClient
+from httpx import Response
 from sqlalchemy import select
 from test_organization import ORIGIN, SETTINGS, actor
 from test_ticket_intake import prepare_catalog
@@ -44,17 +46,22 @@ def test_management_assigns_and_transfers_without_resetting_sla(
         db.flush()
         db.add(TeamMember(team_id=UUID(team), account_id=tech, active=True))
 
-    def assign(client: TestClient, headers: dict, **changes: object):
-        return client.post(
-            url,
-            json={
-                "team_id": team,
-                "assignee_id": str(tech),
-                "reason": "Staffing change",
-                "expectedVersion": 1,
-                **changes,
-            },
-            headers={**headers, "Idempotency-Key": str(uuid4())},
+    def assign(
+        client: TestClient, headers: dict[str, str], **changes: object
+    ) -> Response:
+        return cast(
+            Response,
+            client.post(
+                url,
+                json={
+                    "team_id": team,
+                    "assignee_id": str(tech),
+                    "reason": "Staffing change",
+                    "expectedVersion": 1,
+                    **changes,
+                },
+                headers={**headers, "Idempotency-Key": str(uuid4())},
+            ),
         )
 
     assert assign(technician, tech_headers, assignee_id=str(uuid4())).status_code == 403
@@ -143,14 +150,24 @@ def test_claim_and_start_check_current_actor_version_and_sla(
         row.adjustment_revision = 3
     detail_url = f"{TICKETS}/{ticket['id']}"
 
-    def submit(client: TestClient, headers: dict, action: str, body: dict):
-        return client.post(
-            f"{detail_url}/{action}",
-            json=body,
-            headers={**headers, "Idempotency-Key": str(uuid4())},
+    def submit(
+        client: TestClient,
+        headers: dict[str, str],
+        action: str,
+        body: dict[str, object],
+    ) -> Response:
+        return cast(
+            Response,
+            client.post(
+                f"{detail_url}/{action}",
+                json=body,
+                headers={**headers, "Idempotency-Key": str(uuid4())},
+            ),
         )
 
-    def claim(client: TestClient, headers: dict, assignee_id: UUID):
+    def claim(
+        client: TestClient, headers: dict[str, str], assignee_id: UUID
+    ) -> Response:
         return submit(
             client,
             headers,
@@ -162,7 +179,9 @@ def test_claim_and_start_check_current_actor_version_and_sla(
             },
         )
 
-    def transition(client: TestClient, headers: dict, target: str, version: int):
+    def transition(
+        client: TestClient, headers: dict[str, str], target: str, version: int
+    ) -> Response:
         return submit(
             client,
             headers,
@@ -195,7 +214,7 @@ def test_claim_and_start_check_current_actor_version_and_sla(
     ]
     ready = Barrier(2, timeout=10)
 
-    def compete(participant):
+    def compete(participant: tuple[TestClient, dict[str, str], UUID]) -> Response:
         ready.wait()
         return claim(*participant)
 
