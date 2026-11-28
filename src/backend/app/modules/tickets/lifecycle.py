@@ -8,6 +8,7 @@ from app.infrastructure.clock import Clock, read_utc
 from app.infrastructure.commands import CommandResult
 from app.infrastructure.events import (
     Actor,
+    AuditReason,
     SafeFacts,
     Target,
     enqueue_event,
@@ -50,6 +51,7 @@ class TicketTransition(BaseModel):
     expectedVersion: int = Field(ge=1, strict=True)
     target_status: TicketStatus
     reason: str | None = Field(default=None, max_length=10000)
+    reason_code: AuditReason | None = None
     public_message: str | None = Field(default=None, max_length=10000)
 
 
@@ -114,7 +116,7 @@ def transition_ticket(
     elif target == TicketStatus.IN_PROGRESS and source != TicketStatus.OPEN:
         resume_resolution(row, now)
     return record_transition(
-        db, actor, row, source, target, event_type, body.reason, now
+        db, actor, row, source, target, event_type, body.reason, now, body.reason_code
     )
 
 
@@ -165,6 +167,7 @@ def record_transition(
     event_type: str,
     reason: str | None,
     now: datetime,
+    reason_code: AuditReason | None = None,
 ) -> CommandResult:
     before = SafeFacts(status=source, version=row.version, assignee_id=row.assignee_id)
     row.status = target.value
@@ -177,6 +180,7 @@ def record_transition(
         version=row.version,
         assignee_id=row.assignee_id,
         reason_provided=bool(reason),
+        reason_code=reason_code,
     )
     event_actor, event_target = Actor("user", actor.id), Target("ticket", row.id)
     write_audit(

@@ -58,6 +58,8 @@ def test_audit_projection_is_scoped_and_filters_unsafe_facts(
         rows = list(db.scalars(select(AuditLog).where(audit_scope(db, admin_row))))
         assert [row.action for row in rows] == ["user.provision"]
         item = project_audit(rows[0])
+        assert item.reason_status == "unavailable"
+        assert item.reason_code is None and item.reason_label is None
         assert item.actor_id == admin and item.reason_recorded
         assert item.before == {"active": False}
         assert item.after == {"active": True, "reason_provided": True}
@@ -110,3 +112,31 @@ def test_audit_api_scopes_search_counts_and_bounds(database: Database) -> None:
             url, params={"target_id": str(target_id), "page_size": 1, "page": 2}
         )
         assert second.json()["items"][0]["action"] == "user.provision"
+
+
+def test_reason_projection_rejects_untrusted_codes() -> None:
+    from app.infrastructure.events import AuditReason, SafeFacts
+
+    row = AuditLog(
+        id=uuid4(),
+        actor_type="user",
+        actor_id=uuid4(),
+        target_type="ticket",
+        target_id=uuid4(),
+        action="ticket.assign",
+        occurred_at=datetime.now(UTC),
+        before_after_redacted={},
+    )
+    for code in AuditReason:
+        row.before_after_redacted = {"after": SafeFacts(reason_code=code).project()}
+        view = project_audit(row)
+        assert view.reason_code == code and view.reason_label
+        assert view.reason_status == "available" and view.reason_recorded
+    row.before_after_redacted = {
+        "after": {"reason_code": "password=secret", "reason_provided": True}
+    }
+    view = project_audit(row)
+    assert view.reason_status == "unavailable"
+    assert "secret" not in view.model_dump_json()
+    row.before_after_redacted = {}
+    assert project_audit(row).reason_status == "not_recorded"

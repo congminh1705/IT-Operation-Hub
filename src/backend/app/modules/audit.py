@@ -7,6 +7,7 @@ from sqlalchemy import and_, func, or_, select
 from sqlalchemy.orm import Session
 from sqlalchemy.sql.elements import ColumnElement
 
+from app.infrastructure.events import AUDIT_REASON_LABELS, AuditReason
 from app.infrastructure.models import AuditLog, Scalar
 from app.modules.auth.models import Account
 from app.modules.tickets.models import Ticket
@@ -53,6 +54,9 @@ class AuditView(BaseModel):
     safe_summary: str
     before: dict[str, str | int | bool | None]
     after: dict[str, str | int | bool | None]
+    reason_code: AuditReason | None
+    reason_label: str | None
+    reason_status: Literal["available", "unavailable", "not_recorded"]
     reason_recorded: bool
 
 
@@ -119,11 +123,17 @@ def safe_facts(facts: dict[str, Scalar]) -> dict[str, Scalar]:
         elif key in {"status", "previous_status"} and isinstance(value, str):
             if value in STATUS_VALUES:
                 result[key] = value
-        elif key in {"priority", "previous_priority"} and value in (
-            "P1",
-            "P2",
-            "P3",
-            "P4",
+        elif (
+            key in {"priority", "previous_priority"}
+            and value
+            in (
+                "P1",
+                "P2",
+                "P3",
+                "P4",
+            )
+            or key == "reason_code"
+            and value in AUDIT_REASON_LABELS
         ):
             result[key] = value
         elif key in {
@@ -145,7 +155,17 @@ def safe_facts(facts: dict[str, Scalar]) -> dict[str, Scalar]:
 def project_audit(row: AuditLog) -> AuditView:
     before = safe_facts(row.before_after_redacted.get("before", {}))
     after = safe_facts(row.before_after_redacted.get("after", {}))
+    raw_code = after.get("reason_code")
+    code = AuditReason(raw_code) if isinstance(raw_code, str) else None
+    recorded = after.get("reason_provided") is True or code is not None
     return AuditView(
+        reason_code=code,
+        reason_label=AUDIT_REASON_LABELS.get(code) if code else None,
+        reason_status="available"
+        if code
+        else "unavailable"
+        if recorded
+        else "not_recorded",
         id=row.id,
         actor_type="HUMAN" if row.actor_type == "user" else "SERVICE",
         actor_id=row.actor_id,
@@ -155,7 +175,7 @@ def project_audit(row: AuditLog) -> AuditView:
         safe_summary=row.action,
         before=before,
         after=after,
-        reason_recorded=after.get("reason_provided") is True,
+        reason_recorded=recorded,
     )
 
 

@@ -23,6 +23,7 @@ from app.infrastructure.commands import (
 )
 from app.infrastructure.events import (
     Actor,
+    AuditReason,
     SafeFacts,
     Target,
     enqueue_event,
@@ -184,6 +185,7 @@ class NamedUpdate(BaseModel):
     name: str | None = Field(default=None, min_length=1, max_length=120)
     active: bool | None = None
     reason: str = Field(min_length=10, max_length=1000)
+    reason_code: AuditReason | None = None
 
 
 class NamedView(BaseModel):
@@ -230,6 +232,7 @@ class MemberCommand(BaseModel):
     expectedVersion: int = Field(ge=1, strict=True)
     active: bool = Field(strict=True)
     reason: str = Field(min_length=10, max_length=1000)
+    reason_code: AuditReason | None = None
     handover: list[HandoverItem] = Field(default_factory=list)
 
 
@@ -1438,7 +1441,13 @@ def organization_router(
         return TeamView.model_validate(row)
 
     def audit_team(
-        db: Session, actor: Account, action: str, row: Team, before: SafeFacts
+        db: Session,
+        actor: Account,
+        action: str,
+        row: Team,
+        before: SafeFacts,
+        reason_code: AuditReason | None = None,
+        reason_provided: bool = False,
     ) -> None:
         write_audit(
             db,
@@ -1446,7 +1455,12 @@ def organization_router(
             action=action,
             target=Target("team", row.id),
             before=before,
-            after=SafeFacts(active=row.active, version=row.version),
+            after=SafeFacts(
+                active=row.active,
+                version=row.version,
+                reason_provided=reason_provided,
+                reason_code=reason_code,
+            ),
         )
 
     @router.get("/teams", operation_id="listTeams", response_model=TeamPage)
@@ -1558,6 +1572,7 @@ def organization_router(
             body.handover,
             body.reason.strip(),
             now,
+            reason_code=body.reason_code,
         )
         if row.intake:
             assert destination is not None
@@ -1643,6 +1658,8 @@ def organization_router(
                 "team.intake_set" if body.intake is True else "team.update",
                 row,
                 before,
+                reason_code=body.reason_code,
+                reason_provided=True,
             )
             if retiring:
                 publish_team_scope(db, actor, row, "membership.changed")
@@ -1735,6 +1752,7 @@ def organization_router(
                     body.reason.strip(),
                     read_utc(configured().clock),
                     id,
+                    reason_code=body.reason_code,
                 )
                 membership.active = False
             elif body.handover:
@@ -1755,7 +1773,11 @@ def organization_router(
                 target=Target("team", id),
                 before=before,
                 after=SafeFacts(
-                    active=row.active, version=row.version, assignee_id=candidate.id
+                    active=row.active,
+                    version=row.version,
+                    assignee_id=candidate.id,
+                    reason_provided=True,
+                    reason_code=body.reason_code,
                 ),
             )
             publish_team_scope(db, actor, row, "membership.changed")
@@ -1815,7 +1837,11 @@ def organization_router(
                 action="sla.policy_publish",
                 target=Target("sla_policy_revision", row.id),
                 before=SafeFacts(version=latest.version),
-                after=SafeFacts(version=row.version),
+                after=SafeFacts(
+                    version=row.version,
+                    reason_provided=True,
+                    reason_code=body.reason_code,
+                ),
             )
             return CommandResult(row.id, row.version)
 

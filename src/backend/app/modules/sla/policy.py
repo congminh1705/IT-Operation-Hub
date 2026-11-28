@@ -6,6 +6,7 @@ from sqlalchemy import JSON, String, select
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, Session, mapped_column
 
+from app.infrastructure.events import AuditReason
 from app.infrastructure.models import Base
 
 type Priority = Literal["P1", "P2", "P3", "P4"]
@@ -43,6 +44,7 @@ class PolicyUpdate(BaseModel):
     expectedVersion: int = Field(ge=1)
     priority_budgets: PriorityBudgets
     reason: str = Field(min_length=10, max_length=10000)
+    reason_code: AuditReason | None = None
 
 
 class PolicyRevision(Base):

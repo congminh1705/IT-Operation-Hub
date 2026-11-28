@@ -70,6 +70,7 @@ def test_priority_adjustments_keep_original_budget_and_breaches(
                 "priority": priority,
                 "expectedVersion": version,
                 "reason": reason,
+                "reason_code": "BUSINESS_IMPACT",
             },
         )
 
@@ -78,6 +79,13 @@ def test_priority_adjustments_keep_original_budget_and_breaches(
     assert change(tech, tech_headers, 1, "P1").status_code == 403
     assert change(manager, manager_headers, 1, "P1", "   ").status_code == 422
     assert change(manager, manager_headers, 1, "P3").status_code == 200
+    audit = manager.get("/api/v1/audit", params={"target_id": str(ticket_id)})
+    assert audit.status_code == 200
+    reasons = [item for item in audit.json()["items"] if item["reason_recorded"]]
+    assert reasons and all(item["reason_code"] == "BUSINESS_IMPACT" for item in reasons)
+    assert all(item["reason_status"] == "available" for item in reasons)
+    assert "Updated business impact" not in audit.text
+
     fresh = create_ticket(requester, owner_headers, category, "New SLA default")
     now += timedelta(hours=2, minutes=40)
     result = change(manager, manager_headers, 2, "P1")

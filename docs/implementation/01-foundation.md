@@ -340,6 +340,7 @@ These are group/epic summaries. Each heading names the group goal. Implementatio
 
 1. M reads permitted business audit; Admin additionally reads authorized identity/SLA administration audit, without all-chat access.
 2. Search/paging/counts apply scope and retain actor/time/old-new/reason; redact secrets and bodies.
+   PO approved structured reason codes on 2026-11-28. Commands may supply an explicit allowlisted reason_code. Audit returns that code, its fixed Vietnamese label and availability status. Existing callers and historical records without a code report unavailable when a reason was recorded, or not_recorded otherwise. Free-text notes remain governed by their domain permissions and retention. Do not infer a reason from an action or backfill historical reasons without exact evidence. INT-06 owns the reason selector and real browser integration.
 3. Define reusable audit projection for later automation/assets; later slices supply their own events.
 
 **Child tasks:** [FND-18.01](tasks/FND-18.01.md), [FND-18.02](tasks/FND-18.02.md).

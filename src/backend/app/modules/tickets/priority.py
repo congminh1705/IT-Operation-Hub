@@ -9,6 +9,7 @@ from app.infrastructure.clock import Clock, read_utc
 from app.infrastructure.commands import CommandResult
 from app.infrastructure.events import (
     Actor,
+    AuditReason,
     SafeFacts,
     Target,
     enqueue_event,
@@ -32,6 +33,7 @@ class PriorityCommand(BaseModel):
     expectedVersion: int = Field(ge=1, strict=True)
     priority: Priority
     reason: str = Field(min_length=10, max_length=10000)
+    reason_code: AuditReason | None = None
 
 
 def observe_breaches(
@@ -129,6 +131,7 @@ def change_priority(
         priority=body.priority,
         previous_priority=old,
         reason_provided=True,
+        reason_code=body.reason_code,
     )
     source, target = Actor("user", actor.id), Target("ticket", row.id)
     write_audit(

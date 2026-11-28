@@ -11,6 +11,7 @@ from app.infrastructure.clock import Clock, read_utc
 from app.infrastructure.commands import CommandResult
 from app.infrastructure.events import (
     Actor,
+    AuditReason,
     SafeFacts,
     Target,
     enqueue_event,
@@ -49,12 +50,14 @@ class TaskAssignment(VersionedTaskCommand):
     assignee_id: UUID
     team_id: UUID
     reason: str = Field(min_length=10, max_length=10000)
+    reason_code: AuditReason | None = None
     allocations: list[Interval] = Field(max_length=366)
 
 
 class LockCommand(VersionedTaskCommand):
     locked: bool = Field(strict=True)
     reason: str = Field(min_length=10, max_length=10000)
+    reason_code: AuditReason | None = None
 
 
 class TaskProgress(VersionedTaskCommand):
@@ -249,6 +252,7 @@ def record_task_effect(
     action: str,
     *,
     reason: bool = False,
+    reason_code: AuditReason | None = None,
     status: StrEnum | None = None,
 ) -> None:
     source, target = Actor("user", actor.id), Target("work_task", task.id)
@@ -256,6 +260,7 @@ def record_task_effect(
         version=task.version,
         assignee_id=task.assignee_id,
         reason_provided=reason,
+        reason_code=reason_code,
         status=status,
         previous_status=before.status,
         active=task.assignment_locked if before.active is not None else None,
@@ -311,7 +316,16 @@ def assign_task(
     task.assignee_id = body.assignee_id
     task.version += 1
     replace_slots(db, task, body.assignee_id, grouped, existing, now)
-    record_task_effect(db, actor, task, before, now, "task.assigned", reason=True)
+    record_task_effect(
+        db,
+        actor,
+        task,
+        before,
+        now,
+        "task.assigned",
+        reason=True,
+        reason_code=body.reason_code,
+    )
     return CommandResult(task.id, task.version)
 
 
@@ -340,6 +354,7 @@ def set_assignment_lock(
         read_utc(clock),
         "task.assignment_lock_changed",
         reason=True,
+        reason_code=body.reason_code,
     )
     return CommandResult(task.id, task.version)
 

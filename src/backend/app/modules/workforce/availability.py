@@ -10,6 +10,7 @@ from app.infrastructure.clock import Clock, read_utc
 from app.infrastructure.commands import CommandResult
 from app.infrastructure.events import (
     Actor,
+    AuditReason,
     SafeFacts,
     Target,
     enqueue_event,
@@ -46,6 +47,7 @@ class CalendarUpdate(BaseModel):
     expectedVersion: int = Field(ge=1, strict=True)
     days: list[DayInput] = Field(min_length=1, max_length=MAX_DAYS)
     reason: str = Field(min_length=10, max_length=10000)
+    reason_code: AuditReason | None = None
 
 
 class AbsenceCreate(Interval):
@@ -53,6 +55,7 @@ class AbsenceCreate(Interval):
 
     expectedVersion: int = Field(ge=1, strict=True)
     reason: str = Field(min_length=10, max_length=10000)
+    reason_code: AuditReason | None = None
 
 
 class AvailabilityView(BaseModel):
@@ -134,7 +137,9 @@ def update_calendar(
         )
         for day in body.days
     )
-    record_availability(db, actor, aggregate, "workforce.calendar_update", clock)
+    record_availability(
+        db, actor, aggregate, "workforce.calendar_update", clock, body.reason_code
+    )
     return CommandResult(account_id, aggregate.version)
 
 
@@ -162,7 +167,9 @@ def record_absence(
             ends_at=body.ends_at,
         )
     )
-    record_availability(db, actor, aggregate, "workforce.absence_create", clock)
+    record_availability(
+        db, actor, aggregate, "workforce.absence_create", clock, body.reason_code
+    )
     return CommandResult(absence_id, aggregate.version)
 
 
@@ -185,7 +192,12 @@ def lock_availability(
 
 
 def record_availability(
-    db: Session, actor: Account, aggregate: WorkforceSkills, action: str, clock: Clock
+    db: Session,
+    actor: Account,
+    aggregate: WorkforceSkills,
+    action: str,
+    clock: Clock,
+    reason_code: AuditReason | None = None,
 ) -> None:
     now = read_utc(clock)
     source, target = Actor("user", actor.id), Target("workforce", aggregate.account_id)
@@ -195,7 +207,9 @@ def record_availability(
         action=action,
         target=target,
         before=SafeFacts(version=aggregate.version - 1),
-        after=SafeFacts(version=aggregate.version, reason_provided=True),
+        after=SafeFacts(
+            version=aggregate.version, reason_provided=True, reason_code=reason_code
+        ),
         clock=lambda: now,
     )
     enqueue_event(
